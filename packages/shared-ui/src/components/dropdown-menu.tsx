@@ -17,7 +17,9 @@ function DropdownMenuSubTrigger({
   inset,
   children,
   ...props
-}: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & { inset?: boolean }) {
+}: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+  inset?: boolean;
+}) {
   return (
     <DropdownMenuPrimitive.SubTrigger
       className={cn(
@@ -71,7 +73,9 @@ function DropdownMenuItem({
   className,
   inset,
   ...props
-}: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & { inset?: boolean }) {
+}: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+  inset?: boolean;
+}) {
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
@@ -136,7 +140,9 @@ function DropdownMenuLabel({
   className,
   inset,
   ...props
-}: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & { inset?: boolean }) {
+}: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
+  inset?: boolean;
+}) {
   return (
     <DropdownMenuPrimitive.Label
       className={cn(

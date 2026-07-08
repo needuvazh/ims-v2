@@ -1,16 +1,19 @@
 ## Context
 
 During a strict architectural audit against the IMS DDD Context Map and FRD Module 03, we identified two actionable discrepancies in the Lead & CRM implementation:
+
 1. The domain event for converting a lead was named `LeadConvertedToAdmission` instead of `LeadConverted`, violating Ubiquitous Language.
 2. The Overdue Follow-ups background scheduler (FR-LEAD-012) was not implemented, even though the database query logic (`findAllScheduledOverdue`) exists in the repository.
 
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Sync the domain event name (`LeadConverted`) across the emitting side (`crm-leads`) and consuming side (`admissions-enrollment`).
 - Implement a background service (`FollowUpSchedulerService`) in `crm-leads` to run daily and flag overdue follow-ups, dispatching system alerts.
 
 **Non-Goals:**
+
 - We are NOT implementing Counselor Auto-Assignment (FR-LEAD-009) in this change. It is deferred.
 
 ## Decisions

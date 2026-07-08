@@ -9,12 +9,15 @@ The goal is not only to generate FRDs, but to keep them aligned with the authori
 ## 1. Why FRD Generation Needs Guardrails
 
 Generating a full enterprise FRD in one prompt is usually low quality because:
+
 1. Context windows force omissions or placeholders.
 2. Long outputs drift across module boundaries.
 3. Requirements, entities, APIs, permissions, and workflows can diverge from the DDD context map.
 
 ### The solution
+
 Generate the FRD part by part, then compare each part against:
+
 - `docs/architecture/ddd/ddd-context-map.md`
 - `docs/architecture/ddd/ER Model.md`
 - `packages/database/prisma/schema.prisma`
@@ -45,6 +48,7 @@ Module 03 - Lead & Inquiry Management/
 ```
 
 Optional but recommended for larger modules:
+
 - `ASTI IMS <Module> FRD Validation Against DDD, ER Model, and Implementation Architecture.md`
 
 ---
@@ -57,6 +61,7 @@ Copy and paste this prompt before generating any module FRD:
 You are a Principal Solutions Architect and Senior Staff Engineer specializing in clean architecture, Domain-Driven Design (DDD), and TypeScript/Next.js monorepos. Your task is to help me generate a production-grade, highly detailed Functional Requirement Document (FRD) divided into 12 distinct parts for a specific module of the Al Saud Training Institute (ASTI) Integrated Institute Management System (IMS).
 
 ### Project Principles & Context Rules:
+
 1. Modular monolith first: Do not propose microservices, external brokers, or CQRS/Event Sourcing unless explicitly asked.
 2. Enrollment-centric model: All learning lifecycles must flow into the central `Enrollment` aggregate.
 3. Person/Party model: Follow the shared party pattern to avoid identity duplication.
@@ -67,6 +72,7 @@ You are a Principal Solutions Architect and Senior Staff Engineer specializing i
 8. DDD alignment first: Every requirement, entity, API, screen, permission, validation rule, report, and test case must map back to an owning bounded context, aggregate, or read model from the DDD context map or ER model. If it does not map cleanly, flag it as a gap instead of inventing a new model.
 
 ### Inputs Provided:
+
 - DDD Context Map (`docs/architecture/ddd/ddd-context-map.md`)
 - ER Model Specification (`docs/architecture/ddd/ER Model.md`)
 - Prisma Database Schema (`packages/database/prisma/schema.prisma`)
@@ -103,12 +109,12 @@ Generate the following two files for Module [Module Number] - [Module Name] base
    - Comprehensive introduction and business benefits
    - Detailed functional requirements specifications
    - For each requirement, specify:
-     * Description & Actors
-     * Preconditions
-     * Inputs
-     * Processing Steps
-     * Outputs & Postconditions
-     * Priority (MoSCoW)
+     - Description & Actors
+     - Preconditions
+     - Inputs
+     - Processing Steps
+     - Outputs & Postconditions
+     - Priority (MoSCoW)
    - Comprehensive Business Rules table (BR-[Module Code]-xxx)
    - Cross-module dependencies mapping
    - Explicit comparison notes showing how the rules align with the DDD context map and ER model
@@ -122,6 +128,7 @@ Be exhaustive, concrete, and write out all requirements in full. No placeholders
 Now generate `Part 2 – User Stories, Use Cases, Workflows, State Machines.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 1. User stories: Write at least 8 detailed user stories in the "As a... I want to... So that..." format. Prioritize them using MoSCoW and provide Gherkin acceptance criteria for each.
 2. Use cases: Document the primary use cases with primary actor, preconditions, main success scenario, alternative flows, and postconditions.
 3. Business workflows: Describe the core operational workflows in structured text or ASCII/Mermaid sequence diagrams.
@@ -134,6 +141,7 @@ Requirements:
 Generate `Part 3 – Screen Specifications and UI Components.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 1. Screen inventory: List all screens required for the Admin, Student, and Trainer portals where applicable.
 2. Screen details: For each screen, define layout, interactive elements, input validations, and table behaviors.
 3. Dynamic UI states: Document validation errors, loading skeletons, empty states, and permission-based hiding.
@@ -147,6 +155,7 @@ Requirements:
 Generate `Part 4 – Database Entities and CRUD Matrix.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 1. Entity specifications: Define all database models owned by this context. For each table, provide field names, data types, nullability, keys, indexes, constraints, audit columns, and effective dating columns where relevant.
 2. Relationships: Detail 1:1, 1:N, and N:M relationships with cascading/restrict rules.
 3. CRUD matrix: Provide a table mapping Human/System Actors against entities and allowed actions, including branch-scoping logic.
@@ -159,6 +168,7 @@ Requirements:
 Generate `Part 5 – API Contracts.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 - List all REST endpoints/Server Actions (Route, Method, Purpose)
 - For each endpoint, detail authentication, required permission, branch-scoping behavior, request schema, success DTO, and error responses
 ```
@@ -169,6 +179,7 @@ Requirements:
 Generate `Part 6 – Permission Matrix.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 - Tabular mapping of all business roles against fine-grained permissions
 - Separate permissions by action-level, menu-level, and report-level
 - Highlight permissions that are branch-scoped, global, or consolidated-report only
@@ -180,6 +191,7 @@ Requirements:
 Generate `Part 7 – Validation Rules, Error Catalog, Notifications.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 - Custom business validation schemas
 - Structured error code catalog
 - System notification events triggered by domain events in this module
@@ -192,6 +204,7 @@ Requirements:
 Generate `Part 8 - Reports, Dashboards, KPIs, Analytics.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 - Define module-specific KPIs
 - Detail dashboard widgets with permission scopes
 - List operational reports with filters, columns, sorting, and export options
@@ -205,6 +218,7 @@ Requirements:
 Generate `Part 9 – BDD Acceptance Criteria and Test Scenarios.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 - Write comprehensive Gherkin scenarios covering positive, negative, validation, and boundary conditions
 - Provide test cases for authorization guards and branch data isolation
 - Include at least one scenario proving behavior matches the DDD ownership rule for the module's core aggregate
@@ -216,6 +230,7 @@ Requirements:
 Generate `Part 10 - Security Architecture and NFR.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 - Detail security measures specific to this module
 - Specify non-functional performance, availability, scalability, usability, and compliance targets
 - Confirm audit requirements for sensitive state changes and cross-context side effects
@@ -227,6 +242,7 @@ Requirements:
 Generate `Part 11 - Deployment, Operations, Observability, Runbooks.md` for Module [Module Number] - [Module Name].
 
 Requirements:
+
 - Observability setup: structured logs, tracing boundaries, metrics instrumentation
 - Operations: system health checks, backup/recovery instructions for owned tables
 - Troubleshooting runbooks for operational failures
@@ -238,6 +254,7 @@ Requirements:
 ## 5. DDD / ER Model Validation Workflow
 
 Before a generated FRD is considered complete, compare the entire module against the source documents in this order:
+
 1. `docs/architecture/ddd/ddd-context-map.md`
 2. `docs/architecture/ddd/ER Model.md`
 3. `packages/database/prisma/schema.prisma`
@@ -245,19 +262,20 @@ Before a generated FRD is considered complete, compare the entire module against
 
 Use this comparison table while reviewing each part:
 
-| Check Area | Question |
-| --- | --- |
-| Bounded context ownership | Does the requirement belong to the module's owning context, or is it owned elsewhere? |
-| Aggregate boundaries | Does the FRD avoid direct mutation of aggregates owned by another context? |
-| Entity alignment | Does every owned entity match the ER model and Prisma schema intent? |
-| Domain events | Are only documented events used, and are side effects routed through the correct context? |
-| Permissions and branch scope | Are action, menu, and report permissions explicit and server-enforced? |
-| Workflow and state machine | Do the states and transitions match the DDD model and related module documents? |
-| API contracts | Are endpoints thin adapters over application services with no hidden business rules? |
-| Reporting | Are dashboard and report requirements clearly read-only? |
-| Audit and NFRs | Are sensitive actions, financial actions, and state transitions auditable and testable? |
+| Check Area                   | Question                                                                                  |
+| ---------------------------- | ----------------------------------------------------------------------------------------- |
+| Bounded context ownership    | Does the requirement belong to the module's owning context, or is it owned elsewhere?     |
+| Aggregate boundaries         | Does the FRD avoid direct mutation of aggregates owned by another context?                |
+| Entity alignment             | Does every owned entity match the ER model and Prisma schema intent?                      |
+| Domain events                | Are only documented events used, and are side effects routed through the correct context? |
+| Permissions and branch scope | Are action, menu, and report permissions explicit and server-enforced?                    |
+| Workflow and state machine   | Do the states and transitions match the DDD model and related module documents?           |
+| API contracts                | Are endpoints thin adapters over application services with no hidden business rules?      |
+| Reporting                    | Are dashboard and report requirements clearly read-only?                                  |
+| Audit and NFRs               | Are sensitive actions, financial actions, and state transitions auditable and testable?   |
 
 If a section introduces a new concept that is not in the DDD or ER model, label it as one of the following:
+
 1. A required gap in the architecture source documents.
 2. A referenced concept owned by another bounded context.
 3. A future-phase item that should not be implemented in Phase 1.
@@ -267,6 +285,7 @@ If a section introduces a new concept that is not in the DDD or ER model, label 
 ## 6. Verification Checklist
 
 Before archiving a generated FRD module folder, verify that:
+
 1. Aggregate root integrity is preserved and no aggregate is mutated outside its owning application service.
 2. Branch scoping is defined for every user interface page, endpoint, query, and report.
 3. Oman tax and receipting rules are respected for finance/billing modules.

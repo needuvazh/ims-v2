@@ -52,7 +52,11 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
   const columns = [
     {
       header: 'Exam Name',
-      render: (item: ExamListItem) => <span className="font-semibold text-[color:var(--ims-ink)]">{item.examName}</span>,
+      render: (item: ExamListItem) => (
+        <span className="font-semibold text-[color:var(--ims-ink)]">
+          {item.examName}
+        </span>
+      ),
     },
     {
       header: 'Course',
@@ -60,16 +64,25 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
     },
     {
       header: 'Batch',
-      render: (item: ExamListItem) => <span className="font-mono text-xs text-[color:var(--ims-muted)]">{item.batch.batchNameEnglish}</span>,
+      render: (item: ExamListItem) => (
+        <span className="font-mono text-xs text-[color:var(--ims-muted)]">
+          {item.batch.batchNameEnglish}
+        </span>
+      ),
     },
     {
       header: 'Date',
-      render: (item: ExamListItem) => new Date(item.examDate).toLocaleDateString(),
+      render: (item: ExamListItem) =>
+        new Date(item.examDate).toLocaleDateString(),
       headerClassName: 'w-[120px]',
     },
     {
       header: 'Pass/Max Marks',
-      render: (item: ExamListItem) => <span className="font-medium text-slate-700">{item.passMarks}/{item.maxMarks}</span>,
+      render: (item: ExamListItem) => (
+        <span className="font-medium text-slate-700">
+          {item.passMarks}/{item.maxMarks}
+        </span>
+      ),
       headerClassName: 'w-[140px]',
     },
     {
@@ -83,12 +96,21 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
       render: (item: ExamListItem) => (
         <div className="inline-flex items-center justify-end gap-2">
           {canView && (
-            <LinkButton href={`/exam-completion/exams/${item.id}`} size="sm" variant="outline">
+            <LinkButton
+              href={`/exam-completion/exams/${item.id}`}
+              size="sm"
+              variant="outline"
+            >
               View
             </LinkButton>
           )}
           {canViewResults && item.status === 'OpenForResultEntry' && (
-            <LinkButton href={`/exam-completion/results?examId=${item.id}`} size="sm" variant="primary" className="gap-1">
+            <LinkButton
+              href={`/exam-completion/results?examId=${item.id}`}
+              size="sm"
+              variant="primary"
+              className="gap-1"
+            >
               <PlayCircle className="h-3.5 w-3.5" />
               Results
             </LinkButton>
@@ -107,7 +129,9 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
             <p className="text-[10px] font-bold uppercase tracking-widest text-[color:var(--ims-muted)]">
               {new Date(exam.examDate).toLocaleDateString()}
             </p>
-            <p className="text-sm font-bold text-[color:var(--ims-ink)] truncate">{exam.examName}</p>
+            <p className="text-sm font-bold text-[color:var(--ims-ink)] truncate">
+              {exam.examName}
+            </p>
           </div>
           <StatusBadge status={exam.status} />
         </div>
@@ -115,28 +139,48 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
       <CardContent className="space-y-3 p-4 text-xs">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="font-semibold text-[color:var(--ims-muted)]">Course</p>
-            <p className="truncate mt-0.5 text-slate-800">{exam.course.nameEnglish}</p>
+            <p className="font-semibold text-[color:var(--ims-muted)]">
+              Course
+            </p>
+            <p className="truncate mt-0.5 text-slate-800">
+              {exam.course.nameEnglish}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[color:var(--ims-muted)]">Batch</p>
-            <p className="truncate mt-0.5 text-slate-800">{exam.batch.batchNameEnglish}</p>
+            <p className="truncate mt-0.5 text-slate-800">
+              {exam.batch.batchNameEnglish}
+            </p>
           </div>
           <div className="col-span-2">
-            <p className="font-semibold text-[color:var(--ims-muted)]">Marks (Pass / Max)</p>
-            <p className="mt-0.5 font-medium text-slate-800">{exam.passMarks} / {exam.maxMarks}</p>
+            <p className="font-semibold text-[color:var(--ims-muted)]">
+              Marks (Pass / Max)
+            </p>
+            <p className="mt-0.5 font-medium text-slate-800">
+              {exam.passMarks} / {exam.maxMarks}
+            </p>
           </div>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <div className="flex w-full gap-2">
           {canView && (
-            <LinkButton href={`/exam-completion/exams/${exam.id}`} size="sm" variant="outline" className="flex-1 justify-center">
+            <LinkButton
+              href={`/exam-completion/exams/${exam.id}`}
+              size="sm"
+              variant="outline"
+              className="flex-1 justify-center"
+            >
               View Detail
             </LinkButton>
           )}
           {canViewResults && exam.status === 'OpenForResultEntry' && (
-            <LinkButton href={`/exam-completion/results?examId=${exam.id}`} size="sm" variant="primary" className="flex-1 justify-center gap-1">
+            <LinkButton
+              href={`/exam-completion/results?examId=${exam.id}`}
+              size="sm"
+              variant="primary"
+              className="flex-1 justify-center gap-1"
+            >
               <PlayCircle className="h-3.5 w-3.5" />
               Manage Results
             </LinkButton>
@@ -158,7 +202,10 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const variants: Record<string, 'muted' | 'info' | 'warning' | 'success' | 'error' | 'outline'> = {
+  const variants: Record<
+    string,
+    'muted' | 'info' | 'warning' | 'success' | 'error' | 'outline'
+  > = {
     Draft: 'muted',
     Scheduled: 'info',
     OpenForResultEntry: 'warning',

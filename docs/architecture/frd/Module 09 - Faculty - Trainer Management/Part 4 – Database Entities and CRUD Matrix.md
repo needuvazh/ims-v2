@@ -44,9 +44,9 @@ Module 09 may hold foreign keys to these external models but shall not duplicate
 
 All owned tables use application-generated CUID string identifiers.
 
-| Concern | PostgreSQL | Prisma |
-|---|---|---|
-| Primary identifier | `text` | `String @id @default(cuid())` |
+| Concern            | PostgreSQL | Prisma                        |
+| ------------------ | ---------- | ----------------------------- |
+| Primary identifier | `text`     | `String @id @default(cuid())` |
 
 The same identifier strategy must be used consistently with the existing project schema. If the project-wide Prisma schema uses native PostgreSQL UUIDs instead, all five models shall use `uuid` / `String @db.Uuid` consistently; mixed identifier strategies are not allowed inside the context.
 
@@ -54,20 +54,20 @@ The same identifier strategy must be used consistently with the existing project
 
 Every owned table shall contain the following columns:
 
-| Field | PostgreSQL | Prisma | Null | Rule |
-|---|---|---|---:|---|
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | No | Set once on insert. |
-| `createdBy` | `text` | `String` | No | FK to IAM `User.id`; immutable after insert. |
-| `updatedAt` | `timestamptz` | `DateTime @updatedAt @db.Timestamptz(6)` | No | Updated on mutation. |
-| `updatedBy` | `text` | `String` | No | FK to IAM `User.id`; updated on every mutation. |
-| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | Yes | Set when soft-deleted. |
-| `isDeleted` | `boolean` | `Boolean @default(false)` | No | Normal reads require `false`. |
+| Field       | PostgreSQL    | Prisma                                        | Null | Rule                                            |
+| ----------- | ------------- | --------------------------------------------- | ---: | ----------------------------------------------- |
+| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` |   No | Set once on insert.                             |
+| `createdBy` | `text`        | `String`                                      |   No | FK to IAM `User.id`; immutable after insert.    |
+| `updatedAt` | `timestamptz` | `DateTime @updatedAt @db.Timestamptz(6)`      |   No | Updated on mutation.                            |
+| `updatedBy` | `text`        | `String`                                      |   No | FK to IAM `User.id`; updated on every mutation. |
+| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)`                |  Yes | Set when soft-deleted.                          |
+| `isDeleted` | `boolean`     | `Boolean @default(false)`                     |   No | Normal reads require `false`.                   |
 
 Additional concurrency column:
 
-| Field | PostgreSQL | Prisma | Null | Rule |
-|---|---|---|---:|---|
-| `version` | `integer` | `Int @default(1)` | No | Incremented atomically on successful update; required for optimistic concurrency. |
+| Field     | PostgreSQL | Prisma            | Null | Rule                                                                              |
+| --------- | ---------- | ----------------- | ---: | --------------------------------------------------------------------------------- |
+| `version` | `integer`  | `Int @default(1)` |   No | Incremented atomically on successful update; required for optimistic concurrency. |
 
 `deletedAt` and `isDeleted` must remain consistent:
 
@@ -82,11 +82,11 @@ A PostgreSQL check constraint shall enforce this relationship for all owned tabl
 
 Effective-dated models use:
 
-| Field | PostgreSQL | Prisma | Null | Meaning |
-|---|---|---|---:|---|
-| `effectiveStartDate` | `date` | `DateTime @db.Date` | No | First business date on which the row may apply. |
-| `effectiveEndDate` | `date` | `DateTime? @db.Date` | Yes | Last inclusive business date; `NULL` means open-ended. |
-| `status` | enum-backed type | Prisma enum | No | Administrative lifecycle state. |
+| Field                | PostgreSQL       | Prisma               | Null | Meaning                                                |
+| -------------------- | ---------------- | -------------------- | ---: | ------------------------------------------------------ |
+| `effectiveStartDate` | `date`           | `DateTime @db.Date`  |   No | First business date on which the row may apply.        |
+| `effectiveEndDate`   | `date`           | `DateTime? @db.Date` |  Yes | Last inclusive business date; `NULL` means open-ended. |
+| `status`             | enum-backed type | Prisma enum          |   No | Administrative lifecycle state.                        |
 
 Required database constraint:
 
@@ -271,25 +271,25 @@ Presentation labels may be localized as “Per Hour”, “Per Session”, “Pe
 
 ### 4.1.2 Field Specification
 
-| Field | PostgreSQL Type | Prisma Type | Null | Key / Constraint | Description |
-|---|---|---|---:|---|---|
-| `id` | `text` | `String @id @default(cuid())` | No | PK | Trainer profile identifier. |
-| `personId` | `text` | `String` | No | FK → `Person.id` | Canonical person reference. |
-| `branchId` | `text` | `String` | No | FK → `Branch.id` | Operational home branch. |
-| `trainerCode` | `varchar(30)` | `String @db.VarChar(30)` | No | Partial unique when not deleted | Human-readable trainer number/code. |
-| `trainerType` | enum | `TrainerType` | No | Enum | `FullTime`, `PartTime`, or `Freelance`. |
-| `specialization` | `varchar(500)` | `String @db.VarChar(500)` | No | Length constraint | Trainer professional specialization summary. |
-| `qualificationSummary` | `varchar(1000)` | `String @db.VarChar(1000)` | Yes | Length constraint | Short denormalized summary for operational display; detailed qualifications remain child rows. |
-| `status` | enum | `TrainerStatus` | No | State machine | Operational trainer status. |
-| `effectiveStartDate` | `date` | `DateTime @db.Date` | No | Check with end date | First effective business date. |
-| `effectiveEndDate` | `date` | `DateTime? @db.Date` | Yes | Check with start date | Last inclusive effective business date. |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | No | Audit | Creation timestamp. |
-| `createdBy` | `text` | `String` | No | FK → `User.id` | Creator. |
-| `updatedAt` | `timestamptz` | `DateTime @updatedAt @db.Timestamptz(6)` | No | Audit | Last modification timestamp. |
-| `updatedBy` | `text` | `String` | No | FK → `User.id` | Last modifier. |
-| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | Yes | Soft-delete consistency check | Deletion timestamp. |
-| `isDeleted` | `boolean` | `Boolean @default(false)` | No | Indexed | Soft-delete flag. |
-| `version` | `integer` | `Int @default(1)` | No | `CHECK version >= 1` | Optimistic concurrency token. |
+| Field                  | PostgreSQL Type | Prisma Type                                   | Null | Key / Constraint                | Description                                                                                    |
+| ---------------------- | --------------- | --------------------------------------------- | ---: | ------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `id`                   | `text`          | `String @id @default(cuid())`                 |   No | PK                              | Trainer profile identifier.                                                                    |
+| `personId`             | `text`          | `String`                                      |   No | FK → `Person.id`                | Canonical person reference.                                                                    |
+| `branchId`             | `text`          | `String`                                      |   No | FK → `Branch.id`                | Operational home branch.                                                                       |
+| `trainerCode`          | `varchar(30)`   | `String @db.VarChar(30)`                      |   No | Partial unique when not deleted | Human-readable trainer number/code.                                                            |
+| `trainerType`          | enum            | `TrainerType`                                 |   No | Enum                            | `FullTime`, `PartTime`, or `Freelance`.                                                        |
+| `specialization`       | `varchar(500)`  | `String @db.VarChar(500)`                     |   No | Length constraint               | Trainer professional specialization summary.                                                   |
+| `qualificationSummary` | `varchar(1000)` | `String @db.VarChar(1000)`                    |  Yes | Length constraint               | Short denormalized summary for operational display; detailed qualifications remain child rows. |
+| `status`               | enum            | `TrainerStatus`                               |   No | State machine                   | Operational trainer status.                                                                    |
+| `effectiveStartDate`   | `date`          | `DateTime @db.Date`                           |   No | Check with end date             | First effective business date.                                                                 |
+| `effectiveEndDate`     | `date`          | `DateTime? @db.Date`                          |  Yes | Check with start date           | Last inclusive effective business date.                                                        |
+| `createdAt`            | `timestamptz`   | `DateTime @default(now()) @db.Timestamptz(6)` |   No | Audit                           | Creation timestamp.                                                                            |
+| `createdBy`            | `text`          | `String`                                      |   No | FK → `User.id`                  | Creator.                                                                                       |
+| `updatedAt`            | `timestamptz`   | `DateTime @updatedAt @db.Timestamptz(6)`      |   No | Audit                           | Last modification timestamp.                                                                   |
+| `updatedBy`            | `text`          | `String`                                      |   No | FK → `User.id`                  | Last modifier.                                                                                 |
+| `deletedAt`            | `timestamptz`   | `DateTime? @db.Timestamptz(6)`                |  Yes | Soft-delete consistency check   | Deletion timestamp.                                                                            |
+| `isDeleted`            | `boolean`       | `Boolean @default(false)`                     |   No | Indexed                         | Soft-delete flag.                                                                              |
+| `version`              | `integer`       | `Int @default(1)`                             |   No | `CHECK version >= 1`            | Optimistic concurrency token.                                                                  |
 
 ### 4.1.3 Indexes
 
@@ -381,21 +381,21 @@ Stores structured trainer qualification metadata. Qualification evidence is refe
 
 ### 4.2.2 Field Specification
 
-| Field | PostgreSQL Type | Prisma Type | Null | Key / Constraint | Description |
-|---|---|---|---:|---|---|
-| `id` | `text` | `String @id @default(cuid())` | No | PK | Qualification identifier. |
-| `trainerId` | `text` | `String` | No | FK → `TrainerProfile.id` | Parent trainer. |
-| `qualificationName` | `varchar(200)` | `String @db.VarChar(200)` | No | Nonblank | Qualification or certification name. |
-| `institution` | `varchar(200)` | `String @db.VarChar(200)` | No | Nonblank | Awarding institution. |
-| `yearCompleted` | `smallint` | `Int @db.SmallInt` | No | Range check | Completion year; cannot exceed current Oman business year. |
-| `documentId` | `text` | `String?` | Yes | FK → `Document.id` | Optional supporting evidence reference. |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | No | Audit | Creation timestamp. |
-| `createdBy` | `text` | `String` | No | FK → `User.id` | Creator. |
-| `updatedAt` | `timestamptz` | `DateTime @updatedAt @db.Timestamptz(6)` | No | Audit | Last modification timestamp. |
-| `updatedBy` | `text` | `String` | No | FK → `User.id` | Last modifier. |
-| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | Yes | Soft-delete consistency | Deletion timestamp. |
-| `isDeleted` | `boolean` | `Boolean @default(false)` | No | Indexed | Soft-delete flag. |
-| `version` | `integer` | `Int @default(1)` | No | `CHECK version >= 1` | Concurrency token. |
+| Field               | PostgreSQL Type | Prisma Type                                   | Null | Key / Constraint         | Description                                                |
+| ------------------- | --------------- | --------------------------------------------- | ---: | ------------------------ | ---------------------------------------------------------- |
+| `id`                | `text`          | `String @id @default(cuid())`                 |   No | PK                       | Qualification identifier.                                  |
+| `trainerId`         | `text`          | `String`                                      |   No | FK → `TrainerProfile.id` | Parent trainer.                                            |
+| `qualificationName` | `varchar(200)`  | `String @db.VarChar(200)`                     |   No | Nonblank                 | Qualification or certification name.                       |
+| `institution`       | `varchar(200)`  | `String @db.VarChar(200)`                     |   No | Nonblank                 | Awarding institution.                                      |
+| `yearCompleted`     | `smallint`      | `Int @db.SmallInt`                            |   No | Range check              | Completion year; cannot exceed current Oman business year. |
+| `documentId`        | `text`          | `String?`                                     |  Yes | FK → `Document.id`       | Optional supporting evidence reference.                    |
+| `createdAt`         | `timestamptz`   | `DateTime @default(now()) @db.Timestamptz(6)` |   No | Audit                    | Creation timestamp.                                        |
+| `createdBy`         | `text`          | `String`                                      |   No | FK → `User.id`           | Creator.                                                   |
+| `updatedAt`         | `timestamptz`   | `DateTime @updatedAt @db.Timestamptz(6)`      |   No | Audit                    | Last modification timestamp.                               |
+| `updatedBy`         | `text`          | `String`                                      |   No | FK → `User.id`           | Last modifier.                                             |
+| `deletedAt`         | `timestamptz`   | `DateTime? @db.Timestamptz(6)`                |  Yes | Soft-delete consistency  | Deletion timestamp.                                        |
+| `isDeleted`         | `boolean`       | `Boolean @default(false)`                     |   No | Indexed                  | Soft-delete flag.                                          |
+| `version`           | `integer`       | `Int @default(1)`                             |   No | `CHECK version >= 1`     | Concurrency token.                                         |
 
 ### 4.2.3 Indexes
 
@@ -472,24 +472,24 @@ Stores recurring weekly availability windows for a trainer, scoped to a branch a
 
 ### 4.3.2 Field Specification
 
-| Field | PostgreSQL Type | Prisma Type | Null | Key / Constraint | Description |
-|---|---|---|---:|---|---|
-| `id` | `text` | `String @id @default(cuid())` | No | PK | Availability record identifier. |
-| `trainerId` | `text` | `String` | No | FK → `TrainerProfile.id` | Trainer. |
-| `branchId` | `text` | `String` | No | FK → `Branch.id` | Branch where availability applies. |
-| `dayOfWeek` | enum | `DayOfWeek` | No | Enum | Recurring weekday. |
-| `startTime` | `time(0)` | `DateTime @db.Time(0)` | No | Time check | Local Oman business time. |
-| `endTime` | `time(0)` | `DateTime @db.Time(0)` | No | Time check | Local Oman business time. |
-| `effectiveStartDate` | `date` | `DateTime @db.Date` | No | Effective-date check | First date of recurrence applicability. |
-| `effectiveEndDate` | `date` | `DateTime? @db.Date` | Yes | Effective-date check | Last inclusive date of recurrence applicability. |
-| `status` | enum | `TrainerAvailabilityStatus` | No | Effective-state control | `Active` or `Inactive`. |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | No | Audit | Creation timestamp. |
-| `createdBy` | `text` | `String` | No | FK → `User.id` | Creator. |
-| `updatedAt` | `timestamptz` | `DateTime @updatedAt @db.Timestamptz(6)` | No | Audit | Last modification timestamp. |
-| `updatedBy` | `text` | `String` | No | FK → `User.id` | Last modifier. |
-| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | Yes | Soft-delete consistency | Deletion timestamp. |
-| `isDeleted` | `boolean` | `Boolean @default(false)` | No | Indexed | Soft-delete flag. |
-| `version` | `integer` | `Int @default(1)` | No | Concurrency | Optimistic concurrency token. |
+| Field                | PostgreSQL Type | Prisma Type                                   | Null | Key / Constraint         | Description                                      |
+| -------------------- | --------------- | --------------------------------------------- | ---: | ------------------------ | ------------------------------------------------ |
+| `id`                 | `text`          | `String @id @default(cuid())`                 |   No | PK                       | Availability record identifier.                  |
+| `trainerId`          | `text`          | `String`                                      |   No | FK → `TrainerProfile.id` | Trainer.                                         |
+| `branchId`           | `text`          | `String`                                      |   No | FK → `Branch.id`         | Branch where availability applies.               |
+| `dayOfWeek`          | enum            | `DayOfWeek`                                   |   No | Enum                     | Recurring weekday.                               |
+| `startTime`          | `time(0)`       | `DateTime @db.Time(0)`                        |   No | Time check               | Local Oman business time.                        |
+| `endTime`            | `time(0)`       | `DateTime @db.Time(0)`                        |   No | Time check               | Local Oman business time.                        |
+| `effectiveStartDate` | `date`          | `DateTime @db.Date`                           |   No | Effective-date check     | First date of recurrence applicability.          |
+| `effectiveEndDate`   | `date`          | `DateTime? @db.Date`                          |  Yes | Effective-date check     | Last inclusive date of recurrence applicability. |
+| `status`             | enum            | `TrainerAvailabilityStatus`                   |   No | Effective-state control  | `Active` or `Inactive`.                          |
+| `createdAt`          | `timestamptz`   | `DateTime @default(now()) @db.Timestamptz(6)` |   No | Audit                    | Creation timestamp.                              |
+| `createdBy`          | `text`          | `String`                                      |   No | FK → `User.id`           | Creator.                                         |
+| `updatedAt`          | `timestamptz`   | `DateTime @updatedAt @db.Timestamptz(6)`      |   No | Audit                    | Last modification timestamp.                     |
+| `updatedBy`          | `text`          | `String`                                      |   No | FK → `User.id`           | Last modifier.                                   |
+| `deletedAt`          | `timestamptz`   | `DateTime? @db.Timestamptz(6)`                |  Yes | Soft-delete consistency  | Deletion timestamp.                              |
+| `isDeleted`          | `boolean`       | `Boolean @default(false)`                     |   No | Indexed                  | Soft-delete flag.                                |
+| `version`            | `integer`       | `Int @default(1)`                             |   No | Concurrency              | Optimistic concurrency token.                    |
 
 ### 4.3.3 Indexes
 
@@ -587,21 +587,21 @@ Represents an effective-dated authorization for a trainer to deliver a Course. T
 
 ### 4.4.2 Field Specification
 
-| Field | PostgreSQL Type | Prisma Type | Null | Key / Constraint | Description |
-|---|---|---|---:|---|---|
-| `id` | `text` | `String @id @default(cuid())` | No | PK | Authorization identifier. |
-| `trainerId` | `text` | `String` | No | FK → `TrainerProfile.id` | Authorized trainer. |
-| `courseId` | `text` | `String` | No | FK → `Course.id` | Authorized course. |
-| `status` | enum | `TrainerCourseAuthorizationStatus` | No | State machine | Authorization lifecycle state. |
-| `effectiveStartDate` | `date` | `DateTime @db.Date` | No | Effective range | Start date. |
-| `effectiveEndDate` | `date` | `DateTime? @db.Date` | Yes | Effective range | Last inclusive date. |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | No | Audit | Creation timestamp. |
-| `createdBy` | `text` | `String` | No | FK → `User.id` | Creator. |
-| `updatedAt` | `timestamptz` | `DateTime @updatedAt @db.Timestamptz(6)` | No | Audit | Last modification timestamp. |
-| `updatedBy` | `text` | `String` | No | FK → `User.id` | Last modifier. |
-| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | Yes | Soft-delete consistency | Deletion timestamp. |
-| `isDeleted` | `boolean` | `Boolean @default(false)` | No | Indexed | Soft-delete flag. |
-| `version` | `integer` | `Int @default(1)` | No | Concurrency | Optimistic concurrency token. |
+| Field                | PostgreSQL Type | Prisma Type                                   | Null | Key / Constraint         | Description                    |
+| -------------------- | --------------- | --------------------------------------------- | ---: | ------------------------ | ------------------------------ |
+| `id`                 | `text`          | `String @id @default(cuid())`                 |   No | PK                       | Authorization identifier.      |
+| `trainerId`          | `text`          | `String`                                      |   No | FK → `TrainerProfile.id` | Authorized trainer.            |
+| `courseId`           | `text`          | `String`                                      |   No | FK → `Course.id`         | Authorized course.             |
+| `status`             | enum            | `TrainerCourseAuthorizationStatus`            |   No | State machine            | Authorization lifecycle state. |
+| `effectiveStartDate` | `date`          | `DateTime @db.Date`                           |   No | Effective range          | Start date.                    |
+| `effectiveEndDate`   | `date`          | `DateTime? @db.Date`                          |  Yes | Effective range          | Last inclusive date.           |
+| `createdAt`          | `timestamptz`   | `DateTime @default(now()) @db.Timestamptz(6)` |   No | Audit                    | Creation timestamp.            |
+| `createdBy`          | `text`          | `String`                                      |   No | FK → `User.id`           | Creator.                       |
+| `updatedAt`          | `timestamptz`   | `DateTime @updatedAt @db.Timestamptz(6)`      |   No | Audit                    | Last modification timestamp.   |
+| `updatedBy`          | `text`          | `String`                                      |   No | FK → `User.id`           | Last modifier.                 |
+| `deletedAt`          | `timestamptz`   | `DateTime? @db.Timestamptz(6)`                |  Yes | Soft-delete consistency  | Deletion timestamp.            |
+| `isDeleted`          | `boolean`       | `Boolean @default(false)`                     |   No | Indexed                  | Soft-delete flag.              |
+| `version`            | `integer`       | `Int @default(1)`                             |   No | Concurrency              | Optimistic concurrency token.  |
 
 ### 4.4.3 Indexes
 
@@ -690,35 +690,35 @@ Trainer-level
 
 ### 4.5.2 Field Specification
 
-| Field | PostgreSQL Type | Prisma Type | Null | Key / Constraint | Description |
-|---|---|---|---:|---|---|
-| `id` | `text` | `String @id @default(cuid())` | No | PK | Rate identifier. |
-| `trainerId` | `text` | `String` | No | FK → `TrainerProfile.id` | Trainer. |
-| `batchId` | `text` | `String?` | Yes | FK → `Batch.id` | Optional batch specificity. |
-| `sessionId` | `text` | `String?` | Yes | FK → `Session.id` | Optional session specificity. |
-| `paymentBasis` | enum | `TrainerPaymentBasis` | No | Enum | `PerHour`, `PerSession`, `PerStudent`, or `Fixed`. |
-| `amount` | `numeric(14,3)` | `Decimal @db.Decimal(14, 3)` | No | `CHECK amount > 0` | Rate amount in configured business currency. |
-| `status` | enum | `TrainerCompensationRateStatus` | No | Effective-state control | `Active` or `Inactive`. |
-| `remarks` | `varchar(1000)` | `String? @db.VarChar(1000)` | Yes | Length constraint | Business explanation or contractual reference note. |
-| `effectiveStartDate` | `date` | `DateTime @db.Date` | No | Effective range | First applicable date. |
-| `effectiveEndDate` | `date` | `DateTime? @db.Date` | Yes | Effective range | Last inclusive applicable date. |
-| `createdAt` | `timestamptz` | `DateTime @default(now()) @db.Timestamptz(6)` | No | Audit | Creation timestamp. |
-| `createdBy` | `text` | `String` | No | FK → `User.id` | Creator. |
-| `updatedAt` | `timestamptz` | `DateTime @updatedAt @db.Timestamptz(6)` | No | Audit | Last modification timestamp. |
-| `updatedBy` | `text` | `String` | No | FK → `User.id` | Last modifier. |
-| `deletedAt` | `timestamptz` | `DateTime? @db.Timestamptz(6)` | Yes | Soft-delete consistency | Deletion timestamp. |
-| `isDeleted` | `boolean` | `Boolean @default(false)` | No | Indexed | Soft-delete flag. |
-| `version` | `integer` | `Int @default(1)` | No | Concurrency | Optimistic concurrency token. |
+| Field                | PostgreSQL Type | Prisma Type                                   | Null | Key / Constraint         | Description                                         |
+| -------------------- | --------------- | --------------------------------------------- | ---: | ------------------------ | --------------------------------------------------- |
+| `id`                 | `text`          | `String @id @default(cuid())`                 |   No | PK                       | Rate identifier.                                    |
+| `trainerId`          | `text`          | `String`                                      |   No | FK → `TrainerProfile.id` | Trainer.                                            |
+| `batchId`            | `text`          | `String?`                                     |  Yes | FK → `Batch.id`          | Optional batch specificity.                         |
+| `sessionId`          | `text`          | `String?`                                     |  Yes | FK → `Session.id`        | Optional session specificity.                       |
+| `paymentBasis`       | enum            | `TrainerPaymentBasis`                         |   No | Enum                     | `PerHour`, `PerSession`, `PerStudent`, or `Fixed`.  |
+| `amount`             | `numeric(14,3)` | `Decimal @db.Decimal(14, 3)`                  |   No | `CHECK amount > 0`       | Rate amount in configured business currency.        |
+| `status`             | enum            | `TrainerCompensationRateStatus`               |   No | Effective-state control  | `Active` or `Inactive`.                             |
+| `remarks`            | `varchar(1000)` | `String? @db.VarChar(1000)`                   |  Yes | Length constraint        | Business explanation or contractual reference note. |
+| `effectiveStartDate` | `date`          | `DateTime @db.Date`                           |   No | Effective range          | First applicable date.                              |
+| `effectiveEndDate`   | `date`          | `DateTime? @db.Date`                          |  Yes | Effective range          | Last inclusive applicable date.                     |
+| `createdAt`          | `timestamptz`   | `DateTime @default(now()) @db.Timestamptz(6)` |   No | Audit                    | Creation timestamp.                                 |
+| `createdBy`          | `text`          | `String`                                      |   No | FK → `User.id`           | Creator.                                            |
+| `updatedAt`          | `timestamptz`   | `DateTime @updatedAt @db.Timestamptz(6)`      |   No | Audit                    | Last modification timestamp.                        |
+| `updatedBy`          | `text`          | `String`                                      |   No | FK → `User.id`           | Last modifier.                                      |
+| `deletedAt`          | `timestamptz`   | `DateTime? @db.Timestamptz(6)`                |  Yes | Soft-delete consistency  | Deletion timestamp.                                 |
+| `isDeleted`          | `boolean`       | `Boolean @default(false)`                     |   No | Indexed                  | Soft-delete flag.                                   |
+| `version`            | `integer`       | `Int @default(1)`                             |   No | Concurrency              | Optimistic concurrency token.                       |
 
 ### 4.5.3 Specificity Constraint
 
 Allowed record shapes:
 
-| Specificity | `batchId` | `sessionId` | Meaning |
-|---|---:|---:|---|
-| Trainer-level | `NULL` | `NULL` | Default trainer rate. |
-| Batch-specific | Required | `NULL` | Override for one Batch. |
-| Session-specific | Required | Required | Override for one Session in its Batch. |
+| Specificity      | `batchId` | `sessionId` | Meaning                                |
+| ---------------- | --------: | ----------: | -------------------------------------- |
+| Trainer-level    |    `NULL` |      `NULL` | Default trainer rate.                  |
+| Batch-specific   |  Required |      `NULL` | Override for one Batch.                |
+| Session-specific |  Required |    Required | Override for one Session in its Batch. |
 
 The following shape is invalid:
 
@@ -823,25 +823,25 @@ model TrainerCompensationRate {
 
 ## 5.1 Context-Owned Relationships
 
-| Parent | Child | Cardinality | Child FK | On Update | On Delete | Rule |
-|---|---|---|---|---|---|---|
-| `TrainerProfile` | `TrainerQualification` | 1:N | `trainerId` | CASCADE | RESTRICT | Children are soft-deleted explicitly; no physical cascade. |
-| `TrainerProfile` | `TrainerAvailability` | 1:N | `trainerId` | CASCADE | RESTRICT | Availability history is preserved. |
-| `TrainerProfile` | `TrainerCourseAuthorization` | 1:N | `trainerId` | CASCADE | RESTRICT | Authorization history is preserved. |
-| `TrainerProfile` | `TrainerCompensationRate` | 1:N | `trainerId` | CASCADE | RESTRICT | Compensation history is preserved and sensitive. |
+| Parent           | Child                        | Cardinality | Child FK    | On Update | On Delete | Rule                                                       |
+| ---------------- | ---------------------------- | ----------- | ----------- | --------- | --------- | ---------------------------------------------------------- |
+| `TrainerProfile` | `TrainerQualification`       | 1:N         | `trainerId` | CASCADE   | RESTRICT  | Children are soft-deleted explicitly; no physical cascade. |
+| `TrainerProfile` | `TrainerAvailability`        | 1:N         | `trainerId` | CASCADE   | RESTRICT  | Availability history is preserved.                         |
+| `TrainerProfile` | `TrainerCourseAuthorization` | 1:N         | `trainerId` | CASCADE   | RESTRICT  | Authorization history is preserved.                        |
+| `TrainerProfile` | `TrainerCompensationRate`    | 1:N         | `trainerId` | CASCADE   | RESTRICT  | Compensation history is preserved and sensitive.           |
 
 ## 5.2 External Reference Relationships
 
-| External Parent | Owned Child | Cardinality | FK | On Delete | Ownership Note |
-|---|---|---|---|---|---|
-| `Person` | `TrainerProfile` | 1:0..1 active profile | `personId` | RESTRICT | Person owns canonical identity. Partial unique index enforces one non-deleted trainer profile per Person. |
-| `Branch` | `TrainerProfile` | 1:N | `branchId` | RESTRICT | Organization owns Branch. |
-| `Branch` | `TrainerAvailability` | 1:N | `branchId` | RESTRICT | Availability is branch-scoped. |
-| `Document` | `TrainerQualification` | 1:0..N references | `documentId` | RESTRICT | Document Management owns verification and file lifecycle. |
-| `Course` | `TrainerCourseAuthorization` | 1:N | `courseId` | RESTRICT | Course Catalog owns Course. |
-| `Batch` | `TrainerCompensationRate` | 1:0..N | `batchId` | RESTRICT | Training Delivery owns Batch. |
-| `Session` | `TrainerCompensationRate` | 1:0..N | `sessionId` | RESTRICT | Training Delivery owns Session. |
-| `User` | all owned models | 1:N audit references | `createdBy`, `updatedBy` | RESTRICT | IAM owns User; historical attribution must remain intact. |
+| External Parent | Owned Child                  | Cardinality           | FK                       | On Delete | Ownership Note                                                                                            |
+| --------------- | ---------------------------- | --------------------- | ------------------------ | --------- | --------------------------------------------------------------------------------------------------------- |
+| `Person`        | `TrainerProfile`             | 1:0..1 active profile | `personId`               | RESTRICT  | Person owns canonical identity. Partial unique index enforces one non-deleted trainer profile per Person. |
+| `Branch`        | `TrainerProfile`             | 1:N                   | `branchId`               | RESTRICT  | Organization owns Branch.                                                                                 |
+| `Branch`        | `TrainerAvailability`        | 1:N                   | `branchId`               | RESTRICT  | Availability is branch-scoped.                                                                            |
+| `Document`      | `TrainerQualification`       | 1:0..N references     | `documentId`             | RESTRICT  | Document Management owns verification and file lifecycle.                                                 |
+| `Course`        | `TrainerCourseAuthorization` | 1:N                   | `courseId`               | RESTRICT  | Course Catalog owns Course.                                                                               |
+| `Batch`         | `TrainerCompensationRate`    | 1:0..N                | `batchId`                | RESTRICT  | Training Delivery owns Batch.                                                                             |
+| `Session`       | `TrainerCompensationRate`    | 1:0..N                | `sessionId`              | RESTRICT  | Training Delivery owns Session.                                                                           |
+| `User`          | all owned models             | 1:N audit references  | `createdBy`, `updatedBy` | RESTRICT  | IAM owns User; historical attribution must remain intact.                                                 |
 
 ## 5.3 Conceptual N:M Relationships
 
@@ -878,13 +878,13 @@ Trainer-to-Batch and Trainer-to-Session assignments are **not Module 09 relation
 
 No owned table uses physical `ON DELETE CASCADE` for business records.
 
-| Operation | Policy |
-|---|---|
-| Parent ID key update | `ON UPDATE CASCADE` where identifier update is technically supported; application should treat IDs as immutable. |
-| Parent physical deletion | `ON DELETE RESTRICT`. |
-| Trainer soft delete | Explicit domain service operation with child/history handling and assignment-reference checks. |
-| Child soft delete | Explicit row update; parent remains unchanged. |
-| Audit deletion | Prohibited through Module 09. |
+| Operation                | Policy                                                                                                           |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| Parent ID key update     | `ON UPDATE CASCADE` where identifier update is technically supported; application should treat IDs as immutable. |
+| Parent physical deletion | `ON DELETE RESTRICT`.                                                                                            |
+| Trainer soft delete      | Explicit domain service operation with child/history handling and assignment-reference checks.                   |
+| Child soft delete        | Explicit row update; parent remains unchanged.                                                                   |
+| Audit deletion           | Prohibited through Module 09.                                                                                    |
 
 ---
 
@@ -951,15 +951,15 @@ Single transaction:
 
 The CRUD matrix uses these symbols:
 
-| Symbol | Meaning |
-|---|---|
-| `C` | Create a new business record. |
-| `R` | Read normal non-deleted records. |
-| `U` | Update mutable fields or controlled status. |
-| `D` | Business delete implemented only as soft delete. |
-| `A` | View audit history or audit evidence subject to Audit & Compliance authorization. |
-| `—` | No direct access. |
-| `RO` | Read-only reference consumption; no mutation. |
+| Symbol | Meaning                                                                           |
+| ------ | --------------------------------------------------------------------------------- |
+| `C`    | Create a new business record.                                                     |
+| `R`    | Read normal non-deleted records.                                                  |
+| `U`    | Update mutable fields or controlled status.                                       |
+| `D`    | Business delete implemented only as soft delete.                                  |
+| `A`    | View audit history or audit evidence subject to Audit & Compliance authorization. |
+| `—`    | No direct access.                                                                 |
+| `RO`   | Read-only reference consumption; no mutation.                                     |
 
 CRUD permissions are cumulative only when separately granted. Possessing `R` does not imply `C`, `U`, `D`, `A`, compensation visibility, report access, or consolidated branch visibility.
 
@@ -969,21 +969,21 @@ CRUD permissions are cumulative only when separately granted. Possessing `R` doe
 
 ## 8.1 Core Human Roles
 
-| Human Actor | TrainerProfile | TrainerQualification | TrainerAvailability | TrainerCourseAuthorization | TrainerCompensationRate | Branch-Scoping Requirement |
-|---|---|---|---|---|---|---|
-| **Super Admin** | C/R/U/D/A | C/R/U/D/A | C/R/U/D/A | C/R/U/D/A | C/R/U/D/A | May access configured enterprise-wide scope only through explicit IAM permissions; no branch bypass based solely on role name. |
-| **Institute Administrator** | C/R/U/D/A | C/R/U/D/A | C/R/U/D/A | C/R/U/D/A | R/U/A only when compensation permissions are explicitly granted | Server derives visible branches from IAM; consolidated access requires explicit consolidated permission and branch visibility. |
-| **Branch Admin** | C/R/U/D | C/R/U/D | C/R/U/D | C/R/U/D | R/U only when explicitly granted | Exact assigned branch plus approved child-branch scope; cannot access parent or sibling branches without assignment. |
-| **Branch Manager** | R/U/A | R/U/A | R/U/A | R/U/A | R/A only with explicit compensation read | Read/write limited to managed visible branches; consolidated reporting does not imply write access. |
-| **Academic Coordinator** | R/U | C/R/U | C/R/U | C/R/U | — | Trainer home branch or availability branch must fall within active scope. Cross-branch authorization is allowed only if the trainer is visible and the course reference is valid. |
-| **Training Coordinator** | R | R | C/R/U | R | — | Branch-scoped trainer visibility; availability writes limited to visible operational branches. Batch/Session assignments remain outside this context. |
-| **Compliance Officer** | R/A | R/A | R/A | R/A | A only; amount visibility requires separate compensation read permission | Audit scope follows explicit compliance branch scope; no automatic enterprise-wide visibility. |
-| **Accountant** | R | — | — | — | R only with `trainer.compensation.read` | Reads trainer identity reference and compensation records only for permitted branches; cannot mutate trainer profile or rate records without manage permission. |
-| **Counselor** | R limited directory | — | — | R limited eligibility reference | — | Current branch only unless explicitly assigned more branches; no sensitive trainer detail access. |
-| **Reporting Analyst** | R | R | R | R | R only if report definition and compensation read permission both allow it | Reporting query scope is server-derived; consolidated access requires explicit permission. |
-| **Trainer** | R own profile projection | R own | R own | R own | R own only when business policy and explicit self-compensation permission permit | Must be restricted to own TrainerProfile through Person/User linkage; branch scope alone must not expose other trainers. |
-| **Student** | R public/assigned trainer projection only | — | — | — | — | May only read trainer display data exposed through the Student-facing projection for their own enrollment/batch context; no direct table CRUD. |
-| **Corporate Coordinator** | R assigned-program trainer projection only | — | — | — | — | Limited to trainers visible through corporate program/batch context; no direct table CRUD. |
+| Human Actor                 | TrainerProfile                             | TrainerQualification | TrainerAvailability | TrainerCourseAuthorization      | TrainerCompensationRate                                                          | Branch-Scoping Requirement                                                                                                                                                        |
+| --------------------------- | ------------------------------------------ | -------------------- | ------------------- | ------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Super Admin**             | C/R/U/D/A                                  | C/R/U/D/A            | C/R/U/D/A           | C/R/U/D/A                       | C/R/U/D/A                                                                        | May access configured enterprise-wide scope only through explicit IAM permissions; no branch bypass based solely on role name.                                                    |
+| **Institute Administrator** | C/R/U/D/A                                  | C/R/U/D/A            | C/R/U/D/A           | C/R/U/D/A                       | R/U/A only when compensation permissions are explicitly granted                  | Server derives visible branches from IAM; consolidated access requires explicit consolidated permission and branch visibility.                                                    |
+| **Branch Admin**            | C/R/U/D                                    | C/R/U/D              | C/R/U/D             | C/R/U/D                         | R/U only when explicitly granted                                                 | Exact assigned branch plus approved child-branch scope; cannot access parent or sibling branches without assignment.                                                              |
+| **Branch Manager**          | R/U/A                                      | R/U/A                | R/U/A               | R/U/A                           | R/A only with explicit compensation read                                         | Read/write limited to managed visible branches; consolidated reporting does not imply write access.                                                                               |
+| **Academic Coordinator**    | R/U                                        | C/R/U                | C/R/U               | C/R/U                           | —                                                                                | Trainer home branch or availability branch must fall within active scope. Cross-branch authorization is allowed only if the trainer is visible and the course reference is valid. |
+| **Training Coordinator**    | R                                          | R                    | C/R/U               | R                               | —                                                                                | Branch-scoped trainer visibility; availability writes limited to visible operational branches. Batch/Session assignments remain outside this context.                             |
+| **Compliance Officer**      | R/A                                        | R/A                  | R/A                 | R/A                             | A only; amount visibility requires separate compensation read permission         | Audit scope follows explicit compliance branch scope; no automatic enterprise-wide visibility.                                                                                    |
+| **Accountant**              | R                                          | —                    | —                   | —                               | R only with `trainer.compensation.read`                                          | Reads trainer identity reference and compensation records only for permitted branches; cannot mutate trainer profile or rate records without manage permission.                   |
+| **Counselor**               | R limited directory                        | —                    | —                   | R limited eligibility reference | —                                                                                | Current branch only unless explicitly assigned more branches; no sensitive trainer detail access.                                                                                 |
+| **Reporting Analyst**       | R                                          | R                    | R                   | R                               | R only if report definition and compensation read permission both allow it       | Reporting query scope is server-derived; consolidated access requires explicit permission.                                                                                        |
+| **Trainer**                 | R own profile projection                   | R own                | R own               | R own                           | R own only when business policy and explicit self-compensation permission permit | Must be restricted to own TrainerProfile through Person/User linkage; branch scope alone must not expose other trainers.                                                          |
+| **Student**                 | R public/assigned trainer projection only  | —                    | —                   | —                               | —                                                                                | May only read trainer display data exposed through the Student-facing projection for their own enrollment/batch context; no direct table CRUD.                                    |
+| **Corporate Coordinator**   | R assigned-program trainer projection only | —                    | —                   | —                               | —                                                                                | Limited to trainers visible through corporate program/batch context; no direct table CRUD.                                                                                        |
 
 ### 8.1.1 Human Actor Notes
 
@@ -998,22 +998,22 @@ CRUD permissions are cumulative only when separately granted. Possessing `R` doe
 
 # 9. System Actor CRUD Matrix
 
-| System Actor / Context | TrainerProfile | TrainerQualification | TrainerAvailability | TrainerCourseAuthorization | TrainerCompensationRate | Branch / Ownership Rule |
-|---|---|---|---|---|---|---|
-| **IAM / Authorization Middleware** | RO scope metadata | — | — | — | — | Supplies authenticated user, permissions, branch assignments, child-branch visibility, and consolidated-reporting claims. Does not mutate trainer data. |
-| **Party / Person Context** | RO linkage validation | — | — | — | — | Owns Person; Module 09 references Person. No reverse trainer data mutation. |
-| **Organization Context** | RO Branch validation | — | RO Branch validation | — | — | Owns Branch and hierarchy; supplies branch visibility data. |
-| **Course Catalog Context** | — | — | — | RO Course validation | — | Owns Course; Module 09 stores course reference only. |
-| **Training Delivery Context** | R eligibility projection | R eligibility-related projection where authorized | R | R | R resolved rate only through internal contract where authorized | Must pass actor/system branch context; cannot mutate Module 09 rows through repository access. Owns BatchTrainer and Session assignment. |
-| **Scheduling Context** | R trainer operational state | — | R | R eligibility contribution | — | Reads availability and authorization eligibility; owns timetable conflict checks. |
-| **Exam & Completion Context** | R trainer reference | — | — | — | — | Reads trainer identity/reference for recommendation attribution; no Module 09 mutation. |
-| **Document Management Context** | — | R reference linkage | — | — | — | Owns Document lifecycle; qualification stores `documentId`. Verification result is consumed, not duplicated. |
-| **Communication Context** | R recipient/reference projection | — | — | — | — | Consumes post-commit events and resolves recipient data through approved projection; does not mutate trainer data. |
-| **Reporting Context** | R | R | R | R | R only through protected analytical contract | Branch scope and report permissions must be applied; sensitive amount fields remain protected. |
-| **Audit & Compliance Context** | A ingestion/read | A ingestion/read | A ingestion/read | A ingestion/read | A ingestion/read | Audit context receives immutable change evidence; Module 09 cannot update or delete AuditLog history. |
-| **Configuration / Master Data Context** | RO numbering/lookups | — | — | — | — | Supplies numbering and configured reference values. No trainer mutation. |
-| **Operations / Health Monitoring** | R aggregate counts only | R aggregate counts only | R aggregate counts only | R aggregate counts only | R aggregate counts only; no amounts | Health checks use non-sensitive aggregate probes and must not expose PII or compensation values. |
-| **Approved Data Migration Job** | C/R/U under migration policy | C/R/U | C/R/U | C/R/U | C/R/U | Must execute with explicit migration identity, branch mapping, idempotency keys, audit evidence, validation, and no hard deletes. |
+| System Actor / Context                  | TrainerProfile                   | TrainerQualification                              | TrainerAvailability     | TrainerCourseAuthorization | TrainerCompensationRate                                         | Branch / Ownership Rule                                                                                                                                 |
+| --------------------------------------- | -------------------------------- | ------------------------------------------------- | ----------------------- | -------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **IAM / Authorization Middleware**      | RO scope metadata                | —                                                 | —                       | —                          | —                                                               | Supplies authenticated user, permissions, branch assignments, child-branch visibility, and consolidated-reporting claims. Does not mutate trainer data. |
+| **Party / Person Context**              | RO linkage validation            | —                                                 | —                       | —                          | —                                                               | Owns Person; Module 09 references Person. No reverse trainer data mutation.                                                                             |
+| **Organization Context**                | RO Branch validation             | —                                                 | RO Branch validation    | —                          | —                                                               | Owns Branch and hierarchy; supplies branch visibility data.                                                                                             |
+| **Course Catalog Context**              | —                                | —                                                 | —                       | RO Course validation       | —                                                               | Owns Course; Module 09 stores course reference only.                                                                                                    |
+| **Training Delivery Context**           | R eligibility projection         | R eligibility-related projection where authorized | R                       | R                          | R resolved rate only through internal contract where authorized | Must pass actor/system branch context; cannot mutate Module 09 rows through repository access. Owns BatchTrainer and Session assignment.                |
+| **Scheduling Context**                  | R trainer operational state      | —                                                 | R                       | R eligibility contribution | —                                                               | Reads availability and authorization eligibility; owns timetable conflict checks.                                                                       |
+| **Exam & Completion Context**           | R trainer reference              | —                                                 | —                       | —                          | —                                                               | Reads trainer identity/reference for recommendation attribution; no Module 09 mutation.                                                                 |
+| **Document Management Context**         | —                                | R reference linkage                               | —                       | —                          | —                                                               | Owns Document lifecycle; qualification stores `documentId`. Verification result is consumed, not duplicated.                                            |
+| **Communication Context**               | R recipient/reference projection | —                                                 | —                       | —                          | —                                                               | Consumes post-commit events and resolves recipient data through approved projection; does not mutate trainer data.                                      |
+| **Reporting Context**                   | R                                | R                                                 | R                       | R                          | R only through protected analytical contract                    | Branch scope and report permissions must be applied; sensitive amount fields remain protected.                                                          |
+| **Audit & Compliance Context**          | A ingestion/read                 | A ingestion/read                                  | A ingestion/read        | A ingestion/read           | A ingestion/read                                                | Audit context receives immutable change evidence; Module 09 cannot update or delete AuditLog history.                                                   |
+| **Configuration / Master Data Context** | RO numbering/lookups             | —                                                 | —                       | —                          | —                                                               | Supplies numbering and configured reference values. No trainer mutation.                                                                                |
+| **Operations / Health Monitoring**      | R aggregate counts only          | R aggregate counts only                           | R aggregate counts only | R aggregate counts only    | R aggregate counts only; no amounts                             | Health checks use non-sensitive aggregate probes and must not expose PII or compensation values.                                                        |
+| **Approved Data Migration Job**         | C/R/U under migration policy     | C/R/U                                             | C/R/U                   | C/R/U                      | C/R/U                                                           | Must execute with explicit migration identity, branch mapping, idempotency keys, audit evidence, validation, and no hard deletes.                       |
 
 System actors must use published application contracts or approved repository boundaries. Direct cross-context table writes are prohibited.
 
@@ -1021,13 +1021,13 @@ System actors must use published application contracts or approved repository bo
 
 # 10. Fine-Grained CRUD Permission Mapping
 
-| Entity | Create Permission | Read Permission | Update Permission | Delete Permission | Audit Permission |
-|---|---|---|---|---|---|
-| `TrainerProfile` | `trainer.create` | `trainer.read` | `trainer.update` | `trainer.status.manage` | `trainer.audit.read` |
-| `TrainerQualification` | `trainer.qualification.manage` | `trainer.qualification.read` | `trainer.qualification.manage` | `trainer.qualification.manage` | `trainer.audit.read` |
-| `TrainerAvailability` | `trainer.availability.manage` | `trainer.availability.read` | `trainer.availability.manage` | `trainer.availability.manage` | `trainer.audit.read` |
-| `TrainerCourseAuthorization` | `trainer.authorization.manage` | `trainer.authorization.read` | `trainer.authorization.manage` | `trainer.authorization.manage` | `trainer.audit.read` |
-| `TrainerCompensationRate` | `trainer.compensation.manage` | `trainer.compensation.read` | `trainer.compensation.manage` | `trainer.compensation.manage` | `trainer.audit.read` plus compensation read where audit payload reveals amounts |
+| Entity                       | Create Permission              | Read Permission              | Update Permission              | Delete Permission              | Audit Permission                                                                |
+| ---------------------------- | ------------------------------ | ---------------------------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------- |
+| `TrainerProfile`             | `trainer.create`               | `trainer.read`               | `trainer.update`               | `trainer.status.manage`        | `trainer.audit.read`                                                            |
+| `TrainerQualification`       | `trainer.qualification.manage` | `trainer.qualification.read` | `trainer.qualification.manage` | `trainer.qualification.manage` | `trainer.audit.read`                                                            |
+| `TrainerAvailability`        | `trainer.availability.manage`  | `trainer.availability.read`  | `trainer.availability.manage`  | `trainer.availability.manage`  | `trainer.audit.read`                                                            |
+| `TrainerCourseAuthorization` | `trainer.authorization.manage` | `trainer.authorization.read` | `trainer.authorization.manage` | `trainer.authorization.manage` | `trainer.audit.read`                                                            |
+| `TrainerCompensationRate`    | `trainer.compensation.manage`  | `trainer.compensation.read`  | `trainer.compensation.manage`  | `trainer.compensation.manage`  | `trainer.audit.read` plus compensation read where audit payload reveals amounts |
 
 Trainer status changes additionally require:
 
@@ -1287,16 +1287,16 @@ Changing `TrainerProfile.branchId` is a controlled update, not a raw FK mutation
 
 # 15. Audit Matrix by Entity and Operation
 
-| Entity | Operation | Audit Required | Minimum Change Evidence |
-|---|---|---:|---|
-| TrainerProfile | Create | Yes | personId, branchId, trainerCode, trainerType, status, effective range. |
-| TrainerProfile | Update | Yes | old/new values for trainer-owned fields. |
-| TrainerProfile | Status change | Yes | old status, new status, reason, impact-check outcome. |
-| TrainerProfile | Soft delete | Yes | reason, blocking-reference check result, deletedAt. |
-| TrainerQualification | Create/Update/Delete | Yes | qualification metadata changes and document reference changes. |
-| TrainerAvailability | Create/Update/Delete | Yes | weekday, time range, branch, effective range, status. |
-| TrainerCourseAuthorization | Create/Update/Transition/Delete | Yes | courseId, old/new status, effective range, reason when required. |
-| TrainerCompensationRate | Create/Update/Deactivate/Delete | Yes, sensitive | payment basis, specificity references, old/new amount, effective range, actor; audit read must itself be restricted. |
+| Entity                     | Operation                       | Audit Required | Minimum Change Evidence                                                                                              |
+| -------------------------- | ------------------------------- | -------------: | -------------------------------------------------------------------------------------------------------------------- |
+| TrainerProfile             | Create                          |            Yes | personId, branchId, trainerCode, trainerType, status, effective range.                                               |
+| TrainerProfile             | Update                          |            Yes | old/new values for trainer-owned fields.                                                                             |
+| TrainerProfile             | Status change                   |            Yes | old status, new status, reason, impact-check outcome.                                                                |
+| TrainerProfile             | Soft delete                     |            Yes | reason, blocking-reference check result, deletedAt.                                                                  |
+| TrainerQualification       | Create/Update/Delete            |            Yes | qualification metadata changes and document reference changes.                                                       |
+| TrainerAvailability        | Create/Update/Delete            |            Yes | weekday, time range, branch, effective range, status.                                                                |
+| TrainerCourseAuthorization | Create/Update/Transition/Delete |            Yes | courseId, old/new status, effective range, reason when required.                                                     |
+| TrainerCompensationRate    | Create/Update/Deactivate/Delete | Yes, sensitive | payment basis, specificity references, old/new amount, effective range, actor; audit read must itself be restricted. |
 
 Audit records are owned by Audit & Compliance. Module 09 must not directly permit users to modify or delete audit evidence.
 
@@ -1315,13 +1315,13 @@ Audit records are owned by Audit & Compliance. Module 09 must not directly permi
 
 # 17. Entity-to-Requirement Traceability
 
-| Entity | Primary Functional Requirements |
-|---|---|
-| `TrainerProfile` | FR-FTM-001, FR-FTM-002, FR-FTM-003, FR-FTM-004, FR-FTM-005, FR-FTM-010, FR-FTM-013, FR-FTM-015, FR-FTM-016, FR-FTM-017, FR-FTM-018, FR-FTM-019, FR-FTM-020 |
-| `TrainerQualification` | FR-FTM-006, FR-FTM-010, FR-FTM-016, FR-FTM-018, FR-FTM-019, FR-FTM-020 |
-| `TrainerAvailability` | FR-FTM-007, FR-FTM-008, FR-FTM-010, FR-FTM-013, FR-FTM-014, FR-FTM-016, FR-FTM-018, FR-FTM-019, FR-FTM-020 |
-| `TrainerCourseAuthorization` | FR-FTM-009, FR-FTM-010, FR-FTM-013, FR-FTM-016, FR-FTM-018, FR-FTM-019, FR-FTM-020 |
-| `TrainerCompensationRate` | FR-FTM-011, FR-FTM-012, FR-FTM-016, FR-FTM-017, FR-FTM-018, FR-FTM-019, FR-FTM-020 |
+| Entity                       | Primary Functional Requirements                                                                                                                            |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TrainerProfile`             | FR-FTM-001, FR-FTM-002, FR-FTM-003, FR-FTM-004, FR-FTM-005, FR-FTM-010, FR-FTM-013, FR-FTM-015, FR-FTM-016, FR-FTM-017, FR-FTM-018, FR-FTM-019, FR-FTM-020 |
+| `TrainerQualification`       | FR-FTM-006, FR-FTM-010, FR-FTM-016, FR-FTM-018, FR-FTM-019, FR-FTM-020                                                                                     |
+| `TrainerAvailability`        | FR-FTM-007, FR-FTM-008, FR-FTM-010, FR-FTM-013, FR-FTM-014, FR-FTM-016, FR-FTM-018, FR-FTM-019, FR-FTM-020                                                 |
+| `TrainerCourseAuthorization` | FR-FTM-009, FR-FTM-010, FR-FTM-013, FR-FTM-016, FR-FTM-018, FR-FTM-019, FR-FTM-020                                                                         |
+| `TrainerCompensationRate`    | FR-FTM-011, FR-FTM-012, FR-FTM-016, FR-FTM-017, FR-FTM-018, FR-FTM-019, FR-FTM-020                                                                         |
 
 ---
 

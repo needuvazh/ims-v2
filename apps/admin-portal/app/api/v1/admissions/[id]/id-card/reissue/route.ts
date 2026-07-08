@@ -25,12 +25,20 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
-function getNextCardNumber(studentNumber: string, currentCardNumber: string | null): string {
+function getNextCardNumber(
+  studentNumber: string,
+  currentCardNumber: string | null,
+): string {
   if (!currentCardNumber || currentCardNumber === studentNumber) {
     return `${studentNumber}-R1`;
   }
@@ -42,91 +50,113 @@ function getNextCardNumber(studentNumber: string, currentCardNumber: string | nu
   return `${currentCardNumber}-R1`;
 }
 
-export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: admissionId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'idcard.reissue', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'idcard.reissue', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { prisma, branchScopeResolver } = await import('../../../../../../../lib/runtime');
+        try {
+          const { prisma, branchScopeResolver } =
+            await import('../../../../../../../lib/runtime');
 
-      // 1. Fetch admission with student profile
-      const admission = await prisma.admission.findUnique({
-        where: { id: admissionId },
-        include: {
-          studentProfile: true,
-        },
-      });
+          // 1. Fetch admission with student profile
+          const admission = await prisma.admission.findUnique({
+            where: { id: admissionId },
+            include: {
+              studentProfile: true,
+            },
+          });
 
-      if (!admission || admission.isDeleted) {
-        throw new Error('ERR_ADMISSION_NOT_FOUND');
-      }
+          if (!admission || admission.isDeleted) {
+            throw new Error('ERR_ADMISSION_NOT_FOUND');
+          }
 
-      // 2. Verify branch permission scope
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(admission.branchId as Uuid)) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          // 2. Verify branch permission scope
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(admission.branchId as Uuid)) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      if (admission.admissionStatus !== 'Approved') {
-        throw new Error('ERR_ADMISSION_NOT_APPROVED');
-      }
+          if (admission.admissionStatus !== 'Approved') {
+            throw new Error('ERR_ADMISSION_NOT_APPROVED');
+          }
 
-      const profile = admission.studentProfile;
-      const currentCardNumber = profile.idCardNumber;
-      const nextCardNumber = getNextCardNumber(profile.studentNumber, currentCardNumber);
+          const profile = admission.studentProfile;
+          const currentCardNumber = profile.idCardNumber;
+          const nextCardNumber = getNextCardNumber(
+            profile.studentNumber,
+            currentCardNumber,
+          );
 
-      // 3. Update profile and write audit log in transaction
-      await prisma.$transaction(async (tx) => {
-        await tx.studentProfile.update({
-          where: { id: profile.id },
-          data: {
-            idCardIssued: true,
-            idCardNumber: nextCardNumber,
-            updatedBy: session.userId,
-            updatedAt: new Date(),
-          },
-        });
+          // 3. Update profile and write audit log in transaction
+          await prisma.$transaction(async (tx) => {
+            await tx.studentProfile.update({
+              where: { id: profile.id },
+              data: {
+                idCardIssued: true,
+                idCardNumber: nextCardNumber,
+                updatedBy: session.userId,
+                updatedAt: new Date(),
+              },
+            });
 
-        await tx.auditLog.create({
-          data: {
-            module: 'AdmissionsEnrollment',
-            action: 'IDCardReissued',
-            performedBy: session.userId,
-            performedAt: new Date(),
-            entityType: 'StudentProfile',
+            await tx.auditLog.create({
+              data: {
+                module: 'AdmissionsEnrollment',
+                action: 'IDCardReissued',
+                performedBy: session.userId,
+                performedAt: new Date(),
+                entityType: 'StudentProfile',
+                entityId: profile.id,
+                branchId: admission.branchId,
+                oldValue: {
+                  idCardNumber: currentCardNumber || profile.studentNumber,
+                  idCardIssued: profile.idCardIssued,
+                },
+                newValue: { idCardNumber: nextCardNumber, idCardIssued: true },
+              },
+            });
+          });
+
+          logger.info('api.admissions.idcard.reissue.succeeded', {
+            status: 'success',
             entityId: profile.id,
-            branchId: admission.branchId,
-            oldValue: { idCardNumber: currentCardNumber || profile.studentNumber, idCardIssued: profile.idCardIssued },
-            newValue: { idCardNumber: nextCardNumber, idCardIssued: true },
-          },
-        });
-      });
+            entityType: 'StudentProfile',
+            action: 'IDCardReissued',
+          });
 
-      logger.info('api.admissions.idcard.reissue.succeeded', {
-        status: 'success',
-        entityId: profile.id,
-        entityType: 'StudentProfile',
-        action: 'IDCardReissued',
-      });
+          const response = NextResponse.json(
+            {
+              success: true,
+              idCardNumber: nextCardNumber,
+            },
+            { status: 200 },
+          );
 
-      const response = NextResponse.json({
-        success: true,
-        idCardNumber: nextCardNumber,
-      }, { status: 200 });
-
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/admissions/[id]/id-card/reissue',
-        method: request.method,
-        status: 'success',
-      });
-      return response;
-    } catch (error) {
-      logger.error('api.admissions.idcard.reissue.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/admissions/[id]/id-card/reissue' });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/admissions/[id]/id-card/reissue',
+            method: request.method,
+            status: 'success',
+          });
+          return response;
+        } catch (error) {
+          logger.error('api.admissions.idcard.reissue.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return errorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/admissions/[id]/id-card/reissue' },
+  );
 }

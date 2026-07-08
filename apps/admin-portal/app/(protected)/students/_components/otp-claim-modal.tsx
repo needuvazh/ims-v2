@@ -44,7 +44,8 @@ export function OtpClaimModal({
         body: JSON.stringify({ existingPersonId: personId, channel }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.messageEnglish || 'Failed to send OTP.');
+      if (!res.ok)
+        throw new Error(data.messageEnglish || 'Failed to send OTP.');
       toast.success(`OTP sent via ${channel}. It expires in 5 minutes.`);
       setStep('enter');
     } catch (err: any) {
@@ -72,7 +73,8 @@ export function OtpClaimModal({
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.messageEnglish || 'OTP verification failed.');
+      if (!res.ok)
+        throw new Error(data.messageEnglish || 'OTP verification failed.');
       toast.success('Profile successfully claimed for this branch!');
       onClose();
       router.push(`/admissions/${data.data.admissionId}`);
@@ -92,15 +94,20 @@ export function OtpClaimModal({
             <KeyRound className="h-5 w-5 text-amber-600" />
           </div>
           <div>
-            <h2 className="text-base font-semibold text-slate-800">Claim Existing Profile</h2>
-            <p className="text-xs text-slate-500">Verify identity to link this student to your branch</p>
+            <h2 className="text-base font-semibold text-slate-800">
+              Claim Existing Profile
+            </h2>
+            <p className="text-xs text-slate-500">
+              Verify identity to link this student to your branch
+            </p>
           </div>
         </div>
 
         {step === 'choose' && (
           <div className="space-y-4">
             <p className="text-sm text-slate-600">
-              An existing profile was found. Send a one-time code to the student to confirm their identity.
+              An existing profile was found. Send a one-time code to the student
+              to confirm their identity.
             </p>
             <div className="space-y-2">
               <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -155,7 +162,9 @@ export function OtpClaimModal({
                 disabled={loading}
                 className="flex-1 h-10 rounded-lg bg-[color:var(--ims-brass)] text-white text-sm font-medium hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+                {loading ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : null}
                 {loading ? 'Sending…' : 'Send OTP'}
               </button>
             </div>
@@ -190,7 +199,10 @@ export function OtpClaimModal({
               <button
                 id="otp-back-btn"
                 type="button"
-                onClick={() => { setStep('choose'); setOtpCode(''); }}
+                onClick={() => {
+                  setStep('choose');
+                  setOtpCode('');
+                }}
                 className="flex-1 h-10 rounded-lg border border-slate-200 text-slate-600 text-sm hover:bg-slate-50"
               >
                 Back
@@ -202,7 +214,9 @@ export function OtpClaimModal({
                 disabled={loading || otpCode.length !== 6}
                 className="flex-1 h-10 rounded-lg bg-green-600 text-white text-sm font-medium hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+                {loading ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : null}
                 {loading ? 'Verifying…' : 'Verify & Claim'}
               </button>
             </div>

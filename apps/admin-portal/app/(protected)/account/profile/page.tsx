@@ -1,4 +1,13 @@
-import { Breadcrumbs, Card, CardContent, CardDescription, CardHeader, CardTitle, PageHeader, AdminDetailPageLayout } from '@ims/shared-ui';
+import {
+  Breadcrumbs,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  PageHeader,
+  AdminDetailPageLayout,
+} from '@ims/shared-ui';
 import { UserCircle2, ShieldCheck } from 'lucide-react';
 import { getSession } from '../../../lib/auth-guard';
 import { userService } from '../../../lib/runtime';
@@ -35,16 +44,26 @@ export default async function ProfilePage() {
               <UserCircle2 className="h-6 w-6" />
             </div>
             <CardTitle>Account snapshot</CardTitle>
-            <CardDescription>These details identify your signed-in account across the portal.</CardDescription>
+            <CardDescription>
+              These details identify your signed-in account across the portal.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-[color:var(--ims-muted)]">
             <div className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">Current email</p>
-              <p className="mt-1 font-medium text-[color:var(--ims-ink)]">{user.email}</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
+                Current email
+              </p>
+              <p className="mt-1 font-medium text-[color:var(--ims-ink)]">
+                {user.email}
+              </p>
             </div>
             <div className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">Security</p>
-              <p className="mt-1">Use Change Password when you need to update login credentials.</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
+                Security
+              </p>
+              <p className="mt-1">
+                Use Change Password when you need to update login credentials.
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -66,7 +85,9 @@ export default async function ProfilePage() {
                 <ShieldCheck className="h-6 w-6" />
               </div>
               <CardTitle>Password and access</CardTitle>
-              <CardDescription>Profile edits do not touch your email or login password.</CardDescription>
+              <CardDescription>
+                Profile edits do not touch your email or login password.
+              </CardDescription>
             </CardHeader>
           </Card>
         </div>

@@ -1,1 +1,559 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_md", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_module_09_faculty_trainer_management", "label": "Module 09 \u2013 Faculty / Trainer Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "label": "1. Introduction", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L5"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits", "label": "1.1 Business Benefits", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L13"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_2_functional_requirements_specifications", "label": "2. Functional Requirements Specifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L27"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_001_search_and_list_trainers", "label": "FR-FTM-001 \u2013 Search and List Trainers", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L29"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_002_create_trainer_profile", "label": "FR-FTM-002 \u2013 Create Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L73"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_003_view_complete_trainer_profile", "label": "FR-FTM-003 \u2013 View Complete Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L115"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_004_update_trainer_profile", "label": "FR-FTM-004 \u2013 Update Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L147"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_005_change_trainer_operational_status", "label": "FR-FTM-005 \u2013 Change Trainer Operational Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L188"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_006_manage_trainer_qualifications", "label": "FR-FTM-006 \u2013 Manage Trainer Qualifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L224"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_007_manage_trainer_availability", "label": "FR-FTM-007 \u2013 Manage Trainer Availability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L259"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_008_validate_availability_window_bounds_and_overlaps", "label": "FR-FTM-008 \u2013 Validate Availability Window Bounds and Overlaps", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L298"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_009_manage_trainer_course_authorization", "label": "FR-FTM-009 \u2013 Manage Trainer Course Authorization", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L327"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_010_query_eligible_trainers_for_course_branch_and_time", "label": "FR-FTM-010 \u2013 Query Eligible Trainers for Course, Branch, and Time", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L363"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_011_configure_trainer_compensation_rate", "label": "FR-FTM-011 \u2013 Configure Trainer Compensation Rate", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L399"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_012_resolve_applicable_compensation_rate", "label": "FR-FTM-012 \u2013 Resolve Applicable Compensation Rate", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L441"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_013_validate_trainer_assignment_eligibility_for_training_delivery", "label": "FR-FTM-013 \u2013 Validate Trainer Assignment Eligibility for Training Delivery", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L473"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_014_provide_availability_validation_to_scheduling", "label": "FR-FTM-014 \u2013 Provide Availability Validation to Scheduling", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L502"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_015_view_trainer_assignment_references", "label": "FR-FTM-015 \u2013 View Trainer Assignment References", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L529"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_016_soft_delete_and_deactivate_trainer_owned_records", "label": "FR-FTM-016 \u2013 Soft Delete and Deactivate Trainer-Owned Records", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L557"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_017_trainer_operational_reports_and_export", "label": "FR-FTM-017 \u2013 Trainer Operational Reports and Export", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L589"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_018_audit_sensitive_trainer_actions", "label": "FR-FTM-018 \u2013 Audit Sensitive Trainer Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L623"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_019_enforce_branch_isolation", "label": "FR-FTM-019 \u2013 Enforce Branch Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L648"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_020_publish_in_process_domain_events", "label": "FR-FTM-020 \u2013 Publish In-Process Domain Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L676"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules", "label": "3. Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L713"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "label": "4. State Transition Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L765"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_1_trainerprofile_status", "label": "4.1 TrainerProfile Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L767"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_2_trainercourseauthorization_status", "label": "4.2 TrainerCourseAuthorization Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L778"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "label": "5. Cross-Module Dependencies Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L793"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations", "label": "6. Integration Contract Expectations", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L814"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_1_trainer_eligibility_result", "label": "6.1 Trainer Eligibility Result", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L816"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_2_compensation_rate_resolution_result", "label": "6.2 Compensation Rate Resolution Result", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L847"}, {"id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_7_acceptance_baseline_for_part_1", "label": "7. Acceptance Baseline for Part 1", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L867"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_md", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_module_09_faculty_trainer_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L5", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L13", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_2_functional_requirements_specifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L27", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_001_search_and_list_trainers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L29", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_002_create_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L73", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_003_view_complete_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L115", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_004_update_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L147", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_005_change_trainer_operational_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L188", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_006_manage_trainer_qualifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L224", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_007_manage_trainer_availability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L259", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_008_validate_availability_window_bounds_and_overlaps", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L298", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_009_manage_trainer_course_authorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L327", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_010_query_eligible_trainers_for_course_branch_and_time", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L363", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_011_configure_trainer_compensation_rate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L399", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_012_resolve_applicable_compensation_rate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L441", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_013_validate_trainer_assignment_eligibility_for_training_delivery", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L473", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_014_provide_availability_validation_to_scheduling", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L502", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_015_view_trainer_assignment_references", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L529", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_016_soft_delete_and_deactivate_trainer_owned_records", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L557", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_017_trainer_operational_reports_and_export", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L589", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_018_audit_sensitive_trainer_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L623", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_019_enforce_branch_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L648", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_020_publish_in_process_domain_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L676", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L713", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L765", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_1_trainerprofile_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L767", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_2_trainercourseauthorization_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L778", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L793", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L814", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_1_trainer_eligibility_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L816", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_2_compensation_rate_resolution_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L847", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_7_acceptance_baseline_for_part_1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L867", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_module_09_faculty_trainer_management",
+      "label": "Module 09 \u2013 Faculty / Trainer Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "label": "1. Introduction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits",
+      "label": "1.1 Business Benefits",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_2_functional_requirements_specifications",
+      "label": "2. Functional Requirements Specifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_001_search_and_list_trainers",
+      "label": "FR-FTM-001 \u2013 Search and List Trainers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_002_create_trainer_profile",
+      "label": "FR-FTM-002 \u2013 Create Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L73"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_003_view_complete_trainer_profile",
+      "label": "FR-FTM-003 \u2013 View Complete Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L115"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_004_update_trainer_profile",
+      "label": "FR-FTM-004 \u2013 Update Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L147"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_005_change_trainer_operational_status",
+      "label": "FR-FTM-005 \u2013 Change Trainer Operational Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L188"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_006_manage_trainer_qualifications",
+      "label": "FR-FTM-006 \u2013 Manage Trainer Qualifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L224"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_007_manage_trainer_availability",
+      "label": "FR-FTM-007 \u2013 Manage Trainer Availability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L259"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_008_validate_availability_window_bounds_and_overlaps",
+      "label": "FR-FTM-008 \u2013 Validate Availability Window Bounds and Overlaps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L298"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_009_manage_trainer_course_authorization",
+      "label": "FR-FTM-009 \u2013 Manage Trainer Course Authorization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L327"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_010_query_eligible_trainers_for_course_branch_and_time",
+      "label": "FR-FTM-010 \u2013 Query Eligible Trainers for Course, Branch, and Time",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L363"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_011_configure_trainer_compensation_rate",
+      "label": "FR-FTM-011 \u2013 Configure Trainer Compensation Rate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L399"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_012_resolve_applicable_compensation_rate",
+      "label": "FR-FTM-012 \u2013 Resolve Applicable Compensation Rate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L441"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_013_validate_trainer_assignment_eligibility_for_training_delivery",
+      "label": "FR-FTM-013 \u2013 Validate Trainer Assignment Eligibility for Training Delivery",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L473"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_014_provide_availability_validation_to_scheduling",
+      "label": "FR-FTM-014 \u2013 Provide Availability Validation to Scheduling",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L502"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_015_view_trainer_assignment_references",
+      "label": "FR-FTM-015 \u2013 View Trainer Assignment References",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L529"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_016_soft_delete_and_deactivate_trainer_owned_records",
+      "label": "FR-FTM-016 \u2013 Soft Delete and Deactivate Trainer-Owned Records",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L557"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_017_trainer_operational_reports_and_export",
+      "label": "FR-FTM-017 \u2013 Trainer Operational Reports and Export",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L589"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_018_audit_sensitive_trainer_actions",
+      "label": "FR-FTM-018 \u2013 Audit Sensitive Trainer Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L623"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_019_enforce_branch_isolation",
+      "label": "FR-FTM-019 \u2013 Enforce Branch Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L648"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_020_publish_in_process_domain_events",
+      "label": "FR-FTM-020 \u2013 Publish In-Process Domain Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L676"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules",
+      "label": "3. Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L713"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "label": "4. State Transition Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L765"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_1_trainerprofile_status",
+      "label": "4.1 TrainerProfile Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L767"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_2_trainercourseauthorization_status",
+      "label": "4.2 TrainerCourseAuthorization Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L778"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "label": "5. Cross-Module Dependencies Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L793"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations",
+      "label": "6. Integration Contract Expectations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L814"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_1_trainer_eligibility_result",
+      "label": "6.1 Trainer Eligibility Result",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L816"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_2_compensation_rate_resolution_result",
+      "label": "6.2 Compensation Rate Resolution Result",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L847"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_7_acceptance_baseline_for_part_1",
+      "label": "7. Acceptance Baseline for Part 1",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L867"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_module_09_faculty_trainer_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_1_1_business_benefits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_2_functional_requirements_specifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_001_search_and_list_trainers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_002_create_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_003_view_complete_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_004_update_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_005_change_trainer_operational_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_006_manage_trainer_qualifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_007_manage_trainer_availability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L259",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_008_validate_availability_window_bounds_and_overlaps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L298",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_009_manage_trainer_course_authorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L327",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_010_query_eligible_trainers_for_course_branch_and_time",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L363",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_011_configure_trainer_compensation_rate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_012_resolve_applicable_compensation_rate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L441",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_013_validate_trainer_assignment_eligibility_for_training_delivery",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L473",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_014_provide_availability_validation_to_scheduling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L502",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_015_view_trainer_assignment_references",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L529",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_016_soft_delete_and_deactivate_trainer_owned_records",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L557",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_017_trainer_operational_reports_and_export",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L589",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_018_audit_sensitive_trainer_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L623",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_019_enforce_branch_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L648",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_fr_ftm_020_publish_in_process_domain_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L676",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_3_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L713",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L765",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_1_trainerprofile_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L767",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_state_transition_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_4_2_trainercourseauthorization_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L778",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L793",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L814",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_1_trainer_eligibility_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L816",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_integration_contract_expectations",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_6_2_compensation_rate_resolution_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L847",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_09_faculty_trainer_management_part_1_business_overview_functional_requirements_business_rules_7_acceptance_baseline_for_part_1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L867",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

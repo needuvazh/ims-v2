@@ -42,7 +42,7 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Filter batches based on selected courseId
-  const filteredBatches = batches.filter(b => b.courseId === courseId);
+  const filteredBatches = batches.filter((b) => b.courseId === courseId);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,10 +96,14 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.messageEnglish || data.message || 'Failed to create exam.');
+        throw new Error(
+          data.messageEnglish || data.message || 'Failed to create exam.',
+        );
       }
 
-      toast.success('Exam created successfully in Draft status!', { id: toastId });
+      toast.success('Exam created successfully in Draft status!', {
+        id: toastId,
+      });
       router.push('/exam-completion/exams');
       router.refresh();
     } catch (error: any) {
@@ -114,7 +118,10 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
     <Card className="mx-auto max-w-2xl bg-white shadow-sm border border-slate-100">
       <CardHeader>
         <CardTitle>Exam Parameters</CardTitle>
-        <CardDescription>Specify the course, branch cohort, assessment schedule, and passing standards.</CardDescription>
+        <CardDescription>
+          Specify the course, branch cohort, assessment schedule, and passing
+          standards.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -127,7 +134,10 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
                 setCourseId(val);
                 setBatchId('');
               }}
-              options={courses.map(c => ({ value: c.id, label: c.nameEnglish }))}
+              options={courses.map((c) => ({
+                value: c.id,
+                label: c.nameEnglish,
+              }))}
               disabled={isSubmitting}
               required
             />
@@ -137,7 +147,10 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
               placeholder="Choose Batch"
               value={batchId}
               onValueChange={(val) => setBatchId(val)}
-              options={filteredBatches.map(b => ({ value: b.id, label: b.batchNameEnglish }))}
+              options={filteredBatches.map((b) => ({
+                value: b.id,
+                label: b.batchNameEnglish,
+              }))}
               disabled={isSubmitting || !courseId}
               required
             />
@@ -197,11 +210,7 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              variant="primary"
-            >
+            <Button type="submit" disabled={isSubmitting} variant="primary">
               {isSubmitting ? 'Creating...' : 'Create Exam'}
             </Button>
           </div>

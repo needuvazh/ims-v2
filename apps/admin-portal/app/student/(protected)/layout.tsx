@@ -3,7 +3,11 @@ import { AppShell } from '@ims/shared-ui';
 import { studentNavigation } from '@ims/identity-access';
 import { Home, CreditCard, Award } from 'lucide-react';
 
-export default function StudentProtectedLayout({ children }: { children: ReactNode }) {
+export default function StudentProtectedLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const nav = studentNavigation.map((item) => {
     if (item.href === '/dashboard') {
       return { ...item, icon: <Home className="h-4.5 w-4.5" /> };
@@ -18,7 +22,12 @@ export default function StudentProtectedLayout({ children }: { children: ReactNo
   });
 
   return (
-    <AppShell appName="IMS Student" branchName="Learner scope" userName="Student" items={nav}>
+    <AppShell
+      appName="IMS Student"
+      branchName="Learner scope"
+      userName="Student"
+      items={nav}
+    >
       {children}
     </AppShell>
   );

@@ -19,15 +19,34 @@ export default async function NewVenueBlockPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Scheduling', href: '/scheduling', icon: <CalendarDays className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Venues', href: '/scheduling/venues', icon: <MapPinned className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'New block', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Scheduling',
+                href: '/scheduling',
+                icon: <CalendarDays className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Venues',
+                href: '/scheduling/venues',
+                icon: <MapPinned className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'New block',
+                icon: <Plus className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }
       />
-      <VenueBlockForm mode="create" branches={data.branches} classrooms={data.classrooms} />
+      <VenueBlockForm
+        mode="create"
+        branches={data.branches}
+        classrooms={data.classrooms}
+      />
     </AdminFormPageLayout>
   );
 }

@@ -38,11 +38,11 @@ export class SearchExamsQueryHandler {
         : [];
 
     if (input.fromDate) {
-      exams = exams.filter(e => e.examDate >= input.fromDate!);
+      exams = exams.filter((e) => e.examDate >= input.fromDate!);
     }
 
     if (input.toDate) {
-      exams = exams.filter(e => e.examDate <= input.toDate!);
+      exams = exams.filter((e) => e.examDate <= input.toDate!);
     }
 
     const total = exams.length;
@@ -52,7 +52,7 @@ export class SearchExamsQueryHandler {
     const pagedExams = exams.slice(start, start + pageSize);
 
     return {
-      exams: pagedExams.map(e => ({
+      exams: pagedExams.map((e) => ({
         id: e.id,
         examName: e.examName,
         batchId: e.batchId,

@@ -92,7 +92,8 @@ export function AdmissionsClientList({
   const totalPages = Math.ceil(total / 10);
 
   const currentSortBy = searchParams.get('sortBy') ?? 'createdAt';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? 'desc';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? 'desc';
 
   // Direct Intake Modal State
   const [isOpen, setIsOpen] = useState(false);
@@ -102,23 +103,28 @@ export function AdmissionsClientList({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -135,7 +141,8 @@ export function AdmissionsClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -160,7 +167,9 @@ export function AdmissionsClientList({
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.messageEnglish || 'Failed to create admission draft.');
+        throw new Error(
+          data.messageEnglish || 'Failed to create admission draft.',
+        );
       }
 
       toast.success('Admission draft created successfully!');
@@ -194,9 +203,14 @@ export function AdmissionsClientList({
     {
       header: 'Admission #',
       sortable: true,
-      sortDirection: currentSortBy === 'admissionNumber' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'admissionNumber' ? currentSortOrder : null,
       onSort: () => handleSort('admissionNumber'),
-      render: (adm: any) => <span className="font-mono font-medium text-slate-800">{adm.admissionNumber}</span>
+      render: (adm: any) => (
+        <span className="font-mono font-medium text-slate-800">
+          {adm.admissionNumber}
+        </span>
+      ),
     },
     {
       header: 'Student',
@@ -206,23 +220,25 @@ export function AdmissionsClientList({
       render: (adm: any) => (
         <div className="flex flex-col">
           <div className="font-semibold text-slate-800">{adm.studentName}</div>
-          <div className="text-xs text-[var(--ims-muted)]">{adm.studentEmail}</div>
+          <div className="text-xs text-[var(--ims-muted)]">
+            {adm.studentEmail}
+          </div>
         </div>
-      )
+      ),
     },
     {
       header: 'Course',
       sortable: true,
       sortDirection: currentSortBy === 'courseName' ? currentSortOrder : null,
       onSort: () => handleSort('courseName'),
-      render: (adm: any) => adm.courseName
+      render: (adm: any) => adm.courseName,
     },
     {
       header: 'Branch',
       sortable: true,
       sortDirection: currentSortBy === 'branchName' ? currentSortOrder : null,
       onSort: () => handleSort('branchName'),
-      render: (adm: any) => adm.branchName
+      render: (adm: any) => adm.branchName,
     },
     {
       header: 'Date',
@@ -237,25 +253,34 @@ export function AdmissionsClientList({
             day: 'numeric',
           })}
         </span>
-      )
+      ),
     },
     {
       header: 'Status',
       className: 'text-center',
       sortable: true,
-      sortDirection: currentSortBy === 'admissionStatus' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'admissionStatus' ? currentSortOrder : null,
       onSort: () => handleSort('admissionStatus'),
-      render: (adm: any) => <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>{adm.admissionStatus}</Badge>
+      render: (adm: any) => (
+        <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>
+          {adm.admissionStatus}
+        </Badge>
+      ),
     },
     {
       header: 'Actions',
       className: 'text-right',
       render: (adm: any) => (
-        <Button variant="ghost" size="icon" onClick={() => router.push(`/admissions/${adm.id}`)}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push(`/admissions/${adm.id}`)}
+        >
           <Eye className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
         </Button>
-      )
-    }
+      ),
+    },
   ];
 
   const renderCard = (adm: any) => (
@@ -266,9 +291,13 @@ export function AdmissionsClientList({
             <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
               {adm.admissionNumber}
             </p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{adm.studentName}</p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {adm.studentName}
+            </p>
           </div>
-          <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>{adm.admissionStatus}</Badge>
+          <Badge variant={getStatusBadgeVariant(adm.admissionStatus)}>
+            {adm.admissionStatus}
+          </Badge>
         </div>
       </CardHeader>
       <CardContent className="p-card-p space-y-3">
@@ -310,7 +339,10 @@ export function AdmissionsClientList({
             Admissions
           </h1>
         </div>
-        <Button onClick={() => setIsOpen(true)} className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4">
+        <Button
+          onClick={() => setIsOpen(true)}
+          className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4"
+        >
           <Plus className="h-4 w-4 sm:mr-2" />
           <span className="sr-only sm:not-sr-only">Direct Intake</span>
         </Button>
@@ -386,7 +418,9 @@ export function AdmissionsClientList({
           </FormLabel>
           <Select
             value={searchParams.get('branchId') || ''}
-            onChange={(e) => updateParams({ branchId: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ branchId: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Branches' },
               ...branches.map((b) => ({ value: b.id, label: b.name })),
@@ -402,7 +436,9 @@ export function AdmissionsClientList({
           </FormLabel>
           <Select
             value={searchParams.get('status') || ''}
-            onChange={(e) => updateParams({ status: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ status: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Statuses' },
               { value: 'Draft', label: 'Draft' },
@@ -433,7 +469,14 @@ export function AdmissionsClientList({
       />
 
       {/* Pagination */}
-      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={10}
+        />
+      )}
 
       {/* Direct Intake Modal */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -441,13 +484,16 @@ export function AdmissionsClientList({
           <DialogHeader>
             <DialogTitle>Direct Admission Intake</DialogTitle>
             <DialogDescription>
-              Create a new draft admission directly for an existing candidate student profile.
+              Create a new draft admission directly for an existing candidate
+              student profile.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4 text-sm">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Select Student Profile</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Select Student Profile
+              </label>
               <select
                 value={selectedStudent}
                 onChange={(e) => setSelectedStudent(e.target.value)}
@@ -463,7 +509,9 @@ export function AdmissionsClientList({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Target Course</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Target Course
+              </label>
               <select
                 value={selectedCourse}
                 onChange={(e) => setSelectedCourse(e.target.value)}
@@ -479,7 +527,9 @@ export function AdmissionsClientList({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Target Campus / Branch</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Target Campus / Branch
+              </label>
               <select
                 value={selectedBranch}
                 onChange={(e) => setSelectedBranch(e.target.value)}

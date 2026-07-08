@@ -17,7 +17,10 @@ interface PermissionLifecycleDropdownProps {
   currentStatus: string;
 }
 
-export function PermissionLifecycleDropdown({ permissionId, currentStatus }: PermissionLifecycleDropdownProps) {
+export function PermissionLifecycleDropdown({
+  permissionId,
+  currentStatus,
+}: PermissionLifecycleDropdownProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -33,13 +36,21 @@ export function PermissionLifecycleDropdown({ permissionId, currentStatus }: Per
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="secondary" size="icon" disabled={isPending} data-testid="permission-lifecycle-trigger">
+        <Button
+          variant="secondary"
+          size="icon"
+          disabled={isPending}
+          data-testid="permission-lifecycle-trigger"
+        >
           <MoreVertical className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {!isArchived && (
-          <DropdownMenuItem onClick={handleArchive} className="text-red-600 focus:text-red-600 cursor-pointer">
+          <DropdownMenuItem
+            onClick={handleArchive}
+            className="text-red-600 focus:text-red-600 cursor-pointer"
+          >
             <Archive className="mr-2 h-4 w-4" />
             Archive Permission
           </DropdownMenuItem>

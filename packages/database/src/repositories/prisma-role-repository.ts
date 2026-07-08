@@ -86,7 +86,7 @@ export class PrismaRoleRepository implements IRoleRepository {
 
   async search(
     page: number,
-    pageSize: number
+    pageSize: number,
   ): Promise<{ items: Role[]; total: number }> {
     const [rows, total] = await Promise.all([
       this.prisma.role.findMany({
@@ -104,22 +104,52 @@ export class PrismaRoleRepository implements IRoleRepository {
     };
   }
 
-  async assignRoleToUser(userId: Uuid, roleId: Uuid, actorId: Uuid): Promise<void> {
+  async assignRoleToUser(
+    userId: Uuid,
+    roleId: Uuid,
+    actorId: Uuid,
+  ): Promise<void> {
     await this.prisma.userRole.upsert({
       where: { userId_roleId: { userId, roleId } },
       create: { userId, roleId, status: 'Active', createdBy: actorId },
-      update: { status: 'Active', revokedAt: null, revokedBy: null, reason: null, updatedBy: actorId },
+      update: {
+        status: 'Active',
+        revokedAt: null,
+        revokedBy: null,
+        reason: null,
+        updatedBy: actorId,
+      },
     });
   }
 
-  async revokeRoleFromUser(userId: Uuid, roleId: Uuid, actorId: Uuid, reason: string | null): Promise<void> {
+  async revokeRoleFromUser(
+    userId: Uuid,
+    roleId: Uuid,
+    actorId: Uuid,
+    reason: string | null,
+  ): Promise<void> {
     await this.prisma.userRole.update({
       where: { userId_roleId: { userId, roleId } },
-      data: { status: 'Revoked', revokedAt: new Date(), revokedBy: actorId, reason },
+      data: {
+        status: 'Revoked',
+        revokedAt: new Date(),
+        revokedBy: actorId,
+        reason,
+      },
     });
   }
 
-  async listRolesForUser(userId: Uuid): Promise<{ role: Role; status: string; revokedAt: Date | null; revokedBy: string | null; reason: string | null }[]> {
+  async listRolesForUser(
+    userId: Uuid,
+  ): Promise<
+    {
+      role: Role;
+      status: string;
+      revokedAt: Date | null;
+      revokedBy: string | null;
+      reason: string | null;
+    }[]
+  > {
     const rows = await this.prisma.userRole.findMany({
       where: { userId },
       include: { role: true },
@@ -133,30 +163,43 @@ export class PrismaRoleRepository implements IRoleRepository {
     }));
   }
 
-  async listUsersForRole(roleId: Uuid): Promise<{ userId: Uuid; username: string; status: string; fullName: string | null }[]> {
+  async listUsersForRole(
+    roleId: Uuid,
+  ): Promise<
+    {
+      userId: Uuid;
+      username: string;
+      status: string;
+      fullName: string | null;
+    }[]
+  > {
     const rows = await this.prisma.userRole.findMany({
       where: { roleId, status: 'Active' },
       include: {
         user: {
           include: {
-            person: true
-          }
-        }
-      }
+            person: true,
+          },
+        },
+      },
     });
-    
+
     return rows.map((r) => {
       const p = r.user.person;
       return {
         userId: r.userId as Uuid,
         username: r.user.username,
         status: r.user.status,
-        fullName: p ? `${p.firstName} ${p.lastName}`.trim() : null
+        fullName: p ? `${p.firstName} ${p.lastName}`.trim() : null,
       };
     });
   }
 
-  async assignPermissionToRole(roleId: Uuid, permissionId: Uuid, actorId: Uuid): Promise<void> {
+  async assignPermissionToRole(
+    roleId: Uuid,
+    permissionId: Uuid,
+    actorId: Uuid,
+  ): Promise<void> {
     await this.prisma.rolePermission.upsert({
       where: { roleId_permissionId: { roleId, permissionId } },
       create: { roleId, permissionId, createdBy: actorId },
@@ -164,7 +207,10 @@ export class PrismaRoleRepository implements IRoleRepository {
     });
   }
 
-  async removePermissionFromRole(roleId: Uuid, permissionId: Uuid): Promise<void> {
+  async removePermissionFromRole(
+    roleId: Uuid,
+    permissionId: Uuid,
+  ): Promise<void> {
     await this.prisma.rolePermission.deleteMany({
       where: { roleId, permissionId },
     });

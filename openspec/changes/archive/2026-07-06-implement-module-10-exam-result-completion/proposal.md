@@ -36,38 +36,46 @@ Module 10 – Exam, Result & Completion Management is a core bounded context def
 ## Impact
 
 **Affected Packages:**
+
 - New: `packages/exam-result-completion/` (domain, application, infrastructure, contracts, tests)
 - Modified: `packages/database/prisma/schema.prisma` (4 new models, 5 new enums, relations, constraints)
 - Modified: `apps/admin-portal/` (new routes, UI components, API integration)
 - Modified: `packages/shared/` (audit integration, notification event contracts)
 
 **Affected APIs:**
+
 - 19 new API endpoints under `/api/exams/*`, `/api/results/*`, `/api/completions/*`
 - All endpoints require authentication, permission checks, and branch scope validation
 
 **Database Impact:**
+
 - 4 new tables: `exam`, `result`, `course_completion`, `completion_approval`
 - 5 new enums: `ExamStatus`, `ResultStatus`, `CompletionStatus`, `ApprovalLevel`, `ApprovalStatus`
 - Migration required with backward-compatible expand-and-contract pattern
 
 **Authorization Impact:**
-- 20+ new permissions (exam.*, result.*, completion.*, report.*)
+
+- 20+ new permissions (exam._, result._, completion._, report._)
 - Permission seeds required for default role bundles
 - Branch scoping enforced via entity-derived branch chains
 
 **Audit Impact:**
+
 - All sensitive mutations (Result correction, approval decisions, Exam cancellation) require mandatory audit entries
 - Audit writes must be transactionally consistent with business state changes
 
 **Event/Outbox Impact:**
+
 - 15+ new domain events emitted to transactional outbox
 - Events trigger downstream: Certificate eligibility handoff, Enrollment sync, Notification requests
 
 **NFR Impact:**
+
 - Performance targets: P95 < 1s for single writes, < 3s for completion evaluation, < 5s for bulk validation (1000 rows)
 - Availability: 99.9% monthly target with graceful degradation for Attendance/Finance dependency failures
 
 **Test Impact:**
+
 - 142+ BDD scenarios across 20 features
 - Unit tests for domain invariants and state machines
 - Integration tests for cross-context readers and audit integration
@@ -75,6 +83,7 @@ Module 10 – Exam, Result & Completion Management is a core bounded context def
 - Security tests for IDOR, branch isolation, permission escalation, and forged fields
 
 **Portal Impact:**
+
 - Admin portal: Full operational surface for Exam, Result, Completion workflows
 - Student portal: Future read-only result/certificate visibility (deferred)
 - Trainer portal: Future Result entry and recommendation queue (deferred)

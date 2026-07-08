@@ -4,7 +4,10 @@ import { forwardRef, type InputHTMLAttributes, useCallback } from 'react';
 import { Search, X } from 'lucide-react';
 import { cn } from '../utils/cn';
 
-export interface SearchInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface SearchInputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type'
+> {
   onClear?: () => void;
 }
 

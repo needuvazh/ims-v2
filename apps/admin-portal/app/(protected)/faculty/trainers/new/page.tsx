@@ -11,7 +11,12 @@ type SearchParams = Promise<{
   userId?: string;
 }>;
 
-function pickInitialBranchId(branchIds: string[], defaultBranchId: string | null, activeBranchId: string | null, availableBranchIds: string[]) {
+function pickInitialBranchId(
+  branchIds: string[],
+  defaultBranchId: string | null,
+  activeBranchId: string | null,
+  availableBranchIds: string[],
+) {
   const candidates = [activeBranchId, defaultBranchId, ...branchIds];
   for (const candidate of candidates) {
     if (candidate && availableBranchIds.includes(candidate)) {
@@ -22,13 +27,19 @@ function pickInitialBranchId(branchIds: string[], defaultBranchId: string | null
 }
 
 function generateTrainerCode(personId: string, username: string) {
-  const usernameSeed = username.replace(/[^a-zA-Z0-9]/g, '').slice(0, 6).toUpperCase() || 'TRAINR';
+  const usernameSeed =
+    username
+      .replace(/[^a-zA-Z0-9]/g, '')
+      .slice(0, 6)
+      .toUpperCase() || 'TRAINR';
   const personSeed = personId.replace(/-/g, '').slice(0, 4).toUpperCase();
   const randomSeed = Math.random().toString(36).slice(2, 6).toUpperCase();
   return `TR-${usernameSeed}-${personSeed}${randomSeed}`;
 }
 
-export default async function NewTrainerPage(props: { searchParams: SearchParams }) {
+export default async function NewTrainerPage(props: {
+  searchParams: SearchParams;
+}) {
   const searchParams = await props.searchParams;
   await assertPermission('trainer.create');
   await assertPermission('trainer.read');
@@ -37,23 +48,32 @@ export default async function NewTrainerPage(props: { searchParams: SearchParams
   const selectedUserId = searchParams.userId ?? session.userId;
   const canSearchUsers = session.permissions.includes('iam.user.read');
   const requiresIdentityRead = selectedUserId !== session.userId;
-  const allowedBranchIds = authContext.allowedBranchIds.map((branchId) => String(branchId));
+  const allowedBranchIds = authContext.allowedBranchIds.map((branchId) =>
+    String(branchId),
+  );
 
   if (requiresIdentityRead && !canSearchUsers) {
     await assertPermission('iam.user.read');
   }
 
-  const { organizationService, trainerManagementService, userService } = await import('../../../../lib/runtime');
+  const { organizationService, trainerManagementService, userService } =
+    await import('../../../../lib/runtime');
 
   const [branchResult, selectedUser] = await Promise.all([
     organizationService.listBranches({ pageSize: 1000, status: 'Active' }),
     searchParams.userId
-      ? (selectedUserId === session.userId ? userService.getUser(selectedUserId) : userService.getUser(selectedUserId, authContext))
+      ? selectedUserId === session.userId
+        ? userService.getUser(selectedUserId)
+        : userService.getUser(selectedUserId, authContext)
       : Promise.resolve(null),
   ]);
 
   const branchOptions = branchResult.items
-    .filter((branch) => allowedBranchIds.length === 0 || allowedBranchIds.includes(String(branch.id)))
+    .filter(
+      (branch) =>
+        allowedBranchIds.length === 0 ||
+        allowedBranchIds.includes(String(branch.id)),
+    )
     .map((branch) => ({
       id: String(branch.id),
       branchName: branch.branchName,
@@ -62,15 +82,28 @@ export default async function NewTrainerPage(props: { searchParams: SearchParams
 
   const initialBranchId = selectedUser
     ? pickInitialBranchId(
-        (selectedUser.branchIds ?? []).map((branchId: string) => String(branchId)),
-        selectedUser.defaultBranchId ? String(selectedUser.defaultBranchId) : null,
+        (selectedUser.branchIds ?? []).map((branchId: string) =>
+          String(branchId),
+        ),
+        selectedUser.defaultBranchId
+          ? String(selectedUser.defaultBranchId)
+          : null,
         session.activeBranchId ? String(session.activeBranchId) : null,
         branchOptions.map((branch) => branch.id),
       )
-    : branchOptions.find((branch) => branch.id === allowedBranchIds[0])?.id ?? branchOptions[0]?.id ?? '';
+    : (branchOptions.find((branch) => branch.id === allowedBranchIds[0])?.id ??
+      branchOptions[0]?.id ??
+      '');
 
-  const existingTrainer = selectedUser ? await trainerManagementService.findTrainerByPersonId(selectedUser.personId, authContext) : null;
-  const generatedTrainerCode = selectedUser ? generateTrainerCode(selectedUser.personId, selectedUser.username) : null;
+  const existingTrainer = selectedUser
+    ? await trainerManagementService.findTrainerByPersonId(
+        selectedUser.personId,
+        authContext,
+      )
+    : null;
+  const generatedTrainerCode = selectedUser
+    ? generateTrainerCode(selectedUser.personId, selectedUser.username)
+    : null;
 
   return (
     <AdminFormPageLayout>
@@ -81,8 +114,16 @@ export default async function NewTrainerPage(props: { searchParams: SearchParams
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Faculty', href: '/faculty/trainers', icon: <Users className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Faculty',
+                href: '/faculty/trainers',
+                icon: <Users className="h-3.5 w-3.5" />,
+              },
               { label: 'Trainers', href: '/faculty/trainers' },
               { label: 'Register', icon: <UserPlus className="h-3.5 w-3.5" /> },
             ]}
@@ -90,17 +131,21 @@ export default async function NewTrainerPage(props: { searchParams: SearchParams
         }
       />
       <TrainerOnboardingForm
-        selectedUser={selectedUser ? {
-          userId: selectedUser.id,
-          personId: selectedUser.personId,
-          username: selectedUser.username,
-          fullName: selectedUser.fullName,
-          email: selectedUser.email,
-          mobile: selectedUser.phone ?? null,
-          status: selectedUser.status,
-          defaultBranchId: selectedUser.defaultBranchId ?? null,
-          branchIds: selectedUser.branchIds ?? [],
-        } : null}
+        selectedUser={
+          selectedUser
+            ? {
+                userId: selectedUser.id,
+                personId: selectedUser.personId,
+                username: selectedUser.username,
+                fullName: selectedUser.fullName,
+                email: selectedUser.email,
+                mobile: selectedUser.phone ?? null,
+                status: selectedUser.status,
+                defaultBranchId: selectedUser.defaultBranchId ?? null,
+                branchIds: selectedUser.branchIds ?? [],
+              }
+            : null
+        }
         selectedUserSearchHint="Search an existing IAM user to begin trainer registration."
         branchOptions={branchOptions}
         initialBranchId={initialBranchId}

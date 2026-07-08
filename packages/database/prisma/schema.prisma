@@ -588,6 +588,7 @@ model Branch {
   inquiries              Inquiry[]
   userBranchAccesses     UserBranchAccess[]
   documents              Document[]             @relation("BranchDocuments")
+  documentRequirements   DocumentRequirement[]
   studentProfiles        StudentProfile[]
   attendanceSessions     AttendanceSession[]
   attendanceRecords      AttendanceRecord[]
@@ -1156,6 +1157,7 @@ model Course {
   inquiries Inquiry[]
   trainerAuthorizations TrainerCourseAuthorization[]
   exams     Exam[]
+  documentRequirements DocumentRequirement[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -2186,6 +2188,9 @@ model Document {
   documentType DocumentType
   branchId     String         @db.Uuid
   status       DocumentStatus @default(Active)
+  issueDate    DateTime?      @db.Date
+  expiryDate   DateTime?      @db.Date
+  version      Int            @default(1)
 
   owners        DocumentOwner[]
   verifications DocumentVerification[]
@@ -2993,4 +2998,34 @@ model CertificateReissueRequest {
   @@index([certificateId])
   @@index([newCertificateId])
   @@map("certificate_reissue_requests")
+}
+
+enum TargetEntity {
+  STUDENT
+  TRAINER
+  COURSE
+}
+
+model DocumentRequirement {
+  id                 String       @id @default(uuid()) @db.Uuid
+  targetEntity       TargetEntity @map("target_entity")
+  documentType       DocumentType @map("document_type")
+  isMandatory        Boolean      @default(true) @map("is_mandatory")
+  branchId           String?      @map("branch_id") @db.Uuid
+  courseId           String?      @map("course_id") @db.Uuid
+  status             String       @default("Active") @db.VarChar(30)
+  effectiveStartDate DateTime     @default(now()) @map("effective_start_date") @db.Date
+  effectiveEndDate   DateTime?    @map("effective_end_date") @db.Date
+  version            Int          @default(1)
+  
+  createdAt          DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy          String?      @map("created_by") @db.Uuid
+  updatedAt          DateTime?    @updatedAt @db.Timestamptz(6)
+  updatedBy          String?      @map("updated_by") @db.Uuid
+
+  branch             Branch?      @relation(fields: [branchId], references: [id])
+  course             Course?      @relation(fields: [courseId], references: [id])
+
+  @@unique([targetEntity, documentType, branchId, courseId])
+  @@map("document_requirements")
 }

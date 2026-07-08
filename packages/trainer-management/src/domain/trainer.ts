@@ -3,10 +3,28 @@ import { DomainError, Money } from '@ims/shared-kernel';
 
 export const TrainerTypeSchema = z.enum(['FullTime', 'PartTime', 'Freelance']);
 export const TrainerStatusSchema = z.enum(['Active', 'Inactive', 'Suspended']);
-export const AvailabilityDaySchema = z.enum(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
-export const CompensationBasisSchema = z.enum(['PerHour', 'PerSession', 'PerStudent', 'Fixed']);
+export const AvailabilityDaySchema = z.enum([
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+]);
+export const CompensationBasisSchema = z.enum([
+  'PerHour',
+  'PerSession',
+  'PerStudent',
+  'Fixed',
+]);
 export const RateStatusSchema = z.enum(['Active', 'Inactive']);
-export const AuthorizationStatusSchema = z.enum(['Active', 'Inactive', 'Suspended', 'Expired']);
+export const AuthorizationStatusSchema = z.enum([
+  'Active',
+  'Inactive',
+  'Suspended',
+  'Expired',
+]);
 export const QualificationStatusSchema = z.enum(['Active', 'Inactive']);
 
 export type TrainerType = z.infer<typeof TrainerTypeSchema>;
@@ -210,7 +228,10 @@ export interface TrainerEligibilityResult {
   schedulingConflictCheckRequired: boolean;
 }
 
-export function validateEffectiveDateRange(startDate: Date, endDate?: Date | null) {
+export function validateEffectiveDateRange(
+  startDate: Date,
+  endDate?: Date | null,
+) {
   if (!(startDate instanceof Date) || Number.isNaN(startDate.getTime())) {
     throw new DomainError('invalid_value', 'Effective start date is invalid.');
   }
@@ -218,28 +239,52 @@ export function validateEffectiveDateRange(startDate: Date, endDate?: Date | nul
     throw new DomainError('invalid_value', 'Effective end date is invalid.');
   }
   if (endDate && endDate < startDate) {
-    throw new DomainError('invalid_effective_date_range', 'Effective end date cannot be before the start date.');
+    throw new DomainError(
+      'invalid_effective_date_range',
+      'Effective end date cannot be before the start date.',
+    );
   }
 }
 
 export function validateTimeOrder(startTime: string, endTime: string) {
-  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(startTime) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(endTime)) {
-    throw new DomainError('invalid_value', 'Time values must use HH:MM format.');
+  if (
+    !/^([01]\d|2[0-3]):[0-5]\d$/.test(startTime) ||
+    !/^([01]\d|2[0-3]):[0-5]\d$/.test(endTime)
+  ) {
+    throw new DomainError(
+      'invalid_value',
+      'Time values must use HH:MM format.',
+    );
   }
   if (startTime >= endTime) {
-    throw new DomainError('invalid_value', 'Start time must be before end time.');
+    throw new DomainError(
+      'invalid_value',
+      'Start time must be before end time.',
+    );
   }
 }
 
-export function overlaps(aStart: string, aEnd: string, bStart: string, bEnd: string): boolean {
+export function overlaps(
+  aStart: string,
+  aEnd: string,
+  bStart: string,
+  bEnd: string,
+): boolean {
   return aStart < bEnd && aEnd > bStart;
 }
 
-export function isEffectiveOn(rangeStart: Date, rangeEnd: Date | null | undefined, date: Date): boolean {
+export function isEffectiveOn(
+  rangeStart: Date,
+  rangeEnd: Date | null | undefined,
+  date: Date,
+): boolean {
   if (Number.isNaN(date.getTime())) return false;
   return date >= rangeStart && (!rangeEnd || date <= rangeEnd);
 }
 
 export function toMoney(currency: string, amount: number | string) {
-  return Money.of(currency, typeof amount === 'string' ? Number(amount) : amount);
+  return Money.of(
+    currency,
+    typeof amount === 'string' ? Number(amount) : amount,
+  );
 }

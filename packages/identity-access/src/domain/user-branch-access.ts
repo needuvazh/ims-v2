@@ -2,7 +2,9 @@ import { z } from 'zod';
 import type { Uuid } from '@ims/shared-kernel';
 
 export const userBranchAccessStatusSchema = z.enum(['Active', 'Revoked']);
-export type UserBranchAccessStatus = z.infer<typeof userBranchAccessStatusSchema>;
+export type UserBranchAccessStatus = z.infer<
+  typeof userBranchAccessStatusSchema
+>;
 
 export interface UserBranchAccess {
   id: Uuid;

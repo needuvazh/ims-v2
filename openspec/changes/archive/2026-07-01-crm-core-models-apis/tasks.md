@@ -22,6 +22,7 @@
 - [x] 2.4 Export new repositories from the `@ims/database` package index.
 
 ## 3. CRM Application Services
+
 - [x] 3.1 Implement `InquiryApplicationService` inside `packages/crm-leads/src/application/inquiry-service.ts` with `captureInquiry` (including duplicate checks), `promoteToLead` (handling `Person` creation), and `rejectInquiry`.
 - [x] 3.2 Implement `LeadApplicationService` inside `packages/crm-leads/src/application/lead-service.ts` with `createLead`, `updateLead`, `assignCounselor`, `updateStage`, and `deleteLead`.
 - [x] 3.3 Implement `FollowUpApplicationService` inside `packages/crm-leads/src/application/followup-service.ts` with `scheduleFollowUp`, `recordOutcome`, and `cancelFollowUp`.

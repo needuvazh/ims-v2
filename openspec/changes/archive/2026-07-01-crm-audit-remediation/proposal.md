@@ -1,6 +1,7 @@
 ## Why
 
 An architectural audit of the CRM module against the DDD and FRD documentation revealed two critical gaps that must be addressed before the module can be considered 100% complete and compliant:
+
 1. **Event Name Mismatch**: The implementation uses `LeadConvertedToAdmission` instead of the `LeadConverted` name defined in the overarching DDD Context Map.
 2. **Missing Overdue Follow-ups Background Job**: The `followup-repository.ts` has the capability to query overdue follow-ups (`findAllScheduledOverdue`), but there is no application service or background worker actively invoking this to satisfy FR-LEAD-012.
 
@@ -14,6 +15,7 @@ Auto-assignment (FR-LEAD-009) is being explicitly deferred to Phase 2.
 ## Capabilities
 
 ### New Capabilities
+
 - `crm-audit-remediation`: Remediation of CRM architectural audit findings, specifically the Domain Event name sync and Overdue Follow-ups background worker.
 
 ### Modified Capabilities

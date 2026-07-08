@@ -17,12 +17,12 @@ This section defines the acceptance criteria and test scenarios for the IAM modu
 
 The goal is to make the module testable by:
 
-* Product owners
-* Business analysts
-* QA engineers
-* Automation testers
-* Backend developers
-* Frontend developers
+- Product owners
+- Business analysts
+- QA engineers
+- Automation testers
+- Backend developers
+- Frontend developers
 
 Each scenario follows:
 
@@ -38,34 +38,34 @@ Then
 
 ## In Scope
 
-* User creation
-* User update
-* User activation
-* User suspension
-* User archive
-* Login
-* Logout
-* Password reset
-* Password change
-* Account lockout
-* Role management
-* Permission management
-* Branch assignment
-* Branch switching
-* Session management
-* Audit logging
-* Report access
-* Dashboard access
+- User creation
+- User update
+- User activation
+- User suspension
+- User archive
+- Login
+- Logout
+- Password reset
+- Password change
+- Account lockout
+- Role management
+- Permission management
+- Branch assignment
+- Branch switching
+- Session management
+- Audit logging
+- Report access
+- Dashboard access
 
 ## Out of Scope
 
-* HR employee lifecycle
-* Student portal login
-* Corporate portal login
-* SSO / OAuth
-* MFA / OTP
-* Biometric login
-* External identity providers
+- HR employee lifecycle
+- Student portal login
+- Corporate portal login
+- SSO / OAuth
+- MFA / OTP
+- Biometric login
+- External identity providers
 
 These are future-phase test areas.
 
@@ -594,16 +594,16 @@ And the audit log should remain unchanged
 
 The IAM module can be considered functionally accepted only when:
 
-* All critical scenarios pass.
-* All role and permission tests pass.
-* Branch access rules are verified.
-* Audit logs are created for sensitive actions.
-* Login, logout, password reset, and session management pass.
-* Negative tests pass.
-* Security tests pass.
-* Arabic RTL UI tests pass.
-* API contract tests pass.
-* Regression test suite is automated for critical flows.
+- All critical scenarios pass.
+- All role and permission tests pass.
+- Branch access rules are verified.
+- Audit logs are created for sensitive actions.
+- Login, logout, password reset, and session management pass.
+- Negative tests pass.
+- Security tests pass.
+- Arabic RTL UI tests pass.
+- API contract tests pass.
+- Regression test suite is automated for critical flows.
 
 ---
 
@@ -611,10 +611,10 @@ The IAM module can be considered functionally accepted only when:
 
 This part defines:
 
-* BDD acceptance criteria
-* Functional test scenarios
-* Negative test scenarios
-* Security test scenarios
-* UI test scenarios
-* API test scenarios
-* Acceptance exit criteria
+- BDD acceptance criteria
+- Functional test scenarios
+- Negative test scenarios
+- Security test scenarios
+- UI test scenarios
+- API test scenarios
+- Acceptance exit criteria

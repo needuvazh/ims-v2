@@ -28,7 +28,11 @@ export function getPaginationPageNumbers(page: number, totalPages: number) {
 
   if (page > 3) pages.push('ellipsis');
 
-  for (let i = Math.max(2, page - 1); i <= Math.min(totalPages - 1, page + 1); i += 1) {
+  for (
+    let i = Math.max(2, page - 1);
+    i <= Math.min(totalPages - 1, page + 1);
+    i += 1
+  ) {
     pages.push(i);
   }
 
@@ -73,7 +77,9 @@ export function Pagination({
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLimit = parseInt(e.target.value, 10);
-    router.push(buildPaginationHref(pathname, searchParams, 1, newLimit, buildHref));
+    router.push(
+      buildPaginationHref(pathname, searchParams, 1, newLimit, buildHref),
+    );
   };
 
   const baseClass =
@@ -81,7 +87,13 @@ export function Pagination({
 
   const renderPage = (p: number) => {
     const isActive = p === page;
-    const href = buildPaginationHref(pathname, searchParams, p, limit, buildHref);
+    const href = buildPaginationHref(
+      pathname,
+      searchParams,
+      p,
+      limit,
+      buildHref,
+    );
     const content = (
       <span
         className={cn(
@@ -108,7 +120,10 @@ export function Pagination({
     <nav
       role="navigation"
       aria-label="Pagination"
-      className={cn('flex flex-col sm:flex-row items-center justify-between gap-4 mt-6', className)}
+      className={cn(
+        'flex flex-col sm:flex-row items-center justify-between gap-4 mt-6',
+        className,
+      )}
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
         {totalCount !== undefined && (
@@ -117,7 +132,9 @@ export function Pagination({
           </p>
         )}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-[color:var(--ims-muted)] whitespace-nowrap">Rows per page:</span>
+          <span className="text-xs text-[color:var(--ims-muted)] whitespace-nowrap">
+            Rows per page:
+          </span>
           <Select
             className="h-8 w-20 pl-2 pr-8 text-xs py-1"
             value={limit.toString()}
@@ -129,24 +146,47 @@ export function Pagination({
           />
         </div>
       </div>
-      
+
       <div className="flex flex-wrap items-center justify-center gap-1 sm:justify-end">
         {/* Previous */}
         {page > 1 ? (
-          <Link href={buildPaginationHref(pathname, searchParams, page - 1, limit, buildHref)} aria-label="Previous page">
-            <span className={cn(baseClass, 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]')}>
+          <Link
+            href={buildPaginationHref(
+              pathname,
+              searchParams,
+              page - 1,
+              limit,
+              buildHref,
+            )}
+            aria-label="Previous page"
+          >
+            <span
+              className={cn(
+                baseClass,
+                'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]',
+              )}
+            >
               <ChevronLeft className="h-4 w-4" />
             </span>
           </Link>
         ) : (
-          <span className={cn(baseClass, 'cursor-not-allowed opacity-40')} aria-disabled="true">
+          <span
+            className={cn(baseClass, 'cursor-not-allowed opacity-40')}
+            aria-disabled="true"
+          >
             <ChevronLeft className="h-4 w-4" />
           </span>
         )}
 
         {getPaginationPageNumbers(page, totalPages).map((item, idx) =>
           item === 'ellipsis' ? (
-            <span key={`ellipsis-${idx}`} className={cn(baseClass, 'cursor-default text-[color:var(--ims-muted)]')}>
+            <span
+              key={`ellipsis-${idx}`}
+              className={cn(
+                baseClass,
+                'cursor-default text-[color:var(--ims-muted)]',
+              )}
+            >
               …
             </span>
           ) : (
@@ -156,13 +196,30 @@ export function Pagination({
 
         {/* Next */}
         {page < totalPages ? (
-          <Link href={buildPaginationHref(pathname, searchParams, page + 1, limit, buildHref)} aria-label="Next page">
-            <span className={cn(baseClass, 'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]')}>
+          <Link
+            href={buildPaginationHref(
+              pathname,
+              searchParams,
+              page + 1,
+              limit,
+              buildHref,
+            )}
+            aria-label="Next page"
+          >
+            <span
+              className={cn(
+                baseClass,
+                'text-[color:var(--ims-ink)] hover:bg-[color:var(--ims-accent-soft)]',
+              )}
+            >
               <ChevronRight className="h-4 w-4" />
             </span>
           </Link>
         ) : (
-          <span className={cn(baseClass, 'cursor-not-allowed opacity-40')} aria-disabled="true">
+          <span
+            className={cn(baseClass, 'cursor-not-allowed opacity-40')}
+            aria-disabled="true"
+          >
             <ChevronRight className="h-4 w-4" />
           </span>
         )}

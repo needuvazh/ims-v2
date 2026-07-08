@@ -4,13 +4,41 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CountUp } from '@ims/shared-ui';
-import { ArrowRight, BookOpen, Calendar, Award, Sparkles, BarChart, ChevronRight } from 'lucide-react';
+import {
+  ArrowRight,
+  BookOpen,
+  Calendar,
+  Award,
+  Sparkles,
+  BarChart,
+  ChevronRight,
+} from 'lucide-react';
 
 const FEATURES = [
-  { title: "My Courses", desc: "Access your enrolled courses, materials, and assignments.", icon: BookOpen, link: "#" },
-  { title: "Schedule", desc: "View your upcoming classes, exams, and important deadlines.", icon: Calendar, link: "#" },
-  { title: "Results", desc: "Check your academic performance, grades, and feedback.", icon: BarChart, link: "#" },
-  { title: "Certificates", desc: "Download and verify your earned certificates and achievements.", icon: Award, link: "#" },
+  {
+    title: 'My Courses',
+    desc: 'Access your enrolled courses, materials, and assignments.',
+    icon: BookOpen,
+    link: '#',
+  },
+  {
+    title: 'Schedule',
+    desc: 'View your upcoming classes, exams, and important deadlines.',
+    icon: Calendar,
+    link: '#',
+  },
+  {
+    title: 'Results',
+    desc: 'Check your academic performance, grades, and feedback.',
+    icon: BarChart,
+    link: '#',
+  },
+  {
+    title: 'Certificates',
+    desc: 'Download and verify your earned certificates and achievements.',
+    icon: Award,
+    link: '#',
+  },
 ];
 
 const COUNTERS = [
@@ -23,15 +51,26 @@ const COUNTERS = [
 export default function StudentPortalLanding() {
   return (
     <div className="min-h-screen bg-surface-200 font-sans overflow-hidden text-neutral-900">
-      
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-md border-b border-border-light py-4">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 group">
-            <Image src="/alsaud/logo.png" alt="Al-Saud Training Institute" width={156} height={52} className="h-10 w-auto" priority />
-            <span className="font-black text-lg tracking-tight">Student<span className="text-accent-700">Portal</span></span>
+            <Image
+              src="/alsaud/logo.png"
+              alt="Al-Saud Training Institute"
+              width={156}
+              height={52}
+              className="h-10 w-auto"
+              priority
+            />
+            <span className="font-black text-lg tracking-tight">
+              Student<span className="text-accent-700">Portal</span>
+            </span>
           </Link>
-          <Link href="/student/sign-in" className="px-5 py-2 rounded-full bg-primary-900 text-white text-sm font-bold hover:bg-accent-600 transition-colors shadow-md hover:shadow-accent-600/25">
+          <Link
+            href="/student/sign-in"
+            className="px-5 py-2 rounded-full bg-primary-900 text-white text-sm font-bold hover:bg-accent-600 transition-colors shadow-md hover:shadow-accent-600/25"
+          >
             Sign In
           </Link>
         </div>
@@ -39,28 +78,34 @@ export default function StudentPortalLanding() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6">
-        <motion.div 
-          animate={{ scale: [1, 1.05, 1], rotate: [0, 5, 0] }} 
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-200/30 blur-[100px] rounded-full pointer-events-none -z-10" 
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], rotate: [0, 5, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-200/30 blur-[100px] rounded-full pointer-events-none -z-10"
         />
-        <motion.div 
-          animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 0] }} 
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-100/40 blur-[100px] rounded-full pointer-events-none -z-10" 
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-100/40 blur-[100px] rounded-full pointer-events-none -z-10"
         />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border-accent shadow-sm text-accent-700 text-xs font-bold uppercase tracking-widest mb-8">
               <Sparkles className="w-4 h-4" /> Your Learning Hub
             </div>
             <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-tight mb-6">
               Welcome to the <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-700 via-brand-500 to-accent-600">Student Experience.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-700 via-brand-500 to-accent-600">
+                Student Experience.
+              </span>
             </h1>
             <p className="text-lg md:text-xl text-neutral-500 mb-10 max-w-2xl mx-auto">
-              Access your courses, track your progress, and stay connected with your instructors all in one vibrant place.
+              Access your courses, track your progress, and stay connected with
+              your instructors all in one vibrant place.
             </p>
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mb-10">
               {COUNTERS.map((item, index) => (
@@ -71,13 +116,20 @@ export default function StudentPortalLanding() {
                   transition={{ delay: 0.4 + index * 0.08 }}
                   className="rounded-[1.75rem] border border-border-light bg-white p-5 text-left shadow-card"
                 >
-                  <p className="text-2xl font-black text-neutral-950"><CountUp value={item.value} /></p>
-                  <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">{item.label}</p>
+                  <p className="text-2xl font-black text-neutral-950">
+                    <CountUp value={item.value} />
+                  </p>
+                  <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
+                    {item.label}
+                  </p>
                 </motion.div>
               ))}
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/student/sign-in" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-700 to-accent-600 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-primary-700/25 hover:scale-105 transition-transform">
+              <Link
+                href="/student/sign-in"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-700 to-accent-600 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-primary-700/25 hover:scale-105 transition-transform"
+              >
                 Go to Dashboard <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -92,7 +144,7 @@ export default function StudentPortalLanding() {
             {FEATURES.map((feat, idx) => {
               const Icon = feat.icon;
               return (
-                <motion.div 
+                <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -101,14 +153,19 @@ export default function StudentPortalLanding() {
                   className="group relative bg-surface-200 rounded-3xl p-8 border border-border-light hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
                 >
                   <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-white/0 to-brand-100 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150" />
-                  
+
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-primary-700 shadow-md">
                     <Icon className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-xl font-bold mb-3">{feat.title}</h3>
-                  <p className="text-neutral-500 text-sm mb-6 leading-relaxed">{feat.desc}</p>
-                  
-                    <Link href={feat.link} className="inline-flex items-center text-sm font-bold text-accent-700 hover:underline">
+                  <p className="text-neutral-500 text-sm mb-6 leading-relaxed">
+                    {feat.desc}
+                  </p>
+
+                  <Link
+                    href={feat.link}
+                    className="inline-flex items-center text-sm font-bold text-accent-700 hover:underline"
+                  >
                     Explore <ChevronRight className="w-4 h-4 ml-1" />
                   </Link>
                 </motion.div>
@@ -121,7 +178,7 @@ export default function StudentPortalLanding() {
       {/* CTA Section */}
       <section className="py-24 px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -129,18 +186,23 @@ export default function StudentPortalLanding() {
           >
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-accent-600/20 to-transparent pointer-events-none" />
-            
+
             <div className="relative z-10">
               <h2 className="text-4xl font-black mb-4">Ready to continue?</h2>
-              <p className="text-neutral-400 mb-8 max-w-xl mx-auto">Sign in to your account to view your personalized dashboard and resume your courses.</p>
-              <Link href="/student/sign-in" className="inline-flex px-8 py-4 rounded-2xl bg-white text-primary-900 font-bold hover:bg-accent-50 hover:text-accent-700 transition-colors shadow-lg">
+              <p className="text-neutral-400 mb-8 max-w-xl mx-auto">
+                Sign in to your account to view your personalized dashboard and
+                resume your courses.
+              </p>
+              <Link
+                href="/student/sign-in"
+                className="inline-flex px-8 py-4 rounded-2xl bg-white text-primary-900 font-bold hover:bg-accent-50 hover:text-accent-700 transition-colors shadow-lg"
+              >
                 Sign In Now
               </Link>
             </div>
           </motion.div>
         </div>
       </section>
-      
     </div>
   );
 }

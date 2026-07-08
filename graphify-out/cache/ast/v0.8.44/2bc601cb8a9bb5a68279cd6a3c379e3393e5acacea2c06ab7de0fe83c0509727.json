@@ -1,1 +1,767 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "label": "Part 6 \u2013 Permission Matrix.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1"}, {"id": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix", "label": "Part 6 \u2013 Permission Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1"}, {"id": "module_11_certificate_management_part_6_permission_matrix_module_11_certificate_management", "label": "Module 11 \u2013 Certificate Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L3"}, {"id": "module_11_certificate_management_part_6_permission_matrix_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L5"}, {"id": "module_11_certificate_management_part_6_permission_matrix_2_scope_legend", "label": "2. Scope Legend", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L24"}, {"id": "module_11_certificate_management_part_6_permission_matrix_2_1_scope_precedence", "label": "2.1 Scope Precedence", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L36"}, {"id": "module_11_certificate_management_part_6_permission_matrix_3_reference_business_roles", "label": "3. Reference Business Roles", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L56"}, {"id": "module_11_certificate_management_part_6_permission_matrix_3_1_separation_of_duties_recommendation", "label": "3.1 Separation-of-Duties Recommendation", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L75"}, {"id": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog", "label": "4. Permission Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L97"}, {"id": "module_11_certificate_management_part_6_permission_matrix_4_1_menu_level_permissions", "label": "4.1 Menu-Level Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L99"}, {"id": "module_11_certificate_management_part_6_permission_matrix_menu_permission_rule", "label": "Menu Permission Rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L116"}, {"id": "module_11_certificate_management_part_6_permission_matrix_4_2_action_level_permissions", "label": "4.2 Action-Level Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L130"}, {"id": "module_11_certificate_management_part_6_permission_matrix_4_2_1_canonicalization_of_earlier_naming_variants", "label": "4.2.1 Canonicalization of Earlier Naming Variants", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L152"}, {"id": "module_11_certificate_management_part_6_permission_matrix_4_3_report_level_permissions", "label": "4.3 Report-Level Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L167"}, {"id": "module_11_certificate_management_part_6_permission_matrix_report_permission_composition", "label": "Report Permission Composition", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L182"}, {"id": "module_11_certificate_management_part_6_permission_matrix_5_menu_level_role_matrix", "label": "5. Menu-Level Role Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L210"}, {"id": "module_11_certificate_management_part_6_permission_matrix_5_1_menu_matrix_interpretation", "label": "5.1 Menu Matrix Interpretation", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L229"}, {"id": "module_11_certificate_management_part_6_permission_matrix_6_action_level_role_matrix", "label": "6. Action-Level Role Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L237"}, {"id": "module_11_certificate_management_part_6_permission_matrix_6_1_detailed_action_permission_to_role_mapping", "label": "6.1 Detailed Action Permission-to-Role Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L258"}, {"id": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix", "label": "7. Report-Level Role Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L282"}, {"id": "module_11_certificate_management_part_6_permission_matrix_7_1_consolidated_reporting_guard", "label": "7.1 Consolidated Reporting Guard", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L301"}, {"id": "module_11_certificate_management_part_6_permission_matrix_7_2_global_report_guard", "label": "7.2 Global Report Guard", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L312"}, {"id": "module_11_certificate_management_part_6_permission_matrix_8_permission_to_screen_mapping", "label": "8. Permission-to-Screen Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L324"}, {"id": "module_11_certificate_management_part_6_permission_matrix_9_permission_to_api_mapping", "label": "9. Permission-to-API Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L349"}, {"id": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category", "label": "10. Branch-Scoping Rules by Permission Category", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L384"}, {"id": "module_11_certificate_management_part_6_permission_matrix_10_1_branch_scoped_operational_permissions", "label": "10.1 Branch-Scoped Operational Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L386"}, {"id": "module_11_certificate_management_part_6_permission_matrix_10_2_branch_or_global_compliance_permissions", "label": "10.2 Branch or Global Compliance Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L410"}, {"id": "module_11_certificate_management_part_6_permission_matrix_10_3_consolidated_report_permissions", "label": "10.3 Consolidated-Report Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L426"}, {"id": "module_11_certificate_management_part_6_permission_matrix_10_4_self_scoped_permissions", "label": "10.4 Self-Scoped Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L445"}, {"id": "module_11_certificate_management_part_6_permission_matrix_10_5_trainer_scoped_permission", "label": "10.5 Trainer-Scoped Permission", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L455"}, {"id": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables", "label": "11. Authorization Decision Tables", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L465"}, {"id": "module_11_certificate_management_part_6_permission_matrix_11_1_internal_branch_scoped_read", "label": "11.1 Internal Branch-Scoped Read", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L467"}, {"id": "module_11_certificate_management_part_6_permission_matrix_11_2_sensitive_mutation", "label": "11.2 Sensitive Mutation", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L477"}, {"id": "module_11_certificate_management_part_6_permission_matrix_11_3_consolidated_report", "label": "11.3 Consolidated Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L490"}, {"id": "module_11_certificate_management_part_6_permission_matrix_12_field_and_data_visibility_rules", "label": "12. Field and Data Visibility Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L503"}, {"id": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules", "label": "13. Permission Assignment Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L522"}, {"id": "module_11_certificate_management_part_6_permission_matrix_13_1_mandatory_rules", "label": "13.1 Mandatory Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L524"}, {"id": "module_11_certificate_management_part_6_permission_matrix_13_2_recommended_approval_governance_for_high_risk_grants", "label": "13.2 Recommended Approval Governance for High-Risk Grants", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L539"}, {"id": "module_11_certificate_management_part_6_permission_matrix_14_ddd_ownership_and_permission_boundary_check", "label": "14. DDD Ownership and Permission Boundary Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L556"}, {"id": "module_11_certificate_management_part_6_permission_matrix_14_1_permissions_that_must_not_exist_in_this_module", "label": "14.1 Permissions That Must Not Exist in This Module", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L575"}, {"id": "module_11_certificate_management_part_6_permission_matrix_15_audit_requirements_for_permission_sensitive_actions", "label": "15. Audit Requirements for Permission-Sensitive Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L596"}, {"id": "module_11_certificate_management_part_6_permission_matrix_16_negative_authorization_scenarios", "label": "16. Negative Authorization Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L612"}, {"id": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance", "label": "17. Seed and Migration Guidance", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L629"}, {"id": "module_11_certificate_management_part_6_permission_matrix_17_1_menu_permission_seed_list", "label": "17.1 Menu Permission Seed List", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L633"}, {"id": "module_11_certificate_management_part_6_permission_matrix_17_2_action_permission_seed_list", "label": "17.2 Action Permission Seed List", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L648"}, {"id": "module_11_certificate_management_part_6_permission_matrix_17_3_report_permission_seed_list", "label": "17.3 Report Permission Seed List", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L670"}, {"id": "module_11_certificate_management_part_6_permission_matrix_17_4_migration_rule", "label": "17.4 Migration Rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L685"}, {"id": "module_11_certificate_management_part_6_permission_matrix_18_final_permission_model_summary", "label": "18. Final Permission Model Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L696"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_module_11_certificate_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L3", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L5", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_2_scope_legend", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L24", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_2_scope_legend", "target": "module_11_certificate_management_part_6_permission_matrix_2_1_scope_precedence", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L36", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_3_reference_business_roles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L56", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_3_reference_business_roles", "target": "module_11_certificate_management_part_6_permission_matrix_3_1_separation_of_duties_recommendation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L75", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L97", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog", "target": "module_11_certificate_management_part_6_permission_matrix_4_1_menu_level_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L99", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_4_1_menu_level_permissions", "target": "module_11_certificate_management_part_6_permission_matrix_menu_permission_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L116", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog", "target": "module_11_certificate_management_part_6_permission_matrix_4_2_action_level_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L130", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_4_2_action_level_permissions", "target": "module_11_certificate_management_part_6_permission_matrix_4_2_1_canonicalization_of_earlier_naming_variants", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L152", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog", "target": "module_11_certificate_management_part_6_permission_matrix_4_3_report_level_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L167", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_4_3_report_level_permissions", "target": "module_11_certificate_management_part_6_permission_matrix_report_permission_composition", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L182", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_5_menu_level_role_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L210", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_5_menu_level_role_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_5_1_menu_matrix_interpretation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L229", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_6_action_level_role_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L237", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_6_action_level_role_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_6_1_detailed_action_permission_to_role_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L258", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L282", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_7_1_consolidated_reporting_guard", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L301", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix", "target": "module_11_certificate_management_part_6_permission_matrix_7_2_global_report_guard", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L312", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_8_permission_to_screen_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L324", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_9_permission_to_api_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L349", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L384", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category", "target": "module_11_certificate_management_part_6_permission_matrix_10_1_branch_scoped_operational_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L386", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category", "target": "module_11_certificate_management_part_6_permission_matrix_10_2_branch_or_global_compliance_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L410", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category", "target": "module_11_certificate_management_part_6_permission_matrix_10_3_consolidated_report_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L426", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category", "target": "module_11_certificate_management_part_6_permission_matrix_10_4_self_scoped_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L445", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category", "target": "module_11_certificate_management_part_6_permission_matrix_10_5_trainer_scoped_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L455", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L465", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables", "target": "module_11_certificate_management_part_6_permission_matrix_11_1_internal_branch_scoped_read", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L467", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables", "target": "module_11_certificate_management_part_6_permission_matrix_11_2_sensitive_mutation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L477", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables", "target": "module_11_certificate_management_part_6_permission_matrix_11_3_consolidated_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L490", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_12_field_and_data_visibility_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L503", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L522", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules", "target": "module_11_certificate_management_part_6_permission_matrix_13_1_mandatory_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L524", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules", "target": "module_11_certificate_management_part_6_permission_matrix_13_2_recommended_approval_governance_for_high_risk_grants", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L539", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_14_ddd_ownership_and_permission_boundary_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L556", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_14_ddd_ownership_and_permission_boundary_check", "target": "module_11_certificate_management_part_6_permission_matrix_14_1_permissions_that_must_not_exist_in_this_module", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L575", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_15_audit_requirements_for_permission_sensitive_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L596", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_16_negative_authorization_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L612", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L629", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance", "target": "module_11_certificate_management_part_6_permission_matrix_17_1_menu_permission_seed_list", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L633", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance", "target": "module_11_certificate_management_part_6_permission_matrix_17_2_action_permission_seed_list", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L648", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance", "target": "module_11_certificate_management_part_6_permission_matrix_17_3_report_permission_seed_list", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L670", "weight": 1.0}, {"source": "module_11_certificate_management_part_6_permission_matrix_17_3_report_permission_seed_list", "target": "module_11_certificate_management_part_6_permission_matrix_17_4_migration_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L685", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md", "target": "module_11_certificate_management_part_6_permission_matrix_18_final_permission_model_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L696", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "label": "Part 6 \u2013 Permission Matrix.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix",
+      "label": "Part 6 \u2013 Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_module_11_certificate_management",
+      "label": "Module 11 \u2013 Certificate Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_2_scope_legend",
+      "label": "2. Scope Legend",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_2_1_scope_precedence",
+      "label": "2.1 Scope Precedence",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_3_reference_business_roles",
+      "label": "3. Reference Business Roles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_3_1_separation_of_duties_recommendation",
+      "label": "3.1 Separation-of-Duties Recommendation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L75"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog",
+      "label": "4. Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L97"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_4_1_menu_level_permissions",
+      "label": "4.1 Menu-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L99"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_menu_permission_rule",
+      "label": "Menu Permission Rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_4_2_action_level_permissions",
+      "label": "4.2 Action-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L130"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_4_2_1_canonicalization_of_earlier_naming_variants",
+      "label": "4.2.1 Canonicalization of Earlier Naming Variants",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L152"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_4_3_report_level_permissions",
+      "label": "4.3 Report-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L167"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_report_permission_composition",
+      "label": "Report Permission Composition",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L182"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_5_menu_level_role_matrix",
+      "label": "5. Menu-Level Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L210"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_5_1_menu_matrix_interpretation",
+      "label": "5.1 Menu Matrix Interpretation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L229"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_6_action_level_role_matrix",
+      "label": "6. Action-Level Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L237"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_6_1_detailed_action_permission_to_role_mapping",
+      "label": "6.1 Detailed Action Permission-to-Role Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L258"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix",
+      "label": "7. Report-Level Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L282"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_7_1_consolidated_reporting_guard",
+      "label": "7.1 Consolidated Reporting Guard",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L301"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_7_2_global_report_guard",
+      "label": "7.2 Global Report Guard",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L312"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_8_permission_to_screen_mapping",
+      "label": "8. Permission-to-Screen Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L324"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_9_permission_to_api_mapping",
+      "label": "9. Permission-to-API Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L349"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category",
+      "label": "10. Branch-Scoping Rules by Permission Category",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L384"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_10_1_branch_scoped_operational_permissions",
+      "label": "10.1 Branch-Scoped Operational Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L386"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_10_2_branch_or_global_compliance_permissions",
+      "label": "10.2 Branch or Global Compliance Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L410"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_10_3_consolidated_report_permissions",
+      "label": "10.3 Consolidated-Report Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L426"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_10_4_self_scoped_permissions",
+      "label": "10.4 Self-Scoped Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L445"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_10_5_trainer_scoped_permission",
+      "label": "10.5 Trainer-Scoped Permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L455"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables",
+      "label": "11. Authorization Decision Tables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L465"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_11_1_internal_branch_scoped_read",
+      "label": "11.1 Internal Branch-Scoped Read",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L467"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_11_2_sensitive_mutation",
+      "label": "11.2 Sensitive Mutation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L477"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_11_3_consolidated_report",
+      "label": "11.3 Consolidated Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L490"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_12_field_and_data_visibility_rules",
+      "label": "12. Field and Data Visibility Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L503"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules",
+      "label": "13. Permission Assignment Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L522"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_13_1_mandatory_rules",
+      "label": "13.1 Mandatory Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L524"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_13_2_recommended_approval_governance_for_high_risk_grants",
+      "label": "13.2 Recommended Approval Governance for High-Risk Grants",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L539"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_14_ddd_ownership_and_permission_boundary_check",
+      "label": "14. DDD Ownership and Permission Boundary Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L556"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_14_1_permissions_that_must_not_exist_in_this_module",
+      "label": "14.1 Permissions That Must Not Exist in This Module",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L575"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_15_audit_requirements_for_permission_sensitive_actions",
+      "label": "15. Audit Requirements for Permission-Sensitive Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L596"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_16_negative_authorization_scenarios",
+      "label": "16. Negative Authorization Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L612"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance",
+      "label": "17. Seed and Migration Guidance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L629"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_17_1_menu_permission_seed_list",
+      "label": "17.1 Menu Permission Seed List",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L633"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_17_2_action_permission_seed_list",
+      "label": "17.2 Action Permission Seed List",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L648"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_17_3_report_permission_seed_list",
+      "label": "17.3 Report Permission Seed List",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L670"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_17_4_migration_rule",
+      "label": "17.4 Migration Rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L685"
+    },
+    {
+      "id": "module_11_certificate_management_part_6_permission_matrix_18_final_permission_model_summary",
+      "label": "18. Final Permission Model Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L696"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_module_11_certificate_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_2_scope_legend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_2_scope_legend",
+      "target": "module_11_certificate_management_part_6_permission_matrix_2_1_scope_precedence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_3_reference_business_roles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_3_reference_business_roles",
+      "target": "module_11_certificate_management_part_6_permission_matrix_3_1_separation_of_duties_recommendation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L97",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog",
+      "target": "module_11_certificate_management_part_6_permission_matrix_4_1_menu_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_4_1_menu_level_permissions",
+      "target": "module_11_certificate_management_part_6_permission_matrix_menu_permission_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog",
+      "target": "module_11_certificate_management_part_6_permission_matrix_4_2_action_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_4_2_action_level_permissions",
+      "target": "module_11_certificate_management_part_6_permission_matrix_4_2_1_canonicalization_of_earlier_naming_variants",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_4_permission_catalog",
+      "target": "module_11_certificate_management_part_6_permission_matrix_4_3_report_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_4_3_report_level_permissions",
+      "target": "module_11_certificate_management_part_6_permission_matrix_report_permission_composition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L182",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_5_menu_level_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L210",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_5_menu_level_role_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_5_1_menu_matrix_interpretation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_6_action_level_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L237",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_6_action_level_role_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_6_1_detailed_action_permission_to_role_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L258",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L282",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_7_1_consolidated_reporting_guard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_7_report_level_role_matrix",
+      "target": "module_11_certificate_management_part_6_permission_matrix_7_2_global_report_guard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L312",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_8_permission_to_screen_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L324",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_9_permission_to_api_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L349",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category",
+      "target": "module_11_certificate_management_part_6_permission_matrix_10_1_branch_scoped_operational_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L386",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category",
+      "target": "module_11_certificate_management_part_6_permission_matrix_10_2_branch_or_global_compliance_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L410",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category",
+      "target": "module_11_certificate_management_part_6_permission_matrix_10_3_consolidated_report_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L426",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category",
+      "target": "module_11_certificate_management_part_6_permission_matrix_10_4_self_scoped_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L445",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_10_branch_scoping_rules_by_permission_category",
+      "target": "module_11_certificate_management_part_6_permission_matrix_10_5_trainer_scoped_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L455",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L465",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables",
+      "target": "module_11_certificate_management_part_6_permission_matrix_11_1_internal_branch_scoped_read",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L467",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables",
+      "target": "module_11_certificate_management_part_6_permission_matrix_11_2_sensitive_mutation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L477",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_11_authorization_decision_tables",
+      "target": "module_11_certificate_management_part_6_permission_matrix_11_3_consolidated_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L490",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_12_field_and_data_visibility_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L503",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L522",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules",
+      "target": "module_11_certificate_management_part_6_permission_matrix_13_1_mandatory_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L524",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_13_permission_assignment_rules",
+      "target": "module_11_certificate_management_part_6_permission_matrix_13_2_recommended_approval_governance_for_high_risk_grants",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L539",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_14_ddd_ownership_and_permission_boundary_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L556",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_14_ddd_ownership_and_permission_boundary_check",
+      "target": "module_11_certificate_management_part_6_permission_matrix_14_1_permissions_that_must_not_exist_in_this_module",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L575",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_15_audit_requirements_for_permission_sensitive_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L596",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_16_negative_authorization_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L612",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L629",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance",
+      "target": "module_11_certificate_management_part_6_permission_matrix_17_1_menu_permission_seed_list",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L633",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance",
+      "target": "module_11_certificate_management_part_6_permission_matrix_17_2_action_permission_seed_list",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L648",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_17_seed_and_migration_guidance",
+      "target": "module_11_certificate_management_part_6_permission_matrix_17_3_report_permission_seed_list",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L670",
+      "weight": 1.0
+    },
+    {
+      "source": "module_11_certificate_management_part_6_permission_matrix_17_3_report_permission_seed_list",
+      "target": "module_11_certificate_management_part_6_permission_matrix_17_4_migration_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L685",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_11_certificate_management_part_6_permission_matrix_md",
+      "target": "module_11_certificate_management_part_6_permission_matrix_18_final_permission_model_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 11 - Certificate Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L696",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

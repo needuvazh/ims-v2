@@ -1,5 +1,8 @@
 import type { PrismaClient } from '@prisma/client';
-import type { INotificationRepository, NotificationDto } from '@ims/identity-access';
+import type {
+  INotificationRepository,
+  NotificationDto,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaNotificationRepository implements INotificationRepository {
@@ -49,7 +52,10 @@ export class PrismaNotificationRepository implements INotificationRepository {
     return this.mapNotification(row);
   }
 
-  async markSent(id: Uuid, providerResponse?: unknown): Promise<NotificationDto> {
+  async markSent(
+    id: Uuid,
+    providerResponse?: unknown,
+  ): Promise<NotificationDto> {
     const row = await this.prisma.notification.update({
       where: { id },
       data: {
@@ -60,7 +66,10 @@ export class PrismaNotificationRepository implements INotificationRepository {
     return this.mapNotification(row);
   }
 
-  async markFailed(id: Uuid, providerResponse?: unknown): Promise<NotificationDto> {
+  async markFailed(
+    id: Uuid,
+    providerResponse?: unknown,
+  ): Promise<NotificationDto> {
     const row = await this.prisma.notification.update({
       where: { id },
       data: {

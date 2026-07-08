@@ -9,7 +9,9 @@ export default function StudentCertificatesPage() {
         description="Placeholder for issued certificate history and verification links."
       />
       <Card>
-        <p className="text-sm text-[color:var(--ims-muted)]">Certificate issuance remains owned by the certificates package.</p>
+        <p className="text-sm text-[color:var(--ims-muted)]">
+          Certificate issuance remains owned by the certificates package.
+        </p>
       </Card>
     </div>
   );

@@ -13,7 +13,9 @@ describe('identity form error mapping', () => {
     );
 
     expect(failure.error).toBe('A user with that email already exists.');
-    expect(failure.fieldErrors?.email).toBe('A user with that email already exists.');
+    expect(failure.fieldErrors?.email).toBe(
+      'A user with that email already exists.',
+    );
   });
 
   it('maps generic errors with errorCode (like IamError) to the configured field', () => {
@@ -36,7 +38,9 @@ describe('identity form error mapping', () => {
   });
 
   it('maps prisma unique constraint errors to the configured field message', () => {
-    const error = Object.create(Prisma.PrismaClientKnownRequestError.prototype) as Prisma.PrismaClientKnownRequestError;
+    const error = Object.create(
+      Prisma.PrismaClientKnownRequestError.prototype,
+    ) as Prisma.PrismaClientKnownRequestError;
     error.code = 'P2002';
     error.meta = { target: ['roleCode'] };
 
@@ -46,12 +50,19 @@ describe('identity form error mapping', () => {
       { roleCode: 'SUPER_ADMIN' },
       {
         prisma: { roleCode: 'roleCode' },
-        prismaMessages: { roleCode: 'Role code already exists. Please use a different role code.' },
+        prismaMessages: {
+          roleCode:
+            'Role code already exists. Please use a different role code.',
+        },
       },
     );
 
-    expect(failure.error).toBe('This value already exists. Please use a different value.');
-    expect(failure.fieldErrors?.roleCode).toBe('Role code already exists. Please use a different role code.');
+    expect(failure.error).toBe(
+      'This value already exists. Please use a different value.',
+    );
+    expect(failure.fieldErrors?.roleCode).toBe(
+      'Role code already exists. Please use a different role code.',
+    );
   });
 
   it('extracts form values correctly, concatenating duplicate keys (like checkboxes) with commas', () => {

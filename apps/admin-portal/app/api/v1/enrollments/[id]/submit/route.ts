@@ -25,58 +25,79 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
-export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: enrollmentId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'enrollment.submit', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'enrollment.submit', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { enrollmentService, branchScopeResolver } = await import('../../../../../../lib/runtime');
+        try {
+          const { enrollmentService, branchScopeResolver } =
+            await import('../../../../../../lib/runtime');
 
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
 
-      // Fetch enrollment to verify branch scope before modifying
-      const prisma = (await import('../../../../../../lib/runtime')).prisma;
-      const enrollment = await prisma.enrollment.findUnique({
-        where: { id: enrollmentId },
-      });
+          // Fetch enrollment to verify branch scope before modifying
+          const prisma = (await import('../../../../../../lib/runtime')).prisma;
+          const enrollment = await prisma.enrollment.findUnique({
+            where: { id: enrollmentId },
+          });
 
-      if (!enrollment) {
-        throw new Error('ERR_ENROLLMENT_NOT_FOUND');
-      }
+          if (!enrollment) {
+            throw new Error('ERR_ENROLLMENT_NOT_FOUND');
+          }
 
-      if (!allowedBranches.includes(enrollment.branchId as Uuid)) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          if (!allowedBranches.includes(enrollment.branchId as Uuid)) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      await enrollmentService.submitEnrollment(enrollmentId, session.userId);
+          await enrollmentService.submitEnrollment(
+            enrollmentId,
+            session.userId,
+          );
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          message: 'Enrollment submitted successfully.',
-        },
-        { status: 200 }
-      );
+          const response = NextResponse.json(
+            {
+              success: true,
+              message: 'Enrollment submitted successfully.',
+            },
+            { status: 200 },
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/enrollments/[id]/submit',
-        method: request.method,
-        status: 'success',
-      });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/enrollments/[id]/submit',
+            method: request.method,
+            status: 'success',
+          });
 
-      return response;
-    } catch (error) {
-      logger.error('api.enrollments.submit.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/enrollments/[id]/submit' });
+          return response;
+        } catch (error) {
+          logger.error('api.enrollments.submit.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return errorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/enrollments/[id]/submit' },
+  );
 }

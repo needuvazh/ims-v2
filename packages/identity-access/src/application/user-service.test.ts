@@ -74,7 +74,11 @@ function createRole(overrides: Partial<Role> = {}): Role {
   };
 }
 
-function createBranchAccess(userId: string, branchId: string, overrides: Partial<UserBranchAccess> = {}): UserBranchAccess {
+function createBranchAccess(
+  userId: string,
+  branchId: string,
+  overrides: Partial<UserBranchAccess> = {},
+): UserBranchAccess {
   return {
     id: crypto.randomUUID(),
     userId: userId as never,
@@ -110,9 +114,26 @@ describe('UserService', () => {
   const people = new Map<string, Person>();
   const roles = new Map<string, Role>();
   const branchAccess = new Map<string, UserBranchAccess[]>();
-  const activationTokens = new Map<string, { userId: string; tokenHash: string; expiresAt: Date; status: 'Pending' | 'Used' | 'Expired'; createdAt: Date; usedAt: Date | null }>();
-  const passwordResetTokens = new Map<string, { id: string; userId: string; tokenHash: string; expiresAt: Date }>();
-  const notifications: Array<{ subject: string; body: string; metadata: unknown }> = [];
+  const activationTokens = new Map<
+    string,
+    {
+      userId: string;
+      tokenHash: string;
+      expiresAt: Date;
+      status: 'Pending' | 'Used' | 'Expired';
+      createdAt: Date;
+      usedAt: Date | null;
+    }
+  >();
+  const passwordResetTokens = new Map<
+    string,
+    { id: string; userId: string; tokenHash: string; expiresAt: Date }
+  >();
+  const notifications: Array<{
+    subject: string;
+    body: string;
+    metadata: unknown;
+  }> = [];
   const outbox: Array<{ eventType: string }> = [];
   const sessions = new Map<string, UserSessionDto>();
 
@@ -128,21 +149,35 @@ describe('UserService', () => {
     sessions.clear();
 
     const person = createPerson();
-    const user = createUser({ personId: person.id, email: person.mobile ? 'current@example.com' : 'current@example.com' });
+    const user = createUser({
+      personId: person.id,
+      email: person.mobile ? 'current@example.com' : 'current@example.com',
+    });
     const branchId = '11111111-1111-1111-1111-111111111111';
     const role = createRole();
 
     people.set(person.id, person);
     users.set(user.id, user);
     roles.set(role.id, role);
-    branchAccess.set(user.id, [createBranchAccess(user.id, branchId, { isDefault: true })]);
+    branchAccess.set(user.id, [
+      createBranchAccess(user.id, branchId, { isDefault: true }),
+    ]);
 
     userRepo = {
       findById: async (id) => users.get(id) ?? null,
-      findByEmail: async (email) => Array.from(users.values()).find((candidate) => candidate.email === email) ?? null,
-      findByUsername: async (username) => Array.from(users.values()).find((candidate) => candidate.username === username) ?? null,
+      findByEmail: async (email) =>
+        Array.from(users.values()).find(
+          (candidate) => candidate.email === email,
+        ) ?? null,
+      findByUsername: async (username) =>
+        Array.from(users.values()).find(
+          (candidate) => candidate.username === username,
+        ) ?? null,
       findPersonById: async (id) => people.get(id) ?? null,
-      findPersonByMobile: async (mobile) => Array.from(people.values()).find((candidate) => candidate.mobile === mobile) ?? null,
+      findPersonByMobile: async (mobile) =>
+        Array.from(people.values()).find(
+          (candidate) => candidate.mobile === mobile,
+        ) ?? null,
       create: async (nextUser, personRecord) => {
         users.set(nextUser.id, nextUser);
         people.set(personRecord.id, personRecord);
@@ -154,13 +189,24 @@ describe('UserService', () => {
         return nextUser;
       },
       search: async (filters) => {
-        const items = Array.from(users.values()).filter((candidate) => !filters.branchId || branchAccess.get(candidate.id)?.some((access) => access.branchId === filters.branchId));
+        const items = Array.from(users.values()).filter(
+          (candidate) =>
+            !filters.branchId ||
+            branchAccess
+              .get(candidate.id)
+              ?.some((access) => access.branchId === filters.branchId),
+        );
         return { items, total: items.length };
       },
       getPasswordHash: async () => null,
       updatePassword: async () => undefined,
       createResetToken: async ({ id, userId, tokenHash, expiresAt }) => {
-        passwordResetTokens.set(tokenHash, { id: String(id), userId: String(userId), tokenHash, expiresAt });
+        passwordResetTokens.set(tokenHash, {
+          id: String(id),
+          userId: String(userId),
+          tokenHash,
+          expiresAt,
+        });
       },
       findResetTokenByHash: async () => null,
       markResetTokenAsUsed: async () => undefined,
@@ -168,7 +214,10 @@ describe('UserService', () => {
 
     roleRepo = {
       findById: async (id) => roles.get(id) ?? null,
-      findByCode: async (code) => Array.from(roles.values()).find((candidate) => candidate.roleCode === code) ?? null,
+      findByCode: async (code) =>
+        Array.from(roles.values()).find(
+          (candidate) => candidate.roleCode === code,
+        ) ?? null,
       create: async (roleRecord) => {
         roles.set(roleRecord.id, roleRecord);
         return roleRecord;
@@ -177,13 +226,43 @@ describe('UserService', () => {
         roles.set(roleRecord.id, roleRecord);
         return roleRecord;
       },
-      search: async () => ({ items: Array.from(roles.values()), total: roles.size }),
+      search: async () => ({
+        items: Array.from(roles.values()),
+        total: roles.size,
+      }),
       assignRoleToUser: async () => undefined,
       revokeRoleFromUser: async () => undefined,
-      listRolesForUser: async (userId) => (branchAccess.get(userId) ? [{ role: role, status: 'Active', revokedAt: null, revokedBy: null, reason: null }] : []),
+      listRolesForUser: async (userId) =>
+        branchAccess.get(userId)
+          ? [
+              {
+                role: role,
+                status: 'Active',
+                revokedAt: null,
+                revokedBy: null,
+                reason: null,
+              },
+            ]
+          : [],
       assignPermissionToRole: async () => undefined,
       removePermissionFromRole: async () => undefined,
-      listPermissionsForRole: async () => [{ id: crypto.randomUUID() as never, permissionCode: 'iam.user.read', permissionName: 'Read users', permissionType: 'Action', description: null, status: 'Active', createdAt: new Date(), createdBy: null, updatedAt: null, updatedBy: null, deletedAt: null, deletedBy: null, isDeleted: false }],
+      listPermissionsForRole: async () => [
+        {
+          id: crypto.randomUUID() as never,
+          permissionCode: 'iam.user.read',
+          permissionName: 'Read users',
+          permissionType: 'Action',
+          description: null,
+          status: 'Active',
+          createdAt: new Date(),
+          createdBy: null,
+          updatedAt: null,
+          updatedBy: null,
+          deletedAt: null,
+          deletedBy: null,
+          isDeleted: false,
+        },
+      ],
     };
 
     branchAccessRepo = {
@@ -226,7 +305,11 @@ describe('UserService', () => {
 
     notificationRepo = {
       create: async (notification) => {
-        notifications.push({ subject: notification.subject, body: notification.body, metadata: notification.metadata });
+        notifications.push({
+          subject: notification.subject,
+          body: notification.body,
+          metadata: notification.metadata,
+        });
         return notification;
       },
       update: async (notification) => notification,
@@ -246,7 +329,10 @@ describe('UserService', () => {
     sessionRepo = {
       create: async (session) => session,
       findById: async (id) => sessions.get(String(id)) ?? null,
-      findByAccessTokenJti: async (jti) => Array.from(sessions.values()).find((session) => session.accessTokenJti === jti) ?? null,
+      findByAccessTokenJti: async (jti) =>
+        Array.from(sessions.values()).find(
+          (session) => session.accessTokenJti === jti,
+        ) ?? null,
       findByHashedRefreshToken: async () => null,
       update: async (session) => {
         sessions.set(String(session.id), session);
@@ -258,47 +344,80 @@ describe('UserService', () => {
           if (session.userId === userId) session.status = 'Revoked';
         }
       },
-      listActiveForUser: async () => Array.from(sessions.values()).filter((session) => session.status === 'Active'),
+      listActiveForUser: async () =>
+        Array.from(sessions.values()).filter(
+          (session) => session.status === 'Active',
+        ),
     };
 
-    userService = new UserService(userRepo, roleRepo, branchAccessRepo, activationTokenRepo, securityPolicyRepo, auditRepo, notificationRepo, outboxRepo, sessionRepo);
+    userService = new UserService(
+      userRepo,
+      roleRepo,
+      branchAccessRepo,
+      activationTokenRepo,
+      securityPolicyRepo,
+      auditRepo,
+      notificationRepo,
+      outboxRepo,
+      sessionRepo,
+    );
   });
 
   it('creates a user with role, branch access, notification, outbox, and audit records', async () => {
     const roleId = Array.from(roles.keys())[0];
-    const user = await userService.createUser({
-      email: 'new.user@example.com',
-      userType: 'Admin',
-      roleIds: [roleId],
-      branchIds: ['11111111-1111-1111-1111-111111111111'],
-      defaultBranchId: '11111111-1111-1111-1111-111111111111',
-      firstName: 'New',
-      lastName: 'User',
-      mobile: '+96891111111',
-    }, { actorId: 'actor-1', actorPermissions: ['iam.user.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' });
+    const user = await userService.createUser(
+      {
+        email: 'new.user@example.com',
+        userType: 'Admin',
+        roleIds: [roleId],
+        branchIds: ['11111111-1111-1111-1111-111111111111'],
+        defaultBranchId: '11111111-1111-1111-1111-111111111111',
+        firstName: 'New',
+        lastName: 'User',
+        mobile: '+96891111111',
+      },
+      {
+        actorId: 'actor-1',
+        actorPermissions: ['iam.user.create'],
+        activeBranchId: '11111111-1111-1111-1111-111111111111',
+      },
+    );
 
     expect(user.email).toBe('new.user@example.com');
     expect(branchAccess.get(user.id)?.length).toBe(1);
     expect(notifications).toHaveLength(1);
     expect(outbox).toEqual([{ eventType: 'UserCreated' }]);
-    expect((await auditRepo.list()).some((entry) => entry.action === 'iam.user.created')).toBe(true);
+    expect(
+      (await auditRepo.list()).some(
+        (entry) => entry.action === 'iam.user.created',
+      ),
+    ).toBe(true);
   });
 
   it('records audit entries with the required metadata fields', async () => {
     const roleId = Array.from(roles.keys())[0];
 
-    await userService.createUser({
-      email: 'audit.fields@example.com',
-      userType: 'Admin',
-      roleIds: [roleId],
-      branchIds: ['11111111-1111-1111-1111-111111111111'],
-      defaultBranchId: '11111111-1111-1111-1111-111111111111',
-      firstName: 'Audit',
-      lastName: 'Fields',
-      mobile: '+96895555555',
-    }, { actorId: 'actor-1', actorPermissions: ['iam.user.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' });
+    await userService.createUser(
+      {
+        email: 'audit.fields@example.com',
+        userType: 'Admin',
+        roleIds: [roleId],
+        branchIds: ['11111111-1111-1111-1111-111111111111'],
+        defaultBranchId: '11111111-1111-1111-1111-111111111111',
+        firstName: 'Audit',
+        lastName: 'Fields',
+        mobile: '+96895555555',
+      },
+      {
+        actorId: 'actor-1',
+        actorPermissions: ['iam.user.create'],
+        activeBranchId: '11111111-1111-1111-1111-111111111111',
+      },
+    );
 
-    const auditEntry = (await auditRepo.list()).find((entry) => entry.action === 'iam.user.created');
+    const auditEntry = (await auditRepo.list()).find(
+      (entry) => entry.action === 'iam.user.created',
+    );
     expect(auditEntry).toMatchObject({
       performedBy: 'actor-1',
       entityType: 'User',
@@ -311,42 +430,73 @@ describe('UserService', () => {
   });
 
   it('rejects user creation without role or branch assignments', async () => {
-    await expect(userService.createUser({
-      email: 'no-role@example.com',
-      userType: 'Admin',
-      roleIds: [],
-      branchIds: ['11111111-1111-1111-1111-111111111111'],
-      firstName: 'No',
-      lastName: 'Role',
-      mobile: '+96892222222',
-    }, { actorId: 'actor-1', actorPermissions: ['iam.user.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' })).rejects.toMatchObject({ errorCode: 'IAM-VAL-008' });
+    await expect(
+      userService.createUser(
+        {
+          email: 'no-role@example.com',
+          userType: 'Admin',
+          roleIds: [],
+          branchIds: ['11111111-1111-1111-1111-111111111111'],
+          firstName: 'No',
+          lastName: 'Role',
+          mobile: '+96892222222',
+        },
+        {
+          actorId: 'actor-1',
+          actorPermissions: ['iam.user.create'],
+          activeBranchId: '11111111-1111-1111-1111-111111111111',
+        },
+      ),
+    ).rejects.toMatchObject({ errorCode: 'IAM-VAL-008' });
 
-    await expect(userService.createUser({
-      email: 'no-branch@example.com',
-      userType: 'Admin',
-      roleIds: [Array.from(roles.keys())[0]],
-      branchIds: [],
-      firstName: 'No',
-      lastName: 'Branch',
-      mobile: '+96893333333',
-    }, { actorId: 'actor-1', actorPermissions: ['iam.user.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' })).rejects.toMatchObject({ errorCode: 'IAM-VAL-007' });
+    await expect(
+      userService.createUser(
+        {
+          email: 'no-branch@example.com',
+          userType: 'Admin',
+          roleIds: [Array.from(roles.keys())[0]],
+          branchIds: [],
+          firstName: 'No',
+          lastName: 'Branch',
+          mobile: '+96893333333',
+        },
+        {
+          actorId: 'actor-1',
+          actorPermissions: ['iam.user.create'],
+          activeBranchId: '11111111-1111-1111-1111-111111111111',
+        },
+      ),
+    ).rejects.toMatchObject({ errorCode: 'IAM-VAL-007' });
   });
 
   it('rejects duplicate user email', async () => {
-    await expect(userService.createUser({
-      email: 'current@example.com',
-      userType: 'Admin',
-      roleIds: [Array.from(roles.keys())[0]],
-      branchIds: ['11111111-1111-1111-1111-111111111111'],
-      firstName: 'Dup',
-      lastName: 'Email',
-      mobile: '+96894444444',
-    }, { actorId: 'actor-1', actorPermissions: ['iam.user.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' })).rejects.toMatchObject({ errorCode: 'IAM-VAL-001' });
+    await expect(
+      userService.createUser(
+        {
+          email: 'current@example.com',
+          userType: 'Admin',
+          roleIds: [Array.from(roles.keys())[0]],
+          branchIds: ['11111111-1111-1111-1111-111111111111'],
+          firstName: 'Dup',
+          lastName: 'Email',
+          mobile: '+96894444444',
+        },
+        {
+          actorId: 'actor-1',
+          actorPermissions: ['iam.user.create'],
+          activeBranchId: '11111111-1111-1111-1111-111111111111',
+        },
+      ),
+    ).rejects.toMatchObject({ errorCode: 'IAM-VAL-001' });
   });
 
   it('correctly reports if an email or mobile number exists', async () => {
-    expect(await userService.checkEmailExists('current@example.com')).toBe(true);
-    expect(await userService.checkEmailExists('nonexistent@example.com')).toBe(false);
+    expect(await userService.checkEmailExists('current@example.com')).toBe(
+      true,
+    );
+    expect(await userService.checkEmailExists('nonexistent@example.com')).toBe(
+      false,
+    );
     expect(await userService.checkMobileExists('+96890000000')).toBe(true);
     expect(await userService.checkMobileExists('+96800000000')).toBe(false);
   });
@@ -354,17 +504,26 @@ describe('UserService', () => {
   it('escapes user name fields before storing them', async () => {
     const roleId = Array.from(roles.keys())[0];
 
-    const created = await userService.createUser({
-      email: 'xss@example.com',
-      userType: 'Admin',
-      roleIds: [roleId],
-      branchIds: ['11111111-1111-1111-1111-111111111111'],
-      firstName: '<script>alert(1)</script>',
-      lastName: 'User',
-      mobile: '+96896666666',
-    }, { actorId: 'actor-1', actorPermissions: ['iam.user.create'], activeBranchId: '11111111-1111-1111-1111-111111111111' });
+    const created = await userService.createUser(
+      {
+        email: 'xss@example.com',
+        userType: 'Admin',
+        roleIds: [roleId],
+        branchIds: ['11111111-1111-1111-1111-111111111111'],
+        firstName: '<script>alert(1)</script>',
+        lastName: 'User',
+        mobile: '+96896666666',
+      },
+      {
+        actorId: 'actor-1',
+        actorPermissions: ['iam.user.create'],
+        activeBranchId: '11111111-1111-1111-1111-111111111111',
+      },
+    );
 
-    expect(people.get(created.personId)?.firstName).toBe('&lt;script&gt;alert(1)&lt;/script&gt;');
+    expect(people.get(created.personId)?.firstName).toBe(
+      '&lt;script&gt;alert(1)&lt;/script&gt;',
+    );
   });
 
   it('exposes an append-only audit repository surface', () => {
@@ -374,16 +533,49 @@ describe('UserService', () => {
 
   it('updates user profile and branch assignments', async () => {
     const userId = Array.from(users.keys())[0];
-    await userService.updateUser(userId, { fullName: 'Updated User', branchIds: ['22222222-2222-2222-2222-222222222222'] }, { actorId: 'actor-1', actorPermissions: ['iam.user.update'], activeBranchId: null });
+    await userService.updateUser(
+      userId,
+      {
+        fullName: 'Updated User',
+        branchIds: ['22222222-2222-2222-2222-222222222222'],
+      },
+      {
+        actorId: 'actor-1',
+        actorPermissions: ['iam.user.update'],
+        activeBranchId: null,
+      },
+    );
 
     expect(people.get(users.get(userId)!.personId)?.firstName).toBe('Updated');
-    expect(branchAccess.get(userId)?.some((access) => access.branchId === '22222222-2222-2222-2222-222222222222' && access.status === 'Active')).toBe(true);
-    expect(branchAccess.get(userId)?.some((access) => access.branchId === '11111111-1111-1111-1111-111111111111' && access.status === 'Revoked')).toBe(true);
+    expect(
+      branchAccess
+        .get(userId)
+        ?.some(
+          (access) =>
+            access.branchId === '22222222-2222-2222-2222-222222222222' &&
+            access.status === 'Active',
+        ),
+    ).toBe(true);
+    expect(
+      branchAccess
+        .get(userId)
+        ?.some(
+          (access) =>
+            access.branchId === '11111111-1111-1111-1111-111111111111' &&
+            access.status === 'Revoked',
+        ),
+    ).toBe(true);
   });
 
   it('enforces branch scope when reading a user', async () => {
     const userId = Array.from(users.keys())[0];
-    await expect(userService.getUserById(userId, { actorId: 'actor-1', actorPermissions: ['iam.user.read'], activeBranchId: '22222222-2222-2222-2222-222222222222' })).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      userService.getUserById(userId, {
+        actorId: 'actor-1',
+        actorPermissions: ['iam.user.read'],
+        activeBranchId: '22222222-2222-2222-2222-222222222222',
+      }),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 
   it('reads a user by email and enforces branch scope', async () => {
@@ -391,11 +583,21 @@ describe('UserService', () => {
     const userEmail = users.get(userId)!.email;
 
     // Normal lookup
-    const found = await userService.getUserByEmail(userEmail, { actorId: 'actor-1', actorPermissions: ['iam.user.read'], activeBranchId: null });
+    const found = await userService.getUserByEmail(userEmail, {
+      actorId: 'actor-1',
+      actorPermissions: ['iam.user.read'],
+      activeBranchId: null,
+    });
     expect(found.id).toBe(userId);
 
     // Branch scoping
-    await expect(userService.getUserByEmail(userEmail, { actorId: 'actor-1', actorPermissions: ['iam.user.read'], activeBranchId: '22222222-2222-2222-2222-222222222222' })).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      userService.getUserByEmail(userEmail, {
+        actorId: 'actor-1',
+        actorPermissions: ['iam.user.read'],
+        activeBranchId: '22222222-2222-2222-2222-222222222222',
+      }),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 
   it('suspends, archives, and unlocks with session revocation', async () => {
@@ -415,36 +617,66 @@ describe('UserService', () => {
       createdAt: new Date(),
     });
 
-    await userService.suspendUser(userId, { actorId: 'actor-1', actorPermissions: ['iam.user.suspend'], activeBranchId: null });
+    await userService.suspendUser(userId, {
+      actorId: 'actor-1',
+      actorPermissions: ['iam.user.suspend'],
+      activeBranchId: null,
+    });
     expect(users.get(userId)?.status).toBe('Suspended');
 
     users.get(userId)!.status = 'Locked';
     users.get(userId)!.failedLoginCount = 4;
     users.get(userId)!.lockedUntil = new Date();
-    await userService.unlockUser(userId, { actorId: 'actor-1', actorPermissions: ['iam.user.unlock'], activeBranchId: null });
+    await userService.unlockUser(userId, {
+      actorId: 'actor-1',
+      actorPermissions: ['iam.user.unlock'],
+      activeBranchId: null,
+    });
     expect(users.get(userId)?.status).toBe('Active');
     expect(users.get(userId)?.failedLoginCount).toBe(0);
 
-    await userService.archiveUser(userId, { actorId: 'actor-1', actorPermissions: ['iam.user.archive'], activeBranchId: null });
+    await userService.archiveUser(userId, {
+      actorId: 'actor-1',
+      actorPermissions: ['iam.user.archive'],
+      activeBranchId: null,
+    });
     expect(users.get(userId)?.status).toBe('Archived');
     expect(users.get(userId)?.isDeleted).toBe(true);
-    expect(Array.from(sessions.values()).every((session) => session.status === 'Revoked')).toBe(true);
+    expect(
+      Array.from(sessions.values()).every(
+        (session) => session.status === 'Revoked',
+      ),
+    ).toBe(true);
   });
 
   it('creates an admin reset password request', async () => {
     const userId = Array.from(users.keys())[0];
 
-    await userService.adminResetPassword(userId, { actorId: 'actor-1', actorPermissions: ['iam.user.reset-password'], activeBranchId: null });
+    await userService.adminResetPassword(userId, {
+      actorId: 'actor-1',
+      actorPermissions: ['iam.user.reset-password'],
+      activeBranchId: null,
+    });
 
     expect(passwordResetTokens.size).toBe(1);
     expect(notifications[0]?.subject).toContain('Password Reset Request');
-    expect((await auditRepo.list()).some((entry) => entry.action === 'iam.user.admin-reset-password-requested')).toBe(true);
+    expect(
+      (await auditRepo.list()).some(
+        (entry) => entry.action === 'iam.user.admin-reset-password-requested',
+      ),
+    ).toBe(true);
   });
 
   it('activates an account via token and rejects expired activation tokens', async () => {
     const userId = Array.from(users.keys())[0];
-    const tokenHash = crypto.createHash('sha256').update('activation-token').digest('hex');
-    const expiredHash = crypto.createHash('sha256').update('expired-activation').digest('hex');
+    const tokenHash = crypto
+      .createHash('sha256')
+      .update('activation-token')
+      .digest('hex');
+    const expiredHash = crypto
+      .createHash('sha256')
+      .update('expired-activation')
+      .digest('hex');
 
     users.get(userId)!.status = 'PendingActivation';
     activationTokens.set(tokenHash, {
@@ -470,53 +702,82 @@ describe('UserService', () => {
     expect(users.get(userId)?.status).toBe('Active');
     expect(activationTokens.get(tokenHash)?.status).toBe('Used');
 
-    await expect(userService.activateAccountViaToken('expired-activation')).rejects.toMatchObject({ errorCode: 'IAM-AUTH-006' });
+    await expect(
+      userService.activateAccountViaToken('expired-activation'),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTH-006' });
   });
 
   it('lists users and maps roleSummaries and dataScopes correctly', async () => {
     const list = await userService.listUsers();
     expect(list.length).toBeGreaterThan(0);
     const firstUser = list[0];
-    
+
     expect(firstUser).toHaveProperty('roleSummaries');
     expect(firstUser).toHaveProperty('dataScopes');
     // Since the default created user is Admin and has branch assignments, expect Branch scope
-    expect(firstUser.dataScopes).toEqual([{ scopeType: 'Branch', branchId: '11111111-1111-1111-1111-111111111111' }]);
+    expect(firstUser.dataScopes).toEqual([
+      { scopeType: 'Branch', branchId: '11111111-1111-1111-1111-111111111111' },
+    ]);
     expect(firstUser.roleSummaries.length).toBeGreaterThan(0);
     expect(firstUser.roleSummaries[0]).toHaveProperty('roleName');
   });
 
   it('enforces branch scope when updating or executing lifecycle actions', async () => {
     const userId = Array.from(users.keys())[0];
-    
+
     // Set the actor branch assignments to another branch
-    branchAccess.set('actor-1', [createBranchAccess('actor-1', '22222222-2222-2222-2222-222222222222', { isDefault: true })]);
+    branchAccess.set('actor-1', [
+      createBranchAccess('actor-1', '22222222-2222-2222-2222-222222222222', {
+        isDefault: true,
+      }),
+    ]);
 
     const context = {
       actorId: 'actor-1',
-      actorPermissions: ['iam.user.update', 'iam.user.activate', 'iam.user.suspend', 'iam.user.archive', 'iam.user.unlock', 'iam.user.reset-password'],
+      actorPermissions: [
+        'iam.user.update',
+        'iam.user.activate',
+        'iam.user.suspend',
+        'iam.user.archive',
+        'iam.user.unlock',
+        'iam.user.reset-password',
+      ],
       activeBranchId: '22222222-2222-2222-2222-222222222222',
     };
 
     // updateUser throws authorization error if target user is outside the branch scope
-    await expect(userService.updateUser(userId, { firstName: 'NewName' }, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      userService.updateUser(userId, { firstName: 'NewName' }, context),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
 
     // suspendUser throws authorization error
-    await expect(userService.suspendUser(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      userService.suspendUser(userId, context),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
 
     // archiveUser throws authorization error
-    await expect(userService.archiveUser(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      userService.archiveUser(userId, context),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
 
     // unlockUser throws authorization error
-    await expect(userService.unlockUser(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(userService.unlockUser(userId, context)).rejects.toMatchObject(
+      { errorCode: 'IAM-AUTHZ-002' },
+    );
 
     // adminResetPassword throws authorization error
-    await expect(userService.adminResetPassword(userId, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      userService.adminResetPassword(userId, context),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 
   it('enforces target branch assignments on create and update', async () => {
     // Set actor-1 active assignments to branch 11111111-1111-1111-1111-111111111111
-    branchAccess.set('actor-1', [createBranchAccess('actor-1', '11111111-1111-1111-1111-111111111111', { isDefault: true })]);
+    branchAccess.set('actor-1', [
+      createBranchAccess('actor-1', '11111111-1111-1111-1111-111111111111', {
+        isDefault: true,
+      }),
+    ]);
 
     const context = {
       actorId: 'actor-1',
@@ -534,6 +795,8 @@ describe('UserService', () => {
       lastName: 'User',
       mobile: '9876543210',
     };
-    await expect(userService.createUser(createCommand, context)).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
+    await expect(
+      userService.createUser(createCommand, context),
+    ).rejects.toMatchObject({ errorCode: 'IAM-AUTHZ-002' });
   });
 });

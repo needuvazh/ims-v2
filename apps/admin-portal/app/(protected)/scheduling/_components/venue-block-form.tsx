@@ -3,7 +3,13 @@
 import { useEffect, useMemo, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { AlertTriangle, CalendarDays, MapPinned, Save, ShieldAlert } from 'lucide-react';
+import {
+  AlertTriangle,
+  CalendarDays,
+  MapPinned,
+  Save,
+  ShieldAlert,
+} from 'lucide-react';
 import {
   Alert,
   Button,
@@ -19,7 +25,10 @@ import {
   Input,
   Select,
 } from '@ims/shared-ui';
-import type { CreateVenueBlockCommand, UpdateVenueBlockCommand } from '@ims/scheduling';
+import type {
+  CreateVenueBlockCommand,
+  UpdateVenueBlockCommand,
+} from '@ims/scheduling';
 import { createVenueBlockAction, updateVenueBlockAction } from '../actions';
 
 type BranchOption = {
@@ -74,12 +83,16 @@ function formatDateForInput(date?: Date | string | null) {
   return Number.isNaN(value.getTime()) ? '' : value.toISOString().split('T')[0];
 }
 
-function buildInitialValues(initialData?: VenueBlockRecord): VenueBlockFormValues {
+function buildInitialValues(
+  initialData?: VenueBlockRecord,
+): VenueBlockFormValues {
   return {
     branchId: initialData?.branchId ?? '',
     classroomId: initialData?.classroomId ?? '',
     blockStartDate: formatDateForInput(initialData?.blockStartDate),
-    blockEndDate: formatDateForInput(initialData?.blockEndDate ?? initialData?.blockStartDate),
+    blockEndDate: formatDateForInput(
+      initialData?.blockEndDate ?? initialData?.blockStartDate,
+    ),
     isFullDay: initialData?.isFullDay ?? true,
     startTime: initialData?.startTime ?? '08:00',
     endTime: initialData?.endTime ?? '17:00',
@@ -101,17 +114,27 @@ export function VenueBlockForm({
 }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [values, setValues] = useState<VenueBlockFormValues>(() => buildInitialValues(initialData));
+  const [values, setValues] = useState<VenueBlockFormValues>(() =>
+    buildInitialValues(initialData),
+  );
   const [error, setError] = useState<string | null>(null);
 
-  const selectedBranchId = mode === 'edit' ? initialData?.branchId ?? values.branchId : values.branchId;
+  const selectedBranchId =
+    mode === 'edit'
+      ? (initialData?.branchId ?? values.branchId)
+      : values.branchId;
   const classroomOptions = useMemo(
-    () => classrooms.filter((classroom) => classroom.branchId === selectedBranchId),
+    () =>
+      classrooms.filter((classroom) => classroom.branchId === selectedBranchId),
     [classrooms, selectedBranchId],
   );
 
   useEffect(() => {
-    if (mode === 'create' && values.classroomId && !classroomOptions.some((classroom) => classroom.id === values.classroomId)) {
+    if (
+      mode === 'create' &&
+      values.classroomId &&
+      !classroomOptions.some((classroom) => classroom.id === values.classroomId)
+    ) {
       setValues((prev) => ({ ...prev, classroomId: '' }));
     }
   }, [classroomOptions, mode, values.classroomId]);
@@ -122,7 +145,10 @@ export function VenueBlockForm({
     }
   }, [values.blockEndDate, values.blockStartDate]);
 
-  const updateField = <K extends keyof VenueBlockFormValues>(field: K, value: VenueBlockFormValues[K]) => {
+  const updateField = <K extends keyof VenueBlockFormValues>(
+    field: K,
+    value: VenueBlockFormValues[K],
+  ) => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -167,22 +193,38 @@ export function VenueBlockForm({
           mode === 'create'
             ? await createVenueBlockAction({
                 branchId: selectedBranchId,
-                ...(payloadBase as unknown as Omit<CreateVenueBlockCommand, 'branchId'>),
+                ...(payloadBase as unknown as Omit<
+                  CreateVenueBlockCommand,
+                  'branchId'
+                >),
               })
             : initialData
-              ? await updateVenueBlockAction(initialData.id, initialData.version, payloadBase as unknown as UpdateVenueBlockCommand)
-              : { success: false as const, error: 'Venue block data is not available.' };
+              ? await updateVenueBlockAction(
+                  initialData.id,
+                  initialData.version,
+                  payloadBase as unknown as UpdateVenueBlockCommand,
+                )
+              : {
+                  success: false as const,
+                  error: 'Venue block data is not available.',
+                };
 
         if (!result.success) {
           toast.error(result.error || 'Unable to save venue block.');
           return;
         }
 
-        toast.success(mode === 'create' ? 'Venue block created.' : 'Venue block updated.');
+        toast.success(
+          mode === 'create' ? 'Venue block created.' : 'Venue block updated.',
+        );
         router.push('/scheduling/venues');
         router.refresh();
       } catch (submitError) {
-        toast.error(submitError instanceof Error ? submitError.message : 'Unable to save venue block.');
+        toast.error(
+          submitError instanceof Error
+            ? submitError.message
+            : 'Unable to save venue block.',
+        );
       }
     });
   };
@@ -207,7 +249,9 @@ export function VenueBlockForm({
                 <CalendarDays className="h-4 w-4 text-[color:var(--ims-brass)]" />
                 Block details
               </CardTitle>
-              <CardDescription>Choose the branch, optional classroom, and date range to block.</CardDescription>
+              <CardDescription>
+                Choose the branch, optional classroom, and date range to block.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 p-card-p">
               <FormField>
@@ -215,8 +259,13 @@ export function VenueBlockForm({
                 <FormControl>
                   <Select
                     value={selectedBranchId}
-                    onChange={(event) => updateField('branchId', event.target.value)}
-                    options={branches.map((branch) => ({ value: branch.id, label: branch.branchName }))}
+                    onChange={(event) =>
+                      updateField('branchId', event.target.value)
+                    }
+                    options={branches.map((branch) => ({
+                      value: branch.id,
+                      label: branch.branchName,
+                    }))}
                     disabled={mode === 'edit'}
                   />
                 </FormControl>
@@ -227,7 +276,9 @@ export function VenueBlockForm({
                 <FormControl>
                   <Select
                     value={values.classroomId}
-                    onChange={(event) => updateField('classroomId', event.target.value)}
+                    onChange={(event) =>
+                      updateField('classroomId', event.target.value)
+                    }
                     options={[
                       { value: '', label: 'Entire branch' },
                       ...classroomOptions.map((classroom) => ({
@@ -258,16 +309,28 @@ export function VenueBlockForm({
                   label="Block to date"
                   type="date"
                   value={values.blockEndDate}
-                  onChange={(event) => updateField('blockEndDate', event.target.value)}
+                  onChange={(event) =>
+                    updateField('blockEndDate', event.target.value)
+                  }
                   required
                 />
               </div>
 
               <div className="flex items-start gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-3">
-                <Checkbox checked={values.isFullDay} onChange={(event) => updateField('isFullDay', event.target.checked)} />
+                <Checkbox
+                  checked={values.isFullDay}
+                  onChange={(event) =>
+                    updateField('isFullDay', event.target.checked)
+                  }
+                />
                 <div className="space-y-1">
-                  <p className="text-sm font-semibold text-[color:var(--ims-ink)]">Full-day block</p>
-                  <p className="text-xs text-[color:var(--ims-muted)]">Disable this to block a specific time window on each selected day.</p>
+                  <p className="text-sm font-semibold text-[color:var(--ims-ink)]">
+                    Full-day block
+                  </p>
+                  <p className="text-xs text-[color:var(--ims-muted)]">
+                    Disable this to block a specific time window on each
+                    selected day.
+                  </p>
                 </div>
               </div>
 
@@ -277,14 +340,18 @@ export function VenueBlockForm({
                     label="Start time"
                     type="time"
                     value={values.startTime}
-                    onChange={(event) => updateField('startTime', event.target.value)}
+                    onChange={(event) =>
+                      updateField('startTime', event.target.value)
+                    }
                     required
                   />
                   <Input
                     label="End time"
                     type="time"
                     value={values.endTime}
-                    onChange={(event) => updateField('endTime', event.target.value)}
+                    onChange={(event) =>
+                      updateField('endTime', event.target.value)
+                    }
                     required
                   />
                 </div>
@@ -293,7 +360,9 @@ export function VenueBlockForm({
               <Input
                 label="Reason code"
                 value={values.reasonCode}
-                onChange={(event) => updateField('reasonCode', event.target.value)}
+                onChange={(event) =>
+                  updateField('reasonCode', event.target.value)
+                }
                 placeholder="MAINTENANCE, PRIVATE_EVENT, EXAM"
                 required
               />
@@ -308,13 +377,20 @@ export function VenueBlockForm({
                 <ShieldAlert className="h-4 w-4 text-[color:var(--ims-brass)]" />
                 Lifecycle
               </CardTitle>
-              <CardDescription>Set the block status before saving.</CardDescription>
+              <CardDescription>
+                Set the block status before saving.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 p-card-p">
               <Select
                 label="Status"
                 value={values.status}
-                onChange={(event) => updateField('status', event.target.value as VenueBlockFormValues['status'])}
+                onChange={(event) =>
+                  updateField(
+                    'status',
+                    event.target.value as VenueBlockFormValues['status'],
+                  )
+                }
                 options={[
                   { value: 'Active', label: 'Active' },
                   { value: 'Cancelled', label: 'Cancelled' },
@@ -332,7 +408,10 @@ export function VenueBlockForm({
             </CardHeader>
             <CardContent className="space-y-2 p-card-p text-xs text-white/80">
               <p>Venue blocks are checked during batch session scheduling.</p>
-              <p>Any session that falls inside this date range and matches the room or branch scope will be rejected.</p>
+              <p>
+                Any session that falls inside this date range and matches the
+                room or branch scope will be rejected.
+              </p>
             </CardContent>
           </Card>
 

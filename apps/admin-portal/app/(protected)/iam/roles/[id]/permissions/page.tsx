@@ -5,7 +5,9 @@ import { ManagePermissionsForm } from './manage-permissions-form';
 export const metadata = { title: 'Manage Role Permissions - IAM | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function IamRolePermissionsPage(props: { params: Promise<{ id: string }> }) {
+export default async function IamRolePermissionsPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   await assertPermission('iam.role.permission.assign');
   const params = await props.params;
 
@@ -18,7 +20,7 @@ export default async function IamRolePermissionsPage(props: { params: Promise<{ 
   ]);
 
   const role = rolesData.find((r: any) => r.id === params.id);
-  
+
   if (!role) {
     return <div>Role not found</div>;
   }

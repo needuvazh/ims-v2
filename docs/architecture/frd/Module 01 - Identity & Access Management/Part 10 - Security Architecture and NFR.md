@@ -17,14 +17,14 @@ This section defines the security architecture and non-functional requirements f
 
 The goal is to ensure the IAM module is:
 
-* Secure
-* Reliable
-* Scalable
-* Observable
-* Auditable
-* Maintainable
-* Performant
-* Compliant with enterprise-grade security standards
+- Secure
+- Reliable
+- Scalable
+- Observable
+- Auditable
+- Maintainable
+- Performant
+- Compliant with enterprise-grade security standards
 
 ---
 
@@ -34,12 +34,12 @@ IAM is the central security gateway for ASTI IMS.
 
 All modules depend on IAM for:
 
-* Authentication
-* Authorization
-* Branch-level access
-* Session validation
-* Permission evaluation
-* Security audit context
+- Authentication
+- Authorization
+- Branch-level access
+- Session validation
+- Permission evaluation
+- Security audit context
 
 ```text
 Client Application
@@ -91,12 +91,12 @@ Email + Password
 
 Authentication must verify:
 
-* User exists
-* Account is active
-* Account is not locked
-* Password is valid
-* User has at least one role
-* User has at least one branch assignment
+- User exists
+- Account is active
+- Account is not locked
+- Password is valid
+- User has at least one role
+- User has at least one branch assignment
 
 ---
 
@@ -205,14 +205,14 @@ The system shall maintain server-side session records.
 
 Session record should track:
 
-* User
-* Device
-* Browser
-* IP address
-* Login time
-* Last activity time
-* Expiry time
-* Status
+- User
+- Device
+- Browser
+- IP address
+- Login time
+- Last activity time
+- Expiry time
+- Status
 
 Default session timeout:
 
@@ -278,11 +278,11 @@ Every business query must be scoped by branch access.
 
 Rules:
 
-* User can access only assigned branches.
-* User can switch active branch only among assigned branches.
-* Parent branch users can view child branches only if allowed.
-* Child branch users cannot view parent branch data unless explicitly assigned.
-* Reports and dashboards must apply the same branch rules.
+- User can access only assigned branches.
+- User can switch active branch only among assigned branches.
+- Parent branch users can view child branches only if allowed.
+- Child branch users cannot view parent branch data unless explicitly assigned.
+- Reports and dashboards must apply the same branch rules.
 
 ---
 
@@ -292,12 +292,12 @@ Effective permissions may be cached for performance.
 
 Cache must be invalidated when:
 
-* Role changes
-* Permission changes
-* User role assignment changes
-* Branch assignment changes
-* User is suspended
-* User is archived
+- Role changes
+- Permission changes
+- User role assignment changes
+- Branch assignment changes
+- User is suspended
+- User is archived
 
 ---
 
@@ -307,13 +307,13 @@ Cache must be invalidated when:
 
 All protected APIs must enforce:
 
-* HTTPS
-* JWT validation
-* Permission checks
-* Branch scope checks
-* Input validation
-* Rate limiting
-* Audit logging for sensitive actions
+- HTTPS
+- JWT validation
+- Permission checks
+- Branch scope checks
+- Input validation
+- Rate limiting
+- Audit logging for sensitive actions
 
 ---
 
@@ -373,10 +373,10 @@ TLS 1.3
 
 Encryption at rest is required for:
 
-* Database storage
-* File storage
-* Backup storage
-* Logs containing sensitive metadata
+- Database storage
+- File storage
+- Backup storage
+- Logs containing sensitive metadata
 
 ---
 
@@ -398,13 +398,13 @@ Civil ID: ********1234
 
 Never log:
 
-* Passwords
-* Password reset tokens
-* JWT access tokens
-* Refresh tokens
-* API keys
-* SMTP passwords
-* Private keys
+- Passwords
+- Password reset tokens
+- JWT access tokens
+- Refresh tokens
+- API keys
+- SMTP passwords
+- Private keys
 
 ---
 
@@ -412,28 +412,28 @@ Never log:
 
 Secrets must not be stored in:
 
-* Source code
-* Git repository
-* Docker image
-* Client-side environment variables
-* Plain text configuration files
+- Source code
+- Git repository
+- Docker image
+- Client-side environment variables
+- Plain text configuration files
 
 Recommended secret stores:
 
-* Cloud secret manager
-* Vault
-* Encrypted Kubernetes secrets
-* Secure CI/CD secret vault
+- Cloud secret manager
+- Vault
+- Encrypted Kubernetes secrets
+- Secure CI/CD secret vault
 
 Secrets include:
 
-* Database password
-* JWT private keys
-* SMTP credentials
-* SMS API keys
-* WhatsApp API keys
-* Payment gateway keys
-* Tally integration credentials
+- Database password
+- JWT private keys
+- SMTP credentials
+- SMS API keys
+- WhatsApp API keys
+- Payment gateway keys
+- Tally integration credentials
 
 ---
 
@@ -460,16 +460,16 @@ The IAM module must address the OWASP Top 10 risks.
 
 The admin portal must implement:
 
-* Route guards
-* Permission-based menu rendering
-* Secure token handling
-* No sensitive data in localStorage where avoidable
-* CSRF protection if cookies are used
-* XSS protection
-* Content Security Policy
-* Secure headers
-* Auto logout on inactivity
-* Warning before session expiry
+- Route guards
+- Permission-based menu rendering
+- Secure token handling
+- No sensitive data in localStorage where avoidable
+- CSRF protection if cookies are used
+- XSS protection
+- Content Security Policy
+- Secure headers
+- Auto logout on inactivity
+- Warning before session expiry
 
 ---
 
@@ -479,19 +479,19 @@ Security-sensitive operations must generate audit logs.
 
 Examples:
 
-* Login success
-* Login failure
-* Logout
-* Password reset
-* Password change
-* Account locked
-* User created
-* User suspended
-* User archived
-* Role assigned
-* Permission changed
-* Branch access changed
-* Security policy changed
+- Login success
+- Login failure
+- Logout
+- Password reset
+- Password change
+- Account locked
+- User created
+- User suspended
+- User archived
+- Role assigned
+- Permission changed
+- Branch access changed
+- Security policy changed
 
 Audit log must capture:
 
@@ -571,12 +571,12 @@ Future scalability target:
 
 The system must:
 
-* Recover cleanly after restart.
-* Not lose audit events.
-* Not issue duplicate active refresh tokens after rotation.
-* Invalidate sessions reliably.
-* Keep login functional during normal traffic spikes.
-* Fail safely by denying access if authorization state is unavailable.
+- Recover cleanly after restart.
+- Not lose audit events.
+- Not issue duplicate active refresh tokens after rotation.
+- Invalidate sessions reliably.
+- Keep login functional during normal traffic spikes.
+- Fail safely by denying access if authorization state is unavailable.
 
 ---
 
@@ -584,13 +584,13 @@ The system must:
 
 The IAM codebase must support:
 
-* Modular service structure
-* Reusable permission middleware
-* Centralized validation rules
-* Centralized error handling
-* Testable business logic
-* OpenAPI documentation
-* Clear audit event contracts
+- Modular service structure
+- Reusable permission middleware
+- Centralized validation rules
+- Centralized error handling
+- Testable business logic
+- OpenAPI documentation
+- Clear audit event contracts
 
 ---
 
@@ -598,12 +598,12 @@ The IAM codebase must support:
 
 IAM must expose:
 
-* Structured logs
-* Metrics
-* Distributed traces
-* Audit events
-* Health checks
-* Security alerts
+- Structured logs
+- Metrics
+- Distributed traces
+- Audit events
+- Health checks
+- Security alerts
 
 Required metrics:
 
@@ -623,13 +623,13 @@ iam_api_errors_total
 
 IAM must support:
 
-* English UI
-* Arabic UI
-* RTL layout
-* Localized validation messages
-* Localized notification templates
-* Unicode-safe storage
-* Arabic search/display support where applicable
+- English UI
+- Arabic UI
+- RTL layout
+- Localized validation messages
+- Localized notification templates
+- Unicode-safe storage
+- Arabic search/display support where applicable
 
 ---
 
@@ -637,13 +637,13 @@ IAM must support:
 
 Admin portal must support:
 
-* Keyboard navigation
-* Screen reader labels
-* Visible focus states
-* Logical tab order
-* Form error association
-* Sufficient color contrast
-* RTL accessibility support
+- Keyboard navigation
+- Screen reader labels
+- Visible focus states
+- Logical tab order
+- Form error association
+- Sufficient color contrast
+- RTL accessibility support
 
 Target:
 
@@ -683,16 +683,16 @@ WCAG 2.2 AA
 
 IAM must pass:
 
-* Static Application Security Testing
-* Dependency vulnerability scanning
-* API security testing
-* Penetration testing
-* OWASP Top 10 testing
-* JWT tampering tests
-* Brute force tests
-* Branch bypass tests
-* Permission escalation tests
-* Session fixation tests
+- Static Application Security Testing
+- Dependency vulnerability scanning
+- API security testing
+- Penetration testing
+- OWASP Top 10 testing
+- JWT tampering tests
+- Brute force tests
+- Branch bypass tests
+- Permission escalation tests
+- Session fixation tests
 
 ---
 
@@ -700,19 +700,19 @@ IAM must pass:
 
 Before production:
 
-* HTTPS enabled
-* Password hashing verified
-* JWT signing key rotation tested
-* Refresh token rotation tested
-* Rate limiting enabled
-* Audit logs immutable
-* Secrets externalized
-* Security headers configured
-* Permission middleware tested
-* Branch scoping tested
-* Backup and restore tested
-* Arabic RTL verified
-* Accessibility verified
+- HTTPS enabled
+- Password hashing verified
+- JWT signing key rotation tested
+- Refresh token rotation tested
+- Rate limiting enabled
+- Audit logs immutable
+- Secrets externalized
+- Security headers configured
+- Permission middleware tested
+- Branch scoping tested
+- Backup and restore tested
+- Arabic RTL verified
+- Accessibility verified
 
 ---
 
@@ -734,19 +734,19 @@ Before production:
 
 This part defines:
 
-* IAM security architecture
-* Authentication security rules
-* Token and session security
-* Permission and branch security
-* API security
-* Data security
-* Secrets management
-* OWASP controls
-* Audit and compliance rules
-* Performance NFRs
-* Scalability NFRs
-* Availability NFRs
-* Localization and accessibility NFRs
-* DR and backup targets
-* Security testing requirements
-* Production compliance checklist
+- IAM security architecture
+- Authentication security rules
+- Token and session security
+- Permission and branch security
+- API security
+- Data security
+- Secrets management
+- OWASP controls
+- Audit and compliance rules
+- Performance NFRs
+- Scalability NFRs
+- Availability NFRs
+- Localization and accessibility NFRs
+- DR and backup targets
+- Security testing requirements
+- Production compliance checklist

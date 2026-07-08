@@ -9,7 +9,9 @@ async function login(page: any, email: string) {
 }
 
 test.describe('CRM Analytics Dashboard UI', () => {
-  test('Counselor should see personal metrics and no counselor performance chart', async ({ page }) => {
+  test('Counselor should see personal metrics and no counselor performance chart', async ({
+    page,
+  }) => {
     await login(page, 'counselor.riyadh@ims.com');
     await page.goto('/dashboards/crm');
 
@@ -26,7 +28,9 @@ test.describe('CRM Analytics Dashboard UI', () => {
     await expect(page.getByText('Counselor Performance')).not.toBeVisible();
   });
 
-  test('Branch Manager should see counselor metrics chart and all widgets', async ({ page }) => {
+  test('Branch Manager should see counselor metrics chart and all widgets', async ({
+    page,
+  }) => {
     await login(page, 'manager.riyadh@ims.com');
     await page.goto('/dashboards/crm');
 

@@ -7,6 +7,7 @@ This change stays within the admin portal and does not alter IAM business rules.
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Provide a complete IAM admin portal UX for the completed backend surface.
 - Keep route handlers, server actions, and page loaders thin and permission-aware.
 - Reuse existing shared UI primitives, form patterns, and server-side data loading patterns where possible.
@@ -14,6 +15,7 @@ This change stays within the admin portal and does not alter IAM business rules.
 - Add test coverage for the core IAM screens and their failure states.
 
 **Non-Goals:**
+
 - No new IAM business rules or backend workflow changes.
 - No redesign of the underlying IAM authorization model.
 - No new browser-side state platform, API client generator, or UI framework.
@@ -68,7 +70,6 @@ This change stays within the admin portal and does not alter IAM business rules.
 6. Validate the affected portal build and smoke test the main IAM journeys.
 
 Rollback/mitigation:
+
 - Remove new routes and navigation entries if a screen family proves unstable.
 - Because the UI phase does not change the backend contract, rollback is limited to the portal surface and does not require database changes.
-
-

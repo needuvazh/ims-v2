@@ -27,14 +27,14 @@ The permission model follows these principles:
 
 This document uses the following scope types.
 
-| Scope Code | Scope Name | Meaning |
-|---|---|---|
-| `B` | Branch-Scoped | Permission applies only to branches in the user's effective branch scope |
-| `G` | Global | Permission applies across all branches and should be restricted to trusted platform/institute administrators |
-| `C` | Consolidated-Report Only | User may view combined data across permitted branches but receives no mutation rights from this scope |
-| `O` | Own-Assignment Scope | Permission applies only to records assigned to or owned by the current actor, such as Trainer-assigned batches |
-| `M` | Mixed Scope | Permission can operate under more than one scope depending on IAM policy, such as branch read plus consolidated read |
-| `S` | System Authority | Non-human application workflow authority; not assignable to ordinary users |
+| Scope Code | Scope Name               | Meaning                                                                                                              |
+| ---------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `B`        | Branch-Scoped            | Permission applies only to branches in the user's effective branch scope                                             |
+| `G`        | Global                   | Permission applies across all branches and should be restricted to trusted platform/institute administrators         |
+| `C`        | Consolidated-Report Only | User may view combined data across permitted branches but receives no mutation rights from this scope                |
+| `O`        | Own-Assignment Scope     | Permission applies only to records assigned to or owned by the current actor, such as Trainer-assigned batches       |
+| `M`        | Mixed Scope              | Permission can operate under more than one scope depending on IAM policy, such as branch read plus consolidated read |
+| `S`        | System Authority         | Non-human application workflow authority; not assignable to ordinary users                                           |
 
 ---
 
@@ -42,17 +42,17 @@ This document uses the following scope types.
 
 The matrix uses the following business-role archetypes.
 
-| Role Code | Business Role | Description |
-|---|---|---|
-| `ROLE-EXC-ADM` | Academic Administrator | Broad academic administration across assigned branches |
-| `ROLE-EXC-COORD` | Academic Coordinator | Exam scheduling, result review, completion evaluation, and coordinator-stage approval |
-| `ROLE-EXC-TRAINER` | Trainer | Result entry and Trainer Recommendation for assigned batches |
-| `ROLE-EXC-BM` | Branch Manager | Branch-level oversight and final completion decision |
-| `ROLE-EXC-AUD` | Auditor / Compliance Reader | Read-only access to evidence, approval history, and audit records |
-| `ROLE-EXC-RO` | Read-Only Academic User | Operational read access without mutation |
-| `ROLE-EXC-EXEC` | Executive / Management Viewer | Consolidated dashboard/report access without transactional authority |
-| `ROLE-EXC-IAM` | IAM / Security Administrator | Manages roles and permissions in IAM, not academic data |
-| `ROLE-EXC-SYS` | System Workflow | Internal system authority for evaluation/re-evaluation orchestration |
+| Role Code          | Business Role                 | Description                                                                           |
+| ------------------ | ----------------------------- | ------------------------------------------------------------------------------------- |
+| `ROLE-EXC-ADM`     | Academic Administrator        | Broad academic administration across assigned branches                                |
+| `ROLE-EXC-COORD`   | Academic Coordinator          | Exam scheduling, result review, completion evaluation, and coordinator-stage approval |
+| `ROLE-EXC-TRAINER` | Trainer                       | Result entry and Trainer Recommendation for assigned batches                          |
+| `ROLE-EXC-BM`      | Branch Manager                | Branch-level oversight and final completion decision                                  |
+| `ROLE-EXC-AUD`     | Auditor / Compliance Reader   | Read-only access to evidence, approval history, and audit records                     |
+| `ROLE-EXC-RO`      | Read-Only Academic User       | Operational read access without mutation                                              |
+| `ROLE-EXC-EXEC`    | Executive / Management Viewer | Consolidated dashboard/report access without transactional authority                  |
+| `ROLE-EXC-IAM`     | IAM / Security Administrator  | Manages roles and permissions in IAM, not academic data                               |
+| `ROLE-EXC-SYS`     | System Workflow               | Internal system authority for evaluation/re-evaluation orchestration                  |
 
 Important:
 
@@ -121,16 +121,16 @@ Legend:
 — = Not granted by default
 ```
 
-| Menu Permission | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `menu.exam-completion.dashboard` | M | ✓ | ✓ | △ | ✓ | △ | △ | ✓ | — | — |
-| `menu.exam-completion.exams` | B/M | ✓ | ✓ | △ | △ | ✓ | ✓ | — | — | — |
-| `menu.exam-completion.results` | B/O/M | ✓ | ✓ | ✓ | △ | ✓ | ✓ | — | — | — |
-| `menu.exam-completion.completion` | B/M | ✓ | ✓ | △ | ✓ | ✓ | ✓ | △ | — | — |
-| `menu.exam-completion.approvals` | B/O | ✓ | ✓ | ✓ | ✓ | ✓ | △ | — | — | — |
-| `menu.exam-completion.reevaluation` | B/M | ✓ | △ | — | △ | ✓ | △ | — | — | — |
-| `menu.exam-completion.exports` | B/C/M | ✓ | △ | — | ✓ | ✓ | △ | ✓ | — | — |
-| `menu.exam-completion.audit` | B/M | ✓ | △ | — | △ | ✓ | — | — | — | — |
+| Menu Permission                     | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
+| ----------------------------------- | ----- | -------------: | -------------------: | ------: | -------------: | ------: | -----------------: | ---------------: | --------: | --------------: |
+| `menu.exam-completion.dashboard`    | M     |              ✓ |                    ✓ |       △ |              ✓ |       △ |                  △ |                ✓ |         — |               — |
+| `menu.exam-completion.exams`        | B/M   |              ✓ |                    ✓ |       △ |              △ |       ✓ |                  ✓ |                — |         — |               — |
+| `menu.exam-completion.results`      | B/O/M |              ✓ |                    ✓ |       ✓ |              △ |       ✓ |                  ✓ |                — |         — |               — |
+| `menu.exam-completion.completion`   | B/M   |              ✓ |                    ✓ |       △ |              ✓ |       ✓ |                  ✓ |                △ |         — |               — |
+| `menu.exam-completion.approvals`    | B/O   |              ✓ |                    ✓ |       ✓ |              ✓ |       ✓ |                  △ |                — |         — |               — |
+| `menu.exam-completion.reevaluation` | B/M   |              ✓ |                    △ |       — |              △ |       ✓ |                  △ |                — |         — |               — |
+| `menu.exam-completion.exports`      | B/C/M |              ✓ |                    △ |       — |              ✓ |       ✓ |                  △ |                ✓ |         — |               — |
+| `menu.exam-completion.audit`        | B/M   |              ✓ |                    △ |       — |              △ |       ✓ |                  — |                — |         — |               — |
 
 ## Menu Rules
 
@@ -145,51 +145,51 @@ Legend:
 
 ## 6.1 Exam Permissions
 
-| Permission | Scope | Purpose |
-|---|---|---|
-| `exam.read` | B/M | Read Exam list and detail within permitted branches |
-| `exam.create` | B | Create Exam for authorized Batch branch |
-| `exam.update` | B | Update mutable Exam fields |
-| `exam.schedule` | B | Schedule or reschedule Exam |
-| `exam.activate` | B | Open Exam for Result entry |
-| `exam.close` | B | Close Exam |
-| `exam.cancel` | B | Cancel Exam with required reason |
-| `exam.archive` | B/G | Soft archive or deactivate Exam under administrative policy |
+| Permission      | Scope | Purpose                                                     |
+| --------------- | ----- | ----------------------------------------------------------- |
+| `exam.read`     | B/M   | Read Exam list and detail within permitted branches         |
+| `exam.create`   | B     | Create Exam for authorized Batch branch                     |
+| `exam.update`   | B     | Update mutable Exam fields                                  |
+| `exam.schedule` | B     | Schedule or reschedule Exam                                 |
+| `exam.activate` | B     | Open Exam for Result entry                                  |
+| `exam.close`    | B     | Close Exam                                                  |
+| `exam.cancel`   | B     | Cancel Exam with required reason                            |
+| `exam.archive`  | B/G   | Soft archive or deactivate Exam under administrative policy |
 
 ## 6.2 Result Permissions
 
-| Permission | Scope | Purpose |
-|---|---|---|
-| `result.read` | B/O/M | Read Result data within scope |
-| `result.record` | B/O | Record or edit non-finalized Result |
-| `result.bulk-record` | B/O | Submit validated Result batch |
-| `result.finalize` | B | Finalize academic Result evidence |
-| `result.correct` | B | Restricted correction of finalized Result |
-| `result.audit.read` | B/M | Read Result correction/finalization audit history |
+| Permission           | Scope | Purpose                                           |
+| -------------------- | ----- | ------------------------------------------------- |
+| `result.read`        | B/O/M | Read Result data within scope                     |
+| `result.record`      | B/O   | Record or edit non-finalized Result               |
+| `result.bulk-record` | B/O   | Submit validated Result batch                     |
+| `result.finalize`    | B     | Finalize academic Result evidence                 |
+| `result.correct`     | B     | Restricted correction of finalized Result         |
+| `result.audit.read`  | B/M   | Read Result correction/finalization audit history |
 
 ## 6.3 Completion Permissions
 
-| Permission | Scope | Purpose |
-|---|---|---|
-| `completion.read` | B/M | Read completion record and evidence summary |
-| `completion.evaluate` | B/S | Run initial completion evaluation |
-| `completion.reevaluate` | B/S | Re-evaluate after authoritative evidence change |
-| `completion.recommend` | O/B | Trainer Recommendation stage |
-| `completion.coordinator-review` | B | Coordinator Review stage |
-| `completion.final-approve` | B | Final completion approval |
-| `completion.reject` | B/O | Reject at permitted approval stage |
-| `completion.audit.read` | B/M | Read completion/approval audit trail |
-| `completion.exception.resolve` | B/G | Resolve controlled re-evaluation exception where policy allows |
+| Permission                      | Scope | Purpose                                                        |
+| ------------------------------- | ----- | -------------------------------------------------------------- |
+| `completion.read`               | B/M   | Read completion record and evidence summary                    |
+| `completion.evaluate`           | B/S   | Run initial completion evaluation                              |
+| `completion.reevaluate`         | B/S   | Re-evaluate after authoritative evidence change                |
+| `completion.recommend`          | O/B   | Trainer Recommendation stage                                   |
+| `completion.coordinator-review` | B     | Coordinator Review stage                                       |
+| `completion.final-approve`      | B     | Final completion approval                                      |
+| `completion.reject`             | B/O   | Reject at permitted approval stage                             |
+| `completion.audit.read`         | B/M   | Read completion/approval audit trail                           |
+| `completion.exception.resolve`  | B/G   | Resolve controlled re-evaluation exception where policy allows |
 
 ## 6.4 Export / Reporting Action Permissions
 
-| Permission | Scope | Purpose |
-|---|---|---|
-| `completion.export` | B/C/M | Export authorized Module 10 data |
-| `exam.export` | B/C/M | Export Exam register data |
-| `result.export` | B/C/M | Export Result register data |
-| `completion.report.read` | B/C/M | Read completion operational reports |
-| `exam-completion.dashboard.read` | B/C/M | Read Module 10 dashboard |
+| Permission                       | Scope | Purpose                             |
+| -------------------------------- | ----- | ----------------------------------- |
+| `completion.export`              | B/C/M | Export authorized Module 10 data    |
+| `exam.export`                    | B/C/M | Export Exam register data           |
+| `result.export`                  | B/C/M | Export Result register data         |
+| `completion.report.read`         | B/C/M | Read completion operational reports |
+| `exam-completion.dashboard.read` | B/C/M | Read Module 10 dashboard            |
 
 ---
 
@@ -208,41 +208,41 @@ S = System-only authority
 
 ## 7.1 Exam Actions
 
-| Permission | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `exam.read` | B/M | ✓ | ✓ | O/△ | ✓ | ✓ | ✓ | C/△ | — | S/△ |
-| `exam.create` | B | ✓ | ✓ | — | △ | — | — | — | — | — |
-| `exam.update` | B | ✓ | ✓ | — | △ | — | — | — | — | — |
-| `exam.schedule` | B | ✓ | ✓ | — | △ | — | — | — | — | — |
-| `exam.activate` | B | ✓ | ✓ | — | △ | — | — | — | — | — |
-| `exam.close` | B | ✓ | ✓ | — | △ | — | — | — | — | — |
-| `exam.cancel` | B | ✓ | ✓ | — | △ | — | — | — | — | — |
-| `exam.archive` | B/G | ✓ | △ | — | △ | — | — | — | — | — |
+| Permission      | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
+| --------------- | ----- | -------------: | -------------------: | ------: | -------------: | ------: | -----------------: | ---------------: | --------: | --------------: |
+| `exam.read`     | B/M   |              ✓ |                    ✓ |     O/△ |              ✓ |       ✓ |                  ✓ |              C/△ |         — |             S/△ |
+| `exam.create`   | B     |              ✓ |                    ✓ |       — |              △ |       — |                  — |                — |         — |               — |
+| `exam.update`   | B     |              ✓ |                    ✓ |       — |              △ |       — |                  — |                — |         — |               — |
+| `exam.schedule` | B     |              ✓ |                    ✓ |       — |              △ |       — |                  — |                — |         — |               — |
+| `exam.activate` | B     |              ✓ |                    ✓ |       — |              △ |       — |                  — |                — |         — |               — |
+| `exam.close`    | B     |              ✓ |                    ✓ |       — |              △ |       — |                  — |                — |         — |               — |
+| `exam.cancel`   | B     |              ✓ |                    ✓ |       — |              △ |       — |                  — |                — |         — |               — |
+| `exam.archive`  | B/G   |              ✓ |                    △ |       — |              △ |       — |                  — |                — |         — |               — |
 
 ## 7.2 Result Actions
 
-| Permission | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `result.read` | B/O/M | ✓ | ✓ | O | ✓ | ✓ | ✓ | C/△ | — | S/△ |
-| `result.record` | B/O | ✓ | ✓ | O | — | — | — | — | — | — |
-| `result.bulk-record` | B/O | ✓ | ✓ | O | — | — | — | — | — | — |
-| `result.finalize` | B | ✓ | ✓ | △ | — | — | — | — | — | — |
-| `result.correct` | B | ✓ | △ | — | — | — | — | — | — | — |
-| `result.audit.read` | B/M | ✓ | △ | — | △ | ✓ | — | — | — | — |
+| Permission           | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
+| -------------------- | ----- | -------------: | -------------------: | ------: | -------------: | ------: | -----------------: | ---------------: | --------: | --------------: |
+| `result.read`        | B/O/M |              ✓ |                    ✓ |       O |              ✓ |       ✓ |                  ✓ |              C/△ |         — |             S/△ |
+| `result.record`      | B/O   |              ✓ |                    ✓ |       O |              — |       — |                  — |                — |         — |               — |
+| `result.bulk-record` | B/O   |              ✓ |                    ✓ |       O |              — |       — |                  — |                — |         — |               — |
+| `result.finalize`    | B     |              ✓ |                    ✓ |       △ |              — |       — |                  — |                — |         — |               — |
+| `result.correct`     | B     |              ✓ |                    △ |       — |              — |       — |                  — |                — |         — |               — |
+| `result.audit.read`  | B/M   |              ✓ |                    △ |       — |              △ |       ✓ |                  — |                — |         — |               — |
 
 ## 7.3 Completion Actions
 
-| Permission | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `completion.read` | B/M | ✓ | ✓ | O/△ | ✓ | ✓ | ✓ | C/△ | — | S |
-| `completion.evaluate` | B/S | ✓ | ✓ | — | △ | — | — | — | — | S |
-| `completion.reevaluate` | B/S | ✓ | △ | — | △ | — | — | — | — | S |
-| `completion.recommend` | O/B | △ | — | O | — | — | — | — | — | — |
-| `completion.coordinator-review` | B | ✓ | ✓ | — | — | — | — | — | — | — |
-| `completion.final-approve` | B | △ | — | — | ✓ | — | — | — | — | — |
-| `completion.reject` | B/O | ✓ | ✓ | O | ✓ | — | — | — | — | — |
-| `completion.audit.read` | B/M | ✓ | △ | — | △ | ✓ | — | — | — | — |
-| `completion.exception.resolve` | B/G | ✓ | △ | — | △ | — | — | — | — | S/△ |
+| Permission                      | Scope | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin | System Workflow |
+| ------------------------------- | ----- | -------------: | -------------------: | ------: | -------------: | ------: | -----------------: | ---------------: | --------: | --------------: |
+| `completion.read`               | B/M   |              ✓ |                    ✓ |     O/△ |              ✓ |       ✓ |                  ✓ |              C/△ |         — |               S |
+| `completion.evaluate`           | B/S   |              ✓ |                    ✓ |       — |              △ |       — |                  — |                — |         — |               S |
+| `completion.reevaluate`         | B/S   |              ✓ |                    △ |       — |              △ |       — |                  — |                — |         — |               S |
+| `completion.recommend`          | O/B   |              △ |                    — |       O |              — |       — |                  — |                — |         — |               — |
+| `completion.coordinator-review` | B     |              ✓ |                    ✓ |       — |              — |       — |                  — |                — |         — |               — |
+| `completion.final-approve`      | B     |              △ |                    — |       — |              ✓ |       — |                  — |                — |         — |               — |
+| `completion.reject`             | B/O   |              ✓ |                    ✓ |       O |              ✓ |       — |                  — |                — |         — |               — |
+| `completion.audit.read`         | B/M   |              ✓ |                    △ |       — |              △ |       ✓ |                  — |                — |         — |               — |
+| `completion.exception.resolve`  | B/G   |              ✓ |                    △ |       — |              △ |       — |                  — |                — |         — |             S/△ |
 
 ---
 
@@ -250,12 +250,12 @@ S = System-only authority
 
 ## 8.1 Trainer Recommendation
 
-| Action | Permission | Scope | Default Business Role |
-|---|---|---|---|
-| View pending recommendation | `completion.read` + `completion.recommend` | O | Trainer |
-| Recommend | `completion.recommend` | O | Trainer |
-| Do not recommend | `completion.recommend` | O | Trainer |
-| View history | `completion.read` | O/B | Trainer, Coordinator, Admin |
+| Action                      | Permission                                 | Scope | Default Business Role       |
+| --------------------------- | ------------------------------------------ | ----- | --------------------------- |
+| View pending recommendation | `completion.read` + `completion.recommend` | O     | Trainer                     |
+| Recommend                   | `completion.recommend`                     | O     | Trainer                     |
+| Do not recommend            | `completion.recommend`                     | O     | Trainer                     |
+| View history                | `completion.read`                          | O/B   | Trainer, Coordinator, Admin |
 
 Server guards:
 
@@ -269,12 +269,12 @@ AND evidence not stale
 
 ## 8.2 Academic Coordinator Review
 
-| Action | Permission | Scope | Default Business Role |
-|---|---|---|---|
-| View queue | `completion.coordinator-review` | B | Academic Coordinator |
-| Approve review | `completion.coordinator-review` | B | Academic Coordinator |
-| Reject review | `completion.coordinator-review` or `completion.reject` | B | Academic Coordinator |
-| View audit | `completion.audit.read` | B | Academic Admin, Auditor |
+| Action         | Permission                                             | Scope | Default Business Role   |
+| -------------- | ------------------------------------------------------ | ----- | ----------------------- |
+| View queue     | `completion.coordinator-review`                        | B     | Academic Coordinator    |
+| Approve review | `completion.coordinator-review`                        | B     | Academic Coordinator    |
+| Reject review  | `completion.coordinator-review` or `completion.reject` | B     | Academic Coordinator    |
+| View audit     | `completion.audit.read`                                | B     | Academic Admin, Auditor |
 
 Server guards:
 
@@ -287,12 +287,12 @@ AND evidence not stale
 
 ## 8.3 Final Approval
 
-| Action | Permission | Scope | Default Business Role |
-|---|---|---|---|
-| View final approval queue | `completion.final-approve` or read capability | B | Branch Manager |
-| Final approve | `completion.final-approve` | B | Branch Manager |
-| Final reject | `completion.reject` | B | Branch Manager |
-| View full approval history | `completion.read` | B | Branch Manager |
+| Action                     | Permission                                    | Scope | Default Business Role |
+| -------------------------- | --------------------------------------------- | ----- | --------------------- |
+| View final approval queue  | `completion.final-approve` or read capability | B     | Branch Manager        |
+| Final approve              | `completion.final-approve`                    | B     | Branch Manager        |
+| Final reject               | `completion.reject`                           | B     | Branch Manager        |
+| View full approval history | `completion.read`                             | B     | Branch Manager        |
 
 Server guards:
 
@@ -307,18 +307,18 @@ AND evidence remains current
 
 # 9. Menu Permission Matrix by Route
 
-| Route / Menu | Menu Permission | Additional Data Permission |
-|---|---|---|
-| `/admin/academics/exams-completion` | `menu.exam-completion.dashboard` | `exam-completion.dashboard.read` |
-| `/admin/academics/exams-completion/exams` | `menu.exam-completion.exams` | `exam.read` |
-| `/admin/academics/exams-completion/results` | `menu.exam-completion.results` | `result.read` |
-| `/admin/academics/exams-completion/completion` | `menu.exam-completion.completion` | `completion.read` |
-| `/admin/academics/exams-completion/approvals/trainer` | `menu.exam-completion.approvals` | `completion.recommend` |
-| `/admin/academics/exams-completion/approvals/coordinator` | `menu.exam-completion.approvals` | `completion.coordinator-review` |
-| `/admin/academics/exams-completion/approvals/final` | `menu.exam-completion.approvals` | `completion.final-approve` or approved read capability |
-| `/admin/academics/exams-completion/reevaluation` | `menu.exam-completion.reevaluation` | `completion.reevaluate` or approved read capability |
-| `/admin/academics/exams-completion/exports` | `menu.exam-completion.exports` | corresponding export permission |
-| audit drawer/deep-link | `menu.exam-completion.audit` or deep-link access policy | `completion.audit.read` / `result.audit.read` |
+| Route / Menu                                              | Menu Permission                                         | Additional Data Permission                             |
+| --------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
+| `/admin/academics/exams-completion`                       | `menu.exam-completion.dashboard`                        | `exam-completion.dashboard.read`                       |
+| `/admin/academics/exams-completion/exams`                 | `menu.exam-completion.exams`                            | `exam.read`                                            |
+| `/admin/academics/exams-completion/results`               | `menu.exam-completion.results`                          | `result.read`                                          |
+| `/admin/academics/exams-completion/completion`            | `menu.exam-completion.completion`                       | `completion.read`                                      |
+| `/admin/academics/exams-completion/approvals/trainer`     | `menu.exam-completion.approvals`                        | `completion.recommend`                                 |
+| `/admin/academics/exams-completion/approvals/coordinator` | `menu.exam-completion.approvals`                        | `completion.coordinator-review`                        |
+| `/admin/academics/exams-completion/approvals/final`       | `menu.exam-completion.approvals`                        | `completion.final-approve` or approved read capability |
+| `/admin/academics/exams-completion/reevaluation`          | `menu.exam-completion.reevaluation`                     | `completion.reevaluate` or approved read capability    |
+| `/admin/academics/exams-completion/exports`               | `menu.exam-completion.exports`                          | corresponding export permission                        |
+| audit drawer/deep-link                                    | `menu.exam-completion.audit` or deep-link access policy | `completion.audit.read` / `result.audit.read`          |
 
 ---
 
@@ -326,23 +326,23 @@ AND evidence remains current
 
 ## 10.1 Operational Reports
 
-| Report Permission | Scope | Report |
-|---|---|---|
-| `report.exam-register.read` | B/C/M | Exam Register |
-| `report.result-register.read` | B/C/M | Result Register |
-| `report.missing-results.read` | B/C/M | Missing Results Report |
-| `report.result-finalization.read` | B/C/M | Result Finalization Status |
-| `report.completion-evaluation.read` | B/C/M | Completion Evaluation Report |
-| `report.completion-approval.read` | B/C/M | Completion Approval Report |
+| Report Permission                    | Scope | Report                         |
+| ------------------------------------ | ----- | ------------------------------ |
+| `report.exam-register.read`          | B/C/M | Exam Register                  |
+| `report.result-register.read`        | B/C/M | Result Register                |
+| `report.missing-results.read`        | B/C/M | Missing Results Report         |
+| `report.result-finalization.read`    | B/C/M | Result Finalization Status     |
+| `report.completion-evaluation.read`  | B/C/M | Completion Evaluation Report   |
+| `report.completion-approval.read`    | B/C/M | Completion Approval Report     |
 | `report.reevaluation-exception.read` | B/C/M | Re-evaluation Exception Report |
-| `report.trainer-recommendation.read` | B/C/M | Trainer Recommendation Status |
-| `report.exam-completion.audit.read` | B/M | Academic Audit Report |
+| `report.trainer-recommendation.read` | B/C/M | Trainer Recommendation Status  |
+| `report.exam-completion.audit.read`  | B/M   | Academic Audit Report          |
 
 ## 10.2 Consolidated Reporting Permission
 
-| Permission | Scope | Meaning |
-|---|---|---|
-| `report.exam-completion.consolidated` | C | View combined data across branches allowed by IAM consolidated-read policy |
+| Permission                            | Scope | Meaning                                                                    |
+| ------------------------------------- | ----- | -------------------------------------------------------------------------- |
+| `report.exam-completion.consolidated` | C     | View combined data across branches allowed by IAM consolidated-read policy |
 
 Important:
 
@@ -368,18 +368,18 @@ C = Consolidated report access
 — = Not granted
 ```
 
-| Report Permission | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| `report.exam-register.read` | ✓ | ✓ | △ | ✓ | ✓ | ✓ | C/△ | — |
-| `report.result-register.read` | ✓ | ✓ | O/△ | ✓ | ✓ | ✓ | C/△ | — |
-| `report.missing-results.read` | ✓ | ✓ | O/△ | ✓ | ✓ | △ | C/△ | — |
-| `report.result-finalization.read` | ✓ | ✓ | △ | ✓ | ✓ | △ | C/△ | — |
-| `report.completion-evaluation.read` | ✓ | ✓ | O/△ | ✓ | ✓ | ✓ | C | — |
-| `report.completion-approval.read` | ✓ | ✓ | O/△ | ✓ | ✓ | ✓ | C | — |
-| `report.reevaluation-exception.read` | ✓ | △ | — | △ | ✓ | △ | C/△ | — |
-| `report.trainer-recommendation.read` | ✓ | ✓ | O | ✓ | ✓ | △ | C/△ | — |
-| `report.exam-completion.audit.read` | ✓ | △ | — | △ | ✓ | — | — | — |
-| `report.exam-completion.consolidated` | △ | △ | — | △ | △ | — | ✓ | — |
+| Report Permission                     | Academic Admin | Academic Coordinator | Trainer | Branch Manager | Auditor | Read-Only Academic | Executive Viewer | IAM Admin |
+| ------------------------------------- | -------------: | -------------------: | ------: | -------------: | ------: | -----------------: | ---------------: | --------: |
+| `report.exam-register.read`           |              ✓ |                    ✓ |       △ |              ✓ |       ✓ |                  ✓ |              C/△ |         — |
+| `report.result-register.read`         |              ✓ |                    ✓ |     O/△ |              ✓ |       ✓ |                  ✓ |              C/△ |         — |
+| `report.missing-results.read`         |              ✓ |                    ✓ |     O/△ |              ✓ |       ✓ |                  △ |              C/△ |         — |
+| `report.result-finalization.read`     |              ✓ |                    ✓ |       △ |              ✓ |       ✓ |                  △ |              C/△ |         — |
+| `report.completion-evaluation.read`   |              ✓ |                    ✓ |     O/△ |              ✓ |       ✓ |                  ✓ |                C |         — |
+| `report.completion-approval.read`     |              ✓ |                    ✓ |     O/△ |              ✓ |       ✓ |                  ✓ |                C |         — |
+| `report.reevaluation-exception.read`  |              ✓ |                    △ |       — |              △ |       ✓ |                  △ |              C/△ |         — |
+| `report.trainer-recommendation.read`  |              ✓ |                    ✓ |       O |              ✓ |       ✓ |                  △ |              C/△ |         — |
+| `report.exam-completion.audit.read`   |              ✓ |                    △ |       — |              △ |       ✓ |                  — |                — |         — |
+| `report.exam-completion.consolidated` |              △ |                    △ |       — |              △ |       △ |                  — |                ✓ |         — |
 
 ---
 
@@ -387,33 +387,33 @@ C = Consolidated report access
 
 ## 12.1 Dashboard Widgets
 
-| Widget | Permission | Scope |
-|---|---|---|
-| Exams Awaiting Activation | `dashboard.exam-completion.exams-pending` | B/C |
-| Missing Results | `dashboard.exam-completion.missing-results` | B/C |
-| Results Awaiting Finalization | `dashboard.exam-completion.results-finalization` | B/C |
-| Pending Completion Evaluations | `dashboard.exam-completion.evaluation-pending` | B/C |
-| Trainer Recommendations Pending | `dashboard.exam-completion.trainer-pending` | B/C |
-| Coordinator Reviews Pending | `dashboard.exam-completion.coordinator-pending` | B/C |
-| Final Approvals Pending | `dashboard.exam-completion.final-approval-pending` | B/C |
-| Re-evaluation Exceptions | `dashboard.exam-completion.reevaluation-exceptions` | B/C |
-| Completion Rate Trend | `dashboard.exam-completion.completion-rate` | B/C |
-| Exam Pass Rate | `dashboard.exam-completion.pass-rate` | B/C |
+| Widget                          | Permission                                          | Scope |
+| ------------------------------- | --------------------------------------------------- | ----- |
+| Exams Awaiting Activation       | `dashboard.exam-completion.exams-pending`           | B/C   |
+| Missing Results                 | `dashboard.exam-completion.missing-results`         | B/C   |
+| Results Awaiting Finalization   | `dashboard.exam-completion.results-finalization`    | B/C   |
+| Pending Completion Evaluations  | `dashboard.exam-completion.evaluation-pending`      | B/C   |
+| Trainer Recommendations Pending | `dashboard.exam-completion.trainer-pending`         | B/C   |
+| Coordinator Reviews Pending     | `dashboard.exam-completion.coordinator-pending`     | B/C   |
+| Final Approvals Pending         | `dashboard.exam-completion.final-approval-pending`  | B/C   |
+| Re-evaluation Exceptions        | `dashboard.exam-completion.reevaluation-exceptions` | B/C   |
+| Completion Rate Trend           | `dashboard.exam-completion.completion-rate`         | B/C   |
+| Exam Pass Rate                  | `dashboard.exam-completion.pass-rate`               | B/C   |
 
 ## 12.2 Widget Role Matrix
 
-| Widget Permission | Academic Admin | Coordinator | Trainer | Branch Manager | Auditor | Executive Viewer |
-|---|---:|---:|---:|---:|---:|---:|
-| Exams Pending | ✓ | ✓ | △ | ✓ | △ | C |
-| Missing Results | ✓ | ✓ | O | ✓ | △ | C |
-| Results Finalization | ✓ | ✓ | △ | ✓ | △ | C |
-| Evaluation Pending | ✓ | ✓ | — | ✓ | △ | C |
-| Trainer Pending | ✓ | ✓ | O | ✓ | △ | C |
-| Coordinator Pending | ✓ | ✓ | — | ✓ | △ | C |
-| Final Approval Pending | ✓ | △ | — | ✓ | △ | C |
-| Re-evaluation Exceptions | ✓ | △ | — | △ | ✓ | C |
-| Completion Rate | ✓ | ✓ | △ | ✓ | ✓ | C |
-| Pass Rate | ✓ | ✓ | △ | ✓ | ✓ | C |
+| Widget Permission        | Academic Admin | Coordinator | Trainer | Branch Manager | Auditor | Executive Viewer |
+| ------------------------ | -------------: | ----------: | ------: | -------------: | ------: | ---------------: |
+| Exams Pending            |              ✓ |           ✓ |       △ |              ✓ |       △ |                C |
+| Missing Results          |              ✓ |           ✓ |       O |              ✓ |       △ |                C |
+| Results Finalization     |              ✓ |           ✓ |       △ |              ✓ |       △ |                C |
+| Evaluation Pending       |              ✓ |           ✓ |       — |              ✓ |       △ |                C |
+| Trainer Pending          |              ✓ |           ✓ |       O |              ✓ |       △ |                C |
+| Coordinator Pending      |              ✓ |           ✓ |       — |              ✓ |       △ |                C |
+| Final Approval Pending   |              ✓ |           △ |       — |              ✓ |       △ |                C |
+| Re-evaluation Exceptions |              ✓ |           △ |       — |              △ |       ✓ |                C |
+| Completion Rate          |              ✓ |           ✓ |       △ |              ✓ |       ✓ |                C |
+| Pass Rate                |              ✓ |           ✓ |       △ |              ✓ |       ✓ |                C |
 
 ---
 
@@ -511,84 +511,84 @@ Even where global permission exists, sensitive mutation must remain auditable.
 
 ## 14.1 Exam APIs
 
-| API | Permission | Scope |
-|---|---|---|
-| Search Exams | `exam.read` | B/M |
-| Create Exam | `exam.create` | B |
-| Get Exam Detail | `exam.read` | B/M |
-| Update Exam | `exam.update` | B |
-| Schedule Exam | `exam.schedule` | B |
-| Activate Exam | `exam.activate` | B |
-| Close Exam | `exam.close` | B |
-| Cancel Exam | `exam.cancel` | B |
-| Archive Exam | `exam.archive` | B/G |
+| API             | Permission      | Scope |
+| --------------- | --------------- | ----- |
+| Search Exams    | `exam.read`     | B/M   |
+| Create Exam     | `exam.create`   | B     |
+| Get Exam Detail | `exam.read`     | B/M   |
+| Update Exam     | `exam.update`   | B     |
+| Schedule Exam   | `exam.schedule` | B     |
+| Activate Exam   | `exam.activate` | B     |
+| Close Exam      | `exam.close`    | B     |
+| Cancel Exam     | `exam.cancel`   | B     |
+| Archive Exam    | `exam.archive`  | B/G   |
 
 ## 14.2 Result APIs
 
-| API | Permission | Scope |
-|---|---|---|
-| Result Roster | `result.read` | B/O |
-| Record Result | `result.record` | B/O |
-| Validate Bulk Results | `result.bulk-record` | B/O |
-| Submit Bulk Results | `result.bulk-record` | B/O |
-| Get Result Detail | `result.read` | B/O/M |
-| Finalize Result | `result.finalize` | B |
-| Finalize Result Set | `result.finalize` | B |
-| Correct Result | `result.correct` | B |
-| Read Result Audit | `result.audit.read` | B/M |
+| API                   | Permission           | Scope |
+| --------------------- | -------------------- | ----- |
+| Result Roster         | `result.read`        | B/O   |
+| Record Result         | `result.record`      | B/O   |
+| Validate Bulk Results | `result.bulk-record` | B/O   |
+| Submit Bulk Results   | `result.bulk-record` | B/O   |
+| Get Result Detail     | `result.read`        | B/O/M |
+| Finalize Result       | `result.finalize`    | B     |
+| Finalize Result Set   | `result.finalize`    | B     |
+| Correct Result        | `result.correct`     | B     |
+| Read Result Audit     | `result.audit.read`  | B/M   |
 
 ## 14.3 Completion APIs
 
-| API | Permission | Scope |
-|---|---|---|
-| Search Completion | `completion.read` | B/M |
-| Completion Detail | `completion.read` | B/M |
-| Evaluation Evidence | `completion.read` or `completion.evaluate` | B |
-| Evaluate | `completion.evaluate` | B/S |
-| Reevaluate | `completion.reevaluate` | B/S |
-| Approval Timeline | `completion.read` | B/M |
-| Trainer Recommend | `completion.recommend` | O/B |
-| Trainer Reject | `completion.recommend` | O/B |
-| Coordinator Approve | `completion.coordinator-review` | B |
-| Coordinator Reject | `completion.coordinator-review` or `completion.reject` | B |
-| Final Approve | `completion.final-approve` | B |
-| Final Reject | `completion.reject` | B |
+| API                 | Permission                                             | Scope |
+| ------------------- | ------------------------------------------------------ | ----- |
+| Search Completion   | `completion.read`                                      | B/M   |
+| Completion Detail   | `completion.read`                                      | B/M   |
+| Evaluation Evidence | `completion.read` or `completion.evaluate`             | B     |
+| Evaluate            | `completion.evaluate`                                  | B/S   |
+| Reevaluate          | `completion.reevaluate`                                | B/S   |
+| Approval Timeline   | `completion.read`                                      | B/M   |
+| Trainer Recommend   | `completion.recommend`                                 | O/B   |
+| Trainer Reject      | `completion.recommend`                                 | O/B   |
+| Coordinator Approve | `completion.coordinator-review`                        | B     |
+| Coordinator Reject  | `completion.coordinator-review` or `completion.reject` | B     |
+| Final Approve       | `completion.final-approve`                             | B     |
+| Final Reject        | `completion.reject`                                    | B     |
 
 ## 14.4 Queue and Export APIs
 
-| API | Permission | Scope |
-|---|---|---|
-| Unified Work Queue | Any relevant action/read permission | B/M |
-| Missing Results Queue | `result.read` or `result.record` | B/O |
-| Evaluation Queue | `completion.evaluate` | B |
-| Trainer Queue | `completion.recommend` | O |
-| Coordinator Queue | `completion.coordinator-review` | B |
-| Final Approval Queue | `completion.final-approve` or read capability | B |
-| Reevaluation Queue | `completion.reevaluate` | B |
-| Academic Search | `exam.read`, `result.read`, or `completion.read` | B/M |
-| Audit Timeline | `completion.audit.read` / `result.audit.read` | B/M |
-| Generate Export | entity export permission | B/C/M |
+| API                   | Permission                                       | Scope |
+| --------------------- | ------------------------------------------------ | ----- |
+| Unified Work Queue    | Any relevant action/read permission              | B/M   |
+| Missing Results Queue | `result.read` or `result.record`                 | B/O   |
+| Evaluation Queue      | `completion.evaluate`                            | B     |
+| Trainer Queue         | `completion.recommend`                           | O     |
+| Coordinator Queue     | `completion.coordinator-review`                  | B     |
+| Final Approval Queue  | `completion.final-approve` or read capability    | B     |
+| Reevaluation Queue    | `completion.reevaluate`                          | B     |
+| Academic Search       | `exam.read`, `result.read`, or `completion.read` | B/M   |
+| Audit Timeline        | `completion.audit.read` / `result.audit.read`    | B/M   |
+| Generate Export       | entity export permission                         | B/C/M |
 
 ---
 
 # 15. Permission-to-Screen Mapping
 
-| Screen Group | Minimum Menu Permission | Minimum Data Permission |
-|---|---|---|
-| Module Dashboard | `menu.exam-completion.dashboard` | `exam-completion.dashboard.read` |
-| Exam List/Detail | `menu.exam-completion.exams` | `exam.read` |
-| Create Exam | `menu.exam-completion.exams` | `exam.create` |
-| Result Entry | `menu.exam-completion.results` | `result.record` |
-| Bulk Result Entry | `menu.exam-completion.results` | `result.bulk-record` |
-| Finalization | `menu.exam-completion.results` | `result.finalize` |
-| Result Correction | no separate menu required | `result.correct` |
-| Completion Evaluation | `menu.exam-completion.completion` | `completion.evaluate` |
-| Trainer Recommendation | `menu.exam-completion.approvals` | `completion.recommend` |
-| Coordinator Review | `menu.exam-completion.approvals` | `completion.coordinator-review` |
-| Final Approval | `menu.exam-completion.approvals` | `completion.final-approve` |
-| Reevaluation | `menu.exam-completion.reevaluation` | `completion.reevaluate` |
-| Exports | `menu.exam-completion.exports` | corresponding report/export permission |
-| Audit Timeline | `menu.exam-completion.audit` or authorized deep-link | `completion.audit.read` / `result.audit.read` |
+| Screen Group           | Minimum Menu Permission                              | Minimum Data Permission                       |
+| ---------------------- | ---------------------------------------------------- | --------------------------------------------- |
+| Module Dashboard       | `menu.exam-completion.dashboard`                     | `exam-completion.dashboard.read`              |
+| Exam List/Detail       | `menu.exam-completion.exams`                         | `exam.read`                                   |
+| Create Exam            | `menu.exam-completion.exams`                         | `exam.create`                                 |
+| Result Entry           | `menu.exam-completion.results`                       | `result.record`                               |
+| Bulk Result Entry      | `menu.exam-completion.results`                       | `result.bulk-record`                          |
+| Finalization           | `menu.exam-completion.results`                       | `result.finalize`                             |
+| Result Correction      | no separate menu required                            | `result.correct`                              |
+| Completion Evaluation  | `menu.exam-completion.completion`                    | `completion.evaluate`                         |
+| Trainer Recommendation | `menu.exam-completion.approvals`                     | `completion.recommend`                        |
+| Coordinator Review     | `menu.exam-completion.approvals`                     | `completion.coordinator-review`               |
+| Final Approval         | `menu.exam-completion.approvals`                     | `completion.final-approve`                    |
+| Reevaluation           | `menu.exam-completion.reevaluation`                  | `completion.reevaluate`                       |
+| Exports                | `menu.exam-completion.exports`                       | corresponding report/export permission        |
+| Audit Timeline         | `menu.exam-completion.audit` or authorized deep-link | `completion.audit.read` / `result.audit.read` |
 
 ---
 
@@ -848,25 +848,25 @@ without disclosing unrelated assignment details.
 
 # 20. Audit Requirements by Permission
 
-| Permission | Audit Required | Minimum Audit Data |
-|---|---:|---|
-| `exam.create` | Yes | actor, Exam ID, Course, Batch, timestamp |
-| `exam.update` | Yes | old/new values |
-| `exam.schedule` | Yes | old/new date, reason if required |
-| `exam.cancel` | Yes | reason |
-| `exam.archive` | Yes | reason, old/new active state |
-| `result.record` | Yes | actor, Result ID, marks/status |
-| `result.bulk-record` | Yes | batch reference, actor, count, result IDs |
-| `result.finalize` | Yes | actor, finalized scope |
-| `result.correct` | Mandatory high-detail | old/new marks, old/new status, reason |
-| `completion.evaluate` | Yes | rule reference/version where available, evidence outcome |
-| `completion.reevaluate` | Mandatory | trigger type/reference, before/after outcome |
-| `completion.recommend` | Yes | Trainer, decision, remarks |
-| `completion.coordinator-review` | Yes | Coordinator, decision, remarks |
-| `completion.final-approve` | Mandatory | approver, timestamp, outcome |
-| `completion.reject` | Mandatory | actor, stage, reason |
-| `completion.export` | Policy-dependent but recommended | actor, filters, format, branch scope |
-| `completion.audit.read` | Read audit optional according to security policy | actor, target entity |
+| Permission                      |                                   Audit Required | Minimum Audit Data                                       |
+| ------------------------------- | -----------------------------------------------: | -------------------------------------------------------- |
+| `exam.create`                   |                                              Yes | actor, Exam ID, Course, Batch, timestamp                 |
+| `exam.update`                   |                                              Yes | old/new values                                           |
+| `exam.schedule`                 |                                              Yes | old/new date, reason if required                         |
+| `exam.cancel`                   |                                              Yes | reason                                                   |
+| `exam.archive`                  |                                              Yes | reason, old/new active state                             |
+| `result.record`                 |                                              Yes | actor, Result ID, marks/status                           |
+| `result.bulk-record`            |                                              Yes | batch reference, actor, count, result IDs                |
+| `result.finalize`               |                                              Yes | actor, finalized scope                                   |
+| `result.correct`                |                            Mandatory high-detail | old/new marks, old/new status, reason                    |
+| `completion.evaluate`           |                                              Yes | rule reference/version where available, evidence outcome |
+| `completion.reevaluate`         |                                        Mandatory | trigger type/reference, before/after outcome             |
+| `completion.recommend`          |                                              Yes | Trainer, decision, remarks                               |
+| `completion.coordinator-review` |                                              Yes | Coordinator, decision, remarks                           |
+| `completion.final-approve`      |                                        Mandatory | approver, timestamp, outcome                             |
+| `completion.reject`             |                                        Mandatory | actor, stage, reason                                     |
+| `completion.export`             |                 Policy-dependent but recommended | actor, filters, format, branch scope                     |
+| `completion.audit.read`         | Read audit optional according to security policy | actor, target entity                                     |
 
 ---
 
@@ -979,19 +979,19 @@ actorDomainIdentity
 
 # 24. Ownership Check
 
-| Permission Area | Owning Context | Module 10 Responsibility |
-|---|---|---|
-| User authentication | IAM | Consume authenticated principal |
-| Role definition | IAM | No ownership |
-| Permission definition | IAM | Register/use permission codes |
-| Role-Permission mapping | IAM | No ownership |
-| User-Branch access | IAM | Consume policy result |
-| Exam command authorization | Module 10 + IAM policy | Enforce permission and branch scope |
-| Result actor eligibility | Module 10 + Training Delivery/Trainer context | Validate assignment |
-| Completion approval stage | Module 10 | Enforce workflow state and permission |
-| Audit persistence | Audit & Compliance | Emit/write through shared convention |
-| Report permission | IAM / Reporting policy | Apply permission and branch scope |
-| Dashboard permission | IAM / Reporting | Apply widget-level permission |
+| Permission Area            | Owning Context                                | Module 10 Responsibility              |
+| -------------------------- | --------------------------------------------- | ------------------------------------- |
+| User authentication        | IAM                                           | Consume authenticated principal       |
+| Role definition            | IAM                                           | No ownership                          |
+| Permission definition      | IAM                                           | Register/use permission codes         |
+| Role-Permission mapping    | IAM                                           | No ownership                          |
+| User-Branch access         | IAM                                           | Consume policy result                 |
+| Exam command authorization | Module 10 + IAM policy                        | Enforce permission and branch scope   |
+| Result actor eligibility   | Module 10 + Training Delivery/Trainer context | Validate assignment                   |
+| Completion approval stage  | Module 10                                     | Enforce workflow state and permission |
+| Audit persistence          | Audit & Compliance                            | Emit/write through shared convention  |
+| Report permission          | IAM / Reporting policy                        | Apply permission and branch scope     |
+| Dashboard permission       | IAM / Reporting                               | Apply widget-level permission         |
 
 ---
 

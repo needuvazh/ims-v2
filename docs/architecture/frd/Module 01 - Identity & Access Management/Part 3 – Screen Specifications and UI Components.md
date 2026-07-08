@@ -116,9 +116,9 @@ Authenticate users into ASTI IMS.
 
 ## Actors
 
-* Internal User
-* Student (Future)
-* Corporate User (Future)
+- Internal User
+- Student (Future)
+- Corporate User (Future)
 
 ---
 
@@ -159,8 +159,8 @@ Authenticate users into ASTI IMS.
 
 ## Buttons
 
-* Login
-* Forgot Password
+- Login
+- Forgot Password
 
 ---
 
@@ -974,13 +974,13 @@ The UI should conform to **WCAG 2.2 AA** wherever practical.
 
 Requirements include:
 
-* Full keyboard navigation.
-* Visible focus indicators.
-* Screen reader support (ARIA labels for interactive elements).
-* Minimum 4.5:1 text contrast ratio.
-* Error messages associated with form controls.
-* Logical tab order.
-* Responsive layouts for desktop, tablet, and mobile.
+- Full keyboard navigation.
+- Visible focus indicators.
+- Screen reader support (ARIA labels for interactive elements).
+- Minimum 4.5:1 text contrast ratio.
+- Error messages associated with form controls.
+- Logical tab order.
+- Responsive layouts for desktop, tablet, and mobile.
 
 ---
 
@@ -988,27 +988,27 @@ Requirements include:
 
 ## General Principles
 
-* Minimize clicks for common administrative tasks.
-* Keep forms segmented into logical sections.
-* Preserve user input on validation failures.
-* Use optimistic UI updates where appropriate for non-critical operations.
-* Provide confirmation dialogs only for destructive actions.
+- Minimize clicks for common administrative tasks.
+- Keep forms segmented into logical sections.
+- Preserve user input on validation failures.
+- Use optimistic UI updates where appropriate for non-critical operations.
+- Provide confirmation dialogs only for destructive actions.
 
 ## Navigation
 
-* Breadcrumbs on all administration pages.
-* Persistent left navigation.
-* Global search for users, roles, and permissions.
-* Recently viewed items for administrators.
+- Breadcrumbs on all administration pages.
+- Persistent left navigation.
+- Global search for users, roles, and permissions.
+- Recently viewed items for administrators.
 
 ## Data Grids
 
-* Column sorting.
-* Multi-column filtering.
-* Saved filter presets.
-* Export to Excel/CSV.
-* Configurable column visibility.
-* Pagination with server-side search.
+- Column sorting.
+- Multi-column filtering.
+- Saved filter presets.
+- Export to Excel/CSV.
+- Configurable column visibility.
+- Pagination with server-side search.
 
 ---
 
@@ -1016,14 +1016,14 @@ Requirements include:
 
 The IAM specification now includes:
 
-* Complete navigation hierarchy
-* Screen inventory (20 screens)
-* Detailed screen specifications
-* Form layouts and sections
-* Grid definitions
-* Field standards
-* UI component catalogue
-* Validation standards
-* Error handling
-* Accessibility requirements
-* UX guidelines
+- Complete navigation hierarchy
+- Screen inventory (20 screens)
+- Detailed screen specifications
+- Form layouts and sections
+- Grid definitions
+- Field standards
+- UI component catalogue
+- Validation standards
+- Error handling
+- Accessibility requirements
+- UX guidelines

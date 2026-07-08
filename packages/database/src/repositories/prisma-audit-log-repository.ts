@@ -57,7 +57,7 @@ export class PrismaAuditLogRepository implements IAuditLogRepository {
       module?: string;
     },
     page: number,
-    pageSize: number
+    pageSize: number,
   ): Promise<{ items: AuditLogDto[]; total: number }> {
     const where: any = {};
     if (filters.entityType) {

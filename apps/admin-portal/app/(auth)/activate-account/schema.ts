@@ -10,8 +10,13 @@ export type ActivateAccountFieldErrors = {
   token?: string;
 };
 
-export function parseActivateAccountFieldErrors(formData: FormData, token?: string): ActivateAccountFieldErrors {
-  const result = activateAccountSchema.safeParse({ token: token ?? String(formData.get('token') ?? '') });
+export function parseActivateAccountFieldErrors(
+  formData: FormData,
+  token?: string,
+): ActivateAccountFieldErrors {
+  const result = activateAccountSchema.safeParse({
+    token: token ?? String(formData.get('token') ?? ''),
+  });
 
   if (!result.success) {
     const fieldErrors = result.error.flatten().fieldErrors;

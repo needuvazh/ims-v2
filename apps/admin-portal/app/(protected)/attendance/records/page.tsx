@@ -1,6 +1,9 @@
 import { assertPermission } from '@/lib/auth-guard';
 import { prisma } from '@ims/database';
-import { type AttendanceRecordStatus, type AttendanceSessionStatus } from '@ims/attendance';
+import {
+  type AttendanceRecordStatus,
+  type AttendanceSessionStatus,
+} from '@ims/attendance';
 import { hasPermission } from '@ims/shared-auth';
 import { notFound } from 'next/navigation';
 import {
@@ -20,7 +23,9 @@ import {
 import { ClipboardList, Layers } from 'lucide-react';
 import { AttendanceRosterEditor } from '../_components/attendance-roster-editor';
 
-export const metadata = { title: 'Attendance Records - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Attendance Records - Admin Portal | ASTI IMS',
+};
 
 function recordBadge(status: string) {
   if (status === 'Present') return <Badge variant="success">Present</Badge>;
@@ -43,17 +48,23 @@ export default async function AttendanceRecordsPage(props: {
     )
   ).map((value) => String(value));
 
-  const branchRows = allowedBranchIds.length > 0
-    ? await prisma.branch.findMany({
-        where: { id: { in: allowedBranchIds }, isDeleted: false },
-        select: { id: true, branchName: true },
-      })
-    : [];
-  const branchNameById = new Map(branchRows.map((branch) => [branch.id, branch.branchName]));
+  const branchRows =
+    allowedBranchIds.length > 0
+      ? await prisma.branch.findMany({
+          where: { id: { in: allowedBranchIds }, isDeleted: false },
+          select: { id: true, branchName: true },
+        })
+      : [];
+  const branchNameById = new Map(
+    branchRows.map((branch) => [branch.id, branch.branchName]),
+  );
 
   const canMark = hasPermission(session, 'attendance.record.mark');
   const canGenerateRoster = hasPermission(session, 'attendance.session.open');
-  const canRequestCorrection = hasPermission(session, 'attendance.correction.request');
+  const canRequestCorrection = hasPermission(
+    session,
+    'attendance.correction.request',
+  );
 
   const attendanceSession = sessionId
     ? await prisma.attendanceSession.findFirst({
@@ -146,8 +157,12 @@ export default async function AttendanceRecordsPage(props: {
       header: 'Student',
       render: (record: (typeof readOnlyRows)[number]) => (
         <div className="space-y-0.5">
-          <div className="font-semibold text-[color:var(--ims-ink)]">{record.studentName}</div>
-          <div className="text-xs text-[color:var(--ims-muted)]">{record.studentNumber}</div>
+          <div className="font-semibold text-[color:var(--ims-ink)]">
+            {record.studentName}
+          </div>
+          <div className="text-xs text-[color:var(--ims-muted)]">
+            {record.studentNumber}
+          </div>
         </div>
       ),
     },
@@ -156,7 +171,9 @@ export default async function AttendanceRecordsPage(props: {
       render: (record: (typeof readOnlyRows)[number]) => (
         <div className="space-y-0.5">
           <div className="font-semibold">{record.sessionTitle}</div>
-          <div className="text-xs text-[color:var(--ims-muted)]">{record.batchCode} | #{record.sessionNumber}</div>
+          <div className="text-xs text-[color:var(--ims-muted)]">
+            {record.batchCode} | #{record.sessionNumber}
+          </div>
         </div>
       ),
     },
@@ -166,30 +183,46 @@ export default async function AttendanceRecordsPage(props: {
     },
     {
       header: 'Status',
-      render: (record: (typeof readOnlyRows)[number]) => recordBadge(record.status),
+      render: (record: (typeof readOnlyRows)[number]) =>
+        recordBadge(record.status),
       headerClassName: 'w-[110px]',
     },
     {
       header: 'Correction',
-      render: (record: (typeof readOnlyRows)[number]) => (
+      render: (record: (typeof readOnlyRows)[number]) =>
         record.correctionStatus ? (
-          <Badge variant={record.correctionStatus === 'Approved' ? 'success' : record.correctionStatus === 'Rejected' ? 'error' : 'outline'}>{record.correctionStatus}</Badge>
+          <Badge
+            variant={
+              record.correctionStatus === 'Approved'
+                ? 'success'
+                : record.correctionStatus === 'Rejected'
+                  ? 'error'
+                  : 'outline'
+            }
+          >
+            {record.correctionStatus}
+          </Badge>
         ) : (
           <span className="text-sm text-[color:var(--ims-muted)]">None</span>
-        )
-      ),
+        ),
       headerClassName: 'w-[120px]',
     },
     {
       header: 'Late Mins',
       className: 'text-right',
-      render: (record: (typeof readOnlyRows)[number]) => <span>{record.lateMinutes ?? '—'}</span>,
+      render: (record: (typeof readOnlyRows)[number]) => (
+        <span>{record.lateMinutes ?? '—'}</span>
+      ),
       headerClassName: 'text-right w-[100px]',
     },
     {
       header: 'Marked At',
       className: 'text-right',
-      render: (record: (typeof readOnlyRows)[number]) => <span className="text-sm text-[color:var(--ims-muted)]">{record.markedAt ? new Date(record.markedAt).toLocaleString() : '—'}</span>,
+      render: (record: (typeof readOnlyRows)[number]) => (
+        <span className="text-sm text-[color:var(--ims-muted)]">
+          {record.markedAt ? new Date(record.markedAt).toLocaleString() : '—'}
+        </span>
+      ),
       headerClassName: 'text-right w-[180px]',
     },
   ];
@@ -199,23 +232,45 @@ export default async function AttendanceRecordsPage(props: {
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{record.studentNumber}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{record.studentName}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {record.studentNumber}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {record.studentName}
+            </p>
           </div>
           {recordBadge(record.status)}
         </div>
       </CardHeader>
       <CardContent className="space-y-3 p-card-p text-xs">
         <div className="grid grid-cols-2 gap-4">
-          <div><p className="font-semibold text-[var(--ims-muted)]">Batch</p><p className="truncate">{record.batchCode}</p></div>
-          <div><p className="font-semibold text-[var(--ims-muted)]">Session</p><p className="truncate">#{record.sessionNumber}</p></div>
-          <div className="col-span-2"><p className="font-semibold text-[var(--ims-muted)]">Branch</p><p className="truncate">{record.branchName}</p></div>
-          <div><p className="font-semibold text-[var(--ims-muted)]">Correction</p><p className="truncate">{record.correctionStatus ?? 'None'}</p></div>
-          <div><p className="font-semibold text-[var(--ims-muted)]">Late Mins</p><p className="truncate">{record.lateMinutes ?? '—'}</p></div>
+          <div>
+            <p className="font-semibold text-[var(--ims-muted)]">Batch</p>
+            <p className="truncate">{record.batchCode}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-[var(--ims-muted)]">Session</p>
+            <p className="truncate">#{record.sessionNumber}</p>
+          </div>
+          <div className="col-span-2">
+            <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
+            <p className="truncate">{record.branchName}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-[var(--ims-muted)]">Correction</p>
+            <p className="truncate">{record.correctionStatus ?? 'None'}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-[var(--ims-muted)]">Late Mins</p>
+            <p className="truncate">{record.lateMinutes ?? '—'}</p>
+          </div>
         </div>
       </CardContent>
       <CardFooter className="p-card-p pt-0">
-        <div className="w-full text-xs text-[color:var(--ims-muted)]">Marked at: {record.markedAt ? new Date(record.markedAt).toLocaleString() : '—'}</div>
+        <div className="w-full text-xs text-[color:var(--ims-muted)]">
+          Marked at:{' '}
+          {record.markedAt ? new Date(record.markedAt).toLocaleString() : '—'}
+        </div>
       </CardFooter>
     </Card>
   );
@@ -231,7 +286,11 @@ export default async function AttendanceRecordsPage(props: {
             : 'Enrollment-linked attendance rows with branch-scoped visibility, correction state, and roster history.'
         }
         actions={
-          <LinkButton href="/attendance/sessions" variant="outline" className="gap-2">
+          <LinkButton
+            href="/attendance/sessions"
+            variant="outline"
+            className="gap-2"
+          >
             <Layers className="h-4 w-4" />
             Sessions
           </LinkButton>
@@ -246,15 +305,24 @@ export default async function AttendanceRecordsPage(props: {
           sessionTitleArabic={attendanceSession.session.titleArabic}
           sessionNumber={attendanceSession.session.sessionNumber}
           batchCode={attendanceSession.session.batch.batchCode}
-          branchName={branchNameById.get(attendanceSession.branchId) ?? attendanceSession.branchId}
+          branchName={
+            branchNameById.get(attendanceSession.branchId) ??
+            attendanceSession.branchId
+          }
           attendanceDate={attendanceSession.attendanceDate}
           records={attendanceSession.records.map((record) => ({
             id: record.id,
             status: record.status as AttendanceRecordStatus,
             remarks: record.remarks,
-            lateMinutes: record.lateMinutes !== null ? Number(record.lateMinutes) : null,
+            lateMinutes:
+              record.lateMinutes !== null ? Number(record.lateMinutes) : null,
             markedAt: record.markedAt,
-            correctionStatus: (record.corrections[0]?.status ?? 'None') as 'Pending' | 'Approved' | 'Rejected' | 'Cancelled' | 'None',
+            correctionStatus: (record.corrections[0]?.status ?? 'None') as
+              | 'Pending'
+              | 'Approved'
+              | 'Rejected'
+              | 'Cancelled'
+              | 'None',
             enrollment: {
               id: record.enrollment.id,
               studentProfile: {
@@ -286,14 +354,18 @@ export default async function AttendanceRecordsPage(props: {
           <CardHeader>
             <CardTitle>Record List</CardTitle>
             <CardDescription>
-              {sessionId ? `Filtered to attendance session ${sessionId}.` : 'All attendance records for the authorized branch scope.'}
+              {sessionId
+                ? `Filtered to attendance session ${sessionId}.`
+                : 'All attendance records for the authorized branch scope.'}
             </CardDescription>
           </CardHeader>
           <CardContent>
             {readOnlyRecords.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-8 text-center">
                 <ClipboardList className="mx-auto mb-3 h-10 w-10 text-[color:var(--ims-muted)]" />
-                <p className="text-sm font-semibold text-[color:var(--ims-ink)]">No attendance records yet.</p>
+                <p className="text-sm font-semibold text-[color:var(--ims-ink)]">
+                  No attendance records yet.
+                </p>
                 <p className="mt-1 text-sm text-[color:var(--ims-muted)]">
                   {sessionId
                     ? 'Generate the roster from this session first, then mark each student and submit.'
@@ -301,7 +373,13 @@ export default async function AttendanceRecordsPage(props: {
                 </p>
               </div>
             ) : (
-              <ResponsiveDataTable data={readOnlyRows} columns={columns} renderCard={renderCard} keyExtractor={(record) => record.id} emptyState={null} />
+              <ResponsiveDataTable
+                data={readOnlyRows}
+                columns={columns}
+                renderCard={renderCard}
+                keyExtractor={(record) => record.id}
+                emptyState={null}
+              />
             )}
           </CardContent>
         </Card>

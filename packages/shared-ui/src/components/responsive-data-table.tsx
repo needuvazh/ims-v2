@@ -1,7 +1,14 @@
 import React, { ReactNode } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { cn } from '../utils/cn';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from './table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from './table';
 
 export interface Column<T> {
   header: ReactNode;
@@ -37,7 +44,7 @@ export function ResponsiveDataTable<T>({
   renderCard,
   keyExtractor,
   emptyState,
-  breakpoint = 'lg'
+  breakpoint = 'lg',
 }: ResponsiveDataTableProps<T>) {
   if (data.length === 0 && emptyState) return <>{emptyState}</>;
 
@@ -46,10 +53,7 @@ export function ResponsiveDataTable<T>({
   return (
     <div className="w-full">
       {/* Desktop View: Table */}
-      <div className={cn(
-        'hidden',
-        isLg ? 'lg:block' : 'md:block'
-      )}>
+      <div className={cn('hidden', isLg ? 'lg:block' : 'md:block')}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -60,7 +64,13 @@ export function ResponsiveDataTable<T>({
                       type="button"
                       onClick={col.onSort}
                       className="inline-flex items-center gap-1.5 text-left transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                      aria-sort={col.sortDirection === 'asc' ? 'ascending' : col.sortDirection === 'desc' ? 'descending' : 'none'}
+                      aria-sort={
+                        col.sortDirection === 'asc'
+                          ? 'ascending'
+                          : col.sortDirection === 'desc'
+                            ? 'descending'
+                            : 'none'
+                      }
                     >
                       <span>{col.header}</span>
                       {col.sortDirection === 'asc' ? (
@@ -93,14 +103,14 @@ export function ResponsiveDataTable<T>({
       </div>
 
       {/* Mobile/Tablet View: Cards */}
-      <div className={cn(
-        'grid grid-cols-1 gap-4',
-        isLg ? 'lg:hidden' : 'md:hidden'
-      )}>
+      <div
+        className={cn(
+          'grid grid-cols-1 gap-4',
+          isLg ? 'lg:hidden' : 'md:hidden',
+        )}
+      >
         {data.map((item) => (
-          <div key={keyExtractor(item)}>
-            {renderCard(item)}
-          </div>
+          <div key={keyExtractor(item)}>{renderCard(item)}</div>
         ))}
       </div>
     </div>

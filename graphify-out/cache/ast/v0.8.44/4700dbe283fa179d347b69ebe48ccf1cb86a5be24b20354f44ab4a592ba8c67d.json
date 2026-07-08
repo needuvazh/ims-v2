@@ -1,1 +1,767 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_md", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_module_12_fee_billing_receivables_management", "label": "Module 12 \u2013 Fee, Billing & Receivables Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview", "label": "1. Business Overview", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L5"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_1_introduction", "label": "1.1 Introduction", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L7"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_2_business_benefits", "label": "1.2 Business Benefits", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L19"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts", "label": "2. Domain Ownership and Financial Concepts", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L32"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_1_owned_entities", "label": "2.1 Owned Entities", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L34"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_2_referenced_but_not_owned", "label": "2.2 Referenced but Not Owned", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L49"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "label": "3. Functional Requirements Specifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L63"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_001_create_student_invoice_from_confirmed_enrollment", "label": "FR-FBR-001 \u2013 Create Student Invoice from Confirmed Enrollment", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L65"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_002_create_corporate_or_consolidated_corporate_invoice", "label": "FR-FBR-002 \u2013 Create Corporate or Consolidated Corporate Invoice", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L125"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_003_validate_invoice_monetary_totals", "label": "FR-FBR-003 \u2013 Validate Invoice Monetary Totals", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L183"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_004_generate_unique_invoice_number", "label": "FR-FBR-004 \u2013 Generate Unique Invoice Number", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L235"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_005_search_and_view_invoices", "label": "FR-FBR-005 \u2013 Search and View Invoices", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L271"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_006_create_installment_plan", "label": "FR-FBR-006 \u2013 Create Installment Plan", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L323"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_007_maintain_installment_settlement_status", "label": "FR-FBR-007 \u2013 Maintain Installment Settlement Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L368"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_008_record_manual_payment", "label": "FR-FBR-008 \u2013 Record Manual Payment", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L410"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_009_validate_payment_request", "label": "FR-FBR-009 \u2013 Validate Payment Request", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L468"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_010_generate_and_retrieve_receipt", "label": "FR-FBR-010 \u2013 Generate and Retrieve Receipt", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L511"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_011_support_partial_payment_and_atomic_balance_update", "label": "FR-FBR-011 \u2013 Support Partial Payment and Atomic Balance Update", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L550"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_012_create_and_maintain_receivable", "label": "FR-FBR-012 \u2013 Create and Maintain Receivable", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L584"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_013_calculate_receivables_aging", "label": "FR-FBR-013 \u2013 Calculate Receivables Aging", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L622"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_014_submit_refund_request", "label": "FR-FBR-014 \u2013 Submit Refund Request", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L657"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_015_approve_or_reject_refund", "label": "FR-FBR-015 \u2013 Approve or Reject Refund", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L703"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_016_execute_approved_refund_financial_effect", "label": "FR-FBR-016 \u2013 Execute Approved Refund Financial Effect", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L744"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_017_configure_effective_dated_corporate_credit_rule", "label": "FR-FBR-017 \u2013 Configure Effective-Dated Corporate Credit Rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L790"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_018_validate_corporate_credit_during_enrollment", "label": "FR-FBR-018 \u2013 Validate Corporate Credit During Enrollment", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L831"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_019_calculate_corporate_credit_exposure", "label": "FR-FBR-019 \u2013 Calculate Corporate Credit Exposure", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L870"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_020_provide_enrollment_payment_validation_status", "label": "FR-FBR-020 \u2013 Provide Enrollment Payment Validation Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L905"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_021_provide_branch_finance_summaries", "label": "FR-FBR-021 \u2013 Provide Branch Finance Summaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L941"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_022_provide_consolidated_finance_view", "label": "FR-FBR-022 \u2013 Provide Consolidated Finance View", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L980"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_023_export_authorized_finance_data", "label": "FR-FBR-023 \u2013 Export Authorized Finance Data", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1015"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_024_publish_internal_finance_domain_events", "label": "FR-FBR-024 \u2013 Publish Internal Finance Domain Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1051"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_025_audit_sensitive_finance_operations", "label": "FR-FBR-025 \u2013 Audit Sensitive Finance Operations", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1090"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_026_enforce_financial_soft_delete_and_reversal_policy", "label": "FR-FBR-026 \u2013 Enforce Financial Soft-Delete and Reversal Policy", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1130"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_027_render_bilingual_financial_documents", "label": "FR-FBR-027 \u2013 Render Bilingual Financial Documents", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1164"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_028_apply_oman_gst_business_time", "label": "FR-FBR-028 \u2013 Apply Oman GST Business Time", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1199"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_029_enforce_optimistic_concurrency", "label": "FR-FBR-029 \u2013 Enforce Optimistic Concurrency", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1228"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_030_enforce_invoice_status_lifecycle", "label": "FR-FBR-030 \u2013 Enforce Invoice Status Lifecycle", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1260"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules", "label": "4. Comprehensive Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1302"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "label": "5. Cross-Module Dependencies Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1377"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences", "label": "6. Key Cross-Context Sequences", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1399"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_1_enrollment_to_invoice", "label": "6.1 Enrollment to Invoice", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1401"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_2_payment_and_receipt", "label": "6.2 Payment and Receipt", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1420"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_3_corporate_credit_validation", "label": "6.3 Corporate Credit Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1445"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_4_completion_and_certificate_payment_check", "label": "6.4 Completion and Certificate Payment Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1463"}, {"id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_7_part_1_completion_criteria", "label": "7. Part 1 Completion Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1479"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_md", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_module_12_fee_billing_receivables_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L5", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_1_introduction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L7", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_2_business_benefits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L19", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L32", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_1_owned_entities", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L34", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_2_referenced_but_not_owned", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L49", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L63", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_001_create_student_invoice_from_confirmed_enrollment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L65", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_002_create_corporate_or_consolidated_corporate_invoice", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L125", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_003_validate_invoice_monetary_totals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L183", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_004_generate_unique_invoice_number", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L235", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_005_search_and_view_invoices", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L271", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_006_create_installment_plan", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L323", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_007_maintain_installment_settlement_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L368", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_008_record_manual_payment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L410", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_009_validate_payment_request", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L468", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_010_generate_and_retrieve_receipt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L511", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_011_support_partial_payment_and_atomic_balance_update", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L550", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_012_create_and_maintain_receivable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L584", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_013_calculate_receivables_aging", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L622", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_014_submit_refund_request", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L657", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_015_approve_or_reject_refund", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L703", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_016_execute_approved_refund_financial_effect", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L744", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_017_configure_effective_dated_corporate_credit_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L790", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_018_validate_corporate_credit_during_enrollment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L831", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_019_calculate_corporate_credit_exposure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L870", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_020_provide_enrollment_payment_validation_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L905", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_021_provide_branch_finance_summaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L941", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_022_provide_consolidated_finance_view", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L980", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_023_export_authorized_finance_data", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1015", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_024_publish_internal_finance_domain_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1051", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_025_audit_sensitive_finance_operations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1090", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_026_enforce_financial_soft_delete_and_reversal_policy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1130", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_027_render_bilingual_financial_documents", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1164", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_028_apply_oman_gst_business_time", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1199", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_029_enforce_optimistic_concurrency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1228", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_030_enforce_invoice_status_lifecycle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1260", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1302", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1377", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1399", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_1_enrollment_to_invoice", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1401", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_2_payment_and_receipt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1420", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_3_corporate_credit_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1445", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_4_completion_and_certificate_payment_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1463", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_7_part_1_completion_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1479", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_module_12_fee_billing_receivables_management",
+      "label": "Module 12 \u2013 Fee, Billing & Receivables Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview",
+      "label": "1. Business Overview",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_1_introduction",
+      "label": "1.1 Introduction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_2_business_benefits",
+      "label": "1.2 Business Benefits",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts",
+      "label": "2. Domain Ownership and Financial Concepts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_1_owned_entities",
+      "label": "2.1 Owned Entities",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_2_referenced_but_not_owned",
+      "label": "2.2 Referenced but Not Owned",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L49"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "label": "3. Functional Requirements Specifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_001_create_student_invoice_from_confirmed_enrollment",
+      "label": "FR-FBR-001 \u2013 Create Student Invoice from Confirmed Enrollment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L65"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_002_create_corporate_or_consolidated_corporate_invoice",
+      "label": "FR-FBR-002 \u2013 Create Corporate or Consolidated Corporate Invoice",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L125"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_003_validate_invoice_monetary_totals",
+      "label": "FR-FBR-003 \u2013 Validate Invoice Monetary Totals",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L183"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_004_generate_unique_invoice_number",
+      "label": "FR-FBR-004 \u2013 Generate Unique Invoice Number",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L235"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_005_search_and_view_invoices",
+      "label": "FR-FBR-005 \u2013 Search and View Invoices",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L271"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_006_create_installment_plan",
+      "label": "FR-FBR-006 \u2013 Create Installment Plan",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L323"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_007_maintain_installment_settlement_status",
+      "label": "FR-FBR-007 \u2013 Maintain Installment Settlement Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L368"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_008_record_manual_payment",
+      "label": "FR-FBR-008 \u2013 Record Manual Payment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L410"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_009_validate_payment_request",
+      "label": "FR-FBR-009 \u2013 Validate Payment Request",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L468"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_010_generate_and_retrieve_receipt",
+      "label": "FR-FBR-010 \u2013 Generate and Retrieve Receipt",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L511"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_011_support_partial_payment_and_atomic_balance_update",
+      "label": "FR-FBR-011 \u2013 Support Partial Payment and Atomic Balance Update",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L550"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_012_create_and_maintain_receivable",
+      "label": "FR-FBR-012 \u2013 Create and Maintain Receivable",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L584"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_013_calculate_receivables_aging",
+      "label": "FR-FBR-013 \u2013 Calculate Receivables Aging",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L622"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_014_submit_refund_request",
+      "label": "FR-FBR-014 \u2013 Submit Refund Request",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L657"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_015_approve_or_reject_refund",
+      "label": "FR-FBR-015 \u2013 Approve or Reject Refund",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L703"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_016_execute_approved_refund_financial_effect",
+      "label": "FR-FBR-016 \u2013 Execute Approved Refund Financial Effect",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L744"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_017_configure_effective_dated_corporate_credit_rule",
+      "label": "FR-FBR-017 \u2013 Configure Effective-Dated Corporate Credit Rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L790"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_018_validate_corporate_credit_during_enrollment",
+      "label": "FR-FBR-018 \u2013 Validate Corporate Credit During Enrollment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L831"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_019_calculate_corporate_credit_exposure",
+      "label": "FR-FBR-019 \u2013 Calculate Corporate Credit Exposure",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L870"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_020_provide_enrollment_payment_validation_status",
+      "label": "FR-FBR-020 \u2013 Provide Enrollment Payment Validation Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L905"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_021_provide_branch_finance_summaries",
+      "label": "FR-FBR-021 \u2013 Provide Branch Finance Summaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L941"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_022_provide_consolidated_finance_view",
+      "label": "FR-FBR-022 \u2013 Provide Consolidated Finance View",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L980"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_023_export_authorized_finance_data",
+      "label": "FR-FBR-023 \u2013 Export Authorized Finance Data",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1015"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_024_publish_internal_finance_domain_events",
+      "label": "FR-FBR-024 \u2013 Publish Internal Finance Domain Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1051"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_025_audit_sensitive_finance_operations",
+      "label": "FR-FBR-025 \u2013 Audit Sensitive Finance Operations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1090"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_026_enforce_financial_soft_delete_and_reversal_policy",
+      "label": "FR-FBR-026 \u2013 Enforce Financial Soft-Delete and Reversal Policy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1130"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_027_render_bilingual_financial_documents",
+      "label": "FR-FBR-027 \u2013 Render Bilingual Financial Documents",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1164"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_028_apply_oman_gst_business_time",
+      "label": "FR-FBR-028 \u2013 Apply Oman GST Business Time",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1199"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_029_enforce_optimistic_concurrency",
+      "label": "FR-FBR-029 \u2013 Enforce Optimistic Concurrency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1228"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_030_enforce_invoice_status_lifecycle",
+      "label": "FR-FBR-030 \u2013 Enforce Invoice Status Lifecycle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1260"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules",
+      "label": "4. Comprehensive Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1302"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "label": "5. Cross-Module Dependencies Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1377"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences",
+      "label": "6. Key Cross-Context Sequences",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1399"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_1_enrollment_to_invoice",
+      "label": "6.1 Enrollment to Invoice",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1401"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_2_payment_and_receipt",
+      "label": "6.2 Payment and Receipt",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1420"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_3_corporate_credit_validation",
+      "label": "6.3 Corporate Credit Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1445"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_4_completion_and_certificate_payment_check",
+      "label": "6.4 Completion and Certificate Payment Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1463"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_7_part_1_completion_criteria",
+      "label": "7. Part 1 Completion Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1479"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_module_12_fee_billing_receivables_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_1_introduction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_business_overview",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_1_2_business_benefits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_1_owned_entities",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_domain_ownership_and_financial_concepts",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_2_2_referenced_but_not_owned",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_001_create_student_invoice_from_confirmed_enrollment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_002_create_corporate_or_consolidated_corporate_invoice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_003_validate_invoice_monetary_totals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_004_generate_unique_invoice_number",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_005_search_and_view_invoices",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L271",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_006_create_installment_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L323",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_007_maintain_installment_settlement_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L368",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_008_record_manual_payment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L410",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_009_validate_payment_request",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L468",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_010_generate_and_retrieve_receipt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L511",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_011_support_partial_payment_and_atomic_balance_update",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L550",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_012_create_and_maintain_receivable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L584",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_013_calculate_receivables_aging",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L622",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_014_submit_refund_request",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L657",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_015_approve_or_reject_refund",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L703",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_016_execute_approved_refund_financial_effect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L744",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_017_configure_effective_dated_corporate_credit_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L790",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_018_validate_corporate_credit_during_enrollment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L831",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_019_calculate_corporate_credit_exposure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L870",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_020_provide_enrollment_payment_validation_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L905",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_021_provide_branch_finance_summaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L941",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_022_provide_consolidated_finance_view",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L980",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_023_export_authorized_finance_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1015",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_024_publish_internal_finance_domain_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1051",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_025_audit_sensitive_finance_operations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1090",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_026_enforce_financial_soft_delete_and_reversal_policy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1130",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_027_render_bilingual_financial_documents",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1164",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_028_apply_oman_gst_business_time",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1199",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_029_enforce_optimistic_concurrency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1228",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_3_functional_requirements_specifications",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_fr_fbr_030_enforce_invoice_status_lifecycle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1260",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_4_comprehensive_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1302",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_5_cross_module_dependencies_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1377",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1399",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_1_enrollment_to_invoice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1401",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_2_payment_and_receipt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1420",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_3_corporate_credit_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1445",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_key_cross_context_sequences",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_6_4_completion_and_certificate_payment_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1463",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_12_fee_billing_receivables_management_part_1_business_overview_functional_requirements_business_rules_7_part_1_completion_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1479",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

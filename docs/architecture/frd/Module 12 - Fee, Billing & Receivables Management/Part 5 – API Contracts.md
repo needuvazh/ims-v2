@@ -8,108 +8,115 @@ This document defines the external REST API and internal Server Action contracts
 
 ### 1.1 API Conventions
 
-| Convention | Requirement |
-|---|---|
-| Base REST path | `/api/v1/finance` |
-| Authentication | Authenticated ASTI session for private routes; no anonymous finance route is defined in this module. |
-| Content type | `application/json; charset=utf-8` except export/download responses. |
-| Business timezone | `Asia/Muscat` for business-date evaluation. |
-| Currency precision | Monetary request values use strings matching `^\\d{1,15}(\\.\\d{1,3})?$`; server converts to Prisma `Decimal`. |
-| Pagination | `page` is 1-based; `pageSize` allowed values are 25, 50, 100; maximum 100. |
-| Sorting | Only endpoint-declared sort fields are accepted. |
-| Branch scope | Client branch filters narrow an already-authorized set and never grant access. |
-| Concurrency | Mutable command DTOs carry `expectedVersion` where the target aggregate can be concurrently changed. |
-| Idempotency | Payment posting and externally retryable command endpoints require `Idempotency-Key` header, 8–128 printable ASCII characters. |
-| Correlation | Every response carries `meta.correlationId`; clients may send `X-Correlation-ID`. |
-| Error shape | All errors follow the common error DTO in section 4. |
-| Soft delete | No endpoint exposes hard delete for posted finance transactions. |
+| Convention         | Requirement                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| Base REST path     | `/api/v1/finance`                                                                                                              |
+| Authentication     | Authenticated ASTI session for private routes; no anonymous finance route is defined in this module.                           |
+| Content type       | `application/json; charset=utf-8` except export/download responses.                                                            |
+| Business timezone  | `Asia/Muscat` for business-date evaluation.                                                                                    |
+| Currency precision | Monetary request values use strings matching `^\\d{1,15}(\\.\\d{1,3})?$`; server converts to Prisma `Decimal`.                 |
+| Pagination         | `page` is 1-based; `pageSize` allowed values are 25, 50, 100; maximum 100.                                                     |
+| Sorting            | Only endpoint-declared sort fields are accepted.                                                                               |
+| Branch scope       | Client branch filters narrow an already-authorized set and never grant access.                                                 |
+| Concurrency        | Mutable command DTOs carry `expectedVersion` where the target aggregate can be concurrently changed.                           |
+| Idempotency        | Payment posting and externally retryable command endpoints require `Idempotency-Key` header, 8–128 printable ASCII characters. |
+| Correlation        | Every response carries `meta.correlationId`; clients may send `X-Correlation-ID`.                                              |
+| Error shape        | All errors follow the common error DTO in section 4.                                                                           |
+| Soft delete        | No endpoint exposes hard delete for posted finance transactions.                                                               |
 
 ## 2. Endpoint Inventory
 
 ### 2.1 REST Endpoints
 
-| Route | Method | Purpose | Permission |
-|---|---:|---|---|
-| `/api/v1/finance/invoices` | GET | Search branch-scoped invoices. | `finance.invoice.read` |
-| `/api/v1/finance/invoices` | POST | Create a draft invoice from eligible source data. | `finance.invoice.create` |
-| `/api/v1/finance/invoices/{invoiceId}` | GET | Retrieve full invoice detail. | `finance.invoice.read` |
-| `/api/v1/finance/invoices/{invoiceId}` | PATCH | Update editable draft invoice attributes. | `finance.invoice.create` |
-| `/api/v1/finance/invoices/{invoiceId}/issue` | POST | Validate and issue a draft invoice. | `finance.invoice.issue` |
-| `/api/v1/finance/invoices/{invoiceId}/cancel` | POST | Cancel an eligible unpaid invoice. | `finance.invoice.cancel` |
-| `/api/v1/finance/invoices/{invoiceId}/payment-validation` | GET | Return authoritative payment-completion status for the invoice. | `finance.invoice.read` or trusted internal caller |
-| `/api/v1/finance/enrollments/{enrollmentId}/payment-validation` | GET | Return payment validation for Completion and Certificate contexts. | trusted internal caller or `finance.payment.read` |
-| `/api/v1/finance/invoices/{invoiceId}/installment-plan` | POST | Create an installment plan and schedule. | `finance.installment.create` |
-| `/api/v1/finance/installment-plans/{planId}` | GET | Retrieve plan and installment schedule. | `finance.installment.read` |
-| `/api/v1/finance/installments` | GET | Search installments by due state and branch. | `finance.installment.read` |
-| `/api/v1/finance/payments` | GET | Search payments. | `finance.payment.read` |
-| `/api/v1/finance/payments` | POST | Record and post a manual payment atomically. | `finance.payment.record` |
-| `/api/v1/finance/payments/{paymentId}` | GET | Retrieve payment and allocation detail. | `finance.payment.read` |
-| `/api/v1/finance/receipts/{receiptId}` | GET | Retrieve receipt DTO. | `finance.receipt.read` |
-| `/api/v1/finance/receipts/{receiptId}/document` | GET | Download/render bilingual receipt document. | `finance.receipt.read` |
-| `/api/v1/finance/refunds` | GET | Search refunds. | `finance.refund.read` |
-| `/api/v1/finance/refunds` | POST | Submit refund request and approval request. | `finance.refund.request` |
-| `/api/v1/finance/refunds/{refundId}` | GET | Retrieve refund detail and status history. | `finance.refund.read` |
-| `/api/v1/finance/refunds/{refundId}/decision` | POST | Approve or reject refund request. | `finance.refund.approve` |
-| `/api/v1/finance/refunds/{refundId}/execute` | POST | Record authorized financial execution of approved refund. | `finance.refund.execute` |
-| `/api/v1/finance/receivables` | GET | Search outstanding receivables and aging. | `finance.receivable.read` |
-| `/api/v1/finance/receivables/summary` | GET | Return branch-scoped aging summary. | `finance.report.branch` |
-| `/api/v1/finance/corporate-credit/rules` | GET | Search effective corporate credit rules. | `finance.credit.read` |
-| `/api/v1/finance/corporate-credit/rules` | POST | Create a new effective-dated credit rule. | `finance.credit.manage` |
-| `/api/v1/finance/corporate-credit/rules/{ruleId}/supersede` | POST | End-date current rule and create successor. | `finance.credit.manage` |
-| `/api/v1/finance/corporate-credit/accounts/{corporateAccountId}/exposure` | GET | Return credit exposure and available credit. | `finance.credit.read` |
-| `/api/v1/finance/corporate-credit/accounts/{corporateAccountId}/validate` | POST | Validate a proposed corporate enrollment amount. | trusted Corporate Training caller or `finance.credit.read` |
-| `/api/v1/finance/reports/branch-summary` | GET | Return branch-level finance KPIs. | `finance.report.branch` |
-| `/api/v1/finance/reports/consolidated-summary` | GET | Return authorized multi-branch finance KPIs. | `finance.report.consolidated` |
-| `/api/v1/finance/exports` | POST | Generate an authorized finance export. | `finance.export` |
-| `/api/v1/finance/audit` | GET | Search Finance audit events. | `finance.audit.read` |
+| Route                                                                     | Method | Purpose                                                            | Permission                                                 |
+| ------------------------------------------------------------------------- | -----: | ------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `/api/v1/finance/invoices`                                                |    GET | Search branch-scoped invoices.                                     | `finance.invoice.read`                                     |
+| `/api/v1/finance/invoices`                                                |   POST | Create a draft invoice from eligible source data.                  | `finance.invoice.create`                                   |
+| `/api/v1/finance/invoices/{invoiceId}`                                    |    GET | Retrieve full invoice detail.                                      | `finance.invoice.read`                                     |
+| `/api/v1/finance/invoices/{invoiceId}`                                    |  PATCH | Update editable draft invoice attributes.                          | `finance.invoice.create`                                   |
+| `/api/v1/finance/invoices/{invoiceId}/issue`                              |   POST | Validate and issue a draft invoice.                                | `finance.invoice.issue`                                    |
+| `/api/v1/finance/invoices/{invoiceId}/cancel`                             |   POST | Cancel an eligible unpaid invoice.                                 | `finance.invoice.cancel`                                   |
+| `/api/v1/finance/invoices/{invoiceId}/payment-validation`                 |    GET | Return authoritative payment-completion status for the invoice.    | `finance.invoice.read` or trusted internal caller          |
+| `/api/v1/finance/enrollments/{enrollmentId}/payment-validation`           |    GET | Return payment validation for Completion and Certificate contexts. | trusted internal caller or `finance.payment.read`          |
+| `/api/v1/finance/invoices/{invoiceId}/installment-plan`                   |   POST | Create an installment plan and schedule.                           | `finance.installment.create`                               |
+| `/api/v1/finance/installment-plans/{planId}`                              |    GET | Retrieve plan and installment schedule.                            | `finance.installment.read`                                 |
+| `/api/v1/finance/installments`                                            |    GET | Search installments by due state and branch.                       | `finance.installment.read`                                 |
+| `/api/v1/finance/payments`                                                |    GET | Search payments.                                                   | `finance.payment.read`                                     |
+| `/api/v1/finance/payments`                                                |   POST | Record and post a manual payment atomically.                       | `finance.payment.record`                                   |
+| `/api/v1/finance/payments/{paymentId}`                                    |    GET | Retrieve payment and allocation detail.                            | `finance.payment.read`                                     |
+| `/api/v1/finance/receipts/{receiptId}`                                    |    GET | Retrieve receipt DTO.                                              | `finance.receipt.read`                                     |
+| `/api/v1/finance/receipts/{receiptId}/document`                           |    GET | Download/render bilingual receipt document.                        | `finance.receipt.read`                                     |
+| `/api/v1/finance/refunds`                                                 |    GET | Search refunds.                                                    | `finance.refund.read`                                      |
+| `/api/v1/finance/refunds`                                                 |   POST | Submit refund request and approval request.                        | `finance.refund.request`                                   |
+| `/api/v1/finance/refunds/{refundId}`                                      |    GET | Retrieve refund detail and status history.                         | `finance.refund.read`                                      |
+| `/api/v1/finance/refunds/{refundId}/decision`                             |   POST | Approve or reject refund request.                                  | `finance.refund.approve`                                   |
+| `/api/v1/finance/refunds/{refundId}/execute`                              |   POST | Record authorized financial execution of approved refund.          | `finance.refund.execute`                                   |
+| `/api/v1/finance/receivables`                                             |    GET | Search outstanding receivables and aging.                          | `finance.receivable.read`                                  |
+| `/api/v1/finance/receivables/summary`                                     |    GET | Return branch-scoped aging summary.                                | `finance.report.branch`                                    |
+| `/api/v1/finance/corporate-credit/rules`                                  |    GET | Search effective corporate credit rules.                           | `finance.credit.read`                                      |
+| `/api/v1/finance/corporate-credit/rules`                                  |   POST | Create a new effective-dated credit rule.                          | `finance.credit.manage`                                    |
+| `/api/v1/finance/corporate-credit/rules/{ruleId}/supersede`               |   POST | End-date current rule and create successor.                        | `finance.credit.manage`                                    |
+| `/api/v1/finance/corporate-credit/accounts/{corporateAccountId}/exposure` |    GET | Return credit exposure and available credit.                       | `finance.credit.read`                                      |
+| `/api/v1/finance/corporate-credit/accounts/{corporateAccountId}/validate` |   POST | Validate a proposed corporate enrollment amount.                   | trusted Corporate Training caller or `finance.credit.read` |
+| `/api/v1/finance/reports/branch-summary`                                  |    GET | Return branch-level finance KPIs.                                  | `finance.report.branch`                                    |
+| `/api/v1/finance/reports/consolidated-summary`                            |    GET | Return authorized multi-branch finance KPIs.                       | `finance.report.consolidated`                              |
+| `/api/v1/finance/exports`                                                 |   POST | Generate an authorized finance export.                             | `finance.export`                                           |
+| `/api/v1/finance/audit`                                                   |    GET | Search Finance audit events.                                       | `finance.audit.read`                                       |
 
 ### 2.2 Admin Portal Server Actions
 
 These Server Actions are thin adapters over the same Finance application services and must not contain domain logic.
 
-| Server Action | Purpose | Permission |
-|---|---|---|
-| `createInvoiceAction` | Create draft invoice. | `finance.invoice.create` |
-| `updateDraftInvoiceAction` | Update editable draft invoice fields. | `finance.invoice.create` |
-| `issueInvoiceAction` | Issue draft invoice. | `finance.invoice.issue` |
-| `cancelInvoiceAction` | Cancel eligible invoice. | `finance.invoice.cancel` |
-| `createInstallmentPlanAction` | Create installment plan. | `finance.installment.create` |
-| `recordPaymentAction` | Post manual payment. | `finance.payment.record` |
-| `requestRefundAction` | Submit refund request. | `finance.refund.request` |
-| `decideRefundAction` | Approve or reject refund. | `finance.refund.approve` |
-| `executeRefundAction` | Mark approved refund as financially executed. | `finance.refund.execute` |
-| `createCreditRuleAction` | Create effective-dated credit rule. | `finance.credit.manage` |
-| `supersedeCreditRuleAction` | End-date and replace rule. | `finance.credit.manage` |
-| `createFinanceExportAction` | Request export and return secured download reference. | `finance.export` |
+| Server Action                 | Purpose                                               | Permission                   |
+| ----------------------------- | ----------------------------------------------------- | ---------------------------- |
+| `createInvoiceAction`         | Create draft invoice.                                 | `finance.invoice.create`     |
+| `updateDraftInvoiceAction`    | Update editable draft invoice fields.                 | `finance.invoice.create`     |
+| `issueInvoiceAction`          | Issue draft invoice.                                  | `finance.invoice.issue`      |
+| `cancelInvoiceAction`         | Cancel eligible invoice.                              | `finance.invoice.cancel`     |
+| `createInstallmentPlanAction` | Create installment plan.                              | `finance.installment.create` |
+| `recordPaymentAction`         | Post manual payment.                                  | `finance.payment.record`     |
+| `requestRefundAction`         | Submit refund request.                                | `finance.refund.request`     |
+| `decideRefundAction`          | Approve or reject refund.                             | `finance.refund.approve`     |
+| `executeRefundAction`         | Mark approved refund as financially executed.         | `finance.refund.execute`     |
+| `createCreditRuleAction`      | Create effective-dated credit rule.                   | `finance.credit.manage`      |
+| `supersedeCreditRuleAction`   | End-date and replace rule.                            | `finance.credit.manage`      |
+| `createFinanceExportAction`   | Request export and return secured download reference. | `finance.export`             |
 
 ## 3. Shared Zod Structures
 
 ```ts
 const IdSchema = z.string().uuid();
 const MoneySchema = z.string().regex(/^\\d{1,15}(\\.\\d{1,3})?$/);
-const CurrencySchema = z.string().regex(/^[A-Z]{3}$/).default("OMR");
+const CurrencySchema = z
+  .string()
+  .regex(/^[A-Z]{3}$/)
+  .default('OMR');
 const BusinessDateSchema = z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/);
 const DateTimeSchema = z.string().datetime({ offset: true });
 const ExpectedVersionSchema = z.number().int().min(0);
 const PageSchema = z.coerce.number().int().min(1).default(1);
-const PageSizeSchema = z.coerce.number().int().refine(v => [25, 50, 100].includes(v)).default(25);
+const PageSizeSchema = z.coerce
+  .number()
+  .int()
+  .refine((v) => [25, 50, 100].includes(v))
+  .default(25);
 const BranchIdSchema = IdSchema;
-const LocaleSchema = z.enum(["en", "ar"]);
+const LocaleSchema = z.enum(['en', 'ar']);
 const InvoiceTypeSchema = z.enum([
-  "StudentInvoice",
-  "CorporateInvoice",
-  "AdvanceInvoice",
-  "MilestoneInvoice",
-  "FinalInvoice",
-  "RefundInvoice"
+  'StudentInvoice',
+  'CorporateInvoice',
+  'AdvanceInvoice',
+  'MilestoneInvoice',
+  'FinalInvoice',
+  'RefundInvoice',
 ]);
 const PaymentMethodSchema = z.enum([
-  "Cash",
-  "BankTransfer",
-  "Card",
-  "Online",
-  "Cheque",
-  "CorporateBilling"
+  'Cash',
+  'BankTransfer',
+  'Card',
+  'Online',
+  'Cheque',
+  'CorporateBilling',
 ]);
 ```
 
@@ -185,25 +192,47 @@ Authorization errors must not reveal whether an inaccessible resource exists. `d
 **Query Zod structure:**
 
 ```ts
-const SearchInvoicesQuery = z.object({
-  page: PageSchema,
-  pageSize: PageSizeSchema,
-  branchId: BranchIdSchema.optional(),
-  scope: z.enum(["branch", "consolidated"]).default("branch"),
-  invoiceNumber: z.string().trim().max(50).optional(),
-  invoiceType: InvoiceTypeSchema.optional(),
-  status: z.enum(["Draft", "Issued", "PartiallyPaid", "Paid", "Overdue", "Cancelled", "Refunded", "PartiallyRefunded"]).optional(),
-  studentProfileId: IdSchema.optional(),
-  corporateAccountId: IdSchema.optional(),
-  enrollmentId: IdSchema.optional(),
-  invoiceDateFrom: BusinessDateSchema.optional(),
-  invoiceDateTo: BusinessDateSchema.optional(),
-  dueDateFrom: BusinessDateSchema.optional(),
-  dueDateTo: BusinessDateSchema.optional(),
-  outstandingOnly: z.coerce.boolean().optional(),
-  sortBy: z.enum(["invoiceDate", "dueDate", "invoiceNumber", "totalAmount", "outstandingAmount", "status"]).default("invoiceDate"),
-  sortDirection: z.enum(["asc", "desc"]).default("desc")
-}).superRefine(validateDateRanges);
+const SearchInvoicesQuery = z
+  .object({
+    page: PageSchema,
+    pageSize: PageSizeSchema,
+    branchId: BranchIdSchema.optional(),
+    scope: z.enum(['branch', 'consolidated']).default('branch'),
+    invoiceNumber: z.string().trim().max(50).optional(),
+    invoiceType: InvoiceTypeSchema.optional(),
+    status: z
+      .enum([
+        'Draft',
+        'Issued',
+        'PartiallyPaid',
+        'Paid',
+        'Overdue',
+        'Cancelled',
+        'Refunded',
+        'PartiallyRefunded',
+      ])
+      .optional(),
+    studentProfileId: IdSchema.optional(),
+    corporateAccountId: IdSchema.optional(),
+    enrollmentId: IdSchema.optional(),
+    invoiceDateFrom: BusinessDateSchema.optional(),
+    invoiceDateTo: BusinessDateSchema.optional(),
+    dueDateFrom: BusinessDateSchema.optional(),
+    dueDateTo: BusinessDateSchema.optional(),
+    outstandingOnly: z.coerce.boolean().optional(),
+    sortBy: z
+      .enum([
+        'invoiceDate',
+        'dueDate',
+        'invoiceNumber',
+        'totalAmount',
+        'outstandingAmount',
+        'status',
+      ])
+      .default('invoiceDate'),
+    sortDirection: z.enum(['asc', 'desc']).default('desc'),
+  })
+  .superRefine(validateDateRanges);
 ```
 
 **Success DTO:**
@@ -230,7 +259,10 @@ const SearchInvoicesQuery = z.object({
     }
   ],
   "pagination": { "page": 1, "pageSize": 25, "totalItems": 1, "totalPages": 1 },
-  "meta": { "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4", "timestamp": "2026-07-04T10:30:00+04:00" }
+  "meta": {
+    "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4",
+    "timestamp": "2026-07-04T10:30:00+04:00"
+  }
 }
 ```
 
@@ -247,32 +279,39 @@ const SearchInvoicesQuery = z.object({
 **Request Zod structure:**
 
 ```ts
-const CreateInvoiceBody = z.object({
-  invoiceType: InvoiceTypeSchema,
-  branchId: BranchIdSchema,
-  studentProfileId: IdSchema.optional(),
-  corporateAccountId: IdSchema.optional(),
-  enrollmentId: IdSchema.optional(),
-  quotationId: IdSchema.optional(),
-  salesOrderId: IdSchema.optional(),
-  invoiceDate: BusinessDateSchema,
-  dueDate: BusinessDateSchema,
-  currency: CurrencySchema,
-  billingReference: z.string().trim().min(1).max(100).optional(),
-  remarks: z.string().trim().max(1000).optional(),
-  lines: z.array(z.object({
+const CreateInvoiceBody = z
+  .object({
+    invoiceType: InvoiceTypeSchema,
+    branchId: BranchIdSchema,
+    studentProfileId: IdSchema.optional(),
+    corporateAccountId: IdSchema.optional(),
     enrollmentId: IdSchema.optional(),
-    courseId: IdSchema,
-    description: z.string().trim().min(1).max(500),
-    quantity: MoneySchema.refine(v => Number(v) > 0),
-    unitPrice: MoneySchema,
-    discountAmount: MoneySchema.default("0.000"),
-    taxRatePercent: MoneySchema.default("0.000"),
-    taxAmount: MoneySchema,
-    lineTotal: MoneySchema,
-    sourceBranchId: BranchIdSchema
-  })).min(1).max(500)
-}).superRefine(validateInvoicePartyAndSourceRules);
+    quotationId: IdSchema.optional(),
+    salesOrderId: IdSchema.optional(),
+    invoiceDate: BusinessDateSchema,
+    dueDate: BusinessDateSchema,
+    currency: CurrencySchema,
+    billingReference: z.string().trim().min(1).max(100).optional(),
+    remarks: z.string().trim().max(1000).optional(),
+    lines: z
+      .array(
+        z.object({
+          enrollmentId: IdSchema.optional(),
+          courseId: IdSchema,
+          description: z.string().trim().min(1).max(500),
+          quantity: MoneySchema.refine((v) => Number(v) > 0),
+          unitPrice: MoneySchema,
+          discountAmount: MoneySchema.default('0.000'),
+          taxRatePercent: MoneySchema.default('0.000'),
+          taxAmount: MoneySchema,
+          lineTotal: MoneySchema,
+          sourceBranchId: BranchIdSchema,
+        }),
+      )
+      .min(1)
+      .max(500),
+  })
+  .superRefine(validateInvoicePartyAndSourceRules);
 ```
 
 **Processing contract:** Finance reloads authoritative source data, snapshots resolved pricing and discount, recalculates every line and header total, validates due date, validates source-party exclusivity, allocates invoice number only on issue, and writes audit data.
@@ -294,7 +333,10 @@ const CreateInvoiceBody = z.object({
     "outstandingAmount": "525.000",
     "version": 0
   },
-  "meta": { "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4", "timestamp": "2026-07-04T10:30:00+04:00" }
+  "meta": {
+    "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4",
+    "timestamp": "2026-07-04T10:30:00+04:00"
+  }
 }
 ```
 
@@ -342,7 +384,10 @@ const CreateInvoiceBody = z.object({
       }
     ]
   },
-  "meta": { "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4", "timestamp": "2026-07-04T10:30:00+04:00" }
+  "meta": {
+    "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4",
+    "timestamp": "2026-07-04T10:30:00+04:00"
+  }
 }
 ```
 
@@ -357,13 +402,18 @@ const CreateInvoiceBody = z.object({
 **Body:**
 
 ```ts
-const UpdateDraftInvoiceBody = z.object({
-  dueDate: BusinessDateSchema.optional(),
-  billingReference: z.string().trim().min(1).max(100).nullable().optional(),
-  remarks: z.string().trim().max(1000).nullable().optional(),
-  lines: z.array(InvoiceLineInputSchema).min(1).max(500).optional(),
-  expectedVersion: ExpectedVersionSchema
-}).refine(v => Object.keys(v).some(k => k !== "expectedVersion"), "At least one editable field is required");
+const UpdateDraftInvoiceBody = z
+  .object({
+    dueDate: BusinessDateSchema.optional(),
+    billingReference: z.string().trim().min(1).max(100).nullable().optional(),
+    remarks: z.string().trim().max(1000).nullable().optional(),
+    lines: z.array(InvoiceLineInputSchema).min(1).max(500).optional(),
+    expectedVersion: ExpectedVersionSchema,
+  })
+  .refine(
+    (v) => Object.keys(v).some((k) => k !== 'expectedVersion'),
+    'At least one editable field is required',
+  );
 ```
 
 **Success DTO:** invoice detail DTO with incremented `version`.
@@ -382,7 +432,7 @@ const UpdateDraftInvoiceBody = z.object({
 const IssueInvoiceBody = z.object({
   expectedVersion: ExpectedVersionSchema,
   issueDate: BusinessDateSchema,
-  reason: z.string().trim().max(500).optional()
+  reason: z.string().trim().max(500).optional(),
 });
 ```
 
@@ -397,7 +447,10 @@ const IssueInvoiceBody = z.object({
     "issuedAt": "2026-07-04T10:45:00+04:00",
     "version": 1
   },
-  "meta": { "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4", "timestamp": "2026-07-04T10:45:00+04:00" }
+  "meta": {
+    "correlationId": "8f7f6d36-a39e-4df7-a80d-f5da7fbc85a4",
+    "timestamp": "2026-07-04T10:45:00+04:00"
+  }
 }
 ```
 
@@ -412,7 +465,7 @@ const IssueInvoiceBody = z.object({
 ```ts
 const CancelInvoiceBody = z.object({
   expectedVersion: ExpectedVersionSchema,
-  reason: z.string().trim().min(10).max(500)
+  reason: z.string().trim().min(10).max(500),
 });
 ```
 
@@ -431,15 +484,22 @@ const CancelInvoiceBody = z.object({
 **Body:**
 
 ```ts
-const CreateInstallmentPlanBody = z.object({
-  planName: z.string().trim().min(3).max(100),
-  expectedInvoiceVersion: ExpectedVersionSchema,
-  schedule: z.array(z.object({
-    sequenceNumber: z.number().int().min(1).max(120),
-    dueDate: BusinessDateSchema,
-    amount: MoneySchema.refine(v => Number(v) > 0)
-  })).min(2).max(120)
-}).superRefine(validateInstallmentSchedule);
+const CreateInstallmentPlanBody = z
+  .object({
+    planName: z.string().trim().min(3).max(100),
+    expectedInvoiceVersion: ExpectedVersionSchema,
+    schedule: z
+      .array(
+        z.object({
+          sequenceNumber: z.number().int().min(1).max(120),
+          dueDate: BusinessDateSchema,
+          amount: MoneySchema.refine((v) => Number(v) > 0),
+        }),
+      )
+      .min(2)
+      .max(120),
+  })
+  .superRefine(validateInstallmentSchedule);
 ```
 
 **Success DTO:**
@@ -454,7 +514,13 @@ const CreateInstallmentPlanBody = z.object({
     "numberOfInstallments": 3,
     "status": "Active",
     "installments": [
-      { "sequenceNumber": 1, "dueDate": "2026-07-15", "amount": "175.000", "paidAmount": "0.000", "status": "Pending" }
+      {
+        "sequenceNumber": 1,
+        "dueDate": "2026-07-15",
+        "amount": "175.000",
+        "paidAmount": "0.000",
+        "status": "Pending"
+      }
     ]
   }
 }
@@ -487,25 +553,35 @@ const CreateInstallmentPlanBody = z.object({
 **Body:**
 
 ```ts
-const RecordPaymentBody = z.object({
-  invoiceId: IdSchema,
-  branchId: BranchIdSchema,
-  paymentDate: BusinessDateSchema,
-  paymentMethod: PaymentMethodSchema,
-  amount: MoneySchema.refine(v => Number(v) > 0),
-  referenceNumber: z.string().trim().min(3).max(100).optional(),
-  chequeNumber: z.string().trim().min(3).max(50).optional(),
-  chequeDate: BusinessDateSchema.optional(),
-  bankName: z.string().trim().min(2).max(120).optional(),
-  cardLast4: z.string().regex(/^\\d{4}$/).optional(),
-  remarks: z.string().trim().max(1000).optional(),
-  expectedInvoiceVersion: ExpectedVersionSchema,
-  allocations: z.array(z.object({
-    installmentId: IdSchema.optional(),
-    amount: MoneySchema.refine(v => Number(v) > 0),
-    allocationSequence: z.number().int().min(1)
-  })).min(1).max(120)
-}).superRefine(validatePaymentMethodAndAllocations);
+const RecordPaymentBody = z
+  .object({
+    invoiceId: IdSchema,
+    branchId: BranchIdSchema,
+    paymentDate: BusinessDateSchema,
+    paymentMethod: PaymentMethodSchema,
+    amount: MoneySchema.refine((v) => Number(v) > 0),
+    referenceNumber: z.string().trim().min(3).max(100).optional(),
+    chequeNumber: z.string().trim().min(3).max(50).optional(),
+    chequeDate: BusinessDateSchema.optional(),
+    bankName: z.string().trim().min(2).max(120).optional(),
+    cardLast4: z
+      .string()
+      .regex(/^\\d{4}$/)
+      .optional(),
+    remarks: z.string().trim().max(1000).optional(),
+    expectedInvoiceVersion: ExpectedVersionSchema,
+    allocations: z
+      .array(
+        z.object({
+          installmentId: IdSchema.optional(),
+          amount: MoneySchema.refine((v) => Number(v) > 0),
+          allocationSequence: z.number().int().min(1),
+        }),
+      )
+      .min(1)
+      .max(120),
+  })
+  .superRefine(validatePaymentMethodAndAllocations);
 ```
 
 **Success DTO:**
@@ -582,11 +658,18 @@ const RecordPaymentBody = z.object({
 const CreateRefundRequestBody = z.object({
   invoiceId: IdSchema,
   paymentId: IdSchema,
-  refundType: z.enum(["Full", "Partial"]),
-  amount: MoneySchema.refine(v => Number(v) > 0),
-  reasonCode: z.enum(["CourseCancelled", "EnrollmentCancelled", "DuplicatePayment", "Overpayment", "ServiceNotDelivered", "ApprovedException"]),
+  refundType: z.enum(['Full', 'Partial']),
+  amount: MoneySchema.refine((v) => Number(v) > 0),
+  reasonCode: z.enum([
+    'CourseCancelled',
+    'EnrollmentCancelled',
+    'DuplicatePayment',
+    'Overpayment',
+    'ServiceNotDelivered',
+    'ApprovedException',
+  ]),
   reason: z.string().trim().min(10).max(1000),
-  expectedPaymentVersion: ExpectedVersionSchema
+  expectedPaymentVersion: ExpectedVersionSchema,
 });
 ```
 
@@ -602,9 +685,9 @@ const CreateRefundRequestBody = z.object({
 
 ```ts
 const RefundDecisionBody = z.object({
-  decision: z.enum(["Approve", "Reject"]),
+  decision: z.enum(['Approve', 'Reject']),
   remarks: z.string().trim().min(5).max(1000),
-  expectedVersion: ExpectedVersionSchema
+  expectedVersion: ExpectedVersionSchema,
 });
 ```
 
@@ -623,10 +706,10 @@ const RefundDecisionBody = z.object({
 ```ts
 const ExecuteRefundBody = z.object({
   executionDate: BusinessDateSchema,
-  executionMethod: z.enum(["Cash", "BankTransfer", "CardReversal", "Cheque"]),
+  executionMethod: z.enum(['Cash', 'BankTransfer', 'CardReversal', 'Cheque']),
   externalReference: z.string().trim().min(3).max(100),
   remarks: z.string().trim().max(1000).optional(),
-  expectedVersion: ExpectedVersionSchema
+  expectedVersion: ExpectedVersionSchema,
 });
 ```
 
@@ -643,22 +726,28 @@ const ExecuteRefundBody = z.object({
 **Query:**
 
 ```ts
-const SearchReceivablesQuery = z.object({
-  page: PageSchema,
-  pageSize: PageSizeSchema,
-  branchId: BranchIdSchema.optional(),
-  customerType: z.enum(["Student", "Corporate"]).optional(),
-  studentProfileId: IdSchema.optional(),
-  corporateAccountId: IdSchema.optional(),
-  agingBucket: z.enum(["Current", "30 Days", "60 Days", "90 Days", "120+ Days"]).optional(),
-  dueFrom: BusinessDateSchema.optional(),
-  dueTo: BusinessDateSchema.optional(),
-  minOutstanding: MoneySchema.optional(),
-  maxOutstanding: MoneySchema.optional(),
-  status: z.enum(["Open", "PartiallyPaid", "Overdue", "Settled"]).optional(),
-  sortBy: z.enum(["dueDate", "outstandingAmount", "daysPastDue", "agingBucket"]).default("daysPastDue"),
-  sortDirection: z.enum(["asc", "desc"]).default("desc")
-}).superRefine(validateRangePairs);
+const SearchReceivablesQuery = z
+  .object({
+    page: PageSchema,
+    pageSize: PageSizeSchema,
+    branchId: BranchIdSchema.optional(),
+    customerType: z.enum(['Student', 'Corporate']).optional(),
+    studentProfileId: IdSchema.optional(),
+    corporateAccountId: IdSchema.optional(),
+    agingBucket: z
+      .enum(['Current', '30 Days', '60 Days', '90 Days', '120+ Days'])
+      .optional(),
+    dueFrom: BusinessDateSchema.optional(),
+    dueTo: BusinessDateSchema.optional(),
+    minOutstanding: MoneySchema.optional(),
+    maxOutstanding: MoneySchema.optional(),
+    status: z.enum(['Open', 'PartiallyPaid', 'Overdue', 'Settled']).optional(),
+    sortBy: z
+      .enum(['dueDate', 'outstandingAmount', 'daysPastDue', 'agingBucket'])
+      .default('daysPastDue'),
+    sortDirection: z.enum(['asc', 'desc']).default('desc'),
+  })
+  .superRefine(validateRangePairs);
 ```
 
 **Success:** paged receivable DTOs with invoice reference, customer display reference, due date, outstanding amount, days past due, aging bucket, status.
@@ -678,11 +767,31 @@ const SearchReceivablesQuery = z.object({
     "asOfDate": "2026-07-04",
     "totalOutstanding": "48520.000",
     "buckets": [
-      { "agingBucket": "Current", "invoiceCount": 42, "outstandingAmount": "25000.000" },
-      { "agingBucket": "30 Days", "invoiceCount": 18, "outstandingAmount": "9500.000" },
-      { "agingBucket": "60 Days", "invoiceCount": 9, "outstandingAmount": "6100.000" },
-      { "agingBucket": "90 Days", "invoiceCount": 6, "outstandingAmount": "4200.000" },
-      { "agingBucket": "120+ Days", "invoiceCount": 5, "outstandingAmount": "3720.000" }
+      {
+        "agingBucket": "Current",
+        "invoiceCount": 42,
+        "outstandingAmount": "25000.000"
+      },
+      {
+        "agingBucket": "30 Days",
+        "invoiceCount": 18,
+        "outstandingAmount": "9500.000"
+      },
+      {
+        "agingBucket": "60 Days",
+        "invoiceCount": 9,
+        "outstandingAmount": "6100.000"
+      },
+      {
+        "agingBucket": "90 Days",
+        "invoiceCount": 6,
+        "outstandingAmount": "4200.000"
+      },
+      {
+        "agingBucket": "120+ Days",
+        "invoiceCount": 5,
+        "outstandingAmount": "3720.000"
+      }
     ]
   }
 }
@@ -699,16 +808,18 @@ const SearchReceivablesQuery = z.object({
 **Body:**
 
 ```ts
-const CreateCorporateCreditRuleBody = z.object({
-  corporateAccountId: IdSchema,
-  branchId: BranchIdSchema,
-  creditLimit: MoneySchema,
-  blockOnCreditLimit: z.boolean(),
-  effectiveStartDate: BusinessDateSchema,
-  effectiveEndDate: BusinessDateSchema.nullable().optional(),
-  status: z.enum(["Draft", "Active", "Inactive"]).default("Active"),
-  reason: z.string().trim().min(10).max(1000)
-}).superRefine(validateCreditRuleDates);
+const CreateCorporateCreditRuleBody = z
+  .object({
+    corporateAccountId: IdSchema,
+    branchId: BranchIdSchema,
+    creditLimit: MoneySchema,
+    blockOnCreditLimit: z.boolean(),
+    effectiveStartDate: BusinessDateSchema,
+    effectiveEndDate: BusinessDateSchema.nullable().optional(),
+    status: z.enum(['Draft', 'Active', 'Inactive']).default('Active'),
+    reason: z.string().trim().min(10).max(1000),
+  })
+  .superRefine(validateCreditRuleDates);
 ```
 
 **Success:** created rule with calculated available credit snapshot.
@@ -753,10 +864,10 @@ const CreateCorporateCreditRuleBody = z.object({
 
 ```ts
 const ValidateCorporateCreditBody = z.object({
-  proposedEnrollmentValue: MoneySchema.refine(v => Number(v) >= 0),
+  proposedEnrollmentValue: MoneySchema.refine((v) => Number(v) >= 0),
   validationDate: BusinessDateSchema,
   branchId: BranchIdSchema,
-  sourceReferenceId: IdSchema
+  sourceReferenceId: IdSchema,
 });
 ```
 
@@ -809,11 +920,20 @@ const ValidateCorporateCreditBody = z.object({
 
 ```ts
 const CreateFinanceExportBody = z.object({
-  dataset: z.enum(["Invoices", "Payments", "Receivables", "Refunds", "CorporateCreditExposure"]),
-  format: z.enum(["csv", "xlsx"]),
+  dataset: z.enum([
+    'Invoices',
+    'Payments',
+    'Receivables',
+    'Refunds',
+    'CorporateCreditExposure',
+  ]),
+  format: z.enum(['csv', 'xlsx']),
   locale: LocaleSchema,
-  filters: z.record(z.string(), z.union([z.string(), z.number(), z.boolean(), z.array(z.string())])),
-  reason: z.string().trim().min(5).max(500)
+  filters: z.record(
+    z.string(),
+    z.union([z.string(), z.number(), z.boolean(), z.array(z.string())]),
+  ),
+  reason: z.string().trim().min(5).max(500),
 });
 ```
 
@@ -842,9 +962,9 @@ interface CreateEnrollmentInvoiceCommand {
 
 interface EnrollmentBillingResult {
   invoiceId: string;
-  invoiceStatus: "Draft" | "Issued";
+  invoiceStatus: 'Draft' | 'Issued';
   totalAmount: string;
-  currency: "OMR";
+  currency: 'OMR';
 }
 ```
 
@@ -880,26 +1000,30 @@ interface CorporateCreditValidationQuery {
 }
 
 interface CorporateCreditValidationResult {
-  decision: "Allow" | "AllowWithWarning" | "Block";
+  decision: 'Allow' | 'AllowWithWarning' | 'Block';
   projectedExposure: string;
   availableCreditAfterProposal: string;
-  reasonCode: "WITHIN_LIMIT" | "LIMIT_EXCEEDED_WARNING" | "CREDIT_LIMIT_EXCEEDED" | "NO_BLOCKING_RULE";
+  reasonCode:
+    | 'WITHIN_LIMIT'
+    | 'LIMIT_EXCEEDED_WARNING'
+    | 'CREDIT_LIMIT_EXCEEDED'
+    | 'NO_BLOCKING_RULE';
 }
 ```
 
 ## 13. HTTP Status and Application Error Mapping
 
-| HTTP | Application Error Families | Meaning |
-|---:|---|---|
-| 400 | `ERR_COMMON_VALIDATION`, malformed JSON, unsupported sort/filter | Request syntax or schema validation failed. |
-| 401 | `ERR_AUTH_REQUIRED`, `ERR_AUTH_SESSION_EXPIRED` | Authentication absent or invalid. |
-| 403 | `ERR_AUTH_FORBIDDEN`, `ERR_FIN_BRANCH_SCOPE_DENIED`, `ERR_FIN_CONSOLIDATED_SCOPE_DENIED`, `ERR_FIN_EXPORT_NOT_ALLOWED` | Authenticated caller lacks permission or branch entitlement. |
-| 404 | `ERR_FIN_*_NOT_FOUND` | Authorized lookup did not resolve an active visible resource. |
-| 409 | state transition, duplicate, idempotency, concurrency, overlap conflicts | Command conflicts with current persisted state. |
-| 422 | monetary, date, allocation, eligibility, effective dating, business invariant errors | Schema is valid but domain rule failed. |
-| 429 | `ERR_COMMON_RATE_LIMITED` | Caller exceeded configured request rate. |
-| 500 | `ERR_FIN_INTERNAL`, render/export failures without safe business recovery | Unexpected server failure; sensitive internals are not exposed. |
-| 503 | `ERR_FIN_DEPENDENCY_UNAVAILABLE` | Required internal dependency is unavailable and operation cannot safely continue. |
+| HTTP | Application Error Families                                                                                             | Meaning                                                                           |
+| ---: | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+|  400 | `ERR_COMMON_VALIDATION`, malformed JSON, unsupported sort/filter                                                       | Request syntax or schema validation failed.                                       |
+|  401 | `ERR_AUTH_REQUIRED`, `ERR_AUTH_SESSION_EXPIRED`                                                                        | Authentication absent or invalid.                                                 |
+|  403 | `ERR_AUTH_FORBIDDEN`, `ERR_FIN_BRANCH_SCOPE_DENIED`, `ERR_FIN_CONSOLIDATED_SCOPE_DENIED`, `ERR_FIN_EXPORT_NOT_ALLOWED` | Authenticated caller lacks permission or branch entitlement.                      |
+|  404 | `ERR_FIN_*_NOT_FOUND`                                                                                                  | Authorized lookup did not resolve an active visible resource.                     |
+|  409 | state transition, duplicate, idempotency, concurrency, overlap conflicts                                               | Command conflicts with current persisted state.                                   |
+|  422 | monetary, date, allocation, eligibility, effective dating, business invariant errors                                   | Schema is valid but domain rule failed.                                           |
+|  429 | `ERR_COMMON_RATE_LIMITED`                                                                                              | Caller exceeded configured request rate.                                          |
+|  500 | `ERR_FIN_INTERNAL`, render/export failures without safe business recovery                                              | Unexpected server failure; sensitive internals are not exposed.                   |
+|  503 | `ERR_FIN_DEPENDENCY_UNAVAILABLE`                                                                                       | Required internal dependency is unavailable and operation cannot safely continue. |
 
 ## 14. Contract Acceptance Criteria
 

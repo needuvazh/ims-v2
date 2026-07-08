@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { createDemoSession } from './session';
-import { isAuthorizedForBranch, getAuthorizedBranchIds, isGlobalScope } from './scopes';
+import {
+  isAuthorizedForBranch,
+  getAuthorizedBranchIds,
+  isGlobalScope,
+} from './scopes';
 import type { Session } from './session';
 
 describe('scopes utilities', () => {
@@ -18,8 +22,18 @@ describe('scopes utilities', () => {
       roles: ['Manager'],
       permissions: [],
       dataScopes: [
-        { scopeType: 'Branch', branchId: 'branch-1', departmentId: null, assignedOnly: false },
-        { scopeType: 'Branch', branchId: 'branch-2', departmentId: null, assignedOnly: false }
+        {
+          scopeType: 'Branch',
+          branchId: 'branch-1',
+          departmentId: null,
+          assignedOnly: false,
+        },
+        {
+          scopeType: 'Branch',
+          branchId: 'branch-2',
+          departmentId: null,
+          assignedOnly: false,
+        },
       ],
       activeBranchId: 'branch-1',
       expiresAt: Date.now() + 60 * 60 * 1000,
@@ -38,8 +52,18 @@ describe('scopes utilities', () => {
       roles: ['Counselor'],
       permissions: [],
       dataScopes: [
-        { scopeType: 'Branch', branchId: 'branch-1', departmentId: null, assignedOnly: true },
-        { scopeType: 'Department', branchId: 'branch-2', departmentId: 'dept-1', assignedOnly: false }
+        {
+          scopeType: 'Branch',
+          branchId: 'branch-1',
+          departmentId: null,
+          assignedOnly: true,
+        },
+        {
+          scopeType: 'Department',
+          branchId: 'branch-2',
+          departmentId: 'dept-1',
+          assignedOnly: false,
+        },
       ],
       activeBranchId: 'branch-1',
       expiresAt: Date.now() + 60 * 60 * 1000,
@@ -49,13 +73,16 @@ describe('scopes utilities', () => {
     // Should be unauthorized for full access (default)
     expect(isAuthorizedForBranch(session, 'branch-1')).toBe(false);
     // Should be authorized when full access is not required
-    expect(isAuthorizedForBranch(session, 'branch-1', { requireFullAccess: false })).toBe(true);
+    expect(
+      isAuthorizedForBranch(session, 'branch-1', { requireFullAccess: false }),
+    ).toBe(true);
 
     // Branch 2 has Department scope:
     // Should be unauthorized for full access (default)
     expect(isAuthorizedForBranch(session, 'branch-2')).toBe(false);
     // Should be authorized when full access is not required
-    expect(isAuthorizedForBranch(session, 'branch-2', { requireFullAccess: false })).toBe(true);
+    expect(
+      isAuthorizedForBranch(session, 'branch-2', { requireFullAccess: false }),
+    ).toBe(true);
   });
 });
-

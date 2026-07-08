@@ -1,7 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Button } from '@ims/shared-ui';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Button,
+} from '@ims/shared-ui';
 import { Eye } from 'lucide-react';
 
 interface AuditDetailsButtonProps {
@@ -40,7 +48,12 @@ export function AuditDetailsButton({ item }: AuditDetailsButtonProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="View details">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 w-8 p-0"
+          title="View details"
+        >
           <Eye className="h-4 w-4 text-[color:var(--ims-brass)]" />
           <span className="sr-only">View details</span>
         </Button>
@@ -83,7 +96,9 @@ export function AuditDetailsButton({ item }: AuditDetailsButtonProps) {
               <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
                 Entity
               </span>
-              <span className="font-mono text-xs">{item.entityType}:{item.entityId}</span>
+              <span className="font-mono text-xs">
+                {item.entityType}:{item.entityId}
+              </span>
             </div>
             <div>
               <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
@@ -95,13 +110,17 @@ export function AuditDetailsButton({ item }: AuditDetailsButtonProps) {
               <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
                 Branch ID
               </span>
-              <span className="font-mono text-xs select-all">{item.branchId ?? 'All Branches'}</span>
+              <span className="font-mono text-xs select-all">
+                {item.branchId ?? 'All Branches'}
+              </span>
             </div>
             <div>
               <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
                 Correlation ID
               </span>
-              <span className="font-mono text-xs select-all">{item.correlationId ?? '—'}</span>
+              <span className="font-mono text-xs select-all">
+                {item.correlationId ?? '—'}
+              </span>
             </div>
             <div>
               <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
@@ -113,7 +132,12 @@ export function AuditDetailsButton({ item }: AuditDetailsButtonProps) {
               <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
                 User Agent
               </span>
-              <span className="truncate block font-mono text-xs" title={item.userAgent ?? ''}>{item.userAgent ?? '—'}</span>
+              <span
+                className="truncate block font-mono text-xs"
+                title={item.userAgent ?? ''}
+              >
+                {item.userAgent ?? '—'}
+              </span>
             </div>
             <div className="col-span-2">
               <span className="block text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">

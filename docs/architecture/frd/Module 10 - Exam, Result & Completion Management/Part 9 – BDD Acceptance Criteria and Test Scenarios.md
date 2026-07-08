@@ -1462,32 +1462,32 @@ Current transaction truth remains authoritative
 
 # 33. Traceability Matrix
 
-| Requirement Area | Scenario Coverage |
-|---|---|
-| Exam Creation | Sections 3, 23 |
-| Exam Lifecycle | Section 4 |
-| Result Entry | Sections 5, 6, 23 |
-| Result Finalization | Section 7 |
-| Result Correction | Section 8 |
-| Completion Evaluation | Sections 9, 24 |
-| Trainer Recommendation | Section 10 |
-| Coordinator Review | Section 11 |
-| Final Approval | Sections 12, 25 |
-| Reevaluation | Section 13 |
-| Authorization | Sections 14, 27 |
-| Branch Isolation | Sections 15, 26 |
-| Own Assignment | Section 16 |
-| DDD Ownership | Section 17 |
-| Notifications | Section 18 |
-| Reporting Safety | Section 19 |
-| Audit | Section 20 |
-| Search/Export | Section 21 |
-| API Trust Boundary | Section 22 |
-| Concurrency | Section 28 |
-| Dependency Failure | Section 29 |
-| Soft Delete | Section 30 |
-| Notification Deduplication | Section 31 |
-| Read Models | Section 32 |
+| Requirement Area           | Scenario Coverage |
+| -------------------------- | ----------------- |
+| Exam Creation              | Sections 3, 23    |
+| Exam Lifecycle             | Section 4         |
+| Result Entry               | Sections 5, 6, 23 |
+| Result Finalization        | Section 7         |
+| Result Correction          | Section 8         |
+| Completion Evaluation      | Sections 9, 24    |
+| Trainer Recommendation     | Section 10        |
+| Coordinator Review         | Section 11        |
+| Final Approval             | Sections 12, 25   |
+| Reevaluation               | Section 13        |
+| Authorization              | Sections 14, 27   |
+| Branch Isolation           | Sections 15, 26   |
+| Own Assignment             | Section 16        |
+| DDD Ownership              | Section 17        |
+| Notifications              | Section 18        |
+| Reporting Safety           | Section 19        |
+| Audit                      | Section 20        |
+| Search/Export              | Section 21        |
+| API Trust Boundary         | Section 22        |
+| Concurrency                | Section 28        |
+| Dependency Failure         | Section 29        |
+| Soft Delete                | Section 30        |
+| Notification Deduplication | Section 31        |
+| Read Models                | Section 32        |
 
 ---
 

@@ -1,6 +1,12 @@
 import { CourseCompletionRepository } from '../../domain/interfaces/CourseCompletionRepository';
-import { CourseCompletionAggregate, COMPLETION_STATUSES } from '../../domain/aggregates/CourseCompletion';
-import { CompletionInvalidStateError, CompletionEvidenceStaleError } from '../../domain/errors';
+import {
+  CourseCompletionAggregate,
+  COMPLETION_STATUSES,
+} from '../../domain/aggregates/CourseCompletion';
+import {
+  CompletionInvalidStateError,
+  CompletionEvidenceStaleError,
+} from '../../domain/errors';
 
 export interface CoordinatorReviewInput {
   completionId: string;
@@ -10,20 +16,33 @@ export interface CoordinatorReviewInput {
 }
 
 export class CoordinatorReviewCommandHandler {
-  constructor(private readonly completionRepository: CourseCompletionRepository) {}
+  constructor(
+    private readonly completionRepository: CourseCompletionRepository,
+  ) {}
 
   async execute(input: CoordinatorReviewInput): Promise<void> {
-    const completion = await this.completionRepository.findById(input.completionId);
+    const completion = await this.completionRepository.findById(
+      input.completionId,
+    );
     if (!completion) {
-      throw new CompletionInvalidStateError(`Completion ${input.completionId} not found`);
+      throw new CompletionInvalidStateError(
+        `Completion ${input.completionId} not found`,
+      );
     }
 
-    if (completion.completionStatus !== COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW) {
-      throw new CompletionInvalidStateError(`Completion must be awaiting coordinator review (status: ${completion.completionStatus})`);
+    if (
+      completion.completionStatus !==
+      COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW
+    ) {
+      throw new CompletionInvalidStateError(
+        `Completion must be awaiting coordinator review (status: ${completion.completionStatus})`,
+      );
     }
 
     if (completion.evidenceStale) {
-      throw new CompletionEvidenceStaleError('Cannot review completion with stale evidence');
+      throw new CompletionEvidenceStaleError(
+        'Cannot review completion with stale evidence',
+      );
     }
 
     const aggregate = new CourseCompletionAggregate(completion);

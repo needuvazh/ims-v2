@@ -32,10 +32,16 @@ interface InquiriesClientListProps {
   total: number;
 }
 
-export function InquiriesClientList({ inquiries, branches, total }: InquiriesClientListProps) {
+export function InquiriesClientList({
+  inquiries,
+  branches,
+  total,
+}: InquiriesClientListProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentPage = searchParams.get('page') ? parseInt(searchParams.get('page')!, 10) : 1;
+  const currentPage = searchParams.get('page')
+    ? parseInt(searchParams.get('page')!, 10)
+    : 1;
   const totalPages = Math.ceil(total / 10);
 
   const [qualifyingInquiry, setQualifyingInquiry] = useState<any | null>(null);
@@ -65,11 +71,14 @@ export function InquiriesClientList({ inquiries, branches, total }: InquiriesCli
 
     try {
       setIsSubmitting(true);
-      const res = await fetch(`/api/v1/crm/inquiries/${qualifyingInquiry.id}/qualify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ interestedCourseId }),
-      });
+      const res = await fetch(
+        `/api/v1/crm/inquiries/${qualifyingInquiry.id}/qualify`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ interestedCourseId }),
+        },
+      );
 
       const data = await res.json();
       if (!res.ok || !data.success) {
@@ -90,14 +99,20 @@ export function InquiriesClientList({ inquiries, branches, total }: InquiriesCli
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[color:var(--ims-ink)]">Inquiries</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[color:var(--ims-ink)]">
+            Inquiries
+          </h1>
           <p className="text-sm text-[color:var(--ims-muted)]">
-            Review incoming web inquiries, social media forms, and qualify them to leads.
+            Review incoming web inquiries, social media forms, and qualify them
+            to leads.
           </p>
         </div>
       </div>
 
-      <DataTableFilter searchPlaceholder="Search inquiries by name or phone..." filters={filterConfigs} />
+      <DataTableFilter
+        searchPlaceholder="Search inquiries by name or phone..."
+        filters={filterConfigs}
+      />
 
       <Table>
         <TableHeader>
@@ -114,15 +129,31 @@ export function InquiriesClientList({ inquiries, branches, total }: InquiriesCli
         <TableBody>
           {inquiries.map((inq) => (
             <TableRow key={inq.id}>
-              <TableCell className="font-semibold text-xs tracking-wider">{inq.inquiryNumber}</TableCell>
+              <TableCell className="font-semibold text-xs tracking-wider">
+                {inq.inquiryNumber}
+              </TableCell>
               <TableCell>
                 {inq.firstName} {inq.lastName}
               </TableCell>
               <TableCell>{inq.mobile}</TableCell>
-              <TableCell>{inq.email || <span className="text-xs text-[color:var(--ims-muted)] italic">N/A</span>}</TableCell>
+              <TableCell>
+                {inq.email || (
+                  <span className="text-xs text-[color:var(--ims-muted)] italic">
+                    N/A
+                  </span>
+                )}
+              </TableCell>
               <TableCell>{inq.branch?.branchName}</TableCell>
               <TableCell>
-                <Badge variant={inq.status === 'Qualified' ? 'success' : inq.status === 'New' ? 'default' : 'error'}>
+                <Badge
+                  variant={
+                    inq.status === 'Qualified'
+                      ? 'success'
+                      : inq.status === 'New'
+                        ? 'default'
+                        : 'error'
+                  }
+                >
                   {inq.status}
                 </Badge>
               </TableCell>
@@ -132,14 +163,19 @@ export function InquiriesClientList({ inquiries, branches, total }: InquiriesCli
                     Qualify to Lead
                   </Button>
                 ) : (
-                  <span className="text-xs text-[color:var(--ims-muted)] italic">Processed</span>
+                  <span className="text-xs text-[color:var(--ims-muted)] italic">
+                    Processed
+                  </span>
                 )}
               </TableCell>
             </TableRow>
           ))}
           {inquiries.length === 0 && (
             <TableRow>
-              <TableCell colSpan={7} className="text-center py-12 text-[color:var(--ims-muted)]">
+              <TableCell
+                colSpan={7}
+                className="text-center py-12 text-[color:var(--ims-muted)]"
+              >
                 No inquiries found in this filter context.
               </TableCell>
             </TableRow>
@@ -147,15 +183,26 @@ export function InquiriesClientList({ inquiries, branches, total }: InquiriesCli
         </TableBody>
       </Table>
 
-      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={10}
+        />
+      )}
 
       {/* Qualify Inquiry Modal */}
-      <Dialog open={!!qualifyingInquiry} onOpenChange={(open) => !open && setQualifyingInquiry(null)}>
+      <Dialog
+        open={!!qualifyingInquiry}
+        onOpenChange={(open) => !open && setQualifyingInquiry(null)}
+      >
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Qualify Inquiry</DialogTitle>
             <DialogDescription>
-              Assign the course that this contact is interested in to promote them to the active leads pipeline.
+              Assign the course that this contact is interested in to promote
+              them to the active leads pipeline.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleQualify} className="space-y-4 py-2">
@@ -172,10 +219,18 @@ export function InquiriesClientList({ inquiries, branches, total }: InquiriesCli
             </FormField>
 
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setQualifyingInquiry(null)} disabled={isSubmitting}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setQualifyingInquiry(null)}
+                disabled={isSubmitting}
+              >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isSubmitting || !interestedCourseId.trim()}>
+              <Button
+                type="submit"
+                disabled={isSubmitting || !interestedCourseId.trim()}
+              >
                 {isSubmitting ? 'Qualifying...' : 'Promote to Lead'}
               </Button>
             </DialogFooter>

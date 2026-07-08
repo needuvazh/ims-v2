@@ -5,11 +5,13 @@ Admission intake is decoupled from the enrollment lifecycle. This change separat
 ## Decisions
 
 ### 1. Branch and Identity Resolution
+
 - **Branch Scope:** The request payload must not accept `branchId`. The active branch ID MUST be resolved server-side from the authenticated session context (e.g., `session.activeBranchId` or branch access checks).
 - **Identity Reference:** The admission draft creation method accepts `studentProfileId` (canonical identity reference) rather than raw contact details.
 - **Duplicate Check Invariant:** Before creating a draft, search for any non-deleted admission record (`isDeleted = false`) matching `studentProfileId` and the resolved `branchId` that has a status of `Draft`, `Submitted`, or `Approved`. If found, throw a `DomainError` with error code `ERR_ADM_ACTIVE_ADMISSION_EXISTS`.
 
 ### 2. State Machine and Workflow Controls
+
 - **Block Draft Approval:** Update the `approveAdmission` command to enforce that the admission must be in the `Submitted` state. Direct transition from `Draft` to `Approved` is prohibited.
 - **New States / Actions:**
   - `submitAdmission`: transitions `Draft` $\rightarrow$ `Submitted`, setting `submittedAt = now()`.
@@ -17,10 +19,12 @@ Admission intake is decoupled from the enrollment lifecycle. This change separat
   - `cancelAdmission`: transitions `Draft` or `Submitted` $\rightarrow$ `Cancelled`, setting `cancelledAt = now()`, `cancelledBy = actorId`.
 
 ### 3. CRM Lead Conversion Route Integration
+
 - Update the API route handler `apps/admin-portal/app/api/v1/crm/leads/[id]/convert/route.ts` to explicitly map the `ERR_ADM_ACTIVE_ADMISSION_EXISTS` error.
 - Translate it to HTTP 409 Conflict with a clear English/Arabic error response, preventing generic HTTP 500 responses.
 
 ### 4. Transaction-Safe Outbox Event Semantics
+
 - Ensure the creation of the admission draft, database audit log entries, and outbox events occur in a single database transaction.
 - **Payload shapes:**
   - `AdmissionCreated`:
@@ -46,10 +50,13 @@ Admission intake is decoupled from the enrollment lifecycle. This change separat
     ```
 
 ### 5. Collision-Free Numbering Series
+
 - Replace `Date.now().slice(-6)` slicing with a transaction-safe incremental numbering sequence or database reservation pattern (e.g. database sequence or locking configuration counter) to guarantee unique values for `studentNumber` and `admissionNumber` under high concurrency.
 
 ### 6. Prisma Schema Enhancements
+
 Modify the `Admission` model to capture rejection and cancellation details:
+
 ```prisma
 model Admission {
   // Existing fields...

@@ -1,6 +1,9 @@
 import { prisma } from '@ims/database';
 import { DomainError, ErrorCodes } from '../domain/errors';
-import { PublicVerificationInput, PublicVerificationInputSchema } from '../domain/validators';
+import {
+  PublicVerificationInput,
+  PublicVerificationInputSchema,
+} from '../domain/validators';
 
 export interface VerificationResult {
   status: 'VALID' | 'REVOKED' | 'REPLACED' | 'INVALID';
@@ -16,7 +19,10 @@ export interface VerificationResult {
 }
 
 export class VerificationService {
-  async verify(input: PublicVerificationInput, clientIp?: string): Promise<VerificationResult> {
+  async verify(
+    input: PublicVerificationInput,
+    clientIp?: string,
+  ): Promise<VerificationResult> {
     const validated = PublicVerificationInputSchema.parse(input);
 
     // Query certificate by verification code
@@ -25,11 +31,11 @@ export class VerificationService {
       include: {
         studentProfile: {
           include: {
-            person: true
-          }
+            person: true,
+          },
         },
-        course: true
-      }
+        course: true,
+      },
     });
 
     if (!certificate || certificate.certificateStatus === 'Generated') {
@@ -37,7 +43,10 @@ export class VerificationService {
     }
 
     const displayName = `${certificate.studentProfile.person.firstName} ${certificate.studentProfile.person.lastName}`;
-    const courseName = certificate.language === 'ar' ? certificate.course.nameArabic : certificate.course.nameEnglish;
+    const courseName =
+      certificate.language === 'ar'
+        ? certificate.course.nameArabic
+        : certificate.course.nameEnglish;
 
     let resultStatus: 'VALID' | 'REVOKED' | 'REPLACED' = 'VALID';
     if (certificate.certificateStatus === 'Revoked') {
@@ -52,8 +61,8 @@ export class VerificationService {
         certificateId: certificate.id,
         verificationCode: validated.verificationCode,
         verifiedByIp: clientIp || null,
-        verificationStatus: resultStatus
-      }
+        verificationStatus: resultStatus,
+      },
     });
 
     return {
@@ -66,7 +75,7 @@ export class VerificationService {
       issuedDate: certificate.issuedDate || undefined,
       language: certificate.language,
       revocationReason: certificate.revocationReason || undefined,
-      revokedAt: certificate.revokedAt || undefined
+      revokedAt: certificate.revokedAt || undefined,
     };
   }
 }

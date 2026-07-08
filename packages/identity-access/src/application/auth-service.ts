@@ -2,7 +2,11 @@ import { UAParser } from 'ua-parser-js';
 import crypto from 'crypto';
 import { InMemoryMetrics } from '@ims/observability';
 import { encodeSession, type Session } from '@ims/shared-auth';
-import { JwtService, RefreshTokenService, type TokenPayload } from '@ims/shared-auth/jwt';
+import {
+  JwtService,
+  RefreshTokenService,
+  type TokenPayload,
+} from '@ims/shared-auth/jwt';
 import type { Uuid } from '@ims/shared-kernel';
 import { createIamError, IamError } from '../errors/iam-errors';
 import { PasswordPolicy } from '../domain/password-policy';
@@ -31,7 +35,9 @@ function getKeys(): { publicKey: string; privateKey: string } {
 
   const fallbackSecret = process.env.SESSION_SECRET;
   if (!fallbackSecret) {
-    throw new Error('JWT_PRIVATE_KEY/JWT_PUBLIC_KEY or SESSION_SECRET environment variable is required.');
+    throw new Error(
+      'JWT_PRIVATE_KEY/JWT_PUBLIC_KEY or SESSION_SECRET environment variable is required.',
+    );
   }
 
   return { privateKey: fallbackSecret, publicKey: fallbackSecret };
@@ -59,15 +65,20 @@ export class AuthService {
     private readonly userBranchAccessRepository?: IUserBranchAccessRepository,
     private readonly outboxEventRepository?: IOutboxEventRepository,
     private readonly notificationPort?: INotificationPort,
-    private readonly permissionCache?: IPermissionCachePort
+    private readonly permissionCache?: IPermissionCachePort,
   ) {}
-
 
   async signIn(
     command: { email: string; password: string; rememberMe?: boolean },
-    metadata?: { userAgent?: string | null; ipAddress?: string | null }
+    metadata?: { userAgent?: string | null; ipAddress?: string | null },
   ): Promise<{ sessionToken: string; session: Session }> {
-    const res = await this.login(command.email, command.password, command.rememberMe ?? false, metadata?.ipAddress || null, metadata?.userAgent || null);
+    const res = await this.login(
+      command.email,
+      command.password,
+      command.rememberMe ?? false,
+      metadata?.ipAddress || null,
+      metadata?.userAgent || null,
+    );
     const sessionToken = await encodeSession(res.session);
     return { sessionToken, session: res.session };
   }
@@ -81,7 +92,7 @@ export class AuthService {
     password: string,
     rememberMe: boolean = false,
     ipAddress: string | null = null,
-    userAgent: string | null = null
+    userAgent: string | null = null,
   ): Promise<SignInResult> {
     const attemptedEmail = email.trim().toLowerCase();
     const now = new Date();
@@ -99,7 +110,7 @@ export class AuthService {
       reason: string,
       errorCode: any,
       userId: string | null = null,
-      branchId: string | null = null
+      branchId: string | null = null,
     ) => {
       // Persist LoginHistory record
       await this.loginHistoryRepository.append({
@@ -135,7 +146,10 @@ export class AuthService {
         reason,
       });
 
-      InMemoryMetrics.getInstance().increment('iam.login.failure', 1, { reason, attemptedEmail });
+      InMemoryMetrics.getInstance().increment('iam.login.failure', 1, {
+        reason,
+        attemptedEmail,
+      });
 
       throw createIamError(errorCode);
     };
@@ -153,7 +167,11 @@ export class AuthService {
       await logHistoryAndThrow('user_suspended', 'IAM-AUTH-003', user.id);
     }
     if (user.status === 'PendingActivation') {
-      await logHistoryAndThrow('user_pending_activation', 'IAM-AUTH-001', user.id);
+      await logHistoryAndThrow(
+        'user_pending_activation',
+        'IAM-AUTH-001',
+        user.id,
+      );
     }
 
     // Locked check
@@ -174,7 +192,11 @@ export class AuthService {
       user.effectiveStartDate > now ||
       (user.effectiveEndDate && user.effectiveEndDate < now)
     ) {
-      await logHistoryAndThrow('effective_date_expired', 'IAM-AUTH-001', user.id);
+      await logHistoryAndThrow(
+        'effective_date_expired',
+        'IAM-AUTH-001',
+        user.id,
+      );
     }
 
     // Password credentials validation
@@ -197,7 +219,9 @@ export class AuthService {
     // We can add it there easily!
     // But first, let's finish the logic here.
     // Let's fetch credentials hash:
-    const passwordHash = await (this.userRepository as any).getPasswordHash(user.id);
+    const passwordHash = await (this.userRepository as any).getPasswordHash(
+      user.id,
+    );
     if (!passwordHash) {
       await logHistoryAndThrow('no_credentials', 'IAM-AUTH-001', user.id);
       throw createIamError('IAM-AUTH-001'); // satisfy TS
@@ -217,7 +241,9 @@ export class AuthService {
       user.failedLoginCount += 1;
       if (user.failedLoginCount >= policy.maxFailedAttempts) {
         user.status = 'Locked';
-        user.lockedUntil = new Date(now.getTime() + policy.lockoutDurationMinutes * 60 * 1000);
+        user.lockedUntil = new Date(
+          now.getTime() + policy.lockoutDurationMinutes * 60 * 1000,
+        );
         await this.userRepository.update(user);
 
         // Account Locked Notification & Audit
@@ -241,33 +267,58 @@ export class AuthService {
         // Send lock notification
         await this.notificationPort?.sendAccountLockedNotification(
           ['admin@ims.com'], // In practice this would be loaded admins
-          { displayName: user.username, failedAttempts: user.failedLoginCount, lockedUntil: user.lockedUntil }
+          {
+            displayName: user.username,
+            failedAttempts: user.failedLoginCount,
+            lockedUntil: user.lockedUntil,
+          },
         );
 
-        InMemoryMetrics.getInstance().increment('iam.login.lockout', 1, { userId: user.id });
+        InMemoryMetrics.getInstance().increment('iam.login.lockout', 1, {
+          userId: user.id,
+        });
 
-        await logHistoryAndThrow('account_locked', 'IAM-AUTH-002', user.id, user.defaultBranchId);
+        await logHistoryAndThrow(
+          'account_locked',
+          'IAM-AUTH-002',
+          user.id,
+          user.defaultBranchId,
+        );
       } else {
         await this.userRepository.update(user);
-        await logHistoryAndThrow('invalid_password', 'IAM-AUTH-001', user.id, user.defaultBranchId);
+        await logHistoryAndThrow(
+          'invalid_password',
+          'IAM-AUTH-001',
+          user.id,
+          user.defaultBranchId,
+        );
       }
     }
 
     // 90-day password expiry check
     if (user.passwordChangedAt) {
-      const diffTime = Math.abs(now.getTime() - user.passwordChangedAt.getTime());
+      const diffTime = Math.abs(
+        now.getTime() - user.passwordChangedAt.getTime(),
+      );
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       if (diffDays > policy.passwordExpiryDays) {
-        await logHistoryAndThrow('password_expired', 'IAM-AUTH-004', user.id, user.defaultBranchId);
+        await logHistoryAndThrow(
+          'password_expired',
+          'IAM-AUTH-004',
+          user.id,
+          user.defaultBranchId,
+        );
       }
     }
 
     // Enforce concurrent session limit
-    const activeSessions = await this.sessionRepository.listActiveForUser(user.id);
+    const activeSessions = await this.sessionRepository.listActiveForUser(
+      user.id,
+    );
     if (activeSessions.length >= policy.maxConcurrentSessions) {
       // Policy: Terminate oldest session
       const sorted = [...activeSessions].sort(
-        (a, b) => a.lastActivityAt.getTime() - b.lastActivityAt.getTime()
+        (a, b) => a.lastActivityAt.getTime() - b.lastActivityAt.getTime(),
       );
       const oldest = sorted[0];
       if (oldest) {
@@ -293,25 +344,32 @@ export class AuthService {
       }
     }
 
-    const { raw: refreshToken, hash: hashedRefreshToken } = RefreshTokenService.generate();
+    const { raw: refreshToken, hash: hashedRefreshToken } =
+      RefreshTokenService.generate();
     const accessTokenJti = crypto.randomUUID();
 
     // Create session
     const refreshExpiryDays = rememberMe
       ? policy.rememberMeRefreshTokenDays
       : policy.refreshTokenExpiryDays;
-    const sessionExpiresAt = new Date(now.getTime() + refreshExpiryDays * 24 * 60 * 60 * 1000);
+    const sessionExpiresAt = new Date(
+      now.getTime() + refreshExpiryDays * 24 * 60 * 60 * 1000,
+    );
 
     let roles: string[] = [];
     let permissions: string[] = [];
     if (this.roleRepository) {
       const userRoles = await this.roleRepository.listRolesForUser(user.id);
-      const activeRoles = userRoles.filter((ur: any) => ur.status === 'Active' && ur.role.status === 'Active');
+      const activeRoles = userRoles.filter(
+        (ur: any) => ur.status === 'Active' && ur.role.status === 'Active',
+      );
       roles = activeRoles.map((ur: any) => ur.role.roleCode);
 
       const allPermissions = new Set<string>();
       for (const ur of activeRoles) {
-        const perms = await this.roleRepository.listPermissionsForRole(ur.role.id);
+        const perms = await this.roleRepository.listPermissionsForRole(
+          ur.role.id,
+        );
         for (const p of perms) {
           if (p.status === 'Active') {
             allPermissions.add(p.permissionCode);
@@ -323,7 +381,9 @@ export class AuthService {
 
     let dataScopes: Session['dataScopes'] = [];
     if (this.userBranchAccessRepository) {
-      const branches = await this.userBranchAccessRepository.findByUser(user.id);
+      const branches = await this.userBranchAccessRepository.findByUser(
+        user.id,
+      );
       dataScopes = branches
         .filter((b: any) => b.status === 'Active')
         .map((b: any) => ({
@@ -335,7 +395,14 @@ export class AuthService {
     }
 
     if (dataScopes.length === 0) {
-      dataScopes = [{ scopeType: 'All', branchId: null, departmentId: null, assignedOnly: false }];
+      dataScopes = [
+        {
+          scopeType: 'All',
+          branchId: null,
+          departmentId: null,
+          assignedOnly: false,
+        },
+      ];
     }
 
     const keys = getKeys();
@@ -344,13 +411,19 @@ export class AuthService {
       email: user.email,
       roles,
       // SLIM: Do not pack permissions into the JWT
-      // permissions, 
+      // permissions,
       activeBranchId: user.defaultBranchId,
       jti: accessTokenJti,
     };
 
-    const accessTokenExpiresAt = new Date(now.getTime() + policy.accessTokenExpiryMinutes * 60 * 1000);
-    const accessToken = await JwtService.signAccessToken(payload, keys.privateKey, `${policy.accessTokenExpiryMinutes}m`);
+    const accessTokenExpiresAt = new Date(
+      now.getTime() + policy.accessTokenExpiryMinutes * 60 * 1000,
+    );
+    const accessToken = await JwtService.signAccessToken(
+      payload,
+      keys.privateKey,
+      `${policy.accessTokenExpiryMinutes}m`,
+    );
 
     const session: Session = {
       userId: user.id,
@@ -422,7 +495,9 @@ export class AuthService {
       reason: null,
     });
 
-    InMemoryMetrics.getInstance().increment('iam.login.success', 1, { branchId: user.defaultBranchId || 'none' });
+    InMemoryMetrics.getInstance().increment('iam.login.success', 1, {
+      branchId: user.defaultBranchId || 'none',
+    });
 
     return {
       accessToken,
@@ -436,10 +511,18 @@ export class AuthService {
   async refresh(
     refreshTokenRaw: string,
     userAgent: string | null = null,
-    ipAddress: string | null = null
-  ): Promise<{ accessToken: string; accessTokenExpiresAt: Date; refreshToken: string }> {
-    const hashedToken = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
-    const session = await this.sessionRepository.findByHashedRefreshToken(hashedToken);
+    ipAddress: string | null = null,
+  ): Promise<{
+    accessToken: string;
+    accessTokenExpiresAt: Date;
+    refreshToken: string;
+  }> {
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(refreshTokenRaw)
+      .digest('hex');
+    const session =
+      await this.sessionRepository.findByHashedRefreshToken(hashedToken);
     const now = new Date();
 
     if (!session || session.status !== 'Active' || session.expiresAt < now) {
@@ -480,7 +563,8 @@ export class AuthService {
     const policy = await this.securityPolicyRepository.get();
 
     // Refresh token rotation (issue new refresh token, invalidate old one)
-    const { raw: newRefreshToken, hash: hashedNewRefreshToken } = RefreshTokenService.generate();
+    const { raw: newRefreshToken, hash: hashedNewRefreshToken } =
+      RefreshTokenService.generate();
     session.previousHashedRefreshToken = session.hashedRefreshToken;
     session.hashedRefreshToken = hashedNewRefreshToken;
     session.lastActivityAt = now;
@@ -496,8 +580,14 @@ export class AuthService {
       jti: session.id,
     };
 
-    const accessTokenExpiresAt = new Date(now.getTime() + policy.accessTokenExpiryMinutes * 60 * 1000);
-    const newAccessToken = await JwtService.signAccessToken(payload, keys.privateKey, `${policy.accessTokenExpiryMinutes}m`);
+    const accessTokenExpiresAt = new Date(
+      now.getTime() + policy.accessTokenExpiryMinutes * 60 * 1000,
+    );
+    const newAccessToken = await JwtService.signAccessToken(
+      payload,
+      keys.privateKey,
+      `${policy.accessTokenExpiryMinutes}m`,
+    );
 
     return {
       accessToken: newAccessToken,
@@ -507,7 +597,9 @@ export class AuthService {
   }
 
   async logout(accessTokenJti: string): Promise<void> {
-    const session = await this.sessionRepository.findById(accessTokenJti as Uuid);
+    const session = await this.sessionRepository.findById(
+      accessTokenJti as Uuid,
+    );
     if (session) {
       session.status = 'Revoked';
       await this.sessionRepository.update(session);
@@ -529,7 +621,9 @@ export class AuthService {
         reason: null,
       });
 
-      InMemoryMetrics.getInstance().increment('iam.logout', 1, { userId: session.userId });
+      InMemoryMetrics.getInstance().increment('iam.logout', 1, {
+        userId: session.userId,
+      });
     }
   }
 
@@ -543,9 +637,14 @@ export class AuthService {
     }
 
     const rawToken = crypto.randomBytes(32).toString('hex');
-    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const tokenHash = crypto
+      .createHash('sha256')
+      .update(rawToken)
+      .digest('hex');
     const policy = await this.securityPolicyRepository.get();
-    const expiresAt = new Date(Date.now() + policy.resetTokenExpiryMinutes * 60 * 1000);
+    const expiresAt = new Date(
+      Date.now() + policy.resetTokenExpiryMinutes * 60 * 1000,
+    );
 
     // Re-use PasswordResetToken model in DB if present or activation token repository structure
     // Since we are using Prisma, let's create a reset token.
@@ -613,7 +712,7 @@ export class AuthService {
 
   async resetPassword(
     tokenOrCommand: string | { token: string; password: string },
-    newPassword?: string
+    newPassword?: string,
   ): Promise<void> {
     if (typeof tokenOrCommand === 'object') {
       const command = tokenOrCommand;
@@ -624,11 +723,20 @@ export class AuthService {
     }
   }
 
-  private async resetPasswordInternal(token: string, newPassword: string): Promise<void> {
+  private async resetPasswordInternal(
+    token: string,
+    newPassword: string,
+  ): Promise<void> {
     const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
-    const tokenRecord = await (this.userRepository as any).findResetTokenByHash(tokenHash);
+    const tokenRecord = await (this.userRepository as any).findResetTokenByHash(
+      tokenHash,
+    );
 
-    if (!tokenRecord || tokenRecord.usedAt || tokenRecord.expiresAt < new Date()) {
+    if (
+      !tokenRecord ||
+      tokenRecord.usedAt ||
+      tokenRecord.expiresAt < new Date()
+    ) {
       throw createIamError('IAM-AUTH-006'); // token invalid/expired
     }
 
@@ -640,7 +748,7 @@ export class AuthService {
     const policy = await this.securityPolicyRepository.get();
     const passwordHistory = await this.passwordHistoryRepository.findRecentN(
       user.id,
-      policy.passwordHistoryCount
+      policy.passwordHistoryCount,
     );
 
     const passwordPolicy = new PasswordPolicy({
@@ -658,7 +766,7 @@ export class AuthService {
 
     const isReused = await passwordPolicy.isReused(
       newPassword,
-      passwordHistory.map((h) => h.passwordHash)
+      passwordHistory.map((h) => h.passwordHash),
     );
     if (isReused) {
       throw createIamError('IAM-VAL-009');
@@ -710,14 +818,18 @@ export class AuthService {
   async changePassword(
     userIdOrCommand: Uuid | { currentPassword: string; newPassword: string },
     currentPasswordOrSession: string | Session,
-    newPassword?: string
+    newPassword?: string,
   ): Promise<any> {
     if (typeof userIdOrCommand === 'object') {
       const command = userIdOrCommand;
       const session = currentPasswordOrSession as Session;
-      
-      await this.changePasswordInternal(session.userId as Uuid, command.currentPassword, command.newPassword);
-      
+
+      await this.changePasswordInternal(
+        session.userId as Uuid,
+        command.currentPassword,
+        command.newPassword,
+      );
+
       const nextSession: Session = {
         ...session,
         expiresAt: Date.now() + 8 * 60 * 60 * 1000,
@@ -734,14 +846,16 @@ export class AuthService {
   private async changePasswordInternal(
     userId: Uuid,
     currentPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw createIamError('IAM-AUTH-001');
     }
 
-    const passwordHash = await (this.userRepository as any).getPasswordHash(user.id);
+    const passwordHash = await (this.userRepository as any).getPasswordHash(
+      user.id,
+    );
     if (!passwordHash) {
       throw createIamError('IAM-AUTH-001');
     }
@@ -767,11 +881,11 @@ export class AuthService {
 
     const passwordHistory = await this.passwordHistoryRepository.findRecentN(
       user.id,
-      policy.passwordHistoryCount
+      policy.passwordHistoryCount,
     );
     const isReused = await passwordPolicy.isReused(
       newPassword,
-      passwordHistory.map((h) => h.passwordHash)
+      passwordHistory.map((h) => h.passwordHash),
     );
     if (isReused) {
       throw createIamError('IAM-VAL-009');

@@ -15,8 +15,7 @@ const badgeVariants = cva(
           'border border-[color:var(--ims-warning-border)] bg-[color:var(--ims-warning-bg)] text-[color:var(--ims-warning)]',
         error:
           'border border-[color:var(--ims-error-border)] bg-[color:var(--ims-error-bg)] text-[color:var(--ims-error)]',
-        info:
-          'border border-[color:var(--ims-info-border)] bg-[color:var(--ims-info-bg)] text-[color:var(--ims-info)]',
+        info: 'border border-[color:var(--ims-info-border)] bg-[color:var(--ims-info-bg)] text-[color:var(--ims-info)]',
         outline:
           'border border-[color:var(--ims-border)] bg-transparent text-[color:var(--ims-ink)]',
         muted:
@@ -30,10 +29,11 @@ const badgeVariants = cva(
 );
 
 export interface BadgeProps
-  extends HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof badgeVariants> {}
+  extends HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {}
 
 /** Server-compatible Badge component. */
 export function Badge({ className, variant, ...props }: BadgeProps) {
-  return <span className={cn(badgeVariants({ variant }), className)} {...props} />;
+  return (
+    <span className={cn(badgeVariants({ variant }), className)} {...props} />
+  );
 }

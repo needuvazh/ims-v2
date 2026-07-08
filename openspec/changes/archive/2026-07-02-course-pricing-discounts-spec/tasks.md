@@ -11,19 +11,21 @@
 ## 2. Domain & Application Logic
 
 ### training-delivery Context
+
 - [x] 2.1 Add `batchType` to the `Batch` aggregate state interface in `packages/training-delivery/src/domain/batch.ts`.
 - [x] 2.2 Map `batchType` in `BatchRepository` create/update actions, defaulting it to `"Regular"` (preserving existing waitlist tests).
 
 ### course-catalog Context
+
 - [x] 2.3 Add dedicated repository interfaces in `packages/course-catalog/src/domain/repositories.ts`:
-    - `ICoursePricingRepository`
-    - `ICourseDiscountRepository`
-    - `ICourseCompletionRuleRepository`
+  - `ICoursePricingRepository`
+  - `ICourseDiscountRepository`
+  - `ICourseCompletionRuleRepository`
 - [x] 2.4 Implement separate configurations services (`CoursePricingService`, `CourseDiscountService`, `CourseCompletionRuleService`) to isolate mutations and keep `CourseRepository` transactions lightweight.
 - [x] 2.5 Implement aggregate collision and sequential superseding logic (deactivating overlapping active rows to `Superseded` only if `newRule.effectiveStartDate > existingRule.effectiveStartDate`).
 - [x] 2.6 Normalize date-only queries to Gulf Standard Time (UTC+4) boundaries inside the Application layer.
 - [x] 2.7 Implement hierarchical query pricing and discount resolver (`resolveCoursePricing`) matching batch override -> branch override -> global default.
-- [x] 2.8 Update `CourseService.transitionCourseStatus` publish validation to verify pricing and completion rule existence *as of the publish date* using the resolver contract.
+- [x] 2.8 Update `CourseService.transitionCourseStatus` publish validation to verify pricing and completion rule existence _as of the publish date_ using the resolver contract.
 
 ## 3. API Delivery
 

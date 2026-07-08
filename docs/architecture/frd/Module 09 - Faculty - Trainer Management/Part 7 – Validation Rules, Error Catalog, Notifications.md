@@ -23,53 +23,44 @@ Client validation improves UX but is never authoritative.
 ## 3. Reusable Zod Schemas
 
 ```ts
-import { z } from "zod";
+import { z } from 'zod';
 
 export const EntityIdSchema = z.string().trim().min(1).max(64);
 
 export const OmanBusinessDateSchema = z.coerce.date();
 
-export const TimeHHmmSchema = z.string().regex(
-  /^([01]\d|2[0-3]):[0-5]\d$/,
-  "Time must use 24-hour HH:mm format."
-);
+export const TimeHHmmSchema = z
+  .string()
+  .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Time must use 24-hour HH:mm format.');
 
 export const ReasonSchema = z.string().trim().min(10).max(1000);
 
-export const TrainerTypeSchema = z.enum([
-  "FullTime",
-  "PartTime",
-  "Freelance",
-]);
+export const TrainerTypeSchema = z.enum(['FullTime', 'PartTime', 'Freelance']);
 
-export const TrainerStatusSchema = z.enum([
-  "Active",
-  "Inactive",
-  "Suspended",
-]);
+export const TrainerStatusSchema = z.enum(['Active', 'Inactive', 'Suspended']);
 
 export const WeekdaySchema = z.enum([
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
 ]);
 
 export const AuthorizationStatusSchema = z.enum([
-  "Active",
-  "Inactive",
-  "Suspended",
-  "Expired",
+  'Active',
+  'Inactive',
+  'Suspended',
+  'Expired',
 ]);
 
 export const PaymentBasisSchema = z.enum([
-  "PerHour",
-  "PerSession",
-  "PerStudent",
-  "Fixed",
+  'PerHour',
+  'PerSession',
+  'PerStudent',
+  'Fixed',
 ]);
 
 export const OMRAmountSchema = z.coerce
@@ -81,55 +72,60 @@ export const OMRAmountSchema = z.coerce
 
 ## 4. Trainer Profile Validation Rules
 
-| Rule ID | Validation | Enforcement |
-|---|---|---|
-| VAL-FTM-001 | `personId` must reference an existing canonical Person. | Referential service check. |
-| VAL-FTM-002 | One Person may have at most one non-deleted TrainerProfile. | Service pre-check + unique partial constraint/equivalent. |
-| VAL-FTM-003 | `trainerCode` is system-generated when numbering series is configured and unique among non-deleted profiles. | Numbering service + unique constraint. |
-| VAL-FTM-004 | `trainerType` must be FullTime, PartTime, or Freelance. | Zod enum + database enum/check. |
-| VAL-FTM-005 | Initial status may be Active or Inactive only. | Create schema. |
-| VAL-FTM-006 | `specialization` length 2–500 after trimming. | Zod. |
-| VAL-FTM-007 | `qualificationSummary` maximum length 2,000. | Zod. |
-| VAL-FTM-008 | `effectiveEndDate >= effectiveStartDate` when end date exists. | Zod superRefine + domain service. |
-| VAL-FTM-009 | Person-owned names, Civil ID, passport, nationality, email, and phone cannot be mutated through TrainerProfile endpoint. | Strict schema + ownership check. |
-| VAL-FTM-010 | Update `version` must equal persisted version. | Optimistic concurrency compare. |
+| Rule ID     | Validation                                                                                                               | Enforcement                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| VAL-FTM-001 | `personId` must reference an existing canonical Person.                                                                  | Referential service check.                                |
+| VAL-FTM-002 | One Person may have at most one non-deleted TrainerProfile.                                                              | Service pre-check + unique partial constraint/equivalent. |
+| VAL-FTM-003 | `trainerCode` is system-generated when numbering series is configured and unique among non-deleted profiles.             | Numbering service + unique constraint.                    |
+| VAL-FTM-004 | `trainerType` must be FullTime, PartTime, or Freelance.                                                                  | Zod enum + database enum/check.                           |
+| VAL-FTM-005 | Initial status may be Active or Inactive only.                                                                           | Create schema.                                            |
+| VAL-FTM-006 | `specialization` length 2–500 after trimming.                                                                            | Zod.                                                      |
+| VAL-FTM-007 | `qualificationSummary` maximum length 2,000.                                                                             | Zod.                                                      |
+| VAL-FTM-008 | `effectiveEndDate >= effectiveStartDate` when end date exists.                                                           | Zod superRefine + domain service.                         |
+| VAL-FTM-009 | Person-owned names, Civil ID, passport, nationality, email, and phone cannot be mutated through TrainerProfile endpoint. | Strict schema + ownership check.                          |
+| VAL-FTM-010 | Update `version` must equal persisted version.                                                                           | Optimistic concurrency compare.                           |
 
 ### 4.1 Trainer Profile Schema
 
 ```ts
-export const CreateTrainerProfileSchema = z.object({
-  personId: EntityIdSchema,
-  branchId: EntityIdSchema,
-  trainerType: TrainerTypeSchema,
-  specialization: z.string().trim().min(2).max(500),
-  qualificationSummary: z.string().trim().max(1000).nullable().optional(),
-  status: z.enum(["Active", "Inactive"]),
-  effectiveStartDate: OmanBusinessDateSchema,
-  effectiveEndDate: OmanBusinessDateSchema.nullable().optional(),
-}).superRefine((value, ctx) => {
-  if (value.effectiveEndDate && value.effectiveEndDate < value.effectiveStartDate) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["effectiveEndDate"],
-      message: "effectiveEndDate must be on or after effectiveStartDate.",
-    });
-  }
-});
+export const CreateTrainerProfileSchema = z
+  .object({
+    personId: EntityIdSchema,
+    branchId: EntityIdSchema,
+    trainerType: TrainerTypeSchema,
+    specialization: z.string().trim().min(2).max(500),
+    qualificationSummary: z.string().trim().max(1000).nullable().optional(),
+    status: z.enum(['Active', 'Inactive']),
+    effectiveStartDate: OmanBusinessDateSchema,
+    effectiveEndDate: OmanBusinessDateSchema.nullable().optional(),
+  })
+  .superRefine((value, ctx) => {
+    if (
+      value.effectiveEndDate &&
+      value.effectiveEndDate < value.effectiveStartDate
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['effectiveEndDate'],
+        message: 'effectiveEndDate must be on or after effectiveStartDate.',
+      });
+    }
+  });
 ```
 
 ## 5. Trainer Status Transition Validation
 
 Allowed transitions:
 
-| From | To | Allowed |
-|---|---|---|
-| Inactive | Active | Yes |
-| Active | Inactive | Yes |
-| Active | Suspended | Yes |
-| Suspended | Active | Yes |
-| Suspended | Inactive | Yes |
-| Inactive | Suspended | No |
-| Any | Same state | Idempotent no-op; no duplicate state-change event. |
+| From      | To         | Allowed                                            |
+| --------- | ---------- | -------------------------------------------------- |
+| Inactive  | Active     | Yes                                                |
+| Active    | Inactive   | Yes                                                |
+| Active    | Suspended  | Yes                                                |
+| Suspended | Active     | Yes                                                |
+| Suspended | Inactive   | Yes                                                |
+| Inactive  | Suspended  | No                                                 |
+| Any       | Same state | Idempotent no-op; no duplicate state-change event. |
 
 Validation sequence:
 
@@ -145,47 +141,49 @@ Validation sequence:
 
 ## 6. Qualification Validation
 
-| Rule ID | Validation |
-|---|---|
-| VAL-FTM-020 | `qualificationName` length 2–200. |
-| VAL-FTM-021 | `institution` length 2–200. |
-| VAL-FTM-022 | `yearCompleted` integer from 1900 through current Oman business year. |
+| Rule ID     | Validation                                                                         |
+| ----------- | ---------------------------------------------------------------------------------- |
+| VAL-FTM-020 | `qualificationName` length 2–200.                                                  |
+| VAL-FTM-021 | `institution` length 2–200.                                                        |
+| VAL-FTM-022 | `yearCompleted` integer from 1900 through current Oman business year.              |
 | VAL-FTM-023 | Optional `documentId` must exist and be visible through Document Management scope. |
-| VAL-FTM-024 | Document verification status is read-only in this module. |
-| VAL-FTM-025 | Soft deletion requires reason and audit record. |
+| VAL-FTM-024 | Document verification status is read-only in this module.                          |
+| VAL-FTM-025 | Soft deletion requires reason and audit record.                                    |
 
 ```ts
-export const TrainerQualificationSchema = z.object({
-  qualificationName: z.string().trim().min(2).max(200),
-  institution: z.string().trim().min(2).max(200),
-  yearCompleted: z.number().int().min(1900),
-  documentId: EntityIdSchema.nullable().optional(),
-}).superRefine((value, ctx) => {
-  const omanYear = getOmanBusinessYear();
-  if (value.yearCompleted > omanYear) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["yearCompleted"],
-      message: `yearCompleted cannot be later than ${omanYear}.`,
-    });
-  }
-});
+export const TrainerQualificationSchema = z
+  .object({
+    qualificationName: z.string().trim().min(2).max(200),
+    institution: z.string().trim().min(2).max(200),
+    yearCompleted: z.number().int().min(1900),
+    documentId: EntityIdSchema.nullable().optional(),
+  })
+  .superRefine((value, ctx) => {
+    const omanYear = getOmanBusinessYear();
+    if (value.yearCompleted > omanYear) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['yearCompleted'],
+        message: `yearCompleted cannot be later than ${omanYear}.`,
+      });
+    }
+  });
 ```
 
 ## 7. Availability Validation
 
 ### 7.1 Input Rules
 
-| Rule ID | Validation |
-|---|---|
-| VAL-FTM-030 | `dayOfWeek` must be Monday–Sunday enum. |
-| VAL-FTM-031 | `startTime` and `endTime` use `HH:mm` 24-hour format. |
-| VAL-FTM-032 | `startTime < endTime`. |
-| VAL-FTM-033 | Cross-midnight windows are not stored in one record; use two weekday records. |
-| VAL-FTM-034 | Effective end date must not precede start date. |
+| Rule ID     | Validation                                                                                            |
+| ----------- | ----------------------------------------------------------------------------------------------------- |
+| VAL-FTM-030 | `dayOfWeek` must be Monday–Sunday enum.                                                               |
+| VAL-FTM-031 | `startTime` and `endTime` use `HH:mm` 24-hour format.                                                 |
+| VAL-FTM-032 | `startTime < endTime`.                                                                                |
+| VAL-FTM-033 | Cross-midnight windows are not stored in one record; use two weekday records.                         |
+| VAL-FTM-034 | Effective end date must not precede start date.                                                       |
 | VAL-FTM-035 | Active windows for same trainer, branch, weekday, and intersecting effective period must not overlap. |
 | VAL-FTM-036 | Proposed assignment interval must be fully contained within one effective active availability window. |
-| VAL-FTM-037 | Weekday calculations use `Asia/Muscat`. |
+| VAL-FTM-037 | Weekday calculations use `Asia/Muscat`.                                                               |
 
 ### 7.2 Overlap Algorithm
 
@@ -218,15 +216,15 @@ Adjacent windows are allowed: `09:00–12:00` and `12:00–15:00` do not overlap
 
 ## 8. Course Authorization Validation
 
-| Rule ID | Validation |
-|---|---|
-| VAL-FTM-040 | `courseId` must reference existing Course owned by Course Catalog. |
-| VAL-FTM-041 | Initial authorization status may be Active or Inactive. |
-| VAL-FTM-042 | Effective end date must be on/after start date. |
-| VAL-FTM-043 | Overlapping Active authorization periods for same trainer/course are prohibited. |
+| Rule ID     | Validation                                                                                                       |
+| ----------- | ---------------------------------------------------------------------------------------------------------------- |
+| VAL-FTM-040 | `courseId` must reference existing Course owned by Course Catalog.                                               |
+| VAL-FTM-041 | Initial authorization status may be Active or Inactive.                                                          |
+| VAL-FTM-042 | Effective end date must be on/after start date.                                                                  |
+| VAL-FTM-043 | Overlapping Active authorization periods for same trainer/course are prohibited.                                 |
 | VAL-FTM-044 | An authorization past `effectiveEndDate` is ineffective even if stored status has not yet normalized to Expired. |
-| VAL-FTM-045 | Course authorization grants delivery eligibility only; it never grants IAM access. |
-| VAL-FTM-046 | Transition reason is mandatory for suspension, reactivation, expiry override, or deactivation. |
+| VAL-FTM-045 | Course authorization grants delivery eligibility only; it never grants IAM access.                               |
+| VAL-FTM-046 | Transition reason is mandatory for suspension, reactivation, expiry override, or deactivation.                   |
 
 ### 8.1 Effective Authorization Evaluation
 
@@ -239,19 +237,19 @@ AND (effectiveEndDate IS NULL OR targetDate <= effectiveEndDate)
 
 ## 9. Compensation Rate Validation
 
-| Rule ID | Validation |
-|---|---|
-| VAL-FTM-050 | `paymentBasis` limited to PerHour, PerSession, PerStudent, Fixed. |
-| VAL-FTM-051 | `amount > 0`. |
-| VAL-FTM-052 | OMR amount supports maximum 3 decimal places. |
-| VAL-FTM-053 | Currency is OMR in current ASTI scope. |
-| VAL-FTM-054 | Effective end date must be on/after start date. |
+| Rule ID     | Validation                                                                                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------ |
+| VAL-FTM-050 | `paymentBasis` limited to PerHour, PerSession, PerStudent, Fixed.                                                        |
+| VAL-FTM-051 | `amount > 0`.                                                                                                            |
+| VAL-FTM-052 | OMR amount supports maximum 3 decimal places.                                                                            |
+| VAL-FTM-053 | Currency is OMR in current ASTI scope.                                                                                   |
+| VAL-FTM-054 | Effective end date must be on/after start date.                                                                          |
 | VAL-FTM-055 | Same trainer, basis, specificity level, and intersecting effective period may not have multiple active applicable rates. |
-| VAL-FTM-056 | Session-specific reference must identify an existing Session. |
-| VAL-FTM-057 | Batch-specific reference must identify an existing Batch. |
-| VAL-FTM-058 | When both sessionId and batchId are provided, Session must belong to Batch. |
-| VAL-FTM-059 | Resolution precedence is Session → Batch → Trainer. |
-| VAL-FTM-060 | Compensation access requires explicit compensation permission. |
+| VAL-FTM-056 | Session-specific reference must identify an existing Session.                                                            |
+| VAL-FTM-057 | Batch-specific reference must identify an existing Batch.                                                                |
+| VAL-FTM-058 | When both sessionId and batchId are provided, Session must belong to Batch.                                              |
+| VAL-FTM-059 | Resolution precedence is Session → Batch → Trainer.                                                                      |
+| VAL-FTM-060 | Compensation access requires explicit compensation permission.                                                           |
 
 ### 9.1 Rate Ambiguity Algorithm
 
@@ -290,13 +288,13 @@ Business ineligibility returns a structured reason set rather than an exception 
 
 ## 11. Soft Delete and Referential Protection Validation
 
-| Rule ID | Validation |
-|---|---|
-| VAL-FTM-070 | No hard delete is permitted. |
-| VAL-FTM-071 | TrainerProfile with active or future Batch/Session references cannot be soft-deleted. |
+| Rule ID     | Validation                                                                                      |
+| ----------- | ----------------------------------------------------------------------------------------------- |
+| VAL-FTM-070 | No hard delete is permitted.                                                                    |
+| VAL-FTM-071 | TrainerProfile with active or future Batch/Session references cannot be soft-deleted.           |
 | VAL-FTM-072 | Qualification, availability, authorization, and compensation soft deletes require audit reason. |
-| VAL-FTM-073 | Soft-deleted records are excluded from normal search and eligibility calculations. |
-| VAL-FTM-074 | Historical audit records remain immutable after source record soft deletion. |
+| VAL-FTM-073 | Soft-deleted records are excluded from normal search and eligibility calculations.              |
+| VAL-FTM-074 | Historical audit records remain immutable after source record soft deletion.                    |
 
 ---
 
@@ -304,51 +302,51 @@ Business ineligibility returns a structured reason set rather than an exception 
 
 ## 12.1 Authentication and Authorization Errors
 
-| Error Code | HTTP | Meaning | Client Handling |
-|---|---:|---|---|
-| `ERR_AUTH_UNAUTHENTICATED` | 401 | No valid authenticated session. | Redirect to sign-in. |
-| `ERR_AUTH_PERMISSION_DENIED` | 403 | Required action permission missing. | Show access-denied state; do not retry automatically. |
-| `ERR_FTM_BRANCH_SCOPE_DENIED` | 403 | Requested branch/entity is outside authorized scope. | Show scope denial without exposing hidden entity details. |
-| `ERR_FTM_CONSOLIDATED_REPORT_PERMISSION_REQUIRED` | 403 | Cross-branch consolidated report requested without permission. | Remove consolidated mode and show message. |
-| `ERR_FTM_COMPENSATION_PERMISSION_DENIED` | 403 | Compensation data requested without explicit permission. | Hide compensation surface; do not cache response. |
+| Error Code                                        | HTTP | Meaning                                                        | Client Handling                                           |
+| ------------------------------------------------- | ---: | -------------------------------------------------------------- | --------------------------------------------------------- |
+| `ERR_AUTH_UNAUTHENTICATED`                        |  401 | No valid authenticated session.                                | Redirect to sign-in.                                      |
+| `ERR_AUTH_PERMISSION_DENIED`                      |  403 | Required action permission missing.                            | Show access-denied state; do not retry automatically.     |
+| `ERR_FTM_BRANCH_SCOPE_DENIED`                     |  403 | Requested branch/entity is outside authorized scope.           | Show scope denial without exposing hidden entity details. |
+| `ERR_FTM_CONSOLIDATED_REPORT_PERMISSION_REQUIRED` |  403 | Cross-branch consolidated report requested without permission. | Remove consolidated mode and show message.                |
+| `ERR_FTM_COMPENSATION_PERMISSION_DENIED`          |  403 | Compensation data requested without explicit permission.       | Hide compensation surface; do not cache response.         |
 
 ## 12.2 Trainer Profile Errors
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `ERR_FTM_VALIDATION_FAILED` | 400 | Request failed schema validation. |
-| `ERR_FTM_INVALID_QUERY` | 400 | Query filter/sort/paging values invalid. |
-| `ERR_FTM_TRAINER_NOT_FOUND` | 404 | Trainer not found in accessible scope. |
-| `ERR_FTM_DUPLICATE_TRAINER_PROFILE` | 409 | Person already has a non-deleted TrainerProfile. |
-| `ERR_FTM_TRAINER_CODE_CONFLICT` | 409 | Generated or imported trainer code conflicts. |
-| `ERR_FTM_VERSION_CONFLICT` | 409 | Optimistic concurrency version mismatch. |
-| `ERR_FTM_INVALID_STATUS_TRANSITION` | 409 | Requested trainer status transition not allowed. |
-| `ERR_FTM_ACTIVE_ASSIGNMENT_IMPACT_REVIEW_REQUIRED` | 409 | Status change requires active/future assignment impact review. |
-| `ERR_FTM_EFFECTIVE_DATE_INVALID` | 422 | Effective date range invalid. |
-| `ERR_FTM_STATUS_EFFECTIVE_DATE_INVALID` | 422 | Status transition effective time conflicts with profile period. |
-| `ERR_FTM_PERSON_FIELD_OWNERSHIP_VIOLATION` | 400 | Request attempted to mutate Person-owned fields. |
-| `ERR_FTM_SOFT_DELETE_BLOCKED_BY_ASSIGNMENTS` | 409 | Trainer profile has active or future assignments. |
+| Error Code                                         | HTTP | Meaning                                                         |
+| -------------------------------------------------- | ---: | --------------------------------------------------------------- |
+| `ERR_FTM_VALIDATION_FAILED`                        |  400 | Request failed schema validation.                               |
+| `ERR_FTM_INVALID_QUERY`                            |  400 | Query filter/sort/paging values invalid.                        |
+| `ERR_FTM_TRAINER_NOT_FOUND`                        |  404 | Trainer not found in accessible scope.                          |
+| `ERR_FTM_DUPLICATE_TRAINER_PROFILE`                |  409 | Person already has a non-deleted TrainerProfile.                |
+| `ERR_FTM_TRAINER_CODE_CONFLICT`                    |  409 | Generated or imported trainer code conflicts.                   |
+| `ERR_FTM_VERSION_CONFLICT`                         |  409 | Optimistic concurrency version mismatch.                        |
+| `ERR_FTM_INVALID_STATUS_TRANSITION`                |  409 | Requested trainer status transition not allowed.                |
+| `ERR_FTM_ACTIVE_ASSIGNMENT_IMPACT_REVIEW_REQUIRED` |  409 | Status change requires active/future assignment impact review.  |
+| `ERR_FTM_EFFECTIVE_DATE_INVALID`                   |  422 | Effective date range invalid.                                   |
+| `ERR_FTM_STATUS_EFFECTIVE_DATE_INVALID`            |  422 | Status transition effective time conflicts with profile period. |
+| `ERR_FTM_PERSON_FIELD_OWNERSHIP_VIOLATION`         |  400 | Request attempted to mutate Person-owned fields.                |
+| `ERR_FTM_SOFT_DELETE_BLOCKED_BY_ASSIGNMENTS`       |  409 | Trainer profile has active or future assignments.               |
 
 ## 12.3 Qualification and Document Errors
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `ERR_FTM_QUALIFICATION_NOT_FOUND` | 404 | Qualification not found in trainer scope. |
-| `ERR_FTM_QUALIFICATION_YEAR_IN_FUTURE` | 422 | Completion year exceeds current Oman business year. |
-| `ERR_DOC_DOCUMENT_NOT_FOUND` | 404 | Evidence document does not exist. |
-| `ERR_DOC_DOCUMENT_SCOPE_DENIED` | 403 | Caller cannot access selected evidence document. |
-| `ERR_FTM_DOCUMENT_STATUS_OWNERSHIP_VIOLATION` | 400 | Module attempted to change Document verification state. |
+| Error Code                                    | HTTP | Meaning                                                 |
+| --------------------------------------------- | ---: | ------------------------------------------------------- |
+| `ERR_FTM_QUALIFICATION_NOT_FOUND`             |  404 | Qualification not found in trainer scope.               |
+| `ERR_FTM_QUALIFICATION_YEAR_IN_FUTURE`        |  422 | Completion year exceeds current Oman business year.     |
+| `ERR_DOC_DOCUMENT_NOT_FOUND`                  |  404 | Evidence document does not exist.                       |
+| `ERR_DOC_DOCUMENT_SCOPE_DENIED`               |  403 | Caller cannot access selected evidence document.        |
+| `ERR_FTM_DOCUMENT_STATUS_OWNERSHIP_VIOLATION` |  400 | Module attempted to change Document verification state. |
 
 ## 12.4 Availability Errors
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `ERR_FTM_AVAILABILITY_NOT_FOUND` | 404 | Availability record not found. |
-| `ERR_FTM_AVAILABILITY_TIME_FORMAT_INVALID` | 400 | Time is not valid `HH:mm`. |
-| `ERR_FTM_AVAILABILITY_TIME_ORDER_INVALID` | 422 | Start time is not earlier than end time. |
-| `ERR_FTM_AVAILABILITY_CROSS_MIDNIGHT_NOT_ALLOWED` | 422 | Single recurring window crosses midnight. |
-| `ERR_FTM_AVAILABILITY_OVERLAP` | 409 | Candidate overlaps effective Active window. |
-| `ERR_FTM_AVAILABILITY_NOT_COVERED` | 200/Business Result | Proposed interval not fully contained in availability. |
+| Error Code                                        |                HTTP | Meaning                                                |
+| ------------------------------------------------- | ------------------: | ------------------------------------------------------ |
+| `ERR_FTM_AVAILABILITY_NOT_FOUND`                  |                 404 | Availability record not found.                         |
+| `ERR_FTM_AVAILABILITY_TIME_FORMAT_INVALID`        |                 400 | Time is not valid `HH:mm`.                             |
+| `ERR_FTM_AVAILABILITY_TIME_ORDER_INVALID`         |                 422 | Start time is not earlier than end time.               |
+| `ERR_FTM_AVAILABILITY_CROSS_MIDNIGHT_NOT_ALLOWED` |                 422 | Single recurring window crosses midnight.              |
+| `ERR_FTM_AVAILABILITY_OVERLAP`                    |                 409 | Candidate overlaps effective Active window.            |
+| `ERR_FTM_AVAILABILITY_NOT_COVERED`                | 200/Business Result | Proposed interval not fully contained in availability. |
 
 Example overlap error details:
 
@@ -371,56 +369,56 @@ Example overlap error details:
 
 ## 12.5 Course Authorization Errors
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `ERR_FTM_AUTHORIZATION_NOT_FOUND` | 404 | Authorization not found. |
-| `ERR_FTM_AUTHORIZATION_OVERLAP` | 409 | Active authorization period overlaps existing Active authorization. |
-| `ERR_FTM_AUTHORIZATION_TRANSITION_INVALID` | 409 | Requested authorization lifecycle transition is not allowed. |
-| `ERR_FTM_AUTHORIZATION_EFFECTIVE_DATE_INVALID` | 422 | Authorization effective range invalid. |
-| `ERR_FTM_COURSE_NOT_AUTHORIZED` | 200/Business Result | Trainer is not effectively authorized on target date. |
-| `ERR_CAT_COURSE_NOT_FOUND` | 404 | Course reference does not exist. |
+| Error Code                                     |                HTTP | Meaning                                                             |
+| ---------------------------------------------- | ------------------: | ------------------------------------------------------------------- |
+| `ERR_FTM_AUTHORIZATION_NOT_FOUND`              |                 404 | Authorization not found.                                            |
+| `ERR_FTM_AUTHORIZATION_OVERLAP`                |                 409 | Active authorization period overlaps existing Active authorization. |
+| `ERR_FTM_AUTHORIZATION_TRANSITION_INVALID`     |                 409 | Requested authorization lifecycle transition is not allowed.        |
+| `ERR_FTM_AUTHORIZATION_EFFECTIVE_DATE_INVALID` |                 422 | Authorization effective range invalid.                              |
+| `ERR_FTM_COURSE_NOT_AUTHORIZED`                | 200/Business Result | Trainer is not effectively authorized on target date.               |
+| `ERR_CAT_COURSE_NOT_FOUND`                     |                 404 | Course reference does not exist.                                    |
 
 ## 12.6 Eligibility Errors and Results
 
-| Code | Transport | Meaning |
-|---|---|---|
-| `ERR_FTM_ELIGIBILITY_INPUT_INVALID` | HTTP 400 | Required course/branch/date inputs invalid. |
-| `TRAINER_NOT_FOUND` | Business result | Trainer absent or inaccessible. |
-| `PROFILE_INACTIVE` | Business result | Trainer status not Active. |
-| `PROFILE_OUTSIDE_EFFECTIVE_PERIOD` | Business result | Date outside trainer profile effective range. |
-| `COURSE_NOT_AUTHORIZED` | Business result | No effective Active authorization. |
-| `TRAINER_NOT_AVAILABLE` | Business result | Time interval not fully covered by availability. |
+| Code                                | Transport       | Meaning                                          |
+| ----------------------------------- | --------------- | ------------------------------------------------ |
+| `ERR_FTM_ELIGIBILITY_INPUT_INVALID` | HTTP 400        | Required course/branch/date inputs invalid.      |
+| `TRAINER_NOT_FOUND`                 | Business result | Trainer absent or inaccessible.                  |
+| `PROFILE_INACTIVE`                  | Business result | Trainer status not Active.                       |
+| `PROFILE_OUTSIDE_EFFECTIVE_PERIOD`  | Business result | Date outside trainer profile effective range.    |
+| `COURSE_NOT_AUTHORIZED`             | Business result | No effective Active authorization.               |
+| `TRAINER_NOT_AVAILABLE`             | Business result | Time interval not fully covered by availability. |
 
 ## 12.7 Compensation Errors
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `ERR_FTM_RATE_NOT_FOUND` | 404 | No applicable or requested rate found. |
-| `ERR_FTM_RATE_AMOUNT_INVALID` | 422 | Amount is zero, negative, over precision, or above maximum. |
-| `ERR_FTM_RATE_OVERLAP` | 409 | Candidate rate overlaps an active same-specificity rate. |
-| `ERR_FTM_RATE_AMBIGUOUS` | 409 | Multiple applicable rates found at same resolution level; data integrity issue. |
-| `ERR_FTM_RATE_EFFECTIVE_DATE_INVALID` | 422 | Rate date range invalid. |
-| `ERR_TRD_BATCH_NOT_FOUND` | 404 | Batch reference not found. |
-| `ERR_TRD_SESSION_NOT_FOUND` | 404 | Session reference not found. |
-| `ERR_TRD_SESSION_BATCH_MISMATCH` | 422 | Session does not belong to supplied Batch. |
+| Error Code                            | HTTP | Meaning                                                                         |
+| ------------------------------------- | ---: | ------------------------------------------------------------------------------- |
+| `ERR_FTM_RATE_NOT_FOUND`              |  404 | No applicable or requested rate found.                                          |
+| `ERR_FTM_RATE_AMOUNT_INVALID`         |  422 | Amount is zero, negative, over precision, or above maximum.                     |
+| `ERR_FTM_RATE_OVERLAP`                |  409 | Candidate rate overlaps an active same-specificity rate.                        |
+| `ERR_FTM_RATE_AMBIGUOUS`              |  409 | Multiple applicable rates found at same resolution level; data integrity issue. |
+| `ERR_FTM_RATE_EFFECTIVE_DATE_INVALID` |  422 | Rate date range invalid.                                                        |
+| `ERR_TRD_BATCH_NOT_FOUND`             |  404 | Batch reference not found.                                                      |
+| `ERR_TRD_SESSION_NOT_FOUND`           |  404 | Session reference not found.                                                    |
+| `ERR_TRD_SESSION_BATCH_MISMATCH`      |  422 | Session does not belong to supplied Batch.                                      |
 
 ## 12.8 Reporting and Export Errors
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `ERR_FTM_REPORT_CODE_INVALID` | 400 | Unsupported report code. |
-| `ERR_FTM_REPORT_RANGE_TOO_LARGE` | 422 | Requested period exceeds configured report bound. |
-| `ERR_FTM_REPORT_EXPORT_LIMIT_EXCEEDED` | 422 | Export row count exceeds synchronous export limit. |
-| `ERR_FTM_REPORT_FIELD_PERMISSION_DENIED` | 403 | Requested report field requires extra sensitive permission. |
-| `ERR_FTM_EXPORT_RATE_LIMITED` | 429 | Export request frequency exceeds policy. |
+| Error Code                               | HTTP | Meaning                                                     |
+| ---------------------------------------- | ---: | ----------------------------------------------------------- |
+| `ERR_FTM_REPORT_CODE_INVALID`            |  400 | Unsupported report code.                                    |
+| `ERR_FTM_REPORT_RANGE_TOO_LARGE`         |  422 | Requested period exceeds configured report bound.           |
+| `ERR_FTM_REPORT_EXPORT_LIMIT_EXCEEDED`   |  422 | Export row count exceeds synchronous export limit.          |
+| `ERR_FTM_REPORT_FIELD_PERMISSION_DENIED` |  403 | Requested report field requires extra sensitive permission. |
+| `ERR_FTM_EXPORT_RATE_LIMITED`            |  429 | Export request frequency exceeds policy.                    |
 
 ## 12.9 Dependency and System Errors
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `ERR_FTM_DEPENDENCY_UNAVAILABLE` | 503 | Required owning module unavailable for synchronous validation. |
-| `ERR_FTM_EVENT_PUBLICATION_FAILED_AFTER_COMMIT` | 500 | Post-commit in-process event publication failed; operation is committed and requires operational retry/repair. |
-| `ERR_FTM_INTERNAL` | 500 | Unexpected server error; request ID required for support. |
+| Error Code                                      | HTTP | Meaning                                                                                                        |
+| ----------------------------------------------- | ---: | -------------------------------------------------------------------------------------------------------------- |
+| `ERR_FTM_DEPENDENCY_UNAVAILABLE`                |  503 | Required owning module unavailable for synchronous validation.                                                 |
+| `ERR_FTM_EVENT_PUBLICATION_FAILED_AFTER_COMMIT` |  500 | Post-commit in-process event publication failed; operation is committed and requires operational retry/repair. |
+| `ERR_FTM_INTERNAL`                              |  500 | Unexpected server error; request ID required for support.                                                      |
 
 ---
 
@@ -434,18 +432,18 @@ No notification failure may roll back an already committed Trainer Management bu
 
 ## 13.2 Notification Event Matrix
 
-| Domain Event | Notification Purpose | Default Channels | Recipient Audience | Template Code |
-|---|---|---|---|---|
-| `TrainerCreated` | Welcome/registration notice when trainer communication is enabled. | Email, WhatsApp | Trainer | `FTM_TRAINER_CREATED` |
-| `TrainerStatusChanged` | Inform trainer of activation, suspension, or deactivation. | Email, SMS, WhatsApp | Trainer | `FTM_TRAINER_STATUS_CHANGED` |
-| `TrainerQualificationAdded` | Confirm qualification record addition. | Email | Trainer, optional Compliance distribution | `FTM_QUALIFICATION_ADDED` |
-| `TrainerAvailabilityUpdated` | Confirm material availability change. | Email, WhatsApp | Trainer | `FTM_AVAILABILITY_UPDATED` |
-| `TrainerCourseAuthorized` | Inform trainer of course authorization. | Email, WhatsApp | Trainer | `FTM_COURSE_AUTHORIZED` |
-| `TrainerCourseAuthorizationSuspended` | Notify authorization suspension. | Email, SMS, WhatsApp | Trainer | `FTM_COURSE_AUTHORIZATION_SUSPENDED` |
-| `TrainerCourseAuthorizationExpired` | Inform trainer that authorization expired. | Email, WhatsApp | Trainer | `FTM_COURSE_AUTHORIZATION_EXPIRED` |
-| `TrainerCompensationRateConfigured` | Notify authorized internal finance recipient; trainer notification is policy-controlled. | Email | Authorized finance recipients; optionally Trainer | `FTM_COMPENSATION_RATE_CONFIGURED` |
-| `TrainerAssignmentEligibilityFailed` | Operational alert when assignment validation fails during planning. | System Notification, Email | Training Coordinator / Academic Coordinator | `FTM_ASSIGNMENT_ELIGIBILITY_FAILED` |
-| `TrainerQualificationEvidenceExpiring` | Compliance reminder derived from Document expiry event correlation. | Email, SMS, WhatsApp | Trainer, Compliance Officer | `FTM_QUALIFICATION_EVIDENCE_EXPIRING` |
+| Domain Event                           | Notification Purpose                                                                     | Default Channels           | Recipient Audience                                | Template Code                         |
+| -------------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------- | ------------------------------------- |
+| `TrainerCreated`                       | Welcome/registration notice when trainer communication is enabled.                       | Email, WhatsApp            | Trainer                                           | `FTM_TRAINER_CREATED`                 |
+| `TrainerStatusChanged`                 | Inform trainer of activation, suspension, or deactivation.                               | Email, SMS, WhatsApp       | Trainer                                           | `FTM_TRAINER_STATUS_CHANGED`          |
+| `TrainerQualificationAdded`            | Confirm qualification record addition.                                                   | Email                      | Trainer, optional Compliance distribution         | `FTM_QUALIFICATION_ADDED`             |
+| `TrainerAvailabilityUpdated`           | Confirm material availability change.                                                    | Email, WhatsApp            | Trainer                                           | `FTM_AVAILABILITY_UPDATED`            |
+| `TrainerCourseAuthorized`              | Inform trainer of course authorization.                                                  | Email, WhatsApp            | Trainer                                           | `FTM_COURSE_AUTHORIZED`               |
+| `TrainerCourseAuthorizationSuspended`  | Notify authorization suspension.                                                         | Email, SMS, WhatsApp       | Trainer                                           | `FTM_COURSE_AUTHORIZATION_SUSPENDED`  |
+| `TrainerCourseAuthorizationExpired`    | Inform trainer that authorization expired.                                               | Email, WhatsApp            | Trainer                                           | `FTM_COURSE_AUTHORIZATION_EXPIRED`    |
+| `TrainerCompensationRateConfigured`    | Notify authorized internal finance recipient; trainer notification is policy-controlled. | Email                      | Authorized finance recipients; optionally Trainer | `FTM_COMPENSATION_RATE_CONFIGURED`    |
+| `TrainerAssignmentEligibilityFailed`   | Operational alert when assignment validation fails during planning.                      | System Notification, Email | Training Coordinator / Academic Coordinator       | `FTM_ASSIGNMENT_ELIGIBILITY_FAILED`   |
+| `TrainerQualificationEvidenceExpiring` | Compliance reminder derived from Document expiry event correlation.                      | Email, SMS, WhatsApp       | Trainer, Compliance Officer                       | `FTM_QUALIFICATION_EVIDENCE_EXPIRING` |
 
 ## 13.3 Exact Template Variables
 
@@ -626,12 +624,12 @@ Because compensation is sensitive, channel payload generation requires compensat
 
 ## 13.4 Channel Eligibility Rules
 
-| Channel | Rules |
-|---|---|
-| Email | Recipient must have valid email in canonical Person/contact data; template must be Active in requested language or fallback language. |
-| SMS | Recipient must have valid E.164-compatible mobile number; message length and provider constraints are enforced by Communication context. |
-| WhatsApp | Recipient must have valid opted-in WhatsApp-capable number according to configured communication policy. |
-| System Notification | Internal authenticated user recipient only; stored and delivered by Communication context. |
+| Channel             | Rules                                                                                                                                    |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Email               | Recipient must have valid email in canonical Person/contact data; template must be Active in requested language or fallback language.    |
+| SMS                 | Recipient must have valid E.164-compatible mobile number; message length and provider constraints are enforced by Communication context. |
+| WhatsApp            | Recipient must have valid opted-in WhatsApp-capable number according to configured communication policy.                                 |
+| System Notification | Internal authenticated user recipient only; stored and delivered by Communication context.                                               |
 
 ## 13.5 Bilingual Template Resolution
 

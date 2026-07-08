@@ -17,9 +17,11 @@ ASTI requires a dedicated Finance & Receivables bounded context to support stude
 ## Capabilities
 
 ### New Capabilities
+
 - `finance-receivables`: Invoice listing, bilingual print-ready download actions, Omani tax invoice structure, and detailed dashboard statistics.
 
 ### Modified Capabilities
+
 - `permissions-and-branch-scope`: Added `dashboard.finance` and invoice management permissions mapped dynamically to ASTI Finance managers and administrators.
 - `reports-dashboards`: Added finance dashboard client component displaying comparative trends, collections tracking, and B2B clients.
 

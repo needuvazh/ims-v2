@@ -25,7 +25,7 @@ export class PublicCourseQueryService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async getPublishedCourses(
-    filters: PublicCourseFilters
+    filters: PublicCourseFilters,
   ): Promise<PaginatedResult<PublicCourseListItem>> {
     const page = filters.page ?? 1;
     const limit = Math.min(filters.limit ?? 25, 100);
@@ -40,7 +40,12 @@ export class PublicCourseQueryService {
         OR: [
           { nameEnglish: { contains: filters.search, mode: 'insensitive' } },
           { nameArabic: { contains: filters.search, mode: 'insensitive' } },
-          { descriptionEnglish: { contains: filters.search, mode: 'insensitive' } },
+          {
+            descriptionEnglish: {
+              contains: filters.search,
+              mode: 'insensitive',
+            },
+          },
         ],
       }),
     };
@@ -105,10 +110,16 @@ export class PublicCourseQueryService {
         categoryName: course.category?.nameEnglish ?? null,
         durationType: course.durationType,
         durationValue: course.durationValue,
-        basePrice: showPricing && pricing?.basePrice ? pricing.basePrice.toString() : null,
+        basePrice:
+          showPricing && pricing?.basePrice
+            ? pricing.basePrice.toString()
+            : null,
         currency: showPricing && pricing?.currency ? pricing.currency : null,
-        nextBatchDate: nextBatch?.startDate?.toISOString().split('T')[0] ?? null,
-        availableSeats: nextBatch ? nextBatch.capacity - nextBatch.currentEnrollmentCount : null,
+        nextBatchDate:
+          nextBatch?.startDate?.toISOString().split('T')[0] ?? null,
+        availableSeats: nextBatch
+          ? nextBatch.capacity - nextBatch.currentEnrollmentCount
+          : null,
         imageUrl: course.bannerImage ?? null,
         showPricingPublicly: showPricing,
         hasPracticalInstruction: !!course.hasPracticalInstruction,
@@ -126,15 +137,12 @@ export class PublicCourseQueryService {
   }
 
   async getCourseDetail(idOrSlug: string): Promise<PublicCourseDetail | null> {
-    const courseRaw = await this.prisma.course.findFirst({
+    const courseRaw = (await this.prisma.course.findFirst({
       where: {
         status: 'Published',
         isPubliclyExposed: true,
         isDeleted: false,
-        OR: [
-          { id: idOrSlug },
-          { courseCode: idOrSlug.toUpperCase() },
-        ],
+        OR: [{ id: idOrSlug }, { courseCode: idOrSlug.toUpperCase() }],
       },
       include: {
         category: {
@@ -173,16 +181,20 @@ export class PublicCourseQueryService {
           },
         },
       },
-    }) as any;
+    })) as any;
 
     if (!courseRaw) return null;
 
     const pricing = courseRaw.pricings?.[0];
-    const categoryHierarchy = await this.getCategoryHierarchy(courseRaw.categoryId);
+    const categoryHierarchy = await this.getCategoryHierarchy(
+      courseRaw.categoryId,
+    );
     const showPricing = !!courseRaw.showPricingPublicly;
 
     const batches = (courseRaw.batches ?? []).map((batch: any) => {
-      const primaryTrainer = batch.trainers?.find((t: any) => t.role === 'Primary') ?? batch.trainers?.[0];
+      const primaryTrainer =
+        batch.trainers?.find((t: any) => t.role === 'Primary') ??
+        batch.trainers?.[0];
       return {
         id: batch.id,
         batchCode: batch.batchCode,
@@ -194,7 +206,9 @@ export class PublicCourseQueryService {
         availableSeats: batch.capacity - batch.currentEnrollmentCount,
         status: batch.status,
         branchName: null,
-        trainerName: primaryTrainer?.trainerId ? `Trainer ${primaryTrainer.trainerId.slice(0, 8)}` : null,
+        trainerName: primaryTrainer?.trainerId
+          ? `Trainer ${primaryTrainer.trainerId.slice(0, 8)}`
+          : null,
       };
     });
 
@@ -210,13 +224,18 @@ export class PublicCourseQueryService {
       categoryName: courseRaw.category?.nameEnglish ?? null,
       durationType: courseRaw.durationType,
       durationValue: courseRaw.durationValue,
-      basePrice: showPricing && pricing?.basePrice ? pricing.basePrice.toString() : null,
-      taxPercentage: showPricing && pricing?.taxPercentage ? pricing.taxPercentage.toString() : null,
+      basePrice:
+        showPricing && pricing?.basePrice ? pricing.basePrice.toString() : null,
+      taxPercentage:
+        showPricing && pricing?.taxPercentage
+          ? pricing.taxPercentage.toString()
+          : null,
       currency: showPricing && pricing?.currency ? pricing.currency : null,
       imageUrl: courseRaw.bannerImage ?? null,
       showPricingPublicly: showPricing,
       hasPracticalInstruction: !!courseRaw.hasPracticalInstruction,
-      practicalTestingDescription: courseRaw.practicalTestingDescription ?? null,
+      practicalTestingDescription:
+        courseRaw.practicalTestingDescription ?? null,
       metaTitle: courseRaw.metaTitle ?? null,
       metaDescription: courseRaw.metaDescription ?? null,
       metaKeywords: courseRaw.metaKeywords ?? null,
@@ -268,7 +287,7 @@ export class PublicCourseQueryService {
   }
 
   async getCourseBatches(courseId: string): Promise<PublicBatch[]> {
-    const courseRaw = await this.prisma.course.findFirst({
+    const courseRaw = (await this.prisma.course.findFirst({
       where: {
         id: courseId,
         status: 'Published',
@@ -292,12 +311,14 @@ export class PublicCourseQueryService {
           },
         },
       },
-    }) as any;
+    })) as any;
 
     if (!courseRaw) return [];
 
     return (courseRaw.batches ?? []).map((batch: any) => {
-      const primaryTrainer = batch.trainers?.find((t: any) => t.role === 'Primary') ?? batch.trainers?.[0];
+      const primaryTrainer =
+        batch.trainers?.find((t: any) => t.role === 'Primary') ??
+        batch.trainers?.[0];
       return {
         id: batch.id,
         batchCode: batch.batchCode,
@@ -309,17 +330,26 @@ export class PublicCourseQueryService {
         availableSeats: batch.capacity - batch.currentEnrollmentCount,
         status: batch.status,
         branchName: null,
-        trainerName: primaryTrainer?.trainerId ? `Trainer ${primaryTrainer.trainerId.slice(0, 8)}` : null,
+        trainerName: primaryTrainer?.trainerId
+          ? `Trainer ${primaryTrainer.trainerId.slice(0, 8)}`
+          : null,
         courseName: courseRaw.nameEnglish,
       };
     });
   }
 
   private async getCategoryHierarchy(
-    categoryId: string | null | undefined
-  ): Promise<Array<{ id: string; code: string; nameEnglish: string; nameArabic: string }>> {
+    categoryId: string | null | undefined,
+  ): Promise<
+    Array<{ id: string; code: string; nameEnglish: string; nameArabic: string }>
+  > {
     if (!categoryId) return [];
-    const hierarchy: Array<{ id: string; code: string; nameEnglish: string; nameArabic: string }> = [];
+    const hierarchy: Array<{
+      id: string;
+      code: string;
+      nameEnglish: string;
+      nameArabic: string;
+    }> = [];
     let currentId: string | null = categoryId;
     const visited = new Set<string>();
 
@@ -327,7 +357,13 @@ export class PublicCourseQueryService {
       visited.add(currentId);
       const cat: any = await this.prisma.courseCategory.findUnique({
         where: { id: currentId, isDeleted: false },
-        select: { id: true, code: true, nameEnglish: true, nameArabic: true, parentCategoryId: true },
+        select: {
+          id: true,
+          code: true,
+          nameEnglish: true,
+          nameArabic: true,
+          parentCategoryId: true,
+        },
       });
       if (!cat) break;
       hierarchy.unshift({

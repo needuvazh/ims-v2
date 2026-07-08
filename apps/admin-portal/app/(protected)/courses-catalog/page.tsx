@@ -25,7 +25,8 @@ export default async function CoursesPage(props: {
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const limit = 10;
   const sortBy = searchParams.sortBy || 'createdAt';
-  const sortOrder = (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
+  const sortOrder =
+    (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
 
   const filters = {
     categoryId: searchParams.categoryId,
@@ -35,7 +36,10 @@ export default async function CoursesPage(props: {
     sortOrder,
   };
 
-  const { items: courses, total } = await courseService.findAll(filters, { page, limit });
+  const { items: courses, total } = await courseService.findAll(filters, {
+    page,
+    limit,
+  });
 
   // Resolve master values lists (categories, departments) for the form inputs and display
   const categories = await categoryService.listCategories();
@@ -45,9 +49,15 @@ export default async function CoursesPage(props: {
   });
 
   // Calculate high-level KPIs for course catalog
-  const allCoursesCount = await prisma.course.count({ where: { isDeleted: false } });
-  const publishedCoursesCount = await prisma.course.count({ where: { status: 'Published', isDeleted: false } });
-  const draftCoursesCount = await prisma.course.count({ where: { status: 'Draft', isDeleted: false } });
+  const allCoursesCount = await prisma.course.count({
+    where: { isDeleted: false },
+  });
+  const publishedCoursesCount = await prisma.course.count({
+    where: { status: 'Published', isDeleted: false },
+  });
+  const draftCoursesCount = await prisma.course.count({
+    where: { status: 'Draft', isDeleted: false },
+  });
   const inReviewCoursesCount = await prisma.course.count({
     where: { status: { in: ['InReview', 'Approved'] }, isDeleted: false },
   });

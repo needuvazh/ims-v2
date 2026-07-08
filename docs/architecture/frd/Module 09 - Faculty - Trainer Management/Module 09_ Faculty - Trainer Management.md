@@ -25,18 +25,18 @@ The module shall not own batches, sessions, payroll, attendance records, course 
 
 ## 2. Business Goals
 
-| ID | Business Goal | Success Intent |
-|---|---|---|
-| BO-FTM-001 | Establish a single authoritative trainer registry. | Every trainer is represented through a shared Person and exactly one active TrainerProfile. |
-| BO-FTM-002 | Prevent unqualified or unauthorized course delivery. | Batch and session assignment workflows can validate active TrainerCourseAuthorization before confirmation. |
-| BO-FTM-003 | Improve scheduling reliability. | Scheduling can query effective trainer availability and reject unavailable trainer-time combinations. |
-| BO-FTM-004 | Support flexible workforce models. | FullTime, PartTime, and Freelance trainer types are supported without forcing trainer-to-employee equivalence. |
-| BO-FTM-005 | Improve qualification compliance. | Qualifications are structured, traceable, and optionally backed by verified documents. |
-| BO-FTM-006 | Standardize trainer remuneration inputs. | Effective-dated compensation rate structures are maintained for Per Hour, Per Session, Per Student, and Fixed bases. |
-| BO-FTM-007 | Protect branch-confidential operational data. | Trainer data is filtered and mutated only within authorized branch context unless consolidated access is explicitly granted. |
-| BO-FTM-008 | Provide audit-ready trainer administration. | Critical status, authorization, availability, qualification, and compensation actions are immutably auditable. |
-| BO-FTM-009 | Enable reliable management reporting. | Reporting consumes governed trainer master data for utilization, authorization coverage, availability, and delivery analysis. |
-| BO-FTM-010 | Preserve architectural boundaries. | Trainer Management owns trainer master capability while Batch, Session, Course, Document, Payroll, and IAM ownership remains in their bounded contexts. |
+| ID         | Business Goal                                        | Success Intent                                                                                                                                          |
+| ---------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BO-FTM-001 | Establish a single authoritative trainer registry.   | Every trainer is represented through a shared Person and exactly one active TrainerProfile.                                                             |
+| BO-FTM-002 | Prevent unqualified or unauthorized course delivery. | Batch and session assignment workflows can validate active TrainerCourseAuthorization before confirmation.                                              |
+| BO-FTM-003 | Improve scheduling reliability.                      | Scheduling can query effective trainer availability and reject unavailable trainer-time combinations.                                                   |
+| BO-FTM-004 | Support flexible workforce models.                   | FullTime, PartTime, and Freelance trainer types are supported without forcing trainer-to-employee equivalence.                                          |
+| BO-FTM-005 | Improve qualification compliance.                    | Qualifications are structured, traceable, and optionally backed by verified documents.                                                                  |
+| BO-FTM-006 | Standardize trainer remuneration inputs.             | Effective-dated compensation rate structures are maintained for Per Hour, Per Session, Per Student, and Fixed bases.                                    |
+| BO-FTM-007 | Protect branch-confidential operational data.        | Trainer data is filtered and mutated only within authorized branch context unless consolidated access is explicitly granted.                            |
+| BO-FTM-008 | Provide audit-ready trainer administration.          | Critical status, authorization, availability, qualification, and compensation actions are immutably auditable.                                          |
+| BO-FTM-009 | Enable reliable management reporting.                | Reporting consumes governed trainer master data for utilization, authorization coverage, availability, and delivery analysis.                           |
+| BO-FTM-010 | Preserve architectural boundaries.                   | Trainer Management owns trainer master capability while Batch, Session, Course, Document, Payroll, and IAM ownership remains in their bounded contexts. |
 
 ---
 
@@ -83,32 +83,32 @@ The module shall not own batches, sessions, payroll, attendance records, course 
 
 ### 4.1 Human Actors
 
-| Actor | Responsibility |
-|---|---|
-| Trainer Administrator | Creates and maintains trainer profiles, qualifications, availability, authorizations, and compensation structures subject to permission. |
-| Academic Coordinator | Reviews trainer suitability, course authorization, availability, and active assignments. |
-| Training Coordinator | Searches eligible trainers and uses eligibility information during batch and session planning. |
-| Branch Manager | Oversees branch trainer capacity, status changes, exceptions, and branch-level reporting. |
-| Finance Authorized User | Views or manages compensation rates where specifically permitted; does not run payroll in this module. |
-| Compliance / Auditor | Reviews trainer qualification evidence, status history, authorization history, and audit logs. |
-| Reporting User | Views trainer utilization and operational metrics within branch/reporting permission scope. |
-| Trainer | External business actor whose profile, qualifications, availability, and authorizations are managed; direct self-service is outside current admin-portal scope. |
+| Actor                   | Responsibility                                                                                                                                                  |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Trainer Administrator   | Creates and maintains trainer profiles, qualifications, availability, authorizations, and compensation structures subject to permission.                        |
+| Academic Coordinator    | Reviews trainer suitability, course authorization, availability, and active assignments.                                                                        |
+| Training Coordinator    | Searches eligible trainers and uses eligibility information during batch and session planning.                                                                  |
+| Branch Manager          | Oversees branch trainer capacity, status changes, exceptions, and branch-level reporting.                                                                       |
+| Finance Authorized User | Views or manages compensation rates where specifically permitted; does not run payroll in this module.                                                          |
+| Compliance / Auditor    | Reviews trainer qualification evidence, status history, authorization history, and audit logs.                                                                  |
+| Reporting User          | Views trainer utilization and operational metrics within branch/reporting permission scope.                                                                     |
+| Trainer                 | External business actor whose profile, qualifications, availability, and authorizations are managed; direct self-service is outside current admin-portal scope. |
 
 ### 4.2 System Actors
 
-| System Actor | Interaction |
-|---|---|
-| Identity & Access Management | Authenticates users, evaluates permissions, and supplies authorized branch context. |
-| Party / Person Capability | Supplies canonical Person identity and localized personal data. |
-| Organization Management | Supplies Branch references and branch hierarchy. |
-| Course Catalog Management | Supplies Course references used by TrainerCourseAuthorization. |
-| Training Delivery Management | Consumes trainer eligibility and authorization when assigning BatchTrainer or Session trainer references. |
-| Scheduling, Calendar & Holiday Management | Consumes availability and validates proposed timetable assignments. |
-| Document Management | Owns qualification evidence documents and verification state. |
-| Exam, Result & Completion Management | References trainers for recommendation and completion workflow participation. |
-| Communication & Notification Management | May consume trainer contact reference and event triggers for authorized communications. |
-| Reporting & Executive Dashboards | Consumes trainer data for utilization, coverage, availability, and branch analysis. |
-| Audit & Compliance | Records critical changes and security-relevant actions. |
+| System Actor                              | Interaction                                                                                               |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Identity & Access Management              | Authenticates users, evaluates permissions, and supplies authorized branch context.                       |
+| Party / Person Capability                 | Supplies canonical Person identity and localized personal data.                                           |
+| Organization Management                   | Supplies Branch references and branch hierarchy.                                                          |
+| Course Catalog Management                 | Supplies Course references used by TrainerCourseAuthorization.                                            |
+| Training Delivery Management              | Consumes trainer eligibility and authorization when assigning BatchTrainer or Session trainer references. |
+| Scheduling, Calendar & Holiday Management | Consumes availability and validates proposed timetable assignments.                                       |
+| Document Management                       | Owns qualification evidence documents and verification state.                                             |
+| Exam, Result & Completion Management      | References trainers for recommendation and completion workflow participation.                             |
+| Communication & Notification Management   | May consume trainer contact reference and event triggers for authorized communications.                   |
+| Reporting & Executive Dashboards          | Consumes trainer data for utilization, coverage, availability, and branch analysis.                       |
+| Audit & Compliance                        | Records critical changes and security-relevant actions.                                                   |
 
 ---
 
@@ -175,56 +175,56 @@ Faculty / Trainer Management
 
 ### 6.1 Internal User Capabilities
 
-| Capability | Trainer Admin | Academic Coordinator | Training Coordinator | Branch Manager | Finance Authorized | Auditor | Reporting User |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| View trainer list/profile | Yes | Yes | Yes | Yes | Restricted | Yes | Read-only |
-| Create trainer profile | Yes | Optional | No | Optional | No | No | No |
-| Update trainer profile | Yes | Optional | No | Optional | No | No | No |
-| Change trainer status | Restricted | Optional | No | Yes | No | No | No |
-| Manage qualifications | Yes | Optional | No | Optional | No | Read-only | No |
-| Manage availability | Yes | Optional | Operational | Optional | No | Read-only | No |
-| Manage course authorization | Restricted | Yes | Read-only | Optional | No | Read-only | No |
-| Manage compensation rates | No by default | No | No | Restricted | Yes | Read-only | No |
-| View compensation rates | No by default | No | No | Restricted | Yes | Read-only | No |
-| View audit history | Restricted | Restricted | No | Restricted | Restricted | Yes | No |
-| View reports | Optional | Yes | Yes | Yes | Restricted | Read-only | Yes |
+| Capability                  | Trainer Admin | Academic Coordinator | Training Coordinator | Branch Manager | Finance Authorized |   Auditor | Reporting User |
+| --------------------------- | ------------: | -------------------: | -------------------: | -------------: | -----------------: | --------: | -------------: |
+| View trainer list/profile   |           Yes |                  Yes |                  Yes |            Yes |         Restricted |       Yes |      Read-only |
+| Create trainer profile      |           Yes |             Optional |                   No |       Optional |                 No |        No |             No |
+| Update trainer profile      |           Yes |             Optional |                   No |       Optional |                 No |        No |             No |
+| Change trainer status       |    Restricted |             Optional |                   No |            Yes |                 No |        No |             No |
+| Manage qualifications       |           Yes |             Optional |                   No |       Optional |                 No | Read-only |             No |
+| Manage availability         |           Yes |             Optional |          Operational |       Optional |                 No | Read-only |             No |
+| Manage course authorization |    Restricted |                  Yes |            Read-only |       Optional |                 No | Read-only |             No |
+| Manage compensation rates   | No by default |                   No |                   No |     Restricted |                Yes | Read-only |             No |
+| View compensation rates     | No by default |                   No |                   No |     Restricted |                Yes | Read-only |             No |
+| View audit history          |    Restricted |           Restricted |                   No |     Restricted |         Restricted |       Yes |             No |
+| View reports                |      Optional |                  Yes |                  Yes |            Yes |         Restricted | Read-only |            Yes |
 
 Actual access is permission-based and shall not be inferred from role names.
 
 ### 6.2 External User Types
 
-| External Type | Current Capability |
-|---|---|
-| Trainer | Subject of the trainer record. No direct self-service portal is included in current scope. |
-| Qualification Institution | Reference value only; no direct system access. |
+| External Type              | Current Capability                                                                          |
+| -------------------------- | ------------------------------------------------------------------------------------------- |
+| Trainer                    | Subject of the trainer record. No direct self-service portal is included in current scope.  |
+| Qualification Institution  | Reference value only; no direct system access.                                              |
 | External Document Verifier | Not directly integrated; document verification remains within Document Management workflow. |
 
 ---
 
 ## 7. Functional Requirements Checklist
 
-| Requirement ID | Requirement | Priority |
-|---|---|---|
-| FR-FTM-001 | Search and list trainers with branch-scoped filtering, pagination, sorting, and status/type filters. | Must |
-| FR-FTM-002 | Create a trainer profile linked to canonical Person data. | Must |
-| FR-FTM-003 | View a complete trainer profile with qualifications, availability, authorizations, rate metadata, and assignment references. | Must |
-| FR-FTM-004 | Update trainer profile attributes with optimistic concurrency protection. | Must |
-| FR-FTM-005 | Change trainer operational status using controlled transition rules and effective dates. | Must |
-| FR-FTM-006 | Manage trainer qualifications and link evidence documents. | Must |
-| FR-FTM-007 | Manage branch-specific recurring trainer availability windows with effective dating. | Must |
-| FR-FTM-008 | Validate availability window overlaps and time bounds. | Must |
-| FR-FTM-009 | Manage trainer-course authorization with effective periods and status. | Must |
-| FR-FTM-010 | Query trainers eligible for a course, branch, and target date/time. | Must |
-| FR-FTM-011 | Configure trainer compensation rates with supported payment bases and effective dates. | Must |
-| FR-FTM-012 | Resolve applicable compensation rate by session, batch, trainer, and effective date specificity. | Should |
-| FR-FTM-013 | Provide assignment eligibility validation to Training Delivery. | Must |
-| FR-FTM-014 | Provide availability validation to Scheduling. | Must |
-| FR-FTM-015 | Show trainer batch and session assignment references without owning assignment lifecycle. | Should |
-| FR-FTM-016 | Support soft deletion and deactivation while protecting referenced records. | Must |
-| FR-FTM-017 | Provide trainer operational reports and export within permission and branch scope. | Should |
-| FR-FTM-018 | Record immutable audit evidence for sensitive trainer actions. | Must |
-| FR-FTM-019 | Enforce server-side branch isolation and consolidated reporting rules. | Must |
-| FR-FTM-020 | Emit in-process domain events for trainer lifecycle and configuration changes. | Should |
+| Requirement ID | Requirement                                                                                                                  | Priority |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
+| FR-FTM-001     | Search and list trainers with branch-scoped filtering, pagination, sorting, and status/type filters.                         | Must     |
+| FR-FTM-002     | Create a trainer profile linked to canonical Person data.                                                                    | Must     |
+| FR-FTM-003     | View a complete trainer profile with qualifications, availability, authorizations, rate metadata, and assignment references. | Must     |
+| FR-FTM-004     | Update trainer profile attributes with optimistic concurrency protection.                                                    | Must     |
+| FR-FTM-005     | Change trainer operational status using controlled transition rules and effective dates.                                     | Must     |
+| FR-FTM-006     | Manage trainer qualifications and link evidence documents.                                                                   | Must     |
+| FR-FTM-007     | Manage branch-specific recurring trainer availability windows with effective dating.                                         | Must     |
+| FR-FTM-008     | Validate availability window overlaps and time bounds.                                                                       | Must     |
+| FR-FTM-009     | Manage trainer-course authorization with effective periods and status.                                                       | Must     |
+| FR-FTM-010     | Query trainers eligible for a course, branch, and target date/time.                                                          | Must     |
+| FR-FTM-011     | Configure trainer compensation rates with supported payment bases and effective dates.                                       | Must     |
+| FR-FTM-012     | Resolve applicable compensation rate by session, batch, trainer, and effective date specificity.                             | Should   |
+| FR-FTM-013     | Provide assignment eligibility validation to Training Delivery.                                                              | Must     |
+| FR-FTM-014     | Provide availability validation to Scheduling.                                                                               | Must     |
+| FR-FTM-015     | Show trainer batch and session assignment references without owning assignment lifecycle.                                    | Should   |
+| FR-FTM-016     | Support soft deletion and deactivation while protecting referenced records.                                                  | Must     |
+| FR-FTM-017     | Provide trainer operational reports and export within permission and branch scope.                                           | Should   |
+| FR-FTM-018     | Record immutable audit evidence for sensitive trainer actions.                                                               | Must     |
+| FR-FTM-019     | Enforce server-side branch isolation and consolidated reporting rules.                                                       | Must     |
+| FR-FTM-020     | Emit in-process domain events for trainer lifecycle and configuration changes.                                               | Should   |
 
 ---
 
@@ -232,24 +232,24 @@ Actual access is permission-based and shall not be inferred from role names.
 
 ### 8.1 Permission Codes
 
-| Permission Code | Purpose |
-|---|---|
-| `trainer.read` | View trainer list and base profile within branch scope. |
-| `trainer.create` | Create trainer profiles. |
-| `trainer.update` | Update trainer profile data. |
-| `trainer.status.manage` | Activate, deactivate, or suspend trainer profile subject to transition rules. |
-| `trainer.qualification.read` | View qualification records. |
-| `trainer.qualification.manage` | Create, update, or soft delete qualification records. |
-| `trainer.availability.read` | View availability windows. |
-| `trainer.availability.manage` | Create, update, deactivate, and soft delete availability windows. |
-| `trainer.authorization.read` | View course authorizations. |
-| `trainer.authorization.manage` | Create, update, suspend, expire, or deactivate course authorization. |
-| `trainer.compensation.read` | View compensation rate structures. |
-| `trainer.compensation.manage` | Create and update compensation rate structures. |
-| `trainer.eligibility.read` | Query trainer eligibility for course/branch/time. |
-| `trainer.report.view` | View trainer operational reports. |
-| `trainer.report.export` | Export authorized report datasets. |
-| `trainer.audit.read` | View trainer-related audit history. |
+| Permission Code                    | Purpose                                                                        |
+| ---------------------------------- | ------------------------------------------------------------------------------ |
+| `trainer.read`                     | View trainer list and base profile within branch scope.                        |
+| `trainer.create`                   | Create trainer profiles.                                                       |
+| `trainer.update`                   | Update trainer profile data.                                                   |
+| `trainer.status.manage`            | Activate, deactivate, or suspend trainer profile subject to transition rules.  |
+| `trainer.qualification.read`       | View qualification records.                                                    |
+| `trainer.qualification.manage`     | Create, update, or soft delete qualification records.                          |
+| `trainer.availability.read`        | View availability windows.                                                     |
+| `trainer.availability.manage`      | Create, update, deactivate, and soft delete availability windows.              |
+| `trainer.authorization.read`       | View course authorizations.                                                    |
+| `trainer.authorization.manage`     | Create, update, suspend, expire, or deactivate course authorization.           |
+| `trainer.compensation.read`        | View compensation rate structures.                                             |
+| `trainer.compensation.manage`      | Create and update compensation rate structures.                                |
+| `trainer.eligibility.read`         | Query trainer eligibility for course/branch/time.                              |
+| `trainer.report.view`              | View trainer operational reports.                                              |
+| `trainer.report.export`            | Export authorized report datasets.                                             |
+| `trainer.audit.read`               | View trainer-related audit history.                                            |
 | `trainer.report.consolidated.view` | Permit consolidated cross-branch reporting where branch access also allows it. |
 
 ### 8.2 Enforcement Rules
@@ -282,38 +282,38 @@ Actual access is permission-based and shall not be inferred from role names.
 
 ## 10. Non-Functional Requirements Summary
 
-| Category | Requirement |
-|---|---|
-| Performance | Trainer list queries should return within 500 ms at p95 under normal operating load, excluding network latency. |
-| Performance | Trainer eligibility validation should complete within 300 ms at p95 for a single trainer/course/branch/time request under normal operating load. |
-| Performance | Standard create/update operations should complete within 700 ms at p95 excluding external document-storage latency. |
-| Availability | Module functionality shall follow the admin portal availability target and degrade safely if a non-owning downstream reporting consumer is unavailable. |
-| Scalability | List APIs shall use server-side pagination with a maximum page size of 100 records. |
-| Consistency | Trainer profile, status, qualification, availability, authorization, and compensation writes shall be transactionally consistent within the modular-monolith database boundary. |
-| Security | Authorization and branch filters shall be enforced before repository execution wherever feasible and before returning any data. |
-| Auditability | Critical write actions shall generate audit records in the same business transaction or through reliable in-process transactional integration. |
-| Localization | User-visible dates/times default to Oman GST (UTC+4); English and Arabic shared Person display values shall be supported where available. |
-| Usability | Validation errors shall identify the failing field, business rule code, and actionable correction message. |
-| Data Integrity | Duplicate TrainerProfile per Person, duplicate active trainer code, invalid effective periods, overlapping conflicting availability windows, and conflicting active authorization periods shall be prevented. |
-| Maintainability | Domain logic shall remain inside the trainer-management package/application/domain layers and not inside UI components. |
-| Observability | Structured logs, metrics, and traces shall include module, operation, actor ID, branch context, result status, and correlation ID without leaking protected identity values. |
+| Category        | Requirement                                                                                                                                                                                                   |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Performance     | Trainer list queries should return within 500 ms at p95 under normal operating load, excluding network latency.                                                                                               |
+| Performance     | Trainer eligibility validation should complete within 300 ms at p95 for a single trainer/course/branch/time request under normal operating load.                                                              |
+| Performance     | Standard create/update operations should complete within 700 ms at p95 excluding external document-storage latency.                                                                                           |
+| Availability    | Module functionality shall follow the admin portal availability target and degrade safely if a non-owning downstream reporting consumer is unavailable.                                                       |
+| Scalability     | List APIs shall use server-side pagination with a maximum page size of 100 records.                                                                                                                           |
+| Consistency     | Trainer profile, status, qualification, availability, authorization, and compensation writes shall be transactionally consistent within the modular-monolith database boundary.                               |
+| Security        | Authorization and branch filters shall be enforced before repository execution wherever feasible and before returning any data.                                                                               |
+| Auditability    | Critical write actions shall generate audit records in the same business transaction or through reliable in-process transactional integration.                                                                |
+| Localization    | User-visible dates/times default to Oman GST (UTC+4); English and Arabic shared Person display values shall be supported where available.                                                                     |
+| Usability       | Validation errors shall identify the failing field, business rule code, and actionable correction message.                                                                                                    |
+| Data Integrity  | Duplicate TrainerProfile per Person, duplicate active trainer code, invalid effective periods, overlapping conflicting availability windows, and conflicting active authorization periods shall be prevented. |
+| Maintainability | Domain logic shall remain inside the trainer-management package/application/domain layers and not inside UI components.                                                                                       |
+| Observability   | Structured logs, metrics, and traces shall include module, operation, actor ID, branch context, result status, and correlation ID without leaking protected identity values.                                  |
 
 ---
 
 ## 11. Domain Ownership Summary
 
-| Data / Behavior | Owner | Module 09 Role |
-|---|---|---|
-| Person identity | Party / Person shared capability | Reference and reuse |
-| TrainerProfile | Faculty / Trainer Management | Own |
-| TrainerQualification | Faculty / Trainer Management | Own |
-| TrainerAvailability | Faculty / Trainer Management | Own |
-| TrainerCourseAuthorization | Faculty / Trainer Management | Own |
-| TrainerCompensationRate | Faculty / Trainer Management | Own |
-| Course | Course Catalog | Reference |
-| Batch / BatchTrainer | Training Delivery | Validate eligibility and expose trainer data |
-| Session | Training Delivery / Scheduling boundary | Validate availability and eligibility |
-| Document | Document Management | Reference qualification evidence |
-| Completion recommendation | Exam & Completion | Supply trainer reference only |
-| Payroll | Future Payroll Management | Provide rate inputs only when integration is defined |
-| AuditLog | Audit & Compliance | Produce auditable actions |
+| Data / Behavior            | Owner                                   | Module 09 Role                                       |
+| -------------------------- | --------------------------------------- | ---------------------------------------------------- |
+| Person identity            | Party / Person shared capability        | Reference and reuse                                  |
+| TrainerProfile             | Faculty / Trainer Management            | Own                                                  |
+| TrainerQualification       | Faculty / Trainer Management            | Own                                                  |
+| TrainerAvailability        | Faculty / Trainer Management            | Own                                                  |
+| TrainerCourseAuthorization | Faculty / Trainer Management            | Own                                                  |
+| TrainerCompensationRate    | Faculty / Trainer Management            | Own                                                  |
+| Course                     | Course Catalog                          | Reference                                            |
+| Batch / BatchTrainer       | Training Delivery                       | Validate eligibility and expose trainer data         |
+| Session                    | Training Delivery / Scheduling boundary | Validate availability and eligibility                |
+| Document                   | Document Management                     | Reference qualification evidence                     |
+| Completion recommendation  | Exam & Completion                       | Supply trainer reference only                        |
+| Payroll                    | Future Payroll Management               | Provide rate inputs only when integration is defined |
+| AuditLog                   | Audit & Compliance                      | Produce auditable actions                            |

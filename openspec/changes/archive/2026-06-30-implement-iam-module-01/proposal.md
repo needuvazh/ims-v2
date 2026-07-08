@@ -28,6 +28,7 @@ ASTI IMS requires Module 01 - Identity & Access Management as the foundational s
 ## Capabilities
 
 ### New Capabilities
+
 - `iam-api-contracts`: REST API contracts, request/response DTOs, RFC7807 error mapping, rate-limit boundaries, and endpoint-level permissions for IAM.
 - `iam-branch-access`: Explicit user-branch assignment, active branch switching, branch-scoped query enforcement, and branch access auditing.
 - `iam-audit-notifications`: Immutable security audit logging, notification persistence, outbox events, and dummy notification delivery for IAM-sensitive events.
@@ -35,6 +36,7 @@ ASTI IMS requires Module 01 - Identity & Access Management as the foundational s
 - `iam-operations-observability`: IAM health checks, structured logs, metrics, trace propagation, alerts, smoke-test support, and production readiness hooks.
 
 ### Modified Capabilities
+
 - `identity-access`: Expand the existing identity-access requirements to the full approved IAM Module 01 backend/API/security foundation, including global email uniqueness, `UserBranchAccess`, 15-minute reset tokens, 90-day password expiry enforcement, `iam.*` permissions, RS256 JWTs via HttpOnly cookies, required user statuses, password history, security policy, session management, precise device tracking, concurrent session limit enforcement, self-service activation token flow, Remember Me support within session policy, and BDD acceptance coverage.
 
 ## Impact

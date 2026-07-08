@@ -4,11 +4,18 @@ import { IamError } from '@ims/identity-access';
 const loginMock = vi.fn();
 const rateLimitMock = vi.fn(() => ({ allowed: true, response: null }));
 
-vi.mock('../../../../lib/runtime', () => ({ authService: { login: loginMock } }));
-vi.mock('../../../../lib/api-middleware', () => ({ withRateLimit: rateLimitMock }));
+vi.mock('../../../../lib/runtime', () => ({
+  authService: { login: loginMock },
+}));
+vi.mock('../../../../lib/api-middleware', () => ({
+  withRateLimit: rateLimitMock,
+}));
 vi.mock('../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -50,29 +57,52 @@ describe('auth login route', () => {
     });
 
     const { POST } = await import('./route');
-    const response = await POST(new Request('http://localhost/api/v1/auth/login', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'test@example.com', password: 'Password@123!' }),
-    }));
+    const response = await POST(
+      new Request('http://localhost/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          email: 'test@example.com',
+          password: 'Password@123!',
+        }),
+      }),
+    );
 
     const body = await response.json();
     expect(response.status).toBe(200);
     expect(body.data.user.email).toBe('test@example.com');
-    expect(body.data.session.activeBranchId).toBe('11111111-1111-1111-1111-111111111111');
-    expect(response.headers.get('set-cookie')).toContain('ims_access_token=access-token');
-    expect(response.headers.get('set-cookie')).toContain('ims_refresh_token=refresh-token');
+    expect(body.data.session.activeBranchId).toBe(
+      '11111111-1111-1111-1111-111111111111',
+    );
+    expect(response.headers.get('set-cookie')).toContain(
+      'ims_access_token=access-token',
+    );
+    expect(response.headers.get('set-cookie')).toContain(
+      'ims_refresh_token=refresh-token',
+    );
   });
 
   it('returns invalid credentials for rejected login', async () => {
-    loginMock.mockRejectedValue(new IamError('IAM-AUTH-001', 401, 'Invalid credentials.', 'بيانات الاعتماد غير صالحة'));
+    loginMock.mockRejectedValue(
+      new IamError(
+        'IAM-AUTH-001',
+        401,
+        'Invalid credentials.',
+        'بيانات الاعتماد غير صالحة',
+      ),
+    );
 
     const { POST } = await import('./route');
-    const response = await POST(new Request('http://localhost/api/v1/auth/login', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'test@example.com', password: 'WrongPassword!' }),
-    }));
+    const response = await POST(
+      new Request('http://localhost/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          email: 'test@example.com',
+          password: 'WrongPassword!',
+        }),
+      }),
+    );
 
     const body = await response.json();
     expect(response.status).toBe(401);
@@ -81,14 +111,25 @@ describe('auth login route', () => {
   });
 
   it('returns rate limit response before hitting login service', async () => {
-    rateLimitMock.mockReturnValueOnce({ allowed: false, response: new Response(JSON.stringify({ errorCode: 'RATE_LIMIT' }), { status: 429, headers: { 'content-type': 'application/json' } }) } as any);
+    rateLimitMock.mockReturnValueOnce({
+      allowed: false,
+      response: new Response(JSON.stringify({ errorCode: 'RATE_LIMIT' }), {
+        status: 429,
+        headers: { 'content-type': 'application/json' },
+      }),
+    } as any);
 
     const { POST } = await import('./route');
-    const response = await POST(new Request('http://localhost/api/v1/auth/login', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'test@example.com', password: 'Password@123!' }),
-    }));
+    const response = await POST(
+      new Request('http://localhost/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          email: 'test@example.com',
+          password: 'Password@123!',
+        }),
+      }),
+    );
 
     expect(response.status).toBe(429);
     expect(loginMock).not.toHaveBeenCalled();

@@ -28,6 +28,7 @@ The system shall create a `StudentProfile` from an approved `Admission` record b
 Actors: Admission Counselor, Student Administration Officer, System.
 
 **Preconditions**
+
 1. User is authenticated.
 2. User has `student.create` permission.
 3. User has write access to the admission branch.
@@ -36,6 +37,7 @@ Actors: Admission Counselor, Student Administration Officer, System.
 6. No active `StudentProfile` already exists for the same person unless an explicit reuse path is selected.
 
 **Inputs**
+
 - admissionId
 - personId derived from admission
 - branchId derived from admission context
@@ -45,6 +47,7 @@ Actors: Admission Counselor, Student Administration Officer, System.
 - request metadata
 
 **Processing Steps**
+
 1. Load admission by `admissionId`.
 2. Validate admission status equals `Approved`.
 3. Validate admission branch is accessible to requesting user.
@@ -55,17 +58,20 @@ Actors: Admission Counselor, Student Administration Officer, System.
 8. If duplicate confidence is above blocking threshold, require resolution before create.
 9. Generate `studentNumber` using numbering series applicable to target branch.
 10. Create `StudentProfile` with:
-   - personId
-   - studentNumber
-   - studentStatus = `Active`
-   - idCardIssued = `false`
-   - idCardNumber = null
-   - joinedAt
-   - status = `Active`
+
+- personId
+- studentNumber
+- studentStatus = `Active`
+- idCardIssued = `false`
+- idCardNumber = null
+- joinedAt
+- status = `Active`
+
 11. Persist in one transaction with audit entry.
 12. Return created profile identifier and summary.
 
 **Outputs & Postconditions**
+
 - New `StudentProfile` is created.
 - Student is now available for enrollment linking.
 - Audit entry is written.
@@ -83,6 +89,7 @@ The system shall allow an authorized back-office user to create a student profil
 Actors: Front Desk Executive, Student Administration Officer, System.
 
 **Preconditions**
+
 1. User is authenticated.
 2. User has `student.create`.
 3. User has branch write access.
@@ -90,6 +97,7 @@ Actors: Front Desk Executive, Student Administration Officer, System.
 5. Minimum mandatory person identity fields are supplied.
 
 **Inputs**
+
 - firstName
 - middleName optional
 - lastName
@@ -109,6 +117,7 @@ Actors: Front Desk Executive, Student Administration Officer, System.
 - remarks optional
 
 **Processing Steps**
+
 1. Validate branch write access.
 2. Validate mandatory identity set:
    - at least full personal name,
@@ -128,6 +137,7 @@ Actors: Front Desk Executive, Student Administration Officer, System.
 13. Return student summary.
 
 **Outputs & Postconditions**
+
 - New student profile exists or user is redirected to matched existing student.
 - Duplicate student creation is avoided.
 - Audit trail records source and creator.
@@ -144,12 +154,14 @@ The system shall convert a `CorporateParticipant` into a `StudentProfile` when e
 Actors: Corporate Coordinator, Student Administration Officer, Enrollment System.
 
 **Preconditions**
+
 1. User has `student.create` or workflow executes as trusted internal system action.
 2. Corporate participant exists and is active.
 3. Associated person exists or is creatable from corporate participant source data.
 4. Enrollment branch context is known.
 
 **Inputs**
+
 - corporateParticipantId
 - corporateAccountId
 - targetBranchId
@@ -158,6 +170,7 @@ Actors: Corporate Coordinator, Student Administration Officer, Enrollment System
 - user/system context
 
 **Processing Steps**
+
 1. Load `CorporateParticipant`.
 2. Validate participant belongs to an active corporate account.
 3. Load or resolve linked `Person`.
@@ -172,6 +185,7 @@ Actors: Corporate Coordinator, Student Administration Officer, Enrollment System
 12. Return both student and participant linkage summary.
 
 **Outputs & Postconditions**
+
 - Corporate participant is linked to a student profile.
 - Corporate linkage remains intact for billing and reporting.
 - Student can now participate in enrollment.
@@ -188,17 +202,20 @@ The system shall generate a unique student number using configured numbering ser
 Actors: System Administrator configures rules; System generates number during create operations.
 
 **Preconditions**
+
 1. Numbering series exists for entity type `Student`.
 2. Series is active for target branch or global fallback is defined.
 3. Current transaction holds a write lock or equivalent concurrency-safe mechanism.
 
 **Inputs**
+
 - entityType = Student
 - branchId
 - current business date in Oman timezone
 - numbering series configuration
 
 **Processing Steps**
+
 1. Retrieve applicable numbering series in priority order:
    - branch-specific active series,
    - otherwise institute/global active series.
@@ -213,6 +230,7 @@ Actors: System Administrator configures rules; System generates number during cr
 10. Return student number.
 
 **Outputs & Postconditions**
+
 - Unique student number is produced.
 - Numbering series advances exactly once for committed transaction.
 
@@ -228,10 +246,12 @@ The system shall allow branch-scoped search and filtering of students for operat
 Actors: Admission Counselor, Front Desk Executive, Student Administration Officer, Finance Officer, Reporting User.
 
 **Preconditions**
+
 1. User has `student.read`.
 2. User has branch access to requested branch or consolidated permission where applicable.
 
 **Inputs**
+
 - activeBranchId
 - optional consolidated flag
 - filters:
@@ -251,6 +271,7 @@ Actors: Admission Counselor, Front Desk Executive, Student Administration Office
 - sort inputs
 
 **Processing Steps**
+
 1. Validate user permission.
 2. Resolve effective branch scope.
 3. Build query predicates only for allowed fields.
@@ -265,6 +286,7 @@ Actors: Admission Counselor, Front Desk Executive, Student Administration Office
 12. Return result set and filter metadata.
 
 **Outputs & Postconditions**
+
 - Authorized user receives only branch-scoped matching results.
 - Query execution is logged for audit only where policy requires, not as a business audit event by default.
 
@@ -280,15 +302,18 @@ The system shall display a consolidated student profile view containing student 
 Actors: Student Administration Officer, Branch Manager, Finance Officer, Trainer, Academic Coordinator.
 
 **Preconditions**
+
 1. User has `student.read`.
 2. Student exists and is accessible within branch rules.
 
 **Inputs**
+
 - studentProfileId or studentNumber
 - activeBranchId
 - user context
 
 **Processing Steps**
+
 1. Load student profile.
 2. Validate branch access.
 3. Load linked `Person` and supporting internal reference data.
@@ -316,6 +341,7 @@ Actors: Student Administration Officer, Branch Manager, Finance Officer, Trainer
 11. Return full profile view model.
 
 **Outputs & Postconditions**
+
 - Authorized user can view a single trusted student profile.
 - No cross-module ownership is transferred; related data remains read-only references.
 
@@ -331,12 +357,14 @@ The system shall allow controlled updates to student master and linked person fi
 Actors: Student Administration Officer, Branch Manager.
 
 **Preconditions**
+
 1. User has `student.update`.
 2. Student exists and is not hard deleted.
 3. User has write access to student branch context.
 4. Request carries latest version token or equivalent concurrency value.
 
 **Inputs**
+
 - studentProfileId
 - editable person fields
 - editable student fields
@@ -344,6 +372,7 @@ Actors: Student Administration Officer, Branch Manager.
 - version token
 
 **Processing Steps**
+
 1. Load student and person records.
 2. Validate branch write access.
 3. Validate record is not archived if policy blocks direct edit on archived records.
@@ -358,6 +387,7 @@ Actors: Student Administration Officer, Branch Manager.
 12. Return updated summary.
 
 **Outputs & Postconditions**
+
 - Student/person data is updated safely.
 - Silent overwrite is prevented.
 - Audit history reflects the change.
@@ -374,10 +404,12 @@ The system shall detect potential duplicates during create and update actions an
 Actors: System, Student Administration Officer, Front Desk Executive.
 
 **Preconditions**
+
 1. Create or update workflow is in progress.
 2. Relevant identity/contact fields are present.
 
 **Inputs**
+
 - civilId optional
 - passportNumber optional
 - visaNumber optional
@@ -388,6 +420,7 @@ Actors: System, Student Administration Officer, Front Desk Executive.
 - nationality optional
 
 **Processing Steps**
+
 1. Normalize all candidate fields.
 2. Search existing persons/students using exact identity-number matches first.
 3. Search using exact email and canonical phone match.
@@ -402,6 +435,7 @@ Actors: System, Student Administration Officer, Front Desk Executive.
 8. Log duplicate detection outcome for traceability.
 
 **Outputs & Postconditions**
+
 - Duplicate student creation risk is minimized.
 - User receives deterministic duplicate response categories.
 
@@ -417,11 +451,13 @@ The system shall support controlled student status transitions without altering 
 Actors: Student Administration Officer, Branch Manager.
 
 **Preconditions**
+
 1. User has `student.status.update`.
 2. Student exists within authorized branch scope.
 3. Requested transition is allowed by business rules.
 
 **Inputs**
+
 - studentProfileId
 - currentStatus
 - targetStatus
@@ -430,6 +466,7 @@ Actors: Student Administration Officer, Branch Manager.
 - reason
 
 **Processing Steps**
+
 1. Load student profile.
 2. Validate permission and branch access.
 3. Validate target transition against business-rule matrix.
@@ -444,6 +481,7 @@ Actors: Student Administration Officer, Branch Manager.
 9. Return new status snapshot.
 
 **Outputs & Postconditions**
+
 - Student lifecycle status changes consistently.
 - Status history is retained through audit and effective-date data.
 
@@ -459,12 +497,14 @@ The system shall maintain whether an institutional ID card has been issued to th
 Actors: Student Administration Officer, Front Desk Executive.
 
 **Preconditions**
+
 1. User has `student.idcard.issue`.
 2. Student exists and is accessible.
 3. Student is not archived.
 4. Requested card number is unique if provided.
 
 **Inputs**
+
 - studentProfileId
 - idCardIssued boolean
 - idCardNumber optional
@@ -472,6 +512,7 @@ Actors: Student Administration Officer, Front Desk Executive.
 - reason optional
 
 **Processing Steps**
+
 1. Load student profile.
 2. Validate permission and branch access.
 3. If `idCardIssued = true`, validate `idCardNumber` is provided when policy requires numbered cards.
@@ -481,6 +522,7 @@ Actors: Student Administration Officer, Front Desk Executive.
 7. Return updated card status.
 
 **Outputs & Postconditions**
+
 - Student ID card state is current and traceable.
 - Duplicate card numbers are prevented.
 
@@ -496,18 +538,21 @@ The system shall archive a student record without removing it from the database.
 Actors: Student Administration Officer, Branch Manager.
 
 **Preconditions**
+
 1. User has `student.archive`.
 2. Student exists.
 3. User has write access to student branch.
 4. Archive policy checks pass.
 
 **Inputs**
+
 - studentProfileId
 - archiveReason
 - archivedAt from system clock
 - user context
 
 **Processing Steps**
+
 1. Load student profile.
 2. Validate permission and branch scope.
 3. Check whether active enrollments or legal retention conditions block archival.
@@ -518,6 +563,7 @@ Actors: Student Administration Officer, Branch Manager.
 8. Write audit entry.
 
 **Outputs & Postconditions**
+
 - Student no longer appears in default active views.
 - Authorized restoration remains possible.
 - Historical references remain intact.
@@ -534,19 +580,23 @@ The system shall prevent hard deletion of student records from user-facing appli
 Actors: System.
 
 **Preconditions**
+
 1. Any delete command is submitted through application layer.
 
 **Inputs**
+
 - delete request
 - studentProfileId
 
 **Processing Steps**
+
 1. Intercept delete command.
 2. Reject any hard-delete operation.
 3. Route user to archival flow if authorized.
 4. Log security or audit event when prohibited delete is attempted.
 
 **Outputs & Postconditions**
+
 - Student row remains physically present.
 - Requestor receives denial or archival guidance.
 
@@ -562,9 +612,11 @@ The system shall create immutable audit entries for all sensitive student action
 Actors: System, Compliance/Audit Officer as reader.
 
 **Preconditions**
+
 1. Sensitive action occurs.
 
 **Inputs**
+
 - entityType
 - entityId
 - action
@@ -576,6 +628,7 @@ Actors: System, Compliance/Audit Officer as reader.
 - source metadata
 
 **Processing Steps**
+
 1. Detect action category.
 2. Build audit payload.
 3. Persist audit entry in the same transaction as the business change where feasible.
@@ -583,6 +636,7 @@ Actors: System, Compliance/Audit Officer as reader.
 5. Make audit queryable only to authorized users.
 
 **Outputs & Postconditions**
+
 - Sensitive student actions are historically traceable.
 
 **Priority**  
@@ -597,12 +651,14 @@ The system shall support supervised merge of duplicate student records into one 
 Actors: Branch Manager, Student Administration Officer with `student.merge`.
 
 **Preconditions**
+
 1. User has `student.merge`.
 2. Two or more student records are identified as duplicates.
 3. Merge policy checks pass.
 4. Survivor record is explicitly selected.
 
 **Inputs**
+
 - sourceStudentProfileId
 - survivorStudentProfileId
 - mergeReason
@@ -610,6 +666,7 @@ Actors: Branch Manager, Student Administration Officer with `student.merge`.
 - user context
 
 **Processing Steps**
+
 1. Validate source and survivor are different records.
 2. Validate both are within authorized branch scope or user has consolidated/central permission.
 3. Load linked person, admissions, enrollments, and references.
@@ -622,6 +679,7 @@ Actors: Branch Manager, Student Administration Officer with `student.merge`.
 10. Return survivor summary.
 
 **Outputs & Postconditions**
+
 - One operational student record remains.
 - Retired record remains historically traceable.
 - Downstream references are preserved according to allowed relinking rules.
@@ -638,16 +696,19 @@ The system shall allow export of student list results within the same field-leve
 Actors: Student Administration Officer, Branch Manager, Reporting User.
 
 **Preconditions**
+
 1. User has `student.export`.
 2. User has access to all requested branches.
 
 **Inputs**
+
 - active filters
 - export format
 - selected columns
 - active branch context
 
 **Processing Steps**
+
 1. Re-run authorized filtered query.
 2. Remove restricted fields not permitted for export.
 3. Generate export file.
@@ -660,6 +721,7 @@ Actors: Student Administration Officer, Branch Manager, Reporting User.
 6. Return downloadable artifact.
 
 **Outputs & Postconditions**
+
 - Authorized export file is produced.
 - Export is traceable.
 
@@ -675,9 +737,11 @@ The system shall enforce both permission and branch-access rules for every stude
 Actors: System.
 
 **Preconditions**
+
 1. Any student module request is submitted.
 
 **Inputs**
+
 - authenticated user ID
 - permission set
 - assigned branches
@@ -685,6 +749,7 @@ Actors: System.
 - target record identifiers
 
 **Processing Steps**
+
 1. Resolve user permissions.
 2. Resolve branch assignments and consolidated flag.
 3. Resolve target record branch.
@@ -694,6 +759,7 @@ Actors: System.
 7. Log failed authorization per security policy.
 
 **Outputs & Postconditions**
+
 - Only authorized requests succeed.
 - Cross-branch leakage is prevented.
 
@@ -709,15 +775,18 @@ The system shall expose an internal read contract so downstream modules can retr
 Actors: Enrollment, Finance, Attendance, Completion, Certificate, Reporting modules.
 
 **Preconditions**
+
 1. Calling module is trusted internal consumer.
 2. Student exists and is not inaccessible by policy.
 
 **Inputs**
+
 - studentProfileId or studentNumber
 - contract version
 - caller context
 
 **Processing Steps**
+
 1. Validate internal caller authorization.
 2. Load student profile and linked person.
 3. Map to reference DTO containing only approved fields.
@@ -725,6 +794,7 @@ Actors: Enrollment, Finance, Attendance, Completion, Certificate, Reporting modu
 5. Return stable versioned payload.
 
 **Outputs & Postconditions**
+
 - Downstream modules receive consistent student references.
 - Ownership remains in Student Management.
 
@@ -740,20 +810,24 @@ The system shall display English and Arabic student name values where localized 
 Actors: All read-capable users.
 
 **Preconditions**
+
 1. User has `student.read`.
 2. Localized full-name fields exist for the person.
 
 **Inputs**
+
 - studentProfileId
 - language preference
 
 **Processing Steps**
+
 1. Load person name fields.
 2. If localized name is available for requested language, use it.
 3. Otherwise fall back to default full name.
 4. Preserve source value without overwriting alternate language data.
 
 **Outputs & Postconditions**
+
 - Student identity is viewable in appropriate language context.
 
 **Priority**  
@@ -768,9 +842,11 @@ The system shall preserve effective dating for sensitive lifecycle actions such 
 Actors: Student Administration Officer, Branch Manager, Compliance/Audit Officer.
 
 **Preconditions**
+
 1. Lifecycle action includes effective dating.
 
 **Inputs**
+
 - studentProfileId
 - targetStatus
 - effectiveStartDate
@@ -778,6 +854,7 @@ Actors: Student Administration Officer, Branch Manager, Compliance/Audit Officer
 - reason
 
 **Processing Steps**
+
 1. Validate status transition.
 2. Validate date boundaries.
 3. Persist status change with effective dates or record them in associated history structure/audit payload.
@@ -785,6 +862,7 @@ Actors: Student Administration Officer, Branch Manager, Compliance/Audit Officer
 5. Return effective history summary.
 
 **Outputs & Postconditions**
+
 - Historical lifecycle validity is traceable in business time, not only system time.
 
 **Priority**  
@@ -799,14 +877,17 @@ The system shall validate mandatory fields, field lengths, formats, uniqueness, 
 Actors: System.
 
 **Preconditions**
+
 1. Create or update request is submitted.
 
 **Inputs**
+
 - person fields
 - student fields
 - metadata
 
 **Processing Steps**
+
 1. Validate mandatory fields:
    - name,
    - branch context,
@@ -822,6 +903,7 @@ Actors: System.
 8. Reject request with field-specific errors on failure.
 
 **Outputs & Postconditions**
+
 - Only valid student records are persisted.
 
 **Priority**  
@@ -829,77 +911,77 @@ Must
 
 ## 3. Comprehensive Business Rules
 
-| ID | Rule Category | Business Rule |
-|---|---|---|
-| BR-SM-001 | Identity Ownership | A student shall always be represented through the shared `Person` model; student profile data shall not duplicate person identity independently. |
-| BR-SM-002 | Student Creation Source | Student profile creation is permitted only from approved admission, authorized direct registration, walk-in handoff, online-registration handoff, or corporate participant conversion. |
-| BR-SM-003 | Single Student Per Person | One person may have only one operational student profile at a time. |
-| BR-SM-004 | Corporate Conversion | A corporate participant becomes a student when enrollment requires a student reference; corporate linkage must remain retained. |
-| BR-SM-005 | Enrollment Separation | Student Management does not own enrollment state; student status changes shall not directly mutate enrollment statuses. |
-| BR-SM-006 | Branch Scope | Access to a student profile is granted dynamically to any branch containing an active relationship (Home/Origin Branch, Lead, Admission, or Enrollment). A user may read/write student records only if they have access to at least one of these relationship branches. |
-| BR-SM-007 | Consolidated Read | Consolidated multi-branch reading requires explicit permission in addition to branch assignments. |
-| BR-SM-008 | Branch Trust Boundary | Client-provided branch identifiers shall never be trusted without server-side authorization checks. |
-| BR-SM-009 | Numbering Series Priority | Student numbers shall use branch-specific numbering series when active; otherwise use configured fallback series. |
-| BR-SM-010 | Student Number Uniqueness | `studentNumber` must be globally unique within the ASTI instance. |
-| BR-SM-011 | Duplicate Blocking Identity | Exact match on Civil ID, passport number, or visa number with another operational person/student shall block create or update until resolved. |
-| BR-SM-012 | Duplicate Existing Student | If a person already has a student profile, the system must reuse that student and must not create another. |
-| BR-SM-013 | Contact Duplicate Review | Exact match on email or phone with another person/student requires duplicate review and may block based on policy severity. |
-| BR-SM-014 | Mandatory Contact | At least one contact method, phone or email, must be stored for a student-capable person. |
-| BR-SM-015 | Joined Date | `joinedAt` must be present when a student profile is created. |
-| BR-SM-016 | Status on Create | New student profile shall start in `Active` status unless an approved exception policy defines `Pending`. |
-| BR-SM-017 | Allowed Student States | Allowed student lifecycle states are `Pending`, `Active`, `Suspended`, and `Archived`. |
-| BR-SM-018 | Transition Matrix | Allowed transitions are: `Pending → Active`, `Pending → Archived`, `Active → Suspended`, `Active → Archived`, `Suspended → Active`, `Suspended → Archived`, `Archived → Active` through restoration only. |
-| BR-SM-019 | Prohibited Transition | `Archived → Suspended` is not allowed. |
-| BR-SM-020 | Effective Dates | When effective dates are used, `effectiveStartDate` is mandatory and `effectiveEndDate` cannot be earlier than `effectiveStartDate`. |
-| BR-SM-021 | Soft Delete Only | Student records shall never be hard deleted by user-facing business functions. |
-| BR-SM-022 | Archive Flags | Archival shall set `isDeleted = true` and `deletedAt` to the business timestamp. |
-| BR-SM-023 | Restore Semantics | Restoration shall clear soft-delete flags and move status back to an allowed operational state, typically `Active`. |
-| BR-SM-024 | Archived Visibility | Archived students are excluded from default operational searches unless the user explicitly requests archived records and has permission. |
-| BR-SM-025 | Sensitive Edit Audit | Create, update, status change, merge, archival, restoration, and ID-card actions shall always be audited. |
-| BR-SM-026 | Immutable Audit | Audit records are immutable after creation. |
-| BR-SM-027 | Concurrency | Student update commands must use optimistic locking or an equivalent concurrency control mechanism. |
-| BR-SM-028 | ID Card Uniqueness | `idCardNumber` must be unique when ID-card numbering is enabled. |
-| BR-SM-029 | ID Card Preconditions | An ID card may not be marked issued for an archived student. |
-| BR-SM-030 | Merge Survivor | Duplicate merge requires explicit survivor record selection. |
-| BR-SM-031 | Merge Traceability | Merge must preserve lineage from retired record to survivor record. |
-| BR-SM-032 | Merge Deletion | Merge does not hard delete the retired record. |
-| BR-SM-033 | Restricted Fields | Civil ID, passport number, visa number, and full profile photo references are sensitive fields subject to permission-based visibility. |
-| BR-SM-034 | Bilingual Display | Where localized name values exist, UI may display English or Arabic according to user preference without changing source data. |
-| BR-SM-035 | Business Timestamp | Business operations shall use Oman timezone default UTC+4 for stored operational timestamps and effective-date evaluation. |
-| BR-SM-036 | Export Security | Export shall include only fields allowed by permission and branch scope. |
-| BR-SM-037 | Export Audit | Every student export must be logged with user, time, branch context, and filters used. |
-| BR-SM-038 | Student-to-Enrollment Link | Enrollment creation must reference an existing operational student profile; Student Management does not create placeholder enrollment-only students. |
-| BR-SM-039 | Person Merge Caution | Person-level identity consolidation and student-profile consolidation must not be treated as the same operation without explicit rule handling. |
-| BR-SM-040 | Lookup Validity | Nationality, status, and other coded fields must come from active master data entries. |
-| BR-SM-041 | Search Determinism | Result ordering for paginated student search must be deterministic to prevent duplicate or skipped rows across pages. |
-| BR-SM-042 | Cross-Module Read Model | Downstream modules may consume student reference contracts but may not independently persist master student identity changes. |
-| BR-SM-043 | Active Enrollment Archive Check | If branch policy blocks archival of students with active enrollments, archival must fail until operational dependencies are resolved. |
-| BR-SM-044 | Duplicate Review Logging | Duplicate detection outcomes shall be logged for operational traceability even when save is blocked. |
-| BR-SM-045 | Restoration Audit | Student restoration shall produce the same level of audit detail as archival. |
+| ID        | Rule Category                   | Business Rule                                                                                                                                                                                                                                                           |
+| --------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BR-SM-001 | Identity Ownership              | A student shall always be represented through the shared `Person` model; student profile data shall not duplicate person identity independently.                                                                                                                        |
+| BR-SM-002 | Student Creation Source         | Student profile creation is permitted only from approved admission, authorized direct registration, walk-in handoff, online-registration handoff, or corporate participant conversion.                                                                                  |
+| BR-SM-003 | Single Student Per Person       | One person may have only one operational student profile at a time.                                                                                                                                                                                                     |
+| BR-SM-004 | Corporate Conversion            | A corporate participant becomes a student when enrollment requires a student reference; corporate linkage must remain retained.                                                                                                                                         |
+| BR-SM-005 | Enrollment Separation           | Student Management does not own enrollment state; student status changes shall not directly mutate enrollment statuses.                                                                                                                                                 |
+| BR-SM-006 | Branch Scope                    | Access to a student profile is granted dynamically to any branch containing an active relationship (Home/Origin Branch, Lead, Admission, or Enrollment). A user may read/write student records only if they have access to at least one of these relationship branches. |
+| BR-SM-007 | Consolidated Read               | Consolidated multi-branch reading requires explicit permission in addition to branch assignments.                                                                                                                                                                       |
+| BR-SM-008 | Branch Trust Boundary           | Client-provided branch identifiers shall never be trusted without server-side authorization checks.                                                                                                                                                                     |
+| BR-SM-009 | Numbering Series Priority       | Student numbers shall use branch-specific numbering series when active; otherwise use configured fallback series.                                                                                                                                                       |
+| BR-SM-010 | Student Number Uniqueness       | `studentNumber` must be globally unique within the ASTI instance.                                                                                                                                                                                                       |
+| BR-SM-011 | Duplicate Blocking Identity     | Exact match on Civil ID, passport number, or visa number with another operational person/student shall block create or update until resolved.                                                                                                                           |
+| BR-SM-012 | Duplicate Existing Student      | If a person already has a student profile, the system must reuse that student and must not create another.                                                                                                                                                              |
+| BR-SM-013 | Contact Duplicate Review        | Exact match on email or phone with another person/student requires duplicate review and may block based on policy severity.                                                                                                                                             |
+| BR-SM-014 | Mandatory Contact               | At least one contact method, phone or email, must be stored for a student-capable person.                                                                                                                                                                               |
+| BR-SM-015 | Joined Date                     | `joinedAt` must be present when a student profile is created.                                                                                                                                                                                                           |
+| BR-SM-016 | Status on Create                | New student profile shall start in `Active` status unless an approved exception policy defines `Pending`.                                                                                                                                                               |
+| BR-SM-017 | Allowed Student States          | Allowed student lifecycle states are `Pending`, `Active`, `Suspended`, and `Archived`.                                                                                                                                                                                  |
+| BR-SM-018 | Transition Matrix               | Allowed transitions are: `Pending → Active`, `Pending → Archived`, `Active → Suspended`, `Active → Archived`, `Suspended → Active`, `Suspended → Archived`, `Archived → Active` through restoration only.                                                               |
+| BR-SM-019 | Prohibited Transition           | `Archived → Suspended` is not allowed.                                                                                                                                                                                                                                  |
+| BR-SM-020 | Effective Dates                 | When effective dates are used, `effectiveStartDate` is mandatory and `effectiveEndDate` cannot be earlier than `effectiveStartDate`.                                                                                                                                    |
+| BR-SM-021 | Soft Delete Only                | Student records shall never be hard deleted by user-facing business functions.                                                                                                                                                                                          |
+| BR-SM-022 | Archive Flags                   | Archival shall set `isDeleted = true` and `deletedAt` to the business timestamp.                                                                                                                                                                                        |
+| BR-SM-023 | Restore Semantics               | Restoration shall clear soft-delete flags and move status back to an allowed operational state, typically `Active`.                                                                                                                                                     |
+| BR-SM-024 | Archived Visibility             | Archived students are excluded from default operational searches unless the user explicitly requests archived records and has permission.                                                                                                                               |
+| BR-SM-025 | Sensitive Edit Audit            | Create, update, status change, merge, archival, restoration, and ID-card actions shall always be audited.                                                                                                                                                               |
+| BR-SM-026 | Immutable Audit                 | Audit records are immutable after creation.                                                                                                                                                                                                                             |
+| BR-SM-027 | Concurrency                     | Student update commands must use optimistic locking or an equivalent concurrency control mechanism.                                                                                                                                                                     |
+| BR-SM-028 | ID Card Uniqueness              | `idCardNumber` must be unique when ID-card numbering is enabled.                                                                                                                                                                                                        |
+| BR-SM-029 | ID Card Preconditions           | An ID card may not be marked issued for an archived student.                                                                                                                                                                                                            |
+| BR-SM-030 | Merge Survivor                  | Duplicate merge requires explicit survivor record selection.                                                                                                                                                                                                            |
+| BR-SM-031 | Merge Traceability              | Merge must preserve lineage from retired record to survivor record.                                                                                                                                                                                                     |
+| BR-SM-032 | Merge Deletion                  | Merge does not hard delete the retired record.                                                                                                                                                                                                                          |
+| BR-SM-033 | Restricted Fields               | Civil ID, passport number, visa number, and full profile photo references are sensitive fields subject to permission-based visibility.                                                                                                                                  |
+| BR-SM-034 | Bilingual Display               | Where localized name values exist, UI may display English or Arabic according to user preference without changing source data.                                                                                                                                          |
+| BR-SM-035 | Business Timestamp              | Business operations shall use Oman timezone default UTC+4 for stored operational timestamps and effective-date evaluation.                                                                                                                                              |
+| BR-SM-036 | Export Security                 | Export shall include only fields allowed by permission and branch scope.                                                                                                                                                                                                |
+| BR-SM-037 | Export Audit                    | Every student export must be logged with user, time, branch context, and filters used.                                                                                                                                                                                  |
+| BR-SM-038 | Student-to-Enrollment Link      | Enrollment creation must reference an existing operational student profile; Student Management does not create placeholder enrollment-only students.                                                                                                                    |
+| BR-SM-039 | Person Merge Caution            | Person-level identity consolidation and student-profile consolidation must not be treated as the same operation without explicit rule handling.                                                                                                                         |
+| BR-SM-040 | Lookup Validity                 | Nationality, status, and other coded fields must come from active master data entries.                                                                                                                                                                                  |
+| BR-SM-041 | Search Determinism              | Result ordering for paginated student search must be deterministic to prevent duplicate or skipped rows across pages.                                                                                                                                                   |
+| BR-SM-042 | Cross-Module Read Model         | Downstream modules may consume student reference contracts but may not independently persist master student identity changes.                                                                                                                                           |
+| BR-SM-043 | Active Enrollment Archive Check | If branch policy blocks archival of students with active enrollments, archival must fail until operational dependencies are resolved.                                                                                                                                   |
+| BR-SM-044 | Duplicate Review Logging        | Duplicate detection outcomes shall be logged for operational traceability even when save is blocked.                                                                                                                                                                    |
+| BR-SM-045 | Restoration Audit               | Student restoration shall produce the same level of audit detail as archival.                                                                                                                                                                                           |
 
 ## 4. Cross-Module Dependencies Mapping
 
-| Dependent / Related Module | Dependency Type | Student Management Dependency Detail |
-|---|---|---|
-| Identity & Access Management | Upstream | Provides authenticated user context, permission codes, branch access, and consolidated reporting authorization. |
-| Organization Management | Upstream | Provides institute and branch structure used for branch scoping and branch-aware numbering selection. |
-| Configuration / Master Data | Upstream | Provides numbering series, lookup values, nationality lists, status codes, and localization metadata. |
-| Lead, Enquiry & CRM | Upstream / Adjacent | Qualified lead data may flow into admission, which then leads to student creation; CRM does not own student master. |
-| Admission & Enrollment Management | Bidirectional Adjacent | Approved admissions create or link students; enrollment requires operational student reference. Student module must not own enrollment transaction state. |
-| Walk-In Fast Track Enrollment | Upstream / Adjacent | Walk-in intake may trigger rapid student lookup or controlled direct creation before enrollment finalization. |
-| Corporate Training Management | Upstream / Adjacent | Corporate participant conversion uses participant and corporate account data while preserving corporate linkage. |
-| Course Catalog Management | Indirect | No direct ownership dependency, but student lifecycle ultimately supports enrollment into courses and batches defined there. |
-| Training Delivery Management | Downstream Consumer | Uses student reference via enrollment context for batch participation visibility. |
-| Scheduling, Calendar & Holiday | Indirect | No direct ownership dependency; student module does not schedule sessions. |
-| Attendance Management | Downstream Consumer | Consumes student and enrollment references for attendance records and reports. |
-| Fee, Billing & Receivables Management | Downstream Consumer | Consumes student identity and student reference for invoices, payments, receipts, refunds, and receivables. |
-| Faculty / Trainer Management | Downstream Consumer | Trainers and academic coordinators may view student profile data in read-only educational workflows. |
-| Exam, Result & Completion Management | Downstream Consumer | Consumes student references for assessments, results, and completion approvals. |
-| Certificate Management | Downstream Consumer | Uses student profile and enrollment references for certificate issuance, verification, and reissue records. |
-| Communication & Notification Management | Downstream Consumer | Uses student contact and language fields to deliver messages; does not own contact master. |
-| Document Management | Bidirectional Adjacent | Student profile screens may show student-owned document summaries; document upload and verification remain owned by Document Management. |
-| Reporting & Executive Dashboards | Downstream Consumer | Consumes student counts, lifecycle statuses, and branch distribution for reporting and dashboards. |
-| Audit & Compliance | Cross-Cutting Consumer | Receives audit events and exposes compliance review capabilities for student actions. |
+| Dependent / Related Module              | Dependency Type        | Student Management Dependency Detail                                                                                                                      |
+| --------------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity & Access Management            | Upstream               | Provides authenticated user context, permission codes, branch access, and consolidated reporting authorization.                                           |
+| Organization Management                 | Upstream               | Provides institute and branch structure used for branch scoping and branch-aware numbering selection.                                                     |
+| Configuration / Master Data             | Upstream               | Provides numbering series, lookup values, nationality lists, status codes, and localization metadata.                                                     |
+| Lead, Enquiry & CRM                     | Upstream / Adjacent    | Qualified lead data may flow into admission, which then leads to student creation; CRM does not own student master.                                       |
+| Admission & Enrollment Management       | Bidirectional Adjacent | Approved admissions create or link students; enrollment requires operational student reference. Student module must not own enrollment transaction state. |
+| Walk-In Fast Track Enrollment           | Upstream / Adjacent    | Walk-in intake may trigger rapid student lookup or controlled direct creation before enrollment finalization.                                             |
+| Corporate Training Management           | Upstream / Adjacent    | Corporate participant conversion uses participant and corporate account data while preserving corporate linkage.                                          |
+| Course Catalog Management               | Indirect               | No direct ownership dependency, but student lifecycle ultimately supports enrollment into courses and batches defined there.                              |
+| Training Delivery Management            | Downstream Consumer    | Uses student reference via enrollment context for batch participation visibility.                                                                         |
+| Scheduling, Calendar & Holiday          | Indirect               | No direct ownership dependency; student module does not schedule sessions.                                                                                |
+| Attendance Management                   | Downstream Consumer    | Consumes student and enrollment references for attendance records and reports.                                                                            |
+| Fee, Billing & Receivables Management   | Downstream Consumer    | Consumes student identity and student reference for invoices, payments, receipts, refunds, and receivables.                                               |
+| Faculty / Trainer Management            | Downstream Consumer    | Trainers and academic coordinators may view student profile data in read-only educational workflows.                                                      |
+| Exam, Result & Completion Management    | Downstream Consumer    | Consumes student references for assessments, results, and completion approvals.                                                                           |
+| Certificate Management                  | Downstream Consumer    | Uses student profile and enrollment references for certificate issuance, verification, and reissue records.                                               |
+| Communication & Notification Management | Downstream Consumer    | Uses student contact and language fields to deliver messages; does not own contact master.                                                                |
+| Document Management                     | Bidirectional Adjacent | Student profile screens may show student-owned document summaries; document upload and verification remain owned by Document Management.                  |
+| Reporting & Executive Dashboards        | Downstream Consumer    | Consumes student counts, lifecycle statuses, and branch distribution for reporting and dashboards.                                                        |
+| Audit & Compliance                      | Cross-Cutting Consumer | Receives audit events and exposes compliance review capabilities for student actions.                                                                     |
 
 ## 5. Recommended Internal Contract Shape for Downstream Consumers
 

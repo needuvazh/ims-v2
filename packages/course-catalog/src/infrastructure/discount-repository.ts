@@ -7,7 +7,10 @@ type ConfigStatus = 'Draft' | 'Active' | 'Inactive' | 'Superseded';
 export class CourseDiscountRepository implements ICourseDiscountRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: Prisma.CourseDiscountUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CourseDiscount> {
+  async create(
+    data: Prisma.CourseDiscountUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseDiscount> {
     const client = tx || this.prisma;
     const record = await client.courseDiscount.create({
       data: {
@@ -29,7 +32,11 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
     return record as CourseDiscount;
   }
 
-  async update(id: string, data: Prisma.CourseDiscountUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<CourseDiscount> {
+  async update(
+    id: string,
+    data: Prisma.CourseDiscountUncheckedUpdateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseDiscount> {
     const client = tx || this.prisma;
     const record = await client.courseDiscount.update({
       where: { id },
@@ -38,7 +45,10 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
     return record as CourseDiscount;
   }
 
-  async findById(id: string, tx?: Prisma.TransactionClient): Promise<CourseDiscount | null> {
+  async findById(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseDiscount | null> {
     const client = tx || this.prisma;
     const record = await client.courseDiscount.findFirst({
       where: { id, isDeleted: false },
@@ -55,7 +65,7 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
       startDate: Date;
       endDate?: Date | null;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<CourseDiscount[]> {
     const client = tx || this.prisma;
     const whereClause: Prisma.CourseDiscountWhereInput = {
@@ -67,13 +77,13 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
       isDeleted: false,
       OR: [
         { effectiveEndDate: null },
-        { effectiveEndDate: { gte: filters.startDate } }
-      ]
+        { effectiveEndDate: { gte: filters.startDate } },
+      ],
     };
 
     if (filters.endDate) {
       whereClause.effectiveStartDate = {
-        lte: filters.endDate
+        lte: filters.endDate,
       };
     }
 
@@ -91,7 +101,7 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
       status?: string;
       activeAt?: Date;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<CourseDiscount[]> {
     const client = tx || this.prisma;
     const whereClause: Prisma.CourseDiscountWhereInput = { isDeleted: false };
@@ -112,7 +122,7 @@ export class CourseDiscountRepository implements ICourseDiscountRepository {
       whereClause.effectiveStartDate = { lte: filters.activeAt };
       whereClause.OR = [
         { effectiveEndDate: null },
-        { effectiveEndDate: { gte: filters.activeAt } }
+        { effectiveEndDate: { gte: filters.activeAt } },
       ];
     }
 

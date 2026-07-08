@@ -3,7 +3,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, Clock3, Eye, Lock, Search, Shield, UserCheck, UserPlus, Users, X } from 'lucide-react';
+import {
+  ArrowRight,
+  Clock3,
+  Eye,
+  Lock,
+  Search,
+  Shield,
+  UserCheck,
+  UserPlus,
+  Users,
+  X,
+} from 'lucide-react';
 import {
   Avatar,
   Badge,
@@ -22,7 +33,13 @@ import {
 } from '@ims/shared-ui';
 
 type SortOrder = 'asc' | 'desc';
-type SortField = 'fullName' | 'branchName' | 'roleName' | 'userType' | 'status' | 'lastLoginAt';
+type SortField =
+  | 'fullName'
+  | 'branchName'
+  | 'roleName'
+  | 'userType'
+  | 'status'
+  | 'lastLoginAt';
 
 type UserRow = {
   id: string;
@@ -122,7 +139,9 @@ export function UsersClientList({
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -139,7 +158,8 @@ export function UsersClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: SortField) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -165,7 +185,10 @@ export function UsersClientList({
     }
 
     return branchNames.map((branchName) => (
-      <Badge key={branchName} variant={branchName === 'All Branches' ? 'default' : 'muted'}>
+      <Badge
+        key={branchName}
+        variant={branchName === 'All Branches' ? 'default' : 'muted'}
+      >
         {branchName}
       </Badge>
     ));
@@ -185,7 +208,11 @@ export function UsersClientList({
             {roleName}
           </Badge>
         ))}
-        {roleNames.length > visibleRoles.length && <Badge variant="muted">+{roleNames.length - visibleRoles.length} more</Badge>}
+        {roleNames.length > visibleRoles.length && (
+          <Badge variant="muted">
+            +{roleNames.length - visibleRoles.length} more
+          </Badge>
+        )}
       </>
     );
   };
@@ -200,9 +227,15 @@ export function UsersClientList({
         <div className="flex min-w-0 items-center gap-3">
           <Avatar fallback={user.fullName} size="sm" />
           <div className="min-w-0">
-            <div className="truncate font-semibold text-[color:var(--ims-ink)]">{user.fullName}</div>
-            <div className="truncate text-xs text-[color:var(--ims-muted)]">{user.email}</div>
-            <div className="truncate text-[10px] text-[color:var(--ims-muted)]">{user.phone ?? 'No phone'}</div>
+            <div className="truncate font-semibold text-[color:var(--ims-ink)]">
+              {user.fullName}
+            </div>
+            <div className="truncate text-xs text-[color:var(--ims-muted)]">
+              {user.email}
+            </div>
+            <div className="truncate text-[10px] text-[color:var(--ims-muted)]">
+              {user.phone ?? 'No phone'}
+            </div>
           </div>
         </div>
       ),
@@ -212,7 +245,11 @@ export function UsersClientList({
       sortable: true,
       sortDirection: currentSortBy === 'branchName' ? currentSortOrder : null,
       onSort: () => handleSort('branchName'),
-      render: (user: UserRow) => <div className="flex flex-wrap gap-1.5">{renderBranchBadges(user.branchNames)}</div>,
+      render: (user: UserRow) => (
+        <div className="flex flex-wrap gap-1.5">
+          {renderBranchBadges(user.branchNames)}
+        </div>
+      ),
       className: 'max-w-[220px]',
     },
     {
@@ -220,7 +257,11 @@ export function UsersClientList({
       sortable: true,
       sortDirection: currentSortBy === 'roleName' ? currentSortOrder : null,
       onSort: () => handleSort('roleName'),
-      render: (user: UserRow) => <div className="flex flex-wrap gap-1.5">{renderRoleBadges(user.roleNames)}</div>,
+      render: (user: UserRow) => (
+        <div className="flex flex-wrap gap-1.5">
+          {renderRoleBadges(user.roleNames)}
+        </div>
+      ),
       className: 'max-w-[220px]',
     },
     {
@@ -228,14 +269,18 @@ export function UsersClientList({
       sortable: true,
       sortDirection: currentSortBy === 'userType' ? currentSortOrder : null,
       onSort: () => handleSort('userType'),
-      render: (user: UserRow) => <span className="text-[color:var(--ims-muted)]">{user.userType}</span>,
+      render: (user: UserRow) => (
+        <span className="text-[color:var(--ims-muted)]">{user.userType}</span>
+      ),
     },
     {
       header: 'Status',
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (user: UserRow) => <Badge variant={statusVariant(user.status)}>{user.status}</Badge>,
+      render: (user: UserRow) => (
+        <Badge variant={statusVariant(user.status)}>{user.status}</Badge>
+      ),
       headerClassName: 'w-[140px]',
     },
     {
@@ -261,7 +306,12 @@ export function UsersClientList({
     {
       header: 'Actions',
       render: (user: UserRow) => (
-        <Button variant="ghost" size="icon" onClick={() => router.push(`/iam/users/${user.id}`)} title="View user">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push(`/iam/users/${user.id}`)}
+          title="View user"
+        >
           <ArrowRight className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
         </Button>
       ),
@@ -278,11 +328,17 @@ export function UsersClientList({
             <div className="flex items-center gap-3">
               <Avatar fallback={user.fullName} size="sm" />
               <div className="min-w-0">
-                <p className="truncate text-sm font-bold text-[var(--ims-ink)]">{user.fullName}</p>
-                <p className="truncate text-xs text-[var(--ims-muted)]">{user.email}</p>
+                <p className="truncate text-sm font-bold text-[var(--ims-ink)]">
+                  {user.fullName}
+                </p>
+                <p className="truncate text-xs text-[var(--ims-muted)]">
+                  {user.email}
+                </p>
               </div>
             </div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{user.userType}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {user.userType}
+            </p>
           </div>
           <Badge variant={statusVariant(user.status)}>{user.status}</Badge>
         </div>
@@ -291,11 +347,15 @@ export function UsersClientList({
         <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">
           <div className="space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
-            <div className="flex flex-wrap gap-1.5">{renderBranchBadges(user.branchNames)}</div>
+            <div className="flex flex-wrap gap-1.5">
+              {renderBranchBadges(user.branchNames)}
+            </div>
           </div>
           <div className="space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Roles</p>
-            <div className="flex flex-wrap gap-1.5">{renderRoleBadges(user.roleNames)}</div>
+            <div className="flex flex-wrap gap-1.5">
+              {renderRoleBadges(user.roleNames)}
+            </div>
           </div>
           <div className="space-y-1 sm:col-span-2">
             <p className="font-semibold text-[var(--ims-muted)]">Last login</p>
@@ -314,7 +374,12 @@ export function UsersClientList({
         </div>
       </CardContent>
       <CardFooter className="p-card-p pt-0">
-        <Button variant="outline" size="sm" className="w-full text-[11px]" onClick={() => router.push(`/iam/users/${user.id}`)}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full text-[11px]"
+          onClick={() => router.push(`/iam/users/${user.id}`)}
+        >
           <Eye className="mr-1.5 h-3.5 w-3.5" /> View Details
         </Button>
       </CardFooter>
@@ -322,7 +387,14 @@ export function UsersClientList({
   );
 
   const hasVisibleFilters = useMemo(
-    () => Boolean(currentSearch || currentStatus || currentType || currentBranchId || currentRoleId),
+    () =>
+      Boolean(
+        currentSearch ||
+        currentStatus ||
+        currentType ||
+        currentBranchId ||
+        currentRoleId,
+      ),
     [currentBranchId, currentRoleId, currentSearch, currentStatus, currentType],
   );
 
@@ -334,7 +406,9 @@ export function UsersClientList({
             <Shield className="h-6 w-6 shrink-0 text-indigo-600 sm:h-8 sm:w-8" />
             IAM Users
           </h1>
-          <p className="mt-1 text-sm text-[var(--ims-muted)]">Manage users, branch access, and role assignments.</p>
+          <p className="mt-1 text-sm text-[var(--ims-muted)]">
+            Manage users, branch access, and role assignments.
+          </p>
         </div>
         <Link href="/iam/users/create">
           <Button className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4">
@@ -410,8 +484,16 @@ export function UsersClientList({
           </FormLabel>
           <Select
             value={currentBranchId}
-            onChange={(event) => updateParams({ branchId: event.target.value, page: '1' })}
-            options={[{ value: '', label: 'All Branches' }, ...branches.map((branch) => ({ value: branch.id, label: branch.name }))]}
+            onChange={(event) =>
+              updateParams({ branchId: event.target.value, page: '1' })
+            }
+            options={[
+              { value: '', label: 'All Branches' },
+              ...branches.map((branch) => ({
+                value: branch.id,
+                label: branch.name,
+              })),
+            ]}
             className="h-12"
             placeholder="All Branches"
           />
@@ -423,7 +505,9 @@ export function UsersClientList({
           </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(event) => updateParams({ status: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ status: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Statuses' }, ...statusOptions]}
             className="h-12"
             placeholder="All Statuses"
@@ -436,7 +520,9 @@ export function UsersClientList({
           </FormLabel>
           <Select
             value={currentType}
-            onChange={(event) => updateParams({ type: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ type: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Types' }, ...userTypeOptions]}
             className="h-12"
             placeholder="All Types"
@@ -449,8 +535,13 @@ export function UsersClientList({
           </FormLabel>
           <Select
             value={currentRoleId}
-            onChange={(event) => updateParams({ roleId: event.target.value, page: '1' })}
-            options={[{ value: '', label: 'All Roles' }, ...roles.map((role) => ({ value: role.id, label: role.name }))]}
+            onChange={(event) =>
+              updateParams({ roleId: event.target.value, page: '1' })
+            }
+            options={[
+              { value: '', label: 'All Roles' },
+              ...roles.map((role) => ({ value: role.id, label: role.name })),
+            ]}
             className="h-12"
             placeholder="All Roles"
           />
@@ -459,7 +550,9 @@ export function UsersClientList({
 
       {hasVisibleFilters && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-[color:var(--ims-muted)]">
-          <span className="font-semibold uppercase tracking-[0.18em]">Active filters</span>
+          <span className="font-semibold uppercase tracking-[0.18em]">
+            Active filters
+          </span>
           {currentSearch && <Badge variant="muted">Search</Badge>}
           {currentBranchId && <Badge variant="muted">Branch</Badge>}
           {currentStatus && <Badge variant="muted">Status</Badge>}
@@ -469,7 +562,16 @@ export function UsersClientList({
             variant="ghost"
             size="sm"
             className="h-7 px-2 text-xs"
-            onClick={() => updateParams({ q: null, status: null, type: null, branchId: null, roleId: null, page: '1' })}
+            onClick={() =>
+              updateParams({
+                q: null,
+                status: null,
+                type: null,
+                branchId: null,
+                roleId: null,
+                page: '1',
+              })
+            }
           >
             Clear all
           </Button>
@@ -490,7 +592,14 @@ export function UsersClientList({
         }
       />
 
-      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={totalCount} limit={limit} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={totalCount}
+          limit={limit}
+        />
+      )}
     </div>
   );
 }

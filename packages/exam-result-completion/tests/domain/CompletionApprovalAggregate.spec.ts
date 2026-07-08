@@ -1,9 +1,21 @@
 import { describe, it, expect } from 'vitest';
-import { CompletionApprovalAggregate, CreateApprovalCommand, ActOnApprovalCommand, APPROVAL_LEVELS, APPROVAL_STATUSES } from '../../src/domain/aggregates/CompletionApproval';
-import { ApprovalInvalidStateError, ApprovalStageSequenceError, ApprovalActorIneligibleError } from '../../src/domain/errors';
+import {
+  CompletionApprovalAggregate,
+  CreateApprovalCommand,
+  ActOnApprovalCommand,
+  APPROVAL_LEVELS,
+  APPROVAL_STATUSES,
+} from '../../src/domain/aggregates/CompletionApproval';
+import {
+  ApprovalInvalidStateError,
+  ApprovalStageSequenceError,
+  ApprovalActorIneligibleError,
+} from '../../src/domain/errors';
 
 describe('CompletionApprovalAggregate', () => {
-  const createCommand = (overrides?: Partial<CreateApprovalCommand>): CreateApprovalCommand => ({
+  const createCommand = (
+    overrides?: Partial<CreateApprovalCommand>,
+  ): CreateApprovalCommand => ({
     courseCompletionId: 'completion-1',
     approvalLevel: APPROVAL_LEVELS.TRAINER_RECOMMENDATION,
     actorId: 'trainer-1',
@@ -25,40 +37,62 @@ describe('CompletionApprovalAggregate', () => {
     });
 
     it('throws when first level is not TrainerRecommendation', () => {
-      const aggregate = CompletionApprovalAggregate.create(createCommand({ approvalLevel: APPROVAL_LEVELS.COORDINATOR_REVIEW }));
-      expect(() => aggregate.validateSequence(null)).toThrow(ApprovalStageSequenceError);
+      const aggregate = CompletionApprovalAggregate.create(
+        createCommand({ approvalLevel: APPROVAL_LEVELS.COORDINATOR_REVIEW }),
+      );
+      expect(() => aggregate.validateSequence(null)).toThrow(
+        ApprovalStageSequenceError,
+      );
     });
 
     it('allows CoordinatorReview after TrainerRecommendation', () => {
-      const aggregate = CompletionApprovalAggregate.create(createCommand({ approvalLevel: APPROVAL_LEVELS.COORDINATOR_REVIEW }));
-      expect(() => aggregate.validateSequence(APPROVAL_LEVELS.TRAINER_RECOMMENDATION)).not.toThrow();
+      const aggregate = CompletionApprovalAggregate.create(
+        createCommand({ approvalLevel: APPROVAL_LEVELS.COORDINATOR_REVIEW }),
+      );
+      expect(() =>
+        aggregate.validateSequence(APPROVAL_LEVELS.TRAINER_RECOMMENDATION),
+      ).not.toThrow();
     });
 
     it('allows FinalApproval after CoordinatorReview', () => {
-      const aggregate = CompletionApprovalAggregate.create(createCommand({ approvalLevel: APPROVAL_LEVELS.FINAL_APPROVAL }));
-      expect(() => aggregate.validateSequence(APPROVAL_LEVELS.COORDINATOR_REVIEW)).not.toThrow();
+      const aggregate = CompletionApprovalAggregate.create(
+        createCommand({ approvalLevel: APPROVAL_LEVELS.FINAL_APPROVAL }),
+      );
+      expect(() =>
+        aggregate.validateSequence(APPROVAL_LEVELS.COORDINATOR_REVIEW),
+      ).not.toThrow();
     });
 
     it('throws when skipping levels', () => {
-      const aggregate = CompletionApprovalAggregate.create(createCommand({ approvalLevel: APPROVAL_LEVELS.FINAL_APPROVAL }));
-      expect(() => aggregate.validateSequence(APPROVAL_LEVELS.TRAINER_RECOMMENDATION)).toThrow(ApprovalStageSequenceError);
+      const aggregate = CompletionApprovalAggregate.create(
+        createCommand({ approvalLevel: APPROVAL_LEVELS.FINAL_APPROVAL }),
+      );
+      expect(() =>
+        aggregate.validateSequence(APPROVAL_LEVELS.TRAINER_RECOMMENDATION),
+      ).toThrow(ApprovalStageSequenceError);
     });
   });
 
   describe('validateActor', () => {
     it('passes when actor is eligible', () => {
       const aggregate = CompletionApprovalAggregate.create(createCommand());
-      expect(() => aggregate.validateActor(['trainer-1', 'trainer-2'])).not.toThrow();
+      expect(() =>
+        aggregate.validateActor(['trainer-1', 'trainer-2']),
+      ).not.toThrow();
     });
 
     it('throws when actor is not eligible', () => {
       const aggregate = CompletionApprovalAggregate.create(createCommand());
-      expect(() => aggregate.validateActor(['trainer-2', 'trainer-3'])).toThrow(ApprovalActorIneligibleError);
+      expect(() => aggregate.validateActor(['trainer-2', 'trainer-3'])).toThrow(
+        ApprovalActorIneligibleError,
+      );
     });
   });
 
   describe('act', () => {
-    const actCommand = (overrides?: Partial<ActOnApprovalCommand>): ActOnApprovalCommand => ({
+    const actCommand = (
+      overrides?: Partial<ActOnApprovalCommand>,
+    ): ActOnApprovalCommand => ({
       approvalId: 'approval-1',
       status: APPROVAL_STATUSES.APPROVED,
       remarks: 'Approved',
@@ -96,7 +130,12 @@ describe('CompletionApprovalAggregate', () => {
         isDeleted: false,
       };
       const aggregate = new CompletionApprovalAggregate(approval);
-      const updated = aggregate.act(actCommand({ status: APPROVAL_STATUSES.REJECTED, remarks: 'Not ready' }));
+      const updated = aggregate.act(
+        actCommand({
+          status: APPROVAL_STATUSES.REJECTED,
+          remarks: 'Not ready',
+        }),
+      );
       expect(updated.status).toBe(APPROVAL_STATUSES.REJECTED);
     });
 
@@ -112,7 +151,9 @@ describe('CompletionApprovalAggregate', () => {
         isDeleted: false,
       };
       const aggregate = new CompletionApprovalAggregate(approval);
-      expect(() => aggregate.act(actCommand({ actorId: 'trainer-2' }))).toThrow(ApprovalActorIneligibleError);
+      expect(() => aggregate.act(actCommand({ actorId: 'trainer-2' }))).toThrow(
+        ApprovalActorIneligibleError,
+      );
     });
 
     it('throws when already acted upon', () => {
@@ -128,7 +169,9 @@ describe('CompletionApprovalAggregate', () => {
         isDeleted: false,
       };
       const aggregate = new CompletionApprovalAggregate(approval);
-      expect(() => aggregate.act(actCommand())).toThrow(ApprovalInvalidStateError);
+      expect(() => aggregate.act(actCommand())).toThrow(
+        ApprovalInvalidStateError,
+      );
     });
 
     it('throws when status is invalid', () => {
@@ -143,7 +186,9 @@ describe('CompletionApprovalAggregate', () => {
         isDeleted: false,
       };
       const aggregate = new CompletionApprovalAggregate(approval);
-      expect(() => aggregate.act(actCommand({ status: 'Pending' as any }))).toThrow(ApprovalInvalidStateError);
+      expect(() =>
+        aggregate.act(actCommand({ status: 'Pending' as any })),
+      ).toThrow(ApprovalInvalidStateError);
     });
   });
 });

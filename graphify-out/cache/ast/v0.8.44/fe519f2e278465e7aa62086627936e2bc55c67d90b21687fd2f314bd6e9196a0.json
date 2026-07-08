@@ -1,1 +1,143 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md", "label": "design.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L1"}, {"id": "2026_07_04_implement_module_07_scheduling_design_context", "label": "Context", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L1"}, {"id": "2026_07_04_implement_module_07_scheduling_design_goals_non_goals", "label": "Goals / Non-Goals", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L5"}, {"id": "2026_07_04_implement_module_07_scheduling_design_decisions", "label": "Decisions", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L19"}, {"id": "2026_07_04_implement_module_07_scheduling_design_1_timetable_state_ownership", "label": "1. Timetable State Ownership", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L21"}, {"id": "2026_07_04_implement_module_07_scheduling_design_2_conflict_detection_strategy_sync_vs_async", "label": "2. Conflict Detection Strategy: Sync vs Async", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L26"}, {"id": "2026_07_04_implement_module_07_scheduling_design_3_hard_venue_blocks_vs_soft_holidays", "label": "3. \"Hard\" Venue Blocks vs \"Soft\" Holidays", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L30"}, {"id": "2026_07_04_implement_module_07_scheduling_design_4_the_conflict_dashboard_data_model", "label": "4. The Conflict Dashboard Data Model", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L34"}, {"id": "2026_07_04_implement_module_07_scheduling_design_risks_trade_offs", "label": "Risks / Trade-offs", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L38"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md", "target": "2026_07_04_implement_module_07_scheduling_design_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md", "target": "2026_07_04_implement_module_07_scheduling_design_goals_non_goals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L5", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md", "target": "2026_07_04_implement_module_07_scheduling_design_decisions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L19", "weight": 1.0}, {"source": "2026_07_04_implement_module_07_scheduling_design_decisions", "target": "2026_07_04_implement_module_07_scheduling_design_1_timetable_state_ownership", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L21", "weight": 1.0}, {"source": "2026_07_04_implement_module_07_scheduling_design_decisions", "target": "2026_07_04_implement_module_07_scheduling_design_2_conflict_detection_strategy_sync_vs_async", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L26", "weight": 1.0}, {"source": "2026_07_04_implement_module_07_scheduling_design_decisions", "target": "2026_07_04_implement_module_07_scheduling_design_3_hard_venue_blocks_vs_soft_holidays", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L30", "weight": 1.0}, {"source": "2026_07_04_implement_module_07_scheduling_design_decisions", "target": "2026_07_04_implement_module_07_scheduling_design_4_the_conflict_dashboard_data_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L34", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md", "target": "2026_07_04_implement_module_07_scheduling_design_risks_trade_offs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md", "source_location": "L38", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md",
+      "label": "design.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_context",
+      "label": "Context",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_goals_non_goals",
+      "label": "Goals / Non-Goals",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_decisions",
+      "label": "Decisions",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_1_timetable_state_ownership",
+      "label": "1. Timetable State Ownership",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_2_conflict_detection_strategy_sync_vs_async",
+      "label": "2. Conflict Detection Strategy: Sync vs Async",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_3_hard_venue_blocks_vs_soft_holidays",
+      "label": "3. \"Hard\" Venue Blocks vs \"Soft\" Holidays",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_4_the_conflict_dashboard_data_model",
+      "label": "4. The Conflict Dashboard Data Model",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "2026_07_04_implement_module_07_scheduling_design_risks_trade_offs",
+      "label": "Risks / Trade-offs",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L38"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md",
+      "target": "2026_07_04_implement_module_07_scheduling_design_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md",
+      "target": "2026_07_04_implement_module_07_scheduling_design_goals_non_goals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md",
+      "target": "2026_07_04_implement_module_07_scheduling_design_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_04_implement_module_07_scheduling_design_decisions",
+      "target": "2026_07_04_implement_module_07_scheduling_design_1_timetable_state_ownership",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_04_implement_module_07_scheduling_design_decisions",
+      "target": "2026_07_04_implement_module_07_scheduling_design_2_conflict_detection_strategy_sync_vs_async",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_04_implement_module_07_scheduling_design_decisions",
+      "target": "2026_07_04_implement_module_07_scheduling_design_3_hard_venue_blocks_vs_soft_holidays",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_04_implement_module_07_scheduling_design_decisions",
+      "target": "2026_07_04_implement_module_07_scheduling_design_4_the_conflict_dashboard_data_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_design_md",
+      "target": "2026_07_04_implement_module_07_scheduling_design_risks_trade_offs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/design.md",
+      "source_location": "L38",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

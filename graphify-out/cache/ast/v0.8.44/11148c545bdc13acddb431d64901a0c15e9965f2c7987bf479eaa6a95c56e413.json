@@ -1,1 +1,735 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_md", "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "label": "Part 8 - Reports, Dashboards, KPIs, Analytics", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_module_07_scheduling_calendar_holiday_management", "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L3"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_1_document_control", "label": "1. Document Control", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L5"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_2_reporting_principles", "label": "2. Reporting Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L20"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog", "label": "3. KPI Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L33"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_definitions", "label": "3.1 KPI Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L35"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_2_kpi_calculation_rules", "label": "3.2 KPI Calculation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L60"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "label": "4. Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L77"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_scheduling_dashboard", "label": "4.1 Admin Scheduling Dashboard", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L79"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_portal_dashboard_widgets", "label": "4.2 Trainer Portal Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L101"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets", "label": "4.3 Student Portal Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L114"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_4_executive_dashboard_widgets", "label": "4.4 Executive Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L126"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "label": "5. Operational Reports", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L141"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report", "label": "5.1 Daily Timetable Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L143"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters", "label": "Filters", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L154"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns", "label": "Columns", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L167"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_2_weekly_timetable_report", "label": "5.2 Weekly Timetable Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L189"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_3_monthly_calendar_report", "label": "5.3 Monthly Calendar Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L203"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report", "label": "5.4 Classroom Utilization Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L217"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters_227", "label": "Filters", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L227"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns_238", "label": "Columns", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L238"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_5_trainer_utilization_report", "label": "5.5 Trainer Utilization Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L255"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_6_conflict_and_override_report", "label": "5.6 Conflict and Override Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L267"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_7_holiday_and_closure_report", "label": "5.7 Holiday and Closure Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L281"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_8_venue_block_report", "label": "5.8 Venue Block Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L292"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_9_session_volume_by_course_and_batch_report", "label": "5.9 Session Volume by Course and Batch Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L303"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_10_draft_aging_report", "label": "5.10 Draft Aging Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L314"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_11_recurring_schedule_generation_report", "label": "5.11 Recurring Schedule Generation Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L325"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_12_schedule_change_history_report", "label": "5.12 Schedule Change History Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L336"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_13_student_timetable_coverage_report", "label": "5.13 Student Timetable Coverage Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L348"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_6_export_rules", "label": "6. Export Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L362"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "label": "7. Read Models and Reporting Views", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L377"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_1_view_reporting_vw_sch_session_fact", "label": "7.1 View: `reporting.vw_sch_session_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L379"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_2_view_reporting_vw_sch_conflict_fact", "label": "7.2 View: `reporting.vw_sch_conflict_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L446"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_3_view_reporting_vw_sch_override_fact", "label": "7.3 View: `reporting.vw_sch_override_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L452"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_4_view_reporting_vw_sch_change_fact", "label": "7.4 View: `reporting.vw_sch_change_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L458"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_5_view_reporting_vw_sch_classroom_utilization", "label": "7.5 View: `reporting.vw_sch_classroom_utilization`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L464"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_6_view_reporting_vw_sch_trainer_utilization", "label": "7.6 View: `reporting.vw_sch_trainer_utilization`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L478"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_7_materialized_view_reporting_mv_sch_30_minute_occupancy", "label": "7.7 Materialized View: `reporting.mv_sch_30_minute_occupancy`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L489"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_8_view_reporting_vw_sch_student_timetable_coverage", "label": "7.8 View: `reporting.vw_sch_student_timetable_coverage`", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L503"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_9_reporting_api_query_pattern", "label": "7.9 Reporting API Query Pattern", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L511"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_refresh_and_performance_requirements", "label": "8. Dashboard Refresh and Performance Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L533"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_9_empty_error_and_restricted_states_for_reporting", "label": "9. Empty, Error, and Restricted States for Reporting", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L547"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_10_cross_module_reporting_dependencies", "label": "10. Cross-Module Reporting Dependencies", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L561"}, {"id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_11_report_level_permission_summary", "label": "11. Report-Level Permission Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L577"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_md", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_module_07_scheduling_calendar_holiday_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L3", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_1_document_control", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L5", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_2_reporting_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L20", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L33", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_definitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L35", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_2_kpi_calculation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L60", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L77", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_scheduling_dashboard", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L79", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_portal_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L101", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L114", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_4_executive_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L126", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L141", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L143", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L154", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L167", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_2_weekly_timetable_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L189", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_3_monthly_calendar_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L203", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L217", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters_227", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L227", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns_238", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L238", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_5_trainer_utilization_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L255", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_6_conflict_and_override_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L267", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_7_holiday_and_closure_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L281", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_8_venue_block_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L292", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_9_session_volume_by_course_and_batch_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L303", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_10_draft_aging_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L314", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_11_recurring_schedule_generation_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L325", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_12_schedule_change_history_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L336", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_13_student_timetable_coverage_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L348", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_6_export_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L362", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L377", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_1_view_reporting_vw_sch_session_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L379", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_2_view_reporting_vw_sch_conflict_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L446", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_3_view_reporting_vw_sch_override_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L452", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_4_view_reporting_vw_sch_change_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L458", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_5_view_reporting_vw_sch_classroom_utilization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L464", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_6_view_reporting_vw_sch_trainer_utilization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L478", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_7_materialized_view_reporting_mv_sch_30_minute_occupancy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L489", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_8_view_reporting_vw_sch_student_timetable_coverage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L503", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_9_reporting_api_query_pattern", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L511", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_refresh_and_performance_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L533", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_9_empty_error_and_restricted_states_for_reporting", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L547", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_10_cross_module_reporting_dependencies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L561", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_11_report_level_permission_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L577", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_md",
+      "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "label": "Part 8 - Reports, Dashboards, KPIs, Analytics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_module_07_scheduling_calendar_holiday_management",
+      "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_1_document_control",
+      "label": "1. Document Control",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_2_reporting_principles",
+      "label": "2. Reporting Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog",
+      "label": "3. KPI Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_definitions",
+      "label": "3.1 KPI Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_2_kpi_calculation_rules",
+      "label": "3.2 KPI Calculation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "label": "4. Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_scheduling_dashboard",
+      "label": "4.1 Admin Scheduling Dashboard",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L79"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_portal_dashboard_widgets",
+      "label": "4.2 Trainer Portal Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L101"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets",
+      "label": "4.3 Student Portal Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L114"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_4_executive_dashboard_widgets",
+      "label": "4.4 Executive Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L126"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "label": "5. Operational Reports",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L141"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report",
+      "label": "5.1 Daily Timetable Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L143"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters",
+      "label": "Filters",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L154"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns",
+      "label": "Columns",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L167"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_2_weekly_timetable_report",
+      "label": "5.2 Weekly Timetable Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L189"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_3_monthly_calendar_report",
+      "label": "5.3 Monthly Calendar Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L203"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report",
+      "label": "5.4 Classroom Utilization Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L217"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters_227",
+      "label": "Filters",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L227"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns_238",
+      "label": "Columns",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L238"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_5_trainer_utilization_report",
+      "label": "5.5 Trainer Utilization Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L255"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_6_conflict_and_override_report",
+      "label": "5.6 Conflict and Override Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L267"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_7_holiday_and_closure_report",
+      "label": "5.7 Holiday and Closure Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L281"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_8_venue_block_report",
+      "label": "5.8 Venue Block Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L292"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_9_session_volume_by_course_and_batch_report",
+      "label": "5.9 Session Volume by Course and Batch Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L303"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_10_draft_aging_report",
+      "label": "5.10 Draft Aging Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L314"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_11_recurring_schedule_generation_report",
+      "label": "5.11 Recurring Schedule Generation Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L325"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_12_schedule_change_history_report",
+      "label": "5.12 Schedule Change History Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L336"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_13_student_timetable_coverage_report",
+      "label": "5.13 Student Timetable Coverage Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L348"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_6_export_rules",
+      "label": "6. Export Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L362"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "label": "7. Read Models and Reporting Views",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L377"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_1_view_reporting_vw_sch_session_fact",
+      "label": "7.1 View: `reporting.vw_sch_session_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L379"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_2_view_reporting_vw_sch_conflict_fact",
+      "label": "7.2 View: `reporting.vw_sch_conflict_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L446"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_3_view_reporting_vw_sch_override_fact",
+      "label": "7.3 View: `reporting.vw_sch_override_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L452"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_4_view_reporting_vw_sch_change_fact",
+      "label": "7.4 View: `reporting.vw_sch_change_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L458"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_5_view_reporting_vw_sch_classroom_utilization",
+      "label": "7.5 View: `reporting.vw_sch_classroom_utilization`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L464"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_6_view_reporting_vw_sch_trainer_utilization",
+      "label": "7.6 View: `reporting.vw_sch_trainer_utilization`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L478"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_7_materialized_view_reporting_mv_sch_30_minute_occupancy",
+      "label": "7.7 Materialized View: `reporting.mv_sch_30_minute_occupancy`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L489"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_8_view_reporting_vw_sch_student_timetable_coverage",
+      "label": "7.8 View: `reporting.vw_sch_student_timetable_coverage`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L503"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_9_reporting_api_query_pattern",
+      "label": "7.9 Reporting API Query Pattern",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L511"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_refresh_and_performance_requirements",
+      "label": "8. Dashboard Refresh and Performance Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L533"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_9_empty_error_and_restricted_states_for_reporting",
+      "label": "9. Empty, Error, and Restricted States for Reporting",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L547"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_10_cross_module_reporting_dependencies",
+      "label": "10. Cross-Module Reporting Dependencies",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L561"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_11_report_level_permission_summary",
+      "label": "11. Report-Level Permission Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L577"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_module_07_scheduling_calendar_holiday_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_1_document_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_2_reporting_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_definitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_3_2_kpi_calculation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_scheduling_dashboard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_portal_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_4_4_executive_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L126",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L143",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_1_daily_timetable_report",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_2_weekly_timetable_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_3_monthly_calendar_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_filters_227",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L227",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_4_classroom_utilization_report",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_columns_238",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_5_trainer_utilization_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_6_conflict_and_override_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L267",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_7_holiday_and_closure_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_8_venue_block_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L292",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_9_session_volume_by_course_and_batch_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L303",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_10_draft_aging_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L314",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_11_recurring_schedule_generation_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_12_schedule_change_history_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_5_13_student_timetable_coverage_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L348",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_6_export_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L377",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_1_view_reporting_vw_sch_session_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_2_view_reporting_vw_sch_conflict_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L446",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_3_view_reporting_vw_sch_override_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_4_view_reporting_vw_sch_change_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L458",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_5_view_reporting_vw_sch_classroom_utilization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L464",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_6_view_reporting_vw_sch_trainer_utilization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L478",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_7_materialized_view_reporting_mv_sch_30_minute_occupancy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L489",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_8_view_reporting_vw_sch_student_timetable_coverage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L503",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_7_9_reporting_api_query_pattern",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L511",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_refresh_and_performance_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L533",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_9_empty_error_and_restricted_states_for_reporting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L547",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_10_cross_module_reporting_dependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L561",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_8_reports_dashboards_kpis_analytics_11_report_level_permission_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L577",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

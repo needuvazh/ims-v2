@@ -3,7 +3,11 @@
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { assertPermission, getSession } from '../../lib/auth-guard';
-import { CreateCourseSchema, UpdateCourseSchema, CreateCategorySchema } from '@ims/course-catalog';
+import {
+  CreateCourseSchema,
+  UpdateCourseSchema,
+  CreateCategorySchema,
+} from '@ims/course-catalog';
 import { prisma } from '@ims/database';
 
 export async function createCourseAction(data: any) {
@@ -23,7 +27,11 @@ export async function createCourseAction(data: any) {
   }
 }
 
-export async function updateCourseAction(id: string, version: number, data: any) {
+export async function updateCourseAction(
+  id: string,
+  version: number,
+  data: any,
+) {
   try {
     await assertPermission('course.catalog.update');
     const session = await getSession();
@@ -31,7 +39,12 @@ export async function updateCourseAction(id: string, version: number, data: any)
     const parsed = UpdateCourseSchema.parse(data);
 
     const { courseService } = await import('../../lib/runtime');
-    const result = await courseService.updateCourse(id, parsed, version, session.userId);
+    const result = await courseService.updateCourse(
+      id,
+      parsed,
+      version,
+      session.userId,
+    );
 
     revalidatePath('/courses-catalog');
     revalidatePath(`/courses-catalog/${id}`);
@@ -41,14 +54,26 @@ export async function updateCourseAction(id: string, version: number, data: any)
   }
 }
 
-export async function transitionCourseStatusAction(id: string, targetStatus: string, version: number) {
+export async function transitionCourseStatusAction(
+  id: string,
+  targetStatus: string,
+  version: number,
+) {
   try {
-    const requiredPermission = targetStatus === 'Archived' ? 'course.catalog.archive' : 'course.catalog.publish';
+    const requiredPermission =
+      targetStatus === 'Archived'
+        ? 'course.catalog.archive'
+        : 'course.catalog.publish';
     await assertPermission(requiredPermission);
     const session = await getSession();
 
     const { courseService } = await import('../../lib/runtime');
-    const result = await courseService.transitionCourseStatus(id, targetStatus, version, session.userId);
+    const result = await courseService.transitionCourseStatus(
+      id,
+      targetStatus,
+      version,
+      session.userId,
+    );
 
     revalidatePath('/courses-catalog');
     revalidatePath(`/courses-catalog/${id}`);
@@ -88,31 +113,62 @@ function buildCourseActionFailure(error: any) {
   const message = error?.message || 'An unknown error occurred';
 
   if (message.includes('ERR_CRS_DUPLICATE_CODE')) {
-    return { success: false as const, error: 'A course with this code already exists.' };
+    return {
+      success: false as const,
+      error: 'A course with this code already exists.',
+    };
   }
   if (message.includes('ERR_CRS_DUPLICATE_NAME')) {
-    return { success: false as const, error: 'A course with this name already exists in this department.' };
+    return {
+      success: false as const,
+      error: 'A course with this name already exists in this department.',
+    };
   }
   if (message.includes('ERR_CRS_INVALID_CODE_FORMAT')) {
-    return { success: false as const, error: 'Course code must be uppercase alphanumeric and between 3 to 20 characters.' };
+    return {
+      success: false as const,
+      error:
+        'Course code must be uppercase alphanumeric and between 3 to 20 characters.',
+    };
   }
   if (message.includes('ERR_CRS_INVALID_DATE_RANGE')) {
-    return { success: false as const, error: 'Effective end date must be after effective start date.' };
+    return {
+      success: false as const,
+      error: 'Effective end date must be after effective start date.',
+    };
   }
   if (message.includes('ERR_CRS_CYCLIC_CATEGORY')) {
-    return { success: false as const, error: 'Cyclic parent-child hierarchy detected in categories.' };
+    return {
+      success: false as const,
+      error: 'Cyclic parent-child hierarchy detected in categories.',
+    };
   }
   if (message.includes('ERR_CRS_ACTIVE_COURSE_LOCKED')) {
-    return { success: false as const, error: 'Classification or duration cannot be changed on a published course with active batches.' };
+    return {
+      success: false as const,
+      error:
+        'Classification or duration cannot be changed on a published course with active batches.',
+    };
   }
   if (message.includes('ERR_CRS_MISSING_PRICING_OR_RULES')) {
-    return { success: false as const, error: 'A course must have at least one active pricing rule and one active completion rule configured to be published.' };
+    return {
+      success: false as const,
+      error:
+        'A course must have at least one active pricing rule and one active completion rule configured to be published.',
+    };
   }
   if (message.includes('ERR_CRS_ACTIVE_BATCHES_EXIST')) {
-    return { success: false as const, error: 'Cannot archive course with active batches in OpenForEnrollment or InProgress status.' };
+    return {
+      success: false as const,
+      error:
+        'Cannot archive course with active batches in OpenForEnrollment or InProgress status.',
+    };
   }
   if (message.includes('ERR_CRS_INVALID_ARABIC_SCRIPT')) {
-    return { success: false as const, error: 'Arabic name or description must contain only Arabic characters.' };
+    return {
+      success: false as const,
+      error: 'Arabic name or description must contain only Arabic characters.',
+    };
   }
 
   return {

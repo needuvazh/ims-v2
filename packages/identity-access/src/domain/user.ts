@@ -60,18 +60,23 @@ export interface User {
 }
 
 // Password Complexity is governed by PasswordPolicy, but we can have a basic Zod schema as validation guard.
-export const passwordSchema = z.string()
+export const passwordSchema = z
+  .string()
   .min(12, 'Password must be at least 12 characters long');
 
 export const createUserCommandSchema = z.object({
   firstName: z.string().trim().min(2).max(100).optional(),
   lastName: z.string().trim().min(2).max(100).optional(),
-  mobile: z.string().trim().regex(/^\+?[0-9\-\s]{8,20}$/, 'Invalid mobile phone format').optional(),
+  mobile: z
+    .string()
+    .trim()
+    .regex(/^\+?[0-9\-\s]{8,20}$/, 'Invalid mobile phone format')
+    .optional(),
   nationalId: z.string().trim().nullable().optional(),
   nationality: z.string().trim().nullable().optional(),
   dateOfBirth: z.coerce.date().nullable().optional(),
   gender: z.string().trim().nullable().optional(),
-  
+
   // Legacy fields
   fullName: z.string().trim().optional(),
   phone: z.string().trim().nullable().optional(),
@@ -83,7 +88,7 @@ export const createUserCommandSchema = z.object({
   branchIds: z.array(z.string().uuid()).optional(),
   defaultBranchId: z.string().uuid().nullable().optional(),
   preferredLanguage: z.string().default('en').optional(),
-  
+
   // Extra legacy fields
   status: z.string().optional(),
   assignedOnly: z.boolean().optional(),
@@ -94,12 +99,16 @@ export const createUserCommandSchema = z.object({
 export const updateUserCommandSchema = z.object({
   firstName: z.string().trim().min(2).max(100).optional(),
   lastName: z.string().trim().min(2).max(100).optional(),
-  mobile: z.string().trim().regex(/^\+?[0-9\-\s]{8,20}$/).optional(),
+  mobile: z
+    .string()
+    .trim()
+    .regex(/^\+?[0-9\-\s]{8,20}$/)
+    .optional(),
   nationalId: z.string().trim().nullable().optional(),
   nationality: z.string().trim().nullable().optional(),
   dateOfBirth: z.coerce.date().nullable().optional(),
   gender: z.string().trim().nullable().optional(),
-  
+
   // Legacy fields
   fullName: z.string().trim().optional(),
   phone: z.string().trim().nullable().optional(),
@@ -128,7 +137,9 @@ export type UserListFilters = {
   search?: string;
 };
 
-const allowedUserStatusTransitions: Readonly<Record<UserStatus, readonly UserStatus[]>> = {
+const allowedUserStatusTransitions: Readonly<
+  Record<UserStatus, readonly UserStatus[]>
+> = {
   PendingActivation: ['Active', 'Archived'],
   Active: ['Locked', 'Suspended', 'Archived'],
   Locked: ['Active', 'Suspended', 'Archived'],
@@ -136,11 +147,17 @@ const allowedUserStatusTransitions: Readonly<Record<UserStatus, readonly UserSta
   Archived: [],
 };
 
-export function canTransitionUserStatus(from: UserStatus, to: UserStatus): boolean {
+export function canTransitionUserStatus(
+  from: UserStatus,
+  to: UserStatus,
+): boolean {
   return allowedUserStatusTransitions[from].includes(to);
 }
 
-export function assertUserStatusTransition(from: UserStatus, to: UserStatus): void {
+export function assertUserStatusTransition(
+  from: UserStatus,
+  to: UserStatus,
+): void {
   if (!canTransitionUserStatus(from, to)) {
     throw new Error(`Invalid user status transition from ${from} to ${to}.`);
   }

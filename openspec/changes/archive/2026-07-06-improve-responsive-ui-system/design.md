@@ -9,6 +9,7 @@ This change introduces a small responsive design system that the existing compon
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Make shared UI responsive by default across mobile, tablet, laptop, and wide desktop widths.
 - Replace ad hoc spacing and typography choices with shared tokens and semantic classes.
 - Keep the admin shell, page headers, cards, tables, filters, and public hero sections visually consistent.
@@ -16,6 +17,7 @@ This change introduces a small responsive design system that the existing compon
 - Add measurable acceptance criteria for responsive QA.
 
 **Non-Goals:**
+
 - No backend/domain changes.
 - No new design system package or third-party UI framework.
 - No redesign of brand identity or content strategy.
@@ -24,17 +26,20 @@ This change introduces a small responsive design system that the existing compon
 ## Responsive Rules
 
 ### Breakpoints
+
 - Mobile: `320px–639px`
 - Tablet: `640px–1023px`
 - Laptop: `1024px–1439px`
 - Wide desktop: `1440px+`
 
 ### Density Modes
+
 - `compact`: dashboard, list, and table-heavy admin screens.
 - `standard`: forms, detail pages, settings, and account screens.
 - `hero`: public marketing pages and public landing sections.
 
 ### Spacing Rules
+
 - Page container: `px-4 sm:px-6 lg:px-8`
 - Admin section spacing: `space-y-4 sm:space-y-5 lg:space-y-6`
 - Standard card padding: `p-4 sm:p-5 lg:p-6`
@@ -43,30 +48,36 @@ This change introduces a small responsive design system that the existing compon
 - Fixed large paddings such as `px-8`, `py-20`, and `py-28` are allowed only in `hero` sections or when explicitly justified.
 
 ### Typography Rules
+
 - Use semantic typography tokens for page titles, section titles, card values, and hero titles.
 - Prefer fluid sizing through `clamp()`-based utilities or equivalent tokenized classes.
 - Raw `text-5xl`, `text-6xl`, and `text-7xl` must not be used for normal admin page headings.
 - Large display text is allowed only in `hero` density mode.
 
 ### Page Templates
+
 Standardize layouts into the following reusable wrappers in `packages/shared-ui`:
+
 - `AdminListPageLayout`: `PageHeader` > `FilterBar` > `Card(Table)` or `List`.
 - `AdminFormPageLayout`: `PageHeader` > Single or Multi-column Form Grid.
 - `AdminDetailPageLayout`: `PageHeader` > Main Content Section + Optional Related Sidebar.
 - `PublicLandingLayout`: `PublicShell` > `HeroSection` > `SectionHeading` > `ContentGrid` > `CTA`.
 
 ### Form & Detail Stacking Rules
+
 - Form field groups SHALL default to `grid-cols-1`.
 - Use `sm:grid-cols-2` or `lg:grid-cols-3` only for naturally paired fields (e.g., First Name / Last Name).
 - Detail sidebars SHALL stack below main content on `Mobile` and `Tablet` viewports, and sit side-by-side on `Laptop+`.
 
 ### Shell Rules
+
 - Desktop sidebar remains fixed on large screens.
 - Mobile navigation remains drawer-based.
 - Header height SHALL reduce from `h-20` (desktop) to `h-16` (tablet/mobile).
 - Shell controls must collapse earlier on tablet widths if horizontal pressure appears.
 
 ### Table Rules
+
 - Desktop: normal table layout.
 - Tablet: horizontal scrolling is acceptable.
 - Mobile: either horizontal scroll or card-style row presentation must be used.
@@ -105,5 +116,6 @@ Standardize layouts into the following reusable wrappers in `packages/shared-ui`
 6. Add responsive QA checks for the standard viewport set.
 
 Rollback/mitigation:
+
 - Revert shared token and primitive changes if they cause broad regressions.
 - Because the change is presentation-only, rollback does not require database or backend mitigation.

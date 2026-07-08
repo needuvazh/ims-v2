@@ -14,11 +14,12 @@ export default async function AdmissionDetailPage(props: {
   // Enforce read permission
   const session = await assertPermission('admission.read');
 
-  const { branchScopeResolver, admissionQueryService } = await import('@/lib/runtime');
+  const { branchScopeResolver, admissionQueryService } =
+    await import('@/lib/runtime');
 
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   let mappedDetail: AdmissionDetail | null = null;
@@ -26,7 +27,7 @@ export default async function AdmissionDetailPage(props: {
   try {
     const detail = await admissionQueryService.getAdmissionDetail(
       admissionId,
-      allowedBranchIds.map((id) => id as string)
+      allowedBranchIds.map((id) => id as string),
     );
 
     // Parse values for client component
@@ -41,6 +42,19 @@ export default async function AdmissionDetailPage(props: {
         documents: detail.admission.documents.map((doc) => ({
           ...doc,
           verifiedAt: doc.verifiedAt?.toISOString() || null,
+        })),
+        enrollments: (
+          (detail.admission.studentProfile as any)?.enrollments || []
+        ).map((enr: any) => ({
+          id: enr.id,
+          enrollmentNumber: enr.enrollmentNumber,
+          courseName: enr.course.nameEnglish,
+          batchCode: enr.batch.batchCode,
+          branchName: enr.branch.branchName,
+          enrollmentStatus: enr.enrollmentStatus,
+          enrolledAt: enr.createdAt
+            ? new Date(enr.createdAt).toISOString()
+            : new Date().toISOString(),
         })),
       },
       history: detail.history.map((h) => ({
@@ -58,13 +72,26 @@ export default async function AdmissionDetailPage(props: {
       return (
         <div className="flex flex-col items-center justify-center min-h-[400px] p-6 text-center">
           <div className="rounded-full bg-rose-50 p-3 text-rose-600 mb-4 border border-rose-100">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-slate-800 mb-2">Access Denied</h2>
+          <h2 className="text-xl font-semibold text-slate-800 mb-2">
+            Access Denied
+          </h2>
           <p className="text-sm text-slate-600 max-w-md">
-            You do not have permission to view this admission record because it belongs to another branch.
+            You do not have permission to view this admission record because it
+            belongs to another branch.
           </p>
         </div>
       );

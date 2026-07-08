@@ -17,14 +17,18 @@ export default async function CrmDashboardPage() {
   });
 
   // 1. Authorize user completely lacking CRM Dashboard permissions
-  const hasCrmDashboardPermission = session.permissions.includes('REPORTING_VIEW_CRM_DASHBOARD');
+  const hasCrmDashboardPermission = session.permissions.includes(
+    'REPORTING_VIEW_CRM_DASHBOARD',
+  );
   if (!hasCrmDashboardPermission) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-4 text-center">
         <ShieldAlert className="h-16 w-16 text-rose-500 animate-bounce" />
         <h2 className="text-2xl font-bold text-slate-900">Access Denied</h2>
         <p className="text-slate-500 max-w-md">
-          You do not have the required permissions (`REPORTING_VIEW_CRM_DASHBOARD`) to view the CRM Dashboard. Please contact your administrator.
+          You do not have the required permissions
+          (`REPORTING_VIEW_CRM_DASHBOARD`) to view the CRM Dashboard. Please
+          contact your administrator.
         </p>
       </div>
     );
@@ -32,7 +36,7 @@ export default async function CrmDashboardPage() {
 
   // 2. Call the query service to fetch widgets data
   const { crmDashboardQueryService } = await import('../../../lib/runtime');
-  
+
   // Construct UserContext
   const userContext = {
     userId: session.userId,
@@ -44,14 +48,17 @@ export default async function CrmDashboardPage() {
   try {
     widgets = await crmDashboardQueryService.getCrmDashboardData(userContext);
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'An error occurred while loading dashboard metrics.';
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'An error occurred while loading dashboard metrics.';
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-4 text-center">
         <ShieldAlert className="h-16 w-16 text-rose-500" />
-        <h2 className="text-2xl font-bold text-slate-900">Authorization Failure</h2>
-        <p className="text-slate-500 max-w-md">
-          {message}
-        </p>
+        <h2 className="text-2xl font-bold text-slate-900">
+          Authorization Failure
+        </h2>
+        <p className="text-slate-500 max-w-md">{message}</p>
       </div>
     );
   }
@@ -83,7 +90,11 @@ export default async function CrmDashboardPage() {
         title: string;
         description?: string;
         ariaLabel: string;
-        data: Array<{ counselorId: string | null; counselorName: string; convertedCount: number }>;
+        data: Array<{
+          counselorId: string | null;
+          counselorName: string;
+          convertedCount: number;
+        }>;
       }
     | {
         id: 'leads-vs-targets';
@@ -96,11 +107,21 @@ export default async function CrmDashboardPage() {
   const typedWidgets = widgets as CrmWidget[];
 
   // Find widgets
-  const conversionRateWidget = typedWidgets.find((w) => w.id === 'lead-conversion-rate');
-  const leadsVsTargetsWidget = typedWidgets.find((w) => w.id === 'leads-vs-targets');
-  const statusDistributionWidget = typedWidgets.find((w) => w.id === 'lead-status-distribution');
-  const leadsBySourceWidget = typedWidgets.find((w) => w.id === 'leads-by-source');
-  const counselorPerformanceWidget = typedWidgets.find((w) => w.id === 'counselor-performance');
+  const conversionRateWidget = typedWidgets.find(
+    (w) => w.id === 'lead-conversion-rate',
+  );
+  const leadsVsTargetsWidget = typedWidgets.find(
+    (w) => w.id === 'leads-vs-targets',
+  );
+  const statusDistributionWidget = typedWidgets.find(
+    (w) => w.id === 'lead-status-distribution',
+  );
+  const leadsBySourceWidget = typedWidgets.find(
+    (w) => w.id === 'leads-by-source',
+  );
+  const counselorPerformanceWidget = typedWidgets.find(
+    (w) => w.id === 'counselor-performance',
+  );
 
   return (
     <div className="space-y-8">
@@ -110,9 +131,12 @@ export default async function CrmDashboardPage() {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-indigo-250">
             Analytics & Reports
           </span>
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight">CRM Analytics Dashboard</h1>
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight">
+            CRM Analytics Dashboard
+          </h1>
           <p className="text-sm text-indigo-200 max-w-xl">
-            Live conversion rates, pipeline stages, status distributions, and team performance scoped to your branch.
+            Live conversion rates, pipeline stages, status distributions, and
+            team performance scoped to your branch.
           </p>
         </div>
       </div>
@@ -168,7 +192,9 @@ export default async function CrmDashboardPage() {
               description={counselorPerformanceWidget.description}
               ariaLabel={counselorPerformanceWidget.ariaLabel}
             >
-              <CounselorPerformanceChart data={counselorPerformanceWidget.data} />
+              <CounselorPerformanceChart
+                data={counselorPerformanceWidget.data}
+              />
             </ChartWidget>
           </div>
         )}

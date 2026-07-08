@@ -7,7 +7,9 @@ import {
 
 describe('native validation helpers', () => {
   it('builds a label-specific required message', () => {
-    expect(buildRequiredFieldMessage('Email Address')).toBe('Email Address is required.');
+    expect(buildRequiredFieldMessage('Email Address')).toBe(
+      'Email Address is required.',
+    );
   });
 
   it('falls back to a generic required message when the label is missing', () => {
@@ -27,7 +29,9 @@ describe('native validation helpers', () => {
     } as Parameters<typeof handlers.onInvalidCapture>[0]);
     expect(setCustomValidity).toHaveBeenCalledWith('Password is required.');
 
-    handlers.onInput({ currentTarget: input } as Parameters<typeof handlers.onInput>[0]);
+    handlers.onInput({ currentTarget: input } as Parameters<
+      typeof handlers.onInput
+    >[0]);
     expect(setCustomValidity).toHaveBeenLastCalledWith('');
   });
 
@@ -39,6 +43,8 @@ describe('native validation helpers', () => {
     } as unknown as HTMLInputElement;
 
     expect(validateRequiredInput(input, 'Email Address')).toBe(false);
-    expect(setCustomValidity).toHaveBeenCalledWith('Email Address is required.');
+    expect(setCustomValidity).toHaveBeenCalledWith(
+      'Email Address is required.',
+    );
   });
 });

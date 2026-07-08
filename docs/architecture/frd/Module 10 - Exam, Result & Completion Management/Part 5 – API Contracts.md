@@ -216,20 +216,20 @@ Recommended error:
 
 ## 3.3 Common HTTP Status Mapping
 
-| HTTP | Error Code Category | Meaning |
-|---|---|---|
-| 400 | `VALIDATION_ERROR` | Request validation failed |
-| 401 | `UNAUTHENTICATED` | No valid session |
-| 403 | `FORBIDDEN` | Permission or branch scope denied |
-| 404 | `NOT_FOUND` | Entity not found within authorized scope |
-| 409 | `CONCURRENCY_CONFLICT` | Version mismatch |
-| 409 | `DUPLICATE_RESOURCE` | Unique/business duplicate |
-| 409 | `INVALID_STATE_TRANSITION` | Entity state does not allow action |
-| 422 | `BUSINESS_RULE_VIOLATION` | Domain invariant failed |
-| 424 | `DEPENDENCY_VALIDATION_FAILED` | Required cross-context validation unavailable or failed |
-| 429 | `RATE_LIMITED` | Platform rate limit |
-| 500 | `INTERNAL_ERROR` | Unexpected error without data leakage |
-| 503 | `DEPENDENCY_UNAVAILABLE` | Required dependency temporarily unavailable |
+| HTTP | Error Code Category            | Meaning                                                 |
+| ---- | ------------------------------ | ------------------------------------------------------- |
+| 400  | `VALIDATION_ERROR`             | Request validation failed                               |
+| 401  | `UNAUTHENTICATED`              | No valid session                                        |
+| 403  | `FORBIDDEN`                    | Permission or branch scope denied                       |
+| 404  | `NOT_FOUND`                    | Entity not found within authorized scope                |
+| 409  | `CONCURRENCY_CONFLICT`         | Version mismatch                                        |
+| 409  | `DUPLICATE_RESOURCE`           | Unique/business duplicate                               |
+| 409  | `INVALID_STATE_TRANSITION`     | Entity state does not allow action                      |
+| 422  | `BUSINESS_RULE_VIOLATION`      | Domain invariant failed                                 |
+| 424  | `DEPENDENCY_VALIDATION_FAILED` | Required cross-context validation unavailable or failed |
+| 429  | `RATE_LIMITED`                 | Platform rate limit                                     |
+| 500  | `INTERNAL_ERROR`               | Unexpected error without data leakage                   |
+| 503  | `DEPENDENCY_UNAVAILABLE`       | Required dependency temporarily unavailable             |
 
 ---
 
@@ -237,68 +237,68 @@ Recommended error:
 
 ## 4.1 Exam Endpoints
 
-| ID | Method | Route | Purpose |
-|---|---|---|---|
-| API-EXC-001 | GET | `/api/v1/exams-completion/exams` | Search Exams |
-| API-EXC-002 | POST | `/api/v1/exams-completion/exams` | Create Exam |
-| API-EXC-003 | GET | `/api/v1/exams-completion/exams/{examId}` | Get Exam detail |
-| API-EXC-004 | PATCH | `/api/v1/exams-completion/exams/{examId}` | Update editable Exam fields |
-| API-EXC-005 | POST | `/api/v1/exams-completion/exams/{examId}/schedule` | Schedule/reschedule Exam |
-| API-EXC-006 | POST | `/api/v1/exams-completion/exams/{examId}/activate` | Open Exam for result entry |
-| API-EXC-007 | POST | `/api/v1/exams-completion/exams/{examId}/close` | Close Exam |
-| API-EXC-008 | POST | `/api/v1/exams-completion/exams/{examId}/cancel` | Cancel Exam |
-| API-EXC-009 | POST | `/api/v1/exams-completion/exams/{examId}/archive` | Soft archive/deactivate Exam |
+| ID          | Method | Route                                              | Purpose                      |
+| ----------- | ------ | -------------------------------------------------- | ---------------------------- |
+| API-EXC-001 | GET    | `/api/v1/exams-completion/exams`                   | Search Exams                 |
+| API-EXC-002 | POST   | `/api/v1/exams-completion/exams`                   | Create Exam                  |
+| API-EXC-003 | GET    | `/api/v1/exams-completion/exams/{examId}`          | Get Exam detail              |
+| API-EXC-004 | PATCH  | `/api/v1/exams-completion/exams/{examId}`          | Update editable Exam fields  |
+| API-EXC-005 | POST   | `/api/v1/exams-completion/exams/{examId}/schedule` | Schedule/reschedule Exam     |
+| API-EXC-006 | POST   | `/api/v1/exams-completion/exams/{examId}/activate` | Open Exam for result entry   |
+| API-EXC-007 | POST   | `/api/v1/exams-completion/exams/{examId}/close`    | Close Exam                   |
+| API-EXC-008 | POST   | `/api/v1/exams-completion/exams/{examId}/cancel`   | Cancel Exam                  |
+| API-EXC-009 | POST   | `/api/v1/exams-completion/exams/{examId}/archive`  | Soft archive/deactivate Exam |
 
 ## 4.2 Result Endpoints
 
-| ID | Method | Route | Purpose |
-|---|---|---|---|
-| API-EXC-010 | GET | `/api/v1/exams-completion/exams/{examId}/result-roster` | Get eligible result-entry roster |
-| API-EXC-011 | PUT | `/api/v1/exams-completion/exams/{examId}/results/{enrollmentId}` | Record/update one Result |
-| API-EXC-012 | POST | `/api/v1/exams-completion/exams/{examId}/results/bulk/validate` | Validate bulk result payload |
-| API-EXC-013 | POST | `/api/v1/exams-completion/exams/{examId}/results/bulk` | Submit bulk Results |
-| API-EXC-014 | GET | `/api/v1/exams-completion/results/{resultId}` | Get Result detail |
-| API-EXC-015 | POST | `/api/v1/exams-completion/results/{resultId}/finalize` | Finalize one Result |
-| API-EXC-016 | POST | `/api/v1/exams-completion/exams/{examId}/results/finalize` | Finalize selected Result set |
-| API-EXC-017 | POST | `/api/v1/exams-completion/results/{resultId}/correct` | Correct finalized Result |
+| ID          | Method | Route                                                            | Purpose                          |
+| ----------- | ------ | ---------------------------------------------------------------- | -------------------------------- |
+| API-EXC-010 | GET    | `/api/v1/exams-completion/exams/{examId}/result-roster`          | Get eligible result-entry roster |
+| API-EXC-011 | PUT    | `/api/v1/exams-completion/exams/{examId}/results/{enrollmentId}` | Record/update one Result         |
+| API-EXC-012 | POST   | `/api/v1/exams-completion/exams/{examId}/results/bulk/validate`  | Validate bulk result payload     |
+| API-EXC-013 | POST   | `/api/v1/exams-completion/exams/{examId}/results/bulk`           | Submit bulk Results              |
+| API-EXC-014 | GET    | `/api/v1/exams-completion/results/{resultId}`                    | Get Result detail                |
+| API-EXC-015 | POST   | `/api/v1/exams-completion/results/{resultId}/finalize`           | Finalize one Result              |
+| API-EXC-016 | POST   | `/api/v1/exams-completion/exams/{examId}/results/finalize`       | Finalize selected Result set     |
+| API-EXC-017 | POST   | `/api/v1/exams-completion/results/{resultId}/correct`            | Correct finalized Result         |
 
 ## 4.3 Completion Endpoints
 
-| ID | Method | Route | Purpose |
-|---|---|---|---|
-| API-EXC-018 | GET | `/api/v1/exams-completion/completions` | Search completion records |
-| API-EXC-019 | GET | `/api/v1/exams-completion/completions/{courseCompletionId}` | Get completion detail |
-| API-EXC-020 | GET | `/api/v1/exams-completion/enrollments/{enrollmentId}/completion-evaluation` | Get evaluation evidence |
-| API-EXC-021 | POST | `/api/v1/exams-completion/enrollments/{enrollmentId}/completion-evaluate` | Evaluate completion |
-| API-EXC-022 | POST | `/api/v1/exams-completion/completions/{courseCompletionId}/reevaluate` | Reevaluate completion |
-| API-EXC-023 | GET | `/api/v1/exams-completion/completions/{courseCompletionId}/approval-timeline` | Get completion approval timeline |
+| ID          | Method | Route                                                                         | Purpose                          |
+| ----------- | ------ | ----------------------------------------------------------------------------- | -------------------------------- |
+| API-EXC-018 | GET    | `/api/v1/exams-completion/completions`                                        | Search completion records        |
+| API-EXC-019 | GET    | `/api/v1/exams-completion/completions/{courseCompletionId}`                   | Get completion detail            |
+| API-EXC-020 | GET    | `/api/v1/exams-completion/enrollments/{enrollmentId}/completion-evaluation`   | Get evaluation evidence          |
+| API-EXC-021 | POST   | `/api/v1/exams-completion/enrollments/{enrollmentId}/completion-evaluate`     | Evaluate completion              |
+| API-EXC-022 | POST   | `/api/v1/exams-completion/completions/{courseCompletionId}/reevaluate`        | Reevaluate completion            |
+| API-EXC-023 | GET    | `/api/v1/exams-completion/completions/{courseCompletionId}/approval-timeline` | Get completion approval timeline |
 
 ## 4.4 Approval Endpoints
 
-| ID | Method | Route | Purpose |
-|---|---|---|---|
-| API-EXC-024 | POST | `/api/v1/exams-completion/completions/{id}/trainer-recommendation/approve` | Trainer recommends completion |
-| API-EXC-025 | POST | `/api/v1/exams-completion/completions/{id}/trainer-recommendation/reject` | Trainer does not recommend |
-| API-EXC-026 | POST | `/api/v1/exams-completion/completions/{id}/coordinator-review/approve` | Coordinator approves review |
-| API-EXC-027 | POST | `/api/v1/exams-completion/completions/{id}/coordinator-review/reject` | Coordinator rejects |
-| API-EXC-028 | POST | `/api/v1/exams-completion/completions/{id}/final-approval/approve` | Final completion approval |
-| API-EXC-029 | POST | `/api/v1/exams-completion/completions/{id}/final-approval/reject` | Final completion rejection |
+| ID          | Method | Route                                                                      | Purpose                       |
+| ----------- | ------ | -------------------------------------------------------------------------- | ----------------------------- |
+| API-EXC-024 | POST   | `/api/v1/exams-completion/completions/{id}/trainer-recommendation/approve` | Trainer recommends completion |
+| API-EXC-025 | POST   | `/api/v1/exams-completion/completions/{id}/trainer-recommendation/reject`  | Trainer does not recommend    |
+| API-EXC-026 | POST   | `/api/v1/exams-completion/completions/{id}/coordinator-review/approve`     | Coordinator approves review   |
+| API-EXC-027 | POST   | `/api/v1/exams-completion/completions/{id}/coordinator-review/reject`      | Coordinator rejects           |
+| API-EXC-028 | POST   | `/api/v1/exams-completion/completions/{id}/final-approval/approve`         | Final completion approval     |
+| API-EXC-029 | POST   | `/api/v1/exams-completion/completions/{id}/final-approval/reject`          | Final completion rejection    |
 
 ## 4.5 Queue, Search, Audit, and Export Endpoints
 
-| ID | Method | Route | Purpose |
-|---|---|---|---|
-| API-EXC-030 | GET | `/api/v1/exams-completion/queues/work` | Unified pending work queue |
-| API-EXC-031 | GET | `/api/v1/exams-completion/queues/missing-results` | Missing Results queue |
-| API-EXC-032 | GET | `/api/v1/exams-completion/queues/completion-evaluation` | Pending completion evaluation queue |
-| API-EXC-033 | GET | `/api/v1/exams-completion/queues/trainer-recommendation` | Pending trainer recommendation queue |
-| API-EXC-034 | GET | `/api/v1/exams-completion/queues/coordinator-review` | Pending coordinator review queue |
-| API-EXC-035 | GET | `/api/v1/exams-completion/queues/final-approval` | Pending final approval queue |
-| API-EXC-036 | GET | `/api/v1/exams-completion/queues/reevaluation` | Reevaluation/exception queue |
-| API-EXC-037 | GET | `/api/v1/exams-completion/search` | Cross-entity academic outcome search |
-| API-EXC-038 | GET | `/api/v1/exams-completion/entities/{entityType}/{entityId}/audit` | Read audit timeline |
-| API-EXC-039 | POST | `/api/v1/exams-completion/exports` | Generate authorized export |
-| API-EXC-040 | GET | `/api/v1/exams-completion/exports/options` | Get allowed export filters/formats/columns |
+| ID          | Method | Route                                                             | Purpose                                    |
+| ----------- | ------ | ----------------------------------------------------------------- | ------------------------------------------ |
+| API-EXC-030 | GET    | `/api/v1/exams-completion/queues/work`                            | Unified pending work queue                 |
+| API-EXC-031 | GET    | `/api/v1/exams-completion/queues/missing-results`                 | Missing Results queue                      |
+| API-EXC-032 | GET    | `/api/v1/exams-completion/queues/completion-evaluation`           | Pending completion evaluation queue        |
+| API-EXC-033 | GET    | `/api/v1/exams-completion/queues/trainer-recommendation`          | Pending trainer recommendation queue       |
+| API-EXC-034 | GET    | `/api/v1/exams-completion/queues/coordinator-review`              | Pending coordinator review queue           |
+| API-EXC-035 | GET    | `/api/v1/exams-completion/queues/final-approval`                  | Pending final approval queue               |
+| API-EXC-036 | GET    | `/api/v1/exams-completion/queues/reevaluation`                    | Reevaluation/exception queue               |
+| API-EXC-037 | GET    | `/api/v1/exams-completion/search`                                 | Cross-entity academic outcome search       |
+| API-EXC-038 | GET    | `/api/v1/exams-completion/entities/{entityType}/{entityId}/audit` | Read audit timeline                        |
+| API-EXC-039 | POST   | `/api/v1/exams-completion/exports`                                | Generate authorized export                 |
+| API-EXC-040 | GET    | `/api/v1/exams-completion/exports/options`                        | Get allowed export filters/formats/columns |
 
 ---
 
@@ -457,11 +457,11 @@ direction?: asc|desc
 
 ## Errors
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `VALIDATION_ERROR` | Invalid filter/date range |
-| 401 | `UNAUTHENTICATED` | Session missing |
-| 403 | `FORBIDDEN` | Missing `exam.read` |
+| HTTP | Code               | Condition                 |
+| ---- | ------------------ | ------------------------- |
+| 400  | `VALIDATION_ERROR` | Invalid filter/date range |
+| 401  | `UNAUTHENTICATED`  | Session missing           |
+| 403  | `FORBIDDEN`        | Missing `exam.read`       |
 
 ---
 
@@ -541,14 +541,14 @@ semantic duplicate policy passes
 
 ## Errors
 
-| HTTP | Code | Condition |
-|---|---|---|
-| 400 | `VALIDATION_ERROR` | Invalid input |
-| 403 | `FORBIDDEN` | Missing permission or branch mutation access |
-| 404 | `COURSE_NOT_FOUND` | Course not found/visible |
-| 404 | `BATCH_NOT_FOUND` | Batch not found/visible |
-| 422 | `COURSE_BATCH_MISMATCH` | Batch does not belong to Course |
-| 409 | `DUPLICATE_EXAM` | Semantic duplicate active Exam |
+| HTTP | Code                    | Condition                                    |
+| ---- | ----------------------- | -------------------------------------------- |
+| 400  | `VALIDATION_ERROR`      | Invalid input                                |
+| 403  | `FORBIDDEN`             | Missing permission or branch mutation access |
+| 404  | `COURSE_NOT_FOUND`      | Course not found/visible                     |
+| 404  | `BATCH_NOT_FOUND`       | Batch not found/visible                      |
+| 422  | `COURSE_BATCH_MISMATCH` | Batch does not belong to Course              |
+| 409  | `DUPLICATE_EXAM`        | Semantic duplicate active Exam               |
 
 ---
 
@@ -599,12 +599,7 @@ Derived from Exam → Batch → Branch.
     "finalized": 30,
     "missing": 6
   },
-  "allowedActions": [
-    "EDIT",
-    "CLOSE",
-    "ENTER_RESULTS",
-    "FINALIZE_RESULTS"
-  ],
+  "allowedActions": ["EDIT", "CLOSE", "ENTER_RESULTS", "FINALIZE_RESULTS"],
   "version": 4,
   "createdAt": "2026-07-01T07:00:00Z",
   "updatedAt": "2026-07-05T06:00:00Z"
@@ -979,10 +974,7 @@ size?: number
         "recordedAt": "2026-08-20T11:30:00Z",
         "version": 2
       },
-      "allowedActions": [
-        "EDIT",
-        "FINALIZE"
-      ]
+      "allowedActions": ["EDIT", "FINALIZE"]
     }
   ],
   "page": {
@@ -1297,9 +1289,7 @@ Derived through Result → Exam → Batch → Branch.
     "displayName": "Trainer Name"
   },
   "recordedAt": "2026-08-20T11:30:00Z",
-  "allowedActions": [
-    "CORRECT"
-  ],
+  "allowedActions": ["CORRECT"],
   "version": 3
 }
 ```
@@ -1630,10 +1620,7 @@ completion.read
   },
   "approvedBy": null,
   "approvedAt": null,
-  "allowedActions": [
-    "COORDINATOR_APPROVE",
-    "COORDINATOR_REJECT"
-  ],
+  "allowedActions": ["COORDINATOR_APPROVE", "COORDINATOR_REJECT"],
   "version": 4
 }
 ```
@@ -2328,11 +2315,7 @@ direction?: asc|desc
       "branchId": "BR-001",
       "currentState": "AWAITING_FINAL_APPROVAL",
       "pendingSince": "2026-08-21T10:00:00Z",
-      "allowedActions": [
-        "VIEW",
-        "FINAL_APPROVE",
-        "REJECT"
-      ]
+      "allowedActions": ["VIEW", "FINAL_APPROVE", "REJECT"]
     }
   ],
   "page": {
@@ -2831,26 +2814,26 @@ REST routes remain the canonical integration contract.
 
 Recommended Server Action mapping:
 
-| Server Action | Underlying Application Service |
-|---|---|
-| `createExamAction` | `CreateExamCommand` |
-| `updateExamAction` | `UpdateExamCommand` |
-| `scheduleExamAction` | `ScheduleExamCommand` |
-| `activateExamAction` | `ActivateExamCommand` |
-| `closeExamAction` | `CloseExamCommand` |
-| `cancelExamAction` | `CancelExamCommand` |
-| `recordResultAction` | `RecordResultCommand` |
-| `bulkRecordResultsAction` | `SubmitBulkResultsCommand` |
-| `finalizeResultAction` | `FinalizeResultCommand` |
-| `correctResultAction` | `CorrectFinalizedResultCommand` |
-| `evaluateCompletionAction` | `EvaluateCompletionCommand` |
-| `reevaluateCompletionAction` | `ReevaluateCompletionCommand` |
-| `recommendCompletionAction` | `RecommendCompletionCommand` |
+| Server Action                       | Underlying Application Service           |
+| ----------------------------------- | ---------------------------------------- |
+| `createExamAction`                  | `CreateExamCommand`                      |
+| `updateExamAction`                  | `UpdateExamCommand`                      |
+| `scheduleExamAction`                | `ScheduleExamCommand`                    |
+| `activateExamAction`                | `ActivateExamCommand`                    |
+| `closeExamAction`                   | `CloseExamCommand`                       |
+| `cancelExamAction`                  | `CancelExamCommand`                      |
+| `recordResultAction`                | `RecordResultCommand`                    |
+| `bulkRecordResultsAction`           | `SubmitBulkResultsCommand`               |
+| `finalizeResultAction`              | `FinalizeResultCommand`                  |
+| `correctResultAction`               | `CorrectFinalizedResultCommand`          |
+| `evaluateCompletionAction`          | `EvaluateCompletionCommand`              |
+| `reevaluateCompletionAction`        | `ReevaluateCompletionCommand`            |
+| `recommendCompletionAction`         | `RecommendCompletionCommand`             |
 | `rejectTrainerRecommendationAction` | `DeclineCompletionRecommendationCommand` |
-| `approveCoordinatorReviewAction` | `ApproveCoordinatorReviewCommand` |
-| `rejectCoordinatorReviewAction` | `RejectCoordinatorReviewCommand` |
-| `approveCompletionAction` | `ApproveCompletionCommand` |
-| `rejectCompletionAction` | `RejectCompletionCommand` |
+| `approveCoordinatorReviewAction`    | `ApproveCoordinatorReviewCommand`        |
+| `rejectCoordinatorReviewAction`     | `RejectCoordinatorReviewCommand`         |
+| `approveCompletionAction`           | `ApproveCompletionCommand`               |
+| `rejectCompletionAction`            | `RejectCompletionCommand`                |
 
 ## 12.1 Server Action Security Rule
 
@@ -2939,7 +2922,7 @@ Contract:
 type AttendanceCompletionEvidenceDTO = {
   enrollmentId: string;
   attendancePercentage: string | null;
-  evidenceStatus: "AVAILABLE" | "MISSING" | "UNAVAILABLE";
+  evidenceStatus: 'AVAILABLE' | 'MISSING' | 'UNAVAILABLE';
   calculatedAt: string | null;
   sourceVersion?: string;
 };
@@ -2958,11 +2941,7 @@ Contract:
 ```ts
 type CompletionPaymentValidationDTO = {
   enrollmentId: string;
-  requiredValidationOutcome:
-    | "PASSED"
-    | "FAILED"
-    | "MISSING"
-    | "UNAVAILABLE";
+  requiredValidationOutcome: 'PASSED' | 'FAILED' | 'MISSING' | 'UNAVAILABLE';
   validatedAt: string | null;
   sourceVersion?: string;
 };
@@ -3081,30 +3060,30 @@ Must:
 
 # 15. API-to-Use-Case Traceability
 
-| API | Use Case |
-|---|---|
-| API-EXC-001 to 009 | UC-EXC-001, UC-EXC-002 |
+| API                | Use Case                           |
+| ------------------ | ---------------------------------- |
+| API-EXC-001 to 009 | UC-EXC-001, UC-EXC-002             |
 | API-EXC-010 to 017 | UC-EXC-003, UC-EXC-004, UC-EXC-005 |
-| API-EXC-018 to 023 | UC-EXC-006, UC-EXC-008 |
-| API-EXC-024 to 029 | UC-EXC-007 |
-| API-EXC-030 to 036 | UC-EXC-009 |
-| API-EXC-037 | Read/search use case |
-| API-EXC-038 | Audit read use case |
-| API-EXC-039 to 040 | UC-EXC-010 |
+| API-EXC-018 to 023 | UC-EXC-006, UC-EXC-008             |
+| API-EXC-024 to 029 | UC-EXC-007                         |
+| API-EXC-030 to 036 | UC-EXC-009                         |
+| API-EXC-037        | Read/search use case               |
+| API-EXC-038        | Audit read use case                |
+| API-EXC-039 to 040 | UC-EXC-010                         |
 
 ---
 
 # 16. API-to-Entity Ownership Matrix
 
-| Endpoint Group | Owned Entities Mutated | Referenced Contexts | Forbidden Mutation |
-|---|---|---|---|
-| Exam APIs | Exam | Course, Batch, IAM | Course, Batch |
-| Result APIs | Result | Enrollment, Batch, Person, IAM | Enrollment, StudentProfile |
-| Completion APIs | CourseCompletion | Course Rule, Attendance, Finance, Enrollment | AttendanceRecord, Payment, CourseCompletionRule |
-| Approval APIs | CompletionApproval, CourseCompletion | Trainer, BatchTrainer, IAM | TrainerProfile, BatchTrainer |
-| Queue APIs | None | Multiple read models | No mutation |
-| Export APIs | None | Multiple read projections | No transactional mutation |
-| Certificate eligibility handoff | None in Certificate context | Certificate Management | Certificate |
+| Endpoint Group                  | Owned Entities Mutated               | Referenced Contexts                          | Forbidden Mutation                              |
+| ------------------------------- | ------------------------------------ | -------------------------------------------- | ----------------------------------------------- |
+| Exam APIs                       | Exam                                 | Course, Batch, IAM                           | Course, Batch                                   |
+| Result APIs                     | Result                               | Enrollment, Batch, Person, IAM               | Enrollment, StudentProfile                      |
+| Completion APIs                 | CourseCompletion                     | Course Rule, Attendance, Finance, Enrollment | AttendanceRecord, Payment, CourseCompletionRule |
+| Approval APIs                   | CompletionApproval, CourseCompletion | Trainer, BatchTrainer, IAM                   | TrainerProfile, BatchTrainer                    |
+| Queue APIs                      | None                                 | Multiple read models                         | No mutation                                     |
+| Export APIs                     | None                                 | Multiple read projections                    | No transactional mutation                       |
+| Certificate eligibility handoff | None in Certificate context          | Certificate Management                       | Certificate                                     |
 
 ---
 

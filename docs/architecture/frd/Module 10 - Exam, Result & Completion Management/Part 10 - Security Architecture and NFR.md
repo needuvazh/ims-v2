@@ -134,23 +134,23 @@ unnecessary Person attributes
 
 ## 3.1 Primary Threats
 
-| Threat | Example | Required Control |
-|---|---|---|
-| IDOR | Accessing Result from another branch by ID | Entity-derived branch authorization |
-| Privilege escalation | Trainer calling final approval API | Fine-grained permission checks |
-| Role-name bypass | Hardcoded "Branch Manager" checks | Permission-based authorization |
-| Forged branch scope | Client sends another branchId | Server derives branch from entity |
-| Result tampering | Client sends contradictory resultStatus | Server derives status |
-| Completion tampering | Client sends paymentCompleted=true | Server loads Finance evidence |
-| Approval stage skipping | Calling final approval directly | Workflow state machine guard |
-| Lost update | Two actors overwrite Result | Optimistic versioning |
-| Audit evasion | Correct Result without reason | Mandatory audit and reason |
-| Stale evidence approval | Approving after Attendance correction | Evidence staleness/revalidation |
-| Read-model trust abuse | Approval from stale projection | Reload transactional state |
-| Data export leakage | Exporting unauthorized branches | Server-side branch intersection |
-| Notification confusion | Eligibility event sends issue notice | Certificate context owns issue notice |
-| Replay | Duplicate approval or event request | Idempotency and state validation |
-| Injection | Malicious export/search inputs | Schema validation and output encoding |
+| Threat                  | Example                                    | Required Control                      |
+| ----------------------- | ------------------------------------------ | ------------------------------------- |
+| IDOR                    | Accessing Result from another branch by ID | Entity-derived branch authorization   |
+| Privilege escalation    | Trainer calling final approval API         | Fine-grained permission checks        |
+| Role-name bypass        | Hardcoded "Branch Manager" checks          | Permission-based authorization        |
+| Forged branch scope     | Client sends another branchId              | Server derives branch from entity     |
+| Result tampering        | Client sends contradictory resultStatus    | Server derives status                 |
+| Completion tampering    | Client sends paymentCompleted=true         | Server loads Finance evidence         |
+| Approval stage skipping | Calling final approval directly            | Workflow state machine guard          |
+| Lost update             | Two actors overwrite Result                | Optimistic versioning                 |
+| Audit evasion           | Correct Result without reason              | Mandatory audit and reason            |
+| Stale evidence approval | Approving after Attendance correction      | Evidence staleness/revalidation       |
+| Read-model trust abuse  | Approval from stale projection             | Reload transactional state            |
+| Data export leakage     | Exporting unauthorized branches            | Server-side branch intersection       |
+| Notification confusion  | Eligibility event sends issue notice       | Certificate context owns issue notice |
+| Replay                  | Duplicate approval or event request        | Idempotency and state validation      |
+| Injection               | Malicious export/search inputs             | Schema validation and output encoding |
 
 ---
 
@@ -830,14 +830,14 @@ must be neutralized according to export library policy.
 
 Recommended controls:
 
-| Endpoint Type | Suggested Control |
-|---|---|
-| Search/list | user/session rate limit |
-| Single mutation | moderate per-user rate limit |
-| Bulk Result | stricter per-user and payload-size limit |
-| Export | strict per-user concurrency limit |
-| Audit reads | rate limit and permission |
-| Reevaluation | anti-replay/idempotency |
+| Endpoint Type   | Suggested Control                        |
+| --------------- | ---------------------------------------- |
+| Search/list     | user/session rate limit                  |
+| Single mutation | moderate per-user rate limit             |
+| Bulk Result     | stricter per-user and payload-size limit |
+| Export          | strict per-user concurrency limit        |
+| Audit reads     | rate limit and permission                |
+| Reevaluation    | anti-replay/idempotency                  |
 
 Exact limits must be tuned through load testing.
 
@@ -1530,71 +1530,71 @@ read-model stale approval attempt
 
 # 31. NFR Summary Table
 
-| Category | Requirement |
-|---|---|
-| Availability | 99.9% monthly target |
-| Simple Read API | P95 < 800 ms |
-| List/Search API | P95 < 2 s |
-| Dashboard | P95 < 2 s |
-| Report First Page | P95 < 3 s |
-| Single Result Write | P95 < 1 s |
-| Bulk Validate 1000 rows | <= 5 s |
-| Bulk Commit 1000 rows | <= 10 s |
-| Completion Evaluation | P95 < 3 s |
-| Approval Command | P95 < 1.5 s |
-| Max Default Page Size | 100 |
-| Bulk Row Limit | 1000 recommended |
-| Accessibility | WCAG 2.1 AA |
-| DR RPO | <= 15 min recommended |
-| DR RTO | <= 4 h recommended |
-| Localization | English LTR + Arabic RTL |
-| Audit | Mandatory for sensitive changes |
-| Delete Policy | No hard delete in normal operations |
+| Category                | Requirement                         |
+| ----------------------- | ----------------------------------- |
+| Availability            | 99.9% monthly target                |
+| Simple Read API         | P95 < 800 ms                        |
+| List/Search API         | P95 < 2 s                           |
+| Dashboard               | P95 < 2 s                           |
+| Report First Page       | P95 < 3 s                           |
+| Single Result Write     | P95 < 1 s                           |
+| Bulk Validate 1000 rows | <= 5 s                              |
+| Bulk Commit 1000 rows   | <= 10 s                             |
+| Completion Evaluation   | P95 < 3 s                           |
+| Approval Command        | P95 < 1.5 s                         |
+| Max Default Page Size   | 100                                 |
+| Bulk Row Limit          | 1000 recommended                    |
+| Accessibility           | WCAG 2.1 AA                         |
+| DR RPO                  | <= 15 min recommended               |
+| DR RTO                  | <= 4 h recommended                  |
+| Localization            | English LTR + Arabic RTL            |
+| Audit                   | Mandatory for sensitive changes     |
+| Delete Policy           | No hard delete in normal operations |
 
 ---
 
 # 32. Audit Requirement Matrix
 
-| Action | Audit Required | Old/New Values | Reason Required | Cross-Context Trace Required |
-|---|---:|---:|---:|---:|
-| Exam Create | Yes | New | No | No |
-| Exam Update | Yes | Yes | Conditional | No |
-| Exam Reschedule | Yes | Yes | Recommended | Notification trace |
-| Exam Cancel | Yes | Yes | Yes | Notification trace |
-| Result Record | Yes | New | No | No |
-| Bulk Result Submit | Yes | Summary + IDs | No | No |
-| Result Finalize | Yes | State | No | No |
-| Result Correct | Mandatory | Yes | Yes | Reevaluation trace |
-| Completion Evaluate | Yes | Outcome | Optional | Attendance/Finance evidence trace |
-| Completion Reevaluate | Mandatory | Yes | Yes | Trigger trace |
-| Trainer Recommendation | Yes | Decision | Rejection yes | Notification trace |
-| Coordinator Review | Yes | Decision | Rejection yes | Notification trace |
-| Final Approval | Mandatory | Yes | Optional | Enrollment sync + eligibility trace |
-| Completion Reject | Mandatory | Yes | Yes | Notification trace |
-| Exception Resolution | Mandatory | Yes | Yes | Certificate impact trace if relevant |
-| Export | Recommended/Policy | Filters/scope | No | No |
+| Action                 |     Audit Required | Old/New Values | Reason Required |         Cross-Context Trace Required |
+| ---------------------- | -----------------: | -------------: | --------------: | -----------------------------------: |
+| Exam Create            |                Yes |            New |              No |                                   No |
+| Exam Update            |                Yes |            Yes |     Conditional |                                   No |
+| Exam Reschedule        |                Yes |            Yes |     Recommended |                   Notification trace |
+| Exam Cancel            |                Yes |            Yes |             Yes |                   Notification trace |
+| Result Record          |                Yes |            New |              No |                                   No |
+| Bulk Result Submit     |                Yes |  Summary + IDs |              No |                                   No |
+| Result Finalize        |                Yes |          State |              No |                                   No |
+| Result Correct         |          Mandatory |            Yes |             Yes |                   Reevaluation trace |
+| Completion Evaluate    |                Yes |        Outcome |        Optional |    Attendance/Finance evidence trace |
+| Completion Reevaluate  |          Mandatory |            Yes |             Yes |                        Trigger trace |
+| Trainer Recommendation |                Yes |       Decision |   Rejection yes |                   Notification trace |
+| Coordinator Review     |                Yes |       Decision |   Rejection yes |                   Notification trace |
+| Final Approval         |          Mandatory |            Yes |        Optional |  Enrollment sync + eligibility trace |
+| Completion Reject      |          Mandatory |            Yes |             Yes |                   Notification trace |
+| Exception Resolution   |          Mandatory |            Yes |             Yes | Certificate impact trace if relevant |
+| Export                 | Recommended/Policy |  Filters/scope |              No |                                   No |
 
 ---
 
 # 33. DDD Security Fit Check
 
-| Security Concern | Correct Owner | Module 10 Responsibility |
-|---|---|---|
-| Authentication | IAM | Require authenticated principal |
-| Permission mapping | IAM | Check permission |
-| Branch access | IAM | Consume policy and enforce |
-| Exam state security | Module 10 | Enforce |
-| Result integrity | Module 10 | Enforce |
-| Completion decision | Module 10 | Enforce |
-| Approval sequence | Module 10 | Enforce |
-| Course rules | Course Catalog | Read only |
-| Attendance truth | Attendance | Read only |
-| Payment validation | Finance | Read only |
-| Trainer assignment | Training Delivery/Trainer | Validate through reader |
-| Certificate issue | Certificate | No direct mutation |
-| Notification delivery | Communication | Emit intent/event only |
-| Audit persistence | Audit & Compliance | Write through shared convention |
-| Reporting projections | Reporting/query layer | Read-only only |
+| Security Concern      | Correct Owner             | Module 10 Responsibility        |
+| --------------------- | ------------------------- | ------------------------------- |
+| Authentication        | IAM                       | Require authenticated principal |
+| Permission mapping    | IAM                       | Check permission                |
+| Branch access         | IAM                       | Consume policy and enforce      |
+| Exam state security   | Module 10                 | Enforce                         |
+| Result integrity      | Module 10                 | Enforce                         |
+| Completion decision   | Module 10                 | Enforce                         |
+| Approval sequence     | Module 10                 | Enforce                         |
+| Course rules          | Course Catalog            | Read only                       |
+| Attendance truth      | Attendance                | Read only                       |
+| Payment validation    | Finance                   | Read only                       |
+| Trainer assignment    | Training Delivery/Trainer | Validate through reader         |
+| Certificate issue     | Certificate               | No direct mutation              |
+| Notification delivery | Communication             | Emit intent/event only          |
+| Audit persistence     | Audit & Compliance        | Write through shared convention |
+| Reporting projections | Reporting/query layer     | Read-only only                  |
 
 ---
 

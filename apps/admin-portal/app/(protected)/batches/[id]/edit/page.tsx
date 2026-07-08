@@ -30,7 +30,8 @@ export default async function EditBatchPage(props: {
   });
 
   // Fetch Branches the user has access to
-  const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+  const isSuperAdmin =
+    session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
   let branches;
   if (isSuperAdmin) {
     branches = await prisma.branch.findMany({
@@ -69,9 +70,21 @@ export default async function EditBatchPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Batches', href: '/batches', icon: <Layers className="h-3.5 w-3.5" /> },
-              { label: batch.batchCode, href: `/batches/${id}`, icon: <Layers className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Batches',
+                href: '/batches',
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
+              {
+                label: batch.batchCode,
+                href: `/batches/${id}`,
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
               { label: 'Edit', icon: <Edit className="h-3.5 w-3.5" /> },
             ]}
           />

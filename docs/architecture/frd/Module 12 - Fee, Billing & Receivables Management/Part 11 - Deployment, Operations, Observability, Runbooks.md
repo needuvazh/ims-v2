@@ -10,18 +10,18 @@ The operational objective is to detect and resolve financial integrity failures 
 
 ## 2. Operational Ownership Boundaries
 
-| Concern | Owning Context / Team Boundary |
-|---|---|
-| Invoice, installment, payment, receipt, refund, receivable, corporate credit transactional state | Fee, Billing & Receivables Management |
-| Course price and discount definitions | Course Catalog |
-| Enrollment source and learner-course-batch lifecycle | Admission & Enrollment |
-| Corporate account/participant/contract master data | Corporate Training |
-| User permissions and branch assignments | Identity & Access |
-| Branch master and hierarchy | Organization Management |
-| Audit-log storage and approval-history platform records | Audit & Compliance |
-| Notification delivery/provider status | Communication & Notifications |
-| Finance read-model views/materialized views/snapshots | Reporting design jointly operated by Finance application and platform database operations |
-| Database backups, PITR, infrastructure health | Platform / Database Operations |
+| Concern                                                                                          | Owning Context / Team Boundary                                                            |
+| ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| Invoice, installment, payment, receipt, refund, receivable, corporate credit transactional state | Fee, Billing & Receivables Management                                                     |
+| Course price and discount definitions                                                            | Course Catalog                                                                            |
+| Enrollment source and learner-course-batch lifecycle                                             | Admission & Enrollment                                                                    |
+| Corporate account/participant/contract master data                                               | Corporate Training                                                                        |
+| User permissions and branch assignments                                                          | Identity & Access                                                                         |
+| Branch master and hierarchy                                                                      | Organization Management                                                                   |
+| Audit-log storage and approval-history platform records                                          | Audit & Compliance                                                                        |
+| Notification delivery/provider status                                                            | Communication & Notifications                                                             |
+| Finance read-model views/materialized views/snapshots                                            | Reporting design jointly operated by Finance application and platform database operations |
+| Database backups, PITR, infrastructure health                                                    | Platform / Database Operations                                                            |
 
 No operator may repair Finance inconsistencies by directly editing upstream context-owned data from the Finance module.
 
@@ -67,15 +67,15 @@ PostgreSQL Primary
 
 ### 4.1 Required Configuration Categories
 
-| Category | Examples | Source |
-|---|---|---|
-| Database | connection URL, pool settings, statement timeout | Secrets manager / environment configuration |
-| Application URLs | public application origin, internal canonical origin | Environment configuration |
-| Object storage | bucket/container identifier, region, KMS key reference | Environment configuration + secrets manager |
-| Finance defaults | default currency `OMR`, business timezone `Asia/Muscat` | Configuration context / validated environment default |
-| Document rendering | renderer endpoint/process config, Arabic font package availability | Deployment artifact/environment |
-| Observability | service name, environment, trace exporter, metrics endpoint | Environment configuration |
-| Notification integration | application port configuration | Communication context configuration |
+| Category                 | Examples                                                           | Source                                                |
+| ------------------------ | ------------------------------------------------------------------ | ----------------------------------------------------- |
+| Database                 | connection URL, pool settings, statement timeout                   | Secrets manager / environment configuration           |
+| Application URLs         | public application origin, internal canonical origin               | Environment configuration                             |
+| Object storage           | bucket/container identifier, region, KMS key reference             | Environment configuration + secrets manager           |
+| Finance defaults         | default currency `OMR`, business timezone `Asia/Muscat`            | Configuration context / validated environment default |
+| Document rendering       | renderer endpoint/process config, Arabic font package availability | Deployment artifact/environment                       |
+| Observability            | service name, environment, trace exporter, metrics endpoint        | Environment configuration                             |
+| Notification integration | application port configuration                                     | Communication context configuration                   |
 
 ### 4.2 Secret Handling
 
@@ -161,26 +161,26 @@ All application logs use structured JSON.
 
 ### 6.2 Required Log Fields
 
-| Field | Requirement |
-|---|---|
-| `timestamp` | UTC ISO 8601 timestamp. |
-| `level` | TRACE, DEBUG, INFO, WARN, ERROR, FATAL. |
-| `service` | Deployed application service name. |
-| `module` | `finance-receivables`. |
-| `environment` | Environment identifier. |
-| `event` | Stable machine-readable event name. |
-| `message` | Safe human-readable summary. |
-| `correlationId` | Required for every request/job execution. |
-| `traceId`, `spanId` | Present when tracing enabled. |
-| `userId` | Human actor ID when applicable. |
-| `callerModule` | Internal module name for in-process calls. |
-| `branchId` | Target/effective branch where applicable. |
-| `entityType`, `entityId` | Business target where safe and applicable. |
-| `operation` | Application operation name. |
-| `durationMs` | Operation duration. |
-| `outcome` | `success`, `failure`, `denied`, `conflict`, or `degraded`. |
-| `errorCode` | Application error code when failed. |
-| `retryCount` | Retry count for controlled retrying jobs. |
+| Field                    | Requirement                                                |
+| ------------------------ | ---------------------------------------------------------- |
+| `timestamp`              | UTC ISO 8601 timestamp.                                    |
+| `level`                  | TRACE, DEBUG, INFO, WARN, ERROR, FATAL.                    |
+| `service`                | Deployed application service name.                         |
+| `module`                 | `finance-receivables`.                                     |
+| `environment`            | Environment identifier.                                    |
+| `event`                  | Stable machine-readable event name.                        |
+| `message`                | Safe human-readable summary.                               |
+| `correlationId`          | Required for every request/job execution.                  |
+| `traceId`, `spanId`      | Present when tracing enabled.                              |
+| `userId`                 | Human actor ID when applicable.                            |
+| `callerModule`           | Internal module name for in-process calls.                 |
+| `branchId`               | Target/effective branch where applicable.                  |
+| `entityType`, `entityId` | Business target where safe and applicable.                 |
+| `operation`              | Application operation name.                                |
+| `durationMs`             | Operation duration.                                        |
+| `outcome`                | `success`, `failure`, `denied`, `conflict`, or `degraded`. |
+| `errorCode`              | Application error code when failed.                        |
+| `retryCount`             | Retry count for controlled retrying jobs.                  |
 
 ### 6.3 Log Redaction
 
@@ -292,44 +292,44 @@ Do not attach student names, email addresses, phone numbers, invoice numbers, pa
 
 ### 8.1 RED Metrics
 
-| Metric | Type | Labels |
-|---|---|---|
-| `finance_http_requests_total` | Counter | route template, method, status class |
-| `finance_http_request_duration_seconds` | Histogram | route template, method |
-| `finance_application_operations_total` | Counter | operation, outcome |
-| `finance_application_operation_duration_seconds` | Histogram | operation |
-| `finance_errors_total` | Counter | error_code, operation |
+| Metric                                           | Type      | Labels                               |
+| ------------------------------------------------ | --------- | ------------------------------------ |
+| `finance_http_requests_total`                    | Counter   | route template, method, status class |
+| `finance_http_request_duration_seconds`          | Histogram | route template, method               |
+| `finance_application_operations_total`           | Counter   | operation, outcome                   |
+| `finance_application_operation_duration_seconds` | Histogram | operation                            |
+| `finance_errors_total`                           | Counter   | error_code, operation                |
 
 ### 8.2 Financial Integrity Metrics
 
-| Metric | Type | Meaning |
-|---|---|---|
-| `finance_payment_post_total` | Counter | Successful posted payments by payment method and branch category if cardinality is controlled. |
-| `finance_payment_idempotency_replay_total` | Counter | Safe replay returns. |
-| `finance_payment_idempotency_conflict_total` | Counter | Same key with different payload. |
-| `finance_payment_transaction_rollback_total` | Counter | Payment transaction rollbacks. |
-| `finance_receivable_reconciliation_exception_count` | Gauge | Current reconciliation exception count. |
-| `finance_allocation_reconciliation_exception_count` | Gauge | Current allocation mismatch count. |
-| `finance_refund_pending_approval_count` | Gauge | Pending refund approvals. |
-| `finance_refund_execution_failure_total` | Counter | Failed approved-refund executions. |
-| `finance_credit_validation_total` | Counter | Decision label: allow, warn, block. |
-| `finance_invoice_issue_failure_total` | Counter | Invoice issue failures. |
-| `finance_numbering_allocation_failure_total` | Counter | Numbering-series allocation failures. |
+| Metric                                              | Type    | Meaning                                                                                        |
+| --------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------- |
+| `finance_payment_post_total`                        | Counter | Successful posted payments by payment method and branch category if cardinality is controlled. |
+| `finance_payment_idempotency_replay_total`          | Counter | Safe replay returns.                                                                           |
+| `finance_payment_idempotency_conflict_total`        | Counter | Same key with different payload.                                                               |
+| `finance_payment_transaction_rollback_total`        | Counter | Payment transaction rollbacks.                                                                 |
+| `finance_receivable_reconciliation_exception_count` | Gauge   | Current reconciliation exception count.                                                        |
+| `finance_allocation_reconciliation_exception_count` | Gauge   | Current allocation mismatch count.                                                             |
+| `finance_refund_pending_approval_count`             | Gauge   | Pending refund approvals.                                                                      |
+| `finance_refund_execution_failure_total`            | Counter | Failed approved-refund executions.                                                             |
+| `finance_credit_validation_total`                   | Counter | Decision label: allow, warn, block.                                                            |
+| `finance_invoice_issue_failure_total`               | Counter | Invoice issue failures.                                                                        |
+| `finance_numbering_allocation_failure_total`        | Counter | Numbering-series allocation failures.                                                          |
 
 ### 8.3 Database and Projection Metrics
 
-| Metric | Type | Meaning |
-|---|---|---|
-| `finance_db_transaction_duration_seconds` | Histogram | Finance transaction durations. |
-| `finance_db_deadlock_total` | Counter | Deadlock occurrences affecting Finance. |
-| `finance_db_lock_wait_seconds` | Histogram | Lock wait duration. |
-| `finance_db_pool_in_use` | Gauge | Active DB connections. |
-| `finance_db_pool_waiters` | Gauge | Requests waiting for pool connection. |
-| `finance_read_model_refresh_duration_seconds` | Histogram | Projection refresh duration. |
-| `finance_read_model_last_success_timestamp` | Gauge | Unix timestamp of last success by model. |
-| `finance_read_model_staleness_seconds` | Gauge | Age of reporting projection. |
-| `finance_export_job_duration_seconds` | Histogram | Export generation duration. |
-| `finance_export_job_failure_total` | Counter | Export failures by report code. |
+| Metric                                        | Type      | Meaning                                  |
+| --------------------------------------------- | --------- | ---------------------------------------- |
+| `finance_db_transaction_duration_seconds`     | Histogram | Finance transaction durations.           |
+| `finance_db_deadlock_total`                   | Counter   | Deadlock occurrences affecting Finance.  |
+| `finance_db_lock_wait_seconds`                | Histogram | Lock wait duration.                      |
+| `finance_db_pool_in_use`                      | Gauge     | Active DB connections.                   |
+| `finance_db_pool_waiters`                     | Gauge     | Requests waiting for pool connection.    |
+| `finance_read_model_refresh_duration_seconds` | Histogram | Projection refresh duration.             |
+| `finance_read_model_last_success_timestamp`   | Gauge     | Unix timestamp of last success by model. |
+| `finance_read_model_staleness_seconds`        | Gauge     | Age of reporting projection.             |
+| `finance_export_job_duration_seconds`         | Histogram | Export generation duration.              |
+| `finance_export_job_failure_total`            | Counter   | Export failures by report code.          |
 
 ### 8.4 Notification Metrics
 
@@ -344,20 +344,20 @@ Provider-delivery metrics must remain in Communication & Notifications.
 
 ## 9. Alerting Rules
 
-| Alert | Trigger | Severity | Initial Response |
-|---|---|---|---|
-| Payment posting unavailable | >5% payment post failures for 5 minutes or readiness dependency failure | Critical | Run RB-FBR-001 or RB-FBR-002. |
-| Duplicate/idempotency anomaly | idempotency conflicts exceed baseline threshold for 10 minutes | High | Run RB-FBR-003. |
-| Reconciliation exceptions | exception gauge >0 for 15 minutes | High | Run RB-FBR-004. |
-| Refund execution failures | any repeated failure for same approved refund or >3 failures/15 min | High | Run RB-FBR-005. |
-| Numbering allocation failures | >0 sustained for 5 minutes | High | Run RB-FBR-006. |
-| Corporate credit validation latency | p95 >1.5 s for 10 minutes | Medium/High | Run RB-FBR-007. |
-| Read model stale | staleness >15 minutes for operational dashboard model | Medium | Run RB-FBR-008. |
-| DB pool saturation | >85% utilization and waiters >0 for 10 minutes | High | Run RB-FBR-009. |
-| Deadlocks | >3 Finance-impacting deadlocks in 15 minutes | High | Run RB-FBR-010. |
-| Export backlog | oldest queued export >30 minutes | Medium | Run RB-FBR-011. |
-| Backup/PITR unhealthy | no successful backup/archive progress within infrastructure SLA | Critical | Run RB-FBR-012. |
-| Branch-scope denial spike | >5x normal denial baseline over 15 minutes | Security | Investigate RB-FBR-013. |
+| Alert                               | Trigger                                                                 | Severity    | Initial Response              |
+| ----------------------------------- | ----------------------------------------------------------------------- | ----------- | ----------------------------- |
+| Payment posting unavailable         | >5% payment post failures for 5 minutes or readiness dependency failure | Critical    | Run RB-FBR-001 or RB-FBR-002. |
+| Duplicate/idempotency anomaly       | idempotency conflicts exceed baseline threshold for 10 minutes          | High        | Run RB-FBR-003.               |
+| Reconciliation exceptions           | exception gauge >0 for 15 minutes                                       | High        | Run RB-FBR-004.               |
+| Refund execution failures           | any repeated failure for same approved refund or >3 failures/15 min     | High        | Run RB-FBR-005.               |
+| Numbering allocation failures       | >0 sustained for 5 minutes                                              | High        | Run RB-FBR-006.               |
+| Corporate credit validation latency | p95 >1.5 s for 10 minutes                                               | Medium/High | Run RB-FBR-007.               |
+| Read model stale                    | staleness >15 minutes for operational dashboard model                   | Medium      | Run RB-FBR-008.               |
+| DB pool saturation                  | >85% utilization and waiters >0 for 10 minutes                          | High        | Run RB-FBR-009.               |
+| Deadlocks                           | >3 Finance-impacting deadlocks in 15 minutes                            | High        | Run RB-FBR-010.               |
+| Export backlog                      | oldest queued export >30 minutes                                        | Medium      | Run RB-FBR-011.               |
+| Backup/PITR unhealthy               | no successful backup/archive progress within infrastructure SLA         | Critical    | Run RB-FBR-012.               |
+| Branch-scope denial spike           | >5x normal denial baseline over 15 minutes                              | Security    | Investigate RB-FBR-013.       |
 
 Thresholds should be tuned after baseline collection but must not be relaxed to hide integrity failures.
 
@@ -393,12 +393,12 @@ Readiness must fail when authoritative transaction processing cannot safely proc
 
 ### 10.3 Dependency Health
 
-| Dependency | Health Behavior |
-|---|---|
-| PostgreSQL | Critical. Payment, invoice issue, refunds, credit validation require healthy access. |
-| Object storage | Degraded if unavailable. Transactions may continue, but document generation/download is unavailable and queued retry/re-render may be needed. |
+| Dependency             | Health Behavior                                                                                                                                                                                                                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PostgreSQL             | Critical. Payment, invoice issue, refunds, credit validation require healthy access.                                                                                                                                                                                                                                    |
+| Object storage         | Degraded if unavailable. Transactions may continue, but document generation/download is unavailable and queued retry/re-render may be needed.                                                                                                                                                                           |
 | Communication boundary | Degraded if unavailable. Financial transaction may commit only if notification request handoff follows the module's defined reliability mechanism; alert and retry notification request without rolling back already committed finance state unless the command contract explicitly requires synchronous communication. |
-| Reporting projections | Degraded. Transactional operations continue. Dashboards show stale timestamp or unavailable state. |
+| Reporting projections  | Degraded. Transactional operations continue. Dashboards show stale timestamp or unavailable state.                                                                                                                                                                                                                      |
 
 ### 10.4 Health Check Timeouts
 
@@ -495,16 +495,16 @@ A table-only Finance restore into an otherwise newer database may break referent
 
 ### 13.1 Operational Reconciliation Frequency
 
-| Control | Frequency | Expected Result |
-|---|---|---|
-| Invoice balance equation | Every 15 minutes | Zero exceptions. |
-| Payment allocation sum vs payment posted amount | Every 15 minutes | Zero exceptions. |
-| Installment paid amount vs allocations | Every 15 minutes | Zero exceptions. |
-| Receivable outstanding vs invoice outstanding | Every 15 minutes | Zero exceptions. |
-| Receipt uniqueness per posted payment | Hourly | Zero duplicate active receipts. |
-| Refund cumulative eligibility | Hourly | No executed amount above eligible settled amount. |
-| Full Finance reconciliation | Daily after GST business-day close | Zero unexplained monetary differences. |
-| Corporate credit exposure recomputation comparison | Daily | Zero unexplained exposure mismatch. |
+| Control                                            | Frequency                          | Expected Result                                   |
+| -------------------------------------------------- | ---------------------------------- | ------------------------------------------------- |
+| Invoice balance equation                           | Every 15 minutes                   | Zero exceptions.                                  |
+| Payment allocation sum vs payment posted amount    | Every 15 minutes                   | Zero exceptions.                                  |
+| Installment paid amount vs allocations             | Every 15 minutes                   | Zero exceptions.                                  |
+| Receivable outstanding vs invoice outstanding      | Every 15 minutes                   | Zero exceptions.                                  |
+| Receipt uniqueness per posted payment              | Hourly                             | Zero duplicate active receipts.                   |
+| Refund cumulative eligibility                      | Hourly                             | No executed amount above eligible settled amount. |
+| Full Finance reconciliation                        | Daily after GST business-day close | Zero unexplained monetary differences.            |
+| Corporate credit exposure recomputation comparison | Daily                              | Zero unexplained exposure mismatch.               |
 
 ### 13.2 Reconciliation Output
 
@@ -528,38 +528,38 @@ resolutionReference
 
 ## 14. Scheduled Jobs
 
-| Job | Schedule Guideline | Failure Behavior |
-|---|---|---|
-| Receivable aging refresh/reconciliation | At least daily after GST midnight plus operational refresh as defined in Part 8 | Alert; retain prior valid model; transaction data unchanged. |
-| Daily Finance reconciliation | Daily after business-day close | High-severity alert for unexplained monetary mismatch. |
-| Materialized KPI refresh | As Part 8 refresh SLA requires | Mark dashboards stale and alert if threshold exceeded. |
-| Installment-due notification request generation | Daily GST schedule | Retry idempotently; deduplicate event/template recipient keys. |
-| Invoice-overdue detection | Daily GST schedule | State derivation/update must be idempotent. |
-| Temporary export cleanup | Hourly/daily | Delete expired temporary artifacts only, never transaction documents. |
+| Job                                             | Schedule Guideline                                                              | Failure Behavior                                                      |
+| ----------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Receivable aging refresh/reconciliation         | At least daily after GST midnight plus operational refresh as defined in Part 8 | Alert; retain prior valid model; transaction data unchanged.          |
+| Daily Finance reconciliation                    | Daily after business-day close                                                  | High-severity alert for unexplained monetary mismatch.                |
+| Materialized KPI refresh                        | As Part 8 refresh SLA requires                                                  | Mark dashboards stale and alert if threshold exceeded.                |
+| Installment-due notification request generation | Daily GST schedule                                                              | Retry idempotently; deduplicate event/template recipient keys.        |
+| Invoice-overdue detection                       | Daily GST schedule                                                              | State derivation/update must be idempotent.                           |
+| Temporary export cleanup                        | Hourly/daily                                                                    | Delete expired temporary artifacts only, never transaction documents. |
 
 Internal jobs may use the monolith's `infrastructure/jobs` capability. No external broker is required.
 
 ## 15. Runbook Index
 
-| Runbook | Failure |
-|---|---|
-| RB-FBR-001 | Payment transaction failure before commit |
-| RB-FBR-002 | Payment outcome unknown after client timeout |
+| Runbook    | Failure                                                 |
+| ---------- | ------------------------------------------------------- |
+| RB-FBR-001 | Payment transaction failure before commit               |
+| RB-FBR-002 | Payment outcome unknown after client timeout            |
 | RB-FBR-003 | Duplicate payment or idempotency conflict investigation |
-| RB-FBR-004 | Receivable/payment-allocation reconciliation mismatch |
-| RB-FBR-005 | Approved refund execution failure |
-| RB-FBR-006 | Invoice/receipt numbering-series failure |
-| RB-FBR-007 | Corporate credit validation slow or failing |
-| RB-FBR-008 | Reporting read model stale or refresh failed |
-| RB-FBR-009 | Database connection-pool exhaustion |
-| RB-FBR-010 | Database deadlock or lock contention |
-| RB-FBR-011 | Export job backlog or repeated export failure |
-| RB-FBR-012 | Backup/PITR health failure |
-| RB-FBR-013 | Branch-isolation/security denial anomaly |
-| RB-FBR-014 | Receipt document render/storage failure |
-| RB-FBR-015 | Notification handoff failure |
-| RB-FBR-016 | Finance bulk import/sync issue |
-| RB-FBR-017 | Database restore and post-recovery reconciliation |
+| RB-FBR-004 | Receivable/payment-allocation reconciliation mismatch   |
+| RB-FBR-005 | Approved refund execution failure                       |
+| RB-FBR-006 | Invoice/receipt numbering-series failure                |
+| RB-FBR-007 | Corporate credit validation slow or failing             |
+| RB-FBR-008 | Reporting read model stale or refresh failed            |
+| RB-FBR-009 | Database connection-pool exhaustion                     |
+| RB-FBR-010 | Database deadlock or lock contention                    |
+| RB-FBR-011 | Export job backlog or repeated export failure           |
+| RB-FBR-012 | Backup/PITR health failure                              |
+| RB-FBR-013 | Branch-isolation/security denial anomaly                |
+| RB-FBR-014 | Receipt document render/storage failure                 |
+| RB-FBR-015 | Notification handoff failure                            |
+| RB-FBR-016 | Finance bulk import/sync issue                          |
+| RB-FBR-017 | Database restore and post-recovery reconciliation       |
 
 ## 16. RB-FBR-001 – Payment Transaction Failure Before Commit
 
@@ -916,12 +916,12 @@ Business KPI dashboards from Part 8 are separate from this operational dashboard
 
 ## 35. Incident Severity Guide
 
-| Severity | Examples | Response Expectation |
-|---|---|---|
-| SEV-1 | Confirmed duplicate widespread payment posting, data corruption, cross-branch exposure, database unavailable with Finance stopped, backup chain failure with material RPO risk | Immediate incident command and mutation containment. |
-| SEV-2 | Payment failure rate elevated, refund execution blocked, credit validation unavailable, reconciliation mismatch affecting money | Urgent engineering/database response. |
-| SEV-3 | Stale dashboard, export backlog, receipt renderer unavailable while payments remain safe | Business-hours urgent or on-call according to impact. |
-| SEV-4 | Single-user validation/configuration issue with workaround and no integrity impact | Normal support workflow. |
+| Severity | Examples                                                                                                                                                                       | Response Expectation                                  |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| SEV-1    | Confirmed duplicate widespread payment posting, data corruption, cross-branch exposure, database unavailable with Finance stopped, backup chain failure with material RPO risk | Immediate incident command and mutation containment.  |
+| SEV-2    | Payment failure rate elevated, refund execution blocked, credit validation unavailable, reconciliation mismatch affecting money                                                | Urgent engineering/database response.                 |
+| SEV-3    | Stale dashboard, export backlog, receipt renderer unavailable while payments remain safe                                                                                       | Business-hours urgent or on-call according to impact. |
+| SEV-4    | Single-user validation/configuration issue with workaround and no integrity impact                                                                                             | Normal support workflow.                              |
 
 ## 36. Post-Incident Requirements
 

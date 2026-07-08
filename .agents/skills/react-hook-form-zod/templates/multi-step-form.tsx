@@ -10,10 +10,10 @@
  * - Preserving form state across steps
  */
 
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 // Step 1: Personal Information
 const step1Schema = z.object({
@@ -21,7 +21,7 @@ const step1Schema = z.object({
   lastName: z.string().min(2, 'Last name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
   phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number'),
-})
+});
 
 // Step 2: Address
 const step2Schema = z.object({
@@ -29,35 +29,42 @@ const step2Schema = z.object({
   city: z.string().min(1, 'City is required'),
   state: z.string().min(2, 'State must be at least 2 characters'),
   zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, 'Invalid ZIP code'),
-})
+});
 
 // Step 3: Account
-const step3Schema = z.object({
-  username: z.string()
-    .min(3, 'Username must be at least 3 characters')
-    .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
-  password: z.string()
-    .min(8, 'Password must be at least 8 characters')
-    .regex(/[A-Z]/, 'Password must contain uppercase letter')
-    .regex(/[0-9]/, 'Password must contain number'),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ['confirmPassword'],
-})
+const step3Schema = z
+  .object({
+    username: z
+      .string()
+      .min(3, 'Username must be at least 3 characters')
+      .regex(
+        /^[a-zA-Z0-9_]+$/,
+        'Username can only contain letters, numbers, and underscores',
+      ),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .regex(/[A-Z]/, 'Password must contain uppercase letter')
+      .regex(/[0-9]/, 'Password must contain number'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
 
 // Combined schema for final validation
-const fullFormSchema = step1Schema.merge(step2Schema).merge(step3Schema)
+const fullFormSchema = step1Schema.merge(step2Schema).merge(step3Schema);
 
-type FormData = z.infer<typeof fullFormSchema>
-type Step1Data = z.infer<typeof step1Schema>
-type Step2Data = z.infer<typeof step2Schema>
-type Step3Data = z.infer<typeof step3Schema>
+type FormData = z.infer<typeof fullFormSchema>;
+type Step1Data = z.infer<typeof step1Schema>;
+type Step2Data = z.infer<typeof step2Schema>;
+type Step3Data = z.infer<typeof step3Schema>;
 
-const TOTAL_STEPS = 3
+const TOTAL_STEPS = 3;
 
 export function MultiStepRegistrationForm() {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(1);
 
   const {
     register,
@@ -81,40 +88,40 @@ export function MultiStepRegistrationForm() {
       password: '',
       confirmPassword: '',
     },
-  })
+  });
 
   // Navigate to next step
   const nextStep = async () => {
-    let fieldsToValidate: (keyof FormData)[] = []
+    let fieldsToValidate: (keyof FormData)[] = [];
 
     if (currentStep === 1) {
-      fieldsToValidate = ['firstName', 'lastName', 'email', 'phone']
+      fieldsToValidate = ['firstName', 'lastName', 'email', 'phone'];
     } else if (currentStep === 2) {
-      fieldsToValidate = ['street', 'city', 'state', 'zipCode']
+      fieldsToValidate = ['street', 'city', 'state', 'zipCode'];
     }
 
     // Trigger validation for current step fields
-    const isValid = await trigger(fieldsToValidate)
+    const isValid = await trigger(fieldsToValidate);
 
     if (isValid) {
-      setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS))
+      setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
     }
-  }
+  };
 
   // Navigate to previous step
   const prevStep = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 1))
-  }
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
 
   // Final form submission
   const onSubmit = async (data: FormData) => {
-    console.log('Complete form data:', data)
+    console.log('Complete form data:', data);
     // Make API call
-    alert('Form submitted successfully!')
-  }
+    alert('Form submitted successfully!');
+  };
 
   // Calculate progress percentage
-  const progressPercentage = (currentStep / TOTAL_STEPS) * 100
+  const progressPercentage = (currentStep / TOTAL_STEPS) * 100;
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -149,8 +156,8 @@ export function MultiStepRegistrationForm() {
                   step < currentStep
                     ? 'bg-green-600 text-white'
                     : step === currentStep
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-300 text-gray-600'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-300 text-gray-600'
                 }`}
               >
                 {step < currentStep ? '✓' : step}
@@ -175,24 +182,32 @@ export function MultiStepRegistrationForm() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-1">First Name *</label>
+                <label className="block text-sm font-medium mb-1">
+                  First Name *
+                </label>
                 <input
                   {...register('firstName')}
                   className="w-full px-3 py-2 border rounded-md"
                 />
                 {errors.firstName && (
-                  <span className="text-sm text-red-600">{errors.firstName.message}</span>
+                  <span className="text-sm text-red-600">
+                    {errors.firstName.message}
+                  </span>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Last Name *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Last Name *
+                </label>
                 <input
                   {...register('lastName')}
                   className="w-full px-3 py-2 border rounded-md"
                 />
                 {errors.lastName && (
-                  <span className="text-sm text-red-600">{errors.lastName.message}</span>
+                  <span className="text-sm text-red-600">
+                    {errors.lastName.message}
+                  </span>
                 )}
               </div>
             </div>
@@ -205,7 +220,9 @@ export function MultiStepRegistrationForm() {
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.email && (
-                <span className="text-sm text-red-600">{errors.email.message}</span>
+                <span className="text-sm text-red-600">
+                  {errors.email.message}
+                </span>
               )}
             </div>
 
@@ -218,7 +235,9 @@ export function MultiStepRegistrationForm() {
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.phone && (
-                <span className="text-sm text-red-600">{errors.phone.message}</span>
+                <span className="text-sm text-red-600">
+                  {errors.phone.message}
+                </span>
               )}
             </div>
           </div>
@@ -230,13 +249,17 @@ export function MultiStepRegistrationForm() {
             <h2 className="text-2xl font-bold">Address</h2>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Street Address *</label>
+              <label className="block text-sm font-medium mb-1">
+                Street Address *
+              </label>
               <input
                 {...register('street')}
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.street && (
-                <span className="text-sm text-red-600">{errors.street.message}</span>
+                <span className="text-sm text-red-600">
+                  {errors.street.message}
+                </span>
               )}
             </div>
 
@@ -248,31 +271,41 @@ export function MultiStepRegistrationForm() {
                   className="w-full px-3 py-2 border rounded-md"
                 />
                 {errors.city && (
-                  <span className="text-sm text-red-600">{errors.city.message}</span>
+                  <span className="text-sm text-red-600">
+                    {errors.city.message}
+                  </span>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">State *</label>
+                <label className="block text-sm font-medium mb-1">
+                  State *
+                </label>
                 <input
                   {...register('state')}
                   className="w-full px-3 py-2 border rounded-md"
                 />
                 {errors.state && (
-                  <span className="text-sm text-red-600">{errors.state.message}</span>
+                  <span className="text-sm text-red-600">
+                    {errors.state.message}
+                  </span>
                 )}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">ZIP Code *</label>
+              <label className="block text-sm font-medium mb-1">
+                ZIP Code *
+              </label>
               <input
                 {...register('zipCode')}
                 placeholder="12345 or 12345-6789"
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.zipCode && (
-                <span className="text-sm text-red-600">{errors.zipCode.message}</span>
+                <span className="text-sm text-red-600">
+                  {errors.zipCode.message}
+                </span>
               )}
             </div>
           </div>
@@ -284,37 +317,49 @@ export function MultiStepRegistrationForm() {
             <h2 className="text-2xl font-bold">Create Account</h2>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Username *</label>
+              <label className="block text-sm font-medium mb-1">
+                Username *
+              </label>
               <input
                 {...register('username')}
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.username && (
-                <span className="text-sm text-red-600">{errors.username.message}</span>
+                <span className="text-sm text-red-600">
+                  {errors.username.message}
+                </span>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Password *</label>
+              <label className="block text-sm font-medium mb-1">
+                Password *
+              </label>
               <input
                 type="password"
                 {...register('password')}
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.password && (
-                <span className="text-sm text-red-600">{errors.password.message}</span>
+                <span className="text-sm text-red-600">
+                  {errors.password.message}
+                </span>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Confirm Password *</label>
+              <label className="block text-sm font-medium mb-1">
+                Confirm Password *
+              </label>
               <input
                 type="password"
                 {...register('confirmPassword')}
                 className="w-full px-3 py-2 border rounded-md"
               />
               {errors.confirmPassword && (
-                <span className="text-sm text-red-600">{errors.confirmPassword.message}</span>
+                <span className="text-sm text-red-600">
+                  {errors.confirmPassword.message}
+                </span>
               )}
             </div>
 
@@ -322,11 +367,24 @@ export function MultiStepRegistrationForm() {
             <div className="mt-6 p-4 bg-gray-50 rounded-md">
               <h3 className="font-medium mb-2">Review Your Information:</h3>
               <div className="text-sm space-y-1">
-                <p><strong>Name:</strong> {getValues('firstName')} {getValues('lastName')}</p>
-                <p><strong>Email:</strong> {getValues('email')}</p>
-                <p><strong>Phone:</strong> {getValues('phone')}</p>
-                <p><strong>Address:</strong> {getValues('street')}, {getValues('city')}, {getValues('state')} {getValues('zipCode')}</p>
-                <p><strong>Username:</strong> {getValues('username')}</p>
+                <p>
+                  <strong>Name:</strong> {getValues('firstName')}{' '}
+                  {getValues('lastName')}
+                </p>
+                <p>
+                  <strong>Email:</strong> {getValues('email')}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {getValues('phone')}
+                </p>
+                <p>
+                  <strong>Address:</strong> {getValues('street')},{' '}
+                  {getValues('city')}, {getValues('state')}{' '}
+                  {getValues('zipCode')}
+                </p>
+                <p>
+                  <strong>Username:</strong> {getValues('username')}
+                </p>
               </div>
             </div>
           </div>
@@ -363,5 +421,5 @@ export function MultiStepRegistrationForm() {
         </div>
       </form>
     </div>
-  )
+  );
 }

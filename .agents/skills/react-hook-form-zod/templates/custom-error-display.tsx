@@ -10,26 +10,35 @@
  * - Icon-based error styling
  */
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useEffect, useState } from 'react';
 
 const formSchema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters'),
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   age: z.number().min(18, 'You must be at least 18 years old'),
-})
+});
 
-type FormData = z.infer<typeof formSchema>
+type FormData = z.infer<typeof formSchema>;
 
 /**
  * Custom Error Component
  */
-function FormError({ message, icon = true }: { message: string; icon?: boolean }) {
+function FormError({
+  message,
+  icon = true,
+}: {
+  message: string;
+  icon?: boolean;
+}) {
   return (
-    <div role="alert" className="flex items-start gap-2 text-sm text-red-600 mt-1">
+    <div
+      role="alert"
+      className="flex items-start gap-2 text-sm text-red-600 mt-1"
+    >
       {icon && (
         <svg className="w-4 h-4 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -41,16 +50,18 @@ function FormError({ message, icon = true }: { message: string; icon?: boolean }
       )}
       <span>{message}</span>
     </div>
-  )
+  );
 }
 
 /**
  * Error Summary Component
  */
 function ErrorSummary({ errors }: { errors: Record<string, any> }) {
-  const errorEntries = Object.entries(errors).filter(([key, value]) => value?.message)
+  const errorEntries = Object.entries(errors).filter(
+    ([key, value]) => value?.message,
+  );
 
-  if (errorEntries.length === 0) return null
+  if (errorEntries.length === 0) return null;
 
   return (
     <div
@@ -59,7 +70,11 @@ function ErrorSummary({ errors }: { errors: Record<string, any> }) {
       className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6"
     >
       <div className="flex items-center gap-2 mb-2">
-        <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+        <svg
+          className="w-5 h-5 text-red-600"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
           <path
             fillRule="evenodd"
             d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -67,7 +82,8 @@ function ErrorSummary({ errors }: { errors: Record<string, any> }) {
           />
         </svg>
         <h3 className="font-medium text-red-900">
-          {errorEntries.length} {errorEntries.length === 1 ? 'Error' : 'Errors'} Found
+          {errorEntries.length} {errorEntries.length === 1 ? 'Error' : 'Errors'}{' '}
+          Found
         </h3>
       </div>
       <ul className="list-disc list-inside space-y-1 text-sm text-red-700">
@@ -78,21 +94,31 @@ function ErrorSummary({ errors }: { errors: Record<string, any> }) {
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
 /**
  * Toast Notification for Errors
  */
-function ErrorToast({ message, onClose }: { message: string; onClose: () => void }) {
+function ErrorToast({
+  message,
+  onClose,
+}: {
+  message: string;
+  onClose: () => void;
+}) {
   useEffect(() => {
-    const timer = setTimeout(onClose, 5000)
-    return () => clearTimeout(timer)
-  }, [onClose])
+    const timer = setTimeout(onClose, 5000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
 
   return (
     <div className="fixed bottom-4 right-4 bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-start gap-3 max-w-sm animate-slide-in">
-      <svg className="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <svg
+        className="w-6 h-6 flex-shrink-0"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
         <path
           fillRule="evenodd"
           d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -111,7 +137,7 @@ function ErrorToast({ message, onClose }: { message: string; onClose: () => void
         ✕
       </button>
     </div>
-  )
+  );
 }
 
 /**
@@ -130,20 +156,22 @@ export function CustomErrorDisplayForm() {
       password: '',
       age: 18,
     },
-  })
+  });
 
-  const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form data:', data)
-    setToastMessage('Form submitted successfully!')
-  }
+    console.log('Form data:', data);
+    setToastMessage('Form submitted successfully!');
+  };
 
   const onError = (errors: any) => {
     // Show toast on validation error
-    const errorCount = Object.keys(errors).length
-    setToastMessage(`Please fix ${errorCount} error${errorCount > 1 ? 's' : ''} before submitting`)
-  }
+    const errorCount = Object.keys(errors).length;
+    setToastMessage(
+      `Please fix ${errorCount} error${errorCount > 1 ? 's' : ''} before submitting`,
+    );
+  };
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -164,12 +192,12 @@ export function CustomErrorDisplayForm() {
             aria-invalid={errors.username ? 'true' : 'false'}
             aria-describedby={errors.username ? 'username-error' : undefined}
             className={`w-full px-3 py-2 border rounded-md ${
-              errors.username ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+              errors.username
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-gray-300'
             }`}
           />
-          {errors.username && (
-            <FormError message={errors.username.message!} />
-          )}
+          {errors.username && <FormError message={errors.username.message!} />}
         </div>
 
         {/* Email */}
@@ -186,9 +214,7 @@ export function CustomErrorDisplayForm() {
               errors.email ? 'border-red-500' : 'border-gray-300'
             }`}
           />
-          {errors.email && (
-            <FormError message={errors.email.message!} />
-          )}
+          {errors.email && <FormError message={errors.email.message!} />}
         </div>
 
         {/* Password */}
@@ -205,9 +231,7 @@ export function CustomErrorDisplayForm() {
               errors.password ? 'border-red-500' : 'border-gray-300'
             }`}
           />
-          {errors.password && (
-            <FormError message={errors.password.message!} />
-          )}
+          {errors.password && <FormError message={errors.password.message!} />}
         </div>
 
         {/* Age */}
@@ -224,9 +248,7 @@ export function CustomErrorDisplayForm() {
               errors.age ? 'border-red-500' : 'border-gray-300'
             }`}
           />
-          {errors.age && (
-            <FormError message={errors.age.message!} />
-          )}
+          {errors.age && <FormError message={errors.age.message!} />}
         </div>
 
         <button
@@ -240,7 +262,10 @@ export function CustomErrorDisplayForm() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <ErrorToast message={toastMessage} onClose={() => setToastMessage(null)} />
+        <ErrorToast
+          message={toastMessage}
+          onClose={() => setToastMessage(null)}
+        />
       )}
 
       <style>{`
@@ -259,28 +284,40 @@ export function CustomErrorDisplayForm() {
         }
       `}</style>
     </div>
-  )
+  );
 }
 
 /**
  * Alternative: Grouped Error Display
  */
 export function GroupedErrorDisplayForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-  })
+  });
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))} className="max-w-2xl mx-auto space-y-6">
+    <form
+      onSubmit={handleSubmit((data) => console.log(data))}
+      className="max-w-2xl mx-auto space-y-6"
+    >
       <h2 className="text-2xl font-bold">Grouped Error Display</h2>
 
       {/* All errors in single container */}
       {Object.keys(errors).length > 0 && (
         <div className="bg-red-50 border-l-4 border-red-600 p-4">
-          <h3 className="font-medium text-red-900 mb-2">Please correct the following:</h3>
+          <h3 className="font-medium text-red-900 mb-2">
+            Please correct the following:
+          </h3>
           <div className="space-y-2">
             {Object.entries(errors).map(([field, error]) => (
-              <div key={field} className="flex items-start gap-2 text-sm text-red-700">
+              <div
+                key={field}
+                className="flex items-start gap-2 text-sm text-red-700"
+              >
                 <span className="font-medium capitalize">{field}:</span>
                 <span>{error.message}</span>
               </div>
@@ -290,14 +327,35 @@ export function GroupedErrorDisplayForm() {
       )}
 
       {/* Form fields without individual error messages */}
-      <input {...register('username')} placeholder="Username" className="w-full px-3 py-2 border rounded" />
-      <input {...register('email')} placeholder="Email" className="w-full px-3 py-2 border rounded" />
-      <input {...register('password')} type="password" placeholder="Password" className="w-full px-3 py-2 border rounded" />
-      <input {...register('age', { valueAsNumber: true })} type="number" placeholder="Age" className="w-full px-3 py-2 border rounded" />
+      <input
+        {...register('username')}
+        placeholder="Username"
+        className="w-full px-3 py-2 border rounded"
+      />
+      <input
+        {...register('email')}
+        placeholder="Email"
+        className="w-full px-3 py-2 border rounded"
+      />
+      <input
+        {...register('password')}
+        type="password"
+        placeholder="Password"
+        className="w-full px-3 py-2 border rounded"
+      />
+      <input
+        {...register('age', { valueAsNumber: true })}
+        type="number"
+        placeholder="Age"
+        className="w-full px-3 py-2 border rounded"
+      />
 
-      <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded">
+      <button
+        type="submit"
+        className="w-full px-4 py-2 bg-blue-600 text-white rounded"
+      >
         Submit
       </button>
     </form>
-  )
+  );
 }

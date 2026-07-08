@@ -44,7 +44,10 @@ export function applyObservabilityResponseHeaders(
   source: HeaderBag,
   overrides: Partial<RequestContext> = {},
 ): RequestContext {
-  const { context, headers } = createObservabilityResponseHeaders(source, overrides);
+  const { context, headers } = createObservabilityResponseHeaders(
+    source,
+    overrides,
+  );
   headers.forEach((value, key) => target.set(key, value));
   return context;
 }

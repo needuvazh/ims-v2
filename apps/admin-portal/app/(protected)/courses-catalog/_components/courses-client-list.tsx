@@ -50,7 +50,12 @@ interface CoursesClientListProps {
     durationValue: number;
     status: string;
   }>;
-  categories: Array<{ id: string; code: string; nameEnglish: string; nameArabic: string }>;
+  categories: Array<{
+    id: string;
+    code: string;
+    nameEnglish: string;
+    nameArabic: string;
+  }>;
   departments: Array<{ id: string; departmentName: string }>;
   total: number;
   kpis: {
@@ -100,26 +105,33 @@ export function CoursesClientList({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [searchValue, setSearchValue] = useState(defaultSearch);
 
-  const currentSortBy = searchParams.get('sortBy') ?? defaultSortBy ?? 'createdAt';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? defaultSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? defaultSortBy ?? 'createdAt';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? defaultSortOrder;
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -136,7 +148,8 @@ export function CoursesClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -157,19 +170,29 @@ export function CoursesClientList({
     }
   };
 
-  const getDepartmentName = (departmentId: string) => departments.find((d) => d.id === departmentId)?.departmentName || 'Unassigned';
+  const getDepartmentName = (departmentId: string) =>
+    departments.find((d) => d.id === departmentId)?.departmentName ||
+    'Unassigned';
 
   const getCategoryLabel = (categoryId?: string | null) => {
     if (!categoryId) {
       return 'Uncategorized';
     }
 
-    return categories.find((category) => category.id === categoryId)?.nameEnglish || 'Uncategorized';
+    return (
+      categories.find((category) => category.id === categoryId)?.nameEnglish ||
+      'Uncategorized'
+    );
   };
 
   const activeFilters = [
     { label: 'Search', value: defaultSearch },
-    { label: 'Category', value: categories.find((category) => category.id === defaultCategoryId)?.nameEnglish || defaultCategoryId },
+    {
+      label: 'Category',
+      value:
+        categories.find((category) => category.id === defaultCategoryId)
+          ?.nameEnglish || defaultCategoryId,
+    },
     { label: 'Status', value: defaultStatus },
   ].filter((item) => item.value);
 
@@ -177,7 +200,11 @@ export function CoursesClientList({
     e.preventDefault();
     setErrorMsg(null);
 
-    if (!categoryCode.trim() || !categoryNameEn.trim() || !categoryNameAr.trim()) {
+    if (
+      !categoryCode.trim() ||
+      !categoryNameEn.trim() ||
+      !categoryNameAr.trim()
+    ) {
       setErrorMsg('Code, English Name, and Arabic Name are required.');
       return;
     }
@@ -220,7 +247,9 @@ export function CoursesClientList({
       sortDirection: currentSortBy === 'courseCode' ? currentSortOrder : null,
       onSort: () => handleSort('courseCode'),
       render: (course: CoursesClientListProps['courses'][number]) => (
-        <span className="font-mono font-medium text-slate-800">{course.courseCode}</span>
+        <span className="font-mono font-medium text-slate-800">
+          {course.courseCode}
+        </span>
       ),
       headerClassName: 'w-[120px]',
     },
@@ -239,7 +268,10 @@ export function CoursesClientList({
       sortDirection: currentSortBy === 'nameArabic' ? currentSortOrder : null,
       onSort: () => handleSort('nameArabic'),
       render: (course: CoursesClientListProps['courses'][number]) => (
-        <div className="font-medium text-slate-800 text-right font-arabic" dir="rtl">
+        <div
+          className="font-medium text-slate-800 text-right font-arabic"
+          dir="rtl"
+        >
           {course.nameArabic}
         </div>
       ),
@@ -248,16 +280,21 @@ export function CoursesClientList({
     {
       header: 'Department',
       render: (course: CoursesClientListProps['courses'][number]) => (
-        <span className="text-[color:var(--ims-muted)]">{getDepartmentName(course.departmentId)}</span>
+        <span className="text-[color:var(--ims-muted)]">
+          {getDepartmentName(course.departmentId)}
+        </span>
       ),
     },
     {
       header: 'Duration',
       sortable: true,
-      sortDirection: currentSortBy === 'durationValue' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'durationValue' ? currentSortOrder : null,
       onSort: () => handleSort('durationValue'),
       render: (course: CoursesClientListProps['courses'][number]) => (
-        <span className="text-[color:var(--ims-muted)]">{course.durationValue} {course.durationType}</span>
+        <span className="text-[color:var(--ims-muted)]">
+          {course.durationValue} {course.durationType}
+        </span>
       ),
       headerClassName: 'w-[140px]',
     },
@@ -268,7 +305,9 @@ export function CoursesClientList({
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
       render: (course: CoursesClientListProps['courses'][number]) => (
-        <Badge variant={getStatusBadgeVariant(course.status)}>{course.status}</Badge>
+        <Badge variant={getStatusBadgeVariant(course.status)}>
+          {course.status}
+        </Badge>
       ),
       headerClassName: 'w-[120px] text-center',
     },
@@ -294,17 +333,25 @@ export function CoursesClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{course.courseCode}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{course.nameEnglish}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {course.courseCode}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {course.nameEnglish}
+            </p>
           </div>
-          <Badge variant={getStatusBadgeVariant(course.status)}>{course.status}</Badge>
+          <Badge variant={getStatusBadgeVariant(course.status)}>
+            {course.status}
+          </Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-3 p-card-p">
         <div className="grid grid-cols-2 gap-4 text-xs">
           <div className="space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Arabic Name</p>
-            <p className="truncate text-right font-arabic" dir="rtl">{course.nameArabic}</p>
+            <p className="truncate text-right font-arabic" dir="rtl">
+              {course.nameArabic}
+            </p>
           </div>
           <div className="space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Department</p>
@@ -316,7 +363,9 @@ export function CoursesClientList({
           </div>
           <div className="col-span-2 space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Duration</p>
-            <p className="truncate">{course.durationValue} {course.durationType}</p>
+            <p className="truncate">
+              {course.durationValue} {course.durationType}
+            </p>
           </div>
         </div>
       </CardContent>
@@ -353,7 +402,10 @@ export function CoursesClientList({
                 <FolderPlus className="h-4 w-4" />
                 <span className="sr-only sm:not-sr-only">Add Category</span>
               </Button>
-              <Button onClick={() => router.push('/courses-catalog/new')} className="h-10 gap-0 px-3 sm:gap-1.5 sm:px-4">
+              <Button
+                onClick={() => router.push('/courses-catalog/new')}
+                className="h-10 gap-0 px-3 sm:gap-1.5 sm:px-4"
+              >
                 <Plus className="h-4 w-4" />
                 <span className="sr-only sm:not-sr-only">Create Course</span>
               </Button>
@@ -429,10 +481,15 @@ export function CoursesClientList({
           </FormLabel>
           <Select
             value={searchParams.get('categoryId') || ''}
-            onChange={(e) => updateParams({ categoryId: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ categoryId: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Categories' },
-              ...categories.map((cat) => ({ value: cat.id, label: cat.nameEnglish })),
+              ...categories.map((cat) => ({
+                value: cat.id,
+                label: cat.nameEnglish,
+              })),
             ]}
             className="h-12"
             placeholder="All Categories"
@@ -445,7 +502,9 @@ export function CoursesClientList({
           </FormLabel>
           <Select
             value={searchParams.get('status') || ''}
-            onChange={(e) => updateParams({ status: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ status: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Statuses' },
               { value: 'Draft', label: 'Draft' },
@@ -462,9 +521,14 @@ export function CoursesClientList({
 
       {activeFilters.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-[color:var(--ims-muted)]">
-          <span className="font-semibold uppercase tracking-[0.18em]">Active filters</span>
+          <span className="font-semibold uppercase tracking-[0.18em]">
+            Active filters
+          </span>
           {activeFilters.map((filter) => (
-            <span key={`${filter.label}-${filter.value}`} className="rounded-full border border-[color:var(--ims-border)] bg-white px-3 py-1">
+            <span
+              key={`${filter.label}-${filter.value}`}
+              className="rounded-full border border-[color:var(--ims-border)] bg-white px-3 py-1"
+            >
               {filter.label}: {filter.value}
             </span>
           ))}
@@ -486,7 +550,14 @@ export function CoursesClientList({
       />
 
       {/* Pagination */}
-      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={10}
+        />
+      )}
 
       {/* Add Category Dialog */}
       <Dialog open={isCategoryModalOpen} onOpenChange={setIsCategoryModalOpen}>
@@ -494,19 +565,25 @@ export function CoursesClientList({
           <DialogHeader>
             <DialogTitle>Add Course Category</DialogTitle>
             <DialogDescription>
-              Create a new category for classification. Category names are bilingual.
+              Create a new category for classification. Category names are
+              bilingual.
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleCreateCategorySubmit} className="space-y-4 py-4">
+          <form
+            onSubmit={handleCreateCategorySubmit}
+            className="space-y-4 py-4"
+          >
             {errorMsg && (
               <div className="p-3 bg-red-50 text-red-700 text-xs rounded border border-red-200">
                 {errorMsg}
               </div>
             )}
-            
+
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Category Code (uppercase, e.g. CAT-TECH)</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Category Code (uppercase, e.g. CAT-TECH)
+              </label>
               <Input
                 placeholder="CAT-CODE"
                 value={categoryCode}
@@ -516,7 +593,9 @@ export function CoursesClientList({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Category Name (English)</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Category Name (English)
+              </label>
               <Input
                 placeholder="e.g. Technology"
                 value={categoryNameEn}
@@ -526,7 +605,9 @@ export function CoursesClientList({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Category Name (Arabic)</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Category Name (Arabic)
+              </label>
               <Input
                 placeholder="e.g. التكنولوجيا"
                 value={categoryNameAr}
@@ -538,7 +619,9 @@ export function CoursesClientList({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Description</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Description
+              </label>
               <textarea
                 placeholder="Description of the category..."
                 value={categoryDesc}
@@ -548,7 +631,9 @@ export function CoursesClientList({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Parent Category (Optional)</label>
+              <label className="text-xs font-semibold text-slate-700">
+                Parent Category (Optional)
+              </label>
               <select
                 value={parentCategoryId}
                 onChange={(e) => setParentCategoryId(e.target.value)}
@@ -564,7 +649,12 @@ export function CoursesClientList({
             </div>
 
             <DialogFooter className="pt-4 border-t">
-              <Button type="button" variant="outline" onClick={() => setIsCategoryModalOpen(false)} disabled={isCreatingCategory}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsCategoryModalOpen(false)}
+                disabled={isCreatingCategory}
+              >
                 Cancel
               </Button>
               <Button type="submit" disabled={isCreatingCategory}>

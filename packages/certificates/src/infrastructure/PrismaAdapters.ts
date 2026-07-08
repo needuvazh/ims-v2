@@ -6,23 +6,25 @@ import {
   FinanceValidationPort,
   NumberingPort,
   AuditPort,
-  NotificationPort
+  NotificationPort,
 } from '../ports';
 
 export class PrismaEnrollmentReadAdapter implements EnrollmentReadPort {
-  async getEnrollmentContext(enrollmentId: string): Promise<EnrollmentContext | null> {
+  async getEnrollmentContext(
+    enrollmentId: string,
+  ): Promise<EnrollmentContext | null> {
     const enrollment = await prisma.enrollment.findUnique({
       where: { id: enrollmentId },
       include: {
         studentProfile: {
           include: {
-            person: true
-          }
+            person: true,
+          },
         },
         course: true,
         batch: true,
-        branch: true
-      }
+        branch: true,
+      },
     });
 
     if (!enrollment) return null;
@@ -41,7 +43,7 @@ export class PrismaEnrollmentReadAdapter implements EnrollmentReadPort {
       courseNameEnglish: enrollment.course.nameEnglish,
       courseNameArabic: enrollment.course.nameArabic,
       batchCode: enrollment.batch.batchCode,
-      batchName: enrollment.batch.batchNameEnglish
+      batchName: enrollment.batch.batchNameEnglish,
     };
   }
 }
@@ -49,16 +51,19 @@ export class PrismaEnrollmentReadAdapter implements EnrollmentReadPort {
 export class PrismaCompletionReadAdapter implements CompletionReadPort {
   async isCompletionApproved(enrollmentId: string): Promise<boolean> {
     const completion = await prisma.courseCompletion.findFirst({
-      where: { enrollmentId }
+      where: { enrollmentId },
     });
-    return completion?.completionStatus === 'Approved' && completion?.certificateAllowed === true;
+    return (
+      completion?.completionStatus === 'Approved' &&
+      completion?.certificateAllowed === true
+    );
   }
 }
 
 export class PrismaFinanceValidationAdapter implements FinanceValidationPort {
   async isPaymentValidationPassed(enrollmentId: string): Promise<boolean> {
     const invoices = await prisma.invoice.findMany({
-      where: { enrollmentId }
+      where: { enrollmentId },
     });
 
     if (invoices.length === 0) {
@@ -66,7 +71,7 @@ export class PrismaFinanceValidationAdapter implements FinanceValidationPort {
     }
 
     const unpaid = invoices.some(
-      inv => inv.outstandingAmount.toNumber() > 0 && inv.status !== 'Paid'
+      (inv) => inv.outstandingAmount.toNumber() > 0 && inv.status !== 'Paid',
     );
     return !unpaid;
   }
@@ -81,7 +86,12 @@ export class PrismaNumberingAdapter implements NumberingPort {
 }
 
 export class PrismaAuditAdapter implements AuditPort {
-  async logAction(action: string, actorId: string, resourceId: string, details?: Record<string, any>): Promise<void> {
+  async logAction(
+    action: string,
+    actorId: string,
+    resourceId: string,
+    details?: Record<string, any>,
+  ): Promise<void> {
     await prisma.auditLog.create({
       data: {
         performedBy: actorId,
@@ -90,16 +100,20 @@ export class PrismaAuditAdapter implements AuditPort {
         entityId: resourceId,
         action,
         newValue: (details as any) ?? null,
-        module: 'CertificateManagement'
-      }
+        module: 'CertificateManagement',
+      },
     });
   }
 }
 
 export class PrismaNotificationAdapter implements NotificationPort {
-  async requestNotification(templateCode: string, recipientId: string, placeholders: Record<string, string>): Promise<void> {
+  async requestNotification(
+    templateCode: string,
+    recipientId: string,
+    placeholders: Record<string, string>,
+  ): Promise<void> {
     const user = await prisma.user.findUnique({
-      where: { id: recipientId }
+      where: { id: recipientId },
     });
     if (!user) return;
 
@@ -110,8 +124,8 @@ export class PrismaNotificationAdapter implements NotificationPort {
         recipientEmail: user.email,
         subject: `Certificate Notification: ${templateCode}`,
         body: `Hello, your certificate is ready. Details: ${JSON.stringify(placeholders)}`,
-        status: 'Pending'
-      }
+        status: 'Pending',
+      },
     });
   }
 }

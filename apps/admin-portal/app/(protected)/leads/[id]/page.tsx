@@ -28,9 +28,12 @@ export default async function LeadDetailsPage(props: {
   // Branch Scope Check
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
-  if (allowedBranchIds.length > 0 && !allowedBranchIds.includes(lead.branchId as Uuid)) {
+  if (
+    allowedBranchIds.length > 0 &&
+    !allowedBranchIds.includes(lead.branchId as Uuid)
+  ) {
     throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
   }
 
@@ -84,7 +87,9 @@ export default async function LeadDetailsPage(props: {
   }));
 
   // Fetch paginated follow-ups (display last 10 records)
-  const followUpPage = searchParams.followUpPage ? parseInt(searchParams.followUpPage, 10) : 1;
+  const followUpPage = searchParams.followUpPage
+    ? parseInt(searchParams.followUpPage, 10)
+    : 1;
   const followUpLimit = 10;
   const followUpSkip = (followUpPage - 1) * followUpLimit;
 
@@ -113,10 +118,49 @@ export default async function LeadDetailsPage(props: {
   // Map database lead fields to match UI expectations
   const mappedLead = {
     ...lead,
-    branch: lead.branch ? { id: lead.branchId, name: lead.branch.branchName } : null,
-    counselor: lead.counselor ? { id: lead.counselorId, name: lead.counselor.username } : null,
-    interestedCourse: lead.interestedCourse ? { id: lead.interestedCourseId, nameEnglish: lead.interestedCourse.nameEnglish } : null,
+    branch: lead.branch
+      ? { id: lead.branchId, name: lead.branch.branchName }
+      : null,
+    counselor: lead.counselor
+      ? { id: lead.counselorId, name: lead.counselor.username }
+      : null,
+    interestedCourse: lead.interestedCourse
+      ? {
+          id: lead.interestedCourseId,
+          nameEnglish: lead.interestedCourse.nameEnglish,
+        }
+      : null,
   };
+
+  // Fetch existing documents for the lead's Person
+  const existingDocs = await prisma.document.findMany({
+    where: {
+      isDeleted: false,
+      owners: {
+        some: {
+          ownerId: lead.personId,
+          ownerType: 'Person',
+        },
+      },
+    },
+  });
+
+  const initialDocuments = existingDocs.map((doc) => ({
+    id: doc.id,
+    fileName: doc.fileName,
+    fileKey: doc.fileKey,
+    fileType: doc.fileType,
+    documentType: doc.documentType,
+  }));
+
+  let admissionId: string | null = null;
+  if (lead.stage === 'Converted') {
+    const linkedAdmission = await prisma.admission.findFirst({
+      where: { leadId },
+      select: { id: true },
+    });
+    admissionId = linkedAdmission?.id || null;
+  }
 
   return (
     <div className="p-6">
@@ -127,6 +171,8 @@ export default async function LeadDetailsPage(props: {
         followUps={mappedFollowUps}
         followUpsTotal={followUpsTotal}
         currentFollowUpPage={followUpPage}
+        admissionId={admissionId}
+        initialDocuments={initialDocuments}
       />
     </div>
   );

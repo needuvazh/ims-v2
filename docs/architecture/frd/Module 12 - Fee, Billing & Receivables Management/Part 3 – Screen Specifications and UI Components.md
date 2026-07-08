@@ -60,21 +60,21 @@ Grid rules:
 
 The module uses the following reusable UI components:
 
-| Component | Purpose | Mandatory Behavior |
-|---|---|---|
-| BranchContextSelector | Select active authorized branch context. | Server validates every selection; consolidated option appears only with permission. |
-| FinanceDateRangePicker | Filter invoice/payment/receivable dates. | Uses GST business dates; inclusive date range; maximum export range configurable server-side. |
-| CurrencyAmountInput | Enter monetary amount. | Decimal input; non-negative unless explicitly allowed; max 2 fractional digits for OMR display unless currency configuration defines otherwise. |
-| EntitySearchCombobox | Search student, enrollment, invoice, corporate account, course, or batch. | Debounced server search; minimum 2 characters; branch scoped; keyboard accessible. |
-| StatusBadge | Display business state. | Text label, translated label, icon where useful, never color-only. |
-| PermissionGuard | Hide or disable protected controls. | UI behavior supplements, never replaces, server authorization. |
-| AuditTimeline | Show chronological immutable audit events. | Displays actor, GST timestamp, action, old/new summary, reason, branch. |
-| MoneySummaryPanel | Display subtotal, discount, tax, total, paid, refunded, outstanding. | Fixed decimal precision; explicit currency code. |
-| DataGrid | Dense server-side table. | Sorting, filters, pagination, column visibility, responsive horizontal scroll. |
-| ValidationSummary | Aggregate field and business-rule errors. | Links each error to field/section; screen-reader announcement. |
-| UnsavedChangesGuard | Prevent accidental navigation from dirty forms. | Prompts before route change or tab close. |
-| ApprovalDecisionPanel | Approve/reject controlled actions. | Requires permission; rejection reason mandatory; decision is audited. |
-| BilingualDocumentPreview | Preview invoice/receipt in English or Arabic. | Direction-aware template, stable numeric formatting, print preview. |
+| Component                | Purpose                                                                   | Mandatory Behavior                                                                                                                              |
+| ------------------------ | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| BranchContextSelector    | Select active authorized branch context.                                  | Server validates every selection; consolidated option appears only with permission.                                                             |
+| FinanceDateRangePicker   | Filter invoice/payment/receivable dates.                                  | Uses GST business dates; inclusive date range; maximum export range configurable server-side.                                                   |
+| CurrencyAmountInput      | Enter monetary amount.                                                    | Decimal input; non-negative unless explicitly allowed; max 2 fractional digits for OMR display unless currency configuration defines otherwise. |
+| EntitySearchCombobox     | Search student, enrollment, invoice, corporate account, course, or batch. | Debounced server search; minimum 2 characters; branch scoped; keyboard accessible.                                                              |
+| StatusBadge              | Display business state.                                                   | Text label, translated label, icon where useful, never color-only.                                                                              |
+| PermissionGuard          | Hide or disable protected controls.                                       | UI behavior supplements, never replaces, server authorization.                                                                                  |
+| AuditTimeline            | Show chronological immutable audit events.                                | Displays actor, GST timestamp, action, old/new summary, reason, branch.                                                                         |
+| MoneySummaryPanel        | Display subtotal, discount, tax, total, paid, refunded, outstanding.      | Fixed decimal precision; explicit currency code.                                                                                                |
+| DataGrid                 | Dense server-side table.                                                  | Sorting, filters, pagination, column visibility, responsive horizontal scroll.                                                                  |
+| ValidationSummary        | Aggregate field and business-rule errors.                                 | Links each error to field/section; screen-reader announcement.                                                                                  |
+| UnsavedChangesGuard      | Prevent accidental navigation from dirty forms.                           | Prompts before route change or tab close.                                                                                                       |
+| ApprovalDecisionPanel    | Approve/reject controlled actions.                                        | Requires permission; rejection reason mandatory; decision is audited.                                                                           |
+| BilingualDocumentPreview | Preview invoice/receipt in English or Arabic.                             | Direction-aware template, stable numeric formatting, print preview.                                                                             |
 
 ---
 
@@ -82,38 +82,38 @@ The module uses the following reusable UI components:
 
 ### 3.1 Admin Portal Screens
 
-| Screen ID | Screen Name | Primary Purpose | Primary Actors |
-|---|---|---|---|
-| FBR-A-001 | Finance Overview Dashboard | Operational finance KPIs, collections, overdue exposure, aging, branch summary. | Finance Officer, Finance Manager, Branch Manager, Executive Viewer |
-| FBR-A-002 | Invoice List | Search, filter, review, export, and navigate invoices. | Finance Officer, Finance Manager, Auditor |
-| FBR-A-003 | Create Student Invoice | Create invoice from confirmed/active enrollment commercial snapshot. | Finance Officer |
-| FBR-A-004 | Create Corporate Invoice | Create single or consolidated corporate invoice. | Finance Officer, Finance Manager |
-| FBR-A-005 | Invoice Detail | View monetary breakdown, lines, payments, receipts, refunds, receivable, audit. | Authorized finance/read actors |
-| FBR-A-006 | Installment Plan Builder | Define and activate installment schedules. | Finance Officer, Finance Manager |
-| FBR-A-007 | Payment Collection Workspace | Record manual payment and allocate to invoice/installment. | Finance Officer, Cashier |
-| FBR-A-008 | Payment List and Detail | Search payments, inspect settlement history, receipt linkage, refund position. | Finance Officer, Finance Manager, Auditor |
-| FBR-A-009 | Receipt Viewer and Print | Preview, print, and retrieve bilingual receipt. | Finance Officer, Cashier, Auditor |
-| FBR-A-010 | Refund Work Queue | Search refund requests by status, branch, date, amount, requester. | Finance Officer, Finance Manager |
-| FBR-A-011 | Refund Request Form | Submit a controlled refund request against eligible payment/invoice. | Finance Officer |
-| FBR-A-012 | Refund Review and Decision | Review, approve, or reject refund request. | Finance Manager / delegated approver |
-| FBR-A-013 | Receivables Aging Workspace | Monitor open balances and aging buckets with drill-down. | Finance Officer, Finance Manager, Branch Manager |
-| FBR-A-014 | Corporate Credit Rules | Maintain effective-dated credit limits and block behavior. | Finance Manager |
-| FBR-A-015 | Corporate Credit Exposure Detail | Inspect outstanding, committed, available credit, and validation history. | Finance Manager, Corporate Account Manager read-only |
-| FBR-A-016 | Finance Export Center | Generate authorized CSV/XLSX/PDF exports from supported datasets. | Authorized reporting users |
-| FBR-A-017 | Finance Audit Explorer | Search sensitive financial actions and before/after changes. | Finance Manager, Auditor |
-| FBR-A-018 | Numbering Series Read View | View invoice/receipt numbering configuration consumed from Configuration context. | Finance Manager, Auditor |
+| Screen ID | Screen Name                      | Primary Purpose                                                                   | Primary Actors                                                     |
+| --------- | -------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| FBR-A-001 | Finance Overview Dashboard       | Operational finance KPIs, collections, overdue exposure, aging, branch summary.   | Finance Officer, Finance Manager, Branch Manager, Executive Viewer |
+| FBR-A-002 | Invoice List                     | Search, filter, review, export, and navigate invoices.                            | Finance Officer, Finance Manager, Auditor                          |
+| FBR-A-003 | Create Student Invoice           | Create invoice from confirmed/active enrollment commercial snapshot.              | Finance Officer                                                    |
+| FBR-A-004 | Create Corporate Invoice         | Create single or consolidated corporate invoice.                                  | Finance Officer, Finance Manager                                   |
+| FBR-A-005 | Invoice Detail                   | View monetary breakdown, lines, payments, receipts, refunds, receivable, audit.   | Authorized finance/read actors                                     |
+| FBR-A-006 | Installment Plan Builder         | Define and activate installment schedules.                                        | Finance Officer, Finance Manager                                   |
+| FBR-A-007 | Payment Collection Workspace     | Record manual payment and allocate to invoice/installment.                        | Finance Officer, Cashier                                           |
+| FBR-A-008 | Payment List and Detail          | Search payments, inspect settlement history, receipt linkage, refund position.    | Finance Officer, Finance Manager, Auditor                          |
+| FBR-A-009 | Receipt Viewer and Print         | Preview, print, and retrieve bilingual receipt.                                   | Finance Officer, Cashier, Auditor                                  |
+| FBR-A-010 | Refund Work Queue                | Search refund requests by status, branch, date, amount, requester.                | Finance Officer, Finance Manager                                   |
+| FBR-A-011 | Refund Request Form              | Submit a controlled refund request against eligible payment/invoice.              | Finance Officer                                                    |
+| FBR-A-012 | Refund Review and Decision       | Review, approve, or reject refund request.                                        | Finance Manager / delegated approver                               |
+| FBR-A-013 | Receivables Aging Workspace      | Monitor open balances and aging buckets with drill-down.                          | Finance Officer, Finance Manager, Branch Manager                   |
+| FBR-A-014 | Corporate Credit Rules           | Maintain effective-dated credit limits and block behavior.                        | Finance Manager                                                    |
+| FBR-A-015 | Corporate Credit Exposure Detail | Inspect outstanding, committed, available credit, and validation history.         | Finance Manager, Corporate Account Manager read-only               |
+| FBR-A-016 | Finance Export Center            | Generate authorized CSV/XLSX/PDF exports from supported datasets.                 | Authorized reporting users                                         |
+| FBR-A-017 | Finance Audit Explorer           | Search sensitive financial actions and before/after changes.                      | Finance Manager, Auditor                                           |
+| FBR-A-018 | Numbering Series Read View       | View invoice/receipt numbering configuration consumed from Configuration context. | Finance Manager, Auditor                                           |
 
 ### 3.2 Student Portal Screens
 
 The current DDD baseline is single Admin Portal first. The following Student Portal screens are UI contracts for activation when the Student Portal is enabled. They are read-only except for download/print interactions; automated gateway payment initiation is excluded from current Module 12 scope.
 
-| Screen ID | Screen Name | Purpose |
-|---|---|---|
-| FBR-S-001 | My Fees and Invoices | View own invoices, totals, payment status, due dates, and outstanding balances. |
-| FBR-S-002 | Invoice Detail | View own invoice lines, totals, payment history, installment schedule, and downloadable document. |
-| FBR-S-003 | My Installment Schedule | View due installments, paid amounts, remaining amount, and overdue status. |
-| FBR-S-004 | My Receipts | View and download receipts belonging to the authenticated student. |
-| FBR-S-005 | Payment Status Summary | View payment-validation status per enrollment without exposing internal finance controls. |
+| Screen ID | Screen Name             | Purpose                                                                                           |
+| --------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
+| FBR-S-001 | My Fees and Invoices    | View own invoices, totals, payment status, due dates, and outstanding balances.                   |
+| FBR-S-002 | Invoice Detail          | View own invoice lines, totals, payment history, installment schedule, and downloadable document. |
+| FBR-S-003 | My Installment Schedule | View due installments, paid amounts, remaining amount, and overdue status.                        |
+| FBR-S-004 | My Receipts             | View and download receipts belonging to the authenticated student.                                |
+| FBR-S-005 | Payment Status Summary  | View payment-validation status per enrollment without exposing internal finance controls.         |
 
 ### 3.3 Trainer Portal Applicability
 
@@ -183,12 +183,12 @@ All ratios must handle zero denominator by returning `0%` with tooltip `No colle
 
 ### Filters and Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Branch Scope | Select | Yes | Must be one authorized branch or authorized consolidated scope. |
-| Date From | Date | Yes | Must be <= Date To. |
-| Date To | Date | Yes | Must be >= Date From and not exceed server export/query policy. |
-| Currency | Select | Yes when multiple currencies exist | Must match supported configured currency. |
+| Field        | Type   |                           Required | Validation                                                      |
+| ------------ | ------ | ---------------------------------: | --------------------------------------------------------------- |
+| Branch Scope | Select |                                Yes | Must be one authorized branch or authorized consolidated scope. |
+| Date From    | Date   |                                Yes | Must be <= Date To.                                             |
+| Date To      | Date   |                                Yes | Must be >= Date From and not exceed server export/query policy. |
+| Currency     | Select | Yes when multiple currencies exist | Must match supported configured currency.                       |
 
 ### Data Table: Overdue Invoices
 
@@ -248,21 +248,21 @@ Provide the primary operational register of student and corporate invoices.
 
 ### Filters
 
-| Field | Control | Validation/Behavior |
-|---|---|---|
-| Search | Text | 2–100 chars; searches invoice number and allowed customer display fields. |
-| Invoice Type | Multi-select | Enum values supported by domain model. |
-| Status | Multi-select | Valid InvoiceStatus only. |
-| Student | Async combobox | Branch-scoped; minimum 2 search chars. |
-| Corporate Account | Async combobox | Active/inactive read search; branch/report scope rules apply. |
-| Enrollment | Async combobox | Exact enrollment number or 2+ char search. |
-| Branch | Multi-select | Intersected server-side with authorized branch set. |
-| Invoice Date Range | Date range | From <= To. |
-| Due Date Range | Date range | From <= To. |
-| Outstanding Only | Toggle | When on, outstandingAmount > 0. |
-| Overdue Only | Toggle | When on, dueDate < GST business date and outstandingAmount > 0. |
-| Min Amount | Decimal | >= 0, max 2 decimals. |
-| Max Amount | Decimal | >= Min Amount, max 2 decimals. |
+| Field              | Control        | Validation/Behavior                                                       |
+| ------------------ | -------------- | ------------------------------------------------------------------------- |
+| Search             | Text           | 2–100 chars; searches invoice number and allowed customer display fields. |
+| Invoice Type       | Multi-select   | Enum values supported by domain model.                                    |
+| Status             | Multi-select   | Valid InvoiceStatus only.                                                 |
+| Student            | Async combobox | Branch-scoped; minimum 2 search chars.                                    |
+| Corporate Account  | Async combobox | Active/inactive read search; branch/report scope rules apply.             |
+| Enrollment         | Async combobox | Exact enrollment number or 2+ char search.                                |
+| Branch             | Multi-select   | Intersected server-side with authorized branch set.                       |
+| Invoice Date Range | Date range     | From <= To.                                                               |
+| Due Date Range     | Date range     | From <= To.                                                               |
+| Outstanding Only   | Toggle         | When on, outstandingAmount > 0.                                           |
+| Overdue Only       | Toggle         | When on, dueDate < GST business date and outstandingAmount > 0.           |
+| Min Amount         | Decimal        | >= 0, max 2 decimals.                                                     |
+| Max Amount         | Decimal        | >= Min Amount, max 2 decimals.                                            |
 
 ### Table Columns
 
@@ -342,21 +342,21 @@ Sections:
 
 ### Input Fields and Exact Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Enrollment | Async entity selector | Yes | Must resolve to existing, non-deleted enrollment in Confirmed or Active state; must contain studentProfileId, courseId, batchId, branchId, resolvedPrice, resolvedDiscount, finalAmount. |
-| Invoice Type | Enum select | Yes | Default `StudentInvoice`; only types permitted for selected flow may be chosen. |
-| Invoice Date | Date | Yes | Valid ISO date; interpreted in GST; cannot violate configured backdating permission. |
-| Due Date | Date | Yes | Must be >= Invoice Date unless explicitly authorized business rule permits same-day due date; cannot be null. |
-| Currency | Read-only select/value | Yes | Must equal enrollment commercial currency or approved finance currency source; cannot be edited after line calculation. |
-| Quantity | Decimal | Yes | > 0; max 4 decimal places if fractional quantity is enabled, otherwise positive integer; default 1. |
-| Unit Price | Currency decimal | Yes | >= 0; server value derived from commercial snapshot; read-only unless explicit adjustment permission exists. |
-| Discount Amount | Currency decimal | Yes | >= 0 and <= gross line amount; normally read-only from snapshot. |
-| Tax Rate | Decimal percent | Conditional | >= 0 and <= 100; max 4 decimal places; only visible if tax policy uses rate input. |
-| Tax Amount | Currency decimal | Conditional | >= 0; server-calculated or authoritative input per configuration; cannot conflict with rate calculation beyond rounding tolerance. |
-| Description English | Text | Yes | Trimmed length 3–500; control characters rejected. |
-| Description Arabic | Text | Conditional | Required when bilingual document policy requires Arabic; length 3–500; Unicode Arabic and mixed business identifiers allowed. |
-| Idempotency Key | Hidden/generated string | Yes | UUID v4 or server-supported opaque key; generated once per submission attempt. |
+| Field               | Type                    |    Required | Validation                                                                                                                                                                               |
+| ------------------- | ----------------------- | ----------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Enrollment          | Async entity selector   |         Yes | Must resolve to existing, non-deleted enrollment in Confirmed or Active state; must contain studentProfileId, courseId, batchId, branchId, resolvedPrice, resolvedDiscount, finalAmount. |
+| Invoice Type        | Enum select             |         Yes | Default `StudentInvoice`; only types permitted for selected flow may be chosen.                                                                                                          |
+| Invoice Date        | Date                    |         Yes | Valid ISO date; interpreted in GST; cannot violate configured backdating permission.                                                                                                     |
+| Due Date            | Date                    |         Yes | Must be >= Invoice Date unless explicitly authorized business rule permits same-day due date; cannot be null.                                                                            |
+| Currency            | Read-only select/value  |         Yes | Must equal enrollment commercial currency or approved finance currency source; cannot be edited after line calculation.                                                                  |
+| Quantity            | Decimal                 |         Yes | > 0; max 4 decimal places if fractional quantity is enabled, otherwise positive integer; default 1.                                                                                      |
+| Unit Price          | Currency decimal        |         Yes | >= 0; server value derived from commercial snapshot; read-only unless explicit adjustment permission exists.                                                                             |
+| Discount Amount     | Currency decimal        |         Yes | >= 0 and <= gross line amount; normally read-only from snapshot.                                                                                                                         |
+| Tax Rate            | Decimal percent         | Conditional | >= 0 and <= 100; max 4 decimal places; only visible if tax policy uses rate input.                                                                                                       |
+| Tax Amount          | Currency decimal        | Conditional | >= 0; server-calculated or authoritative input per configuration; cannot conflict with rate calculation beyond rounding tolerance.                                                       |
+| Description English | Text                    |         Yes | Trimmed length 3–500; control characters rejected.                                                                                                                                       |
+| Description Arabic  | Text                    | Conditional | Required when bilingual document policy requires Arabic; length 3–500; Unicode Arabic and mixed business identifiers allowed.                                                            |
+| Idempotency Key     | Hidden/generated string |         Yes | UUID v4 or server-supported opaque key; generated once per submission attempt.                                                                                                           |
 
 ### Processing Feedback
 
@@ -398,19 +398,19 @@ Create a corporate invoice from one or more eligible corporate enrollments while
 
 ### Inputs and Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Corporate Account | Async selector | Yes | Must exist and be active for new billing. |
-| Invoice Type | Enum | Yes | `CorporateInvoice`, `MilestoneInvoice`, or `FinalInvoice` when flow permits. |
-| Contract | Async selector | Conditional | Required when billing is contract-driven; must belong to selected corporate account and be effective for transaction date unless authorized exception exists. |
-| Quotation Reference | Async read selector | Optional | Must belong to account/prospect lineage and be approved if used as billing basis. |
-| Sales Order Reference | Async read selector | Optional | Must belong to selected account and valid commercial lineage. |
-| Enrollment IDs | Multi-row selection | Yes | At least 1; every enrollment must be corporate-linked, billable, currency-compatible, and belong to selected account. |
-| Invoice Date | Date | Yes | GST business date validation and backdate permission rules. |
-| Due Date | Date | Yes | >= invoice date. |
-| Currency | Select/read-only | Yes | All selected lines must use same currency. |
-| Header Description EN | Text | Yes | 3–500 chars. |
-| Header Description AR | Text | Conditional | 3–500 chars when required. |
+| Field                 | Type                |    Required | Validation                                                                                                                                                    |
+| --------------------- | ------------------- | ----------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Corporate Account     | Async selector      |         Yes | Must exist and be active for new billing.                                                                                                                     |
+| Invoice Type          | Enum                |         Yes | `CorporateInvoice`, `MilestoneInvoice`, or `FinalInvoice` when flow permits.                                                                                  |
+| Contract              | Async selector      | Conditional | Required when billing is contract-driven; must belong to selected corporate account and be effective for transaction date unless authorized exception exists. |
+| Quotation Reference   | Async read selector |    Optional | Must belong to account/prospect lineage and be approved if used as billing basis.                                                                             |
+| Sales Order Reference | Async read selector |    Optional | Must belong to selected account and valid commercial lineage.                                                                                                 |
+| Enrollment IDs        | Multi-row selection |         Yes | At least 1; every enrollment must be corporate-linked, billable, currency-compatible, and belong to selected account.                                         |
+| Invoice Date          | Date                |         Yes | GST business date validation and backdate permission rules.                                                                                                   |
+| Due Date              | Date                |         Yes | >= invoice date.                                                                                                                                              |
+| Currency              | Select/read-only    |         Yes | All selected lines must use same currency.                                                                                                                    |
+| Header Description EN | Text                |         Yes | 3–500 chars.                                                                                                                                                  |
+| Header Description AR | Text                | Conditional | 3–500 chars when required.                                                                                                                                    |
 
 ### Enrollment Selection Table
 
@@ -572,15 +572,15 @@ Create an installment schedule whose sum exactly matches the invoice amount assi
 
 ### Input Fields and Exact Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Invoice | Read-only entity reference | Yes | Must exist, be authorized, and be eligible for installment planning. |
-| Plan Name | Text | Yes | 3–100 chars; trimmed; letters, numbers, spaces, hyphen, slash, parentheses allowed. Regex: `^[\\p{L}\\p{N} .()/_-]{3,100}$` with Unicode flag. |
-| Number of Installments | Integer | Yes | 1–60; server may enforce lower configured maximum. |
-| First Due Date | Date | Yes | Valid GST business date; cannot precede invoice date unless explicitly authorized. |
-| Frequency | Enum | Yes | Weekly, Monthly, Custom when supported by business configuration. |
-| Installment Amounts | Currency decimal | Yes | Each > 0; max currency precision; sum must exactly equal plan total. |
-| Due Dates | Date | Yes | Strictly increasing; no duplicates; each valid date. |
+| Field                  | Type                       | Required | Validation                                                                                                                                     |
+| ---------------------- | -------------------------- | -------: | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Invoice                | Read-only entity reference |      Yes | Must exist, be authorized, and be eligible for installment planning.                                                                           |
+| Plan Name              | Text                       |      Yes | 3–100 chars; trimmed; letters, numbers, spaces, hyphen, slash, parentheses allowed. Regex: `^[\\p{L}\\p{N} .()/_-]{3,100}$` with Unicode flag. |
+| Number of Installments | Integer                    |      Yes | 1–60; server may enforce lower configured maximum.                                                                                             |
+| First Due Date         | Date                       |      Yes | Valid GST business date; cannot precede invoice date unless explicitly authorized.                                                             |
+| Frequency              | Enum                       |      Yes | Weekly, Monthly, Custom when supported by business configuration.                                                                              |
+| Installment Amounts    | Currency decimal           |      Yes | Each > 0; max currency precision; sum must exactly equal plan total.                                                                           |
+| Due Dates              | Date                       |      Yes | Strictly increasing; no duplicates; each valid date.                                                                                           |
 
 ### Installment Grid Columns
 
@@ -634,16 +634,16 @@ Record a manual payment against an invoice and, where applicable, allocate it to
 
 ### Input Fields and Exact Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Invoice | Async selector | Yes | Must exist, be branch-authorized, have outstanding collectible amount, and be in payable state. |
-| Payment Date | Date/time business input | Yes | Stored as timestamp; UI defaults to current GST date/time; future timestamp prohibited beyond clock-skew tolerance. Backdating requires permission where configured. |
-| Payment Method | Enum | Yes | Cash, Bank Transfer, Card, Cheque, Corporate Billing; Online is display-only until gateway processing is implemented. |
-| Amount | Currency decimal | Yes | > 0; max configured currency precision; cannot exceed effective outstanding amount unless explicit advance-credit model is enabled, which is outside current normal settlement flow. |
-| Reference Number | Text | Conditional | Required for Bank Transfer, Card, Cheque, and Corporate Billing reference flows; 3–100 chars; regex `^[A-Za-z0-9][A-Za-z0-9 ./_-]{2,99}$`. |
-| Remarks | Textarea | Optional | 0–500 chars; trimmed; control characters rejected. |
-| Installment Allocation | Allocation rows | Conditional | Required when allocation policy requires explicit installment mapping; allocation total must equal payment amount. |
-| Idempotency Key | Hidden/generated | Yes | Unique opaque key per logical submission. |
+| Field                  | Type                     |    Required | Validation                                                                                                                                                                           |
+| ---------------------- | ------------------------ | ----------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Invoice                | Async selector           |         Yes | Must exist, be branch-authorized, have outstanding collectible amount, and be in payable state.                                                                                      |
+| Payment Date           | Date/time business input |         Yes | Stored as timestamp; UI defaults to current GST date/time; future timestamp prohibited beyond clock-skew tolerance. Backdating requires permission where configured.                 |
+| Payment Method         | Enum                     |         Yes | Cash, Bank Transfer, Card, Cheque, Corporate Billing; Online is display-only until gateway processing is implemented.                                                                |
+| Amount                 | Currency decimal         |         Yes | > 0; max configured currency precision; cannot exceed effective outstanding amount unless explicit advance-credit model is enabled, which is outside current normal settlement flow. |
+| Reference Number       | Text                     | Conditional | Required for Bank Transfer, Card, Cheque, and Corporate Billing reference flows; 3–100 chars; regex `^[A-Za-z0-9][A-Za-z0-9 ./_-]{2,99}$`.                                           |
+| Remarks                | Textarea                 |    Optional | 0–500 chars; trimmed; control characters rejected.                                                                                                                                   |
+| Installment Allocation | Allocation rows          | Conditional | Required when allocation policy requires explicit installment mapping; allocation total must equal payment amount.                                                                   |
+| Idempotency Key        | Hidden/generated         |         Yes | Unique opaque key per logical submission.                                                                                                                                            |
 
 ### Installment Allocation Table
 
@@ -851,15 +851,15 @@ Create a refund request without mutating the original payment.
 
 ### Input Fields and Exact Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Payment | Async selector | Yes | Must be successful/eligible payment in authorized branch scope. |
-| Invoice | Read-only derived | Yes | Must match selected payment. |
-| Refund Type | Enum | Yes | Full or Partial. |
-| Amount | Currency decimal | Yes | > 0; for Full must equal currently refundable amount; for Partial must be <= currently refundable amount. |
-| Reason Code | Enum | Yes | Must be active configured refund reason. |
-| Reason Details | Textarea | Yes | 10–1000 chars; trimmed. |
-| Requested Effective Date | Date | Yes | Valid GST business date; cannot be future unless explicitly permitted by workflow policy. |
+| Field                    | Type              | Required | Validation                                                                                                |
+| ------------------------ | ----------------- | -------: | --------------------------------------------------------------------------------------------------------- |
+| Payment                  | Async selector    |      Yes | Must be successful/eligible payment in authorized branch scope.                                           |
+| Invoice                  | Read-only derived |      Yes | Must match selected payment.                                                                              |
+| Refund Type              | Enum              |      Yes | Full or Partial.                                                                                          |
+| Amount                   | Currency decimal  |      Yes | > 0; for Full must equal currently refundable amount; for Partial must be <= currently refundable amount. |
+| Reason Code              | Enum              |      Yes | Must be active configured refund reason.                                                                  |
+| Reason Details           | Textarea          |      Yes | 10–1000 chars; trimmed.                                                                                   |
+| Requested Effective Date | Date              |      Yes | Valid GST business date; cannot be future unless explicitly permitted by workflow policy.                 |
 
 ### Summary Panel
 
@@ -913,12 +913,12 @@ Display:
 
 ### Decision Inputs
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Decision | Radio | Yes | Approve or Reject. |
-| Approval Remarks | Textarea | Conditional | Optional for approve unless policy requires; 0–1000 chars. |
-| Rejection Reason | Textarea | Required on Reject | 10–1000 chars. |
-| Version | Hidden integer | Yes | Must match current aggregate version. |
+| Field            | Type           |           Required | Validation                                                 |
+| ---------------- | -------------- | -----------------: | ---------------------------------------------------------- |
+| Decision         | Radio          |                Yes | Approve or Reject.                                         |
+| Approval Remarks | Textarea       |        Conditional | Optional for approve unless policy requires; 0–1000 chars. |
+| Rejection Reason | Textarea       | Required on Reject | 10–1000 chars.                                             |
+| Version          | Hidden integer |                Yes | Must match current aggregate version.                      |
 
 ### Actions
 
@@ -1023,15 +1023,15 @@ Maintain effective-dated corporate credit limits and blocking behavior.
 
 ### Rule Form Fields and Exact Validations
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Corporate Account | Async selector | Yes | Must exist; immutable after rule creation unless draft flow explicitly supports correction. |
-| Credit Limit | Currency decimal | Yes | >= 0; max currency precision; upper bound enforced server-side according to Decimal schema capacity. |
-| Block on Credit Limit | Boolean | Yes | true or false. |
-| Effective Start Date | Date | Yes | Valid GST business date. |
-| Effective End Date | Date | Optional | Must be >= Effective Start Date. |
-| Status | Enum | Yes | Draft/Active/Inactive as supported by implementation policy. |
-| Change Reason | Textarea | Yes for update/deactivation | 10–500 chars. |
+| Field                 | Type             |                    Required | Validation                                                                                           |
+| --------------------- | ---------------- | --------------------------: | ---------------------------------------------------------------------------------------------------- |
+| Corporate Account     | Async selector   |                         Yes | Must exist; immutable after rule creation unless draft flow explicitly supports correction.          |
+| Credit Limit          | Currency decimal |                         Yes | >= 0; max currency precision; upper bound enforced server-side according to Decimal schema capacity. |
+| Block on Credit Limit | Boolean          |                         Yes | true or false.                                                                                       |
+| Effective Start Date  | Date             |                         Yes | Valid GST business date.                                                                             |
+| Effective End Date    | Date             |                    Optional | Must be >= Effective Start Date.                                                                     |
+| Status                | Enum             |                         Yes | Draft/Active/Inactive as supported by implementation policy.                                         |
+| Change Reason         | Textarea         | Yes for update/deactivation | 10–500 chars.                                                                                        |
 
 ### Overlap Validation
 
@@ -1145,15 +1145,15 @@ Generate branch-scoped or authorized consolidated exports without exposing unaut
 
 ### Input Fields
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| Dataset | Enum | Yes | Must be one authorized dataset. |
-| Branch Scope | Select/multi-select | Yes | Must be subset of authorized branches or approved consolidated scope. |
-| Date From | Date | Conditional | Required for transaction datasets. |
-| Date To | Date | Conditional | >= Date From; maximum range server controlled. |
-| Format | Enum | Yes | CSV, XLSX, PDF only where supported. |
-| Language | Enum | Yes | English or Arabic for human-readable PDF; data exports may use bilingual columns according to dataset definition. |
-| Include Audit Metadata | Boolean | Optional | Visible only with audit-export permission. |
+| Field                  | Type                |    Required | Validation                                                                                                        |
+| ---------------------- | ------------------- | ----------: | ----------------------------------------------------------------------------------------------------------------- |
+| Dataset                | Enum                |         Yes | Must be one authorized dataset.                                                                                   |
+| Branch Scope           | Select/multi-select |         Yes | Must be subset of authorized branches or approved consolidated scope.                                             |
+| Date From              | Date                | Conditional | Required for transaction datasets.                                                                                |
+| Date To                | Date                | Conditional | >= Date From; maximum range server controlled.                                                                    |
+| Format                 | Enum                |         Yes | CSV, XLSX, PDF only where supported.                                                                              |
+| Language               | Enum                |         Yes | English or Arabic for human-readable PDF; data exports may use bilingual columns according to dataset definition. |
+| Include Audit Metadata | Boolean             |    Optional | Visible only with audit-export permission.                                                                        |
 
 ### Recent Exports Table
 
@@ -1499,15 +1499,15 @@ For invoice balance, refund eligibility, credit rule, and installment mutations:
 
 Empty states must be contextual.
 
-| Context | Message | Action |
-|---|---|---|
-| Invoice list, no data | No invoices have been created in this branch. | Create Invoice, if permitted. |
-| Invoice list, filtered empty | No invoices match the selected filters. | Clear Filters. |
-| Payment list, no data | No payments have been recorded in this scope. | Record Payment, if permitted and context exists. |
-| Refund queue | No refund requests are waiting in this queue. | None. |
-| Receivables | No outstanding receivables match this scope. | Clear Filters. |
-| Student receipts | You do not have any receipts yet. | Back to My Fees. |
-| Corporate credit history | No credit validation history is available for this account. | None. |
+| Context                      | Message                                                     | Action                                           |
+| ---------------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| Invoice list, no data        | No invoices have been created in this branch.               | Create Invoice, if permitted.                    |
+| Invoice list, filtered empty | No invoices match the selected filters.                     | Clear Filters.                                   |
+| Payment list, no data        | No payments have been recorded in this scope.               | Record Payment, if permitted and context exists. |
+| Refund queue                 | No refund requests are waiting in this queue.               | None.                                            |
+| Receivables                  | No outstanding receivables match this scope.                | Clear Filters.                                   |
+| Student receipts             | You do not have any receipts yet.                           | Back to My Fees.                                 |
+| Corporate credit history     | No credit validation history is available for this account. | None.                                            |
 
 ## 6.4 Error Page States
 
@@ -1551,23 +1551,23 @@ The following principles are mandatory:
 
 ### Recommended Permission-to-UI Mapping
 
-| Permission | UI Capability |
-|---|---|
-| `finance.dashboard.read` | Finance Overview Dashboard. |
-| `finance.invoice.read` | Invoice list/detail. |
-| `finance.invoice.create` | Student/Corporate invoice creation actions. |
-| `finance.installment.manage` | Create and activate installment plans. |
-| `finance.payment.read` | Payment list/detail. |
-| `finance.payment.record` | Record Payment action and workspace. |
-| `finance.receipt.read` | Receipt viewer/download. |
-| `finance.refund.request` | Refund Request action/form. |
-| `finance.refund.approve` | Approve/Reject controls. |
-| `finance.receivable.read` | Aging workspace. |
-| `finance.credit.read` | Credit exposure views. |
-| `finance.credit.manage` | Credit rule create/update/end-date controls. |
-| `finance.export` | Export action/center. |
-| `finance.audit.read` | Audit Explorer and Audit History tabs. |
-| `finance.consolidated.read` | Consolidated branch scope option and authorized multi-branch reporting. |
+| Permission                   | UI Capability                                                           |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `finance.dashboard.read`     | Finance Overview Dashboard.                                             |
+| `finance.invoice.read`       | Invoice list/detail.                                                    |
+| `finance.invoice.create`     | Student/Corporate invoice creation actions.                             |
+| `finance.installment.manage` | Create and activate installment plans.                                  |
+| `finance.payment.read`       | Payment list/detail.                                                    |
+| `finance.payment.record`     | Record Payment action and workspace.                                    |
+| `finance.receipt.read`       | Receipt viewer/download.                                                |
+| `finance.refund.request`     | Refund Request action/form.                                             |
+| `finance.refund.approve`     | Approve/Reject controls.                                                |
+| `finance.receivable.read`    | Aging workspace.                                                        |
+| `finance.credit.read`        | Credit exposure views.                                                  |
+| `finance.credit.manage`      | Credit rule create/update/end-date controls.                            |
+| `finance.export`             | Export action/center.                                                   |
+| `finance.audit.read`         | Audit Explorer and Audit History tabs.                                  |
+| `finance.consolidated.read`  | Consolidated branch scope option and authorized multi-branch reporting. |
 
 Exact permission codes must be synchronized with IAM implementation and seeded Permission records; the UI must consume permissions dynamically rather than hardcoding role names.
 
@@ -1735,44 +1735,44 @@ Document rules:
 
 # 10. Responsive Behavior Matrix
 
-| Screen Type | Desktop | Tablet | Mobile |
-|---|---|---|---|
-| Dashboard | Full multi-panel grid | Two-column cards, stacked charts | Single-column cards and simplified charts |
-| Data Grid | Full dense grid | Horizontal scroll + filter drawer | Card list for student portal; admin emergency read grid with horizontal scroll |
-| Invoice Creation | Main + sticky summary | Stacked summary below form | Stacked sections; persistent bottom action bar |
-| Payment Collection | Two-column | Stacked with summary first | Stacked; one primary submit action |
-| Refund Approval | Review + decision side panel | Stacked review and decision | Read facts then sticky decision action area |
-| Audit Explorer | Dense grid + drawer | Horizontal grid | Read-only event cards; advanced comparison may require larger viewport |
+| Screen Type        | Desktop                      | Tablet                            | Mobile                                                                         |
+| ------------------ | ---------------------------- | --------------------------------- | ------------------------------------------------------------------------------ |
+| Dashboard          | Full multi-panel grid        | Two-column cards, stacked charts  | Single-column cards and simplified charts                                      |
+| Data Grid          | Full dense grid              | Horizontal scroll + filter drawer | Card list for student portal; admin emergency read grid with horizontal scroll |
+| Invoice Creation   | Main + sticky summary        | Stacked summary below form        | Stacked sections; persistent bottom action bar                                 |
+| Payment Collection | Two-column                   | Stacked with summary first        | Stacked; one primary submit action                                             |
+| Refund Approval    | Review + decision side panel | Stacked review and decision       | Read facts then sticky decision action area                                    |
+| Audit Explorer     | Dense grid + drawer          | Horizontal grid                   | Read-only event cards; advanced comparison may require larger viewport         |
 
 ---
 
 # 11. Screen-to-Functional-Requirement Traceability
 
-| Screen ID | Primary FR Coverage |
-|---|---|
-| FBR-A-001 | FR-FBR-021, FR-FBR-022, FR-FBR-023, FR-FBR-028 |
-| FBR-A-002 | FR-FBR-005, FR-FBR-021, FR-FBR-022, FR-FBR-023 |
-| FBR-A-003 | FR-FBR-001, FR-FBR-003, FR-FBR-004, FR-FBR-027, FR-FBR-028, FR-FBR-029, FR-FBR-030 |
-| FBR-A-004 | FR-FBR-002, FR-FBR-003, FR-FBR-004, FR-FBR-018, FR-FBR-019, FR-FBR-029 |
-| FBR-A-005 | FR-FBR-005, FR-FBR-007, FR-FBR-010, FR-FBR-012, FR-FBR-020, FR-FBR-025, FR-FBR-030 |
-| FBR-A-006 | FR-FBR-006, FR-FBR-007, FR-FBR-029 |
+| Screen ID | Primary FR Coverage                                                                            |
+| --------- | ---------------------------------------------------------------------------------------------- |
+| FBR-A-001 | FR-FBR-021, FR-FBR-022, FR-FBR-023, FR-FBR-028                                                 |
+| FBR-A-002 | FR-FBR-005, FR-FBR-021, FR-FBR-022, FR-FBR-023                                                 |
+| FBR-A-003 | FR-FBR-001, FR-FBR-003, FR-FBR-004, FR-FBR-027, FR-FBR-028, FR-FBR-029, FR-FBR-030             |
+| FBR-A-004 | FR-FBR-002, FR-FBR-003, FR-FBR-004, FR-FBR-018, FR-FBR-019, FR-FBR-029                         |
+| FBR-A-005 | FR-FBR-005, FR-FBR-007, FR-FBR-010, FR-FBR-012, FR-FBR-020, FR-FBR-025, FR-FBR-030             |
+| FBR-A-006 | FR-FBR-006, FR-FBR-007, FR-FBR-029                                                             |
 | FBR-A-007 | FR-FBR-008, FR-FBR-009, FR-FBR-010, FR-FBR-011, FR-FBR-012, FR-FBR-024, FR-FBR-025, FR-FBR-029 |
-| FBR-A-008 | FR-FBR-008, FR-FBR-010, FR-FBR-011, FR-FBR-014, FR-FBR-016, FR-FBR-025 |
-| FBR-A-009 | FR-FBR-010, FR-FBR-027, FR-FBR-028 |
-| FBR-A-010 | FR-FBR-014, FR-FBR-015, FR-FBR-016, FR-FBR-025 |
-| FBR-A-011 | FR-FBR-014, FR-FBR-025, FR-FBR-029 |
-| FBR-A-012 | FR-FBR-015, FR-FBR-016, FR-FBR-025, FR-FBR-029 |
-| FBR-A-013 | FR-FBR-012, FR-FBR-013, FR-FBR-021, FR-FBR-022, FR-FBR-023 |
-| FBR-A-014 | FR-FBR-017, FR-FBR-019, FR-FBR-025, FR-FBR-029 |
-| FBR-A-015 | FR-FBR-018, FR-FBR-019, FR-FBR-021, FR-FBR-022 |
-| FBR-A-016 | FR-FBR-023, FR-FBR-028 |
-| FBR-A-017 | FR-FBR-025, FR-FBR-028 |
-| FBR-A-018 | FR-FBR-004, FR-FBR-010 |
-| FBR-S-001 | FR-FBR-005, FR-FBR-020 |
-| FBR-S-002 | FR-FBR-005, FR-FBR-007, FR-FBR-010, FR-FBR-020, FR-FBR-027 |
-| FBR-S-003 | FR-FBR-006, FR-FBR-007, FR-FBR-020 |
-| FBR-S-004 | FR-FBR-010, FR-FBR-027 |
-| FBR-S-005 | FR-FBR-020 |
+| FBR-A-008 | FR-FBR-008, FR-FBR-010, FR-FBR-011, FR-FBR-014, FR-FBR-016, FR-FBR-025                         |
+| FBR-A-009 | FR-FBR-010, FR-FBR-027, FR-FBR-028                                                             |
+| FBR-A-010 | FR-FBR-014, FR-FBR-015, FR-FBR-016, FR-FBR-025                                                 |
+| FBR-A-011 | FR-FBR-014, FR-FBR-025, FR-FBR-029                                                             |
+| FBR-A-012 | FR-FBR-015, FR-FBR-016, FR-FBR-025, FR-FBR-029                                                 |
+| FBR-A-013 | FR-FBR-012, FR-FBR-013, FR-FBR-021, FR-FBR-022, FR-FBR-023                                     |
+| FBR-A-014 | FR-FBR-017, FR-FBR-019, FR-FBR-025, FR-FBR-029                                                 |
+| FBR-A-015 | FR-FBR-018, FR-FBR-019, FR-FBR-021, FR-FBR-022                                                 |
+| FBR-A-016 | FR-FBR-023, FR-FBR-028                                                                         |
+| FBR-A-017 | FR-FBR-025, FR-FBR-028                                                                         |
+| FBR-A-018 | FR-FBR-004, FR-FBR-010                                                                         |
+| FBR-S-001 | FR-FBR-005, FR-FBR-020                                                                         |
+| FBR-S-002 | FR-FBR-005, FR-FBR-007, FR-FBR-010, FR-FBR-020, FR-FBR-027                                     |
+| FBR-S-003 | FR-FBR-006, FR-FBR-007, FR-FBR-020                                                             |
+| FBR-S-004 | FR-FBR-010, FR-FBR-027                                                                         |
+| FBR-S-005 | FR-FBR-020                                                                                     |
 
 ---
 
@@ -1800,4 +1800,3 @@ A Module 12 UI implementation is not complete until all of the following are ver
 - Finance audit history is immutable and sensitive fields are redacted.
 - All displayed business times are rendered in GST, UTC+4, while storage follows platform timestamp standards.
 - Posted financial transactions have no hard-delete UI action.
-

@@ -40,21 +40,37 @@ function toInputDate(value?: string | null): string {
   return value.slice(0, 10);
 }
 
-export function StudentProfileForm({ mode, branches = [], initialValues = {}, showHeader = true, hideBranchSelector = false }: Props) {
+export function StudentProfileForm({
+  mode,
+  branches = [],
+  initialValues = {},
+  showHeader = true,
+  hideBranchSelector = false,
+}: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [version, setVersion] = useState<number | undefined>(initialValues.version);
+  const [version, setVersion] = useState<number | undefined>(
+    initialValues.version,
+  );
 
-  const [branchId, setBranchId] = useState(initialValues.branchId || branches[0]?.id || '');
+  const [branchId, setBranchId] = useState(
+    initialValues.branchId || branches[0]?.id || '',
+  );
   const [firstName, setFirstName] = useState(initialValues.firstName || '');
   const [lastName, setLastName] = useState(initialValues.lastName || '');
   const [mobile, setMobile] = useState(initialValues.mobile || '');
   const [email, setEmail] = useState(initialValues.email || '');
   const [nationalId, setNationalId] = useState(initialValues.nationalId || '');
-  const [passportNumber, setPassportNumber] = useState(initialValues.passportNumber || '');
+  const [passportNumber, setPassportNumber] = useState(
+    initialValues.passportNumber || '',
+  );
   const [visaNumber, setVisaNumber] = useState(initialValues.visaNumber || '');
-  const [nationality, setNationality] = useState(initialValues.nationality || '');
-  const [dateOfBirth, setDateOfBirth] = useState(toInputDate(initialValues.dateOfBirth));
+  const [nationality, setNationality] = useState(
+    initialValues.nationality || '',
+  );
+  const [dateOfBirth, setDateOfBirth] = useState(
+    toInputDate(initialValues.dateOfBirth),
+  );
   const [gender, setGender] = useState(initialValues.gender || '');
   const [remarks, setRemarks] = useState(initialValues.remarks || '');
 
@@ -89,12 +105,14 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
       };
 
       const response = await fetch(
-        isCreate ? '/api/v1/students' : `/api/v1/students/${initialValues.studentId}`,
+        isCreate
+          ? '/api/v1/students'
+          : `/api/v1/students/${initialValues.studentId}`,
         {
           method: isCreate ? 'POST' : 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
-        }
+        },
       );
 
       const result = await response.json();
@@ -102,7 +120,9 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
         throw new Error(result.messageEnglish || 'Student save failed.');
       }
 
-      toast.success(isCreate ? 'Student profile created.' : 'Student profile updated.');
+      toast.success(
+        isCreate ? 'Student profile created.' : 'Student profile updated.',
+      );
       router.push(`/students/${result.data.studentId}`);
       router.refresh();
     } catch (error: any) {
@@ -118,7 +138,11 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
         <PageHeader
           eyebrow="Student Management"
           title={isCreate ? 'Create Student' : 'Edit Student'}
-          description={isCreate ? 'Create a new student profile.' : 'Update profile identity details.'}
+          description={
+            isCreate
+              ? 'Create a new student profile.'
+              : 'Update profile identity details.'
+          }
         />
       )}
 
@@ -130,23 +154,41 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
                 <User className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Personal Information</h3>
-                <p className="text-xs text-slate-500">Identity and contact details</p>
+                <h3 className="font-semibold text-slate-800">
+                  Personal Information
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Identity and contact details
+                </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">First Name</span>
-                <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  First Name
+                </span>
+                <input
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
               </label>
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Last Name</span>
-                <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Last Name
+                </span>
+                <input
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </label>
 
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Mobile</span>
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Mobile
+                </span>
                 <input
                   className="w-full h-10 rounded-lg border border-slate-200 px-3 disabled:bg-slate-50 disabled:text-slate-500"
                   value={mobile}
@@ -155,7 +197,9 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
                 />
               </label>
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Email</span>
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Email
+                </span>
                 <input
                   className="w-full h-10 rounded-lg border border-slate-200 px-3 disabled:bg-slate-50 disabled:text-slate-500"
                   value={email}
@@ -165,17 +209,36 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
               </label>
 
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Date of Birth</span>
-                <input type="date" className="w-full h-10 rounded-lg border border-slate-200 px-3" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Date of Birth
+                </span>
+                <input
+                  type="date"
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={dateOfBirth}
+                  onChange={(e) => setDateOfBirth(e.target.value)}
+                />
               </label>
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Gender</span>
-                <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={gender} onChange={(e) => setGender(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Gender
+                </span>
+                <input
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                />
               </label>
 
               <label className="space-y-1.5 sm:col-span-2">
-                <span className="text-xs font-semibold uppercase text-slate-500">Remarks</span>
-                <textarea className="w-full min-h-28 rounded-lg border border-slate-200 px-3 py-2" value={remarks} onChange={(e) => setRemarks(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Remarks
+                </span>
+                <textarea
+                  className="w-full min-h-28 rounded-lg border border-slate-200 px-3 py-2"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                />
               </label>
             </div>
           </Card>
@@ -188,14 +251,20 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
                 <Compass className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Identity & Branch</h3>
-                <p className="text-xs text-slate-500">Branch and identity documents</p>
+                <h3 className="font-semibold text-slate-800">
+                  Identity & Branch
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Branch and identity documents
+                </p>
               </div>
             </div>
 
             {isCreate && !hideBranchSelector && (
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Branch</span>
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Branch
+                </span>
                 <select
                   value={branchId}
                   onChange={(e) => setBranchId(e.target.value)}
@@ -213,27 +282,57 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
 
             {!isCreate && (
               <div className="rounded-lg bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-600">
-                Student #: <span className="font-mono font-semibold">{initialValues.studentNumber || 'N/A'}</span>
-                {' '}| Branch: <span className="font-semibold">{initialValues.branchName || 'N/A'}</span>
+                Student #:{' '}
+                <span className="font-mono font-semibold">
+                  {initialValues.studentNumber || 'N/A'}
+                </span>{' '}
+                | Branch:{' '}
+                <span className="font-semibold">
+                  {initialValues.branchName || 'N/A'}
+                </span>
               </div>
             )}
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Civil ID</span>
-                <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={nationalId} onChange={(e) => setNationalId(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Civil ID
+                </span>
+                <input
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={nationalId}
+                  onChange={(e) => setNationalId(e.target.value)}
+                />
               </label>
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Passport</span>
-                <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={passportNumber} onChange={(e) => setPassportNumber(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Passport
+                </span>
+                <input
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={passportNumber}
+                  onChange={(e) => setPassportNumber(e.target.value)}
+                />
               </label>
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Visa</span>
-                <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={visaNumber} onChange={(e) => setVisaNumber(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Visa
+                </span>
+                <input
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={visaNumber}
+                  onChange={(e) => setVisaNumber(e.target.value)}
+                />
               </label>
               <label className="space-y-1.5">
-                <span className="text-xs font-semibold uppercase text-slate-500">Nationality</span>
-                <input className="w-full h-10 rounded-lg border border-slate-200 px-3" value={nationality} onChange={(e) => setNationality(e.target.value)} />
+                <span className="text-xs font-semibold uppercase text-slate-500">
+                  Nationality
+                </span>
+                <input
+                  className="w-full h-10 rounded-lg border border-slate-200 px-3"
+                  value={nationality}
+                  onChange={(e) => setNationality(e.target.value)}
+                />
               </label>
             </div>
           </Card>
@@ -245,14 +344,32 @@ export function StudentProfileForm({ mode, branches = [], initialValues = {}, sh
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">Save Changes</h3>
-                <p className="text-xs text-slate-500">Review then create or update the student profile</p>
+                <p className="text-xs text-slate-500">
+                  Review then create or update the student profile
+                </p>
               </div>
             </div>
 
             <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-end">
-              <Button variant="outline" onClick={() => router.back()} type="button" className="w-full sm:w-auto">Cancel</Button>
-              <Button onClick={handleSubmit} disabled={loading} type="button" className="w-full sm:w-auto">
-                {loading ? 'Saving…' : isCreate ? 'Create Student' : 'Save Changes'}
+              <Button
+                variant="outline"
+                onClick={() => router.back()}
+                type="button"
+                className="w-full sm:w-auto"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSubmit}
+                disabled={loading}
+                type="button"
+                className="w-full sm:w-auto"
+              >
+                {loading
+                  ? 'Saving…'
+                  : isCreate
+                    ? 'Create Student'
+                    : 'Save Changes'}
               </Button>
             </div>
           </Card>

@@ -5,6 +5,7 @@ Currently, the admin portal lacks user interface screens and forms to capture, q
 ## What Changes
 
 This change implements the frontend portal pages, filtering controls, form dialogs, and necessary domain queries/modifications for the CRM module. Specifically:
+
 - **Core Screen Views:** Next.js App Router protected routes for Leads Management (`/leads`) and Inquiries Management.
 - **Dynamic Scoped Fetching:** Server-side verification of user permissions and branch scoping context to filter query results dynamically (restricting Counselors to their assigned records by default, unless overridden by permission `crm.leads.read.all`). Exposes query `findAll` methods on the Application Services.
 - **Database Schema & Type Safety:** Adds `email String? @unique` to the `Person` model in `schema.prisma`, parameters `createUuid` with generated random UUIDs, and types `counselorId` on repository creations. Collects and syncs `dateOfBirth` on leads to the `Person` model to satisfy conversion prerequisites. Also adds dedicated tables `LeadNote` (for timeline logs) and `LeadStageHistory` (for tracking stage updates).
@@ -20,16 +21,17 @@ This change implements the frontend portal pages, filtering controls, form dialo
 ## Capabilities
 
 ### New Capabilities
+
 - `crm-portal-ui-scoped-filtering`: Frontend interface for Inquiry and Lead lists, dynamic search and filtering bar, creation/edit modals, client-side React Hook Form validation, custom select inputs, counselor-scoped data filtering, type-safe Person-level email queries, branch-scoped qualification checks, and conversion-level document collection modals.
 
 ### Modified Capabilities
-*(None)*
+
+_(None)_
 
 ## Impact
 
-* **Bounded Context:** Main owner is **Lead, Enquiry & CRM Management** (frontend portal screens, query services, and API route wrappers).
-* **Dependencies:** Relies on `@ims/shared-ui` for layout, table, input, popover select, modal, and badge components; depends on `@ims/crm-leads` for schemas, repositories, and services; depends on `@ims/shared-auth` and `auth-guard` for session and permission assertion.
-* **Server Action & Validation:** Implements backend Server Actions for lead/inquiry operations, with error mapper `buildCrmActionFailure` resolving unique constraints and domain issues to field-level validation messages.
-* **Data Scopes:** Integrates with user session `dataScopes` to dynamically restrict lists based on `branchId` and `assignedOnly` flags.
-* **Audit Impact:** Actions (creation, updates, stage transitions, qualifications, and conversions) will log structured entries to the database via `AuditLogRepository` and trigger outbox domain events.
-
+- **Bounded Context:** Main owner is **Lead, Enquiry & CRM Management** (frontend portal screens, query services, and API route wrappers).
+- **Dependencies:** Relies on `@ims/shared-ui` for layout, table, input, popover select, modal, and badge components; depends on `@ims/crm-leads` for schemas, repositories, and services; depends on `@ims/shared-auth` and `auth-guard` for session and permission assertion.
+- **Server Action & Validation:** Implements backend Server Actions for lead/inquiry operations, with error mapper `buildCrmActionFailure` resolving unique constraints and domain issues to field-level validation messages.
+- **Data Scopes:** Integrates with user session `dataScopes` to dynamically restrict lists based on `branchId` and `assignedOnly` flags.
+- **Audit Impact:** Actions (creation, updates, stage transitions, qualifications, and conversions) will log structured entries to the database via `AuditLogRepository` and trigger outbox domain events.

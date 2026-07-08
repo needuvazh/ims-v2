@@ -41,7 +41,7 @@ describe('enrollments create route', () => {
           userId: 'user-1',
           activeBranchId: 'branch-1',
         },
-      })
+      }),
     );
   });
 
@@ -57,7 +57,7 @@ describe('enrollments create route', () => {
           batchId: '22222222-2222-2222-2222-222222222222',
           enrollmentType: 'WalkIn',
         }),
-      })
+      }),
     );
 
     const body = await response.json();

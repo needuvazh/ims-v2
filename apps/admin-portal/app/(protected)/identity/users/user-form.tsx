@@ -3,14 +3,12 @@
 import { useActionState, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserPlus, Save } from 'lucide-react';
+import { Alert, Button, Checkbox, Input, Select } from '@ims/shared-ui';
 import {
-  Alert,
-  Button,
-  Checkbox,
-  Input,
-  Select,
-} from '@ims/shared-ui';
-import { createUserAction, updateUserAction, type ActionResult } from '../actions';
+  createUserAction,
+  updateUserAction,
+  type ActionResult,
+} from '../actions';
 
 type UserProfile = {
   id: string;
@@ -21,7 +19,11 @@ type UserProfile = {
   userType?: string;
   effectiveStartDate?: Date | null;
   effectiveEndDate?: Date | null;
-  dataScopes?: Array<{ scopeType: string; branchId?: string | null; assignedOnly?: boolean }>;
+  dataScopes?: Array<{
+    scopeType: string;
+    branchId?: string | null;
+    assignedOnly?: boolean;
+  }>;
 };
 
 const initialState: ActionResult = { success: false };
@@ -42,9 +44,10 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
-      const result = mode === 'edit' && initialData
-        ? await updateUserAction(initialData.id, prev, formData)
-        : await createUserAction(prev, formData);
+      const result =
+        mode === 'edit' && initialData
+          ? await updateUserAction(initialData.id, prev, formData)
+          : await createUserAction(prev, formData);
       if (result.success) {
         router.push('/iam/users');
       }
@@ -68,57 +71,78 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
   const isView = mode === 'view';
 
   // State for controlled selections
-  const [selectedBranchIds, setSelectedBranchIds] = useState<Set<string>>(() =>
-    new Set((initialData?.dataScopes ?? [])
-      .filter((scope: { scopeType: string; branchId?: string | null }) => scope.scopeType === 'Branch' && scope.branchId)
-      .map((scope: { branchId?: string | null }) => scope.branchId as string))
+  const [selectedBranchIds, setSelectedBranchIds] = useState<Set<string>>(
+    () =>
+      new Set(
+        (initialData?.dataScopes ?? [])
+          .filter(
+            (scope: { scopeType: string; branchId?: string | null }) =>
+              scope.scopeType === 'Branch' && scope.branchId,
+          )
+          .map(
+            (scope: { branchId?: string | null }) => scope.branchId as string,
+          ),
+      ),
   );
-  const [assignedOnly, setAssignedOnly] = useState<boolean>(() =>
-    initialData?.dataScopes?.some((scope: { scopeType: string; assignedOnly?: boolean }) => scope.scopeType === 'Branch' && scope.assignedOnly) ?? false
+  const [assignedOnly, setAssignedOnly] = useState<boolean>(
+    () =>
+      initialData?.dataScopes?.some(
+        (scope: { scopeType: string; assignedOnly?: boolean }) =>
+          scope.scopeType === 'Branch' && scope.assignedOnly,
+      ) ?? false,
   );
 
   useEffect(() => {
     if (state.values) {
       if (state.values.branchIds !== undefined) {
-        const branchesArr = state.values.branchIds ? state.values.branchIds.split(',').filter(Boolean) : [];
+        const branchesArr = state.values.branchIds
+          ? state.values.branchIds.split(',').filter(Boolean)
+          : [];
         setSelectedBranchIds(new Set(branchesArr));
       }
       if (state.values.assignedOnly !== undefined) {
-        setAssignedOnly(state.values.assignedOnly === 'on' || state.values.assignedOnly === 'true');
+        setAssignedOnly(
+          state.values.assignedOnly === 'on' ||
+            state.values.assignedOnly === 'true',
+        );
       }
     }
   }, [state.values]);
 
   return (
-    <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]">
+    <form
+      action={formAction}
+      noValidate
+      className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)]"
+    >
       {state.error && <Alert variant="error" description={state.error} />}
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input 
-          name="fullName" 
-          label="Full Name" 
-          placeholder="Fatima Al-Saud" 
-          required 
+        <Input
+          name="fullName"
+          label="Full Name"
+          placeholder="Fatima Al-Saud"
+          required
           defaultValue={state.values?.fullName ?? initialData?.fullName}
           disabled={isView}
-          data-testid="user-name-input" 
+          data-testid="user-name-input"
           errorText={fieldErrors.fullName}
         />
-        <Input 
-          name="email" 
-          type="email" 
-          label="Email" 
-          placeholder="fatima@institute.com" 
-          required 
+        <Input
+          name="email"
+          type="email"
+          label="Email"
+          placeholder="fatima@institute.com"
+          required
           defaultValue={state.values?.email ?? initialData?.email}
           disabled={isView || mode === 'edit'}
-          data-testid="user-email-input" 
+          data-testid="user-email-input"
           errorText={fieldErrors.email}
         />
-        <Input 
-          name="phone" 
-          label="Phone" 
-          placeholder="+966 xx xxxx xxxx" 
+        <Input
+          name="phone"
+          label="Phone"
+          placeholder="+966 xx xxxx xxxx"
           defaultValue={state.values?.phone ?? initialData?.phone ?? ''}
           disabled={isView}
           errorText={fieldErrors.phone}
@@ -127,7 +151,9 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="status"
           label="Status"
           placeholder="Select status"
-          defaultValue={state.values?.status ?? initialData?.status ?? 'PendingActivation'}
+          defaultValue={
+            state.values?.status ?? initialData?.status ?? 'PendingActivation'
+          }
           options={[
             { value: 'PendingActivation', label: 'Pending Activation' },
             { value: 'Active', label: 'Active' },
@@ -141,14 +167,14 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           errorText={fieldErrors.status}
         />
         {mode === 'create' && (
-          <Input 
-            name="password" 
-            type="password" 
-            label="Password" 
-            placeholder="Min 8 characters" 
-            required 
+          <Input
+            name="password"
+            type="password"
+            label="Password"
+            placeholder="Min 8 characters"
+            required
             disabled={isView}
-            data-testid="user-password-input" 
+            data-testid="user-password-input"
             errorText={fieldErrors.password}
           />
         )}
@@ -176,7 +202,11 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="effectiveStartDate"
           type="date"
           label="Effective Start Date"
-          defaultValue={state.values?.effectiveStartDate ? toDateInputValue(new Date(state.values.effectiveStartDate)) : toDateInputValue(initialData?.effectiveStartDate)}
+          defaultValue={
+            state.values?.effectiveStartDate
+              ? toDateInputValue(new Date(state.values.effectiveStartDate))
+              : toDateInputValue(initialData?.effectiveStartDate)
+          }
           disabled={isView}
           errorText={fieldErrors.effectiveStartDate}
         />
@@ -184,7 +214,11 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
           name="effectiveEndDate"
           type="date"
           label="Effective End Date"
-          defaultValue={state.values?.effectiveEndDate ? toDateInputValue(new Date(state.values.effectiveEndDate)) : toDateInputValue(initialData?.effectiveEndDate ?? null)}
+          defaultValue={
+            state.values?.effectiveEndDate
+              ? toDateInputValue(new Date(state.values.effectiveEndDate))
+              : toDateInputValue(initialData?.effectiveEndDate ?? null)
+          }
           disabled={isView}
           errorText={fieldErrors.effectiveEndDate}
         />
@@ -192,15 +226,20 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
 
       <div className="space-y-4 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4">
         <div className="space-y-1">
-          <h3 className="text-sm font-semibold text-[color:var(--ims-ink)]">Branch Scope</h3>
+          <h3 className="text-sm font-semibold text-[color:var(--ims-ink)]">
+            Branch Scope
+          </h3>
           <p className="text-xs text-[color:var(--ims-muted)]">
-            Select the branches this user can access. Leave empty only for Owner or Management users with global scope.
+            Select the branches this user can access. Leave empty only for Owner
+            or Management users with global scope.
           </p>
         </div>
 
         {isView ? (
           <div className="flex flex-wrap gap-2">
-            {(initialData?.dataScopes ?? []).some((scope: { scopeType: string }) => scope.scopeType === 'All') ? (
+            {(initialData?.dataScopes ?? []).some(
+              (scope: { scopeType: string }) => scope.scopeType === 'All',
+            ) ? (
               <span className="rounded-full border border-[color:var(--ims-border)] px-3 py-1 text-xs font-medium text-[color:var(--ims-ink)]">
                 All Branches
               </span>
@@ -208,7 +247,10 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
               branches
                 .filter((branch) => selectedBranchIds.has(branch.id))
                 .map((branch) => (
-                  <span key={branch.id} className="rounded-full border border-[color:var(--ims-border)] px-3 py-1 text-xs font-medium text-[color:var(--ims-ink)]">
+                  <span
+                    key={branch.id}
+                    className="rounded-full border border-[color:var(--ims-border)] px-3 py-1 text-xs font-medium text-[color:var(--ims-ink)]"
+                  >
                     {branch.branchName}
                   </span>
                 ))
@@ -222,7 +264,10 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
         ) : (
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {branches.map((branch) => (
-              <label key={branch.id} className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-3 cursor-pointer">
+              <label
+                key={branch.id}
+                className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-3 cursor-pointer"
+              >
                 <Checkbox
                   name="branchIds"
                   value={branch.id}
@@ -235,7 +280,9 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
                   }}
                   className="mt-1"
                 />
-                <span className="text-sm font-medium text-[color:var(--ims-ink)]">{branch.branchName}</span>
+                <span className="text-sm font-medium text-[color:var(--ims-ink)]">
+                  {branch.branchName}
+                </span>
               </label>
             ))}
           </div>
@@ -254,14 +301,26 @@ export function UserForm({ mode, initialData, branches }: UserFormProps) {
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-4">
-          <Button type="button" variant="secondary" onClick={() => router.push('/iam/users')}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => router.push('/iam/users')}
+          >
             Cancel
           </Button>
-          <Button type="submit" loading={isPending} data-testid="user-submit-btn">
+          <Button
+            type="submit"
+            loading={isPending}
+            data-testid="user-submit-btn"
+          >
             {mode === 'create' ? (
-              <><UserPlus className="h-4 w-4 mr-2" /> Create User</>
+              <>
+                <UserPlus className="h-4 w-4 mr-2" /> Create User
+              </>
             ) : (
-              <><Save className="h-4 w-4 mr-2" /> Save Changes</>
+              <>
+                <Save className="h-4 w-4 mr-2" /> Save Changes
+              </>
             )}
           </Button>
         </div>

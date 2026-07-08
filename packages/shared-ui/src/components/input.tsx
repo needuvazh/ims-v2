@@ -1,6 +1,11 @@
 'use client';
 
-import { forwardRef, type InputHTMLAttributes, type ReactNode, useId } from 'react';
+import {
+  forwardRef,
+  type InputHTMLAttributes,
+  type ReactNode,
+  useId,
+} from 'react';
 import { cn } from '../utils/cn';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -44,7 +49,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           >
             {label}
             {required && (
-              <span className="ml-1 text-[color:var(--ims-error)]" aria-hidden="true">
+              <span
+                className="ml-1 text-[color:var(--ims-error)]"
+                aria-hidden="true"
+              >
                 *
               </span>
             )}
@@ -69,7 +77,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               hasError ? errorId : helperText ? helperId : undefined
             }
             className={cn(
-               'h-11 w-full rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 text-sm text-[color:var(--ims-ink)] shadow-[0_8px_24px_rgba(16,36,58,0.04)] outline-none transition-all placeholder:text-[color:var(--ims-muted)] focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50',
+              'h-11 w-full rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 text-sm text-[color:var(--ims-ink)] shadow-[0_8px_24px_rgba(16,36,58,0.04)] outline-none transition-all placeholder:text-[color:var(--ims-muted)] focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50',
               leftIcon && 'pl-10',
               rightIcon && 'pr-10',
               hasError &&
@@ -93,7 +101,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </p>
         )}
         {hasError && (
-          <p id={errorId} role="alert" className="text-xs text-[color:var(--ims-error)]">
+          <p
+            id={errorId}
+            role="alert"
+            className="text-xs text-[color:var(--ims-error)]"
+          >
             {errorText}
           </p>
         )}

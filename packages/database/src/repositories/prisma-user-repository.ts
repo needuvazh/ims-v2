@@ -1,11 +1,21 @@
 import type { PrismaClient } from '@prisma/client';
-import type { IUserRepository, User, Person, UserListFilters, UserType, UserStatus } from '@ims/identity-access';
+import type {
+  IUserRepository,
+  User,
+  Person,
+  UserListFilters,
+  UserType,
+  UserStatus,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaUserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  private async ensureEmailAvailable(email: string, excludeUserId?: Uuid): Promise<void> {
+  private async ensureEmailAvailable(
+    email: string,
+    excludeUserId?: Uuid,
+  ): Promise<void> {
     const existingUser = await this.prisma.user.findFirst({
       where: {
         email,
@@ -64,7 +74,10 @@ export class PrismaUserRepository implements IUserRepository {
     return row ? this.mapUser(row) : null;
   }
 
-  async findByEmail(email: string, includeDeleted = false): Promise<User | null> {
+  async findByEmail(
+    email: string,
+    includeDeleted = false,
+  ): Promise<User | null> {
     const row = await this.prisma.user.findFirst({
       where: { email, ...(includeDeleted ? {} : { isDeleted: false }) },
     });
@@ -85,7 +98,10 @@ export class PrismaUserRepository implements IUserRepository {
     return row ? this.mapPerson(row) : null;
   }
 
-  async findPersonByMobile(mobile: string, includeDeleted = false): Promise<Person | null> {
+  async findPersonByMobile(
+    mobile: string,
+    includeDeleted = false,
+  ): Promise<Person | null> {
     const row = await this.prisma.person.findFirst({
       where: { mobile, ...(includeDeleted ? {} : { isDeleted: false }) },
     });
@@ -98,13 +114,13 @@ export class PrismaUserRepository implements IUserRepository {
     return this.prisma.$transaction(async (tx) => {
       await tx.person.create({
         data: {
-            id: person.id,
-            firstName: person.firstName,
-            lastName: person.lastName,
-            mobile: person.mobile,
-            nationalId: person.nationalId,
-            nationality: person.nationality,
-            dateOfBirth: person.dateOfBirth,
+          id: person.id,
+          firstName: person.firstName,
+          lastName: person.lastName,
+          mobile: person.mobile,
+          nationalId: person.nationalId,
+          nationality: person.nationality,
+          dateOfBirth: person.dateOfBirth,
           gender: person.gender,
           createdBy: person.createdBy,
           updatedBy: person.updatedBy,
@@ -199,10 +215,10 @@ export class PrismaUserRepository implements IUserRepository {
   async search(
     filters: UserListFilters,
     page: number,
-    pageSize: number
+    pageSize: number,
   ): Promise<{ items: User[]; total: number }> {
     const where: any = { isDeleted: false };
-    
+
     if (filters.status) {
       where.status = filters.status;
     }
@@ -279,7 +295,12 @@ export class PrismaUserRepository implements IUserRepository {
     });
   }
 
-  async createResetToken(data: { id: Uuid; userId: Uuid; tokenHash: string; expiresAt: Date }): Promise<void> {
+  async createResetToken(data: {
+    id: Uuid;
+    userId: Uuid;
+    tokenHash: string;
+    expiresAt: Date;
+  }): Promise<void> {
     await this.prisma.passwordResetToken.create({
       data: {
         id: data.id,
@@ -290,15 +311,19 @@ export class PrismaUserRepository implements IUserRepository {
     });
   }
 
-  async findResetTokenByHash(tokenHash: string): Promise<{ userId: Uuid; expiresAt: Date; usedAt: Date | null } | null> {
+  async findResetTokenByHash(
+    tokenHash: string,
+  ): Promise<{ userId: Uuid; expiresAt: Date; usedAt: Date | null } | null> {
     const row = await this.prisma.passwordResetToken.findUnique({
       where: { tokenHash },
     });
-    return row ? {
-      userId: row.userId as Uuid,
-      expiresAt: row.expiresAt,
-      usedAt: row.usedAt,
-    } : null;
+    return row
+      ? {
+          userId: row.userId as Uuid,
+          expiresAt: row.expiresAt,
+          usedAt: row.usedAt,
+        }
+      : null;
   }
 
   async markResetTokenAsUsed(tokenHash: string): Promise<void> {

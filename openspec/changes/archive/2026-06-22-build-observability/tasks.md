@@ -22,10 +22,10 @@
 
 ## 4. Route Handler and Server Action Logging
 
- - [x] 4.1 Update API route handlers to read trace context from the shared request helper and attach support headers consistently.
- - [x] 4.2 Update API route handlers to attach a request correlation header on responses and a trace identifier header where trace context is available.
- - [x] 4.3 Update server action entrypoints to log with correlation-aware context without attempting to write HTTP response headers directly.
- - [x] 4.4 Confirm sign-in, sign-out, and protected-route request paths continue to work with the new correlation flow.
+- [x] 4.1 Update API route handlers to read trace context from the shared request helper and attach support headers consistently.
+- [x] 4.2 Update API route handlers to attach a request correlation header on responses and a trace identifier header where trace context is available.
+- [x] 4.3 Update server action entrypoints to log with correlation-aware context without attempting to write HTTP response headers directly.
+- [x] 4.4 Confirm sign-in, sign-out, and protected-route request paths continue to work with the new correlation flow.
 
 ## 5. Verification
 

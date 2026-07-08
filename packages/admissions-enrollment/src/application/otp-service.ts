@@ -1,5 +1,8 @@
 export class OtpService {
-  private readonly otpStore = new Map<string, { code: string; expiresAt: number }>();
+  private readonly otpStore = new Map<
+    string,
+    { code: string; expiresAt: number }
+  >();
 
   async generateOtp(personId: string): Promise<string> {
     // Generate a secure 6-digit random code

@@ -45,7 +45,9 @@ vi.mock('@ims/database', () => ({
       findMany: findManyMock,
     },
     lead: {
-      findUnique: vi.fn().mockResolvedValue({ id: 'lead-123', branchId: 'branch-123' }),
+      findUnique: vi
+        .fn()
+        .mockResolvedValue({ id: 'lead-123', branchId: 'branch-123' }),
     },
   },
 }));
@@ -66,13 +68,17 @@ describe('Batches Waitlist POST API Route', () => {
           userId: 'user-1',
           permissions: ['waitinglist.manage'],
         },
-      })
+      }),
     );
 
     findByIdMock.mockResolvedValue({ id: 'batch-123', branchId: 'branch-123' });
     findFirstMock.mockResolvedValue({ id: 'access-123', status: 'Active' });
     verifyBranchScopeMock.mockResolvedValue(undefined);
-    enqueueWaitlistMock.mockResolvedValue({ id: 'wl-123', queuePosition: 1, status: 'Waiting' });
+    enqueueWaitlistMock.mockResolvedValue({
+      id: 'wl-123',
+      queuePosition: 1,
+      status: 'Waiting',
+    });
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -80,14 +86,19 @@ describe('Batches Waitlist POST API Route', () => {
         method: 'POST',
         body: JSON.stringify({ studentProfileId }),
       }),
-      { params: Promise.resolve({ id: 'batch-123' }) }
+      { params: Promise.resolve({ id: 'batch-123' }) },
     );
 
     const body = await response.json();
     expect(response.status).toBe(201);
     expect(body.success).toBe(true);
     expect(body.data.queuePosition).toBe(1);
-    expect(enqueueWaitlistMock).toHaveBeenCalledWith({ batchId: 'batch-123', studentProfileId, leadId: null, actorId: 'user-1' });
+    expect(enqueueWaitlistMock).toHaveBeenCalledWith({
+      batchId: 'batch-123',
+      studentProfileId,
+      leadId: null,
+      actorId: 'user-1',
+    });
   });
 
   it('POST /api/v1/batches/[id]/waitlist rejects enqueuing if user lacks branch access and is not admin', async () => {
@@ -98,7 +109,7 @@ describe('Batches Waitlist POST API Route', () => {
           userId: 'user-1',
           permissions: ['waitinglist.manage'],
         },
-      })
+      }),
     );
 
     findByIdMock.mockResolvedValue({ id: 'batch-123', branchId: 'branch-123' });
@@ -111,7 +122,7 @@ describe('Batches Waitlist POST API Route', () => {
         method: 'POST',
         body: JSON.stringify({ studentProfileId }),
       }),
-      { params: Promise.resolve({ id: 'batch-123' }) }
+      { params: Promise.resolve({ id: 'batch-123' }) },
     );
 
     const body = await response.json();
@@ -129,7 +140,7 @@ describe('Batches Waitlist POST API Route', () => {
           userId: 'user-1',
           permissions: ['waitinglist.manage'],
         },
-      })
+      }),
     );
 
     const { POST } = await import('./route');
@@ -138,14 +149,16 @@ describe('Batches Waitlist POST API Route', () => {
         method: 'POST',
         body: JSON.stringify({ studentProfileId, leadId }),
       }),
-      { params: Promise.resolve({ id: 'batch-123' }) }
+      { params: Promise.resolve({ id: 'batch-123' }) },
     );
 
     const body = await response.json();
     expect(response.status).toBe(400);
     expect(body.success).toBe(false);
     expect(body.errorCode).toBe('CRS-VAL-BATCHES-INVALID_BODY');
-    expect(body.invalidFields[0].message).toBe('Exactly one of studentProfileId or leadId must be provided.');
+    expect(body.invalidFields[0].message).toBe(
+      'Exactly one of studentProfileId or leadId must be provided.',
+    );
   });
 
   it('POST /api/v1/batches/[id]/waitlist rejects if verifyBranchScope fails', async () => {
@@ -156,12 +169,14 @@ describe('Batches Waitlist POST API Route', () => {
           userId: 'user-1',
           permissions: ['waitinglist.manage'],
         },
-      })
+      }),
     );
 
     findByIdMock.mockResolvedValue({ id: 'batch-123', branchId: 'branch-123' });
     findFirstMock.mockResolvedValue({ id: 'access-123', status: 'Active' });
-    verifyBranchScopeMock.mockRejectedValue(new Error('ERR_AUTH_BRANCH_DENIED'));
+    verifyBranchScopeMock.mockRejectedValue(
+      new Error('ERR_AUTH_BRANCH_DENIED'),
+    );
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -169,7 +184,7 @@ describe('Batches Waitlist POST API Route', () => {
         method: 'POST',
         body: JSON.stringify({ studentProfileId }),
       }),
-      { params: Promise.resolve({ id: 'batch-123' }) }
+      { params: Promise.resolve({ id: 'batch-123' }) },
     );
 
     const body = await response.json();

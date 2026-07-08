@@ -28,8 +28,16 @@ export default async function CreateExamPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Exams', href: '/exam-completion/exams', icon: <Layers className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Exams',
+                href: '/exam-completion/exams',
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
               { label: 'Create', icon: <PlusCircle className="h-3.5 w-3.5" /> },
             ]}
           />

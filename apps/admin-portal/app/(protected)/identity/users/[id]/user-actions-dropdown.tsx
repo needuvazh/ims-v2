@@ -1,14 +1,20 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { 
-  DropdownMenu, 
-  DropdownMenuTrigger, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  Button 
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  Button,
 } from '@ims/shared-ui';
-import { MoreVertical, Pencil, ShieldAlert, Ban, CheckCircle } from 'lucide-react';
+import {
+  MoreVertical,
+  Pencil,
+  ShieldAlert,
+  Ban,
+  CheckCircle,
+} from 'lucide-react';
 import { updateUserStatusAction } from '../../actions';
 import Link from 'next/link';
 
@@ -17,7 +23,10 @@ interface UserActionsDropdownProps {
   userStatus: string;
 }
 
-export function UserActionsDropdown({ userId, userStatus }: UserActionsDropdownProps) {
+export function UserActionsDropdown({
+  userId,
+  userStatus,
+}: UserActionsDropdownProps) {
   const router = useRouter();
 
   const handleToggleStatus = async () => {
@@ -39,23 +48,34 @@ export function UserActionsDropdown({ userId, userStatus }: UserActionsDropdownP
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/iam/users/${userId}/edit`} className="w-full flex items-center gap-2">
+          <Link
+            href={`/iam/users/${userId}/edit`}
+            className="w-full flex items-center gap-2"
+          >
             <Pencil className="h-4 w-4" /> Edit User
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/iam/users/${userId}/roles`} className="w-full flex items-center gap-2">
+          <Link
+            href={`/iam/users/${userId}/roles`}
+            className="w-full flex items-center gap-2"
+          >
             <ShieldAlert className="h-4 w-4" /> Manage Roles
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleToggleStatus} className="text-[color:var(--ims-error)]">
+        <DropdownMenuItem
+          onClick={handleToggleStatus}
+          className="text-[color:var(--ims-error)]"
+        >
           {userStatus === 'Active' ? (
             <span className="flex items-center gap-2">
-              <Ban className="h-4 w-4 text-[color:var(--ims-error)]" /> Suspend User
+              <Ban className="h-4 w-4 text-[color:var(--ims-error)]" /> Suspend
+              User
             </span>
           ) : (
             <span className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-[color:var(--ims-success)]" /> Activate User
+              <CheckCircle className="h-4 w-4 text-[color:var(--ims-success)]" />{' '}
+              Activate User
             </span>
           )}
         </DropdownMenuItem>

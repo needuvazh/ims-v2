@@ -13,7 +13,13 @@ const assignSchema = z.object({
   counselorId: z.string().uuid('Invalid counselor ID reference'),
 });
 
-function problemJson(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problemJson(
+  status: number,
+  title: string,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -22,7 +28,7 @@ function problemJson(status: number, title: string, detail: string, errorCode: s
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
@@ -46,7 +52,8 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_COUNSELOR_INACTIVE')) {
     status = 422;
     code = 'ERR_CRM_COUNSELOR_INACTIVE';
-    messageEn = 'Assigned counselor is inactive or unauthorized for this branch.';
+    messageEn =
+      'Assigned counselor is inactive or unauthorized for this branch.';
     messageAr = 'الموظف المسؤول غير نشط أو غير مصرح له بالعمل في هذا الفرع.';
   }
 
@@ -58,77 +65,99 @@ function crmErrorResponse(error: Error) {
       messageArabic: messageAr,
       statusCode: status,
     },
-    { status }
+    { status },
   );
 }
 
-export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: leadId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'lead.assign', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'lead.assign', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    let payload: unknown;
-    try {
-      payload = await request.json();
-    } catch {
-      return problemJson(400, 'Invalid request body', 'Request body must be valid JSON.', 'CRM-VAL-ASSIGN-INVALID_JSON');
-    }
+        let payload: unknown;
+        try {
+          payload = await request.json();
+        } catch {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Request body must be valid JSON.',
+            'CRM-VAL-ASSIGN-INVALID_JSON',
+          );
+        }
 
-    const parsed = assignSchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(
-        400,
-        'Invalid request body',
-        'Counselor assignment details are invalid.',
-        'CRM-VAL-ASSIGN-INVALID_BODY',
-        parsed.error.issues.map((issue) => ({
-          field: issue.path.join('.') || 'body',
-          message: issue.message,
-        }))
-      );
-    }
+        const parsed = assignSchema.safeParse(payload);
+        if (!parsed.success) {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Counselor assignment details are invalid.',
+            'CRM-VAL-ASSIGN-INVALID_BODY',
+            parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.') || 'body',
+              message: issue.message,
+            })),
+          );
+        }
 
-    try {
-      const { branchScopeResolver, leadService } = await import('../../../../../../lib/runtime');
-      
-      const lead = await leadService.getLeadById(leadId);
-      if (!lead) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-      }
+        try {
+          const { branchScopeResolver, leadService } =
+            await import('../../../../../../lib/runtime');
 
-      // Branch Scoping check
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(lead.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          const lead = await leadService.getLeadById(leadId);
+          if (!lead) {
+            throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+          }
 
-      await leadService.assignCounselor(leadId, parsed.data.counselorId, session.userId);
+          // Branch Scoping check
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(lead.branchId as Uuid)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: {
+          await leadService.assignCounselor(
             leadId,
-            counselorId: parsed.data.counselorId,
-            assignedAt: new Date(),
-          },
-        },
-        { status: 200 }
-      );
+            parsed.data.counselorId,
+            session.userId,
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/leads/[id]/assign',
-        method: request.method,
-        status: 'success',
-      });
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: {
+                leadId,
+                counselorId: parsed.data.counselorId,
+                assignedAt: new Date(),
+              },
+            },
+            { status: 200 },
+          );
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.leads.assign.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/leads/[id]/assign' });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/leads/[id]/assign',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.leads.assign.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/leads/[id]/assign' },
+  );
 }

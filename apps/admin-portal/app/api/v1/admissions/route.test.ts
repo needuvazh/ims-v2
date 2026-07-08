@@ -9,13 +9,18 @@ vi.mock('../../../../lib/api-middleware', () => ({
 }));
 
 vi.mock('../../../../lib/runtime', () => ({
-  admissionService: { createAdmissionDraftDirect: createAdmissionDraftDirectMock },
+  admissionService: {
+    createAdmissionDraftDirect: createAdmissionDraftDirectMock,
+  },
   branchScopeResolver: { resolveAllowedBranches: resolveAllowedBranchesMock },
 }));
 
 vi.mock('../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -35,11 +40,15 @@ describe('Admissions creation API routes', () => {
           permissions: ['admission.create'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
-    createAdmissionDraftDirectMock.mockResolvedValue({ admissionId: 'adm-123' });
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
+    createAdmissionDraftDirectMock.mockResolvedValue({
+      admissionId: 'adm-123',
+    });
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -49,7 +58,7 @@ describe('Admissions creation API routes', () => {
           studentProfileId: '22222222-2222-2222-2222-222222222222',
           courseId: '33333333-3333-3333-3333-333333333333',
         }),
-      })
+      }),
     );
 
     const body = await response.json();
@@ -63,7 +72,7 @@ describe('Admissions creation API routes', () => {
         leadId: null,
       },
       '11111111-1111-1111-1111-111111111111',
-      'user-1'
+      'user-1',
     );
   });
 
@@ -75,10 +84,12 @@ describe('Admissions creation API routes', () => {
           permissions: ['admission.create'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -88,7 +99,7 @@ describe('Admissions creation API routes', () => {
           studentProfileId: '22222222-2222-2222-2222-222222222222',
           branchId: '99999999-9999-9999-9999-999999999999', // out-of-scope branch
         }),
-      })
+      }),
     );
 
     const body = await response.json();
@@ -105,11 +116,15 @@ describe('Admissions creation API routes', () => {
           permissions: ['admission.create'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
-    createAdmissionDraftDirectMock.mockRejectedValue(new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS'));
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
+    createAdmissionDraftDirectMock.mockRejectedValue(
+      new Error('ERR_ADM_ACTIVE_ADMISSION_EXISTS'),
+    );
 
     const { POST } = await import('./route');
     const response = await POST(
@@ -118,7 +133,7 @@ describe('Admissions creation API routes', () => {
         body: JSON.stringify({
           studentProfileId: '22222222-2222-2222-2222-222222222222',
         }),
-      })
+      }),
     );
 
     const body = await response.json();

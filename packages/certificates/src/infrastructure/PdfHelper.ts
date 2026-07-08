@@ -1,15 +1,23 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-export function saveLocalMockPdf(certNumber: string, studentNumber: string, verificationCode: string): string {
+export function saveLocalMockPdf(
+  certNumber: string,
+  studentNumber: string,
+  verificationCode: string,
+): string {
   // Dynamically find workspace root to support all executing directories (e.g. root, apps, packages)
   let baseDir = process.cwd();
-  while (baseDir && baseDir !== '/' && !fs.existsSync(path.join(baseDir, 'apps/admin-portal'))) {
+  while (
+    baseDir &&
+    baseDir !== '/' &&
+    !fs.existsSync(path.join(baseDir, 'apps/admin-portal'))
+  ) {
     const parent = path.dirname(baseDir);
     if (parent === baseDir) break;
     baseDir = parent;
   }
-  
+
   const publicDir = path.join(baseDir, 'apps/admin-portal/public/certificates');
 
   try {

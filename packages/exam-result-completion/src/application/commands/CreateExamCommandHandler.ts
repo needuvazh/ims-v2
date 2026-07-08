@@ -1,7 +1,14 @@
 import { ExamRepository } from '../../domain/interfaces/ExamRepository';
 import { EnrollmentReader } from '../../domain/interfaces/EnrollmentReader';
-import { ExamAggregate, CreateExamCommand, EXAM_STATUSES } from '../../domain/aggregates/Exam';
-import { ExamInvalidStateError, ExamMarksValidationError } from '../../domain/errors';
+import {
+  ExamAggregate,
+  CreateExamCommand,
+  EXAM_STATUSES,
+} from '../../domain/aggregates/Exam';
+import {
+  ExamInvalidStateError,
+  ExamMarksValidationError,
+} from '../../domain/errors';
 
 export interface CreateExamInput {
   courseId: string;
@@ -20,9 +27,13 @@ export class CreateExamCommandHandler {
   ) {}
 
   async execute(input: CreateExamInput): Promise<string> {
-    const batch = await this.enrollmentReader.getEnrollmentsForBatch(input.batchId);
+    const batch = await this.enrollmentReader.getEnrollmentsForBatch(
+      input.batchId,
+    );
     if (!batch || batch.length === 0) {
-      throw new ExamInvalidStateError(`Batch ${input.batchId} not found or has no enrollments`);
+      throw new ExamInvalidStateError(
+        `Batch ${input.batchId} not found or has no enrollments`,
+      );
     }
 
     const command: CreateExamCommand = {

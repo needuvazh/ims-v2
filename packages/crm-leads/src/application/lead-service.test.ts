@@ -23,10 +23,22 @@ test('DateOfBirthSchema pre-processor should coerce dates correctly', () => {
 // 2. LeadService unit tests
 test('LeadService.createLead should reuse an existing Person record matching the mobile number', async () => {
   const mockPrisma = {
-    user: { findFirst: vi.fn().mockResolvedValue({ id: 'counselor-1', status: 'Active', isDeleted: false }) },
+    user: {
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({
+          id: 'counselor-1',
+          status: 'Active',
+          isDeleted: false,
+        }),
+    },
     person: {
-      findFirst: vi.fn().mockResolvedValue({ id: 'person-existing', mobile: '+968 12345678' }),
-      update: vi.fn().mockResolvedValue({ id: 'person-existing', mobile: '+968 12345678' }),
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({ id: 'person-existing', mobile: '+968 12345678' }),
+      update: vi
+        .fn()
+        .mockResolvedValue({ id: 'person-existing', mobile: '+968 12345678' }),
     },
     lead: { findFirst: vi.fn().mockResolvedValue(null) },
     branch: { findUnique: vi.fn().mockResolvedValue({ branchCode: 'MCT' }) },
@@ -35,11 +47,17 @@ test('LeadService.createLead should reuse an existing Person record matching the
   } as any;
 
   const mockLeadRepo = {
-    create: vi.fn().mockImplementation((data) => Promise.resolve({ id: 'lead-1', ...data })),
+    create: vi
+      .fn()
+      .mockImplementation((data) => Promise.resolve({ id: 'lead-1', ...data })),
   } as any;
 
   const mockFollowUpRepo = {} as any;
-  const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
+  const leadService = new LeadService(
+    mockPrisma,
+    mockLeadRepo,
+    mockFollowUpRepo,
+  );
 
   const input = {
     branchId: 'branch-1',
@@ -63,21 +81,37 @@ test('LeadService.createLead should reuse an existing Person record matching the
       personId: 'person-existing', // reused!
       leadNumber: expect.stringMatching(pattern),
     }),
-    mockPrisma
+    mockPrisma,
   );
   expect(result.leadNumber).toContain(`LD-${currentYear}-MCT-`);
 });
 
 test('LeadService.createLead should throw duplicate error if active duplicate exists and bypass is false', async () => {
   const mockPrisma = {
-    user: { findFirst: vi.fn().mockResolvedValue({ id: 'counselor-1', status: 'Active', isDeleted: false }) },
-    lead: { findFirst: vi.fn().mockResolvedValue({ id: 'lead-dup', leadNumber: 'LD-DUP' }) },
+    user: {
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({
+          id: 'counselor-1',
+          status: 'Active',
+          isDeleted: false,
+        }),
+    },
+    lead: {
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({ id: 'lead-dup', leadNumber: 'LD-DUP' }),
+    },
     branch: { findUnique: vi.fn().mockResolvedValue({ branchCode: 'MCT' }) },
   } as any;
 
   const mockLeadRepo = {} as any;
   const mockFollowUpRepo = {} as any;
-  const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
+  const leadService = new LeadService(
+    mockPrisma,
+    mockLeadRepo,
+    mockFollowUpRepo,
+  );
 
   const input = {
     branchId: 'branch-1',
@@ -90,27 +124,101 @@ test('LeadService.createLead should throw duplicate error if active duplicate ex
     interestedCourseId: 'course-1',
   };
 
-  await expect(leadService.createLead(input, 'actor-1'))
-    .rejects
-    .toThrow('ERR_CRM_DUPLICATE_LEAD_DETECTED');
+  await expect(leadService.createLead(input, 'actor-1')).rejects.toThrow(
+    'ERR_CRM_DUPLICATE_LEAD_DETECTED',
+  );
+});
+
+test('LeadService.createLead should throw duplicate error if active duplicate exists with same nationalId', async () => {
+  const mockPrisma = {
+    user: {
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({
+          id: 'counselor-1',
+          status: 'Active',
+          isDeleted: false,
+        }),
+    },
+    lead: {
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({ id: 'lead-dup', leadNumber: 'LD-DUP' }),
+    },
+    branch: { findUnique: vi.fn().mockResolvedValue({ branchCode: 'MCT' }) },
+  } as any;
+
+  const mockLeadRepo = {} as any;
+  const mockFollowUpRepo = {} as any;
+  const leadService = new LeadService(
+    mockPrisma,
+    mockLeadRepo,
+    mockFollowUpRepo,
+  );
+
+  const input = {
+    branchId: 'branch-1',
+    firstName: 'Salim',
+    lastName: 'Al-Harthy',
+    phone: '+968 12345678',
+    email: 'salim@example.com',
+    nationalId: 'NID-999',
+    source: 'Campaign' as const,
+    counselorId: 'counselor-1',
+    interestedCourseId: 'course-1',
+  };
+
+  await expect(leadService.createLead(input, 'actor-1')).rejects.toThrow(
+    'ERR_CRM_DUPLICATE_LEAD_DETECTED',
+  );
+  expect(mockPrisma.lead.findFirst).toHaveBeenCalledWith(
+    expect.objectContaining({
+      where: expect.objectContaining({
+        OR: expect.arrayContaining([
+          expect.objectContaining({ nationalId: 'NID-999' }),
+        ]),
+      }),
+    }),
+  );
 });
 
 test('LeadService.createLead should bypass duplicate check if bypassDuplicateBlock is true', async () => {
   const mockPrisma = {
-    user: { findFirst: vi.fn().mockResolvedValue({ id: 'counselor-1', status: 'Active', isDeleted: false }) },
-    lead: { findFirst: vi.fn().mockResolvedValue({ id: 'lead-dup', leadNumber: 'LD-DUP' }) },
-    person: { findFirst: vi.fn().mockResolvedValue(null), create: vi.fn().mockResolvedValue({ id: 'person-new' }) },
+    user: {
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({
+          id: 'counselor-1',
+          status: 'Active',
+          isDeleted: false,
+        }),
+    },
+    lead: {
+      findFirst: vi
+        .fn()
+        .mockResolvedValue({ id: 'lead-dup', leadNumber: 'LD-DUP' }),
+    },
+    person: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      create: vi.fn().mockResolvedValue({ id: 'person-new' }),
+    },
     branch: { findUnique: vi.fn().mockResolvedValue({ branchCode: 'MCT' }) },
     outboxEvent: { create: vi.fn() },
     auditLog: { create: vi.fn() },
   } as any;
 
   const mockLeadRepo = {
-    create: vi.fn().mockImplementation((data) => Promise.resolve({ id: 'lead-1', ...data })),
+    create: vi
+      .fn()
+      .mockImplementation((data) => Promise.resolve({ id: 'lead-1', ...data })),
   } as any;
 
   const mockFollowUpRepo = {} as any;
-  const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
+  const leadService = new LeadService(
+    mockPrisma,
+    mockLeadRepo,
+    mockFollowUpRepo,
+  );
 
   const input = {
     branchId: 'branch-1',
@@ -154,16 +262,33 @@ test('LeadService.updateStage should enforce optimistic concurrent locks', async
   } as any;
 
   const mockFollowUpRepo = {} as any;
-  const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
+  const leadService = new LeadService(
+    mockPrisma,
+    mockLeadRepo,
+    mockFollowUpRepo,
+  );
 
   // Mismatched version update throws concurrency error
   await expect(
-    leadService.updateStage('lead-1', { newStage: 'FollowUp', version: 2 }, 'actor-1')
+    leadService.updateStage(
+      'lead-1',
+      { newStage: 'FollowUp', version: 2 },
+      'actor-1',
+    ),
   ).rejects.toThrow('ERR_CRM_CONCURRENCY_VIOLATION');
 
   // Matching version update succeeds
-  await leadService.updateStage('lead-1', { newStage: 'FollowUp', version: 1 }, 'actor-1');
-  expect(mockLeadRepo.updateStage).toHaveBeenCalledWith('lead-1', 'FollowUp', 1, mockPrisma);
+  await leadService.updateStage(
+    'lead-1',
+    { newStage: 'FollowUp', version: 1 },
+    'actor-1',
+  );
+  expect(mockLeadRepo.updateStage).toHaveBeenCalledWith(
+    'lead-1',
+    'FollowUp',
+    1,
+    mockPrisma,
+  );
 });
 
 test('LeadService.closeLeadLost should reject lost reason notes under 15 characters', async () => {
@@ -172,14 +297,23 @@ test('LeadService.closeLeadLost should reject lost reason notes under 15 charact
   } as any;
 
   const mockLeadRepo = {
-    findById: vi.fn().mockResolvedValue({ id: 'lead-1', stage: 'New', version: 1 }),
+    findById: vi
+      .fn()
+      .mockResolvedValue({ id: 'lead-1', stage: 'New', version: 1 }),
   } as any;
 
   const mockFollowUpRepo = {} as any;
-  const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
+  const leadService = new LeadService(
+    mockPrisma,
+    mockLeadRepo,
+    mockFollowUpRepo,
+  );
 
   await expect(
-    leadService.closeLeadLost('lead-1', { lostReasonCode: 'PriceTooHigh', lostReasonNotes: 'Too short' })
+    leadService.closeLeadLost('lead-1', {
+      lostReasonCode: 'PriceTooHigh',
+      lostReasonNotes: 'Too short',
+    }),
   ).rejects.toThrow('ERR_CRM_LOST_REASON_REQUIRED');
 });
 
@@ -187,11 +321,19 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
   const mockPrisma = {
     outboxEvent: {
       createMany: vi.fn().mockResolvedValue(null),
+      create: vi.fn().mockResolvedValue(null),
     },
     leadStageHistory: { create: vi.fn() },
-    document: { create: vi.fn().mockResolvedValue({ id: 'doc-1' }) },
+    documentRequirement: {
+      findMany: vi.fn().mockResolvedValue([{ documentType: 'CIVIL_ID_FRONT' }]),
+    },
+    document: {
+      create: vi.fn().mockResolvedValue({ id: 'doc-1' }),
+      findMany: vi.fn().mockResolvedValue([]),
+    },
     documentOwner: { create: vi.fn().mockResolvedValue(null) },
     documentVerification: { create: vi.fn().mockResolvedValue(null) },
+    auditLog: { create: vi.fn().mockResolvedValue(null) },
   } as any;
   const mockLeadRepo = {
     findById: vi.fn().mockImplementation((id) => {
@@ -215,11 +357,15 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
   const mockFollowUpRepo = {
     cancelAllScheduled: vi.fn().mockResolvedValue(0),
   } as any;
-  const leadService = new LeadService(mockPrisma, mockLeadRepo, mockFollowUpRepo);
+  const leadService = new LeadService(
+    mockPrisma,
+    mockLeadRepo,
+    mockFollowUpRepo,
+  );
 
   // Fails if missing documents
   await expect(
-    leadService.convertLead('lead-1', [], mockPrisma)
+    leadService.convertLead('lead-1', [], mockPrisma),
   ).rejects.toThrow('ERR_CRM_WON_PRECONDITIONS_MISSED');
 
   // Fails if phone is missing
@@ -236,14 +382,46 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
     },
   });
   await expect(
-    leadService.convertLead('lead-1', [{ fileName: 'civil.pdf', fileKey: 'uploads/civil.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' }], mockPrisma)
+    leadService.convertLead(
+      'lead-1',
+      [
+        {
+          fileName: 'civil.pdf',
+          fileKey: 'uploads/civil.pdf',
+          fileType: 'application/pdf',
+          documentType: 'CIVIL_ID_FRONT',
+        },
+      ],
+      mockPrisma,
+    ),
   ).rejects.toThrow('ERR_CRM_WON_PRECONDITIONS_MISSED');
 
   // Succeeds if documents are present
-  const result = await leadService.convertLead('lead-1', [{ fileName: 'civil.pdf', fileKey: 'uploads/civil.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' }], mockPrisma);
+  const result = await leadService.convertLead(
+    'lead-1',
+    [
+      {
+        fileName: 'civil.pdf',
+        fileKey: 'uploads/civil.pdf',
+        fileType: 'application/pdf',
+        documentType: 'CIVIL_ID_FRONT',
+      },
+    ],
+    mockPrisma,
+  );
   expect(result.id).toBe('lead-1');
-  expect(mockLeadRepo.updateStage).toHaveBeenCalledWith('lead-1', 'Won', 1, mockPrisma);
-  expect(mockLeadRepo.updateStage).toHaveBeenCalledWith('lead-1', 'Converted', 2, mockPrisma);
+  expect(mockLeadRepo.updateStage).toHaveBeenCalledWith(
+    'lead-1',
+    'Won',
+    1,
+    mockPrisma,
+  );
+  expect(mockLeadRepo.updateStage).toHaveBeenCalledWith(
+    'lead-1',
+    'Converted',
+    2,
+    mockPrisma,
+  );
   expect(mockPrisma.document.create).toHaveBeenCalled();
   expect(mockPrisma.documentOwner.create).toHaveBeenCalled();
   expect(mockPrisma.documentVerification.create).toHaveBeenCalled();
@@ -260,7 +438,18 @@ test('LeadService.convertLead should enforce Won outcome preconditions', async (
     person: { dateOfBirth: new Date('1995-05-15') },
   });
   await expect(
-    leadService.convertLead('lead-1', [{ fileName: 'civil.pdf', fileKey: 'uploads/civil.pdf', fileType: 'application/pdf', documentType: 'CIVIL_ID_FRONT' }], mockPrisma)
+    leadService.convertLead(
+      'lead-1',
+      [
+        {
+          fileName: 'civil.pdf',
+          fileKey: 'uploads/civil.pdf',
+          fileType: 'application/pdf',
+          documentType: 'CIVIL_ID_FRONT',
+        },
+      ],
+      mockPrisma,
+    ),
   ).rejects.toThrow('ERR_CRM_INVALID_STAGE_TRANSITION');
 });
 
@@ -288,7 +477,7 @@ test('LeadService.updateLead should merge partial updates and detect active dupl
 
   // When updating phone only (partial update), it should resolve branchId & interestedCourseId from original lead and trigger duplicate error
   await expect(
-    leadService.updateLead('lead-1', { phone: '+96899999999' })
+    leadService.updateLead('lead-1', { phone: '+96899999999' }),
   ).rejects.toThrow('ERR_CRM_DUPLICATE_LEAD_DETECTED');
 });
 
@@ -321,27 +510,40 @@ test('LeadService.updateLead should perform successful update, audit the action,
 
   const leadService = new LeadService(mockPrisma, mockLeadRepo, {} as any);
 
-  await leadService.updateLead('lead-1', {
-    phone: '+96899999999',
-    firstName: 'NewName',
-  }, undefined, 'actor-99');
+  await leadService.updateLead(
+    'lead-1',
+    {
+      phone: '+96899999999',
+      firstName: 'NewName',
+    },
+    undefined,
+    'actor-99',
+  );
 
-  expect(mockLeadRepo.updateLead).toHaveBeenCalledWith('lead-1', expect.objectContaining({ firstName: 'NewName' }), mockPrisma);
-  expect(mockPrisma.auditLog.create).toHaveBeenCalledWith(expect.objectContaining({
-    data: expect.objectContaining({
-      performedBy: 'actor-99',
-      entityType: 'Lead',
-      entityId: 'lead-1',
-      action: 'Update',
-    })
-  }));
-  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(expect.objectContaining({
-    data: expect.objectContaining({
-      eventType: 'LeadUpdated',
-      aggregateType: 'Lead',
-      aggregateId: 'lead-1',
-    })
-  }));
+  expect(mockLeadRepo.updateLead).toHaveBeenCalledWith(
+    'lead-1',
+    expect.objectContaining({ firstName: 'NewName' }),
+    mockPrisma,
+  );
+  expect(mockPrisma.auditLog.create).toHaveBeenCalledWith(
+    expect.objectContaining({
+      data: expect.objectContaining({
+        performedBy: 'actor-99',
+        entityType: 'Lead',
+        entityId: 'lead-1',
+        action: 'Update',
+      }),
+    }),
+  );
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(
+    expect.objectContaining({
+      data: expect.objectContaining({
+        eventType: 'LeadUpdated',
+        aggregateType: 'Lead',
+        aggregateId: 'lead-1',
+      }),
+    }),
+  );
 });
 
 test('LeadService.deleteLead should soft-delete the lead, write to audit logs, and dispatch outbox event', async () => {
@@ -368,23 +570,30 @@ test('LeadService.deleteLead should soft-delete the lead, write to audit logs, a
 
   await leadService.deleteLead('lead-delete-123', 'actor-1');
 
-  expect(mockLeadRepo.deleteLead).toHaveBeenCalledWith('lead-delete-123', 'actor-1', mockPrisma);
-  expect(mockPrisma.auditLog.create).toHaveBeenCalledWith(expect.objectContaining({
-    data: expect.objectContaining({
-      performedBy: 'actor-1',
-      entityType: 'Lead',
-      entityId: 'lead-delete-123',
-      action: 'Delete',
-      branchId: 'branch-1',
-    })
-  }));
-  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(expect.objectContaining({
-    data: expect.objectContaining({
-      eventType: 'LeadDeleted',
-      aggregateType: 'Lead',
-      aggregateId: 'lead-delete-123',
-      payload: { leadId: 'lead-delete-123', leadNumber: 'LD-2026-MCT-55555' },
-    })
-  }));
+  expect(mockLeadRepo.deleteLead).toHaveBeenCalledWith(
+    'lead-delete-123',
+    'actor-1',
+    mockPrisma,
+  );
+  expect(mockPrisma.auditLog.create).toHaveBeenCalledWith(
+    expect.objectContaining({
+      data: expect.objectContaining({
+        performedBy: 'actor-1',
+        entityType: 'Lead',
+        entityId: 'lead-delete-123',
+        action: 'Delete',
+        branchId: 'branch-1',
+      }),
+    }),
+  );
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledWith(
+    expect.objectContaining({
+      data: expect.objectContaining({
+        eventType: 'LeadDeleted',
+        aggregateType: 'Lead',
+        aggregateId: 'lead-delete-123',
+        payload: { leadId: 'lead-delete-123', leadNumber: 'LD-2026-MCT-55555' },
+      }),
+    }),
+  );
 });
-

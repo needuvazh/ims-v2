@@ -16,7 +16,16 @@ import {
   Input,
   Textarea,
 } from '@ims/shared-ui';
-import { UploadCloud, CheckCircle, Save, PlusCircle, ArrowLeft, RefreshCw, Sparkles, ClipboardList } from 'lucide-react';
+import {
+  UploadCloud,
+  CheckCircle,
+  Save,
+  PlusCircle,
+  ArrowLeft,
+  RefreshCw,
+  Sparkles,
+  ClipboardList,
+} from 'lucide-react';
 
 interface ResultsClientListProps {
   results: any[];
@@ -33,12 +42,19 @@ function hasPermission(permissions: string[], code: string): boolean {
   return permissions.includes(code) || permissions.includes('SUPER_ADMIN');
 }
 
-export function ResultsClientList({ results: initialResults, exam, permissions }: ResultsClientListProps) {
+export function ResultsClientList({
+  results: initialResults,
+  exam,
+  permissions,
+}: ResultsClientListProps) {
   const router = useRouter();
 
   // Handle local state for marks editing roster
-  const [localMarks, setLocalMarks] = useState<Record<string, { marksObtained: string; grade: string }>>(() => {
-    const initial: Record<string, { marksObtained: string; grade: string }> = {};
+  const [localMarks, setLocalMarks] = useState<
+    Record<string, { marksObtained: string; grade: string }>
+  >(() => {
+    const initial: Record<string, { marksObtained: string; grade: string }> =
+      {};
     initialResults.forEach((r) => {
       // Only default editable fields if the status is not Finalized
       if (r.resultStatus !== 'Finalized') {
@@ -65,9 +81,14 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
   const canCorrect = hasPermission(permissions, 'result.correct');
 
   // Roster is editable only if exam is in 'OpenForResultEntry' status and user can create results
-  const isRosterEditable = exam !== null && exam.status === 'OpenForResultEntry' && canCreate;
+  const isRosterEditable =
+    exam !== null && exam.status === 'OpenForResultEntry' && canCreate;
 
-  const handleInputChange = (enrollmentId: string, field: 'marksObtained' | 'grade', value: string) => {
+  const handleInputChange = (
+    enrollmentId: string,
+    field: 'marksObtained' | 'grade',
+    value: string,
+  ) => {
     setLocalMarks((prev) => ({
       ...prev,
       [enrollmentId]: {
@@ -82,15 +103,23 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
     if (!exam) return;
 
     // Validate inputs locally
-    const validRows: Array<{ enrollmentId: string; marksObtained: number; grade?: string }> = [];
+    const validRows: Array<{
+      enrollmentId: string;
+      marksObtained: number;
+      grade?: string;
+    }> = [];
     for (const [enrollmentId, values] of Object.entries(localMarks)) {
       const marks = parseFloat(values.marksObtained);
       if (isNaN(marks) || marks < 0) {
-        toast.error('All marks must be valid numbers greater than or equal to 0.');
+        toast.error(
+          'All marks must be valid numbers greater than or equal to 0.',
+        );
         return;
       }
       if (marks > exam.maxMarks) {
-        toast.error(`Marks cannot exceed the exam's maximum allowed limit (${exam.maxMarks}).`);
+        toast.error(
+          `Marks cannot exceed the exam's maximum allowed limit (${exam.maxMarks}).`,
+        );
         return;
       }
       validRows.push({
@@ -120,14 +149,20 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.messageEnglish || data.message || 'Failed to save roster results.');
+        throw new Error(
+          data.messageEnglish ||
+            data.message ||
+            'Failed to save roster results.',
+        );
       }
 
       toast.success('Results roster recorded successfully!', { id: toastId });
       router.refresh();
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || 'Failed to save roster results.', { id: toastId });
+      toast.error(err.message || 'Failed to save roster results.', {
+        id: toastId,
+      });
     } finally {
       setSaving(false);
     }
@@ -152,7 +187,9 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.messageEnglish || data.message || 'Failed to finalize result.');
+        throw new Error(
+          data.messageEnglish || data.message || 'Failed to finalize result.',
+        );
       }
 
       toast.success('Result finalized successfully!', { id: toastId });
@@ -183,7 +220,9 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
       return;
     }
     if (parseFloat(correctedMarks) > correctionResult.exam.maxMarks) {
-      toast.error(`Marks cannot exceed exam max marks (${correctionResult.exam.maxMarks}).`);
+      toast.error(
+        `Marks cannot exceed exam max marks (${correctionResult.exam.maxMarks}).`,
+      );
       return;
     }
     if (correctionReason.trim().length < 10) {
@@ -195,19 +234,24 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
     const toastId = toast.loading('Applying correction...');
 
     try {
-      const response = await fetch(`/api/v1/results/${correctionResult.id}/correct`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          marksObtained: parseFloat(correctedMarks),
-          grade: correctedGrade.trim() || undefined,
-          reason: correctionReason.trim(),
-        }),
-      });
+      const response = await fetch(
+        `/api/v1/results/${correctionResult.id}/correct`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            marksObtained: parseFloat(correctedMarks),
+            grade: correctedGrade.trim() || undefined,
+            reason: correctionReason.trim(),
+          }),
+        },
+      );
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.messageEnglish || data.message || 'Failed to correct result.');
+        throw new Error(
+          data.messageEnglish || data.message || 'Failed to correct result.',
+        );
       }
 
       toast.success('Result corrected successfully!', { id: toastId });
@@ -222,7 +266,10 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
   };
 
   const getResultStatusBadge = (status: string) => {
-    const variants: Record<string, 'success' | 'warning' | 'info' | 'muted' | 'outline'> = {
+    const variants: Record<
+      string,
+      'success' | 'warning' | 'info' | 'muted' | 'outline'
+    > = {
       Finalized: 'success',
       Recorded: 'warning',
       Corrected: 'info',
@@ -236,7 +283,9 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
       <EmptyState
         title="No students enrolled"
         description="There are no active student enrollments in the batch associated with this exam."
-        icon={<ClipboardList className="h-10 w-10 text-[color:var(--ims-muted)]" />}
+        icon={
+          <ClipboardList className="h-10 w-10 text-[color:var(--ims-muted)]" />
+        }
       />
     );
   }
@@ -247,10 +296,16 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
       {exam && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
           <div className="space-y-1">
-            <h2 className="text-base font-bold text-slate-800">Direct Entry & Roster Verification</h2>
+            <h2 className="text-base font-bold text-slate-800">
+              Direct Entry & Roster Verification
+            </h2>
             <p className="text-xs text-slate-500">
-              Maximum allowed: <span className="font-semibold">{exam.maxMarks}</span> marks • Pass mark threshold:{' '}
-              <span className="font-semibold text-emerald-600">{exam.passMarks}</span>
+              Maximum allowed:{' '}
+              <span className="font-semibold">{exam.maxMarks}</span> marks •
+              Pass mark threshold:{' '}
+              <span className="font-semibold text-emerald-600">
+                {exam.passMarks}
+              </span>
             </p>
           </div>
           {isRosterEditable && (
@@ -273,7 +328,8 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
         <CardHeader>
           <CardTitle>Results Roster</CardTitle>
           <CardDescription>
-            Input grades directly into the inputs below and click "Save Roster Marks" to save draft changes.
+            Input grades directly into the inputs below and click "Save Roster
+            Marks" to save draft changes.
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
@@ -281,25 +337,45 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
             <table className="min-w-full divide-y divide-slate-100">
               <thead className="bg-slate-50/75">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500">Student</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500">Enrollment #</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500 w-[180px]">Marks</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500 w-[120px]">Grade</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500 w-[140px]">Status</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-slate-500 w-[220px]">Actions</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Student
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Enrollment #
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500 w-[180px]">
+                    Marks
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500 w-[120px]">
+                    Grade
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500 w-[140px]">
+                    Status
+                  </th>
+                  <th className="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-slate-500 w-[220px]">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 bg-white">
                 {initialResults.map((r) => {
                   const isRowFinalized = r.resultStatus === 'Finalized';
                   const isEditable = isRosterEditable && !isRowFinalized;
-                  const marksValue = isEditable ? localMarks[r.enrollmentId]?.marksObtained : r.marksObtained.toString();
-                  const gradeValue = isEditable ? localMarks[r.enrollmentId]?.grade : r.grade || '-';
+                  const marksValue = isEditable
+                    ? localMarks[r.enrollmentId]?.marksObtained
+                    : r.marksObtained.toString();
+                  const gradeValue = isEditable
+                    ? localMarks[r.enrollmentId]?.grade
+                    : r.grade || '-';
 
                   return (
-                    <tr key={r.id} className="hover:bg-slate-50/50 transition-colors">
+                    <tr
+                      key={r.id}
+                      className="hover:bg-slate-50/50 transition-colors"
+                    >
                       <td className="whitespace-nowrap px-6 py-4 text-sm font-semibold text-slate-800">
-                        {r.enrollment.studentProfile?.person?.firstName} {r.enrollment.studentProfile?.person?.lastName}
+                        {r.enrollment.studentProfile?.person?.firstName}{' '}
+                        {r.enrollment.studentProfile?.person?.lastName}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm font-mono text-slate-500">
                         {r.enrollment.enrollmentNumber}
@@ -313,16 +389,26 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
                               max={exam?.maxMarks}
                               step="any"
                               value={marksValue}
-                              onChange={(e) => handleInputChange(r.enrollmentId, 'marksObtained', e.target.value)}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  r.enrollmentId,
+                                  'marksObtained',
+                                  e.target.value,
+                                )
+                              }
                               disabled={saving}
                               className="w-24 h-9 rounded-lg border border-slate-200 px-2 text-sm font-semibold text-slate-800 focus:border-indigo-500 focus:outline-none"
                               required
                             />
-                            <span className="text-xs text-slate-400 font-medium">/ {exam?.maxMarks}</span>
+                            <span className="text-xs text-slate-400 font-medium">
+                              / {exam?.maxMarks}
+                            </span>
                           </div>
                         ) : (
                           <span className="font-semibold text-slate-700">
-                            {r.resultStatus === 'Pending' ? '-' : `${r.marksObtained} / ${exam?.maxMarks}`}
+                            {r.resultStatus === 'Pending'
+                              ? '-'
+                              : `${r.marksObtained} / ${exam?.maxMarks}`}
                           </span>
                         )}
                       </td>
@@ -332,13 +418,21 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
                             type="text"
                             maxLength={10}
                             value={gradeValue}
-                            onChange={(e) => handleInputChange(r.enrollmentId, 'grade', e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange(
+                                r.enrollmentId,
+                                'grade',
+                                e.target.value,
+                              )
+                            }
                             disabled={saving}
                             placeholder="Grade"
                             className="w-20 h-9 rounded-lg border border-slate-200 px-2 text-sm font-semibold text-slate-800 focus:border-indigo-500 focus:outline-none"
                           />
                         ) : (
-                          <span className="font-semibold text-indigo-600">{r.grade || '-'}</span>
+                          <span className="font-semibold text-indigo-600">
+                            {r.grade || '-'}
+                          </span>
                         )}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm">
@@ -347,17 +441,23 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
                       <td className="whitespace-nowrap px-6 py-4 text-right text-sm">
                         <div className="inline-flex justify-end gap-2 w-full">
                           {/* Finalize Button */}
-                          {!isRowFinalized && ['Recorded', 'Corrected'].includes(r.resultStatus) && canFinalize && (
-                            <Button
-                              onClick={() => handleFinalize(r.id)}
-                              disabled={actionId !== null}
-                              variant="primary"
-                              size="sm"
-                              className="bg-emerald-600 hover:bg-emerald-700 h-8 text-xs px-2.5"
-                            >
-                              {actionId === r.id ? 'Finalizing...' : 'Finalize'}
-                            </Button>
-                          )}
+                          {!isRowFinalized &&
+                            ['Recorded', 'Corrected'].includes(
+                              r.resultStatus,
+                            ) &&
+                            canFinalize && (
+                              <Button
+                                onClick={() => handleFinalize(r.id)}
+                                disabled={actionId !== null}
+                                variant="primary"
+                                size="sm"
+                                className="bg-emerald-600 hover:bg-emerald-700 h-8 text-xs px-2.5"
+                              >
+                                {actionId === r.id
+                                  ? 'Finalizing...'
+                                  : 'Finalize'}
+                              </Button>
+                            )}
                           {/* Correction Button */}
                           {isRowFinalized && canCorrect && (
                             <Button
@@ -370,9 +470,13 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
                               Correct Marks
                             </Button>
                           )}
-                          {!isEditable && !isRowFinalized && r.resultStatus === 'Pending' && (
-                            <span className="text-xs text-slate-400 font-medium italic">Save roster to edit</span>
-                          )}
+                          {!isEditable &&
+                            !isRowFinalized &&
+                            r.resultStatus === 'Pending' && (
+                              <span className="text-xs text-slate-400 font-medium italic">
+                                Save roster to edit
+                              </span>
+                            )}
                         </div>
                       </td>
                     </tr>
@@ -387,7 +491,9 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
       {/* Roster Submit Action Panel */}
       {isRosterEditable && (
         <div className="flex items-center justify-end gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
-          <p className="text-xs text-slate-500 font-medium">All inputs will be updated in Draft status.</p>
+          <p className="text-xs text-slate-500 font-medium">
+            All inputs will be updated in Draft status.
+          </p>
           <Button
             onClick={handleSaveRoster}
             disabled={saving}
@@ -409,7 +515,10 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
               <CardDescription>
                 Correcting marks for{' '}
                 <span className="font-semibold text-slate-800">
-                  {correctionResult.enrollment.studentProfile?.person?.firstName}{' '}
+                  {
+                    correctionResult.enrollment.studentProfile?.person
+                      ?.firstName
+                  }{' '}
                   {correctionResult.enrollment.studentProfile?.person?.lastName}
                 </span>
               </CardDescription>
@@ -428,7 +537,9 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
                       onChange={(e) => setCorrectedMarks(e.target.value)}
                       required
                     />
-                    <p className="text-[10px] text-slate-400 font-medium text-right mt-1">/ {correctionResult.exam.maxMarks} max</p>
+                    <p className="text-[10px] text-slate-400 font-medium text-right mt-1">
+                      / {correctionResult.exam.maxMarks} max
+                    </p>
                   </div>
 
                   <div className="space-y-1">
@@ -462,11 +573,7 @@ export function ResultsClientList({ results: initialResults, exam, permissions }
                   >
                     Cancel
                   </Button>
-                  <Button
-                    type="submit"
-                    disabled={saving}
-                    variant="primary"
-                  >
+                  <Button type="submit" disabled={saving} variant="primary">
                     Apply Correction
                   </Button>
                 </div>

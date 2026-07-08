@@ -23,10 +23,10 @@ export default async function EnrollmentsPage(props: {
   const { branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
-  let filterBranchIds = allowedBranchIds.map(id => id as string);
+  let filterBranchIds = allowedBranchIds.map((id) => id as string);
   if (filterBranchIds.length === 0) {
     filterBranchIds = ['00000000-0000-0000-0000-000000000000'];
   } else if (searchParams.branchId) {
@@ -42,7 +42,8 @@ export default async function EnrollmentsPage(props: {
   const limit = 10;
   const skip = (page - 1) * limit;
   const sortBy = searchParams.sortBy || 'createdAt';
-  const sortOrder = (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
+  const sortOrder =
+    (searchParams.sortOrder as 'asc' | 'desc' | undefined) || 'desc';
 
   const whereClause: any = {
     isDeleted: false,
@@ -67,15 +68,34 @@ export default async function EnrollmentsPage(props: {
   if (searchParams.q) {
     whereClause.OR = [
       { enrollmentNumber: { contains: searchParams.q, mode: 'insensitive' } },
-      { studentProfile: { person: { firstName: { contains: searchParams.q, mode: 'insensitive' } } } },
-      { studentProfile: { person: { lastName: { contains: searchParams.q, mode: 'insensitive' } } } },
-      { studentProfile: { person: { email: { contains: searchParams.q, mode: 'insensitive' } } } },
+      {
+        studentProfile: {
+          person: {
+            firstName: { contains: searchParams.q, mode: 'insensitive' },
+          },
+        },
+      },
+      {
+        studentProfile: {
+          person: {
+            lastName: { contains: searchParams.q, mode: 'insensitive' },
+          },
+        },
+      },
+      {
+        studentProfile: {
+          person: { email: { contains: searchParams.q, mode: 'insensitive' } },
+        },
+      },
     ];
   }
 
   let orderBy: any;
   if (sortBy === 'studentName') {
-    orderBy = [{ studentProfile: { person: { firstName: sortOrder } } }, { studentProfile: { person: { lastName: sortOrder } } }];
+    orderBy = [
+      { studentProfile: { person: { firstName: sortOrder } } },
+      { studentProfile: { person: { lastName: sortOrder } } },
+    ];
   } else if (sortBy === 'courseName') {
     orderBy = [{ course: { nameEnglish: sortOrder } }, { createdAt: 'desc' }];
   } else if (sortBy === 'batchCode') {
@@ -138,7 +158,10 @@ export default async function EnrollmentsPage(props: {
     where: {
       isDeleted: false,
       status: { in: ['OpenForEnrollment', 'InProgress'] },
-      branchId: allowedBranchIds.length > 0 ? { in: allowedBranchIds.map(id => id as string) } : undefined,
+      branchId:
+        allowedBranchIds.length > 0
+          ? { in: allowedBranchIds.map((id) => id as string) }
+          : undefined,
     },
     select: { id: true, batchCode: true, courseId: true },
   });
@@ -148,7 +171,10 @@ export default async function EnrollmentsPage(props: {
     where: {
       admissionStatus: 'Approved',
       isDeleted: false,
-      branchId: allowedBranchIds.length > 0 ? { in: allowedBranchIds.map(id => id as string) } : undefined,
+      branchId:
+        allowedBranchIds.length > 0
+          ? { in: allowedBranchIds.map((id) => id as string) }
+          : undefined,
     },
     include: {
       person: true,
@@ -166,15 +192,29 @@ export default async function EnrollmentsPage(props: {
   // Fetch enrollment stats
   const kpiWhere = {
     isDeleted: false,
-    branchId: allowedBranchIds.length > 0 ? { in: allowedBranchIds.map(id => id as string) } : undefined,
+    branchId:
+      allowedBranchIds.length > 0
+        ? { in: allowedBranchIds.map((id) => id as string) }
+        : undefined,
   };
 
-  const [allCount, activeCount, submittedCount, draftCount] = await Promise.all([
-    prisma.enrollment.count({ where: kpiWhere }),
-    prisma.enrollment.count({ where: { ...kpiWhere, enrollmentStatus: { in: ['Confirmed', 'Active'] } } }),
-    prisma.enrollment.count({ where: { ...kpiWhere, enrollmentStatus: 'Submitted' } }),
-    prisma.enrollment.count({ where: { ...kpiWhere, enrollmentStatus: 'Draft' } }),
-  ]);
+  const [allCount, activeCount, submittedCount, draftCount] = await Promise.all(
+    [
+      prisma.enrollment.count({ where: kpiWhere }),
+      prisma.enrollment.count({
+        where: {
+          ...kpiWhere,
+          enrollmentStatus: { in: ['Confirmed', 'Active'] },
+        },
+      }),
+      prisma.enrollment.count({
+        where: { ...kpiWhere, enrollmentStatus: 'Submitted' },
+      }),
+      prisma.enrollment.count({
+        where: { ...kpiWhere, enrollmentStatus: 'Draft' },
+      }),
+    ],
+  );
 
   const kpis = {
     total: allCount,
@@ -189,7 +229,11 @@ export default async function EnrollmentsPage(props: {
         enrollments={mappedEnrollments}
         branches={branches.map((b) => ({ id: b.id, name: b.branchName }))}
         courses={courses.map((c) => ({ id: c.id, name: c.nameEnglish }))}
-        batches={batches.map((b) => ({ id: b.id, code: b.batchCode, courseId: b.courseId }))}
+        batches={batches.map((b) => ({
+          id: b.id,
+          code: b.batchCode,
+          courseId: b.courseId,
+        }))}
         admissions={admissionsList}
         total={total}
         currentPage={page}

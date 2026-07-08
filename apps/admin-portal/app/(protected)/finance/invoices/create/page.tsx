@@ -15,7 +15,7 @@ export default async function CreateInvoicePage() {
   // Resolve allowed branch IDs for user
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   // Query branches
@@ -108,8 +108,16 @@ export default async function CreateInvoicePage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Finance', href: '/finance', icon: <Landmark className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Finance',
+                href: '/finance',
+                icon: <Landmark className="h-3.5 w-3.5" />,
+              },
               { label: 'Invoices', href: '/finance/invoices' },
               { label: 'Create', icon: <PlusCircle className="h-3.5 w-3.5" /> },
             ]}

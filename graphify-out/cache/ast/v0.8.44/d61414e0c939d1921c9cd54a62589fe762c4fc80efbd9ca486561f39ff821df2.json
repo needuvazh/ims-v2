@@ -1,1 +1,687 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_12_fee_billing_receivables_management", "label": "Module 12 \u2013 Fee, Billing & Receivables Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose_and_test_scope", "label": "1. Purpose and Test Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L5"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "label": "2. Test Data Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L11"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_student_invoice_creation_and_commercial_snapshot", "label": "3. Feature: Student Invoice Creation and Commercial Snapshot", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L34"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_corporate_consolidated_invoicing", "label": "4. Feature: Corporate Consolidated Invoicing", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L89"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_invoice_arithmetic_and_boundary_validation", "label": "5. Feature: Invoice Arithmetic and Boundary Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L127"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_numbering_series_and_invoice_issue", "label": "6. Feature: Numbering Series and Invoice Issue", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L181"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_invoice_search_filtering_sorting_and_paging", "label": "7. Feature: Invoice Search, Filtering, Sorting, and Paging", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L213"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_installment_plan_creation_and_validation", "label": "8. Feature: Installment Plan Creation and Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L243"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_installment_status_derivation", "label": "9. Feature: Installment Status Derivation", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L304"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_manual_payment_posting", "label": "10. Feature: Manual Payment Posting", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L334"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_payment_allocation_and_atomicity", "label": "11. Feature: Payment Allocation and Atomicity", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L432"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_payment_idempotency_and_optimistic_concurrency", "label": "12. Feature: Payment Idempotency and Optimistic Concurrency", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L474"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_receipt_generation_and_controlled_rendering", "label": "13. Feature: Receipt Generation and Controlled Rendering", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L505"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_receivable_maintenance_and_aging", "label": "14. Feature: Receivable Maintenance and Aging", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L539"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_refund_request_decision_and_execution", "label": "15. Feature: Refund Request, Decision, and Execution", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L594"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_feature_corporate_credit_rule_effective_dating", "label": "16. Feature: Corporate Credit Rule Effective Dating", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L691"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_feature_corporate_credit_exposure_and_enrollment_guard", "label": "17. Feature: Corporate Credit Exposure and Enrollment Guard", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L737"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_feature_payment_validation_for_completion_and_certificate", "label": "18. Feature: Payment Validation for Completion and Certificate", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L776"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_feature_invoice_state_machine", "label": "19. Feature: Invoice State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L811"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_feature_soft_delete_and_financial_record_immutability", "label": "20. Feature: Soft Delete and Financial Record Immutability", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L858"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_21_feature_authorization_guards_action_permissions", "label": "21. Feature: Authorization Guards \u2013 Action Permissions", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L886"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_22_feature_branch_data_isolation", "label": "22. Feature: Branch Data Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L927"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_23_feature_consolidated_reporting_two_key_guard", "label": "23. Feature: Consolidated Reporting Two-Key Guard", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L994"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_24_feature_student_self_service_ownership_guards", "label": "24. Feature: Student Self-Service Ownership Guards", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1025"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_25_feature_corporate_account_manager_scope", "label": "25. Feature: Corporate Account Manager Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1070"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_26_feature_finance_export_authorization_and_isolation", "label": "26. Feature: Finance Export Authorization and Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1091"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_27_feature_reporting_kpi_accuracy_and_drill_through", "label": "27. Feature: Reporting KPI Accuracy and Drill-Through", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1137"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_feature_multi_currency_reporting_safety", "label": "28. Feature: Multi-Currency Reporting Safety", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1174"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_feature_read_model_freshness_and_transactional_authority", "label": "29. Feature: Read Model Freshness and Transactional Authority", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1187"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_feature_bilingual_ui_and_reporting", "label": "30. Feature: Bilingual UI and Reporting", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1214"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_feature_audit_and_sensitive_action_traceability", "label": "31. Feature: Audit and Sensitive Action Traceability", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1243"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_feature_notification_event_conditions", "label": "32. Feature: Notification Event Conditions", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1276"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_33_feature_low_level_api_error_contract", "label": "33. Feature: Low-Level API Error Contract", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1306"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_34_end_to_end_scenario_regular_enrollment_to_settlement", "label": "34. End-to-End Scenario: Regular Enrollment to Settlement", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1329"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_35_end_to_end_scenario_corporate_enrollment_credit_block", "label": "35. End-to-End Scenario: Corporate Enrollment Credit Block", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1349"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_36_end_to_end_scenario_refund_separation_of_duties", "label": "36. End-to-End Scenario: Refund Separation of Duties", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1377"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_37_cross_browser_and_accessibility_acceptance_scenarios", "label": "37. Cross-Browser and Accessibility Acceptance Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1396"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_38_test_coverage_matrix", "label": "38. Test Coverage Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1425"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_39_mandatory_authorization_regression_suite", "label": "39. Mandatory Authorization Regression Suite", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1460"}, {"id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_40_definition_of_done_for_acceptance_testing", "label": "40. Definition of Done for Acceptance Testing", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1480"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_12_fee_billing_receivables_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose_and_test_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L5", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L11", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_student_invoice_creation_and_commercial_snapshot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L34", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_corporate_consolidated_invoicing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L89", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_invoice_arithmetic_and_boundary_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L127", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_numbering_series_and_invoice_issue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L181", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_invoice_search_filtering_sorting_and_paging", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L213", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_installment_plan_creation_and_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L243", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_installment_status_derivation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L304", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_manual_payment_posting", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L334", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_payment_allocation_and_atomicity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L432", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_payment_idempotency_and_optimistic_concurrency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L474", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_receipt_generation_and_controlled_rendering", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L505", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_receivable_maintenance_and_aging", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L539", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_refund_request_decision_and_execution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L594", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_feature_corporate_credit_rule_effective_dating", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L691", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_feature_corporate_credit_exposure_and_enrollment_guard", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L737", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_feature_payment_validation_for_completion_and_certificate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L776", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_feature_invoice_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L811", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_feature_soft_delete_and_financial_record_immutability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L858", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_21_feature_authorization_guards_action_permissions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L886", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_22_feature_branch_data_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L927", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_23_feature_consolidated_reporting_two_key_guard", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L994", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_24_feature_student_self_service_ownership_guards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1025", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_25_feature_corporate_account_manager_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1070", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_26_feature_finance_export_authorization_and_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1091", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_27_feature_reporting_kpi_accuracy_and_drill_through", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1137", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_feature_multi_currency_reporting_safety", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1174", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_feature_read_model_freshness_and_transactional_authority", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1187", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_feature_bilingual_ui_and_reporting", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1214", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_feature_audit_and_sensitive_action_traceability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1243", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_feature_notification_event_conditions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1276", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_33_feature_low_level_api_error_contract", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1306", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_34_end_to_end_scenario_regular_enrollment_to_settlement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1329", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_35_end_to_end_scenario_corporate_enrollment_credit_block", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1349", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_36_end_to_end_scenario_refund_separation_of_duties", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1377", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_37_cross_browser_and_accessibility_acceptance_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1396", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_38_test_coverage_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1425", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_39_mandatory_authorization_regression_suite", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1460", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_40_definition_of_done_for_acceptance_testing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1480", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_12_fee_billing_receivables_management",
+      "label": "Module 12 \u2013 Fee, Billing & Receivables Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose_and_test_scope",
+      "label": "1. Purpose and Test Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "label": "2. Test Data Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_student_invoice_creation_and_commercial_snapshot",
+      "label": "3. Feature: Student Invoice Creation and Commercial Snapshot",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_corporate_consolidated_invoicing",
+      "label": "4. Feature: Corporate Consolidated Invoicing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L89"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_invoice_arithmetic_and_boundary_validation",
+      "label": "5. Feature: Invoice Arithmetic and Boundary Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L127"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_numbering_series_and_invoice_issue",
+      "label": "6. Feature: Numbering Series and Invoice Issue",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L181"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_invoice_search_filtering_sorting_and_paging",
+      "label": "7. Feature: Invoice Search, Filtering, Sorting, and Paging",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L213"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_installment_plan_creation_and_validation",
+      "label": "8. Feature: Installment Plan Creation and Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L243"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_installment_status_derivation",
+      "label": "9. Feature: Installment Status Derivation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L304"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_manual_payment_posting",
+      "label": "10. Feature: Manual Payment Posting",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L334"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_payment_allocation_and_atomicity",
+      "label": "11. Feature: Payment Allocation and Atomicity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L432"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_payment_idempotency_and_optimistic_concurrency",
+      "label": "12. Feature: Payment Idempotency and Optimistic Concurrency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L474"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_receipt_generation_and_controlled_rendering",
+      "label": "13. Feature: Receipt Generation and Controlled Rendering",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L505"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_receivable_maintenance_and_aging",
+      "label": "14. Feature: Receivable Maintenance and Aging",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L539"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_refund_request_decision_and_execution",
+      "label": "15. Feature: Refund Request, Decision, and Execution",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L594"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_feature_corporate_credit_rule_effective_dating",
+      "label": "16. Feature: Corporate Credit Rule Effective Dating",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L691"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_feature_corporate_credit_exposure_and_enrollment_guard",
+      "label": "17. Feature: Corporate Credit Exposure and Enrollment Guard",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L737"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_feature_payment_validation_for_completion_and_certificate",
+      "label": "18. Feature: Payment Validation for Completion and Certificate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L776"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_feature_invoice_state_machine",
+      "label": "19. Feature: Invoice State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L811"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_feature_soft_delete_and_financial_record_immutability",
+      "label": "20. Feature: Soft Delete and Financial Record Immutability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L858"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_21_feature_authorization_guards_action_permissions",
+      "label": "21. Feature: Authorization Guards \u2013 Action Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L886"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_22_feature_branch_data_isolation",
+      "label": "22. Feature: Branch Data Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L927"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_23_feature_consolidated_reporting_two_key_guard",
+      "label": "23. Feature: Consolidated Reporting Two-Key Guard",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L994"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_24_feature_student_self_service_ownership_guards",
+      "label": "24. Feature: Student Self-Service Ownership Guards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1025"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_25_feature_corporate_account_manager_scope",
+      "label": "25. Feature: Corporate Account Manager Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1070"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_26_feature_finance_export_authorization_and_isolation",
+      "label": "26. Feature: Finance Export Authorization and Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1091"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_27_feature_reporting_kpi_accuracy_and_drill_through",
+      "label": "27. Feature: Reporting KPI Accuracy and Drill-Through",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1137"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_feature_multi_currency_reporting_safety",
+      "label": "28. Feature: Multi-Currency Reporting Safety",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1174"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_feature_read_model_freshness_and_transactional_authority",
+      "label": "29. Feature: Read Model Freshness and Transactional Authority",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1187"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_feature_bilingual_ui_and_reporting",
+      "label": "30. Feature: Bilingual UI and Reporting",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1214"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_feature_audit_and_sensitive_action_traceability",
+      "label": "31. Feature: Audit and Sensitive Action Traceability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1243"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_feature_notification_event_conditions",
+      "label": "32. Feature: Notification Event Conditions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1276"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_33_feature_low_level_api_error_contract",
+      "label": "33. Feature: Low-Level API Error Contract",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1306"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_34_end_to_end_scenario_regular_enrollment_to_settlement",
+      "label": "34. End-to-End Scenario: Regular Enrollment to Settlement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1329"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_35_end_to_end_scenario_corporate_enrollment_credit_block",
+      "label": "35. End-to-End Scenario: Corporate Enrollment Credit Block",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1349"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_36_end_to_end_scenario_refund_separation_of_duties",
+      "label": "36. End-to-End Scenario: Refund Separation of Duties",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1377"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_37_cross_browser_and_accessibility_acceptance_scenarios",
+      "label": "37. Cross-Browser and Accessibility Acceptance Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1396"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_38_test_coverage_matrix",
+      "label": "38. Test Coverage Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1425"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_39_mandatory_authorization_regression_suite",
+      "label": "39. Mandatory Authorization Regression Suite",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1460"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_40_definition_of_done_for_acceptance_testing",
+      "label": "40. Definition of Done for Acceptance Testing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1480"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_12_fee_billing_receivables_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose_and_test_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_student_invoice_creation_and_commercial_snapshot",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_corporate_consolidated_invoicing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_invoice_arithmetic_and_boundary_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_numbering_series_and_invoice_issue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_invoice_search_filtering_sorting_and_paging",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L213",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_installment_plan_creation_and_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L243",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_installment_status_derivation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L304",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_manual_payment_posting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L334",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_payment_allocation_and_atomicity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L432",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_payment_idempotency_and_optimistic_concurrency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L474",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_receipt_generation_and_controlled_rendering",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L505",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_receivable_maintenance_and_aging",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L539",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_refund_request_decision_and_execution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L594",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_feature_corporate_credit_rule_effective_dating",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L691",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_feature_corporate_credit_exposure_and_enrollment_guard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L737",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_feature_payment_validation_for_completion_and_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L776",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_feature_invoice_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L811",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_feature_soft_delete_and_financial_record_immutability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L858",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_21_feature_authorization_guards_action_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L886",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_22_feature_branch_data_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L927",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_23_feature_consolidated_reporting_two_key_guard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L994",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_24_feature_student_self_service_ownership_guards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1025",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_25_feature_corporate_account_manager_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1070",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_26_feature_finance_export_authorization_and_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1091",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_27_feature_reporting_kpi_accuracy_and_drill_through",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1137",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_28_feature_multi_currency_reporting_safety",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1174",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_29_feature_read_model_freshness_and_transactional_authority",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1187",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_30_feature_bilingual_ui_and_reporting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1214",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_31_feature_audit_and_sensitive_action_traceability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1243",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_32_feature_notification_event_conditions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1276",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_33_feature_low_level_api_error_contract",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1306",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_34_end_to_end_scenario_regular_enrollment_to_settlement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1329",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_35_end_to_end_scenario_corporate_enrollment_credit_block",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1349",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_36_end_to_end_scenario_refund_separation_of_duties",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1377",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_37_cross_browser_and_accessibility_acceptance_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1396",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_38_test_coverage_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1425",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_39_mandatory_authorization_regression_suite",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1460",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_12_fee_billing_receivables_management_part_9_bdd_acceptance_criteria_and_test_scenarios_40_definition_of_done_for_acceptance_testing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1480",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -49,25 +49,45 @@ export function BatchForm({
 
   // Form State
   const [batchCode, setBatchCode] = useState(initialData?.batchCode || '');
-  const [batchNameEnglish, setBatchNameEnglish] = useState(initialData?.batchNameEnglish || '');
-  const [batchNameArabic, setBatchNameArabic] = useState(initialData?.batchNameArabic || '');
+  const [batchNameEnglish, setBatchNameEnglish] = useState(
+    initialData?.batchNameEnglish || '',
+  );
+  const [batchNameArabic, setBatchNameArabic] = useState(
+    initialData?.batchNameArabic || '',
+  );
   const [courseId, setCourseId] = useState(initialData?.courseId || '');
   const [branchId, setBranchId] = useState(initialData?.branchId || '');
-  const [classroomId, setClassroomId] = useState(initialData?.classroomId || '');
+  const [classroomId, setClassroomId] = useState(
+    initialData?.classroomId || '',
+  );
   const [startDate, setStartDate] = useState(
-    initialData?.startDate ? new Date(initialData.startDate).toISOString().split('T')[0] : ''
+    initialData?.startDate
+      ? new Date(initialData.startDate).toISOString().split('T')[0]
+      : '',
   );
   const [endDate, setEndDate] = useState(
-    initialData?.endDate ? new Date(initialData.endDate).toISOString().split('T')[0] : ''
+    initialData?.endDate
+      ? new Date(initialData.endDate).toISOString().split('T')[0]
+      : '',
   );
-  const [capacity, setCapacity] = useState(initialData?.capacity?.toString() || '20');
-  const [waitingListEnabled, setWaitingListEnabled] = useState(initialData?.waitingListEnabled ?? true);
-  const [allowOverbooking, setAllowOverbooking] = useState(initialData?.allowOverbooking ?? false);
+  const [capacity, setCapacity] = useState(
+    initialData?.capacity?.toString() || '20',
+  );
+  const [waitingListEnabled, setWaitingListEnabled] = useState(
+    initialData?.waitingListEnabled ?? true,
+  );
+  const [allowOverbooking, setAllowOverbooking] = useState(
+    initialData?.allowOverbooking ?? false,
+  );
   const [isWalkIn, setIsWalkIn] = useState(initialData?.isWalkIn ?? false);
-  const [corporateAccountId, setCorporateAccountId] = useState(initialData?.corporateAccountId || '');
-  
+  const [corporateAccountId, setCorporateAccountId] = useState(
+    initialData?.corporateAccountId || '',
+  );
+
   // Trainer assignment (Step 3)
-  const [primaryTrainerId, setPrimaryTrainerId] = useState(initialTrainerId || '');
+  const [primaryTrainerId, setPrimaryTrainerId] = useState(
+    initialTrainerId || '',
+  );
   const [conflicts, setConflicts] = useState<any[]>([]);
   const [checkingConflicts, setCheckingConflicts] = useState(false);
 
@@ -89,7 +109,7 @@ export function BatchForm({
     setCheckingConflicts(true);
     try {
       const res = await fetch(
-        `/api/v1/batches/${initialData.id}/trainers/conflicts?trainerId=${trainerId}&assignedFrom=${startDate}&assignedTo=${endDate}`
+        `/api/v1/batches/${initialData.id}/trainers/conflicts?trainerId=${trainerId}&assignedFrom=${startDate}&assignedTo=${endDate}`,
       );
       const json = await res.json();
       if (json.success) {
@@ -169,10 +189,24 @@ export function BatchForm({
       });
 
       if (!res.success) {
-        setErrorMsg(res.error || (initialData ? 'Failed to update batch.' : 'Failed to create batch.'));
-        toast.error(res.error || (initialData ? 'Failed to update batch.' : 'Failed to create batch.'));
+        setErrorMsg(
+          res.error ||
+            (initialData
+              ? 'Failed to update batch.'
+              : 'Failed to create batch.'),
+        );
+        toast.error(
+          res.error ||
+            (initialData
+              ? 'Failed to update batch.'
+              : 'Failed to create batch.'),
+        );
       } else {
-        toast.success(initialData ? 'Batch updated successfully!' : 'Batch created successfully in Draft state!');
+        toast.success(
+          initialData
+            ? 'Batch updated successfully!'
+            : 'Batch created successfully in Draft state!',
+        );
         router.push(initialData ? `/batches/${initialData.id}` : '/batches');
         router.refresh();
       }
@@ -185,7 +219,10 @@ export function BatchForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-4 sm:space-y-5 lg:space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full space-y-4 sm:space-y-5 lg:space-y-6"
+    >
       {errorMsg && (
         <Alert variant="error" title="Form Validation Error">
           {errorMsg}
@@ -198,12 +235,16 @@ export function BatchForm({
           <div className="flex items-center gap-2">
             <span
               className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
-                step === 1 ? 'bg-indigo-600 text-white' : 'bg-green-100 text-green-700'
+                step === 1
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-green-100 text-green-700'
               }`}
             >
               {step > 1 ? '✓' : '1'}
             </span>
-            <span className={`text-sm font-semibold ${step === 1 ? 'text-slate-800' : 'text-slate-400'}`}>
+            <span
+              className={`text-sm font-semibold ${step === 1 ? 'text-slate-800' : 'text-slate-400'}`}
+            >
               Details & Dates
             </span>
           </div>
@@ -211,12 +252,18 @@ export function BatchForm({
           <div className="flex items-center gap-2">
             <span
               className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
-                step === 2 ? 'bg-indigo-600 text-white' : step === 3 ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'
+                step === 2
+                  ? 'bg-indigo-600 text-white'
+                  : step === 3
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-slate-100 text-slate-500'
               }`}
             >
               {step > 2 ? '✓' : '2'}
             </span>
-            <span className={`text-sm font-semibold ${step === 2 ? 'text-slate-800' : 'text-slate-400'}`}>
+            <span
+              className={`text-sm font-semibold ${step === 2 ? 'text-slate-800' : 'text-slate-400'}`}
+            >
               Capacity & Controls
             </span>
           </div>
@@ -226,19 +273,25 @@ export function BatchForm({
               <div className="flex items-center gap-2">
                 <span
                   className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
-                    step === 3 ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'
+                    step === 3
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-slate-100 text-slate-500'
                   }`}
                 >
                   3
                 </span>
-                <span className={`text-sm font-semibold ${step === 3 ? 'text-slate-800' : 'text-slate-400'}`}>
+                <span
+                  className={`text-sm font-semibold ${step === 3 ? 'text-slate-800' : 'text-slate-400'}`}
+                >
                   Faculty Assignment
                 </span>
               </div>
             </>
           )}
         </div>
-        <div className="text-xs font-medium text-slate-400">Step {step} of {initialData ? '2' : '3'}</div>
+        <div className="text-xs font-medium text-slate-400">
+          Step {step} of {initialData ? '2' : '3'}
+        </div>
       </div>
 
       {step === 1 && (
@@ -250,8 +303,12 @@ export function BatchForm({
                 <Layers className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Batch Parameters</h3>
-                <p className="text-xs text-slate-500">Provide code, bilingual titles, and course association</p>
+                <h3 className="font-semibold text-slate-800">
+                  Batch Parameters
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Provide code, bilingual titles, and course association
+                </p>
               </div>
             </div>
 
@@ -292,7 +349,10 @@ export function BatchForm({
                     placeholder="Select Branch"
                     value={branchId}
                     onChange={(e) => setBranchId(e.target.value)}
-                    options={branches.map((b) => ({ value: b.id, label: b.branchName }))}
+                    options={branches.map((b) => ({
+                      value: b.id,
+                      label: b.branchName,
+                    }))}
                   />
                 </FormControl>
               </FormField>
@@ -348,8 +408,12 @@ export function BatchForm({
                   <Calendar className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-800">Timeline & Scheduling</h3>
-                  <p className="text-xs text-slate-500">Define batch start date, end date, and normalizations</p>
+                  <h3 className="font-semibold text-slate-800">
+                    Timeline & Scheduling
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Define batch start date, end date, and normalizations
+                  </p>
                 </div>
               </div>
 
@@ -357,21 +421,33 @@ export function BatchForm({
                 <FormField>
                   <FormLabel required>Start Date</FormLabel>
                   <FormControl>
-                    <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                    <Input
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
                   </FormControl>
                 </FormField>
 
                 <FormField>
                   <FormLabel required>End Date</FormLabel>
                   <FormControl>
-                    <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                    <Input
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
                   </FormControl>
                 </FormField>
               </div>
             </div>
 
             <div className="flex justify-end pt-4 sm:pt-6">
-              <Button type="button" onClick={handleNext} disabled={!isStep1Valid}>
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={!isStep1Valid}
+              >
                 Next: Capacity & Controls
               </Button>
             </div>
@@ -388,8 +464,12 @@ export function BatchForm({
                 <Sliders className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Capacity & Student Controls</h3>
-                <p className="text-xs text-slate-500">Define maximum enrollments and B2B client overrides</p>
+                <h3 className="font-semibold text-slate-800">
+                  Capacity & Student Controls
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Define maximum enrollments and B2B client overrides
+                </p>
               </div>
             </div>
 
@@ -397,12 +477,18 @@ export function BatchForm({
               <FormField>
                 <FormLabel required>Capacity Limit</FormLabel>
                 <FormControl>
-                  <Input type="number" value={capacity} onChange={(e) => setCapacity(e.target.value)} />
+                  <Input
+                    type="number"
+                    value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)}
+                  />
                 </FormControl>
               </FormField>
 
               <FormField>
-                <FormLabel>Corporate Client Account ID (Optional UUID)</FormLabel>
+                <FormLabel>
+                  Corporate Client Account ID (Optional UUID)
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="e.g. 550e8400-e29b-41d4-a716-446655440000"
@@ -431,7 +517,8 @@ export function BatchForm({
                     Enable Waiting List Queue
                   </label>
                   <span className="text-xs text-slate-500">
-                    Automatically redirect enrollments to waiting list queue when capacity limit is reached.
+                    Automatically redirect enrollments to waiting list queue
+                    when capacity limit is reached.
                   </span>
                 </div>
               </div>
@@ -452,7 +539,8 @@ export function BatchForm({
                     Allow Overbooking limits
                   </label>
                   <span className="text-xs text-slate-500">
-                    Bypass standard batch capacity limits for corporate or prioritized bookings.
+                    Bypass standard batch capacity limits for corporate or
+                    prioritized bookings.
                   </span>
                 </div>
               </div>
@@ -466,11 +554,15 @@ export function BatchForm({
                   className="h-4.5 w-4.5 mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                 />
                 <div>
-                  <label htmlFor="isWalkIn" className="text-sm font-semibold text-slate-800 block cursor-pointer">
+                  <label
+                    htmlFor="isWalkIn"
+                    className="text-sm font-semibold text-slate-800 block cursor-pointer"
+                  >
                     Walk-in Program Configuration
                   </label>
                   <span className="text-xs text-slate-500">
-                    Designate this batch for rapid same-day completions and fast-track learning journeys.
+                    Designate this batch for rapid same-day completions and
+                    fast-track learning journeys.
                   </span>
                 </div>
               </div>
@@ -485,19 +577,27 @@ export function BatchForm({
                   <UserCheck className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-800">Review Parameters</h3>
-                  <p className="text-xs text-slate-500">Check configured options before proceeding</p>
+                  <h3 className="font-semibold text-slate-800">
+                    Review Parameters
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Check configured options before proceeding
+                  </p>
                 </div>
               </div>
 
               <div className="space-y-3 text-sm text-slate-600 bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">Batch Code:</span>
-                  <span className="font-mono text-slate-800 uppercase">{batchCode || 'Not set'}</span>
+                  <span className="font-mono text-slate-800 uppercase">
+                    {batchCode || 'Not set'}
+                  </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">English Name:</span>
-                  <span className="text-slate-800">{batchNameEnglish || 'Not set'}</span>
+                  <span className="text-slate-800">
+                    {batchNameEnglish || 'Not set'}
+                  </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">Dates Scope:</span>
@@ -507,22 +607,33 @@ export function BatchForm({
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Capacity Limit:</span>
-                  <span className="text-slate-800 font-bold">{capacity} seats</span>
+                  <span className="text-slate-800 font-bold">
+                    {capacity} seats
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:justify-between">
-              <Button type="button" variant="outline" onClick={handleBack} className="w-full sm:w-auto">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="w-full sm:w-auto"
+              >
                 Back
               </Button>
-              <Button 
-                type={initialData ? "submit" : "button"} 
+              <Button
+                type={initialData ? 'submit' : 'button'}
                 disabled={isSubmitting}
                 onClick={initialData ? undefined : handleNext}
                 className="w-full sm:w-auto"
               >
-                {initialData ? (isSubmitting ? 'Saving...' : 'Save Changes') : 'Next: Faculty Assignment'}
+                {initialData
+                  ? isSubmitting
+                    ? 'Saving...'
+                    : 'Save Changes'
+                  : 'Next: Faculty Assignment'}
               </Button>
             </div>
           </div>
@@ -538,8 +649,12 @@ export function BatchForm({
                 <Users className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Primary Trainer Allocation</h3>
-                <p className="text-xs text-slate-500">Allocate a qualified primary trainer for the batch duration.</p>
+                <h3 className="font-semibold text-slate-800">
+                  Primary Trainer Allocation
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Allocate a qualified primary trainer for the batch duration.
+                </p>
               </div>
             </div>
 
@@ -559,8 +674,13 @@ export function BatchForm({
             </FormField>
 
             {!primaryTrainerId && (
-              <Alert variant="warning" title="Primary Trainer Required for Open Status">
-                An active Primary Trainer must be assigned before this batch can be transitioned to OpenForEnrollment status. You can skip this now and assign it later.
+              <Alert
+                variant="warning"
+                title="Primary Trainer Required for Open Status"
+              >
+                An active Primary Trainer must be assigned before this batch can
+                be transitioned to OpenForEnrollment status. You can skip this
+                now and assign it later.
               </Alert>
             )}
 
@@ -573,24 +693,40 @@ export function BatchForm({
 
             {conflicts.length > 0 && (
               <div className="space-y-4">
-                <Alert variant="error" title="Trainer Schedule Conflicts Detected">
-                  The selected trainer has overlapping sessions in the following batches:
+                <Alert
+                  variant="error"
+                  title="Trainer Schedule Conflicts Detected"
+                >
+                  The selected trainer has overlapping sessions in the following
+                  batches:
                 </Alert>
                 <div className="border border-red-100 bg-red-50/30 rounded-xl overflow-hidden">
                   <table className="min-w-full divide-y divide-red-100 text-xs">
                     <thead className="bg-red-50 text-red-700">
                       <tr>
-                        <th className="px-4 py-2 text-left font-semibold">Batch Code</th>
-                        <th className="px-4 py-2 text-left font-semibold">Date</th>
-                        <th className="px-4 py-2 text-left font-semibold">Start Time</th>
-                        <th className="px-4 py-2 text-left font-semibold">End Time</th>
+                        <th className="px-4 py-2 text-left font-semibold">
+                          Batch Code
+                        </th>
+                        <th className="px-4 py-2 text-left font-semibold">
+                          Date
+                        </th>
+                        <th className="px-4 py-2 text-left font-semibold">
+                          Start Time
+                        </th>
+                        <th className="px-4 py-2 text-left font-semibold">
+                          End Time
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-red-100 text-slate-700">
                       {conflicts.map((c, idx) => (
                         <tr key={idx}>
-                          <td className="px-4 py-2 font-mono font-bold">{c.batchCode}</td>
-                          <td className="px-4 py-2">{new Date(c.sessionDate).toLocaleDateString()}</td>
+                          <td className="px-4 py-2 font-mono font-bold">
+                            {c.batchCode}
+                          </td>
+                          <td className="px-4 py-2">
+                            {new Date(c.sessionDate).toLocaleDateString()}
+                          </td>
                           <td className="px-4 py-2">{c.startTime}</td>
                           <td className="px-4 py-2">{c.endTime}</td>
                         </tr>
@@ -610,15 +746,21 @@ export function BatchForm({
                   <UserCheck className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-800">Final Confirmation</h3>
-                  <p className="text-xs text-slate-500 font-medium">Review final settings before submitting</p>
+                  <h3 className="font-semibold text-slate-800">
+                    Final Confirmation
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Review final settings before submitting
+                  </p>
                 </div>
               </div>
 
               <div className="space-y-3 text-sm text-slate-600 bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">Batch Code:</span>
-                  <span className="font-mono text-slate-800 uppercase">{batchCode || 'Not set'}</span>
+                  <span className="font-mono text-slate-800 uppercase">
+                    {batchCode || 'Not set'}
+                  </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">Dates Scope:</span>
@@ -630,7 +772,9 @@ export function BatchForm({
                   <span className="font-medium">Primary Trainer:</span>
                   <span className="text-slate-800 font-medium text-right truncate max-w-[150px]">
                     {primaryTrainerId
-                      ? (trainersList || []).find((t) => t.id === primaryTrainerId)?.displayName || 'Selected'
+                      ? (trainersList || []).find(
+                          (t) => t.id === primaryTrainerId,
+                        )?.displayName || 'Selected'
                       : 'None assigned'}
                   </span>
                 </div>
@@ -643,17 +787,30 @@ export function BatchForm({
             </div>
 
             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:justify-between">
-              <Button type="button" variant="outline" onClick={handleBack} className="w-full sm:w-auto">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="w-full sm:w-auto"
+              >
                 Back
               </Button>
-              <Button type="submit" disabled={isSubmitting || conflicts.length > 0 || checkingConflicts} className="w-full sm:w-auto">
+              <Button
+                type="submit"
+                disabled={
+                  isSubmitting || conflicts.length > 0 || checkingConflicts
+                }
+                className="w-full sm:w-auto"
+              >
                 {isSubmitting ? (
                   <div className="flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     <span>Submitting...</span>
                   </div>
+                ) : initialData ? (
+                  'Save Changes'
                 ) : (
-                  initialData ? 'Save Changes' : 'Create Batch'
+                  'Create Batch'
                 )}
               </Button>
             </div>

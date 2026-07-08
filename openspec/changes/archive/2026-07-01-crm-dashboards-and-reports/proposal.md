@@ -1,6 +1,6 @@
 ## Why
 
-The Institute Management System (IMS) requires a robust analytics and reporting capability to track the performance of the Lead & CRM Workflows module. Specifically, administrators and counselors need visibility into lead conversion rates, pipeline stages, status distributions, and team performance to drive business growth. 
+The Institute Management System (IMS) requires a robust analytics and reporting capability to track the performance of the Lead & CRM Workflows module. Specifically, administrators and counselors need visibility into lead conversion rates, pipeline stages, status distributions, and team performance to drive business growth.
 
 According to our DDD architecture guidelines, while this data relates to the Lead Management context, the responsibility for aggregating data and presenting dashboards falls under the "Reporting & Executive Dashboards" bounded context. We need to establish this boundary early to prevent cross-context coupling in the `crm-leads` application services and to provide a scalable foundation for all future reporting requirements across the institute.
 
@@ -15,9 +15,11 @@ According to our DDD architecture guidelines, while this data relates to the Lea
 ## Capabilities
 
 ### New Capabilities
+
 - `crm-dashboards`: Provides real-time analytical views and aggregated key performance indicators for the Lead and Enquiry CRM workflows, dynamically scoped to the user's branch and explicit data access permissions.
 
 ### Modified Capabilities
+
 - (None - This represents a net-new reporting capability for the CRM module.)
 
 ## Impact

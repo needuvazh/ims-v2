@@ -12,9 +12,18 @@ import {
   StatCard,
   LinkButton,
 } from '@ims/shared-ui';
-import { Calendar, PlayCircle, ClipboardList, GraduationCap, CheckSquare, Layers } from 'lucide-react';
+import {
+  Calendar,
+  PlayCircle,
+  ClipboardList,
+  GraduationCap,
+  CheckSquare,
+  Layers,
+} from 'lucide-react';
 
-export const metadata = { title: 'Exam & Completion Dashboard - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Exam & Completion Dashboard - Admin Portal | ASTI IMS',
+};
 
 export default async function ExamCompletionDashboard() {
   await assertPermission('exam.view');
@@ -27,12 +36,24 @@ export default async function ExamCompletionDashboard() {
     pendingApprovals,
   ] = await Promise.all([
     prisma.exam.count({ where: { status: 'Scheduled', isDeleted: false } }),
-    prisma.exam.count({ where: { status: 'OpenForResultEntry', isDeleted: false } }),
-    prisma.result.count({ where: { resultStatus: 'Pending', isDeleted: false } }),
-    prisma.courseCompletion.count({ where: { completionStatus: 'Pending', isDeleted: false } }),
+    prisma.exam.count({
+      where: { status: 'OpenForResultEntry', isDeleted: false },
+    }),
+    prisma.result.count({
+      where: { resultStatus: 'Pending', isDeleted: false },
+    }),
+    prisma.courseCompletion.count({
+      where: { completionStatus: 'Pending', isDeleted: false },
+    }),
     prisma.courseCompletion.count({
       where: {
-        completionStatus: { in: ['AwaitingTrainerRecommendation', 'AwaitingCoordinatorReview', 'AwaitingFinalApproval'] },
+        completionStatus: {
+          in: [
+            'AwaitingTrainerRecommendation',
+            'AwaitingCoordinatorReview',
+            'AwaitingFinalApproval',
+          ],
+        },
         isDeleted: false,
       },
     }),
@@ -42,7 +63,10 @@ export default async function ExamCompletionDashboard() {
     where: { isDeleted: false },
     orderBy: { createdAt: 'desc' },
     take: 5,
-    include: { course: { select: { nameEnglish: true } }, batch: { select: { batchNameEnglish: true } } },
+    include: {
+      course: { select: { nameEnglish: true } },
+      batch: { select: { batchNameEnglish: true } },
+    },
   });
 
   return (
@@ -110,16 +134,25 @@ export default async function ExamCompletionDashboard() {
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>Recent Exams</CardTitle>
-            <CardDescription>Latest exam schedules created for branch cohorts.</CardDescription>
+            <CardDescription>
+              Latest exam schedules created for branch cohorts.
+            </CardDescription>
           </CardHeader>
           <CardContent className="divide-y divide-slate-100 p-0">
             {recentExams.length === 0 ? (
-              <p className="p-6 text-sm text-slate-500 text-center">No exams scheduled yet.</p>
+              <p className="p-6 text-sm text-slate-500 text-center">
+                No exams scheduled yet.
+              </p>
             ) : (
               recentExams.map((exam) => (
-                <div key={exam.id} className="flex items-center justify-between px-6 py-4 hover:bg-slate-50/50">
+                <div
+                  key={exam.id}
+                  className="flex items-center justify-between px-6 py-4 hover:bg-slate-50/50"
+                >
                   <div className="min-w-0 pr-4">
-                    <p className="text-sm font-semibold text-[color:var(--ims-ink)] truncate">{exam.examName}</p>
+                    <p className="text-sm font-semibold text-[color:var(--ims-ink)] truncate">
+                      {exam.examName}
+                    </p>
                     <p className="text-xs text-[color:var(--ims-muted)] mt-0.5 truncate">
                       {exam.course.nameEnglish} • {exam.batch.batchNameEnglish}
                     </p>
@@ -128,7 +161,11 @@ export default async function ExamCompletionDashboard() {
                     <span className="text-xs font-medium text-[color:var(--ims-muted)]">
                       {new Date(exam.examDate).toLocaleDateString()}
                     </span>
-                    <LinkButton href={`/exam-completion/exams/${exam.id}`} variant="ghost" size="sm">
+                    <LinkButton
+                      href={`/exam-completion/exams/${exam.id}`}
+                      variant="ghost"
+                      size="sm"
+                    >
                       View Detail
                     </LinkButton>
                   </div>
@@ -141,22 +178,40 @@ export default async function ExamCompletionDashboard() {
         <Card>
           <CardHeader>
             <CardTitle>Quick Navigation</CardTitle>
-            <CardDescription>Drill directly into modular lists or queue dashboards.</CardDescription>
+            <CardDescription>
+              Drill directly into modular lists or queue dashboards.
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-2.5">
-            <LinkButton href="/exam-completion/exams" variant="outline" className="w-full justify-start gap-3">
+            <LinkButton
+              href="/exam-completion/exams"
+              variant="outline"
+              className="w-full justify-start gap-3"
+            >
               <Calendar className="h-4 w-4 text-sky-600" />
               Manage Exams List
             </LinkButton>
-            <LinkButton href="/exam-completion/completions" variant="outline" className="w-full justify-start gap-3">
+            <LinkButton
+              href="/exam-completion/completions"
+              variant="outline"
+              className="w-full justify-start gap-3"
+            >
               <GraduationCap className="h-4 w-4 text-violet-600" />
               Course Completions
             </LinkButton>
-            <LinkButton href="/exam-completion/approval-queue" variant="outline" className="w-full justify-start gap-3">
+            <LinkButton
+              href="/exam-completion/approval-queue"
+              variant="outline"
+              className="w-full justify-start gap-3"
+            >
               <CheckSquare className="h-4 w-4 text-emerald-600" />
               Approval Queue Inbox
             </LinkButton>
-            <LinkButton href="/exam-completion/evaluate" variant="outline" className="w-full justify-start gap-3">
+            <LinkButton
+              href="/exam-completion/evaluate"
+              variant="outline"
+              className="w-full justify-start gap-3"
+            >
               <PlayCircle className="h-4 w-4 text-amber-600" />
               Run Evaluation Engine
             </LinkButton>

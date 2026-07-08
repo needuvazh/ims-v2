@@ -67,31 +67,31 @@ Accordingly:
 
 ## 3.1 Admin Portal Screen Inventory
 
-| ID | Screen | Primary Users | Main Use Case |
-|---|---|---|---|
-| SCR-EXC-ADM-001 | Module Dashboard / Work Queue | Academic Coordinator, Academic Administrator, Branch Manager | UC-EXC-009 |
-| SCR-EXC-ADM-002 | Exam List | Academic Coordinator, Academic Administrator | UC-EXC-001, UC-EXC-002 |
-| SCR-EXC-ADM-003 | Create Exam | Academic Coordinator | UC-EXC-001 |
-| SCR-EXC-ADM-004 | Exam Detail | Academic Coordinator, Academic Administrator | UC-EXC-002 |
-| SCR-EXC-ADM-005 | Edit / Reschedule Exam | Academic Coordinator, Academic Administrator | UC-EXC-002 |
-| SCR-EXC-ADM-006 | Result Entry Roster | Trainer via Admin Portal, Academic Coordinator | UC-EXC-003 |
-| SCR-EXC-ADM-007 | Bulk Result Entry | Trainer via Admin Portal, Academic Coordinator | UC-EXC-003 |
-| SCR-EXC-ADM-008 | Result Review and Finalization | Academic Coordinator, Academic Administrator | UC-EXC-004 |
-| SCR-EXC-ADM-009 | Finalized Result Detail | Academic Coordinator, Academic Administrator, Auditor | UC-EXC-004, UC-EXC-005 |
-| SCR-EXC-ADM-010 | Correct Finalized Result Dialog | Restricted Academic Authority | UC-EXC-005 |
-| SCR-EXC-ADM-011 | Completion Evaluation Queue | Academic Coordinator, Academic Administrator | UC-EXC-006, UC-EXC-009 |
-| SCR-EXC-ADM-012 | Completion Evaluation Detail | Academic Coordinator, Academic Administrator | UC-EXC-006 |
-| SCR-EXC-ADM-013 | Trainer Recommendation Queue | Trainer via Admin Portal | UC-EXC-007, UC-EXC-009 |
-| SCR-EXC-ADM-014 | Trainer Recommendation Detail | Assigned Trainer | UC-EXC-007 |
-| SCR-EXC-ADM-015 | Coordinator Review Queue | Academic Coordinator | UC-EXC-007, UC-EXC-009 |
-| SCR-EXC-ADM-016 | Coordinator Review Detail | Academic Coordinator | UC-EXC-007 |
-| SCR-EXC-ADM-017 | Final Approval Queue | Branch Manager | UC-EXC-007, UC-EXC-009 |
-| SCR-EXC-ADM-018 | Final Approval Detail | Branch Manager | UC-EXC-007 |
-| SCR-EXC-ADM-019 | Re-evaluation / Exception Queue | Academic Administrator | UC-EXC-008, UC-EXC-009 |
-| SCR-EXC-ADM-020 | Re-evaluation Detail | Academic Administrator | UC-EXC-008 |
-| SCR-EXC-ADM-021 | Academic Outcome Search | Academic Users, Auditor | Read use case |
-| SCR-EXC-ADM-022 | Export Center | Academic Administrator, Auditor | UC-EXC-010 |
-| SCR-EXC-ADM-023 | Audit Timeline Drawer | Academic Administrator, Auditor | UC-EXC-005, UC-EXC-010 |
+| ID              | Screen                          | Primary Users                                                | Main Use Case          |
+| --------------- | ------------------------------- | ------------------------------------------------------------ | ---------------------- |
+| SCR-EXC-ADM-001 | Module Dashboard / Work Queue   | Academic Coordinator, Academic Administrator, Branch Manager | UC-EXC-009             |
+| SCR-EXC-ADM-002 | Exam List                       | Academic Coordinator, Academic Administrator                 | UC-EXC-001, UC-EXC-002 |
+| SCR-EXC-ADM-003 | Create Exam                     | Academic Coordinator                                         | UC-EXC-001             |
+| SCR-EXC-ADM-004 | Exam Detail                     | Academic Coordinator, Academic Administrator                 | UC-EXC-002             |
+| SCR-EXC-ADM-005 | Edit / Reschedule Exam          | Academic Coordinator, Academic Administrator                 | UC-EXC-002             |
+| SCR-EXC-ADM-006 | Result Entry Roster             | Trainer via Admin Portal, Academic Coordinator               | UC-EXC-003             |
+| SCR-EXC-ADM-007 | Bulk Result Entry               | Trainer via Admin Portal, Academic Coordinator               | UC-EXC-003             |
+| SCR-EXC-ADM-008 | Result Review and Finalization  | Academic Coordinator, Academic Administrator                 | UC-EXC-004             |
+| SCR-EXC-ADM-009 | Finalized Result Detail         | Academic Coordinator, Academic Administrator, Auditor        | UC-EXC-004, UC-EXC-005 |
+| SCR-EXC-ADM-010 | Correct Finalized Result Dialog | Restricted Academic Authority                                | UC-EXC-005             |
+| SCR-EXC-ADM-011 | Completion Evaluation Queue     | Academic Coordinator, Academic Administrator                 | UC-EXC-006, UC-EXC-009 |
+| SCR-EXC-ADM-012 | Completion Evaluation Detail    | Academic Coordinator, Academic Administrator                 | UC-EXC-006             |
+| SCR-EXC-ADM-013 | Trainer Recommendation Queue    | Trainer via Admin Portal                                     | UC-EXC-007, UC-EXC-009 |
+| SCR-EXC-ADM-014 | Trainer Recommendation Detail   | Assigned Trainer                                             | UC-EXC-007             |
+| SCR-EXC-ADM-015 | Coordinator Review Queue        | Academic Coordinator                                         | UC-EXC-007, UC-EXC-009 |
+| SCR-EXC-ADM-016 | Coordinator Review Detail       | Academic Coordinator                                         | UC-EXC-007             |
+| SCR-EXC-ADM-017 | Final Approval Queue            | Branch Manager                                               | UC-EXC-007, UC-EXC-009 |
+| SCR-EXC-ADM-018 | Final Approval Detail           | Branch Manager                                               | UC-EXC-007             |
+| SCR-EXC-ADM-019 | Re-evaluation / Exception Queue | Academic Administrator                                       | UC-EXC-008, UC-EXC-009 |
+| SCR-EXC-ADM-020 | Re-evaluation Detail            | Academic Administrator                                       | UC-EXC-008             |
+| SCR-EXC-ADM-021 | Academic Outcome Search         | Academic Users, Auditor                                      | Read use case          |
+| SCR-EXC-ADM-022 | Export Center                   | Academic Administrator, Auditor                              | UC-EXC-010             |
+| SCR-EXC-ADM-023 | Audit Timeline Drawer           | Academic Administrator, Auditor                              | UC-EXC-005, UC-EXC-010 |
 
 ---
 
@@ -99,13 +99,13 @@ Accordingly:
 
 These screens reuse the same application services and permissions as the Admin Portal.
 
-| ID | Screen | Applicability | Main Use Case |
-|---|---|---|---|
-| SCR-EXC-TRN-001 | My Exam Tasks | Applicable when Trainer Portal is enabled | UC-EXC-009 |
-| SCR-EXC-TRN-002 | Exam Result Entry | Applicable when Trainer Portal is enabled | UC-EXC-003 |
-| SCR-EXC-TRN-003 | My Completion Recommendations | Applicable when Trainer Portal is enabled | UC-EXC-007 |
-| SCR-EXC-TRN-004 | Completion Recommendation Detail | Applicable when Trainer Portal is enabled | UC-EXC-007 |
-| SCR-EXC-TRN-005 | My Submitted Academic Actions | Optional read-only history | Audit/read |
+| ID              | Screen                           | Applicability                             | Main Use Case |
+| --------------- | -------------------------------- | ----------------------------------------- | ------------- |
+| SCR-EXC-TRN-001 | My Exam Tasks                    | Applicable when Trainer Portal is enabled | UC-EXC-009    |
+| SCR-EXC-TRN-002 | Exam Result Entry                | Applicable when Trainer Portal is enabled | UC-EXC-003    |
+| SCR-EXC-TRN-003 | My Completion Recommendations    | Applicable when Trainer Portal is enabled | UC-EXC-007    |
+| SCR-EXC-TRN-004 | Completion Recommendation Detail | Applicable when Trainer Portal is enabled | UC-EXC-007    |
+| SCR-EXC-TRN-005 | My Submitted Academic Actions    | Optional read-only history                | Audit/read    |
 
 ---
 
@@ -113,12 +113,12 @@ These screens reuse the same application services and permissions as the Admin P
 
 Student Portal screens are read-only and future-facing.
 
-| ID | Screen | Applicability | Main Use Case |
-|---|---|---|---|
-| SCR-EXC-STU-001 | My Exams | Applicable when Student Portal is enabled | Read-only exam schedule |
-| SCR-EXC-STU-002 | My Results | Applicable when Student Portal is enabled | Read-only result outcome |
-| SCR-EXC-STU-003 | My Completion Status | Applicable when Student Portal is enabled | Read-only completion progress |
-| SCR-EXC-STU-004 | Completion Evidence Detail | Optional read-only evidence summary | Read-only completion evidence |
+| ID              | Screen                     | Applicability                             | Main Use Case                 |
+| --------------- | -------------------------- | ----------------------------------------- | ----------------------------- |
+| SCR-EXC-STU-001 | My Exams                   | Applicable when Student Portal is enabled | Read-only exam schedule       |
+| SCR-EXC-STU-002 | My Results                 | Applicable when Student Portal is enabled | Read-only result outcome      |
+| SCR-EXC-STU-003 | My Completion Status       | Applicable when Student Portal is enabled | Read-only completion progress |
+| SCR-EXC-STU-004 | Completion Evidence Detail | Optional read-only evidence summary       | Read-only completion evidence |
 
 Student screens must never:
 
@@ -2525,13 +2525,13 @@ Localization affects presentation only.
 English:
 
 ```html
-<html dir="ltr" lang="en">
+<html dir="ltr" lang="en"></html>
 ```
 
 Arabic:
 
 ```html
-<html dir="rtl" lang="ar">
+<html dir="rtl" lang="ar"></html>
 ```
 
 Direction must be set at application/page shell level.
@@ -2790,58 +2790,58 @@ Route structure is an application concern and must not be interpreted as aggrega
 
 # 14. Screen-to-Use-Case Mapping
 
-| Screen | Use Case / Application Service |
-|---|---|
-| SCR-EXC-ADM-001 | UC-EXC-009 |
-| SCR-EXC-ADM-002 | SearchExamsQuery |
-| SCR-EXC-ADM-003 | UC-EXC-001 |
-| SCR-EXC-ADM-004 | UC-EXC-002 |
-| SCR-EXC-ADM-005 | UC-EXC-002 |
-| SCR-EXC-ADM-006 | UC-EXC-003 |
-| SCR-EXC-ADM-007 | UC-EXC-003 |
-| SCR-EXC-ADM-008 | UC-EXC-004 |
-| SCR-EXC-ADM-009 | UC-EXC-004 / UC-EXC-005 |
-| SCR-EXC-ADM-010 | UC-EXC-005 |
-| SCR-EXC-ADM-011 | UC-EXC-006 / UC-EXC-009 |
-| SCR-EXC-ADM-012 | UC-EXC-006 |
-| SCR-EXC-ADM-013 | UC-EXC-007 / UC-EXC-009 |
-| SCR-EXC-ADM-014 | UC-EXC-007 |
-| SCR-EXC-ADM-015 | UC-EXC-007 / UC-EXC-009 |
-| SCR-EXC-ADM-016 | UC-EXC-007 |
-| SCR-EXC-ADM-017 | UC-EXC-007 / UC-EXC-009 |
-| SCR-EXC-ADM-018 | UC-EXC-007 |
-| SCR-EXC-ADM-019 | UC-EXC-008 / UC-EXC-009 |
-| SCR-EXC-ADM-020 | UC-EXC-008 |
-| SCR-EXC-ADM-021 | SearchAcademicOutcomesQuery |
-| SCR-EXC-ADM-022 | UC-EXC-010 |
-| SCR-EXC-ADM-023 | Audit read use case |
-| SCR-EXC-TRN-001 | UC-EXC-009 |
-| SCR-EXC-TRN-002 | UC-EXC-003 |
-| SCR-EXC-TRN-003 | UC-EXC-007 |
-| SCR-EXC-TRN-004 | UC-EXC-007 |
-| SCR-EXC-TRN-005 | Trainer action-history read query |
-| SCR-EXC-STU-001 | Student-owned exam visibility query |
-| SCR-EXC-STU-002 | Student-published result query |
-| SCR-EXC-STU-003 | Student completion-summary query |
+| Screen          | Use Case / Application Service            |
+| --------------- | ----------------------------------------- |
+| SCR-EXC-ADM-001 | UC-EXC-009                                |
+| SCR-EXC-ADM-002 | SearchExamsQuery                          |
+| SCR-EXC-ADM-003 | UC-EXC-001                                |
+| SCR-EXC-ADM-004 | UC-EXC-002                                |
+| SCR-EXC-ADM-005 | UC-EXC-002                                |
+| SCR-EXC-ADM-006 | UC-EXC-003                                |
+| SCR-EXC-ADM-007 | UC-EXC-003                                |
+| SCR-EXC-ADM-008 | UC-EXC-004                                |
+| SCR-EXC-ADM-009 | UC-EXC-004 / UC-EXC-005                   |
+| SCR-EXC-ADM-010 | UC-EXC-005                                |
+| SCR-EXC-ADM-011 | UC-EXC-006 / UC-EXC-009                   |
+| SCR-EXC-ADM-012 | UC-EXC-006                                |
+| SCR-EXC-ADM-013 | UC-EXC-007 / UC-EXC-009                   |
+| SCR-EXC-ADM-014 | UC-EXC-007                                |
+| SCR-EXC-ADM-015 | UC-EXC-007 / UC-EXC-009                   |
+| SCR-EXC-ADM-016 | UC-EXC-007                                |
+| SCR-EXC-ADM-017 | UC-EXC-007 / UC-EXC-009                   |
+| SCR-EXC-ADM-018 | UC-EXC-007                                |
+| SCR-EXC-ADM-019 | UC-EXC-008 / UC-EXC-009                   |
+| SCR-EXC-ADM-020 | UC-EXC-008                                |
+| SCR-EXC-ADM-021 | SearchAcademicOutcomesQuery               |
+| SCR-EXC-ADM-022 | UC-EXC-010                                |
+| SCR-EXC-ADM-023 | Audit read use case                       |
+| SCR-EXC-TRN-001 | UC-EXC-009                                |
+| SCR-EXC-TRN-002 | UC-EXC-003                                |
+| SCR-EXC-TRN-003 | UC-EXC-007                                |
+| SCR-EXC-TRN-004 | UC-EXC-007                                |
+| SCR-EXC-TRN-005 | Trainer action-history read query         |
+| SCR-EXC-STU-001 | Student-owned exam visibility query       |
+| SCR-EXC-STU-002 | Student-published result query            |
+| SCR-EXC-STU-003 | Student completion-summary query          |
 | SCR-EXC-STU-004 | Student completion-evidence summary query |
 
 ---
 
 # 15. DDD Fit Check Matrix
 
-| Screen / Group | Owning Context | Consumed Contexts | UI Boundary Rule |
-|---|---|---|---|
-| Exam screens | Exam & Completion | Course Catalog, Training Delivery, IAM, Organization | UI sends exam commands only |
-| Result entry | Exam & Completion | Enrollment, Training Delivery, Person/Party, IAM | Roster comes from server; UI does not create learner-course relationships |
-| Completion evaluation | Exam & Completion | Course Catalog, Attendance, Finance, Enrollment | UI displays evidence; server evaluates |
-| Trainer recommendation | Exam & Completion | Trainer Management, Training Delivery, IAM | Server validates trainer assignment |
-| Coordinator review | Exam & Completion | IAM, Audit | Ordered workflow enforced server-side |
-| Final approval | Exam & Completion | IAM, Enrollment, Certificate downstream boundary | UI does not create Certificate |
-| Re-evaluation | Exam & Completion | Attendance, Finance, Enrollment, Certificate downstream notification | UI cannot mutate source evidence |
-| Export | Exam & Completion read model | IAM, Audit | Export remains branch-scoped |
-| Student result view | Exam & Completion query | Enrollment identity scope | Read-only own data |
-| Student completion view | Exam & Completion query | Attendance/Finance summarized through server | No client evaluation |
-| Audit timeline | Audit & Compliance / module audit query | Module entities | Read-only immutable history |
+| Screen / Group          | Owning Context                          | Consumed Contexts                                                    | UI Boundary Rule                                                          |
+| ----------------------- | --------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Exam screens            | Exam & Completion                       | Course Catalog, Training Delivery, IAM, Organization                 | UI sends exam commands only                                               |
+| Result entry            | Exam & Completion                       | Enrollment, Training Delivery, Person/Party, IAM                     | Roster comes from server; UI does not create learner-course relationships |
+| Completion evaluation   | Exam & Completion                       | Course Catalog, Attendance, Finance, Enrollment                      | UI displays evidence; server evaluates                                    |
+| Trainer recommendation  | Exam & Completion                       | Trainer Management, Training Delivery, IAM                           | Server validates trainer assignment                                       |
+| Coordinator review      | Exam & Completion                       | IAM, Audit                                                           | Ordered workflow enforced server-side                                     |
+| Final approval          | Exam & Completion                       | IAM, Enrollment, Certificate downstream boundary                     | UI does not create Certificate                                            |
+| Re-evaluation           | Exam & Completion                       | Attendance, Finance, Enrollment, Certificate downstream notification | UI cannot mutate source evidence                                          |
+| Export                  | Exam & Completion read model            | IAM, Audit                                                           | Export remains branch-scoped                                              |
+| Student result view     | Exam & Completion query                 | Enrollment identity scope                                            | Read-only own data                                                        |
+| Student completion view | Exam & Completion query                 | Attendance/Finance summarized through server                         | No client evaluation                                                      |
+| Audit timeline          | Audit & Compliance / module audit query | Module entities                                                      | Read-only immutable history                                               |
 
 ---
 
@@ -2876,7 +2876,7 @@ UI renders outcome.
 Prohibited:
 
 ```ts
-if (user.role === "Branch Manager") {
+if (user.role === 'Branch Manager') {
   showApproveButton();
 }
 ```

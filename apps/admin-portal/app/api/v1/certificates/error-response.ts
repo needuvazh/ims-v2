@@ -25,16 +25,18 @@ export function certificateErrorResponse(error: Error) {
   const errCode = (error as any).code || '';
 
   let status = 500;
-  if (errCode === ErrorCodes.CERTIFICATE_NOT_FOUND || errCode === ErrorCodes.ENROLLMENT_NOT_FOUND || msg.includes('not found')) {
+  if (
+    errCode === ErrorCodes.CERTIFICATE_NOT_FOUND ||
+    errCode === ErrorCodes.ENROLLMENT_NOT_FOUND ||
+    msg.includes('not found')
+  ) {
     status = 404;
   } else if (
     errCode === ErrorCodes.PERMISSION_DENIED ||
     errCode === ErrorCodes.BRANCH_SCOPE_DENIED
   ) {
     status = 403;
-  } else if (
-    errCode === ErrorCodes.UNAUTHENTICATED
-  ) {
+  } else if (errCode === ErrorCodes.UNAUTHENTICATED) {
     status = 401;
   } else if (
     errCode === ErrorCodes.COMPLETION_NOT_APPROVED ||
@@ -49,5 +51,10 @@ export function certificateErrorResponse(error: Error) {
     status = 400;
   }
 
-  return certificateProblemJson(status, 'Certificate Error', msg || 'An unexpected error occurred.', errCode || 'CERTIFICATE_UNKNOWN');
+  return certificateProblemJson(
+    status,
+    'Certificate Error',
+    msg || 'An unexpected error occurred.',
+    errCode || 'CERTIFICATE_UNKNOWN',
+  );
 }

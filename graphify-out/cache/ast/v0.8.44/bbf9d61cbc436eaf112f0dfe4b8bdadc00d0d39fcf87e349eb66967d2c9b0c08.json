@@ -1,0 +1,3535 @@
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "label": "Part 5 \u2013 API Contracts.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_part_5_api_contracts",
+      "label": "Part 5 \u2013 API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_module_13_document_management",
+      "label": "Module 13 \u2013 Document Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_1_purpose_and_contract_boundary",
+      "label": "1. Purpose and Contract Boundary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_1_1_contract_principles",
+      "label": "1.1 Contract principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "label": "2. API Style and Base Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_2_1_base_route",
+      "label": "2.1 Base route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_2_2_response_envelope",
+      "label": "2.2 Response envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_response",
+      "label": "Success response",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_2_3_error_envelope",
+      "label": "2.3 Error envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_2_4_authentication_model",
+      "label": "2.4 Authentication model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_2_5_branch_scope_algorithm",
+      "label": "2.5 Branch-scope algorithm",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L118"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_2_6_standard_validation_limits",
+      "label": "2.6 Standard validation limits",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L145"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_3_endpoint_inventory",
+      "label": "3. Endpoint Inventory",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L165"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_3_1_current_admin_api_surface",
+      "label": "3.1 Current Admin/API surface",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L167"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_3_1_1_server_action_mapping",
+      "label": "3.1.1 Server Action mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L189"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_4_common_dtos",
+      "label": "4. Common DTOs",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L208"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_4_1_enumerations",
+      "label": "4.1 Enumerations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L210"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_4_2_document_summary_dto",
+      "label": "4.2 Document summary DTO",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L229"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_4_3_document_detail_dto",
+      "label": "4.3 Document detail DTO",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L268"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_4_4_verification_history_dto",
+      "label": "4.4 Verification history DTO",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L294"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "label": "5. Detailed Endpoint Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L312"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "label": "API-DOC-001 \u2013 Create Upload Intent",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L314"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L316"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L322"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L328"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L332"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L338"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L346"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L376"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L389"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L407"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "label": "API-DOC-002 \u2013 Register Uploaded Document",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L425"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_427",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L427"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_433",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L433"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_437",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L437"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_441",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L441"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_447",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L447"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_451",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L451"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_467",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L467"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_201_created",
+      "label": "Success DTO \u2013 `201 Created`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L484"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_492",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L492"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_idempotency",
+      "label": "Idempotency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L508"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "label": "API-DOC-003 \u2013 List and Search Documents",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L514"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_516",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L516"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_522",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L522"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_526",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L526"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_530",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L530"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_536",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L536"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_query_schema",
+      "label": "Query schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L540"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_565",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L565"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_578",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L578"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_594",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L594"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_security_behavior",
+      "label": "Security behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L603"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "label": "API-DOC-004 \u2013 Get Document Detail",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L609"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_611",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L611"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_617",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L617"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_621",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L621"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_625",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L625"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_631",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L631"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_635",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L635"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_643",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L643"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_652",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L652"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "label": "API-DOC-005 \u2013 Update Document Metadata",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L666"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_668",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L668"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_674",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L674"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_678",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L678"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_682",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L682"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_688",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L688"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_692",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L692"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_720",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L720"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_733",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L733"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_742",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L742"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "label": "API-DOC-006 \u2013 Submit Document for Verification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L759"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_761",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L761"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_767",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L767"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_775",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L775"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_779",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L779"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_787",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L787"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_791",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L791"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_799",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L799"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_809",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L809"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_823",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L823"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "label": "API-DOC-007 \u2013 Get Verification Queue",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L838"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_840",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L840"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_846",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L846"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_850",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L850"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_854",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L854"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_860",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L860"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_query_schema_864",
+      "label": "Query schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L864"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_878",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L878"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_882",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L882"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_892",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L892"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "label": "API-DOC-008 \u2013 Approve Document",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L902"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_904",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L904"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_910",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L910"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_914",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L914"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_918",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L918"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_924",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L924"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_928",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L928"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_transaction",
+      "label": "Processing transaction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L939"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_955",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L955"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_967",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L967"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "label": "API-DOC-009 \u2013 Reject Document",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L984"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_986",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L986"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_992",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L992"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_996",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L996"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1000",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1000"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1006",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1006"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_1010",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1010"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_transaction_1025",
+      "label": "Processing transaction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1025"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1029",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1029"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1041",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1041"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_important_unresolved_workflow_note",
+      "label": "Important unresolved workflow note",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1050"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "label": "API-DOC-010 \u2013 Get Verification and Audit History",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1056"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1058",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1058"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1064",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1064"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1068",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1068"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1072",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1072"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1080",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1080"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_query_schema_1084",
+      "label": "Query schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1084"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1094",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1094"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1117",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1117"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "label": "API-DOC-011 \u2013 Request Secure File Access",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1129"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1131",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1131"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1137",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1137"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1141",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1141"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1145",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1145"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1153",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1153"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_1157",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1157"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_1165",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1165"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1176",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1176"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1205",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1205"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "label": "API-DOC-012 \u2013 Get Expiry Workbench",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1218"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1220",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1220"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1226",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1226"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1230",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1230"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1234",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1234"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1240",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1240"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_query_schema_1244",
+      "label": "Query schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1244"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1262",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1262"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1274",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1274"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_ddd_note",
+      "label": "DDD note",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1282"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "label": "API-DOC-013 \u2013 Soft-Retire Document",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1288"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1290",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1290"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1296",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1296"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1300",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1300"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1304",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1304"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1312",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1312"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_1316",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1316"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_processing_1335",
+      "label": "Processing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1335"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1346",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1346"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1359",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1359"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "label": "API-DOC-014 \u2013 List Blob/Database Reconciliation Issues",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1375"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1377",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1377"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1383",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1383"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1387",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1387"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1391",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1391"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1397",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1397"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_query_schema_1401",
+      "label": "Query schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1401"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1416",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1416"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1431",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1431"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_architecture_gap_note",
+      "label": "Architecture gap note",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1440"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "label": "API-DOC-015 \u2013 Retry Reconciliation Action",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1446"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1448",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1448"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1454",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1454"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1458",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1458"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1462",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1462"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1468",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1468"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_request_schema_1472",
+      "label": "Request schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1472"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_202_accepted_or_200_ok",
+      "label": "Success DTO \u2013 `202 Accepted` or `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1481"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1498",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1498"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "label": "API-DOC-016 \u2013 List Active Document Types",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1512"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1514",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1514"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1520",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1520"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_ownership",
+      "label": "Ownership",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1524"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1528",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1528"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1532",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1532"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1541",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1541"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_query_schema_1545",
+      "label": "Query schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1545"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1555",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1555"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1572",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1572"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "label": "API-DOC-017 \u2013 Search Eligible Document Owners",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1578"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_route_1580",
+      "label": "Route",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1580"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_purpose_1586",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1586"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_authentication_1590",
+      "label": "Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1590"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_required_permission_1594",
+      "label": "Required permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1594"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_branch_scoping_1602",
+      "label": "Branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1602"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_query_schema_1606",
+      "label": "Query schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1606"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1619",
+      "label": "Success DTO \u2013 `200 OK`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1619"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_error_responses_1634",
+      "label": "Error responses",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1634"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_6_conditional_student_portal_api_contracts",
+      "label": "6. Conditional Student Portal API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1646"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_7_conditional_trainer_portal_api_contracts",
+      "label": "7. Conditional Trainer Portal API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1670"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_8_permission_to_endpoint_matrix",
+      "label": "8. Permission-to-Endpoint Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1688"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_permission_normalization_issue",
+      "label": "Permission normalization issue",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1705"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_9_error_catalogue",
+      "label": "9. Error Catalogue",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1728"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_9_1_authentication_and_authorization",
+      "label": "9.1 Authentication and authorization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1730"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_9_2_resource_errors",
+      "label": "9.2 Resource errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1740"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_9_3_validation_errors",
+      "label": "9.3 Validation errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1749"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_9_4_conflict_state_errors",
+      "label": "9.4 Conflict/state errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1763"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_9_5_dependency_operational_errors",
+      "label": "9.5 Dependency/operational errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1776"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_10_transaction_boundaries_and_side_effects",
+      "label": "10. Transaction Boundaries and Side Effects",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1789"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_10_1_upload_and_registration",
+      "label": "10.1 Upload and registration",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1791"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_10_2_approval_rejection",
+      "label": "10.2 Approval/rejection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1822"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_10_3_audit_side_effects",
+      "label": "10.3 Audit side effects",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1833"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_10_4_communication_side_effects",
+      "label": "10.4 Communication side effects",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1848"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_11_api_level_business_guards",
+      "label": "11. API-Level Business Guards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1854"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_12_screen_to_api_mapping",
+      "label": "12. Screen-to-API Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1876"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_13_use_case_to_api_traceability",
+      "label": "13. Use-Case-to-API Traceability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1893"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_14_ddd_ownership_and_cross_context_contract_check",
+      "label": "14. DDD Ownership and Cross-Context Contract Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1910"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_15_er_model_alignment_check",
+      "label": "15. ER Model Alignment Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1932"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "label": "16. Known Contract Gaps and Required Decisions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1977"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_001_prisma_schema_validation",
+      "label": "GAP-DOC-API-001 \u2013 Prisma schema validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1979"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_002_document_type_persistence",
+      "label": "GAP-DOC-API-002 \u2013 Document type persistence",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1983"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_003_person_branch_scope",
+      "label": "GAP-DOC-API-003 \u2013 Person branch scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1987"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_004_expired_state_semantics",
+      "label": "GAP-DOC-API-004 \u2013 Expired state semantics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1991"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_005_rejected_resubmission",
+      "label": "GAP-DOC-API-005 \u2013 Rejected resubmission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1995"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_006_approved_document_replacement",
+      "label": "GAP-DOC-API-006 \u2013 Approved document replacement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1999"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_007_reconciliation_persistence_ownership",
+      "label": "GAP-DOC-API-007 \u2013 Reconciliation persistence ownership",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L2003"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_gap_doc_api_008_permission_code_normalization",
+      "label": "GAP-DOC-API-008 \u2013 Permission-code normalization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L2007"
+    },
+    {
+      "id": "module_13_document_management_part_5_api_contracts_17_final_consistency_check",
+      "label": "17. Final Consistency Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L2020"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_part_5_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_module_13_document_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_1_purpose_and_contract_boundary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_1_purpose_and_contract_boundary",
+      "target": "module_13_document_management_part_5_api_contracts_1_1_contract_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "target": "module_13_document_management_part_5_api_contracts_2_1_base_route",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "target": "module_13_document_management_part_5_api_contracts_2_2_response_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_2_2_response_envelope",
+      "target": "module_13_document_management_part_5_api_contracts_success_response",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "target": "module_13_document_management_part_5_api_contracts_2_3_error_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "target": "module_13_document_management_part_5_api_contracts_2_4_authentication_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "target": "module_13_document_management_part_5_api_contracts_2_5_branch_scope_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_2_api_style_and_base_conventions",
+      "target": "module_13_document_management_part_5_api_contracts_2_6_standard_validation_limits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_3_endpoint_inventory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_3_endpoint_inventory",
+      "target": "module_13_document_management_part_5_api_contracts_3_1_current_admin_api_surface",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_3_1_current_admin_api_surface",
+      "target": "module_13_document_management_part_5_api_contracts_3_1_1_server_action_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_4_common_dtos",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_4_common_dtos",
+      "target": "module_13_document_management_part_5_api_contracts_4_1_enumerations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L210",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_4_common_dtos",
+      "target": "module_13_document_management_part_5_api_contracts_4_2_document_summary_dto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_4_common_dtos",
+      "target": "module_13_document_management_part_5_api_contracts_4_3_document_detail_dto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_4_common_dtos",
+      "target": "module_13_document_management_part_5_api_contracts_4_4_verification_history_dto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L294",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L312",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L314",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_route",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L316",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L322",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_authentication",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L328",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L332",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L338",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L346",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_processing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L389",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_001_create_upload_intent",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L407",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L425",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_route_427",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_433",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L433",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_437",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L437",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_441",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L441",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_447",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L447",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_451",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L451",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_processing_467",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L467",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_201_created",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L484",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_492",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L492",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_002_register_uploaded_document",
+      "target": "module_13_document_management_part_5_api_contracts_idempotency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L508",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L514",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_route_516",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L516",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_522",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L522",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_526",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L526",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_530",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L530",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_536",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L536",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_query_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L540",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_processing_565",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L565",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_578",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L578",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_594",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L594",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_003_list_and_search_documents",
+      "target": "module_13_document_management_part_5_api_contracts_security_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L603",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L609",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_route_611",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L611",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_617",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L617",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_621",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L621",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_625",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L625",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_631",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L631",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_635",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L635",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_643",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L643",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_004_get_document_detail",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_652",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L652",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L666",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_route_668",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L668",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_674",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L674",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_678",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L678",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_682",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L682",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_688",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L688",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_692",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L692",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_processing_720",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L720",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_733",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L733",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_005_update_document_metadata",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_742",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L742",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L759",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_route_761",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L761",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_767",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L767",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_775",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L775",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_779",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L779",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_787",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L787",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_791",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L791",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_processing_799",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L799",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_809",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L809",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_006_submit_document_for_verification",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_823",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L823",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L838",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_route_840",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L840",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_846",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L846",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_850",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L850",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_854",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L854",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_860",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L860",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_query_schema_864",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L864",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_processing_878",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L878",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_882",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L882",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_007_get_verification_queue",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_892",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L892",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L902",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_route_904",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L904",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_910",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L910",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_914",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L914",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_918",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L918",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_924",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L924",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_928",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L928",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_processing_transaction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L939",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_955",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L955",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_008_approve_document",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_967",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L967",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L984",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_route_986",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L986",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_992",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L992",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_996",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L996",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1000",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1000",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1006",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1006",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_1010",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1010",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_processing_transaction_1025",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1025",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1029",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1029",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1041",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1041",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_009_reject_document",
+      "target": "module_13_document_management_part_5_api_contracts_important_unresolved_workflow_note",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1050",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1056",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_route_1058",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1058",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1064",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1064",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1068",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1068",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1072",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1072",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1080",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1080",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_query_schema_1084",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1084",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1094",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1094",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_010_get_verification_and_audit_history",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1117",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1117",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1129",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_route_1131",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1131",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1137",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1137",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1141",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1141",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1145",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1145",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1153",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1153",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_1157",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1157",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_processing_1165",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1165",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1176",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1176",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_011_request_secure_file_access",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1205",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1205",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1218",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_route_1220",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1220",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1226",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1226",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1230",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1230",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1234",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1234",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1240",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1240",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_query_schema_1244",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1244",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1262",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1262",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1274",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1274",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_012_get_expiry_workbench",
+      "target": "module_13_document_management_part_5_api_contracts_ddd_note",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1282",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1288",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_route_1290",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1290",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1296",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1296",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1300",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1300",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1304",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1304",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1312",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1312",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_1316",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1316",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_processing_1335",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1335",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1346",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1346",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_013_soft_retire_document",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1359",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1359",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1375",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_route_1377",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1377",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1383",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1383",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1387",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1387",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1391",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1391",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1397",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1397",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_query_schema_1401",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1401",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1416",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1416",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1431",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1431",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_014_list_blob_database_reconciliation_issues",
+      "target": "module_13_document_management_part_5_api_contracts_architecture_gap_note",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1440",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1446",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_route_1448",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1448",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1454",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1454",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1458",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1458",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1462",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1462",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1468",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1468",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_request_schema_1472",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1472",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_202_accepted_or_200_ok",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1481",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_015_retry_reconciliation_action",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1498",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1498",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1512",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_route_1514",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1514",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1520",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1520",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_ownership",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1524",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1528",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1528",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1532",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1532",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1541",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1541",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_query_schema_1545",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1545",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1555",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1555",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_016_list_active_document_types",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1572",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1572",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_5_detailed_endpoint_contracts",
+      "target": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1578",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_route_1580",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1580",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_purpose_1586",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1586",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_authentication_1590",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1590",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_required_permission_1594",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1594",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_branch_scoping_1602",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1602",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_query_schema_1606",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1606",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_success_dto_200_ok_1619",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1619",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_api_doc_017_search_eligible_document_owners",
+      "target": "module_13_document_management_part_5_api_contracts_error_responses_1634",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1634",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_6_conditional_student_portal_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1646",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_7_conditional_trainer_portal_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1670",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_8_permission_to_endpoint_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1688",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_8_permission_to_endpoint_matrix",
+      "target": "module_13_document_management_part_5_api_contracts_permission_normalization_issue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1705",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_9_error_catalogue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1728",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_9_error_catalogue",
+      "target": "module_13_document_management_part_5_api_contracts_9_1_authentication_and_authorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1730",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_9_error_catalogue",
+      "target": "module_13_document_management_part_5_api_contracts_9_2_resource_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1740",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_9_error_catalogue",
+      "target": "module_13_document_management_part_5_api_contracts_9_3_validation_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1749",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_9_error_catalogue",
+      "target": "module_13_document_management_part_5_api_contracts_9_4_conflict_state_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1763",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_9_error_catalogue",
+      "target": "module_13_document_management_part_5_api_contracts_9_5_dependency_operational_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1776",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_10_transaction_boundaries_and_side_effects",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1789",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_10_transaction_boundaries_and_side_effects",
+      "target": "module_13_document_management_part_5_api_contracts_10_1_upload_and_registration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1791",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_10_transaction_boundaries_and_side_effects",
+      "target": "module_13_document_management_part_5_api_contracts_10_2_approval_rejection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1822",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_10_transaction_boundaries_and_side_effects",
+      "target": "module_13_document_management_part_5_api_contracts_10_3_audit_side_effects",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1833",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_10_transaction_boundaries_and_side_effects",
+      "target": "module_13_document_management_part_5_api_contracts_10_4_communication_side_effects",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1848",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_11_api_level_business_guards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1854",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_12_screen_to_api_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1876",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_13_use_case_to_api_traceability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1893",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_14_ddd_ownership_and_cross_context_contract_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1910",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_15_er_model_alignment_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1932",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1977",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_001_prisma_schema_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1979",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_002_document_type_persistence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1983",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_003_person_branch_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1987",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_004_expired_state_semantics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1991",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_005_rejected_resubmission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1995",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_006_approved_document_replacement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1999",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_007_reconciliation_persistence_ownership",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L2003",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_5_api_contracts_16_known_contract_gaps_and_required_decisions",
+      "target": "module_13_document_management_part_5_api_contracts_gap_doc_api_008_permission_code_normalization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L2007",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_5_api_contracts_md",
+      "target": "module_13_document_management_part_5_api_contracts_17_final_consistency_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L2020",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

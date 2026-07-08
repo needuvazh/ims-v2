@@ -1171,89 +1171,89 @@ Feature: Require authentication for Module 09 API access
 
 # 28. Authorization and Branch Isolation Test Matrix
 
-| Test ID | Actor | Target | Expected |
-|---|---|---|---|
-| AUTH-001 | Counselor | Trainer list | 403 |
-| AUTH-002 | Student | Trainer detail | 403 |
-| AUTH-003 | Trainer role | Admin compensation route | 403 |
-| AUTH-004 | Accountant with comp read | Compensation list in own branch | 200 |
-| AUTH-005 | Accountant without status permission | Status transition | 403 |
-| AUTH-006 | Training Coordinator | Eligible trainer search | 200 |
-| AUTH-007 | Training Coordinator without comp read | Compensation amount | 403/omitted |
-| AUTH-008 | Compliance Officer with audit read | Audit history in scope | 200 |
-| AUTH-009 | Branch Admin MCT | Sohar trainer direct ID | scope-safe denial |
-| AUTH-010 | Reporting Analyst multi-branch, no consolidated permission | Consolidated report | 403 |
-| AUTH-011 | Reporting Analyst with consolidated permission | Authorized MCT+SOH report | 200, no SAL rows |
-| AUTH-012 | Export user without export permission | Export route | 403 |
-| AUTH-013 | Report user without compensation read | Compensation report | 403 |
-| AUTH-014 | Direct API call with hidden menu | Permission present | Action permitted if endpoint permission passes |
-| AUTH-015 | Visible menu but missing action permission | Mutation API | 403 |
+| Test ID  | Actor                                                      | Target                          | Expected                                       |
+| -------- | ---------------------------------------------------------- | ------------------------------- | ---------------------------------------------- |
+| AUTH-001 | Counselor                                                  | Trainer list                    | 403                                            |
+| AUTH-002 | Student                                                    | Trainer detail                  | 403                                            |
+| AUTH-003 | Trainer role                                               | Admin compensation route        | 403                                            |
+| AUTH-004 | Accountant with comp read                                  | Compensation list in own branch | 200                                            |
+| AUTH-005 | Accountant without status permission                       | Status transition               | 403                                            |
+| AUTH-006 | Training Coordinator                                       | Eligible trainer search         | 200                                            |
+| AUTH-007 | Training Coordinator without comp read                     | Compensation amount             | 403/omitted                                    |
+| AUTH-008 | Compliance Officer with audit read                         | Audit history in scope          | 200                                            |
+| AUTH-009 | Branch Admin MCT                                           | Sohar trainer direct ID         | scope-safe denial                              |
+| AUTH-010 | Reporting Analyst multi-branch, no consolidated permission | Consolidated report             | 403                                            |
+| AUTH-011 | Reporting Analyst with consolidated permission             | Authorized MCT+SOH report       | 200, no SAL rows                               |
+| AUTH-012 | Export user without export permission                      | Export route                    | 403                                            |
+| AUTH-013 | Report user without compensation read                      | Compensation report             | 403                                            |
+| AUTH-014 | Direct API call with hidden menu                           | Permission present              | Action permitted if endpoint permission passes |
+| AUTH-015 | Visible menu but missing action permission                 | Mutation API                    | 403                                            |
 
 ---
 
 # 29. Boundary and Validation Test Matrix
 
-| Test ID | Boundary | Input | Expected |
-|---|---|---|---|
-| VAL-001 | page minimum | 0 | `ERR_FTM_INVALID_QUERY` |
-| VAL-002 | pageSize minimum | 24 | `ERR_FTM_INVALID_QUERY` |
-| VAL-003 | pageSize maximum | 101 | `ERR_FTM_INVALID_QUERY` |
-| VAL-004 | effective date equality | start=end | Accepted |
-| VAL-005 | date inversion | start>end | Date-specific error |
-| VAL-006 | availability adjacency | existing ends 12:00, new starts 12:00 | Accepted |
-| VAL-007 | availability 1-minute overlap | 11:59–13:00 vs 09:00–12:00 | Overlap error |
-| VAL-008 | rate amount zero | 0.000 | `ERR_FTM_RATE_AMOUNT_INVALID` |
-| VAL-009 | rate 3 decimals | 12.345 | Exact persistence |
-| VAL-010 | qualification year current year | current Oman year | Accepted |
-| VAL-011 | qualification year next year | current year + 1 | Future year error |
-| VAL-012 | export PDF 5000 rows | 5000 | Accepted |
-| VAL-013 | export PDF 5001 rows | 5001 | Export limit error |
-| VAL-014 | open-ended effectiveEndDate | null | Accepted when allowed |
-| VAL-014 | stale version | expectedVersion < currentVersion | `ERR_FTM_VERSION_CONFLICT` |
-| VAL-015 | deleted active record | isDeleted=true | Not effective / not listed |
+| Test ID | Boundary                        | Input                                 | Expected                      |
+| ------- | ------------------------------- | ------------------------------------- | ----------------------------- |
+| VAL-001 | page minimum                    | 0                                     | `ERR_FTM_INVALID_QUERY`       |
+| VAL-002 | pageSize minimum                | 24                                    | `ERR_FTM_INVALID_QUERY`       |
+| VAL-003 | pageSize maximum                | 101                                   | `ERR_FTM_INVALID_QUERY`       |
+| VAL-004 | effective date equality         | start=end                             | Accepted                      |
+| VAL-005 | date inversion                  | start>end                             | Date-specific error           |
+| VAL-006 | availability adjacency          | existing ends 12:00, new starts 12:00 | Accepted                      |
+| VAL-007 | availability 1-minute overlap   | 11:59–13:00 vs 09:00–12:00            | Overlap error                 |
+| VAL-008 | rate amount zero                | 0.000                                 | `ERR_FTM_RATE_AMOUNT_INVALID` |
+| VAL-009 | rate 3 decimals                 | 12.345                                | Exact persistence             |
+| VAL-010 | qualification year current year | current Oman year                     | Accepted                      |
+| VAL-011 | qualification year next year    | current year + 1                      | Future year error             |
+| VAL-012 | export PDF 5000 rows            | 5000                                  | Accepted                      |
+| VAL-013 | export PDF 5001 rows            | 5001                                  | Export limit error            |
+| VAL-014 | open-ended effectiveEndDate     | null                                  | Accepted when allowed         |
+| VAL-014 | stale version                   | expectedVersion < currentVersion      | `ERR_FTM_VERSION_CONFLICT`    |
+| VAL-015 | deleted active record           | isDeleted=true                        | Not effective / not listed    |
 
 ---
 
 # 30. Cross-Module Contract Test Matrix
 
-| Test ID | Producer/Consumer | Contract | Expected Ownership Behavior |
-|---|---|---|---|
-| INT-001 | Person → FTM | Person reference | FTM links Person; does not duplicate identity |
-| INT-002 | Course Catalog → FTM | Course existence/read | FTM stores courseId authorization only |
-| INT-003 | FTM → Training Delivery | Eligibility validation | FTM validates; Training Delivery assigns |
-| INT-004 | FTM → Scheduling | Availability validation | FTM exposes availability result; Scheduling owns timetable conflict |
-| INT-005 | Document → FTM | Evidence status projection | FTM reads status; Document owns verification |
-| INT-006 | Training Delivery → FTM report | Assignment projection | FTM reports read-only utilization reference |
-| INT-007 | Audit → FTM UI | Audit projection | FTM reads immutable history |
-| INT-008 | FTM → Communication | Notification request/event | Communication owns provider delivery |
-| INT-009 | FTM compensation → future Payroll | Rate reference | No payroll calculation in Module 09 |
+| Test ID | Producer/Consumer                 | Contract                   | Expected Ownership Behavior                                         |
+| ------- | --------------------------------- | -------------------------- | ------------------------------------------------------------------- |
+| INT-001 | Person → FTM                      | Person reference           | FTM links Person; does not duplicate identity                       |
+| INT-002 | Course Catalog → FTM              | Course existence/read      | FTM stores courseId authorization only                              |
+| INT-003 | FTM → Training Delivery           | Eligibility validation     | FTM validates; Training Delivery assigns                            |
+| INT-004 | FTM → Scheduling                  | Availability validation    | FTM exposes availability result; Scheduling owns timetable conflict |
+| INT-005 | Document → FTM                    | Evidence status projection | FTM reads status; Document owns verification                        |
+| INT-006 | Training Delivery → FTM report    | Assignment projection      | FTM reports read-only utilization reference                         |
+| INT-007 | Audit → FTM UI                    | Audit projection           | FTM reads immutable history                                         |
+| INT-008 | FTM → Communication               | Notification request/event | Communication owns provider delivery                                |
+| INT-009 | FTM compensation → future Payroll | Rate reference             | No payroll calculation in Module 09                                 |
 
 ---
 
 # 31. FR Traceability Matrix
 
-| FR | Covered Features |
-|---|---|
-| FR-FTM-001 | Features 1, 17, 18 |
-| FR-FTM-002 | Features 2, 17, 21, 22 |
-| FR-FTM-003 | Features 3, 17, 19 |
-| FR-FTM-004 | Feature 4 |
-| FR-FTM-005 | Feature 5 |
-| FR-FTM-006 | Feature 6 |
-| FR-FTM-007 | Feature 7 |
-| FR-FTM-008 | Feature 7 |
-| FR-FTM-009 | Feature 8 |
-| FR-FTM-010 | Feature 9 |
-| FR-FTM-011 | Features 10, 19 |
-| FR-FTM-012 | Feature 11 |
-| FR-FTM-013 | Feature 12 |
-| FR-FTM-014 | Feature 7 |
-| FR-FTM-015 | Feature 13 |
-| FR-FTM-016 | Feature 14 |
-| FR-FTM-017 | Features 15, 23, 24, 25, 26 |
-| FR-FTM-018 | Feature 16 |
+| FR         | Covered Features              |
+| ---------- | ----------------------------- |
+| FR-FTM-001 | Features 1, 17, 18            |
+| FR-FTM-002 | Features 2, 17, 21, 22        |
+| FR-FTM-003 | Features 3, 17, 19            |
+| FR-FTM-004 | Feature 4                     |
+| FR-FTM-005 | Feature 5                     |
+| FR-FTM-006 | Feature 6                     |
+| FR-FTM-007 | Feature 7                     |
+| FR-FTM-008 | Feature 7                     |
+| FR-FTM-009 | Feature 8                     |
+| FR-FTM-010 | Feature 9                     |
+| FR-FTM-011 | Features 10, 19               |
+| FR-FTM-012 | Feature 11                    |
+| FR-FTM-013 | Feature 12                    |
+| FR-FTM-014 | Feature 7                     |
+| FR-FTM-015 | Feature 13                    |
+| FR-FTM-016 | Feature 14                    |
+| FR-FTM-017 | Features 15, 23, 24, 25, 26   |
+| FR-FTM-018 | Feature 16                    |
 | FR-FTM-019 | Features 1, 3, 15, 17, 18, 19 |
-| FR-FTM-020 | Feature 21 |
+| FR-FTM-020 | Feature 21                    |
 
 ---
 

@@ -25,22 +25,34 @@ export default async function CertificatesPage(props: {
   if (search) {
     registryWhere.OR = [
       { certificateNumber: { contains: search, mode: 'insensitive' } },
-      { studentProfile: { studentNumber: { contains: search, mode: 'insensitive' } } },
-      { studentProfile: { person: { firstName: { contains: search, mode: 'insensitive' } } } },
-      { studentProfile: { person: { lastName: { contains: search, mode: 'insensitive' } } } },
+      {
+        studentProfile: {
+          studentNumber: { contains: search, mode: 'insensitive' },
+        },
+      },
+      {
+        studentProfile: {
+          person: { firstName: { contains: search, mode: 'insensitive' } },
+        },
+      },
+      {
+        studentProfile: {
+          person: { lastName: { contains: search, mode: 'insensitive' } },
+        },
+      },
     ];
   }
 
   // Branch isolation scoping
   const userBranches = await prisma.userBranchAccess.findMany({
     where: { userId: session.userId },
-    select: { branchId: true }
+    select: { branchId: true },
   });
-  const branchIds = userBranches.map(ub => ub.branchId);
+  const branchIds = userBranches.map((ub) => ub.branchId);
 
   if (branchIds.length > 0) {
     registryWhere.enrollment = {
-      branchId: { in: branchIds }
+      branchId: { in: branchIds },
     };
   }
 
@@ -54,18 +66,20 @@ export default async function CertificatesPage(props: {
           branch: true,
           studentProfile: {
             include: {
-              person: true
-            }
-          }
-        }
-      }
+              person: true,
+            },
+          },
+        },
+      },
     },
     skip: (page - 1) * pageSize,
     take: pageSize,
-    orderBy: { createdAt: 'desc' }
+    orderBy: { createdAt: 'desc' },
   });
 
-  const registryTotal = await prisma.certificate.count({ where: registryWhere });
+  const registryTotal = await prisma.certificate.count({
+    where: registryWhere,
+  });
 
   // 2. Fetch completions for Readiness Queue (Approved, certificateAllowed = true, no active cert)
   const readinessWhere: any = {
@@ -74,10 +88,10 @@ export default async function CertificatesPage(props: {
     enrollment: {
       certificates: {
         none: {
-          certificateStatus: { in: ['Generated', 'Issued'] }
-        }
-      }
-    }
+          certificateStatus: { in: ['Generated', 'Issued'] },
+        },
+      },
+    },
   };
 
   if (branchIds.length > 0) {
@@ -91,17 +105,17 @@ export default async function CertificatesPage(props: {
         include: {
           studentProfile: {
             include: {
-              person: true
-            }
+              person: true,
+            },
           },
           course: true,
           batch: true,
           branch: true,
-          invoices: true
-        }
-      }
+          invoices: true,
+        },
+      },
     },
-    orderBy: { createdAt: 'desc' }
+    orderBy: { createdAt: 'desc' },
   });
 
   // Calculate finance validation status for each completion
@@ -114,7 +128,8 @@ export default async function CertificatesPage(props: {
         paymentPassed = false;
       } else {
         const unpaid = invoices.some(
-          inv => inv.outstandingAmount.toNumber() > 0 && inv.status !== 'Paid'
+          (inv) =>
+            inv.outstandingAmount.toNumber() > 0 && inv.status !== 'Paid',
         );
         paymentPassed = !unpaid;
       }
@@ -129,7 +144,7 @@ export default async function CertificatesPage(props: {
       batchCode: enrollment.batch.batchCode,
       branchName: enrollment.branch.branchName,
       paymentValidationRequired: enrollment.paymentValidationRequired,
-      paymentPassed
+      paymentPassed,
     };
   });
 
@@ -138,8 +153,8 @@ export default async function CertificatesPage(props: {
   if (branchIds.length > 0) {
     reissueWhere.certificate = {
       enrollment: {
-        branchId: { in: branchIds }
-      }
+        branchId: { in: branchIds },
+      },
     };
   }
 
@@ -153,34 +168,45 @@ export default async function CertificatesPage(props: {
               course: true,
               studentProfile: {
                 include: {
-                  person: true
-                }
-              }
-            }
-          }
-        }
+                  person: true,
+                },
+              },
+            },
+          },
+        },
       },
-      requestedByUser: true
+      requestedByUser: true,
     },
-    orderBy: { createdAt: 'desc' }
+    orderBy: { createdAt: 'desc' },
   });
 
   // 4. Fetch metrics
-  const totalIssued = await prisma.certificate.count({ where: { certificateStatus: 'Issued' } });
-  const totalRevoked = await prisma.certificate.count({ where: { certificateStatus: 'Revoked' } });
-  const totalGenerated = await prisma.certificate.count({ where: { certificateStatus: 'Generated' } });
-  const pendingReissues = await prisma.certificateReissueRequest.count({ where: { status: 'PendingReview' } });
+  const totalIssued = await prisma.certificate.count({
+    where: { certificateStatus: 'Issued' },
+  });
+  const totalRevoked = await prisma.certificate.count({
+    where: { certificateStatus: 'Revoked' },
+  });
+  const totalGenerated = await prisma.certificate.count({
+    where: { certificateStatus: 'Generated' },
+  });
+  const pendingReissues = await prisma.certificateReissueRequest.count({
+    where: { status: 'PendingReview' },
+  });
 
   const breadcrumbs = [
     { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Certificates', href: '/certificates' }
+    { label: 'Certificates', href: '/certificates' },
   ];
 
   return (
     <AdminListPageLayout>
       <div className="flex flex-col space-y-6 p-6">
         <Breadcrumbs items={breadcrumbs} />
-        <PageHeader title="Certificate Management" description="Generate, issue, verify, reissue, or revoke student credentials." />
+        <PageHeader
+          title="Certificate Management"
+          description="Generate, issue, verify, reissue, or revoke student credentials."
+        />
 
         <CertificatesClientView
           certificates={certificates}
@@ -190,7 +216,7 @@ export default async function CertificatesPage(props: {
             totalIssued,
             totalRevoked,
             totalGenerated,
-            pendingReissues
+            pendingReissues,
           }}
           total={registryTotal}
           page={page}

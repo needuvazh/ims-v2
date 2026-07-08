@@ -1,21 +1,36 @@
 import type { Session } from '@ims/shared-auth';
 import { hasPermission, hasRole } from '@ims/shared-auth';
 import type { NavigationItem } from '../domain/access';
-import { adminNavigation, studentNavigation, trainerNavigation } from '../domain/access';
+import {
+  adminNavigation,
+  studentNavigation,
+  trainerNavigation,
+} from '../domain/access';
 
 type Portal = 'admin' | 'student' | 'trainer';
 
-export function resolvePortalNavigation(portal: Portal, session: Session | null): NavigationItem[] {
+export function resolvePortalNavigation(
+  portal: Portal,
+  session: Session | null,
+): NavigationItem[] {
   const items =
-    portal === 'admin' ? adminNavigation : portal === 'student' ? studentNavigation : trainerNavigation;
+    portal === 'admin'
+      ? adminNavigation
+      : portal === 'student'
+        ? studentNavigation
+        : trainerNavigation;
 
   return items
-    .filter((item) => !item.permission || hasPermission(session, item.permission))
+    .filter(
+      (item) => !item.permission || hasPermission(session, item.permission),
+    )
     .map((item) => {
       if (item.items) {
         return {
           ...item,
-          items: item.items.filter((sub) => !sub.permission || hasPermission(session, sub.permission)),
+          items: item.items.filter(
+            (sub) => !sub.permission || hasPermission(session, sub.permission),
+          ),
         };
       }
       return item;

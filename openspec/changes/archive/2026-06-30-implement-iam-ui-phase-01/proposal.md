@@ -14,11 +14,12 @@ The IAM backend is in place, but the admin portal still exposes only a narrow sl
 ## Capabilities
 
 ### New Capabilities
+
 - `iam-admin-portal-ui`: Admin portal screens and navigation for IAM user, role, permission, session, security policy, audit, dashboard, and report workflows. Add public-facing screens for account activation and mandatory password change.
 
 ### Modified Capabilities
 
-- 
+-
 
 ## Impact
 

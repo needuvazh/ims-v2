@@ -1,7 +1,12 @@
 import { z } from 'zod';
 import type { Uuid } from '@ims/shared-kernel';
 
-export const permissionTypeSchema = z.enum(['Module', 'Menu', 'Action', 'Report']);
+export const permissionTypeSchema = z.enum([
+  'Module',
+  'Menu',
+  'Action',
+  'Report',
+]);
 export type PermissionType = z.infer<typeof permissionTypeSchema>;
 
 export const permissionStatusSchema = z.enum(['Active', 'Archived']);
@@ -38,5 +43,9 @@ export const updatePermissionCommandSchema = z.object({
   description: z.string().trim().nullable().optional(),
 });
 
-export type CreatePermissionCommand = z.infer<typeof createPermissionCommandSchema>;
-export type UpdatePermissionCommand = z.infer<typeof updatePermissionCommandSchema>;
+export type CreatePermissionCommand = z.infer<
+  typeof createPermissionCommandSchema
+>;
+export type UpdatePermissionCommand = z.infer<
+  typeof updatePermissionCommandSchema
+>;

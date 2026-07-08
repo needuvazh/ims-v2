@@ -1,5 +1,8 @@
 import type { PrismaClient } from '@prisma/client';
-import type { ILoginHistoryRepository, LoginHistoryDto } from '@ims/identity-access';
+import type {
+  ILoginHistoryRepository,
+  LoginHistoryDto,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaLoginHistoryRepository implements ILoginHistoryRepository {
@@ -44,7 +47,7 @@ export class PrismaLoginHistoryRepository implements ILoginHistoryRepository {
   async findByUser(
     userId: Uuid,
     page: number,
-    pageSize: number
+    pageSize: number,
   ): Promise<{ items: LoginHistoryDto[]; total: number }> {
     const [rows, total] = await Promise.all([
       this.prisma.loginHistory.findMany({
@@ -62,9 +65,14 @@ export class PrismaLoginHistoryRepository implements ILoginHistoryRepository {
   }
 
   async list(
-    filters: { branchId?: string; status?: string; startDate?: Date; endDate?: Date },
+    filters: {
+      branchId?: string;
+      status?: string;
+      startDate?: Date;
+      endDate?: Date;
+    },
     page: number,
-    pageSize: number
+    pageSize: number,
   ): Promise<{ items: LoginHistoryDto[]; total: number }> {
     const where: any = {};
     if (filters.branchId) {

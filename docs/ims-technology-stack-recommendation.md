@@ -59,26 +59,26 @@ The central business concept is Enrollment. It connects Student, Course, Batch, 
 
 ## 2. Bounded Context Analysis
 
-| Bounded Context | Responsibility | Complexity | Data Ownership | Integration Needs | Change Frequency | Criticality | Suggested Style |
-|---|---|---:|---|---|---|---|---|
-| Identity & Access | Users, dynamic roles, permissions, branch-scoped access | Medium | User, Role, Permission | Used by all contexts | Medium | High | Shared platform package plus API module |
-| Organization | Institute, branch, department, classroom | Low-Medium | Branch, Department, Classroom | Referenced by most contexts | Low | High | Domain package |
-| Lead & Inquiry | Leads, sources, campaigns, follow-ups, counselor assignment | Medium | Lead, FollowUp, Campaign | Creates Admission | High | High | Domain package |
-| Admission & Enrollment | Student registration, admission, enrollment lifecycle | High | Student, Admission, Enrollment | Central aggregate used across finance, attendance, completion, certificate | High | Very High | Core domain package |
-| Corporate Training | Corporate accounts, contracts, programs, participants | Medium-High | CorporateAccount, Contract, Program, Participant | Optional Student link and Enrollment | Medium | High in Phase 2 | Domain package, extractable later |
-| Course & Batch | Courses, pricing, batches, capacity, waiting list, completion rules | High | Course, Pricing, Batch, CompletionRule | Feeds Enrollment, Scheduling, Completion, Certificate | High | Very High | Core domain package |
-| Walk-In Flow | Same-day enrollment, completion, payment validation, certificate eligibility | Medium | Uses Enrollment and Course rules | Strongly coupled to enrollment, finance, completion, certificate | Medium | High | Application flow package, not separate database ownership |
-| Scheduling | Sessions, trainer/classroom allocation, conflict prevention | Medium | ScheduleSession | Uses Trainer, Batch, Classroom | Medium | High | Domain package |
-| Attendance | Attendance records and attendance percentage | Medium | AttendanceRecord | Completion rules depend on it | Medium | High | Domain package |
-| Fee & Finance | Fee plans, payments, receipts, discounts, refunds, due tracking | High | FeePlan, Payment, Receipt, Refund | Enrollment, Certificate, Corporate invoicing | High | Very High | Core domain package with strict audit |
-| Trainer Management | Trainer profiles, availability, documents, assignments, payment tracking | Medium | Trainer, Availability, Assignment, TrainerPayment | Scheduling, Course/Batch | Medium | Medium-High | Domain package |
-| Exam & Completion | Exams, results, completion approval workflow | High | Exam, Result, CourseCompletion | Attendance, Course rules, Certificate | Medium | High | Domain package |
-| Certificate | Templates, certificate generation, issuance, verification | Medium-High | Certificate, CertificateTemplate | Completion, Finance, public verification | Medium | Very High | Domain package plus public verification app |
-| Communication | Templates, logs, SMS, WhatsApp, email | Medium | CommunicationTemplate, CommunicationLog | Triggered by lead, payment, enrollment events | Medium | Medium | Integration package, Phase 2 |
-| Document Management | Student/trainer/corporate documents, verification workflow | Medium | Document, DocumentType, Verification | Student, Trainer, Corporate | Medium | Medium-High | Domain package plus object storage |
-| Reporting & Analytics | Operational reports and dashboards | Medium | ReportDefinition, MetricSnapshot | Reads across contexts | Medium | Medium | Read-model/reporting package |
-| Audit & Compliance | Critical action logs, approval history | Medium | AuditLog, ApprovalLog | Cross-cutting | Medium | High | Shared infrastructure and domain package |
-| AI Intelligence | Future insights and intelligence | Unknown | Future derived data | Needs clean historical data | Low now | Future | Do not build as separate service yet |
+| Bounded Context        | Responsibility                                                               |  Complexity | Data Ownership                                    | Integration Needs                                                          | Change Frequency | Criticality     | Suggested Style                                           |
+| ---------------------- | ---------------------------------------------------------------------------- | ----------: | ------------------------------------------------- | -------------------------------------------------------------------------- | ---------------- | --------------- | --------------------------------------------------------- |
+| Identity & Access      | Users, dynamic roles, permissions, branch-scoped access                      |      Medium | User, Role, Permission                            | Used by all contexts                                                       | Medium           | High            | Shared platform package plus API module                   |
+| Organization           | Institute, branch, department, classroom                                     |  Low-Medium | Branch, Department, Classroom                     | Referenced by most contexts                                                | Low              | High            | Domain package                                            |
+| Lead & Inquiry         | Leads, sources, campaigns, follow-ups, counselor assignment                  |      Medium | Lead, FollowUp, Campaign                          | Creates Admission                                                          | High             | High            | Domain package                                            |
+| Admission & Enrollment | Student registration, admission, enrollment lifecycle                        |        High | Student, Admission, Enrollment                    | Central aggregate used across finance, attendance, completion, certificate | High             | Very High       | Core domain package                                       |
+| Corporate Training     | Corporate accounts, contracts, programs, participants                        | Medium-High | CorporateAccount, Contract, Program, Participant  | Optional Student link and Enrollment                                       | Medium           | High in Phase 2 | Domain package, extractable later                         |
+| Course & Batch         | Courses, pricing, batches, capacity, waiting list, completion rules          |        High | Course, Pricing, Batch, CompletionRule            | Feeds Enrollment, Scheduling, Completion, Certificate                      | High             | Very High       | Core domain package                                       |
+| Walk-In Flow           | Same-day enrollment, completion, payment validation, certificate eligibility |      Medium | Uses Enrollment and Course rules                  | Strongly coupled to enrollment, finance, completion, certificate           | Medium           | High            | Application flow package, not separate database ownership |
+| Scheduling             | Sessions, trainer/classroom allocation, conflict prevention                  |      Medium | ScheduleSession                                   | Uses Trainer, Batch, Classroom                                             | Medium           | High            | Domain package                                            |
+| Attendance             | Attendance records and attendance percentage                                 |      Medium | AttendanceRecord                                  | Completion rules depend on it                                              | Medium           | High            | Domain package                                            |
+| Fee & Finance          | Fee plans, payments, receipts, discounts, refunds, due tracking              |        High | FeePlan, Payment, Receipt, Refund                 | Enrollment, Certificate, Corporate invoicing                               | High             | Very High       | Core domain package with strict audit                     |
+| Trainer Management     | Trainer profiles, availability, documents, assignments, payment tracking     |      Medium | Trainer, Availability, Assignment, TrainerPayment | Scheduling, Course/Batch                                                   | Medium           | Medium-High     | Domain package                                            |
+| Exam & Completion      | Exams, results, completion approval workflow                                 |        High | Exam, Result, CourseCompletion                    | Attendance, Course rules, Certificate                                      | Medium           | High            | Domain package                                            |
+| Certificate            | Templates, certificate generation, issuance, verification                    | Medium-High | Certificate, CertificateTemplate                  | Completion, Finance, public verification                                   | Medium           | Very High       | Domain package plus public verification app               |
+| Communication          | Templates, logs, SMS, WhatsApp, email                                        |      Medium | CommunicationTemplate, CommunicationLog           | Triggered by lead, payment, enrollment events                              | Medium           | Medium          | Integration package, Phase 2                              |
+| Document Management    | Student/trainer/corporate documents, verification workflow                   |      Medium | Document, DocumentType, Verification              | Student, Trainer, Corporate                                                | Medium           | Medium-High     | Domain package plus object storage                        |
+| Reporting & Analytics  | Operational reports and dashboards                                           |      Medium | ReportDefinition, MetricSnapshot                  | Reads across contexts                                                      | Medium           | Medium          | Read-model/reporting package                              |
+| Audit & Compliance     | Critical action logs, approval history                                       |      Medium | AuditLog, ApprovalLog                             | Cross-cutting                                                              | Medium           | High            | Shared infrastructure and domain package                  |
+| AI Intelligence        | Future insights and intelligence                                             |     Unknown | Future derived data                               | Needs clean historical data                                                | Low now          | Future          | Do not build as separate service yet                      |
 
 ## 3. Context Map Interpretation
 
@@ -331,41 +331,41 @@ Recommended:
 
 ## 6. Context-Level Tech Stack Matrix
 
-| Bounded Context | Domain Type | Criticality | Suggested Architecture | Backend Tech | Database | Integration Style | Deployment Strategy | Reason |
-|---|---|---:|---|---|---|---|---|---|
-| Identity & Access | Generic | High | Platform module | Next.js API + TS package | PostgreSQL | Direct calls | Same app deployment | Dynamic RBAC is shared everywhere |
-| Organization | Supporting | High | Domain module | TS package | PostgreSQL | Direct calls | Same deployment | Stable reference data |
-| Lead & Inquiry | Core | High | Domain module | TS package | PostgreSQL | Direct + events | Same deployment | High workflow value, feeds admission |
-| Admission & Enrollment | Core | Very High | Core domain module | TS package | PostgreSQL | Direct commands + events | Same deployment, extraction-ready | Central aggregate |
-| Corporate Training | Core Phase 2 | High | Domain module | TS package | PostgreSQL | Direct + events | Same deployment initially | Tied to enrollment but may grow |
-| Course & Batch | Core | Very High | Core domain module | TS package | PostgreSQL | Direct commands | Same deployment | Rules, pricing, capacity, waiting list |
-| Walk-In Flow | Core | High | Application flow module | TS package | PostgreSQL via owning contexts | Orchestrated calls | Same deployment | Specialized enrollment/completion flow |
-| Scheduling | Supporting | High | Domain module | TS package | PostgreSQL | Direct calls | Same deployment | Needs transactional conflict checks |
-| Attendance | Supporting | High | Domain module | TS package | PostgreSQL | Events to completion | Same deployment | Completion depends on attendance |
-| Fee & Finance | Core | Very High | Core domain module | TS package | PostgreSQL | Events + future payment adapter | Same deployment, strong audit | Money and receipts require consistency |
-| Trainer Management | Supporting | Medium-High | Domain module | TS package | PostgreSQL | Direct calls | Same deployment | Supports scheduling and payroll later |
-| Exam & Completion | Supporting/Core edge | High | Domain module | TS package | PostgreSQL | Direct + events | Same deployment | Approval workflow affects certificates |
-| Certificate | Core | Very High | Domain module | TS package | PostgreSQL + object storage | Events + public API | Same deployment plus public app | Verification and issuance are business-visible |
-| Communication | Supporting | Medium | Integration module | TS package + worker | PostgreSQL + vendor APIs | Event subscribers | Phase 2 worker | Notifications are side effects |
-| Document Management | Supporting | Medium-High | Domain module | TS package | PostgreSQL + object storage | Direct calls | Same deployment | Verification workflow and file storage |
-| Reporting | Generic | Medium | Read model module | TS package + worker | PostgreSQL snapshots | Event/read queries | Same deployment initially | Avoid slowing operational transactions |
-| Audit & Compliance | Generic | High | Cross-cutting module | TS package | PostgreSQL append-only logs | Event subscribers | Same deployment | Required for sensitive actions |
-| AI Intelligence | Generic future | Future | Separate later | Future AI service or analytics package | Derived store later | Event/read model | Final phase | Do not overbuild now |
+| Bounded Context        | Domain Type          | Criticality | Suggested Architecture  | Backend Tech                           | Database                       | Integration Style               | Deployment Strategy               | Reason                                         |
+| ---------------------- | -------------------- | ----------: | ----------------------- | -------------------------------------- | ------------------------------ | ------------------------------- | --------------------------------- | ---------------------------------------------- |
+| Identity & Access      | Generic              |        High | Platform module         | Next.js API + TS package               | PostgreSQL                     | Direct calls                    | Same app deployment               | Dynamic RBAC is shared everywhere              |
+| Organization           | Supporting           |        High | Domain module           | TS package                             | PostgreSQL                     | Direct calls                    | Same deployment                   | Stable reference data                          |
+| Lead & Inquiry         | Core                 |        High | Domain module           | TS package                             | PostgreSQL                     | Direct + events                 | Same deployment                   | High workflow value, feeds admission           |
+| Admission & Enrollment | Core                 |   Very High | Core domain module      | TS package                             | PostgreSQL                     | Direct commands + events        | Same deployment, extraction-ready | Central aggregate                              |
+| Corporate Training     | Core Phase 2         |        High | Domain module           | TS package                             | PostgreSQL                     | Direct + events                 | Same deployment initially         | Tied to enrollment but may grow                |
+| Course & Batch         | Core                 |   Very High | Core domain module      | TS package                             | PostgreSQL                     | Direct commands                 | Same deployment                   | Rules, pricing, capacity, waiting list         |
+| Walk-In Flow           | Core                 |        High | Application flow module | TS package                             | PostgreSQL via owning contexts | Orchestrated calls              | Same deployment                   | Specialized enrollment/completion flow         |
+| Scheduling             | Supporting           |        High | Domain module           | TS package                             | PostgreSQL                     | Direct calls                    | Same deployment                   | Needs transactional conflict checks            |
+| Attendance             | Supporting           |        High | Domain module           | TS package                             | PostgreSQL                     | Events to completion            | Same deployment                   | Completion depends on attendance               |
+| Fee & Finance          | Core                 |   Very High | Core domain module      | TS package                             | PostgreSQL                     | Events + future payment adapter | Same deployment, strong audit     | Money and receipts require consistency         |
+| Trainer Management     | Supporting           | Medium-High | Domain module           | TS package                             | PostgreSQL                     | Direct calls                    | Same deployment                   | Supports scheduling and payroll later          |
+| Exam & Completion      | Supporting/Core edge |        High | Domain module           | TS package                             | PostgreSQL                     | Direct + events                 | Same deployment                   | Approval workflow affects certificates         |
+| Certificate            | Core                 |   Very High | Domain module           | TS package                             | PostgreSQL + object storage    | Events + public API             | Same deployment plus public app   | Verification and issuance are business-visible |
+| Communication          | Supporting           |      Medium | Integration module      | TS package + worker                    | PostgreSQL + vendor APIs       | Event subscribers               | Phase 2 worker                    | Notifications are side effects                 |
+| Document Management    | Supporting           | Medium-High | Domain module           | TS package                             | PostgreSQL + object storage    | Direct calls                    | Same deployment                   | Verification workflow and file storage         |
+| Reporting              | Generic              |      Medium | Read model module       | TS package + worker                    | PostgreSQL snapshots           | Event/read queries              | Same deployment initially         | Avoid slowing operational transactions         |
+| Audit & Compliance     | Generic              |        High | Cross-cutting module    | TS package                             | PostgreSQL append-only logs    | Event subscribers               | Same deployment                   | Required for sensitive actions                 |
+| AI Intelligence        | Generic future       |      Future | Separate later          | Future AI service or analytics package | Derived store later            | Event/read model                | Final phase                       | Do not overbuild now                           |
 
 ## 7. Decision Criteria
 
-| Criteria | Recommended Stack Fit |
-|---|---|
-| Domain fit | Strong. The modular monolith maps naturally to bounded contexts while preserving Enrollment consistency. |
-| Team skill fit | Strong if the team is comfortable with TypeScript and React. One language reduces handoff friction. |
-| Scalability | Good for expected IMS scale. Can split workers, reporting, and integrations later. |
-| Maintainability | Strong if domain packages enforce boundaries. Weak if all logic leaks into route handlers. |
-| Operational complexity | Low to moderate. Much simpler than microservices. |
-| Cost | Good. PostgreSQL plus one app deployment is cost-efficient. |
-| Ecosystem maturity | Strong. Next.js, React, TypeScript, PostgreSQL, Prisma, and Tailwind are mature enough for this system. |
-| Security | Strong if authorization is enforced in backend services and audit logs are first-class. |
-| Developer productivity | High. Shared types, shared UI, and shared validation help a lot. |
-| Long-term extensibility | Good. Context packages can later become services if business/team needs justify it. |
+| Criteria                | Recommended Stack Fit                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| Domain fit              | Strong. The modular monolith maps naturally to bounded contexts while preserving Enrollment consistency. |
+| Team skill fit          | Strong if the team is comfortable with TypeScript and React. One language reduces handoff friction.      |
+| Scalability             | Good for expected IMS scale. Can split workers, reporting, and integrations later.                       |
+| Maintainability         | Strong if domain packages enforce boundaries. Weak if all logic leaks into route handlers.               |
+| Operational complexity  | Low to moderate. Much simpler than microservices.                                                        |
+| Cost                    | Good. PostgreSQL plus one app deployment is cost-efficient.                                              |
+| Ecosystem maturity      | Strong. Next.js, React, TypeScript, PostgreSQL, Prisma, and Tailwind are mature enough for this system.  |
+| Security                | Strong if authorization is enforced in backend services and audit logs are first-class.                  |
+| Developer productivity  | High. Shared types, shared UI, and shared validation help a lot.                                         |
+| Long-term extensibility | Good. Context packages can later become services if business/team needs justify it.                      |
 
 ## 8. Alternatives Considered
 
@@ -414,18 +414,18 @@ Why:
 
 ## 9. Risks and Trade-offs
 
-| Risk | Impact | Mitigation |
-|---|---|---|
-| API routes become business logic containers | High maintainability risk | Keep route handlers thin and enforce domain package boundaries |
-| Shared database leads to cross-context table coupling | Medium-High | Define owning context per table and expose writes through application services |
-| Monorepo package boundaries are ignored | High | Use lint rules, dependency constraints, and clear public package exports |
-| Finance and certificates lack audit rigor | High | Append audit logs for all payment, refund, discount, receipt, completion, and certificate actions |
-| Effective dating is inconsistently implemented | Medium | Add reusable validity helpers and database constraints where possible |
-| Reporting queries slow operational workflows | Medium | Use snapshots/read models for heavy dashboards |
-| Payment gateway added too late without abstraction | Medium | Define Finance payment interfaces early, even while Phase 1 is manual payment |
-| Vendor lock-in through deployment platform | Medium | Containerize app and workers; avoid platform-only assumptions in domain code |
-| Configurable permissions become hard to reason about | Medium | Create permission naming conventions and test access-control rules |
-| Walk-in flow duplicates enrollment logic | High | Implement Walk-In as orchestration over Enrollment, Finance, Completion, and Certificate contexts |
+| Risk                                                  | Impact                    | Mitigation                                                                                        |
+| ----------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------- |
+| API routes become business logic containers           | High maintainability risk | Keep route handlers thin and enforce domain package boundaries                                    |
+| Shared database leads to cross-context table coupling | Medium-High               | Define owning context per table and expose writes through application services                    |
+| Monorepo package boundaries are ignored               | High                      | Use lint rules, dependency constraints, and clear public package exports                          |
+| Finance and certificates lack audit rigor             | High                      | Append audit logs for all payment, refund, discount, receipt, completion, and certificate actions |
+| Effective dating is inconsistently implemented        | Medium                    | Add reusable validity helpers and database constraints where possible                             |
+| Reporting queries slow operational workflows          | Medium                    | Use snapshots/read models for heavy dashboards                                                    |
+| Payment gateway added too late without abstraction    | Medium                    | Define Finance payment interfaces early, even while Phase 1 is manual payment                     |
+| Vendor lock-in through deployment platform            | Medium                    | Containerize app and workers; avoid platform-only assumptions in domain code                      |
+| Configurable permissions become hard to reason about  | Medium                    | Create permission naming conventions and test access-control rules                                |
+| Walk-in flow duplicates enrollment logic              | High                      | Implement Walk-In as orchestration over Enrollment, Finance, Completion, and Certificate contexts |
 
 ## 10. Final Recommendation
 
@@ -505,12 +505,12 @@ Scores are qualitative, from 1 to 5:
 
 Because team size, target load, deployment platform, and compliance requirements are not fully specified, these scores should be treated as directional rather than mathematically precise.
 
-| Option | Domain Fit | Maintainability | Scalability | Operational Simplicity | Cost | Developer Productivity | Long-Term Extensibility | Total / 35 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Recommended: Next.js TypeScript modular monolith | 5 | 4 | 4 | 5 | 5 | 5 | 4 | 32 |
-| Next.js frontend + NestJS backend modular monolith | 5 | 5 | 4 | 4 | 4 | 4 | 5 | 31 |
-| Microservices from day 1 | 3 | 3 | 5 | 2 | 2 | 3 | 5 | 23 |
-| Laravel/Django monolith | 4 | 4 | 3 | 5 | 5 | 3 | 3 | 27 |
+| Option                                             | Domain Fit | Maintainability | Scalability | Operational Simplicity | Cost | Developer Productivity | Long-Term Extensibility | Total / 35 |
+| -------------------------------------------------- | ---------: | --------------: | ----------: | ---------------------: | ---: | ---------------------: | ----------------------: | ---------: |
+| Recommended: Next.js TypeScript modular monolith   |          5 |               4 |           4 |                      5 |    5 |                      5 |                       4 |         32 |
+| Next.js frontend + NestJS backend modular monolith |          5 |               5 |           4 |                      4 |    4 |                      4 |                       5 |         31 |
+| Microservices from day 1                           |          3 |               3 |           5 |                      2 |    2 |                      3 |                       5 |         23 |
+| Laravel/Django monolith                            |          4 |               4 |           3 |                      5 |    5 |                      3 |                       3 |         27 |
 
 ### Matrix Interpretation
 

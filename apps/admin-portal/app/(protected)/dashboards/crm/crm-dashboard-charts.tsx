@@ -12,7 +12,7 @@ import {
   PieChart,
   Pie,
   Cell,
-  Legend
+  Legend,
 } from 'recharts';
 import { chartColors, chartTones } from '@ims/shared-ui';
 
@@ -23,20 +23,27 @@ interface BarChartProps {
 export function LeadsByStageChart({ data }: BarChartProps) {
   return (
     <ResponsiveContainer width="100%" height={280}>
-      <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-        <XAxis 
-          dataKey="stage" 
-          stroke="#94a3b8" 
-          fontSize={12} 
-          tickLine={false} 
-          axisLine={false} 
+      <BarChart
+        data={data}
+        margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+      >
+        <CartesianGrid
+          strokeDasharray="3 3"
+          vertical={false}
+          stroke="#e2e8f0"
         />
-        <YAxis 
-          stroke="#94a3b8" 
-          fontSize={12} 
-          tickLine={false} 
-          axisLine={false} 
+        <XAxis
+          dataKey="stage"
+          stroke="#94a3b8"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+        />
+        <YAxis
+          stroke="#94a3b8"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
           allowDecimals={false}
         />
         <Tooltip
@@ -48,10 +55,10 @@ export function LeadsByStageChart({ data }: BarChartProps) {
           }}
           labelStyle={{ fontWeight: 'bold', color: '#1e293b' }}
         />
-        <Bar 
-          dataKey="count" 
-          fill={chartColors.primary} 
-          radius={[6, 6, 0, 0]} 
+        <Bar
+          dataKey="count"
+          fill={chartColors.primary}
+          radius={[6, 6, 0, 0]}
           maxBarSize={45}
         />
       </BarChart>
@@ -78,7 +85,10 @@ export function LeadsBySourceChart({ data }: PieChartProps) {
           paddingAngle={4}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={chartTones[index % chartTones.length]} />
+            <Cell
+              key={`cell-${index}`}
+              fill={chartTones[index % chartTones.length]}
+            />
           ))}
         </Pie>
         <Tooltip
@@ -89,11 +99,15 @@ export function LeadsBySourceChart({ data }: PieChartProps) {
             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
           }}
         />
-        <Legend 
-          verticalAlign="bottom" 
-          height={36} 
+        <Legend
+          verticalAlign="bottom"
+          height={36}
           iconType="circle"
-          formatter={(value: any) => <span className="text-xs text-slate-600 font-semibold">{value}</span>}
+          formatter={(value: any) => (
+            <span className="text-xs text-slate-600 font-semibold">
+              {value}
+            </span>
+          )}
         />
       </PieChart>
     </ResponsiveContainer>
@@ -101,26 +115,37 @@ export function LeadsBySourceChart({ data }: PieChartProps) {
 }
 
 interface CounselorPerformanceProps {
-  data: Array<{ counselorId: string | null; counselorName: string; convertedCount: number }>;
+  data: Array<{
+    counselorId: string | null;
+    counselorName: string;
+    convertedCount: number;
+  }>;
 }
 
 export function CounselorPerformanceChart({ data }: CounselorPerformanceProps) {
   return (
     <ResponsiveContainer width="100%" height={280}>
-      <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-        <XAxis 
-          dataKey="counselorName" 
-          stroke="#94a3b8" 
-          fontSize={12} 
-          tickLine={false} 
-          axisLine={false} 
+      <BarChart
+        data={data}
+        margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+      >
+        <CartesianGrid
+          strokeDasharray="3 3"
+          vertical={false}
+          stroke="#e2e8f0"
         />
-        <YAxis 
-          stroke="#94a3b8" 
-          fontSize={12} 
-          tickLine={false} 
-          axisLine={false} 
+        <XAxis
+          dataKey="counselorName"
+          stroke="#94a3b8"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+        />
+        <YAxis
+          stroke="#94a3b8"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
           allowDecimals={false}
         />
         <Tooltip
@@ -132,10 +157,10 @@ export function CounselorPerformanceChart({ data }: CounselorPerformanceProps) {
           }}
           labelStyle={{ fontWeight: 'bold', color: '#1e293b' }}
         />
-        <Bar 
-          dataKey="convertedCount" 
-          fill={chartColors.success} 
-          radius={[6, 6, 0, 0]} 
+        <Bar
+          dataKey="convertedCount"
+          fill={chartColors.success}
+          radius={[6, 6, 0, 0]}
           maxBarSize={45}
         />
       </BarChart>

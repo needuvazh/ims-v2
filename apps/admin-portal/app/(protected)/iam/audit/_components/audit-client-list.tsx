@@ -74,9 +74,15 @@ const PAGE_SIZE_OPTIONS = [
   { value: '100', label: '100' },
 ];
 
-const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+const collator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
 
-function compareText(a: string | null | undefined, b: string | null | undefined) {
+function compareText(
+  a: string | null | undefined,
+  b: string | null | undefined,
+) {
   return collator.compare(a ?? '', b ?? '');
 }
 
@@ -100,34 +106,43 @@ export function AuditClientList({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentSortBy = searchParams.get('sortBy') ?? initialSortBy ?? 'performedAt';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? initialSortBy ?? 'performedAt';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
 
   const currentAction = searchParams.get('action') ?? initialAction ?? '';
-  const currentEntityType = searchParams.get('entityType') ?? initialEntityType ?? '';
+  const currentEntityType =
+    searchParams.get('entityType') ?? initialEntityType ?? '';
   const currentEntityId = searchParams.get('entityId') ?? initialEntityId ?? '';
-  const currentPerformerId = searchParams.get('performerId') ?? initialPerformerId ?? '';
+  const currentPerformerId =
+    searchParams.get('performerId') ?? initialPerformerId ?? '';
   const currentModule = searchParams.get('module') ?? initialModule ?? '';
-  const currentStartDate = searchParams.get('startDate') ?? initialStartDate ?? '';
+  const currentStartDate =
+    searchParams.get('startDate') ?? initialStartDate ?? '';
   const currentEndDate = searchParams.get('endDate') ?? initialEndDate ?? '';
   const currentPageSize = searchParams.get('pageSize') ?? String(pageSize);
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -148,7 +163,11 @@ export function AuditClientList({
           return compareText(left.branchId, right.branchId) * direction;
         case 'performedAt':
         default:
-          return (new Date(left.performedAt).getTime() - new Date(right.performedAt).getTime()) * direction;
+          return (
+            (new Date(left.performedAt).getTime() -
+              new Date(right.performedAt).getTime()) *
+            direction
+          );
       }
     });
   }, [auditLogs, currentSortBy, currentSortOrder]);
@@ -159,7 +178,11 @@ export function AuditClientList({
       sortable: true,
       sortDirection: currentSortBy === 'performedAt' ? currentSortOrder : null,
       onSort: () => handleSort('performedAt'),
-      render: (item: AuditLogItem) => <span className="whitespace-nowrap text-sm text-slate-600">{new Date(item.performedAt).toLocaleString()}</span>,
+      render: (item: AuditLogItem) => (
+        <span className="whitespace-nowrap text-sm text-slate-600">
+          {new Date(item.performedAt).toLocaleString()}
+        </span>
+      ),
       headerClassName: 'w-[170px]',
     },
     {
@@ -167,7 +190,11 @@ export function AuditClientList({
       sortable: true,
       sortDirection: currentSortBy === 'module' ? currentSortOrder : null,
       onSort: () => handleSort('module'),
-      render: (item: AuditLogItem) => <span className="capitalize text-xs font-semibold text-slate-700">{item.module}</span>,
+      render: (item: AuditLogItem) => (
+        <span className="capitalize text-xs font-semibold text-slate-700">
+          {item.module}
+        </span>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
@@ -175,7 +202,9 @@ export function AuditClientList({
       sortable: true,
       sortDirection: currentSortBy === 'action' ? currentSortOrder : null,
       onSort: () => handleSort('action'),
-      render: (item: AuditLogItem) => <span className="font-mono text-xs text-slate-600">{item.action}</span>,
+      render: (item: AuditLogItem) => (
+        <span className="font-mono text-xs text-slate-600">{item.action}</span>
+      ),
     },
     {
       header: 'Entity',
@@ -183,7 +212,10 @@ export function AuditClientList({
       sortDirection: currentSortBy === 'entityType' ? currentSortOrder : null,
       onSort: () => handleSort('entityType'),
       render: (item: AuditLogItem) => (
-        <span className="font-mono text-xs text-slate-600 truncate max-w-[180px]" title={`${item.entityType}:${item.entityId}`}>
+        <span
+          className="font-mono text-xs text-slate-600 truncate max-w-[180px]"
+          title={`${item.entityType}:${item.entityId}`}
+        >
           {item.entityType}:{item.entityId.substring(0, 8)}...
         </span>
       ),
@@ -195,7 +227,10 @@ export function AuditClientList({
       onSort: () => handleSort('performedBy'),
       render: (item: AuditLogItem) =>
         item.performedBy ? (
-          <Link href={`/iam/users/${item.performedBy}`} className="font-semibold text-[var(--ims-primary)] hover:underline">
+          <Link
+            href={`/iam/users/${item.performedBy}`}
+            className="font-semibold text-[var(--ims-primary)] hover:underline"
+          >
             {item.performedBy.substring(0, 8)}...
           </Link>
         ) : (
@@ -208,13 +243,20 @@ export function AuditClientList({
       sortDirection: currentSortBy === 'branchId' ? currentSortOrder : null,
       onSort: () => handleSort('branchId'),
       render: (item: AuditLogItem) => (
-        <span className="text-sm text-slate-600">{item.branchId ? `Branch (${item.branchId.substring(0, 8)})` : 'All Branches'}</span>
+        <span className="text-sm text-slate-600">
+          {item.branchId
+            ? `Branch (${item.branchId.substring(0, 8)})`
+            : 'All Branches'}
+        </span>
       ),
     },
     {
       header: 'Reason',
       render: (item: AuditLogItem) => (
-        <span className="max-w-[200px] truncate text-sm text-slate-600" title={item.reason ?? ''}>
+        <span
+          className="max-w-[200px] truncate text-sm text-slate-600"
+          title={item.reason ?? ''}
+        >
           {item.reason ?? '—'}
         </span>
       ),
@@ -232,8 +274,12 @@ export function AuditClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{new Date(item.performedAt).toLocaleString()}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{item.action}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {new Date(item.performedAt).toLocaleString()}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {item.action}
+            </p>
           </div>
           <Badge variant="outline">{item.module}</Badge>
         </div>
@@ -242,15 +288,27 @@ export function AuditClientList({
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-2">
             <p className="font-semibold text-[var(--ims-muted)]">Entity</p>
-            <p className="truncate">{item.entityType}:{item.entityId.substring(0, 8)}...</p>
+            <p className="truncate">
+              {item.entityType}:{item.entityId.substring(0, 8)}...
+            </p>
           </div>
           <div>
-            <p className="font-semibold text-[var(--ims-muted)]">Performed By</p>
-            <p className="truncate">{item.performedBy ? item.performedBy.substring(0, 8) + '...' : 'System'}</p>
+            <p className="font-semibold text-[var(--ims-muted)]">
+              Performed By
+            </p>
+            <p className="truncate">
+              {item.performedBy
+                ? item.performedBy.substring(0, 8) + '...'
+                : 'System'}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
-            <p className="truncate">{item.branchId ? `Branch (${item.branchId.substring(0, 8)})` : 'All Branches'}</p>
+            <p className="truncate">
+              {item.branchId
+                ? `Branch (${item.branchId.substring(0, 8)})`
+                : 'All Branches'}
+            </p>
           </div>
           <div className="col-span-2">
             <p className="font-semibold text-[var(--ims-muted)]">Reason</p>
@@ -286,7 +344,9 @@ export function AuditClientList({
           <Input
             name="action"
             value={currentAction}
-            onChange={(e) => updateParams({ action: e.target.value || null, page: '1' })}
+            onChange={(e) =>
+              updateParams({ action: e.target.value || null, page: '1' })
+            }
             placeholder="e.g. iam.user.create"
             className="h-12"
           />
@@ -299,7 +359,9 @@ export function AuditClientList({
           <Input
             name="entityType"
             value={currentEntityType}
-            onChange={(e) => updateParams({ entityType: e.target.value || null, page: '1' })}
+            onChange={(e) =>
+              updateParams({ entityType: e.target.value || null, page: '1' })
+            }
             placeholder="e.g. User"
             className="h-12"
           />
@@ -311,7 +373,9 @@ export function AuditClientList({
           </FormLabel>
           <Select
             value={currentModule}
-            onChange={(e) => updateParams({ module: e.target.value || null, page: '1' })}
+            onChange={(e) =>
+              updateParams({ module: e.target.value || null, page: '1' })
+            }
             options={MODULE_OPTIONS}
             className="h-12"
             placeholder="All Modules"
@@ -327,14 +391,18 @@ export function AuditClientList({
               name="startDate"
               type="date"
               value={currentStartDate}
-              onChange={(e) => updateParams({ startDate: e.target.value || null, page: '1' })}
+              onChange={(e) =>
+                updateParams({ startDate: e.target.value || null, page: '1' })
+              }
               className="h-12 flex-1"
             />
             <Input
               name="endDate"
               type="date"
               value={currentEndDate}
-              onChange={(e) => updateParams({ endDate: e.target.value || null, page: '1' })}
+              onChange={(e) =>
+                updateParams({ endDate: e.target.value || null, page: '1' })
+              }
               className="h-12 flex-1"
             />
           </div>
@@ -347,7 +415,9 @@ export function AuditClientList({
           <Input
             name="performerId"
             value={currentPerformerId}
-            onChange={(e) => updateParams({ performerId: e.target.value || null, page: '1' })}
+            onChange={(e) =>
+              updateParams({ performerId: e.target.value || null, page: '1' })
+            }
             placeholder="UUID"
             className="h-12"
           />
@@ -360,7 +430,9 @@ export function AuditClientList({
           <Input
             name="entityId"
             value={currentEntityId}
-            onChange={(e) => updateParams({ entityId: e.target.value || null, page: '1' })}
+            onChange={(e) =>
+              updateParams({ entityId: e.target.value || null, page: '1' })
+            }
             placeholder="UUID"
             className="h-12"
           />
@@ -372,7 +444,9 @@ export function AuditClientList({
           </FormLabel>
           <Select
             value={currentPageSize}
-            onChange={(e) => updateParams({ pageSize: e.target.value || null, page: '1' })}
+            onChange={(e) =>
+              updateParams({ pageSize: e.target.value || null, page: '1' })
+            }
             options={PAGE_SIZE_OPTIONS}
             className="h-12"
           />

@@ -21,7 +21,11 @@ type Props = {
  * The calling page controls visibility — render this component only when the
  * actor has the `student.merge` permission.
  */
-export function MergeProfileModal({ survivorProfileId, survivorStudentNumber, onClose }: Props) {
+export function MergeProfileModal({
+  survivorProfileId,
+  survivorStudentNumber,
+  onClose,
+}: Props) {
   const router = useRouter();
   const [sourceProfileId, setSourceProfileId] = useState('');
   const [mergeReason, setMergeReason] = useState('');
@@ -68,10 +72,14 @@ export function MergeProfileModal({ survivorProfileId, survivorStudentNumber, on
             <GitMerge className="h-5 w-5 text-red-600" />
           </div>
           <div>
-            <h2 className="text-base font-semibold text-slate-800">Merge Duplicate Profile</h2>
+            <h2 className="text-base font-semibold text-slate-800">
+              Merge Duplicate Profile
+            </h2>
             <p className="text-xs text-slate-500">
               This will permanently merge the source into{' '}
-              <span className="font-mono font-semibold">{survivorStudentNumber}</span>
+              <span className="font-mono font-semibold">
+                {survivorStudentNumber}
+              </span>
             </p>
           </div>
         </div>
@@ -80,9 +88,9 @@ export function MergeProfileModal({ survivorProfileId, survivorStudentNumber, on
         <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700 flex gap-2">
           <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5" />
           <div>
-            <strong>Irreversible action.</strong> All admissions, enrollments, documents, and leads
-            from the source profile will be permanently remapped to the survivor. The source profile
-            will be archived.
+            <strong>Irreversible action.</strong> All admissions, enrollments,
+            documents, and leads from the source profile will be permanently
+            remapped to the survivor. The source profile will be archived.
           </div>
         </div>
 
@@ -119,7 +127,9 @@ export function MergeProfileModal({ survivorProfileId, survivorStudentNumber, on
               placeholder="Describe why these profiles are being merged..."
               className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-red-400"
             />
-            <p className="text-xs text-slate-400 text-right">{mergeReason.length}/500</p>
+            <p className="text-xs text-slate-400 text-right">
+              {mergeReason.length}/500
+            </p>
           </div>
 
           <label className="flex items-start gap-2 cursor-pointer">
@@ -131,7 +141,8 @@ export function MergeProfileModal({ survivorProfileId, survivorStudentNumber, on
               className="mt-0.5 h-4 w-4 rounded border-slate-300 accent-red-600"
             />
             <span className="text-sm text-slate-600">
-              I understand this action is irreversible and has been reviewed with the Branch Manager.
+              I understand this action is irreversible and has been reviewed
+              with the Branch Manager.
             </span>
           </label>
         </div>
@@ -152,7 +163,11 @@ export function MergeProfileModal({ survivorProfileId, survivorStudentNumber, on
             disabled={!canSubmit}
             className="flex-1 h-10 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 disabled:opacity-40 flex items-center justify-center gap-2"
           >
-            {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <GitMerge className="h-3.5 w-3.5" />}
+            {loading ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <GitMerge className="h-3.5 w-3.5" />
+            )}
             {loading ? 'Merging…' : 'Merge Profiles'}
           </button>
         </div>

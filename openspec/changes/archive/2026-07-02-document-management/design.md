@@ -5,6 +5,7 @@ Document evidence is required by admission and enrollment flows, but the actual 
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Define type-safe database schema for the Documents context (`Document`, `DocumentOwner`, and `DocumentVerification` models).
 - Persist `branchId` directly on the `Document` record to ensure robust, leak-proof branch scoping.
 - Redesign the lead conversion input contract using a structured `DocumentCaptureInput` DTO instead of raw URL strings.
@@ -14,6 +15,7 @@ Document evidence is required by admission and enrollment flows, but the actual 
 - Define a document requirements resolver that evaluates course-level overrides and branch rules.
 
 **Non-Goals:**
+
 - Changing certificate or finance document workflows.
 
 ## Decisions
@@ -23,10 +25,10 @@ Document evidence is required by admission and enrollment flows, but the actual 
 - **Redesigned Lead-Conversion Contract:** Upgrade `ConvertLeadSchema` to accept structured document metadata (file keys, file names, document types, and file types) rather than raw URL strings.
 - **Transactional Orchestration:** The `LeadConversionOrchestrator` will call the Documents context's `registerDocuments` service synchronously inside the interactive database transaction, passing the transaction client.
 - **Idempotency in Admission Service:** Update `AdmissionService` and the database repository helper to reuse existing `Person` and `StudentProfile` records if a profile already exists for the email/mobile, avoiding transition errors.
-- **Gate Semantics Split:** 
-  - *Document Lifecycle State:* `Draft`, `Active`, `Expired`, `Replaced`, `Deleted`.
-  - *Verification Outcome:* `Pending`, `Verified`, `Rejected`.
-  - *Resolver Precedence:* Course-level required document types override branch-level defaults.
+- **Gate Semantics Split:**
+  - _Document Lifecycle State:_ `Draft`, `Active`, `Expired`, `Replaced`, `Deleted`.
+  - _Verification Outcome:_ `Pending`, `Verified`, `Rejected`.
+  - _Resolver Precedence:_ Course-level required document types override branch-level defaults.
 
 ## Risks / Trade-offs
 

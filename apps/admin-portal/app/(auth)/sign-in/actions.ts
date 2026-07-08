@@ -4,7 +4,11 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { sessionCookieName } from '@ims/shared-auth';
 import { DomainError } from '@ims/shared-kernel';
-import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '../../lib/observability';
+import {
+  createStructuredLogger,
+  getCurrentRequestContext,
+  withServerActionObservability,
+} from '../../lib/observability';
 import { signInSchema } from './schema';
 
 export type SignInState = {
@@ -16,7 +20,10 @@ export type SignInState = {
   };
 };
 
-export async function signInAction(_prev: SignInState, formData: FormData): Promise<SignInState> {
+export async function signInAction(
+  _prev: SignInState,
+  formData: FormData,
+): Promise<SignInState> {
   const emailInput = formData.get('email');
   const passwordInput = formData.get('password');
   const rememberMe = formData.get('rememberMe') === 'on';
@@ -37,69 +44,102 @@ export async function signInAction(_prev: SignInState, formData: FormData): Prom
     };
   }
 
-  return withServerActionObservability(async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
-    let accessToken: string;
-    let accessTokenExpiresAt = 0;
-    let refreshToken: string;
-    let sessionToken: string;
-    let sessionExpiresAt = 0;
+  return withServerActionObservability(
+    async () => {
+      const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+      let accessToken: string;
+      let accessTokenExpiresAt = 0;
+      let refreshToken: string;
+      let sessionToken: string;
+      let sessionExpiresAt = 0;
 
-    try {
-      const { authService } = await import('../../lib/runtime');
-      const result = await authService.login(parsed.data.email, parsed.data.password, rememberMe);
-      accessToken = result.accessToken;
-      accessTokenExpiresAt = result.accessTokenExpiresAt.getTime();
-      refreshToken = result.refreshToken;
-      sessionToken = await (await import('@ims/shared-auth')).encodeSession(result.session);
-      sessionExpiresAt = result.session.expiresAt;
-      logger.info('auth.signIn.succeeded', { status: 'success' });
-    } catch (err) {
-      const returnValues = {
-        email: parsed.data.email,
-        password: parsed.data.password,
-        rememberMe,
-      };
+      try {
+        const { authService } = await import('../../lib/runtime');
+        const result = await authService.login(
+          parsed.data.email,
+          parsed.data.password,
+          rememberMe,
+        );
+        accessToken = result.accessToken;
+        accessTokenExpiresAt = result.accessTokenExpiresAt.getTime();
+        refreshToken = result.refreshToken;
+        sessionToken = await (
+          await import('@ims/shared-auth')
+        ).encodeSession(result.session);
+        sessionExpiresAt = result.session.expiresAt;
+        logger.info('auth.signIn.succeeded', { status: 'success' });
+      } catch (err) {
+        const returnValues = {
+          email: parsed.data.email,
+          password: parsed.data.password,
+          rememberMe,
+        };
 
-      if (err instanceof Error && (err.name === 'IamError' || 'errorCode' in err)) {
-        const errorMsg = (err as any).messageEn || err.message;
-        logger.warn('auth.signIn.failed', { status: 'failed', message: errorMsg, error: err });
-        return { error: errorMsg, values: returnValues };
+        if (
+          err instanceof Error &&
+          (err.name === 'IamError' || 'errorCode' in err)
+        ) {
+          const errorMsg = (err as any).messageEn || err.message;
+          logger.warn('auth.signIn.failed', {
+            status: 'failed',
+            message: errorMsg,
+            error: err,
+          });
+          return { error: errorMsg, values: returnValues };
+        }
+
+        if (err instanceof DomainError) {
+          logger.warn('auth.signIn.failed', {
+            status: 'failed',
+            message: err.message,
+            error: err,
+          });
+          return { error: err.message, values: returnValues };
+        }
+
+        logger.error('auth.signIn.failed', {
+          status: 'failed',
+          message: 'Unexpected sign-in failure.',
+          error: err as Error,
+        });
+        return {
+          error: 'Something went wrong. Please try again.',
+          values: returnValues,
+        };
       }
 
-      if (err instanceof DomainError) {
-        logger.warn('auth.signIn.failed', { status: 'failed', message: err.message, error: err });
-        return { error: err.message, values: returnValues };
-      }
+      const cookieStore = await cookies();
+      cookieStore.set('ims_access_token', accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/',
+        maxAge: Math.max(
+          0,
+          Math.floor((accessTokenExpiresAt - Date.now()) / 1000),
+        ),
+      });
+      cookieStore.set('ims_refresh_token', refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/',
+        maxAge: Math.max(0, Math.floor((sessionExpiresAt - Date.now()) / 1000)),
+      });
+      cookieStore.set(sessionCookieName, sessionToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/',
+        maxAge: Math.max(0, Math.floor((sessionExpiresAt - Date.now()) / 1000)),
+      });
 
-      logger.error('auth.signIn.failed', { status: 'failed', message: 'Unexpected sign-in failure.', error: err as Error });
-      return { error: 'Something went wrong. Please try again.', values: returnValues };
-    }
-
-    const cookieStore = await cookies();
-    cookieStore.set('ims_access_token', accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/',
-      maxAge: Math.max(0, Math.floor((accessTokenExpiresAt - Date.now()) / 1000)),
-    });
-    cookieStore.set('ims_refresh_token', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/',
-      maxAge: Math.max(0, Math.floor((sessionExpiresAt - Date.now()) / 1000)),
-    });
-    cookieStore.set(sessionCookieName, sessionToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/',
-      maxAge: Math.max(0, Math.floor((sessionExpiresAt - Date.now()) / 1000)),
-    });
-
-    logger.info('auth.signIn.redirect', { status: 'success', route: '/dashboard' });
-    redirect('/dashboard');
-  }, { action: 'auth.signIn', route: '/sign-in' });
+      logger.info('auth.signIn.redirect', {
+        status: 'success',
+        route: '/dashboard',
+      });
+      redirect('/dashboard');
+    },
+    { action: 'auth.signIn', route: '/sign-in' },
+  );
 }

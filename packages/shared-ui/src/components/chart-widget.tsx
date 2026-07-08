@@ -1,7 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from './card';
 import { cn } from '../utils/cn';
 
 export interface ChartWidgetProps {
@@ -51,9 +57,9 @@ export function ChartWidget({
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent className="flex-1 min-h-[300px] w-full flex items-center justify-center p-6 pt-2">
-        <div 
-          className="w-full h-full min-h-[280px] flex items-center justify-center" 
-          role="img" 
+        <div
+          className="w-full h-full min-h-[280px] flex items-center justify-center"
+          role="img"
           aria-label={ariaLabel}
         >
           {children}

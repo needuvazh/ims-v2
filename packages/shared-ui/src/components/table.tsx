@@ -3,12 +3,18 @@ import { cn } from '../utils/cn';
 
 /** Server-compatible Table component system. */
 
-export function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>) {
+export function Table({
+  className,
+  ...props
+}: HTMLAttributes<HTMLTableElement>) {
   return (
     <div className="overflow-hidden rounded-2xl border border-[color:var(--ims-border)] bg-white/70 shadow-sm backdrop-blur-md transition-all duration-300">
       <div className="overflow-x-auto">
         <table
-          className={cn('w-full border-collapse bg-white/40 text-sm', className)}
+          className={cn(
+            'w-full border-collapse bg-white/40 text-sm',
+            className,
+          )}
           {...props}
         />
       </div>
@@ -16,7 +22,10 @@ export function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>)
   );
 }
 
-export function TableCaption({ className, ...props }: HTMLAttributes<HTMLTableCaptionElement>) {
+export function TableCaption({
+  className,
+  ...props
+}: HTMLAttributes<HTMLTableCaptionElement>) {
   return (
     <caption
       className={cn('mb-2 text-sm text-[color:var(--ims-muted)]', className)}
@@ -25,7 +34,10 @@ export function TableCaption({ className, ...props }: HTMLAttributes<HTMLTableCa
   );
 }
 
-export function TableHeader({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
+export function TableHeader({
+  className,
+  ...props
+}: HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <thead
       className={cn(
@@ -37,7 +49,10 @@ export function TableHeader({ className, ...props }: HTMLAttributes<HTMLTableSec
   );
 }
 
-export function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
+export function TableBody({
+  className,
+  ...props
+}: HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <tbody
       className={cn('divide-y divide-[color:var(--ims-border)]', className)}
@@ -46,10 +61,16 @@ export function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSecti
   );
 }
 
-export function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) {
+export function TableRow({
+  className,
+  ...props
+}: HTMLAttributes<HTMLTableRowElement>) {
   return (
     <tr
-      className={cn('transition-all hover:bg-indigo-50/30 hover:scale-[1.002] duration-200', className)}
+      className={cn(
+        'transition-all hover:bg-indigo-50/30 hover:scale-[1.002] duration-200',
+        className,
+      )}
       {...props}
     />
   );
@@ -70,7 +91,10 @@ export function TableHead({
   );
 }
 
-export function TableCell({ className, ...props }: TdHTMLAttributes<HTMLTableCellElement>) {
+export function TableCell({
+  className,
+  ...props
+}: TdHTMLAttributes<HTMLTableCellElement>) {
   return (
     <td
       className={cn('px-4 py-3 text-[color:var(--ims-ink)]', className)}
@@ -81,7 +105,13 @@ export function TableCell({ className, ...props }: TdHTMLAttributes<HTMLTableCel
 
 /** Loading, Empty, Error states */
 
-export function TableLoadingState({ columns = 5, rows = 5 }: { columns?: number; rows?: number }) {
+export function TableLoadingState({
+  columns = 5,
+  rows = 5,
+}: {
+  columns?: number;
+  rows?: number;
+}) {
   return (
     <tbody>
       {Array.from({ length: rows }).map((_, rowIdx) => (
@@ -107,7 +137,10 @@ export function TableEmptyState({
   return (
     <tbody>
       <tr>
-        <td colSpan={colSpan} className="px-4 py-12 text-center text-sm text-[color:var(--ims-muted)]">
+        <td
+          colSpan={colSpan}
+          className="px-4 py-12 text-center text-sm text-[color:var(--ims-muted)]"
+        >
           {message}
         </td>
       </tr>
@@ -125,7 +158,10 @@ export function TableErrorState({
   return (
     <tbody>
       <tr>
-        <td colSpan={colSpan} className="px-4 py-12 text-center text-sm text-[color:var(--ims-error)]">
+        <td
+          colSpan={colSpan}
+          className="px-4 py-12 text-center text-sm text-[color:var(--ims-error)]"
+        >
           {message}
         </td>
       </tr>

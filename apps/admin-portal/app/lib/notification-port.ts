@@ -12,7 +12,10 @@
  */
 
 export interface PasswordResetNotificationPort {
-  sendPasswordResetLink(input: { toEmail: string; resetUrl: string }): Promise<void>;
+  sendPasswordResetLink(input: {
+    toEmail: string;
+    resetUrl: string;
+  }): Promise<void>;
 }
 
 export class ConsolePasswordResetPort implements PasswordResetNotificationPort {

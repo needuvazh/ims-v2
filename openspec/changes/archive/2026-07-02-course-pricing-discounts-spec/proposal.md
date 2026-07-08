@@ -1,6 +1,6 @@
 ## Why
 
-ASTI needs to configure base prices, tax policies, branch-level pricing overrides, completion rules, and discount configurations (percentage or fixed amount) for training courses. 
+ASTI needs to configure base prices, tax policies, branch-level pricing overrides, completion rules, and discount configurations (percentage or fixed amount) for training courses.
 This configuration directly impacts enrollment invoicing, tax calculations, and student graduation eligibility verification.
 
 ## What Changes
@@ -10,6 +10,7 @@ We will introduce pricing, completion rule, and discount models and configuratio
 ## Capabilities
 
 ### New Capabilities
+
 - `course-pricing-discounts`: Covers global/branch-level pricing, discounts configurations, and completion rules.
 
 ### Modified Capabilities

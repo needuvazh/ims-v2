@@ -9,6 +9,7 @@ We will introduce the `Batch` and `Session` models, alongside fully defined sche
 ## Capabilities
 
 ### New Capabilities
+
 - `batch-delivery`: Covers batch card listing, creation/modification wizard steps, capacity control blocks, state-aware seat allocations, FIFO waitlist promotions, trainer scheduling conflict guards, and lifecycle state changes.
 
 ### Modified Capabilities

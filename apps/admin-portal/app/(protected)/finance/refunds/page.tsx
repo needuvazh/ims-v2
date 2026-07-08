@@ -1,6 +1,26 @@
 import { assertPermission, getSession } from '@/lib/auth-guard';
-import { Card, CardHeader, CardContent, PageHeader, ResponsiveDataTable, Badge, Button, StatCard, AdminListPageLayout, EmptyState, DataTableFilter } from '@ims/shared-ui';
-import { Search, RefreshCcw, Eye, Plus, CheckCircle2, Clock3, ArrowDownRight } from 'lucide-react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  PageHeader,
+  ResponsiveDataTable,
+  Badge,
+  Button,
+  StatCard,
+  AdminListPageLayout,
+  EmptyState,
+  DataTableFilter,
+} from '@ims/shared-ui';
+import {
+  Search,
+  RefreshCcw,
+  Eye,
+  Plus,
+  CheckCircle2,
+  Clock3,
+  ArrowDownRight,
+} from 'lucide-react';
 import Link from 'next/link';
 import { hasPermission } from '@ims/shared-auth';
 import { RefundActionsClient } from './_components/refund-actions-client';
@@ -26,7 +46,7 @@ export default async function RefundsListPage(props: {
   const { prisma, branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   // Fetch branches for filter selection
@@ -40,10 +60,12 @@ export default async function RefundsListPage(props: {
     where: {
       branchId: branchFilter ? branchFilter : { in: allowedBranchIds },
       ...(statusFilter ? { status: statusFilter as any } : {}),
-      OR: query ? [
-        { reasonCode: { contains: query, mode: 'insensitive' } },
-        { executionReference: { contains: query, mode: 'insensitive' } },
-      ] : undefined
+      OR: query
+        ? [
+            { reasonCode: { contains: query, mode: 'insensitive' } },
+            { executionReference: { contains: query, mode: 'insensitive' } },
+          ]
+        : undefined,
     },
     orderBy: { createdAt: 'desc' },
     include: {
@@ -51,10 +73,10 @@ export default async function RefundsListPage(props: {
       decider: {
         select: {
           email: true,
-          person: { select: { firstName: true, lastName: true } }
-        }
-      }
-    }
+          person: { select: { firstName: true, lastName: true } },
+        },
+      },
+    },
   });
 
   const totals = refunds.reduce(
@@ -62,7 +84,7 @@ export default async function RefundsListPage(props: {
       acc.total = acc.total + Number(ref.amount);
       return acc;
     },
-    { total: 0 }
+    { total: 0 },
   );
 
   const columns = [
@@ -72,15 +94,19 @@ export default async function RefundsListPage(props: {
         <span className="font-mono font-bold text-slate-600 text-xs">
           {ref.referenceNumber || ref.id.slice(0, 8)}
         </span>
-      )
+      ),
     },
     {
       header: 'Refund Type',
-      render: (ref: any) => <Badge variant="outline">{ref.refundType}</Badge>
+      render: (ref: any) => <Badge variant="outline">{ref.refundType}</Badge>,
     },
     {
       header: 'Reason Code',
-      render: (ref: any) => <span className="text-xs font-semibold text-slate-700">{ref.reasonCode}</span>
+      render: (ref: any) => (
+        <span className="text-xs font-semibold text-slate-700">
+          {ref.reasonCode}
+        </span>
+      ),
     },
     {
       header: 'Amount Refunded',
@@ -88,30 +114,38 @@ export default async function RefundsListPage(props: {
         <span className="font-semibold text-rose-600 font-mono text-xs">
           {Number(ref.amount).toFixed(3)} {ref.currency}
         </span>
-      )
+      ),
     },
     {
       header: 'Requested By',
-      render: (ref: any) => <span className="text-xs text-slate-500">{ref.requestedBy}</span>
+      render: (ref: any) => (
+        <span className="text-xs text-slate-500">{ref.requestedBy}</span>
+      ),
     },
     {
       header: 'Decided By',
       render: (ref: any) => {
         const d = ref.decider;
-        const name = d?.person ? `${d.person.firstName} ${d.person.lastName}`.trim() : d?.email;
-        return <span className="text-xs text-slate-500">{name || 'Pending'}</span>;
-      }
+        const name = d?.person
+          ? `${d.person.firstName} ${d.person.lastName}`.trim()
+          : d?.email;
+        return (
+          <span className="text-xs text-slate-500">{name || 'Pending'}</span>
+        );
+      },
     },
     {
       header: 'Status',
       render: (ref: any) => {
-        let variant: 'success' | 'warning' | 'error' | 'info' | 'outline' = 'outline';
+        let variant: 'success' | 'warning' | 'error' | 'info' | 'outline' =
+          'outline';
         if (ref.status === 'Executed') variant = 'success';
         if (ref.status === 'Approved') variant = 'info';
         if (ref.status === 'Rejected') variant = 'error';
-        if (['Requested', 'UnderReview'].includes(ref.status)) variant = 'warning';
+        if (['Requested', 'UnderReview'].includes(ref.status))
+          variant = 'warning';
         return <Badge variant={variant}>{ref.status}</Badge>;
-      }
+      },
     },
     {
       header: 'Actions',
@@ -133,8 +167,8 @@ export default async function RefundsListPage(props: {
             />
           )}
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const renderCard = (ref: any) => (
@@ -143,7 +177,17 @@ export default async function RefundsListPage(props: {
         <span className="font-mono font-bold text-slate-800">
           {ref.refundNumber}
         </span>
-        <Badge variant={ref.status === 'Executed' ? 'success' : ['Requested', 'UnderReview'].includes(ref.status) ? 'warning' : ref.status === 'Rejected' ? 'error' : 'info'}>
+        <Badge
+          variant={
+            ref.status === 'Executed'
+              ? 'success'
+              : ['Requested', 'UnderReview'].includes(ref.status)
+                ? 'warning'
+                : ref.status === 'Rejected'
+                  ? 'error'
+                  : 'info'
+          }
+        >
           {ref.status}
         </Badge>
       </div>
@@ -156,7 +200,7 @@ export default async function RefundsListPage(props: {
           {Number(ref.amount).toFixed(3)} {ref.currency}
         </span>
       </div>
-      {canApprove && (['Requested', 'Approved'].includes(ref.status)) && (
+      {canApprove && ['Requested', 'Approved'].includes(ref.status) && (
         <div className="pt-2 border-t">
           <RefundActionsClient
             refundId={ref.id}
@@ -166,7 +210,10 @@ export default async function RefundsListPage(props: {
         </div>
       )}
       <div className="pt-2 border-t">
-        <Link href={`/finance/refunds/${ref.id}`} className="inline-flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+        <Link
+          href={`/finance/refunds/${ref.id}`}
+          className="inline-flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium"
+        >
           <Eye className="h-3.5 w-3.5" /> View Details
         </Link>
       </div>
@@ -204,7 +251,10 @@ export default async function RefundsListPage(props: {
             {
               key: 'branchId',
               label: 'Branch',
-              options: branches.map(b => ({ label: b.branchName, value: b.id }))
+              options: branches.map((b) => ({
+                label: b.branchName,
+                value: b.id,
+              })),
             },
             {
               key: 'status',
@@ -215,8 +265,8 @@ export default async function RefundsListPage(props: {
                 { label: 'Approved', value: 'Approved' },
                 { label: 'Executed', value: 'Executed' },
                 { label: 'Rejected', value: 'Rejected' },
-              ]
-            }
+              ],
+            },
           ]}
         />
 

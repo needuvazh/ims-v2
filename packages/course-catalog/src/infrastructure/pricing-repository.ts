@@ -7,7 +7,10 @@ type ConfigStatus = 'Draft' | 'Active' | 'Inactive' | 'Superseded';
 export class CoursePricingRepository implements ICoursePricingRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: Prisma.CoursePricingUncheckedCreateInput, tx?: Prisma.TransactionClient): Promise<CoursePricing> {
+  async create(
+    data: Prisma.CoursePricingUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CoursePricing> {
     const client = tx || this.prisma;
     const record = await client.coursePricing.create({
       data: {
@@ -19,7 +22,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
         batchType: data.batchType,
         currency: data.currency || 'OMR',
         basePrice: data.basePrice,
-        taxPercentage: data.taxPercentage ?? 5.000,
+        taxPercentage: data.taxPercentage ?? 5.0,
         isTaxExempt: data.isTaxExempt ?? false,
         taxExemptionReason: data.taxExemptionReason || null,
         taxExemptionCode: data.taxExemptionCode || null,
@@ -34,7 +37,11 @@ export class CoursePricingRepository implements ICoursePricingRepository {
     return record as CoursePricing;
   }
 
-  async update(id: string, data: Prisma.CoursePricingUncheckedUpdateInput, tx?: Prisma.TransactionClient): Promise<CoursePricing> {
+  async update(
+    id: string,
+    data: Prisma.CoursePricingUncheckedUpdateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CoursePricing> {
     const client = tx || this.prisma;
     const record = await client.coursePricing.update({
       where: { id },
@@ -46,7 +53,10 @@ export class CoursePricingRepository implements ICoursePricingRepository {
     return record as CoursePricing;
   }
 
-  async findById(id: string, tx?: Prisma.TransactionClient): Promise<CoursePricing | null> {
+  async findById(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CoursePricing | null> {
     const client = tx || this.prisma;
     const record = await client.coursePricing.findFirst({
       where: { id, isDeleted: false },
@@ -65,7 +75,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
       startDate: Date;
       endDate?: Date | null;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<CoursePricing[]> {
     const client = tx || this.prisma;
     const whereClause: Prisma.CoursePricingWhereInput = {
@@ -79,13 +89,13 @@ export class CoursePricingRepository implements ICoursePricingRepository {
       isDeleted: false,
       OR: [
         { effectiveEndDate: null },
-        { effectiveEndDate: { gte: filters.startDate } }
-      ]
+        { effectiveEndDate: { gte: filters.startDate } },
+      ],
     };
 
     if (filters.endDate) {
       whereClause.effectiveStartDate = {
-        lte: filters.endDate
+        lte: filters.endDate,
       };
     }
 
@@ -103,7 +113,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
       status?: string;
       activeAt?: Date;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<CoursePricing[]> {
     const client = tx || this.prisma;
     const whereClause: Prisma.CoursePricingWhereInput = { isDeleted: false };
@@ -124,7 +134,7 @@ export class CoursePricingRepository implements ICoursePricingRepository {
       whereClause.effectiveStartDate = { lte: filters.activeAt };
       whereClause.OR = [
         { effectiveEndDate: null },
-        { effectiveEndDate: { gte: filters.activeAt } }
+        { effectiveEndDate: { gte: filters.activeAt } },
       ];
     }
 

@@ -27,13 +27,17 @@ test.describe('responsive layout system', () => {
     for (const width of viewportWidths) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/');
-      await expect(page.getByRole('link', { name: 'Browse Courses' })).toBeVisible();
+      await expect(
+        page.getByRole('link', { name: 'Browse Courses' }),
+      ).toBeVisible();
       await expect(page.getByRole('link', { name: 'About Us' })).toBeVisible();
       await assertNoHorizontalOverflow(page);
     }
   });
 
-  test('admin shell adapts across the standard viewport set', async ({ page }) => {
+  test('admin shell adapts across the standard viewport set', async ({
+    page,
+  }) => {
     await loginAsManager(page);
 
     for (const width of viewportWidths) {
@@ -41,14 +45,20 @@ test.describe('responsive layout system', () => {
       await page.goto('/dashboard');
       await expect(page.getByTestId('dashboard-stats')).toBeVisible();
 
-      const mobileSidebarButton = page.getByRole('button', { name: 'Open sidebar' });
-      const searchButton = page.getByRole('button', { name: 'Search or jump to...' });
+      const mobileSidebarButton = page.getByRole('button', {
+        name: 'Open sidebar',
+      });
+      const searchButton = page.getByRole('button', {
+        name: 'Search or jump to...',
+      });
       if (width < 1024) {
         await expect(mobileSidebarButton).toBeVisible();
         await expect(searchButton).not.toBeVisible();
       } else {
         await expect(mobileSidebarButton).not.toBeVisible();
-        await expect(page.locator('nav[aria-label="Primary navigation"]').first()).toBeVisible();
+        await expect(
+          page.locator('nav[aria-label="Primary navigation"]').first(),
+        ).toBeVisible();
       }
 
       if (width >= 1280) {
@@ -59,13 +69,17 @@ test.describe('responsive layout system', () => {
     }
   });
 
-  test('form pages stack cleanly on mobile and tablet widths', async ({ page }) => {
+  test('form pages stack cleanly on mobile and tablet widths', async ({
+    page,
+  }) => {
     await loginAsManager(page);
 
     for (const width of viewportWidths) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/leads/create');
-      await expect(page.getByRole('heading', { name: 'Create Lead' })).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: 'Create Lead' }),
+      ).toBeVisible();
       await expect(page.getByPlaceholder('Enter first name')).toBeVisible();
       await expect(page.getByPlaceholder('Enter last name')).toBeVisible();
       await assertNoHorizontalOverflow(page);

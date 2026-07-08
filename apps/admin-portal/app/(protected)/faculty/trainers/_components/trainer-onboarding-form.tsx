@@ -2,7 +2,18 @@
 
 import { useMemo, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, UserCheck, UserRoundCheck, Copy, Check, Loader2, User, Briefcase, ArrowRight, AlertCircle } from 'lucide-react';
+import {
+  Search,
+  UserCheck,
+  UserRoundCheck,
+  Copy,
+  Check,
+  Loader2,
+  User,
+  Briefcase,
+  ArrowRight,
+  AlertCircle,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import {
   Badge,
@@ -79,9 +90,14 @@ export function TrainerOnboardingForm({
   const [effectiveEndDate, setEffectiveEndDate] = useState('');
   const [branchId, setBranchId] = useState(initialBranchId);
 
-  const branchLookup = useMemo(() => new Map(branchOptions.map((branch) => [branch.id, branch])), [branchOptions]);
+  const branchLookup = useMemo(
+    () => new Map(branchOptions.map((branch) => [branch.id, branch])),
+    [branchOptions],
+  );
   const selectedBranches = selectedUser
-    ? selectedUser.branchIds.map((branchId) => branchLookup.get(branchId)).filter(Boolean) as BranchOption[]
+    ? (selectedUser.branchIds
+        .map((branchId) => branchLookup.get(branchId))
+        .filter(Boolean) as BranchOption[])
     : [];
 
   const handleSearch = async () => {
@@ -95,7 +111,9 @@ export function TrainerOnboardingForm({
     setLastSearchQuery(query);
     setFocusedResultIndex(-1);
     try {
-      const response = await fetch(`/api/v1/iam/users/search?query=${encodeURIComponent(query)}&pageSize=8`);
+      const response = await fetch(
+        `/api/v1/iam/users/search?query=${encodeURIComponent(query)}&pageSize=8`,
+      );
       const payload = await response.json();
       if (!response.ok) {
         throw new Error(payload.messageEnglish || 'User search failed.');
@@ -103,7 +121,9 @@ export function TrainerOnboardingForm({
 
       setResults(payload.data.items as SearchResult[]);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'User search failed.');
+      toast.error(
+        error instanceof Error ? error.message : 'User search failed.',
+      );
     } finally {
       setIsSearching(false);
     }
@@ -134,7 +154,8 @@ export function TrainerOnboardingForm({
     router.push(`/faculty/trainers/new?userId=${encodeURIComponent(userId)}`);
   };
 
-  const isStep2Valid = trainerType && status && specialization && effectiveStartDate;
+  const isStep2Valid =
+    trainerType && status && specialization && effectiveStartDate;
 
   const handleNext = () => {
     if (step === 1) {
@@ -196,7 +217,9 @@ export function TrainerOnboardingForm({
       toast.success('Trainer profile created.');
       router.push(`/faculty/trainers/${body.data.trainer.id}`);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Unable to save trainer.');
+      toast.error(
+        error instanceof Error ? error.message : 'Unable to save trainer.',
+      );
     } finally {
       setIsSaving(false);
     }
@@ -220,8 +243,13 @@ export function TrainerOnboardingForm({
               <AlertCircle className="h-5 w-5 text-amber-700" />
             </div>
             <div>
-              <h3 className="font-semibold text-amber-900">Trainer Profile Already Exists</h3>
-              <p className="text-xs text-amber-700">This IAM person is already registered as a trainer in the system.</p>
+              <h3 className="font-semibold text-amber-900">
+                Trainer Profile Already Exists
+              </h3>
+              <p className="text-xs text-amber-700">
+                This IAM person is already registered as a trainer in the
+                system.
+              </p>
             </div>
           </div>
         </div>
@@ -230,12 +258,24 @@ export function TrainerOnboardingForm({
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-amber-200">
-                <span className="text-xs font-medium text-amber-700 uppercase tracking-wide">Status</span>
-                <Badge variant={existingTrainer.status === 'Active' ? 'success' : 'warning'}>{existingTrainer.status}</Badge>
+                <span className="text-xs font-medium text-amber-700 uppercase tracking-wide">
+                  Status
+                </span>
+                <Badge
+                  variant={
+                    existingTrainer.status === 'Active' ? 'success' : 'warning'
+                  }
+                >
+                  {existingTrainer.status}
+                </Badge>
               </div>
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-amber-200">
-                <span className="text-xs font-medium text-amber-700 uppercase tracking-wide">Code</span>
-                <code className="text-sm font-mono font-semibold text-amber-900">{existingTrainer.trainerCode}</code>
+                <span className="text-xs font-medium text-amber-700 uppercase tracking-wide">
+                  Code
+                </span>
+                <code className="text-sm font-mono font-semibold text-amber-900">
+                  {existingTrainer.trainerCode}
+                </code>
                 <button
                   type="button"
                   onClick={() => {
@@ -252,7 +292,9 @@ export function TrainerOnboardingForm({
 
             <Button
               variant="outline"
-              onClick={() => router.push(`/faculty/trainers/${existingTrainer.id}`)}
+              onClick={() =>
+                router.push(`/faculty/trainers/${existingTrainer.id}`)
+              }
               className="shrink-0 border-amber-300 bg-white text-amber-800 hover:bg-amber-50 hover:border-amber-400"
             >
               Open Trainer Profile
@@ -265,7 +307,10 @@ export function TrainerOnboardingForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-4 sm:space-y-5 lg:space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full space-y-4 sm:space-y-5 lg:space-y-6"
+    >
       {errorMsg && (
         <Alert variant="error" title="Form Validation Error">
           {errorMsg}
@@ -278,12 +323,16 @@ export function TrainerOnboardingForm({
           <div className="flex items-center gap-2">
             <span
               className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
-                step === 1 ? 'bg-indigo-600 text-white' : 'bg-green-100 text-green-700'
+                step === 1
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-green-100 text-green-700'
               }`}
             >
               {step > 1 ? '✓' : '1'}
             </span>
-            <span className={`text-sm font-semibold ${step === 1 ? 'text-slate-800' : 'text-slate-400'}`}>
+            <span
+              className={`text-sm font-semibold ${step === 1 ? 'text-slate-800' : 'text-slate-400'}`}
+            >
               Select IAM Person
             </span>
           </div>
@@ -291,17 +340,23 @@ export function TrainerOnboardingForm({
           <div className="flex items-center gap-2">
             <span
               className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
-                step === 2 ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'
+                step === 2
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-slate-100 text-slate-500'
               }`}
             >
               2
             </span>
-            <span className={`text-sm font-semibold ${step === 2 ? 'text-slate-800' : 'text-slate-400'}`}>
+            <span
+              className={`text-sm font-semibold ${step === 2 ? 'text-slate-800' : 'text-slate-400'}`}
+            >
               Trainer Profile Details
             </span>
           </div>
         </div>
-        <div className="text-xs font-medium text-slate-400">Step {step} of 2</div>
+        <div className="text-xs font-medium text-slate-400">
+          Step {step} of 2
+        </div>
       </div>
 
       {step === 1 && (
@@ -313,8 +368,12 @@ export function TrainerOnboardingForm({
                 <UserRoundCheck className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Search IAM Directory</h3>
-                <p className="text-xs text-slate-500">Find an existing IAM user to register as a trainer</p>
+                <h3 className="font-semibold text-slate-800">
+                  Search IAM Directory
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Find an existing IAM user to register as a trainer
+                </p>
               </div>
             </div>
 
@@ -330,9 +389,20 @@ export function TrainerOnboardingForm({
                       leftIcon={<Search className="h-4 w-4" />}
                     />
                   </div>
-                  <Button type="button" onClick={handleSearch} disabled={isSearching} className="shrink-0">
-                    {isSearching ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
-                    <span className="ml-2">{isSearching ? 'Searching...' : 'Search'}</span>
+                  <Button
+                    type="button"
+                    onClick={handleSearch}
+                    disabled={isSearching}
+                    className="shrink-0"
+                  >
+                    {isSearching ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Search className="h-4 w-4" />
+                    )}
+                    <span className="ml-2">
+                      {isSearching ? 'Searching...' : 'Search'}
+                    </span>
                   </Button>
                 </div>
 
@@ -350,13 +420,25 @@ export function TrainerOnboardingForm({
                         }`}
                       >
                         <div className="space-y-1">
-                          <p className="font-semibold text-slate-800">{user.fullName}</p>
+                          <p className="font-semibold text-slate-800">
+                            {user.fullName}
+                          </p>
                           <p className="text-xs text-slate-500">
                             {user.username} &middot; {user.email}
                           </p>
-                          {user.mobile && <p className="text-xs text-slate-400">{user.mobile}</p>}
+                          {user.mobile && (
+                            <p className="text-xs text-slate-400">
+                              {user.mobile}
+                            </p>
+                          )}
                         </div>
-                        <Badge variant={user.status === 'Active' ? 'success' : 'muted'}>{user.status}</Badge>
+                        <Badge
+                          variant={
+                            user.status === 'Active' ? 'success' : 'muted'
+                          }
+                        >
+                          {user.status}
+                        </Badge>
                       </button>
                     ))}
                   </div>
@@ -365,17 +447,35 @@ export function TrainerOnboardingForm({
                 {lastSearchQuery && results.length === 0 && (
                   <Alert variant="warning" title="No IAM profile found">
                     <p className="text-xs mt-1">
-                      No user found for <span className="font-semibold">{lastSearchQuery}</span>. Create the IAM profile first.
+                      No user found for{' '}
+                      <span className="font-semibold">{lastSearchQuery}</span>.
+                      Create the IAM profile first.
                     </p>
                     <div className="flex gap-2 mt-3">
-                      <Button variant="outline" onClick={() => router.push('/iam/users/create')}>Create IAM profile</Button>
-                      <Button variant="ghost" onClick={() => { setSearchTerm(''); setResults([]); setLastSearchQuery(''); }}>Clear</Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => router.push('/iam/users/create')}
+                      >
+                        Create IAM profile
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          setSearchTerm('');
+                          setResults([]);
+                          setLastSearchQuery('');
+                        }}
+                      >
+                        Clear
+                      </Button>
                     </div>
                   </Alert>
                 )}
 
                 {!selectedUser && results.length === 0 && !lastSearchQuery && (
-                  <p className="text-sm text-slate-500">{selectedUserSearchHint}</p>
+                  <p className="text-sm text-slate-500">
+                    {selectedUserSearchHint}
+                  </p>
                 )}
               </div>
             ) : (
@@ -391,8 +491,12 @@ export function TrainerOnboardingForm({
                   <UserCheck className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-800">Selected Person</h3>
-                  <p className="text-xs text-slate-500">Review identity details before proceeding</p>
+                  <h3 className="font-semibold text-slate-800">
+                    Selected Person
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Review identity details before proceeding
+                  </p>
                 </div>
               </div>
 
@@ -400,46 +504,84 @@ export function TrainerOnboardingForm({
                 <div className="space-y-4">
                   <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-base font-semibold text-indigo-600">
-                      {selectedUser.fullName.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}
+                      {selectedUser.fullName
+                        .split(' ')
+                        .map((n) => n[0])
+                        .slice(0, 2)
+                        .join('')
+                        .toUpperCase()}
                     </div>
                     <div className="space-y-1">
-                      <p className="font-semibold text-slate-800">{selectedUser.fullName}</p>
-                      <p className="text-xs text-slate-500">@{selectedUser.username}</p>
+                      <p className="font-semibold text-slate-800">
+                        {selectedUser.fullName}
+                      </p>
+                      <p className="text-xs text-slate-500">
+                        @{selectedUser.username}
+                      </p>
                       <div className="flex flex-wrap gap-2 pt-1">
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{selectedUser.email}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                          {selectedUser.email}
+                        </span>
                         {selectedUser.mobile && (
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{selectedUser.mobile}</span>
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                            {selectedUser.mobile}
+                          </span>
                         )}
-                        <Badge variant={selectedUser.status === 'Active' ? 'success' : 'muted'}>{selectedUser.status}</Badge>
+                        <Badge
+                          variant={
+                            selectedUser.status === 'Active'
+                              ? 'success'
+                              : 'muted'
+                          }
+                        >
+                          {selectedUser.status}
+                        </Badge>
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">IAM Branch Assignments</p>
+                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                      IAM Branch Assignments
+                    </p>
                     <div className="flex flex-wrap gap-2">
-                      {selectedBranches.length > 0 ? selectedBranches.map((branch) => (
-                        <span key={branch.id} className="text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-                          {branch.branchName}
+                      {selectedBranches.length > 0 ? (
+                        selectedBranches.map((branch) => (
+                          <span
+                            key={branch.id}
+                            className="text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
+                          >
+                            {branch.branchName}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">
+                          All branches
                         </span>
-                      )) : (
-                        <span className="text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">All branches</span>
                       )}
                     </div>
                   </div>
 
                   {generatedTrainerCode && (
                     <div className="space-y-2">
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Generated Trainer Code</p>
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                        Generated Trainer Code
+                      </p>
                       <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                        <code className="flex-1 text-sm font-mono font-semibold text-slate-800">{generatedTrainerCode}</code>
+                        <code className="flex-1 text-sm font-mono font-semibold text-slate-800">
+                          {generatedTrainerCode}
+                        </code>
                         <button
                           type="button"
                           onClick={handleCopyTrainerCode}
                           className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-200 hover:text-slate-600"
                           aria-label="Copy trainer code"
                         >
-                          {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+                          {copied ? (
+                            <Check className="h-4 w-4 text-emerald-600" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -448,14 +590,22 @@ export function TrainerOnboardingForm({
               ) : (
                 <div className="flex flex-col items-center justify-center py-8 text-center">
                   <User className="h-12 w-12 text-slate-300 mb-3" />
-                  <p className="text-sm font-medium text-slate-500">No IAM user selected</p>
-                  <p className="text-xs text-slate-400 mt-1">Search and select a user from the directory</p>
+                  <p className="text-sm font-medium text-slate-500">
+                    No IAM user selected
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Search and select a user from the directory
+                  </p>
                 </div>
               )}
             </div>
 
             <div className="flex justify-end pt-4 sm:pt-6">
-              <Button type="button" onClick={handleNext} disabled={!selectedUser}>
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={!selectedUser}
+              >
                 Next: Trainer Profile Details
               </Button>
             </div>
@@ -472,8 +622,12 @@ export function TrainerOnboardingForm({
                 <Briefcase className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Trainer Assignment & Type</h3>
-                <p className="text-xs text-slate-500">Configure branch, trainer type, and engagement status</p>
+                <h3 className="font-semibold text-slate-800">
+                  Trainer Assignment & Type
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Configure branch, trainer type, and engagement status
+                </p>
               </div>
             </div>
 
@@ -497,14 +651,20 @@ export function TrainerOnboardingForm({
                 <FormLabel>Trainer Code</FormLabel>
                 <FormControl>
                   <div className="flex items-center gap-2 h-11 rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4">
-                    <code className="flex-1 text-sm font-mono font-semibold text-slate-800">{generatedTrainerCode}</code>
+                    <code className="flex-1 text-sm font-mono font-semibold text-slate-800">
+                      {generatedTrainerCode}
+                    </code>
                     <button
                       type="button"
                       onClick={handleCopyTrainerCode}
                       className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-200 hover:text-slate-600"
                       aria-label="Copy trainer code"
                     >
-                      {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+                      {copied ? (
+                        <Check className="h-4 w-4 text-emerald-600" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
                     </button>
                   </div>
                 </FormControl>
@@ -554,38 +714,58 @@ export function TrainerOnboardingForm({
                   <UserCheck className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-800">Review Parameters</h3>
-                  <p className="text-xs text-slate-500">Check configured options before submitting</p>
+                  <h3 className="font-semibold text-slate-800">
+                    Review Parameters
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Check configured options before submitting
+                  </p>
                 </div>
               </div>
 
               <div className="space-y-3 text-sm text-slate-600 bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">Name:</span>
-                  <span className="text-slate-800">{selectedUser.fullName}</span>
+                  <span className="text-slate-800">
+                    {selectedUser.fullName}
+                  </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">Branch:</span>
                   <span className="text-slate-800">
-                    {branchOptions.find((b) => b.id === branchId)?.branchName || 'Not set'}
+                    {branchOptions.find((b) => b.id === branchId)?.branchName ||
+                      'Not set'}
                   </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-slate-200/50">
                   <span className="font-medium">Trainer Type:</span>
-                  <span className="text-slate-800">{trainerType || 'Not set'}</span>
+                  <span className="text-slate-800">
+                    {trainerType || 'Not set'}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Status:</span>
-                  <span className="text-slate-800 font-bold">{status || 'Not set'}</span>
+                  <span className="text-slate-800 font-bold">
+                    {status || 'Not set'}
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:justify-between">
-              <Button type="button" variant="outline" onClick={handleBack} className="w-full sm:w-auto">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="w-full sm:w-auto"
+              >
                 Back
               </Button>
-              <Button type="submit" disabled={isSaving || !isStep2Valid} className="w-full sm:w-auto">
+              <Button
+                type="submit"
+                disabled={isSaving || !isStep2Valid}
+                className="w-full sm:w-auto"
+              >
                 {isSaving ? (
                   <div className="flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -605,8 +785,12 @@ export function TrainerOnboardingForm({
                 <Briefcase className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">Professional Information</h3>
-                <p className="text-xs text-slate-500">Specialization, qualifications, and effective dates</p>
+                <h3 className="font-semibold text-slate-800">
+                  Professional Information
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Specialization, qualifications, and effective dates
+                </p>
               </div>
             </div>
 
@@ -637,14 +821,22 @@ export function TrainerOnboardingForm({
               <FormField>
                 <FormLabel required>Effective Start Date</FormLabel>
                 <FormControl>
-                  <Input type="date" value={effectiveStartDate} onChange={(e) => setEffectiveStartDate(e.target.value)} />
+                  <Input
+                    type="date"
+                    value={effectiveStartDate}
+                    onChange={(e) => setEffectiveStartDate(e.target.value)}
+                  />
                 </FormControl>
               </FormField>
 
               <FormField>
                 <FormLabel>Effective End Date</FormLabel>
                 <FormControl>
-                  <Input type="date" value={effectiveEndDate} onChange={(e) => setEffectiveEndDate(e.target.value)} />
+                  <Input
+                    type="date"
+                    value={effectiveEndDate}
+                    onChange={(e) => setEffectiveEndDate(e.target.value)}
+                  />
                 </FormControl>
               </FormField>
             </div>

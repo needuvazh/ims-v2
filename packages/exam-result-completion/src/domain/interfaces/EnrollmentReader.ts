@@ -8,9 +8,11 @@ export interface EnrollmentReader {
     enrollmentStatus: string;
   } | null>;
 
-  getEnrollmentsForBatch(batchId: string): Promise<Array<{
-    id: string;
-    studentProfileId: string;
-    enrollmentStatus: string;
-  }>>;
+  getEnrollmentsForBatch(batchId: string): Promise<
+    Array<{
+      id: string;
+      studentProfileId: string;
+      enrollmentStatus: string;
+    }>
+  >;
 }

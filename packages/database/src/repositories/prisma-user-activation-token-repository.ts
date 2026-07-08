@@ -1,5 +1,8 @@
 import type { PrismaClient } from '@prisma/client';
-import type { IUserActivationTokenRepository, UserActivationTokenDto } from '@ims/identity-access';
+import type {
+  IUserActivationTokenRepository,
+  UserActivationTokenDto,
+} from '@ims/identity-access';
 import type { Uuid } from '@ims/shared-kernel';
 
 export class PrismaUserActivationTokenRepository implements IUserActivationTokenRepository {

@@ -20,9 +20,15 @@ test.describe('Trainer Assignment & Conflict Validation UI Flow', () => {
   test.beforeAll(async () => {
     // Setup seed data for E2E trainer conflict flow
     // Find active trainer, branch, course, classroom
-    const branch = await prisma.branch.findFirst({ where: { isDeleted: false } });
-    const course = await prisma.course.findFirst({ where: { status: 'Published', isDeleted: false } });
-    const classroom = await prisma.classroom.findFirst({ where: { status: 'Active', isDeleted: false } });
+    const branch = await prisma.branch.findFirst({
+      where: { isDeleted: false },
+    });
+    const course = await prisma.course.findFirst({
+      where: { status: 'Published', isDeleted: false },
+    });
+    const classroom = await prisma.classroom.findFirst({
+      where: { status: 'Active', isDeleted: false },
+    });
     const trainerUser = await prisma.user.findFirst({
       where: {
         isDeleted: false,
@@ -124,13 +130,20 @@ test.describe('Trainer Assignment & Conflict Validation UI Flow', () => {
 
   test.afterAll(async () => {
     // Cleanup seed records
-    await prisma.session.deleteMany({ where: { batchId: { in: [batchId, conflictingBatchId] } } });
-    await prisma.batchTrainer.deleteMany({ where: { batchId: { in: [batchId, conflictingBatchId] } } });
-    await prisma.batch.deleteMany({ where: { id: { in: [batchId, conflictingBatchId] } } });
+    await prisma.session.deleteMany({
+      where: { batchId: { in: [batchId, conflictingBatchId] } },
+    });
+    await prisma.batchTrainer.deleteMany({
+      where: { batchId: { in: [batchId, conflictingBatchId] } },
+    });
+    await prisma.batch.deleteMany({
+      where: { id: { in: [batchId, conflictingBatchId] } },
+    });
   });
 
-  test('Should block trainer assignment if schedule conflicts are detected', async ({ page }) => {
-
+  test('Should block trainer assignment if schedule conflicts are detected', async ({
+    page,
+  }) => {
     // 1. Log in
     await login(page, 'manager.riyadh@ims.com');
 
@@ -145,7 +158,7 @@ test.describe('Trainer Assignment & Conflict Validation UI Flow', () => {
     await page.getByRole('button', { name: 'Select Trainer Profile' }).click();
     const trainerUser = await prisma.user.findUnique({
       where: { id: trainerId },
-      select: { email: true }
+      select: { email: true },
     });
     await page.locator('span').filter({ hasText: trainerUser!.email }).click();
 
@@ -154,11 +167,16 @@ test.describe('Trainer Assignment & Conflict Validation UI Flow', () => {
     await page.locator('input[type="date"]').last().fill('2026-11-30');
 
     // 5. Verify that the Conflict Alert and Overlap Grid is rendered
-    const conflictAlert = page.getByText('Trainer has schedule conflicts in the following batches:');
+    const conflictAlert = page.getByText(
+      'Trainer has schedule conflicts in the following batches:',
+    );
     await expect(conflictAlert).toBeVisible();
 
     // Verify overlap details (batch code) is displayed
-    const overlapBatchCell = page.locator('table').getByText(/B-E2E-C-/).first();
+    const overlapBatchCell = page
+      .locator('table')
+      .getByText(/B-E2E-C-/)
+      .first();
     await expect(overlapBatchCell).toBeVisible();
 
     // 6. Verify that the Assign Faculty button is disabled

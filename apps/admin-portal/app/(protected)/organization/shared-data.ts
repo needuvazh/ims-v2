@@ -8,7 +8,8 @@ export async function loadOrganizationData() {
     'organization.department.manage',
     'organization.classroom.manage',
   ]);
-  const { organizationService, userService } = await import('../../lib/runtime');
+  const { organizationService, userService } =
+    await import('../../lib/runtime');
 
   const [
     { items: institutes },
@@ -34,28 +35,32 @@ export async function loadOrganizationData() {
     : classrooms.filter((c) => authorizedBranchIds.includes(c.branchId));
 
   const deptsList = await Promise.all(
-    filteredBranches.map((b) => organizationService.listDepartments(b.id))
+    filteredBranches.map((b) => organizationService.listDepartments(b.id)),
   );
   const departments = deptsList.flat();
 
   const rawHierarchies = await Promise.all(
-    institutes.map(inst => organizationService.getOrganizationHierarchy(inst.id))
+    institutes.map((inst) =>
+      organizationService.getOrganizationHierarchy(inst.id),
+    ),
   );
 
   const hierarchies = !globalScope
-    ? rawHierarchies.map(raw => ({
+    ? rawHierarchies.map((raw) => ({
         ...raw,
         children: (raw.children || []).filter((branch) =>
-          authorizedBranchIds.includes(branch.id)
+          authorizedBranchIds.includes(branch.id),
         ),
       }))
     : rawHierarchies;
 
-  const userOptions = usersList.map((u: { id: string; fullName: string; email: string }) => ({
-    id: u.id,
-    fullName: u.fullName,
-    email: u.email,
-  }));
+  const userOptions = usersList.map(
+    (u: { id: string; fullName: string; email: string }) => ({
+      id: u.id,
+      fullName: u.fullName,
+      email: u.email,
+    }),
+  );
 
   return {
     institutes,

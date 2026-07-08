@@ -1,1 +1,399 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_5_student_management", "label": "Module 5 \u2013 Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L2"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L4"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions", "label": "2. Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L25"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_tags", "label": "Feature Tags", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L27"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_default_test_data_assumptions", "label": "Default Test Data Assumptions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L39"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_student_creation_scenarios", "label": "3. Student Creation Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L63"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_corporate_conversion_scenarios", "label": "4. Corporate Conversion Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L153"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_student_search_and_detail_scenarios", "label": "5. Student Search and Detail Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L181"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_update_validation_scenarios", "label": "6. Update Validation Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L219"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_status_lifecycle_scenarios", "label": "7. Status Lifecycle Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L255"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_archive_and_restore_scenarios", "label": "8. Archive and Restore Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L299"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_id_card_scenarios", "label": "9. ID Card Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L339"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_duplicate_case_scenarios", "label": "10. Duplicate Case Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L376"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_merge_scenarios", "label": "11. Merge Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L410"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_export_and_audit_scenarios", "label": "12. Export and Audit Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L452"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_reporting_scenarios", "label": "13. Reporting Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L489"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_student_portal_scenarios", "label": "14. Student Portal Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L524"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_trainer_portal_scenarios", "label": "15. Trainer Portal Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L549"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_authorization_guard_scenarios", "label": "16. Authorization Guard Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L569"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_branch_isolation_scenarios", "label": "17. Branch Isolation Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L605"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_boundary_and_volume_scenarios", "label": "18. Boundary and Volume Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L680"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_audit_and_notification_scenarios", "label": "19. Audit and Notification Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L728"}, {"id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_final_acceptance_conditions", "label": "20. Final Acceptance Conditions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L759"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_5_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L2", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L4", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L25", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_tags", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L27", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_default_test_data_assumptions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L39", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_student_creation_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L63", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_corporate_conversion_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L153", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_student_search_and_detail_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L181", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_update_validation_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L219", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_status_lifecycle_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L255", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_archive_and_restore_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L299", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_id_card_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L339", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_duplicate_case_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L376", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_merge_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L410", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_export_and_audit_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L452", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_reporting_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L489", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_student_portal_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L524", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_trainer_portal_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L549", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_authorization_guard_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L569", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_branch_isolation_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L605", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_boundary_and_volume_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L680", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_audit_and_notification_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L728", "weight": 1.0}, {"source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_final_acceptance_conditions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L759", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_5_student_management",
+      "label": "Module 5 \u2013 Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L2"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L4"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions",
+      "label": "2. Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_tags",
+      "label": "Feature Tags",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_default_test_data_assumptions",
+      "label": "Default Test Data Assumptions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_student_creation_scenarios",
+      "label": "3. Student Creation Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_corporate_conversion_scenarios",
+      "label": "4. Corporate Conversion Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L153"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_student_search_and_detail_scenarios",
+      "label": "5. Student Search and Detail Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L181"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_update_validation_scenarios",
+      "label": "6. Update Validation Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L219"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_status_lifecycle_scenarios",
+      "label": "7. Status Lifecycle Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L255"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_archive_and_restore_scenarios",
+      "label": "8. Archive and Restore Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L299"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_id_card_scenarios",
+      "label": "9. ID Card Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L339"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_duplicate_case_scenarios",
+      "label": "10. Duplicate Case Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L376"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_merge_scenarios",
+      "label": "11. Merge Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L410"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_export_and_audit_scenarios",
+      "label": "12. Export and Audit Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L452"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_reporting_scenarios",
+      "label": "13. Reporting Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L489"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_student_portal_scenarios",
+      "label": "14. Student Portal Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L524"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_trainer_portal_scenarios",
+      "label": "15. Trainer Portal Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L549"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_authorization_guard_scenarios",
+      "label": "16. Authorization Guard Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L569"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_branch_isolation_scenarios",
+      "label": "17. Branch Isolation Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L605"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_boundary_and_volume_scenarios",
+      "label": "18. Boundary and Volume Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L680"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_audit_and_notification_scenarios",
+      "label": "19. Audit and Notification Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L728"
+    },
+    {
+      "id": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_final_acceptance_conditions",
+      "label": "20. Final Acceptance Conditions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L759"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_5_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_tags",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_conventions",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_default_test_data_assumptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_student_creation_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_corporate_conversion_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_student_search_and_detail_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_update_validation_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L219",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_status_lifecycle_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_archive_and_restore_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_id_card_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L339",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_duplicate_case_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_merge_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L410",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_export_and_audit_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_reporting_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L489",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_student_portal_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L524",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_trainer_portal_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L549",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_authorization_guard_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L569",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_branch_isolation_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L605",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_18_boundary_and_volume_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L680",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_19_audit_and_notification_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L728",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_05_student_management_part_9_bdd_acceptance_criteria_and_test_scenarios_20_final_acceptance_conditions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L759",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

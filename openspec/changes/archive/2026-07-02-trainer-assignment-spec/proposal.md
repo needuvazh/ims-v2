@@ -9,6 +9,7 @@ We will extend the existing `BatchTrainer` mapping, assignment logic, and traine
 ## Capabilities
 
 ### New Capabilities
+
 - `trainer-assignment`: Covers trainer batch assignment, scheduling validation, and conflict display.
 
 ### Modified Capabilities

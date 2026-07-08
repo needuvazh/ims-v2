@@ -74,8 +74,13 @@ export function RealTimeCourseGrid({ limit = 6 }: { limit?: number }) {
   if (error || !data?.courses.length) {
     return (
       <div className="text-center py-12">
-        <p className="text-neutral-500">{error ?? 'No courses available at the moment.'}</p>
-        <Link href="/contact-us" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-accent-600 hover:text-accent-700">
+        <p className="text-neutral-500">
+          {error ?? 'No courses available at the moment.'}
+        </p>
+        <Link
+          href="/contact-us"
+          className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-accent-600 hover:text-accent-700"
+        >
           Contact us for course info <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
@@ -91,7 +96,10 @@ export function RealTimeCourseGrid({ limit = 6 }: { limit?: number }) {
       </div>
       {data.pagination.total > limit && (
         <div className="mt-10 text-center">
-          <Link href="/courses" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-accent-700 transition-colors hover:text-primary-700">
+          <Link
+            href="/courses"
+            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-accent-700 transition-colors hover:text-primary-700"
+          >
             View all {data.pagination.total} courses
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -101,7 +109,13 @@ export function RealTimeCourseGrid({ limit = 6 }: { limit?: number }) {
   );
 }
 
-function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; index: number }) {
+function RealTimeCourseCard({
+  course,
+  index,
+}: {
+  course: PublicCourseListItem;
+  index: number;
+}) {
   const durationLabel = course.durationValue
     ? `${course.durationValue} ${course.durationType.toLowerCase()}${course.durationValue > 1 ? 's' : ''}`
     : 'Flexible';
@@ -139,7 +153,12 @@ function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; i
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-surface-100">
         {normalizedImageUrl ? (
-          <Image src={normalizedImageUrl} alt={course.nameEnglish} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+          <Image
+            src={normalizedImageUrl}
+            alt={course.nameEnglish}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary-100 to-accent-50 flex items-center justify-center">
             <Clock className="h-12 w-12 text-primary-300" />
@@ -147,7 +166,10 @@ function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; i
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-primary-950/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <Link href={`/courses/${course.slug}`} className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md hover:bg-white/30">
+          <Link
+            href={`/courses/${course.slug}`}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md hover:bg-white/30"
+          >
             View Details <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -169,15 +191,27 @@ function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; i
             {priceLabel}
           </span>
         </div>
-        <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-neutral-900 line-clamp-2">{course.nameEnglish}</h3>
+        <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-neutral-900 line-clamp-2">
+          {course.nameEnglish}
+        </h3>
         {course.descriptionEnglish && (
-          <p className="mt-2 text-sm leading-relaxed text-neutral-600 line-clamp-2">{course.descriptionEnglish}</p>
+          <p className="mt-2 text-sm leading-relaxed text-neutral-600 line-clamp-2">
+            {course.descriptionEnglish}
+          </p>
         )}
         <div className="mt-auto pt-5 space-y-3">
           {course.nextBatchDate && (
             <div className="flex items-center gap-2 text-xs text-neutral-600">
               <CalendarIcon className="h-4 w-4 text-primary-600" />
-              <span>Next batch: <strong>{new Date(course.nextBatchDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</strong></span>
+              <span>
+                Next batch:{' '}
+                <strong>
+                  {new Date(course.nextBatchDate).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                  })}
+                </strong>
+              </span>
             </div>
           )}
           {course.availableSeats !== null && course.availableSeats > 0 && (
@@ -193,7 +227,9 @@ function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; i
             </li>
             <li className="flex gap-2">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
-              <span className="line-clamp-1">Industry-recognized certification</span>
+              <span className="line-clamp-1">
+                Industry-recognized certification
+              </span>
             </li>
           </ul>
         </div>
@@ -204,8 +240,22 @@ function RealTimeCourseCard({ course, index }: { course: PublicCourseListItem; i
 
 function CalendarIcon(props: React.ComponentProps<'svg'>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M8 2v4" />
+      <path d="M16 2v4" />
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" />
     </svg>
   );
 }
@@ -227,7 +277,9 @@ export function RealTimeStatStrip() {
   if (loading) {
     return (
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map((_, i) => <StatCardSkeleton key={i} />)}
+        {stats.map((_, i) => (
+          <StatCardSkeleton key={i} />
+        ))}
       </div>
     );
   }
@@ -243,8 +295,12 @@ export function RealTimeStatStrip() {
           transition={{ delay: index * 0.08 }}
           className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
         >
-          <p className="text-3xl font-black tracking-tight text-neutral-950">{stat.value}</p>
-          <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.24em] text-neutral-500">{stat.label}</p>
+          <p className="text-3xl font-black tracking-tight text-neutral-950">
+            {stat.value}
+          </p>
+          <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.24em] text-neutral-500">
+            {stat.label}
+          </p>
         </motion.div>
       ))}
     </div>
@@ -252,7 +308,14 @@ export function RealTimeStatStrip() {
 }
 
 export function RealTimeBatchSchedule() {
-  const [batches, setBatches] = useState<Array<{ courseName: string; startDate: string; branchName: string | null; availableSeats: number }>>([]);
+  const [batches, setBatches] = useState<
+    Array<{
+      courseName: string;
+      startDate: string;
+      branchName: string | null;
+      availableSeats: number;
+    }>
+  >([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -284,7 +347,10 @@ export function RealTimeBatchSchedule() {
     return (
       <div className="space-y-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-2xl border border-border-light bg-white p-5 shimmer h-20" />
+          <div
+            key={i}
+            className="rounded-2xl border border-border-light bg-white p-5 shimmer h-20"
+          />
         ))}
       </div>
     );
@@ -308,16 +374,33 @@ export function RealTimeBatchSchedule() {
               <MapPin className="h-6 w-6 text-primary-700" />
             </div>
             <div>
-              <p className="font-display text-base font-bold text-neutral-900">{batch.courseName}</p>
-              <p className="text-xs text-neutral-500">{batch.branchName ?? 'Main Campus'}</p>
+              <p className="font-display text-base font-bold text-neutral-900">
+                {batch.courseName}
+              </p>
+              <p className="text-xs text-neutral-500">
+                {batch.branchName ?? 'Main Campus'}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-4 sm:gap-6">
             <div className="text-right">
-              <p className="text-sm font-bold text-neutral-900">{new Date(batch.startDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-              <p className="text-xs text-neutral-500">{batch.availableSeats > 0 ? `${batch.availableSeats} seats left` : 'Waitlist'}</p>
+              <p className="text-sm font-bold text-neutral-900">
+                {new Date(batch.startDate).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </p>
+              <p className="text-xs text-neutral-500">
+                {batch.availableSeats > 0
+                  ? `${batch.availableSeats} seats left`
+                  : 'Waitlist'}
+              </p>
             </div>
-            <Link href="/contact-us" className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-accent-600 px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-white hover:bg-accent-700 transition-colors">
+            <Link
+              href="/contact-us"
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-accent-600 px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-white hover:bg-accent-700 transition-colors"
+            >
               Book <ArrowRight className="h-3 w-3" />
             </Link>
           </div>

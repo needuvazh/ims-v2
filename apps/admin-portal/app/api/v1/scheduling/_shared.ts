@@ -21,7 +21,9 @@ export function problemJson(
   );
 }
 
-export function zodInvalidFields(issues: Array<{ path: (string | number)[]; message: string }>) {
+export function zodInvalidFields(
+  issues: Array<{ path: (string | number)[]; message: string }>,
+) {
   return issues.map((issue) => ({
     field: issue.path.join('.') || 'body',
     message: issue.message,

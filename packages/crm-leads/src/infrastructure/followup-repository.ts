@@ -7,8 +7,13 @@ export class FollowUpRepository implements IFollowUpRepository {
 
   async create(
     data: ScheduleFollowUpInput & { leadId: string; counselorId: string },
-    tx?: Prisma.TransactionClient
-  ): Promise<{ id: string; followUpDate: Date; followUpType: string; status: string }> {
+    tx?: Prisma.TransactionClient,
+  ): Promise<{
+    id: string;
+    followUpDate: Date;
+    followUpType: string;
+    status: string;
+  }> {
     const client = tx || this.prisma;
     const followUp = await client.leadFollowUp.create({
       data: {
@@ -30,7 +35,8 @@ export class FollowUpRepository implements IFollowUpRepository {
   }
 
   async findById(id: string, tx?: Prisma.TransactionClient): Promise<any> {
-    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const UUID_REGEX =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!UUID_REGEX.test(id)) {
       return null;
     }
@@ -57,7 +63,7 @@ export class FollowUpRepository implements IFollowUpRepository {
     id: string,
     outcome: string,
     notes: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<void> {
     const client = tx || this.prisma;
     await client.leadFollowUp.update({
@@ -70,7 +76,10 @@ export class FollowUpRepository implements IFollowUpRepository {
     });
   }
 
-  async cancelAllScheduled(leadId: string, tx?: Prisma.TransactionClient): Promise<number> {
+  async cancelAllScheduled(
+    leadId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<number> {
     const client = tx || this.prisma;
     const result = await client.leadFollowUp.updateMany({
       where: {
@@ -85,7 +94,10 @@ export class FollowUpRepository implements IFollowUpRepository {
     return result.count;
   }
 
-  async findAllScheduledOverdue(since: Date, tx?: Prisma.TransactionClient): Promise<any[]> {
+  async findAllScheduledOverdue(
+    since: Date,
+    tx?: Prisma.TransactionClient,
+  ): Promise<any[]> {
     const client = tx || this.prisma;
     return client.leadFollowUp.findMany({
       where: {
@@ -106,7 +118,10 @@ export class FollowUpRepository implements IFollowUpRepository {
     });
   }
 
-  async findAllForLead(leadId: string, tx?: Prisma.TransactionClient): Promise<any[]> {
+  async findAllForLead(
+    leadId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<any[]> {
     const client = tx || this.prisma;
     return client.leadFollowUp.findMany({
       where: { leadId, isDeleted: false },

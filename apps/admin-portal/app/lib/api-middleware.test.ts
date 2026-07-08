@@ -43,7 +43,8 @@ vi.mock('./runtime', () => ({
 
 describe('api middleware session hydration', () => {
   beforeEach(() => {
-    process.env.SESSION_SECRET = 'middleware-test-secret-middleware-test-secret';
+    process.env.SESSION_SECRET =
+      'middleware-test-secret-middleware-test-secret';
     cookiesMock.mockReset();
     headersMock.mockReset();
     verifyAccessTokenMock.mockReset();
@@ -82,9 +83,13 @@ describe('api middleware session hydration', () => {
       expiresAt: Date.now() + 60_000,
     });
 
-    getPermissionsForRolesMock.mockResolvedValue(['crm.leads.read.all', 'lead.read']);
+    getPermissionsForRolesMock.mockResolvedValue([
+      'crm.leads.read.all',
+      'lead.read',
+    ]);
 
-    const cookieHeader = 'ims_access_token=access-token; ims_session=session-token';
+    const cookieHeader =
+      'ims_access_token=access-token; ims_session=session-token';
     cookiesMock.mockReturnValue({
       get: (name: string) => {
         if (name === 'ims_access_token') return { value: 'access-token' };
@@ -104,12 +109,14 @@ describe('api middleware session hydration', () => {
   it('hydrates permissions from roles for decoded sessions', async () => {
     const { withAuth } = await import('./api-middleware');
 
-    const context = await withAuth(new Request('http://localhost/api/v1/crm/leads/123', {
-      headers: {
-        cookie: 'ims_access_token=access-token; ims_session=session-token',
-        authorization: 'Bearer access-token',
-      },
-    }));
+    const context = await withAuth(
+      new Request('http://localhost/api/v1/crm/leads/123', {
+        headers: {
+          cookie: 'ims_access_token=access-token; ims_session=session-token',
+          authorization: 'Bearer access-token',
+        },
+      }),
+    );
 
     expect(context.session.roles).toEqual(['SUPER_ADMIN']);
     expect(context.session.permissions).toContain('crm.leads.read.all');

@@ -52,68 +52,83 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
 export async function POST(request: Request) {
-  return withRouteObservability(request.headers, async () => withPermission(request, 'enrollment.create', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'enrollment.create', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const body = await request.json();
-      const parsed = CreateWalkInRequestSchema.parse(body);
+        try {
+          const body = await request.json();
+          const parsed = CreateWalkInRequestSchema.parse(body);
 
-      const targetBranchId = session.activeBranchId;
-      if (!targetBranchId) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          const targetBranchId = session.activeBranchId;
+          if (!targetBranchId) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      const { branchScopeResolver, enrollmentService } = await import('../../../../../lib/runtime');
+          const { branchScopeResolver, enrollmentService } =
+            await import('../../../../../lib/runtime');
 
-      // Verify branch permission scope
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(targetBranchId as Uuid)) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          // Verify branch permission scope
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(targetBranchId as Uuid)) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      const result = await enrollmentService.createWalkInEnrollment({
-        firstName: parsed.firstName,
-        lastName: parsed.lastName,
-        email: parsed.email || undefined,
-        phone: parsed.phone,
-        nationalId: parsed.nationalId || undefined,
-        courseId: parsed.courseId,
-        batchId: parsed.batchId,
-        branchId: targetBranchId,
-        actorId: session.userId,
-        remarks: parsed.remarks || undefined,
-      });
+          const result = await enrollmentService.createWalkInEnrollment({
+            firstName: parsed.firstName,
+            lastName: parsed.lastName,
+            email: parsed.email || undefined,
+            phone: parsed.phone,
+            nationalId: parsed.nationalId || undefined,
+            courseId: parsed.courseId,
+            batchId: parsed.batchId,
+            branchId: targetBranchId,
+            actorId: session.userId,
+            remarks: parsed.remarks || undefined,
+          });
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          enrollmentId: result.enrollment.id,
-          enrollmentNumber: result.enrollment.enrollmentNumber,
-          enrollmentStatus: result.enrollment.enrollmentStatus,
-        },
-        { status: 201 }
-      );
+          const response = NextResponse.json(
+            {
+              success: true,
+              enrollmentId: result.enrollment.id,
+              enrollmentNumber: result.enrollment.enrollmentNumber,
+              enrollmentStatus: result.enrollment.enrollmentStatus,
+            },
+            { status: 201 },
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/enrollments/walk-in',
-        method: request.method,
-        status: 'success',
-      });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/enrollments/walk-in',
+            method: request.method,
+            status: 'success',
+          });
 
-      return response;
-    } catch (error) {
-      logger.error('api.enrollments.walkin.create.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/enrollments/walk-in' });
+          return response;
+        } catch (error) {
+          logger.error('api.enrollments.walkin.create.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return errorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/enrollments/walk-in' },
+  );
 }

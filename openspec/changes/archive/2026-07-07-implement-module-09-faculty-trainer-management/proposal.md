@@ -16,9 +16,11 @@ ASTI IMS needs Module 09 to manage trainer master data, qualifications, availabi
 ## Capabilities
 
 ### New Capabilities
+
 - `faculty-trainer-management`: End-to-end admin-portal trainer management covering directory, profile, status, qualifications, availability, authorization, compensation, eligibility, assignment references, reports, dashboard, and audit workflows.
 
 ### Modified Capabilities
+
 - `identity-access`: Add trainer-specific permissions, menu visibility, and server-side authorization hooks needed to protect Module 09 routes and actions.
 - `permissions-and-branch-scope`: Extend branch-scope rules to trainer-owned records, branch-restricted trainer search, and compensation confidentiality checks.
 - `reports-dashboards`: Add trainer operational dashboards, report read models, export behavior, and branch-scoped KPI surfaces.

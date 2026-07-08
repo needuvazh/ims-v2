@@ -2,7 +2,13 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import crypto from 'crypto';
 import { InMemoryAuditLogRepository } from '@ims/audit';
 import { RoleService } from './role-service';
-import type { IRoleRepository, IPermissionRepository, IAuditLogRepository, IUserRepository, INotificationRepository } from '../domain/repositories';
+import type {
+  IRoleRepository,
+  IPermissionRepository,
+  IAuditLogRepository,
+  IUserRepository,
+  INotificationRepository,
+} from '../domain/repositories';
 import type { Role } from '../domain/role';
 import type { Permission } from '../domain/permission';
 import type { User } from '../domain/user';
@@ -56,8 +62,21 @@ describe('RoleService', () => {
   const roleStore = new Map<string, Role>();
   const permissionStore = new Map<string, Permission>();
   const rolePermissions = new Map<string, Permission[]>();
-  const userRoles = new Map<string, Array<{ role: Role; status: string; revokedAt: Date | null; revokedBy: string | null; reason: string | null }>>();
-  const notifications: Array<{ type: string; recipientEmail: string; subject: string }> = [];
+  const userRoles = new Map<
+    string,
+    Array<{
+      role: Role;
+      status: string;
+      revokedAt: Date | null;
+      revokedBy: string | null;
+      reason: string | null;
+    }>
+  >();
+  const notifications: Array<{
+    type: string;
+    recipientEmail: string;
+    subject: string;
+  }> = [];
   const userStore = new Map<string, User>();
 
   beforeEach(() => {
@@ -69,16 +88,37 @@ describe('RoleService', () => {
     userStore.clear();
 
     const activeRole = createRole();
-    const systemRole = createRole({ id: 'role-system', roleCode: 'ROLE_SYSTEM', roleName: 'System Role', isSystemRole: true });
-    const activePermission = createPermission({ permissionCode: 'iam.user.read', permissionName: 'Read users' });
-    const inactivePermission = createPermission({ id: 'perm-inactive', permissionCode: 'iam.user.update', permissionName: 'Update users', status: 'Archived' });
+    const systemRole = createRole({
+      id: 'role-system',
+      roleCode: 'ROLE_SYSTEM',
+      roleName: 'System Role',
+      isSystemRole: true,
+    });
+    const activePermission = createPermission({
+      permissionCode: 'iam.user.read',
+      permissionName: 'Read users',
+    });
+    const inactivePermission = createPermission({
+      id: 'perm-inactive',
+      permissionCode: 'iam.user.update',
+      permissionName: 'Update users',
+      status: 'Archived',
+    });
 
     roleStore.set(activeRole.id, activeRole);
     roleStore.set(systemRole.id, systemRole);
     permissionStore.set(activePermission.id, activePermission);
     permissionStore.set(inactivePermission.id, inactivePermission);
     rolePermissions.set(activeRole.id, [activePermission]);
-    userRoles.set('user-1', [{ role: activeRole, status: 'Active', revokedAt: null, revokedBy: null, reason: null }]);
+    userRoles.set('user-1', [
+      {
+        role: activeRole,
+        status: 'Active',
+        revokedAt: null,
+        revokedBy: null,
+        reason: null,
+      },
+    ]);
 
     userStore.set('actor-1', {
       id: 'actor-1' as never,
@@ -117,7 +157,9 @@ describe('RoleService', () => {
 
     roleRepo = {
       findById: async (id) => roleStore.get(id) ?? null,
-      findByCode: async (code) => Array.from(roleStore.values()).find((role) => role.roleCode === code) ?? null,
+      findByCode: async (code) =>
+        Array.from(roleStore.values()).find((role) => role.roleCode === code) ??
+        null,
       create: async (role) => {
         roleStore.set(role.id, role);
         return role;
@@ -126,12 +168,21 @@ describe('RoleService', () => {
         roleStore.set(role.id, role);
         return role;
       },
-      search: async (page, pageSize) => ({ items: Array.from(roleStore.values()).slice(0, pageSize), total: roleStore.size }),
+      search: async (page, pageSize) => ({
+        items: Array.from(roleStore.values()).slice(0, pageSize),
+        total: roleStore.size,
+      }),
       assignRoleToUser: async (userId, roleId) => {
         const role = roleStore.get(roleId);
         if (!role) return;
         const list = userRoles.get(userId) ?? [];
-        list.push({ role, status: 'Active', revokedAt: null, revokedBy: null, reason: null });
+        list.push({
+          role,
+          status: 'Active',
+          revokedAt: null,
+          revokedBy: null,
+          reason: null,
+        });
         userRoles.set(userId, list);
       },
       revokeRoleFromUser: async (userId, roleId, actorId, reason) => {
@@ -154,14 +205,21 @@ describe('RoleService', () => {
       },
       removePermissionFromRole: async (roleId, permissionId) => {
         const list = rolePermissions.get(roleId) ?? [];
-        rolePermissions.set(roleId, list.filter((permission) => permission.id !== permissionId));
+        rolePermissions.set(
+          roleId,
+          list.filter((permission) => permission.id !== permissionId),
+        );
       },
-      listPermissionsForRole: async (roleId) => rolePermissions.get(roleId) ?? [],
+      listPermissionsForRole: async (roleId) =>
+        rolePermissions.get(roleId) ?? [],
     };
 
     permissionRepo = {
       findById: async (id) => permissionStore.get(id) ?? null,
-      findByCode: async (code) => Array.from(permissionStore.values()).find((permission) => permission.permissionCode === code) ?? null,
+      findByCode: async (code) =>
+        Array.from(permissionStore.values()).find(
+          (permission) => permission.permissionCode === code,
+        ) ?? null,
       create: async (permission) => {
         permissionStore.set(permission.id, permission);
         return permission;
@@ -191,7 +249,11 @@ describe('RoleService', () => {
 
     notificationRepo = {
       create: async (notification) => {
-        notifications.push({ type: notification.type, recipientEmail: notification.recipientEmail, subject: notification.subject });
+        notifications.push({
+          type: notification.type,
+          recipientEmail: notification.recipientEmail,
+          subject: notification.subject,
+        });
         return notification;
       },
       update: async (notification) => notification,
@@ -200,18 +262,49 @@ describe('RoleService', () => {
     };
 
     auditRepo = new InMemoryAuditLogRepository();
-    roleService = new RoleService(roleRepo, permissionRepo, auditRepo, userRepo, notificationRepo);
+    roleService = new RoleService(
+      roleRepo,
+      permissionRepo,
+      auditRepo,
+      userRepo,
+      notificationRepo,
+    );
   });
 
   it('creates, updates, and archives roles', async () => {
-    const created = await roleService.createRole({ roleCode: 'ROLE_NEW', roleName: 'New Role', description: null }, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.create'], activeBranchId: null });
+    const created = await roleService.createRole(
+      { roleCode: 'ROLE_NEW', roleName: 'New Role', description: null },
+      {
+        actorId: 'actor-1' as never,
+        actorPermissions: ['iam.role.create'],
+        activeBranchId: null,
+      },
+    );
     expect(created.roleCode).toBe('ROLE_NEW');
 
-    const updated = await roleService.updateRole(created.id, { roleName: 'Updated Role' }, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.update'], activeBranchId: null });
+    const updated = await roleService.updateRole(
+      created.id,
+      { roleName: 'Updated Role' },
+      {
+        actorId: 'actor-1' as never,
+        actorPermissions: ['iam.role.update'],
+        activeBranchId: null,
+      },
+    );
     expect(updated.roleName).toBe('Updated Role');
 
-    await expect(roleService.archiveRole('role-system', { actorId: 'actor-1' as never, actorPermissions: ['iam.role.archive'], activeBranchId: null })).rejects.toMatchObject({ errorCode: 'IAM-VAL-010' });
-    await roleService.archiveRole(created.id, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.archive'], activeBranchId: null });
+    await expect(
+      roleService.archiveRole('role-system', {
+        actorId: 'actor-1' as never,
+        actorPermissions: ['iam.role.archive'],
+        activeBranchId: null,
+      }),
+    ).rejects.toMatchObject({ errorCode: 'IAM-VAL-010' });
+    await roleService.archiveRole(created.id, {
+      actorId: 'actor-1' as never,
+      actorPermissions: ['iam.role.archive'],
+      activeBranchId: null,
+    });
     expect(roleStore.get(created.id)?.status).toBe('Archived');
   });
 
@@ -219,19 +312,45 @@ describe('RoleService', () => {
     const roleId = Array.from(roleStore.values())[0].id;
     const permissionId = Array.from(permissionStore.values())[0].id;
 
-    await roleService.assignPermissionToRole(roleId, permissionId, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.permission.assign'], activeBranchId: null });
-    expect((rolePermissions.get(roleId) ?? []).some((permission) => permission.id === permissionId)).toBe(true);
+    await roleService.assignPermissionToRole(roleId, permissionId, {
+      actorId: 'actor-1' as never,
+      actorPermissions: ['iam.role.permission.assign'],
+      activeBranchId: null,
+    });
+    expect(
+      (rolePermissions.get(roleId) ?? []).some(
+        (permission) => permission.id === permissionId,
+      ),
+    ).toBe(true);
 
-    await roleService.removePermissionFromRole(roleId, permissionId, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.permission.assign'], activeBranchId: null });
-    expect((rolePermissions.get(roleId) ?? []).some((permission) => permission.id === permissionId)).toBe(false);
+    await roleService.removePermissionFromRole(roleId, permissionId, {
+      actorId: 'actor-1' as never,
+      actorPermissions: ['iam.role.permission.assign'],
+      activeBranchId: null,
+    });
+    expect(
+      (rolePermissions.get(roleId) ?? []).some(
+        (permission) => permission.id === permissionId,
+      ),
+    ).toBe(false);
   });
 
   it('assigns a role to a user and creates a notification', async () => {
     const roleId = Array.from(roleStore.values())[0].id;
 
-    await roleService.assignRoleToUser('user-1', roleId, 'reason', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.assign-role'], activeBranchId: null });
+    await roleService.assignRoleToUser('user-1', roleId, 'reason', {
+      actorId: 'actor-1' as never,
+      actorPermissions: ['iam.user.assign-role'],
+      activeBranchId: null,
+    });
 
-    expect(userRoles.get('user-1')?.some((entry) => entry.role.id === roleId && entry.status === 'Active')).toBe(true);
+    expect(
+      userRoles
+        .get('user-1')
+        ?.some(
+          (entry) => entry.role.id === roleId && entry.status === 'Active',
+        ),
+    ).toBe(true);
     expect(notifications).toHaveLength(1);
     expect(notifications[0]?.type).toBe('user.role_assigned');
   });
@@ -239,17 +358,48 @@ describe('RoleService', () => {
   it('assigns and revokes roles for users', async () => {
     const roleId = Array.from(roleStore.values())[0].id;
 
-    await roleService.assignRoleToUser('user-1', roleId, 'reason', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.assign-role'], activeBranchId: null });
-    expect(userRoles.get('user-1')?.some((entry) => entry.role.id === roleId && entry.status === 'Active')).toBe(true);
+    await roleService.assignRoleToUser('user-1', roleId, 'reason', {
+      actorId: 'actor-1' as never,
+      actorPermissions: ['iam.user.assign-role'],
+      activeBranchId: null,
+    });
+    expect(
+      userRoles
+        .get('user-1')
+        ?.some(
+          (entry) => entry.role.id === roleId && entry.status === 'Active',
+        ),
+    ).toBe(true);
 
-    await roleService.removeRoleFromUser('user-1', roleId, 'reason', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.assign-role'], activeBranchId: null });
-    expect(userRoles.get('user-1')?.find((entry) => entry.role.id === roleId)?.status).toBe('Revoked');
+    await roleService.removeRoleFromUser('user-1', roleId, 'reason', {
+      actorId: 'actor-1' as never,
+      actorPermissions: ['iam.user.assign-role'],
+      activeBranchId: null,
+    });
+    expect(
+      userRoles.get('user-1')?.find((entry) => entry.role.id === roleId)
+        ?.status,
+    ).toBe('Revoked');
   });
 
   it('returns assigned permissions and user roles', async () => {
     const roleId = Array.from(roleStore.values())[0].id;
-    expect(await roleService.getRolePermissions(roleId, { actorId: 'actor-1' as never, actorPermissions: ['iam.role.read'], activeBranchId: null })).toHaveLength(1);
-    expect(await roleService.listRolesForUser('user-1', { actorId: 'actor-1' as never, actorPermissions: ['iam.user.read'], activeBranchId: null })).toHaveLength(1);
-    expect(await roleService.listPermissions()).toHaveLength(permissionStore.size);
+    expect(
+      await roleService.getRolePermissions(roleId, {
+        actorId: 'actor-1' as never,
+        actorPermissions: ['iam.role.read'],
+        activeBranchId: null,
+      }),
+    ).toHaveLength(1);
+    expect(
+      await roleService.listRolesForUser('user-1', {
+        actorId: 'actor-1' as never,
+        actorPermissions: ['iam.user.read'],
+        activeBranchId: null,
+      }),
+    ).toHaveLength(1);
+    expect(await roleService.listPermissions()).toHaveLength(
+      permissionStore.size,
+    );
   });
 });

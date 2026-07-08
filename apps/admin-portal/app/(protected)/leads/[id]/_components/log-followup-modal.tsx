@@ -27,26 +27,49 @@ import {
   FormError,
   Checkbox,
 } from '@ims/shared-ui';
-const clientOutcomeSchema = z.object({
-  outcome: z.enum(['Answered', 'Busy', 'SwitchedOff', 'NoResponse', 'NotInterested', 'Interested', 'VisitScheduled']),
-  outcomeNotes: z.string().min(15, 'Outcome notes must contain conversation detail'),
-  scheduleNext: z.boolean(),
-  version: z.number().int('Optimistic concurrency version required'),
-  nextFollowUpDate: z.string().optional().nullable(),
-  nextFollowUpType: z.enum(['Call', 'WhatsApp', 'Email', 'Visit']).optional().nullable(),
-  nextFollowUpAgenda: z.string().max(250).optional().nullable(),
-}).refine((data) => {
-  if (data.scheduleNext) {
-    if (!data.nextFollowUpDate || !data.nextFollowUpType || !data.nextFollowUpAgenda) {
-      return false;
-    }
-    return new Date(data.nextFollowUpDate).getTime() > Date.now() + 300000;
-  }
-  return true;
-}, {
-  message: 'Next follow-up details are mandatory and must be scheduled at least 5 minutes in the future',
-  path: ['nextFollowUpDate'],
-});
+const clientOutcomeSchema = z
+  .object({
+    outcome: z.enum([
+      'Answered',
+      'Busy',
+      'SwitchedOff',
+      'NoResponse',
+      'NotInterested',
+      'Interested',
+      'VisitScheduled',
+    ]),
+    outcomeNotes: z
+      .string()
+      .min(15, 'Outcome notes must contain conversation detail'),
+    scheduleNext: z.boolean(),
+    version: z.number().int('Optimistic concurrency version required'),
+    nextFollowUpDate: z.string().optional().nullable(),
+    nextFollowUpType: z
+      .enum(['Call', 'WhatsApp', 'Email', 'Visit'])
+      .optional()
+      .nullable(),
+    nextFollowUpAgenda: z.string().max(250).optional().nullable(),
+  })
+  .refine(
+    (data) => {
+      if (data.scheduleNext) {
+        if (
+          !data.nextFollowUpDate ||
+          !data.nextFollowUpType ||
+          !data.nextFollowUpAgenda
+        ) {
+          return false;
+        }
+        return new Date(data.nextFollowUpDate).getTime() > Date.now() + 300000;
+      }
+      return true;
+    },
+    {
+      message:
+        'Next follow-up details are mandatory and must be scheduled at least 5 minutes in the future',
+      path: ['nextFollowUpDate'],
+    },
+  );
 
 type OutcomeFormData = z.infer<typeof clientOutcomeSchema>;
 
@@ -95,13 +118,15 @@ export function LogFollowUpModal({
         },
         body: JSON.stringify({
           ...data,
-          nextFollowUpDate: data.nextFollowUpDate ? new Date(data.nextFollowUpDate).toISOString() : null,
+          nextFollowUpDate: data.nextFollowUpDate
+            ? new Date(data.nextFollowUpDate).toISOString()
+            : null,
           version: leadVersion,
         }),
       });
 
       const result = await res.json();
-      
+
       if (!res.ok) {
         throw new Error(result.messageEnglish || 'Failed to log outcome');
       }
@@ -117,10 +142,13 @@ export function LogFollowUpModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => {
-      if (!open) reset();
-      onOpenChange(open);
-    }}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) reset();
+        onOpenChange(open);
+      }}
+    >
       <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
@@ -159,7 +187,9 @@ export function LogFollowUpModal({
           </FormField>
 
           <FormField>
-            <FormLabel htmlFor="outcomeNotes">Outcome Notes (Min 15 chars)</FormLabel>
+            <FormLabel htmlFor="outcomeNotes">
+              Outcome Notes (Min 15 chars)
+            </FormLabel>
             <FormControl>
               <Textarea
                 id="outcomeNotes"
@@ -239,7 +269,9 @@ export function LogFollowUpModal({
               </div>
 
               <FormField>
-                <FormLabel htmlFor="nextFollowUpAgenda">Agenda (Max 250 chars)</FormLabel>
+                <FormLabel htmlFor="nextFollowUpAgenda">
+                  Agenda (Max 250 chars)
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     id="nextFollowUpAgenda"

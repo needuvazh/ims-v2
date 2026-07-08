@@ -3,7 +3,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Eye, Key, KeyRound, Search, ShieldCheck, Users, X } from 'lucide-react';
+import {
+  Eye,
+  Key,
+  KeyRound,
+  Search,
+  ShieldCheck,
+  Users,
+  X,
+} from 'lucide-react';
 import {
   Badge,
   Button,
@@ -21,7 +29,13 @@ import {
 } from '@ims/shared-ui';
 
 type SortOrder = 'asc' | 'desc';
-type SortField = 'permissionCode' | 'moduleCode' | 'featureCode' | 'actionCode' | 'permissionType' | 'status';
+type SortField =
+  | 'permissionCode'
+  | 'moduleCode'
+  | 'featureCode'
+  | 'actionCode'
+  | 'permissionType'
+  | 'status';
 
 type PermissionItem = {
   id: string;
@@ -47,21 +61,34 @@ type PermissionsClientListProps = {
 };
 
 const MODULE_OPTIONS = (permissions: PermissionItem[]) => {
-  const modules = Array.from(new Set(permissions.map((p) => p.moduleCode))).filter(Boolean).sort();
+  const modules = Array.from(new Set(permissions.map((p) => p.moduleCode)))
+    .filter(Boolean)
+    .sort();
   return modules.map((m) => ({ value: m, label: m }));
 };
 
 const TYPE_OPTIONS = (permissions: PermissionItem[]) => {
-  const types = Array.from(new Set(permissions.map((p) => p.permissionType))).filter(Boolean).sort();
+  const types = Array.from(new Set(permissions.map((p) => p.permissionType)))
+    .filter(Boolean)
+    .sort();
   return types.map((t) => ({ value: t, label: t }));
 };
 
 const STATUS_OPTIONS = (permissions: PermissionItem[]) => {
-  const statuses = Array.from(new Set(permissions.map((p) => p.status))).filter(Boolean).sort();
+  const statuses = Array.from(new Set(permissions.map((p) => p.status)))
+    .filter(Boolean)
+    .sort();
   return statuses.map((s) => ({ value: s, label: s }));
 };
 
-const SORT_FIELDS = new Set<SortField>(['permissionCode', 'moduleCode', 'featureCode', 'actionCode', 'permissionType', 'status']);
+const SORT_FIELDS = new Set<SortField>([
+  'permissionCode',
+  'moduleCode',
+  'featureCode',
+  'actionCode',
+  'permissionType',
+  'status',
+]);
 
 function getStatusVariant(status: string) {
   switch (status) {
@@ -75,8 +102,14 @@ function getStatusVariant(status: string) {
   }
 }
 
-function compareNullableText(left: string | null | undefined, right: string | null | undefined) {
-  return new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare(left ?? '', right ?? '');
+function compareNullableText(
+  left: string | null | undefined,
+  right: string | null | undefined,
+) {
+  return new Intl.Collator(undefined, {
+    numeric: true,
+    sensitivity: 'base',
+  }).compare(left ?? '', right ?? '');
 }
 
 export function PermissionsClientList({
@@ -95,35 +128,59 @@ export function PermissionsClientList({
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(initialSearch);
 
-  const moduleOptions = useMemo(() => MODULE_OPTIONS(permissions), [permissions]);
+  const moduleOptions = useMemo(
+    () => MODULE_OPTIONS(permissions),
+    [permissions],
+  );
   const typeOptions = useMemo(() => TYPE_OPTIONS(permissions), [permissions]);
-  const statusOptions = useMemo(() => STATUS_OPTIONS(permissions), [permissions]);
+  const statusOptions = useMemo(
+    () => STATUS_OPTIONS(permissions),
+    [permissions],
+  );
 
-  const currentSortBy = (searchParams.get('sortBy') as SortField | null) ?? (SORT_FIELDS.has(initialSortBy as SortField) ? (initialSortBy as SortField) : 'permissionCode');
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    (searchParams.get('sortBy') as SortField | null) ??
+    (SORT_FIELDS.has(initialSortBy as SortField)
+      ? (initialSortBy as SortField)
+      : 'permissionCode');
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
   const currentModule = searchParams.get('module') ?? initialModule ?? '';
   const currentType = searchParams.get('type') ?? initialType ?? '';
   const currentStatus = searchParams.get('status') ?? initialStatus ?? '';
-  const currentPage = Math.max(parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1, 1);
-  const currentLimit = Math.max(parseInt(searchParams.get('limit') ?? String(initialLimit), 10) || initialLimit || 10, 1);
+  const currentPage = Math.max(
+    parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1,
+    1,
+  );
+  const currentLimit = Math.max(
+    parseInt(searchParams.get('limit') ?? String(initialLimit), 10) ||
+      initialLimit ||
+      10,
+    1,
+  );
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -140,7 +197,8 @@ export function PermissionsClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: SortField) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -165,7 +223,12 @@ export function PermissionsClientList({
           return true;
         }
 
-        return [perm.permissionCode, perm.description, perm.featureCode, perm.actionCode]
+        return [
+          perm.permissionCode,
+          perm.description,
+          perm.featureCode,
+          perm.actionCode,
+        ]
           .filter(Boolean)
           .some((value) => String(value).toLowerCase().includes(q));
       })
@@ -173,32 +236,62 @@ export function PermissionsClientList({
         const direction = currentSortOrder === 'asc' ? 1 : -1;
 
         if (!SORT_FIELDS.has(currentSortBy)) {
-          return compareNullableText(left.permissionCode, right.permissionCode) * direction;
+          return (
+            compareNullableText(left.permissionCode, right.permissionCode) *
+            direction
+          );
         }
 
         switch (currentSortBy) {
           case 'permissionCode':
-            return compareNullableText(left.permissionCode, right.permissionCode) * direction;
+            return (
+              compareNullableText(left.permissionCode, right.permissionCode) *
+              direction
+            );
           case 'moduleCode':
-            return compareNullableText(left.moduleCode, right.moduleCode) * direction;
+            return (
+              compareNullableText(left.moduleCode, right.moduleCode) * direction
+            );
           case 'featureCode':
-            return compareNullableText(left.featureCode, right.featureCode) * direction;
+            return (
+              compareNullableText(left.featureCode, right.featureCode) *
+              direction
+            );
           case 'actionCode':
-            return compareNullableText(left.actionCode, right.actionCode) * direction;
+            return (
+              compareNullableText(left.actionCode, right.actionCode) * direction
+            );
           case 'permissionType':
-            return compareNullableText(left.permissionType, right.permissionType) * direction;
+            return (
+              compareNullableText(left.permissionType, right.permissionType) *
+              direction
+            );
           case 'status':
             return compareNullableText(left.status, right.status) * direction;
           default:
-            return compareNullableText(left.permissionCode, right.permissionCode) * direction;
+            return (
+              compareNullableText(left.permissionCode, right.permissionCode) *
+              direction
+            );
         }
       });
-  }, [permissions, currentSortBy, currentSortOrder, currentModule, currentType, currentStatus, searchParams]);
+  }, [
+    permissions,
+    currentSortBy,
+    currentSortOrder,
+    currentModule,
+    currentType,
+    currentStatus,
+    searchParams,
+  ]);
 
   const total = filteredPermissions.length;
   const totalPages = Math.max(Math.ceil(total / currentLimit), 1);
   const safePage = Math.min(currentPage, totalPages);
-  const paginatedPermissions = filteredPermissions.slice((safePage - 1) * currentLimit, safePage * currentLimit);
+  const paginatedPermissions = filteredPermissions.slice(
+    (safePage - 1) * currentLimit,
+    safePage * currentLimit,
+  );
 
   const stats = {
     total: permissions.length,
@@ -211,14 +304,22 @@ export function PermissionsClientList({
     {
       header: 'Permission Code',
       sortable: true,
-      sortDirection: currentSortBy === 'permissionCode' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'permissionCode' ? currentSortOrder : null,
       onSort: () => handleSort('permissionCode'),
       render: (perm: PermissionItem) => (
         <div className="space-y-1">
-          <Link href={`/iam/permissions/${perm.id}`} className="font-mono text-xs font-semibold text-[color:var(--ims-brand-600)] hover:underline">
+          <Link
+            href={`/iam/permissions/${perm.id}`}
+            className="font-mono text-xs font-semibold text-[color:var(--ims-brand-600)] hover:underline"
+          >
             {perm.permissionCode}
           </Link>
-          {perm.description && <div className="text-xs text-[color:var(--ims-muted)]">{perm.description}</div>}
+          {perm.description && (
+            <div className="text-xs text-[color:var(--ims-muted)]">
+              {perm.description}
+            </div>
+          )}
         </div>
       ),
     },
@@ -227,7 +328,9 @@ export function PermissionsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'moduleCode' ? currentSortOrder : null,
       onSort: () => handleSort('moduleCode'),
-      render: (perm: PermissionItem) => <span className="text-sm text-slate-700">{perm.moduleCode}</span>,
+      render: (perm: PermissionItem) => (
+        <span className="text-sm text-slate-700">{perm.moduleCode}</span>
+      ),
       headerClassName: 'w-[140px]',
     },
     {
@@ -235,7 +338,11 @@ export function PermissionsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'featureCode' ? currentSortOrder : null,
       onSort: () => handleSort('featureCode'),
-      render: (perm: PermissionItem) => <span className="text-sm text-slate-700">{perm.featureCode || '—'}</span>,
+      render: (perm: PermissionItem) => (
+        <span className="text-sm text-slate-700">
+          {perm.featureCode || '—'}
+        </span>
+      ),
       headerClassName: 'w-[140px]',
     },
     {
@@ -243,15 +350,20 @@ export function PermissionsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'actionCode' ? currentSortOrder : null,
       onSort: () => handleSort('actionCode'),
-      render: (perm: PermissionItem) => <span className="text-sm text-slate-700">{perm.actionCode || '—'}</span>,
+      render: (perm: PermissionItem) => (
+        <span className="text-sm text-slate-700">{perm.actionCode || '—'}</span>
+      ),
       headerClassName: 'w-[120px]',
     },
     {
       header: 'Type',
       sortable: true,
-      sortDirection: currentSortBy === 'permissionType' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'permissionType' ? currentSortOrder : null,
       onSort: () => handleSort('permissionType'),
-      render: (perm: PermissionItem) => <span className="text-sm text-slate-700">{perm.permissionType}</span>,
+      render: (perm: PermissionItem) => (
+        <span className="text-sm text-slate-700">{perm.permissionType}</span>
+      ),
       headerClassName: 'w-[120px]',
     },
     {
@@ -259,14 +371,21 @@ export function PermissionsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (perm: PermissionItem) => <Badge variant={getStatusVariant(perm.status)}>{perm.status}</Badge>,
+      render: (perm: PermissionItem) => (
+        <Badge variant={getStatusVariant(perm.status)}>{perm.status}</Badge>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
       header: 'Actions',
       className: 'text-right',
       render: (perm: PermissionItem) => (
-        <Button variant="ghost" size="icon" onClick={() => router.push(`/iam/permissions/${perm.id}`)} title="View permission">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push(`/iam/permissions/${perm.id}`)}
+          title="View permission"
+        >
           <Eye className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
         </Button>
       ),
@@ -279,8 +398,13 @@ export function PermissionsClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{perm.moduleCode}</p>
-            <Link href={`/iam/permissions/${perm.id}`} className="font-mono text-sm font-semibold text-[color:var(--ims-brand-600)] hover:underline">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {perm.moduleCode}
+            </p>
+            <Link
+              href={`/iam/permissions/${perm.id}`}
+              className="font-mono text-sm font-semibold text-[color:var(--ims-brand-600)] hover:underline"
+            >
               {perm.permissionCode}
             </Link>
           </div>
@@ -303,19 +427,28 @@ export function PermissionsClientList({
           </div>
           <div className="col-span-2">
             <p className="font-semibold text-[var(--ims-muted)]">Description</p>
-            <p className="truncate">{perm.description || 'No description provided'}</p>
+            <p className="truncate">
+              {perm.description || 'No description provided'}
+            </p>
           </div>
         </div>
       </CardContent>
       <CardFooter className="p-card-p pt-0">
-        <Button variant="outline" size="sm" className="w-full text-[11px]" onClick={() => router.push(`/iam/permissions/${perm.id}`)}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full text-[11px]"
+          onClick={() => router.push(`/iam/permissions/${perm.id}`)}
+        >
           <Eye className="mr-1.5 h-3.5 w-3.5" /> View Details
         </Button>
       </CardFooter>
     </Card>
   );
 
-  const hasVisibleFilters = Boolean(searchValue || currentModule || currentType || currentStatus);
+  const hasVisibleFilters = Boolean(
+    searchValue || currentModule || currentType || currentStatus,
+  );
 
   return (
     <div className="space-y-4 sm:space-y-5 lg:space-y-6">
@@ -325,20 +458,48 @@ export function PermissionsClientList({
             <ShieldCheck className="h-6 w-6 shrink-0 text-indigo-600 sm:h-8 sm:w-8" />
             Permissions
           </h1>
-          <p className="mt-1 text-sm text-[var(--ims-muted)]">Manage system permissions, modules, and access controls.</p>
+          <p className="mt-1 text-sm text-[var(--ims-muted)]">
+            Manage system permissions, modules, and access controls.
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-5">
-        <StatCard title="Total Permissions" value={stats.total} description="System-wide permissions" icon={<Key className="h-5 w-5" />} tone="indigo" />
-        <StatCard title="Active" value={stats.active} description="Currently enabled" icon={<KeyRound className="h-5 w-5" />} tone="emerald" />
-        <StatCard title="Modules" value={stats.modules} description="Distinct modules" icon={<Users className="h-5 w-5" />} tone="amber" />
-        <StatCard title="Types" value={stats.types} description="Permission categories" icon={<ShieldCheck className="h-5 w-5" />} tone="rose" />
+        <StatCard
+          title="Total Permissions"
+          value={stats.total}
+          description="System-wide permissions"
+          icon={<Key className="h-5 w-5" />}
+          tone="indigo"
+        />
+        <StatCard
+          title="Active"
+          value={stats.active}
+          description="Currently enabled"
+          icon={<KeyRound className="h-5 w-5" />}
+          tone="emerald"
+        />
+        <StatCard
+          title="Modules"
+          value={stats.modules}
+          description="Distinct modules"
+          icon={<Users className="h-5 w-5" />}
+          tone="amber"
+        />
+        <StatCard
+          title="Types"
+          value={stats.types}
+          description="Permission categories"
+          icon={<ShieldCheck className="h-5 w-5" />}
+          tone="rose"
+        />
       </div>
 
       <div className="grid gap-4 xl:grid-cols-6">
         <div className="min-w-0 xl:col-span-2">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Search</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Search
+          </FormLabel>
           <div className="relative">
             <Input
               value={searchValue}
@@ -364,10 +525,14 @@ export function PermissionsClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Module</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Module
+          </FormLabel>
           <Select
             value={currentModule}
-            onChange={(event) => updateParams({ module: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ module: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Modules' }, ...moduleOptions]}
             className="h-12"
             placeholder="All Modules"
@@ -375,10 +540,14 @@ export function PermissionsClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Type</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Type
+          </FormLabel>
           <Select
             value={currentType}
-            onChange={(event) => updateParams({ type: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ type: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Types' }, ...typeOptions]}
             className="h-12"
             placeholder="All Types"
@@ -386,10 +555,14 @@ export function PermissionsClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Status</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Status
+          </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(event) => updateParams({ status: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ status: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Statuses' }, ...statusOptions]}
             className="h-12"
             placeholder="All Statuses"
@@ -397,10 +570,14 @@ export function PermissionsClientList({
         </div>
 
         <div className="min-w-0 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Sort</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Sort
+          </FormLabel>
           <Select
             value={currentSortBy}
-            onChange={(event) => updateParams({ sortBy: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ sortBy: event.target.value, page: '1' })
+            }
             options={[
               { value: 'permissionCode', label: 'Permission Code' },
               { value: 'moduleCode', label: 'Module' },
@@ -415,10 +592,14 @@ export function PermissionsClientList({
         </div>
 
         <div className="min-w-0 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Order</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Order
+          </FormLabel>
           <Select
             value={currentSortOrder}
-            onChange={(event) => updateParams({ sortOrder: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ sortOrder: event.target.value, page: '1' })
+            }
             options={[
               { value: 'asc', label: 'Ascending' },
               { value: 'desc', label: 'Descending' },
@@ -431,12 +612,27 @@ export function PermissionsClientList({
 
       {hasVisibleFilters && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-[color:var(--ims-muted)]">
-          <span className="font-semibold uppercase tracking-[0.18em]">Active filters</span>
+          <span className="font-semibold uppercase tracking-[0.18em]">
+            Active filters
+          </span>
           {searchValue && <Badge variant="muted">Search</Badge>}
           {currentModule && <Badge variant="muted">Module</Badge>}
           {currentType && <Badge variant="muted">Type</Badge>}
           {currentStatus && <Badge variant="muted">Status</Badge>}
-          <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => updateParams({ q: null, module: null, type: null, status: null, page: '1' })}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-7 px-2 text-xs"
+            onClick={() =>
+              updateParams({
+                q: null,
+                module: null,
+                type: null,
+                status: null,
+                page: '1',
+              })
+            }
+          >
             Clear all
           </Button>
         </div>
@@ -456,7 +652,14 @@ export function PermissionsClientList({
         }
       />
 
-      {totalPages > 1 && <Pagination page={safePage} totalPages={totalPages} totalCount={total} limit={currentLimit} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={safePage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={currentLimit}
+        />
+      )}
     </div>
   );
 }

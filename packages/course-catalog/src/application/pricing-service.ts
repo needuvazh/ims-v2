@@ -1,5 +1,8 @@
 import { PrismaClient, Prisma } from '@prisma/client';
-import { ICoursePricingRepository, ICourseDiscountRepository } from '../domain/repositories';
+import {
+  ICoursePricingRepository,
+  ICourseDiscountRepository,
+} from '../domain/repositories';
 import { CoursePricing } from '../domain/course';
 import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
@@ -49,7 +52,13 @@ export interface ResolvedPricingResponse {
 
 export function parseDateOnly(dateInput: string | Date): Date {
   if (dateInput instanceof Date) {
-    return new Date(Date.UTC(dateInput.getUTCFullYear(), dateInput.getUTCMonth(), dateInput.getUTCDate()));
+    return new Date(
+      Date.UTC(
+        dateInput.getUTCFullYear(),
+        dateInput.getUTCMonth(),
+        dateInput.getUTCDate(),
+      ),
+    );
   }
   const parts = dateInput.split('-');
   const year = parseInt(parts[0], 10);
@@ -62,17 +71,27 @@ export function getGstDateAtMidnight(date: Date = new Date()): Date {
   const gstOffset = 4 * 60 * 60 * 1000; // GST is UTC+4
   const gstTime = date.getTime() + gstOffset;
   const gstDate = new Date(gstTime);
-  return new Date(Date.UTC(gstDate.getUTCFullYear(), gstDate.getUTCMonth(), gstDate.getUTCDate()));
+  return new Date(
+    Date.UTC(
+      gstDate.getUTCFullYear(),
+      gstDate.getUTCMonth(),
+      gstDate.getUTCDate(),
+    ),
+  );
 }
 
 export class CoursePricingService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly pricingRepository: ICoursePricingRepository,
-    private readonly discountRepository: ICourseDiscountRepository
+    private readonly discountRepository: ICourseDiscountRepository,
   ) {}
 
-  async createPricingRule(input: CreatePricingRuleInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createPricingRule(
+    input: CreatePricingRuleInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate Course exists
       const courseExists = await activeClient.course.findFirst({
@@ -84,19 +103,21 @@ export class CoursePricingService {
 
       // Normalize date boundaries
       const startDate = parseDateOnly(input.effectiveStartDate);
-      const endDate = input.effectiveEndDate ? parseDateOnly(input.effectiveEndDate) : null;
+      const endDate = input.effectiveEndDate
+        ? parseDateOnly(input.effectiveEndDate)
+        : null;
 
       if (endDate && endDate <= startDate) {
         throw new Error('ERR_CRS_INVALID_DATE_RANGE');
       }
 
       // Tax Exemption Checks
-      let taxPercentage = input.taxPercentage ?? 5.000;
+      let taxPercentage = input.taxPercentage ?? 5.0;
       if (input.isTaxExempt) {
         if (!input.taxExemptionReason || !input.taxExemptionCode) {
           throw new Error('ERR_CRS_TAX_EXEMPTION_METADATA_REQUIRED');
         }
-        taxPercentage = 0.000;
+        taxPercentage = 0.0;
       }
 
       // Round basePrice to 3 decimals (Omani Rial standard)
@@ -114,7 +135,7 @@ export class CoursePricingService {
           startDate,
           endDate,
         },
-        activeClient
+        activeClient,
       );
 
       for (const record of overlaps) {
@@ -122,7 +143,7 @@ export class CoursePricingService {
         if (startDate <= new Date(record.effectiveStartDate)) {
           throw new Error('ERR_CRS_MULTIPLE_ACTIVE_PRICING');
         }
-        
+
         // Sequential Deprecation / Superseding
         const previousEnd = new Date(startDate.getTime() - 24 * 60 * 60 * 1000);
         await this.pricingRepository.update(
@@ -131,7 +152,7 @@ export class CoursePricingService {
             status: 'Superseded',
             effectiveEndDate: previousEnd,
           },
-          activeClient
+          activeClient,
         );
 
         // Log Audit of superseded pricing record
@@ -144,7 +165,10 @@ export class CoursePricingService {
             entityType: 'CoursePricing',
             entityId: record.id,
             action: 'Supersede',
-            oldValue: { status: record.status, effectiveEndDate: record.effectiveEndDate },
+            oldValue: {
+              status: record.status,
+              effectiveEndDate: record.effectiveEndDate,
+            },
             newValue: { status: 'Superseded', effectiveEndDate: previousEnd },
           },
         });
@@ -161,7 +185,7 @@ export class CoursePricingService {
           status: 'Active',
           createdBy: actorId,
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -206,7 +230,11 @@ export class CoursePricingService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async disablePricingRule(id: string, actorId?: string, tx?: Prisma.TransactionClient) {
+  async disablePricingRule(
+    id: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       const record = await this.pricingRepository.findById(id, activeClient);
       if (!record) {
@@ -222,7 +250,7 @@ export class CoursePricingService {
         {
           status: 'Inactive',
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -255,12 +283,14 @@ export class CoursePricingService {
       batchType?: string;
       asOfDate?: Date | string;
     },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<ResolvedPricingResponse> {
     const client = tx || this.prisma;
 
     // Normalise evaluation date to GST Midnight
-    const evaluationDate = filters.asOfDate ? parseDateOnly(filters.asOfDate) : getGstDateAtMidnight();
+    const evaluationDate = filters.asOfDate
+      ? parseDateOnly(filters.asOfDate)
+      : getGstDateAtMidnight();
 
     let resolvedBranchId = filters.branchId || null;
     let resolvedBatchType = filters.batchType || 'Regular';
@@ -283,32 +313,39 @@ export class CoursePricingService {
         status: 'Active',
         activeAt: evaluationDate,
       },
-      client
+      client,
     );
 
     // Apply strict override priority resolution
     // P1: Match batchId override
     let matchingPricing = pricings.find(
-      p => p.customerType === filters.customerType &&
-           p.batchType === resolvedBatchType &&
-           filters.batchId && p.batchId === filters.batchId
+      (p) =>
+        p.customerType === filters.customerType &&
+        p.batchType === resolvedBatchType &&
+        filters.batchId &&
+        p.batchId === filters.batchId,
     );
 
     // P2: Match branchId override, batchId is null
     if (!matchingPricing) {
       matchingPricing = pricings.find(
-        p => p.customerType === filters.customerType &&
-             p.batchType === resolvedBatchType &&
-             !p.batchId && resolvedBranchId && p.branchId === resolvedBranchId
+        (p) =>
+          p.customerType === filters.customerType &&
+          p.batchType === resolvedBatchType &&
+          !p.batchId &&
+          resolvedBranchId &&
+          p.branchId === resolvedBranchId,
       );
     }
 
     // P3: Global fallback, branchId and batchId are null
     if (!matchingPricing) {
       matchingPricing = pricings.find(
-        p => p.customerType === filters.customerType &&
-             p.batchType === resolvedBatchType &&
-             !p.batchId && !p.branchId
+        (p) =>
+          p.customerType === filters.customerType &&
+          p.batchType === resolvedBatchType &&
+          !p.batchId &&
+          !p.branchId,
       );
     }
 
@@ -319,7 +356,8 @@ export class CoursePricingService {
     // Rounding and conversion to raw numbers
     const basePriceNum = Number(matchingPricing.basePrice);
     const taxPercentageNum = Number(matchingPricing.taxPercentage);
-    const totalPrice = Math.round(basePriceNum * (1 + taxPercentageNum / 100) * 1000) / 1000;
+    const totalPrice =
+      Math.round(basePriceNum * (1 + taxPercentageNum / 100) * 1000) / 1000;
 
     // Query active discounts
     const discounts = await this.discountRepository.findAll(
@@ -328,15 +366,16 @@ export class CoursePricingService {
         status: 'Active',
         activeAt: evaluationDate,
       },
-      client
+      client,
     );
 
     // Filter discounts matching target segment and branch/batch scope context
-    const segmentDiscounts = discounts.filter(d => {
+    const segmentDiscounts = discounts.filter((d) => {
       // 1. Customer segment match
       let segmentMatch = false;
       if (filters.customerType === 'Individual') {
-        segmentMatch = d.discountType === 'Individual' || d.discountType === 'EarlyBird';
+        segmentMatch =
+          d.discountType === 'Individual' || d.discountType === 'EarlyBird';
       } else if (filters.customerType === 'Corporate') {
         segmentMatch = d.discountType === 'Corporate';
       } else {
@@ -356,13 +395,18 @@ export class CoursePricingService {
     });
 
     // Resolve discount hierarchy by sorting by priority ascending: Global (0) -> Branch (1) -> Batch (2)
-      const getDiscountPriority = (d: { batchId?: string | null; branchId?: string | null }) => {
+    const getDiscountPriority = (d: {
+      batchId?: string | null;
+      branchId?: string | null;
+    }) => {
       if (d.batchId) return 2;
       if (d.branchId) return 1;
       return 0;
     };
 
-    const sortedDiscounts = [...segmentDiscounts].sort((a, b) => getDiscountPriority(a) - getDiscountPriority(b));
+    const sortedDiscounts = [...segmentDiscounts].sort(
+      (a, b) => getDiscountPriority(a) - getDiscountPriority(b),
+    );
 
     const resolvedDiscountsMap = new Map<string, ResolvedDiscount>();
     for (const d of sortedDiscounts) {
@@ -375,7 +419,8 @@ export class CoursePricingService {
       });
     }
 
-    let pricingSource: 'BatchLevel' | 'BranchLevel' | 'GlobalDefault' = 'GlobalDefault';
+    let pricingSource: 'BatchLevel' | 'BranchLevel' | 'GlobalDefault' =
+      'GlobalDefault';
     if (matchingPricing.batchId) {
       pricingSource = 'BatchLevel';
     } else if (matchingPricing.branchId) {
@@ -394,7 +439,9 @@ export class CoursePricingService {
       taxExemptionCode: matchingPricing.taxExemptionCode,
       currency: matchingPricing.currency,
       totalPrice,
-      effectiveStartDate: matchingPricing.effectiveStartDate.toISOString().split('T')[0],
+      effectiveStartDate: matchingPricing.effectiveStartDate
+        .toISOString()
+        .split('T')[0],
       applicableDiscounts: Array.from(resolvedDiscountsMap.values()),
       pricingSource,
     };

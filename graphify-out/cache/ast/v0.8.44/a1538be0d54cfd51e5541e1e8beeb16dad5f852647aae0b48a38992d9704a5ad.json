@@ -1,0 +1,207 @@
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_certificate_issuance_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "certificate_issuance_spec_certificate_issuance_specification",
+      "label": "certificate-issuance Specification",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "certificate_issuance_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "certificate_issuance_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "certificate_issuance_spec_requirement_view_certificate_ready_enrollments",
+      "label": "Requirement: View Certificate-Ready Enrollments",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "certificate_issuance_spec_scenario_view_ready_enrollment",
+      "label": "Scenario: View ready enrollment",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "certificate_issuance_spec_scenario_blocked_by_completion",
+      "label": "Scenario: Blocked by completion",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "certificate_issuance_spec_scenario_blocked_by_payment",
+      "label": "Scenario: Blocked by payment",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "certificate_issuance_spec_requirement_generate_certificate",
+      "label": "Requirement: Generate Certificate",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "certificate_issuance_spec_scenario_generate_english_certificate_successfully",
+      "label": "Scenario: Generate English certificate successfully",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "certificate_issuance_spec_scenario_prevent_duplicate_active_certificate",
+      "label": "Scenario: Prevent duplicate active certificate",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "certificate_issuance_spec_requirement_issue_certificate",
+      "label": "Requirement: Issue Certificate",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "certificate_issuance_spec_scenario_issue_generated_certificate_successfully",
+      "label": "Scenario: Issue generated certificate successfully",
+      "file_type": "document",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L39"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_certificate_issuance_spec_md",
+      "target": "certificate_issuance_spec_certificate_issuance_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_certificate_issuance_specification",
+      "target": "certificate_issuance_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_certificate_issuance_specification",
+      "target": "certificate_issuance_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirements",
+      "target": "certificate_issuance_spec_requirement_view_certificate_ready_enrollments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirement_view_certificate_ready_enrollments",
+      "target": "certificate_issuance_spec_scenario_view_ready_enrollment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirement_view_certificate_ready_enrollments",
+      "target": "certificate_issuance_spec_scenario_blocked_by_completion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirement_view_certificate_ready_enrollments",
+      "target": "certificate_issuance_spec_scenario_blocked_by_payment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirements",
+      "target": "certificate_issuance_spec_requirement_generate_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirement_generate_certificate",
+      "target": "certificate_issuance_spec_scenario_generate_english_certificate_successfully",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirement_generate_certificate",
+      "target": "certificate_issuance_spec_scenario_prevent_duplicate_active_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirements",
+      "target": "certificate_issuance_spec_requirement_issue_certificate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "certificate_issuance_spec_requirement_issue_certificate",
+      "target": "certificate_issuance_spec_scenario_issue_generated_certificate_successfully",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/certificate-issuance/spec.md",
+      "source_location": "L39",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

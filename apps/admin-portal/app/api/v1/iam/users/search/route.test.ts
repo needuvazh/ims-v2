@@ -17,7 +17,10 @@ vi.mock('../../../../../lib/runtime', () => ({
 
 vi.mock('../../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -31,7 +34,13 @@ describe('iam users search route', () => {
 
   it('returns enriched IAM users when authorized', async () => {
     withPermissionMock.mockImplementation((req, perm, cb) =>
-      cb({ session: { userId: 'user-1', permissions: ['iam.user.read'], activeBranchId: '11111111-1111-1111-1111-111111111111' } }),
+      cb({
+        session: {
+          userId: 'user-1',
+          permissions: ['iam.user.read'],
+          activeBranchId: '11111111-1111-1111-1111-111111111111',
+        },
+      }),
     );
     searchUsersMock.mockResolvedValue({
       items: [{ id: 'user-1' }, { id: 'user-2' }],
@@ -64,7 +73,11 @@ describe('iam users search route', () => {
       });
 
     const { GET } = await import('./route');
-    const response = await GET(new Request('http://localhost/api/v1/iam/users/search?query=trainer&pageSize=8'));
+    const response = await GET(
+      new Request(
+        'http://localhost/api/v1/iam/users/search?query=trainer&pageSize=8',
+      ),
+    );
 
     const body = await response.json();
     expect(response.status).toBe(200);
@@ -81,11 +94,19 @@ describe('iam users search route', () => {
 
   it('rejects invalid search queries', async () => {
     withPermissionMock.mockImplementation((req, perm, cb) =>
-      cb({ session: { userId: 'user-1', permissions: ['iam.user.read'], activeBranchId: null } }),
+      cb({
+        session: {
+          userId: 'user-1',
+          permissions: ['iam.user.read'],
+          activeBranchId: null,
+        },
+      }),
     );
 
     const { GET } = await import('./route');
-    const response = await GET(new Request('http://localhost/api/v1/iam/users/search?query='));
+    const response = await GET(
+      new Request('http://localhost/api/v1/iam/users/search?query='),
+    );
 
     const body = await response.json();
     expect(response.status).toBe(400);

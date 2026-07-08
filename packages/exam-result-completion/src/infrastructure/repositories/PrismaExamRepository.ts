@@ -66,8 +66,8 @@ export class PrismaExamRepository implements ExamRepository {
           where: { id: exam.id },
           update: this.toPrismaUpdate(exam),
           create: this.toPrismaCreate(exam),
-        })
-      )
+        }),
+      ),
     );
   }
 

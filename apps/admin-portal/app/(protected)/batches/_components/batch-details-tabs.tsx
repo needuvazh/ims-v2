@@ -35,7 +35,16 @@ import {
   PlayCircle,
   ClipboardList,
 } from 'lucide-react';
-import { assignTrainerAction, addToWaitlistAction, manualPromoteAction, createSessionAction, skipWaitlistAction, reactivateWaitlistAction, removeWaitlistAction, reorderWaitlistAction } from '../actions';
+import {
+  assignTrainerAction,
+  addToWaitlistAction,
+  manualPromoteAction,
+  createSessionAction,
+  skipWaitlistAction,
+  reactivateWaitlistAction,
+  removeWaitlistAction,
+  reorderWaitlistAction,
+} from '../actions';
 import { openAttendanceSessionAction } from '../../attendance/actions';
 
 interface BatchDetailsTabsProps {
@@ -57,7 +66,8 @@ interface BatchDetailsTabsProps {
 
 function getSessionScheduleTone(session: any) {
   if (session.scheduleStatus === 'Conflict') return 'bg-rose-50/70';
-  if (session.isConflictIgnored || session.overrideReason) return 'bg-amber-50/70';
+  if (session.isConflictIgnored || session.overrideReason)
+    return 'bg-amber-50/70';
   return '';
 }
 
@@ -67,7 +77,14 @@ function getScheduleStatusBadge(session: any) {
   }
 
   if (session.isConflictIgnored || session.overrideReason) {
-    return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Warning</Badge>;
+    return (
+      <Badge
+        variant="outline"
+        className="bg-amber-50 text-amber-700 border-amber-200"
+      >
+        Warning
+      </Badge>
+    );
   }
 
   if (session.scheduleStatus === 'Published') {
@@ -94,12 +111,16 @@ export function BatchDetailsTabs({
   isCoordinator,
 }: BatchDetailsTabsProps) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'sessions' | 'trainers' | 'waitlist' | 'students'>('sessions');
+  const [activeTab, setActiveTab] = useState<
+    'sessions' | 'trainers' | 'waitlist' | 'students'
+  >('sessions');
   const [isPending, startTransition] = useTransition();
 
   // Trainer form state
   const [selectedTrainerId, setSelectedTrainerId] = useState('');
-  const [trainerRole, setTrainerRole] = useState<'Primary' | 'Assistant' | 'Observer'>('Primary');
+  const [trainerRole, setTrainerRole] = useState<
+    'Primary' | 'Assistant' | 'Observer'
+  >('Primary');
   const [trainerFrom, setTrainerFrom] = useState(batchStartDate.split('T')[0]);
   const [trainerTo, setTrainerTo] = useState(batchEndDate.split('T')[0]);
 
@@ -107,7 +128,11 @@ export function BatchDetailsTabs({
   const [conflicts, setConflicts] = useState<any[]>([]);
   const [checkingConflicts, setCheckingConflicts] = useState(false);
 
-  const checkTrainerConflicts = async (trainerId: string, fromDate: string, toDate: string) => {
+  const checkTrainerConflicts = async (
+    trainerId: string,
+    fromDate: string,
+    toDate: string,
+  ) => {
     if (!trainerId) {
       setConflicts([]);
       return;
@@ -115,7 +140,7 @@ export function BatchDetailsTabs({
     setCheckingConflicts(true);
     try {
       const res = await fetch(
-        `/api/v1/batches/${batchId}/trainers/conflicts?trainerId=${trainerId}&assignedFrom=${fromDate}&assignedTo=${toDate}`
+        `/api/v1/batches/${batchId}/trainers/conflicts?trainerId=${trainerId}&assignedFrom=${fromDate}&assignedTo=${toDate}`,
       );
       const json = await res.json();
       if (json.success) {
@@ -146,12 +171,16 @@ export function BatchDetailsTabs({
   };
 
   // Waitlist form state
-  const [candidateType, setCandidateType] = useState<'Student' | 'Lead'>('Student');
+  const [candidateType, setCandidateType] = useState<'Student' | 'Lead'>(
+    'Student',
+  );
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [selectedLeadId, setSelectedLeadId] = useState('');
 
   // Session form state
-  const [sessionNumber, setSessionNumber] = useState((sessions.length + 1).toString());
+  const [sessionNumber, setSessionNumber] = useState(
+    (sessions.length + 1).toString(),
+  );
   const [sessionTitleEnglish, setSessionTitleEnglish] = useState('');
   const [sessionTitleArabic, setSessionTitleArabic] = useState('');
   const [sessionDate, setSessionDate] = useState(batchStartDate.split('T')[0]);
@@ -286,7 +315,9 @@ export function BatchDetailsTabs({
 
   // Handle Skip Candidate
   const handleSkip = (waitlistId: string) => {
-    const reason = prompt('Please enter the reason for skipping this candidate:');
+    const reason = prompt(
+      'Please enter the reason for skipping this candidate:',
+    );
     if (!reason || !reason.trim()) {
       toast.error('Skip reason is required.');
       return;
@@ -315,7 +346,9 @@ export function BatchDetailsTabs({
         if (res && !res.success) {
           toast.error(res.error || 'Failed to reactivate candidate.');
         } else {
-          toast.success('Candidate successfully reactivated and appended to queue!');
+          toast.success(
+            'Candidate successfully reactivated and appended to queue!',
+          );
           router.refresh();
         }
       } catch (err: any) {
@@ -326,7 +359,11 @@ export function BatchDetailsTabs({
 
   // Handle Remove Candidate
   const handleRemove = (waitlistId: string) => {
-    if (!confirm('Are you sure you want to remove this candidate from the waitlist?')) {
+    if (
+      !confirm(
+        'Are you sure you want to remove this candidate from the waitlist?',
+      )
+    ) {
       return;
     }
 
@@ -400,7 +437,9 @@ export function BatchDetailsTabs({
         <button
           onClick={() => setActiveTab('sessions')}
           className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
-            activeTab === 'sessions' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+            activeTab === 'sessions'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'text-slate-600 hover:bg-slate-50'
           }`}
         >
           <Calendar className="h-4.5 w-4.5" /> Sessions ({sessions.length})
@@ -408,7 +447,9 @@ export function BatchDetailsTabs({
         <button
           onClick={() => setActiveTab('trainers')}
           className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
-            activeTab === 'trainers' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+            activeTab === 'trainers'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'text-slate-600 hover:bg-slate-50'
           }`}
         >
           <Users className="h-4.5 w-4.5" /> Faculty ({trainers.length})
@@ -416,7 +457,9 @@ export function BatchDetailsTabs({
         <button
           onClick={() => setActiveTab('students')}
           className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
-            activeTab === 'students' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+            activeTab === 'students'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'text-slate-600 hover:bg-slate-50'
           }`}
         >
           <Users className="h-4.5 w-4.5" /> Students ({enrolledStudents.length})
@@ -424,10 +467,13 @@ export function BatchDetailsTabs({
         <button
           onClick={() => setActiveTab('waitlist')}
           className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
-            activeTab === 'waitlist' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+            activeTab === 'waitlist'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'text-slate-600 hover:bg-slate-50'
           }`}
         >
-          <ShieldAlert className="h-4.5 w-4.5" /> Waiting List ({waitlist.length})
+          <ShieldAlert className="h-4.5 w-4.5" /> Waiting List (
+          {waitlist.length})
         </button>
       </div>
 
@@ -438,7 +484,9 @@ export function BatchDetailsTabs({
             <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
                 <Calendar className="h-5 w-5 text-indigo-600" />
-                <h3 className="font-semibold text-slate-800">Scheduled Sessions</h3>
+                <h3 className="font-semibold text-slate-800">
+                  Scheduled Sessions
+                </h3>
               </div>
               {sessions.length === 0 ? (
                 <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
@@ -458,22 +506,43 @@ export function BatchDetailsTabs({
                   </TableHeader>
                   <TableBody>
                     {sessions.map((s) => {
-                      const attendanceSession = attendanceSessions.find((item) => item.sessionId === s.id);
+                      const attendanceSession = attendanceSessions.find(
+                        (item) => item.sessionId === s.id,
+                      );
 
                       return (
-                        <TableRow key={s.id} className={getSessionScheduleTone(s)}>
-                          <TableCell className="font-semibold text-slate-600">#{s.sessionNumber}</TableCell>
-                          <TableCell>
-                            <div className="font-medium text-slate-800">{s.titleEnglish}</div>
-                            <div className="text-xs font-arabic text-slate-400">{s.titleArabic}</div>
+                        <TableRow
+                          key={s.id}
+                          className={getSessionScheduleTone(s)}
+                        >
+                          <TableCell className="font-semibold text-slate-600">
+                            #{s.sessionNumber}
                           </TableCell>
-                          <TableCell>{new Date(s.sessionDate).toLocaleDateString()}</TableCell>
+                          <TableCell>
+                            <div className="font-medium text-slate-800">
+                              {s.titleEnglish}
+                            </div>
+                            <div className="text-xs font-arabic text-slate-400">
+                              {s.titleArabic}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            {new Date(s.sessionDate).toLocaleDateString()}
+                          </TableCell>
                           <TableCell className="font-mono text-xs">
                             {s.startTime} - {s.endTime}
                           </TableCell>
                           <TableCell>
                             <div className="space-y-2">
-                              <Badge variant={s.status === 'Scheduled' ? 'info' : s.status === 'Completed' ? 'success' : 'outline'}>
+                              <Badge
+                                variant={
+                                  s.status === 'Scheduled'
+                                    ? 'info'
+                                    : s.status === 'Completed'
+                                      ? 'success'
+                                      : 'outline'
+                                }
+                              >
                                 {s.status}
                               </Badge>
                               <div>{getScheduleStatusBadge(s)}</div>
@@ -485,46 +554,61 @@ export function BatchDetailsTabs({
                             </div>
                           </TableCell>
                           <TableCell className="text-right">
-                          {attendanceSession ? (
-                            <div className="inline-flex items-center gap-2">
-                              <Badge variant="success">Opened</Badge>
-                              {attendanceSession.records.length === 0 ? (
-                                <Button
-                                  type="button"
-                                  size="sm"
-                                  variant="outline"
-                                  disabled={isPending}
-                                  onClick={() => {
-                                    startTransition(async () => {
-                                      try {
-                                        const res = await openAttendanceSessionAction(s.id);
-                                        if (res && !res.success) {
-                                          toast.error(res.error || 'Failed to generate attendance roster.');
-                                          return;
+                            {attendanceSession ? (
+                              <div className="inline-flex items-center gap-2">
+                                <Badge variant="success">Opened</Badge>
+                                {attendanceSession.records.length === 0 ? (
+                                  <Button
+                                    type="button"
+                                    size="sm"
+                                    variant="outline"
+                                    disabled={isPending}
+                                    onClick={() => {
+                                      startTransition(async () => {
+                                        try {
+                                          const res =
+                                            await openAttendanceSessionAction(
+                                              s.id,
+                                            );
+                                          if (res && !res.success) {
+                                            toast.error(
+                                              res.error ||
+                                                'Failed to generate attendance roster.',
+                                            );
+                                            return;
+                                          }
+                                          toast.success(
+                                            'Attendance roster generated.',
+                                          );
+                                          router.refresh();
+                                        } catch (err: any) {
+                                          toast.error(
+                                            err.message ||
+                                              'An unexpected error occurred.',
+                                          );
                                         }
-                                        toast.success('Attendance roster generated.');
-                                        router.refresh();
-                                      } catch (err: any) {
-                                        toast.error(err.message || 'An unexpected error occurred.');
-                                      }
-                                    });
-                                  }}
-                                  className="gap-2"
-                                >
-                                  {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ClipboardList className="h-4 w-4" />}
-                                  Generate Roster
-                                </Button>
-                              ) : (
-                                <Link
-                                  href="/attendance/sessions"
-                                  className="inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--ims-brass)] hover:underline"
-                                >
-                                  <ClipboardList className="h-3.5 w-3.5" />
-                                  View
-                                </Link>
-                              )}
-                            </div>
-                          ) : (
+                                      });
+                                    }}
+                                    className="gap-2"
+                                  >
+                                    {isPending ? (
+                                      <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : (
+                                      <ClipboardList className="h-4 w-4" />
+                                    )}
+                                    Generate Roster
+                                  </Button>
+                                ) : (
+                                  <Link
+                                    href="/attendance/sessions"
+                                    className="inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--ims-brass)] hover:underline"
+                                  >
+                                    <ClipboardList className="h-3.5 w-3.5" />
+                                    View
+                                  </Link>
+                                )}
+                              </div>
+                            ) : (
                               <Button
                                 type="button"
                                 size="sm"
@@ -533,22 +617,35 @@ export function BatchDetailsTabs({
                                 onClick={() => {
                                   startTransition(async () => {
                                     try {
-                                      const res = await openAttendanceSessionAction(s.id);
+                                      const res =
+                                        await openAttendanceSessionAction(s.id);
                                       if (res && !res.success) {
-                                        toast.error(res.error || 'Failed to open attendance session.');
+                                        toast.error(
+                                          res.error ||
+                                            'Failed to open attendance session.',
+                                        );
                                         return;
                                       }
-                                      toast.success('Attendance session opened and roster generated.');
+                                      toast.success(
+                                        'Attendance session opened and roster generated.',
+                                      );
                                       router.refresh();
                                       router.push('/attendance/sessions');
                                     } catch (err: any) {
-                                      toast.error(err.message || 'An unexpected error occurred.');
+                                      toast.error(
+                                        err.message ||
+                                          'An unexpected error occurred.',
+                                      );
                                     }
                                   });
                                 }}
                                 className="gap-2"
                               >
-                                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ClipboardList className="h-4 w-4" />}
+                                {isPending ? (
+                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                ) : (
+                                  <ClipboardList className="h-4 w-4" />
+                                )}
                                 Open Attendance
                               </Button>
                             )}
@@ -568,7 +665,9 @@ export function BatchDetailsTabs({
               <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
                   <PlusCircle className="h-5 w-5 text-indigo-600" />
-                  <h3 className="font-semibold text-slate-800">Schedule Session</h3>
+                  <h3 className="font-semibold text-slate-800">
+                    Schedule Session
+                  </h3>
                 </div>
                 <form onSubmit={handleCreateSession} className="space-y-4">
                   <FormField>
@@ -647,7 +746,10 @@ export function BatchDetailsTabs({
                         placeholder="Assign Trainer"
                         value={sessionTrainerId}
                         onChange={(e) => setSessionTrainerId(e.target.value)}
-                        options={trainersList.map((t: any) => ({ value: t.id, label: t.displayName }))}
+                        options={trainersList.map((t: any) => ({
+                          value: t.id,
+                          label: t.displayName,
+                        }))}
                       />
                     </FormControl>
                   </FormField>
@@ -659,13 +761,24 @@ export function BatchDetailsTabs({
                         placeholder="Book Classroom"
                         value={sessionClassroomId}
                         onChange={(e) => setSessionClassroomId(e.target.value)}
-                        options={classroomsList.map((c: any) => ({ value: c.id, label: c.classroomName }))}
+                        options={classroomsList.map((c: any) => ({
+                          value: c.id,
+                          label: c.classroomName,
+                        }))}
                       />
                     </FormControl>
                   </FormField>
 
-                  <Button type="submit" disabled={isPending} className="w-full mt-2">
-                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Schedule Session'}
+                  <Button
+                    type="submit"
+                    disabled={isPending}
+                    className="w-full mt-2"
+                  >
+                    {isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      'Schedule Session'
+                    )}
                   </Button>
                 </form>
               </Card>
@@ -681,7 +794,9 @@ export function BatchDetailsTabs({
             <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
                 <Users className="h-5 w-5 text-indigo-600" />
-                <h3 className="font-semibold text-slate-800">Faculty Assignments</h3>
+                <h3 className="font-semibold text-slate-800">
+                  Faculty Assignments
+                </h3>
               </div>
               {trainers.length === 0 ? (
                 <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
@@ -701,12 +816,24 @@ export function BatchDetailsTabs({
                   <TableBody>
                     {trainers.map((t) => (
                       <TableRow key={t.id}>
-                        <TableCell className="font-mono text-xs text-slate-600">{t.trainerId}</TableCell>
-                        <TableCell>
-                          <Badge variant={t.role === 'Primary' ? 'default' : 'outline'}>{t.role}</Badge>
+                        <TableCell className="font-mono text-xs text-slate-600">
+                          {t.trainerId}
                         </TableCell>
-                        <TableCell>{new Date(t.assignedFrom).toLocaleDateString()}</TableCell>
-                        <TableCell>{new Date(t.assignedTo).toLocaleDateString()}</TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              t.role === 'Primary' ? 'default' : 'outline'
+                            }
+                          >
+                            {t.role}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {new Date(t.assignedFrom).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>
+                          {new Date(t.assignedTo).toLocaleDateString()}
+                        </TableCell>
                         <TableCell>{t.status}</TableCell>
                       </TableRow>
                     ))}
@@ -722,7 +849,9 @@ export function BatchDetailsTabs({
               <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
                   <PlusCircle className="h-5 w-5 text-indigo-600" />
-                  <h3 className="font-semibold text-slate-800">Assign Faculty</h3>
+                  <h3 className="font-semibold text-slate-800">
+                    Assign Faculty
+                  </h3>
                 </div>
                 <form onSubmit={handleAssignTrainer} className="space-y-4">
                   <FormField>
@@ -732,7 +861,10 @@ export function BatchDetailsTabs({
                         placeholder="Select Trainer Profile"
                         value={selectedTrainerId}
                         onChange={(e) => handleTrainerChange(e.target.value)}
-                        options={trainersList.map((t) => ({ value: t.id, label: `${t.displayName} (${t.email})` }))}
+                        options={trainersList.map((t) => ({
+                          value: t.id,
+                          label: `${t.displayName} (${t.email})`,
+                        }))}
                       />
                     </FormControl>
                   </FormField>
@@ -790,17 +922,29 @@ export function BatchDetailsTabs({
                         <table className="min-w-full divide-y divide-red-100">
                           <thead className="bg-red-50 text-red-700">
                             <tr>
-                              <th className="px-3 py-1.5 text-left font-semibold">Batch</th>
-                              <th className="px-3 py-1.5 text-left font-semibold">Date</th>
-                              <th className="px-3 py-1.5 text-left font-semibold">Start</th>
-                              <th className="px-3 py-1.5 text-left font-semibold">End</th>
+                              <th className="px-3 py-1.5 text-left font-semibold">
+                                Batch
+                              </th>
+                              <th className="px-3 py-1.5 text-left font-semibold">
+                                Date
+                              </th>
+                              <th className="px-3 py-1.5 text-left font-semibold">
+                                Start
+                              </th>
+                              <th className="px-3 py-1.5 text-left font-semibold">
+                                End
+                              </th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-red-100 text-slate-600">
                             {conflicts.map((c, idx) => (
                               <tr key={idx}>
-                                <td className="px-3 py-1.5 font-mono font-bold">{c.batchCode}</td>
-                                <td className="px-3 py-1.5">{new Date(c.sessionDate).toLocaleDateString()}</td>
+                                <td className="px-3 py-1.5 font-mono font-bold">
+                                  {c.batchCode}
+                                </td>
+                                <td className="px-3 py-1.5">
+                                  {new Date(c.sessionDate).toLocaleDateString()}
+                                </td>
                                 <td className="px-3 py-1.5">{c.startTime}</td>
                                 <td className="px-3 py-1.5">{c.endTime}</td>
                               </tr>
@@ -811,8 +955,18 @@ export function BatchDetailsTabs({
                     </div>
                   )}
 
-                  <Button type="submit" disabled={isPending || conflicts.length > 0 || checkingConflicts} className="w-full mt-2">
-                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Assign Faculty'}
+                  <Button
+                    type="submit"
+                    disabled={
+                      isPending || conflicts.length > 0 || checkingConflicts
+                    }
+                    className="w-full mt-2"
+                  >
+                    {isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      'Assign Faculty'
+                    )}
                   </Button>
                 </form>
               </Card>
@@ -829,10 +983,16 @@ export function BatchDetailsTabs({
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
                 <div className="flex items-center gap-2">
                   <ShieldAlert className="h-5 w-5 text-indigo-600" />
-                  <h3 className="font-semibold text-slate-800">Waiting List Queue</h3>
+                  <h3 className="font-semibold text-slate-800">
+                    Waiting List Queue
+                  </h3>
                 </div>
-                <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200">
-                  Total Active: {waitlist.filter(w => w.status === 'Waiting').length}
+                <Badge
+                  variant="outline"
+                  className="bg-indigo-50 text-indigo-700 border-indigo-200"
+                >
+                  Total Active:{' '}
+                  {waitlist.filter((w) => w.status === 'Waiting').length}
                 </Badge>
               </div>
               {waitlist.length === 0 ? (
@@ -848,7 +1008,9 @@ export function BatchDetailsTabs({
                       <TableHead>Type</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Details / Reason</TableHead>
-                      {isRegistrar && <TableHead className="text-right">Actions</TableHead>}
+                      {isRegistrar && (
+                        <TableHead className="text-right">Actions</TableHead>
+                      )}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -857,40 +1019,70 @@ export function BatchDetailsTabs({
                       let typeLabel = '-';
                       const studentId = w.studentProfileId || w.studentId;
                       if (studentId) {
-                        const student = studentsList.find((s) => s.id === studentId);
-                        displayName = student ? `${student.firstName} ${student.lastName}` : 'Unknown Student';
+                        const student = studentsList.find(
+                          (s) => s.id === studentId,
+                        );
+                        displayName = student
+                          ? `${student.firstName} ${student.lastName}`
+                          : 'Unknown Student';
                         typeLabel = 'Student Profile';
                       } else if (w.leadId) {
                         const lead = leadsList.find((l) => l.id === w.leadId);
-                        displayName = lead ? `${lead.firstName} ${lead.lastName}` : 'Unknown Lead';
+                        displayName = lead
+                          ? `${lead.firstName} ${lead.lastName}`
+                          : 'Unknown Lead';
                         typeLabel = `CRM Lead (${lead?.leadNumber ?? ''})`;
                       }
 
                       return (
                         <TableRow key={w.id}>
                           <TableCell className="font-semibold text-slate-700">
-                            {w.status === 'Waiting' ? `#${w.queuePosition}` : '-'}
+                            {w.status === 'Waiting'
+                              ? `#${w.queuePosition}`
+                              : '-'}
                           </TableCell>
-                          <TableCell className="font-medium text-slate-900">{displayName}</TableCell>
-                          <TableCell className="text-xs text-slate-500">{typeLabel}</TableCell>
+                          <TableCell className="font-medium text-slate-900">
+                            {displayName}
+                          </TableCell>
+                          <TableCell className="text-xs text-slate-500">
+                            {typeLabel}
+                          </TableCell>
                           <TableCell>
                             {w.status === 'Waiting' && (
-                              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Waiting</Badge>
+                              <Badge
+                                variant="outline"
+                                className="bg-blue-50 text-blue-700 border-blue-200"
+                              >
+                                Waiting
+                              </Badge>
                             )}
                             {w.status === 'Promoted' && (
                               <Badge variant="success">Promoted</Badge>
                             )}
                             {w.status === 'Held' && (
-                              <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Held</Badge>
+                              <Badge
+                                variant="outline"
+                                className="bg-amber-50 text-amber-700 border-amber-200"
+                              >
+                                Held
+                              </Badge>
                             )}
                             {w.status === 'Suspended' && (
                               <Badge variant="error">Suspended</Badge>
                             )}
                             {w.status === 'Removed' && (
-                              <Badge variant="outline" className="bg-slate-100 text-slate-500 border-slate-200">Removed</Badge>
+                              <Badge
+                                variant="outline"
+                                className="bg-slate-100 text-slate-500 border-slate-200"
+                              >
+                                Removed
+                              </Badge>
                             )}
                           </TableCell>
-                          <TableCell className="text-xs text-slate-500 max-w-[150px] truncate" title={w.statusReason || ''}>
+                          <TableCell
+                            className="text-xs text-slate-500 max-w-[150px] truncate"
+                            title={w.statusReason || ''}
+                          >
                             {w.statusReason || '-'}
                           </TableCell>
                           {isRegistrar && (
@@ -901,7 +1093,12 @@ export function BatchDetailsTabs({
                                   <>
                                     <Button
                                       onClick={() => handleMoveUp(index)}
-                                      disabled={index === 0 || isPending || waitlist[index - 1]?.status !== 'Waiting'}
+                                      disabled={
+                                        index === 0 ||
+                                        isPending ||
+                                        waitlist[index - 1]?.status !==
+                                          'Waiting'
+                                      }
                                       size="sm"
                                       variant="ghost"
                                       className="p-1 h-7 w-7 text-slate-400 hover:text-slate-700"
@@ -911,7 +1108,12 @@ export function BatchDetailsTabs({
                                     </Button>
                                     <Button
                                       onClick={() => handleMoveDown(index)}
-                                      disabled={index === waitlist.length - 1 || isPending || waitlist[index + 1]?.status !== 'Waiting'}
+                                      disabled={
+                                        index === waitlist.length - 1 ||
+                                        isPending ||
+                                        waitlist[index + 1]?.status !==
+                                          'Waiting'
+                                      }
                                       size="sm"
                                       variant="ghost"
                                       className="p-1 h-7 w-7 text-slate-400 hover:text-slate-700"
@@ -950,7 +1152,8 @@ export function BatchDetailsTabs({
                                   </>
                                 )}
 
-                                {(w.status === 'Held' || w.status === 'Suspended') && (
+                                {(w.status === 'Held' ||
+                                  w.status === 'Suspended') && (
                                   <Button
                                     onClick={() => handleReactivate(w.id)}
                                     disabled={isPending}
@@ -964,18 +1167,19 @@ export function BatchDetailsTabs({
                                   </Button>
                                 )}
 
-                                {w.status !== 'Removed' && w.status !== 'Promoted' && (
-                                  <Button
-                                    onClick={() => handleRemove(w.id)}
-                                    disabled={isPending}
-                                    size="sm"
-                                    variant="ghost"
-                                    className="p-1 h-7 w-7 text-rose-500 hover:text-rose-700 hover:bg-rose-50"
-                                    title="Remove Candidate"
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                )}
+                                {w.status !== 'Removed' &&
+                                  w.status !== 'Promoted' && (
+                                    <Button
+                                      onClick={() => handleRemove(w.id)}
+                                      disabled={isPending}
+                                      size="sm"
+                                      variant="ghost"
+                                      className="p-1 h-7 w-7 text-rose-500 hover:text-rose-700 hover:bg-rose-50"
+                                      title="Remove Candidate"
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  )}
                               </div>
                             </TableCell>
                           )}
@@ -994,7 +1198,9 @@ export function BatchDetailsTabs({
               <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
                   <Bookmark className="h-5 w-5 text-indigo-600" />
-                  <h3 className="font-semibold text-slate-800">Queue Candidate</h3>
+                  <h3 className="font-semibold text-slate-800">
+                    Queue Candidate
+                  </h3>
                 </div>
 
                 <div className="flex bg-slate-100 p-1 rounded-xl">
@@ -1002,7 +1208,9 @@ export function BatchDetailsTabs({
                     type="button"
                     onClick={() => setCandidateType('Student')}
                     className={`flex-1 py-1.5 text-xs font-semibold rounded-lg ${
-                      candidateType === 'Student' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500'
+                      candidateType === 'Student'
+                        ? 'bg-white text-slate-800 shadow-sm'
+                        : 'text-slate-500'
                     }`}
                   >
                     Student Profile
@@ -1011,7 +1219,9 @@ export function BatchDetailsTabs({
                     type="button"
                     onClick={() => setCandidateType('Lead')}
                     className={`flex-1 py-1.5 text-xs font-semibold rounded-lg ${
-                      candidateType === 'Lead' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500'
+                      candidateType === 'Lead'
+                        ? 'bg-white text-slate-800 shadow-sm'
+                        : 'text-slate-500'
                     }`}
                   >
                     Active Lead
@@ -1027,7 +1237,10 @@ export function BatchDetailsTabs({
                           placeholder="Select Student"
                           value={selectedStudentId}
                           onChange={(e) => setSelectedStudentId(e.target.value)}
-                          options={studentsList.map((s) => ({ value: s.id, label: `${s.firstName} ${s.lastName} (${s.email})` }))}
+                          options={studentsList.map((s) => ({
+                            value: s.id,
+                            label: `${s.firstName} ${s.lastName} (${s.email})`,
+                          }))}
                         />
                       </FormControl>
                     </FormField>
@@ -1039,14 +1252,25 @@ export function BatchDetailsTabs({
                           placeholder="Select Lead"
                           value={selectedLeadId}
                           onChange={(e) => setSelectedLeadId(e.target.value)}
-                          options={leadsList.map((l) => ({ value: l.id, label: `${l.firstName} ${l.lastName} (#${l.leadNumber})` }))}
+                          options={leadsList.map((l) => ({
+                            value: l.id,
+                            label: `${l.firstName} ${l.lastName} (#${l.leadNumber})`,
+                          }))}
                         />
                       </FormControl>
                     </FormField>
                   )}
 
-                  <Button type="submit" disabled={isPending} className="w-full mt-2">
-                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Queue Candidate'}
+                  <Button
+                    type="submit"
+                    disabled={isPending}
+                    className="w-full mt-2"
+                  >
+                    {isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      'Queue Candidate'
+                    )}
                   </Button>
                 </form>
               </Card>
@@ -1059,7 +1283,9 @@ export function BatchDetailsTabs({
         <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
             <Users className="h-5 w-5 text-indigo-600" />
-            <h3 className="font-semibold text-slate-800">Enrolled Students Roster</h3>
+            <h3 className="font-semibold text-slate-800">
+              Enrolled Students Roster
+            </h3>
           </div>
           {enrolledStudents.length === 0 ? (
             <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
@@ -1080,17 +1306,32 @@ export function BatchDetailsTabs({
               <TableBody>
                 {enrolledStudents.map((s) => (
                   <TableRow key={s.id}>
-                    <TableCell className="font-mono text-xs font-semibold text-slate-600">{s.studentNumber}</TableCell>
+                    <TableCell className="font-mono text-xs font-semibold text-slate-600">
+                      {s.studentNumber}
+                    </TableCell>
                     <TableCell className="font-medium text-slate-900">
-                      <Link href={`/admissions?q=${s.studentNumber}`} className="text-indigo-600 hover:text-indigo-700 hover:underline">
+                      <Link
+                        href={`/admissions?q=${s.studentNumber}`}
+                        className="text-indigo-600 hover:text-indigo-700 hover:underline"
+                      >
                         {s.firstName} {s.lastName}
                       </Link>
                     </TableCell>
                     <TableCell>{s.email}</TableCell>
                     <TableCell>{s.mobile}</TableCell>
-                    <TableCell>{new Date(s.enrollmentDate).toLocaleDateString()}</TableCell>
                     <TableCell>
-                      <Badge variant={s.status === 'Active' ? 'success' : s.status === 'Confirmed' ? 'info' : 'outline'}>
+                      {new Date(s.enrollmentDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={
+                          s.status === 'Active'
+                            ? 'success'
+                            : s.status === 'Confirmed'
+                              ? 'info'
+                              : 'outline'
+                        }
+                      >
                         {s.status}
                       </Badge>
                     </TableCell>

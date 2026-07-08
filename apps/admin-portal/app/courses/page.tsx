@@ -1,5 +1,12 @@
 import { Suspense } from 'react';
-import { PublicShell, SplitHero, SectionHeading, SimpleCTA, contactInfo, CourseCardSkeleton } from '../_components/public-site';
+import {
+  PublicShell,
+  SplitHero,
+  SectionHeading,
+  SimpleCTA,
+  contactInfo,
+  CourseCardSkeleton,
+} from '../_components/public-site';
 import { CoursesClient } from '../_components/courses-page-client';
 
 export const dynamic = 'force-dynamic';

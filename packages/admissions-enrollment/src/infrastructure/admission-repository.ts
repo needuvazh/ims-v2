@@ -1,25 +1,31 @@
 import { PrismaClient, Prisma } from '@prisma/client';
-import { IAdmissionRepository, CreateStudentProfileAdmissionInput } from '../domain/admission';
+import {
+  IAdmissionRepository,
+  CreateStudentProfileAdmissionInput,
+} from '../domain/admission';
 
 export class AdmissionRepository implements IAdmissionRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async findPersonByUniqueKeys(email: string | null, phone: string | null, nationalId: string | null, tx?: Prisma.TransactionClient): Promise<any> {
+  async findPersonByUniqueKeys(
+    email: string | null,
+    phone: string | null,
+    nationalId: string | null,
+    tx?: Prisma.TransactionClient,
+  ): Promise<any> {
     const client = tx || this.prisma;
-    
-    if (!email && !phone && !nationalId) return null;
 
-    const OR: any[] = [];
-    if (email) OR.push({ email });
-    if (phone) OR.push({ mobile: phone });
-    if (nationalId) OR.push({ nationalId });
+    if (!nationalId) return null;
 
     return client.person.findFirst({
-      where: { OR, isDeleted: false },
+      where: { nationalId, isDeleted: false },
     });
   }
 
-  async findStudentProfileByPersonId(personId: string, tx?: Prisma.TransactionClient): Promise<any> {
+  async findStudentProfileByPersonId(
+    personId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<any> {
     const client = tx || this.prisma;
 
     return client.studentProfile.findFirst({
@@ -29,19 +35,27 @@ export class AdmissionRepository implements IAdmissionRepository {
 
   async getNextStudentNumber(tx?: Prisma.TransactionClient): Promise<string> {
     const client = tx || this.prisma;
-    const result = await client.$queryRawUnsafe<{ nextval: string }[]>("SELECT nextval('student_number_seq')::text as nextval");
+    const result = await client.$queryRawUnsafe<{ nextval: string }[]>(
+      "SELECT nextval('student_number_seq')::text as nextval",
+    );
     const seq = result[0]?.nextval || '10000';
     return `STU-2026-${seq.padStart(5, '0')}`;
   }
 
   async getNextAdmissionNumber(tx?: Prisma.TransactionClient): Promise<string> {
     const client = tx || this.prisma;
-    const result = await client.$queryRawUnsafe<{ nextval: string }[]>("SELECT nextval('admission_number_seq')::text as nextval");
+    const result = await client.$queryRawUnsafe<{ nextval: string }[]>(
+      "SELECT nextval('admission_number_seq')::text as nextval",
+    );
     const seq = result[0]?.nextval || '10000';
     return `ADM-2026-${seq.padStart(5, '0')}`;
   }
 
-  async hasActiveAdmission(studentProfileId: string, branchId: string, tx?: Prisma.TransactionClient): Promise<boolean> {
+  async hasActiveAdmission(
+    studentProfileId: string,
+    branchId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<boolean> {
     const client = tx || this.prisma;
     const count = await client.admission.count({
       where: {
@@ -49,9 +63,9 @@ export class AdmissionRepository implements IAdmissionRepository {
         branchId,
         isDeleted: false,
         admissionStatus: {
-          in: ['Draft', 'Submitted', 'Approved']
-        }
-      }
+          in: ['Draft', 'Submitted', 'Approved'],
+        },
+      },
     });
     return count > 0;
   }
@@ -62,11 +76,11 @@ export class AdmissionRepository implements IAdmissionRepository {
     admissionNumber: string,
     courseId?: string | null,
     leadId?: string | null,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ): Promise<{ admissionId: string }> {
     const client = tx || this.prisma;
     const studentProfile = await client.studentProfile.findUnique({
-      where: { id: studentProfileId }
+      where: { id: studentProfileId },
     });
     if (!studentProfile) {
       throw new Error('ERR_STUDENT_PROFILE_NOT_FOUND');
@@ -80,15 +94,29 @@ export class AdmissionRepository implements IAdmissionRepository {
         courseId: courseId || null,
         leadId: leadId || null,
         admissionStatus: 'Draft',
-      }
+      },
     });
     return { admissionId: admission.id };
   }
 
-  async createStudentProfileAndAdmission(data: CreateStudentProfileAdmissionInput, studentNumber: string, tx?: Prisma.TransactionClient): Promise<{ personId: string; studentProfileId: string; admissionId: string; admissionNumber: string; }> {
+  async createStudentProfileAndAdmission(
+    data: CreateStudentProfileAdmissionInput,
+    studentNumber: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<{
+    personId: string;
+    studentProfileId: string;
+    admissionId: string;
+    admissionNumber: string;
+  }> {
     const client = tx || this.prisma;
 
-    let person = await this.findPersonByUniqueKeys(data.email || null, data.phone || null, data.nationalId || null, tx);
+    let person = await this.findPersonByUniqueKeys(
+      data.email || null,
+      data.phone || null,
+      data.nationalId || null,
+      tx,
+    );
 
     if (!person) {
       person = await client.person.create({
@@ -103,7 +131,7 @@ export class AdmissionRepository implements IAdmissionRepository {
         },
       });
     }
-    
+
     // Create or reuse student profile
     let studentProfile = await this.findStudentProfileByPersonId(person.id, tx);
     if (!studentProfile) {

@@ -9,7 +9,9 @@ export default function StudentFeesPage() {
         description="Placeholder for fee summaries, receipts, and due tracking."
       />
       <Card>
-        <p className="text-sm text-[color:var(--ims-muted)]">Financial workflows stay in the finance context.</p>
+        <p className="text-sm text-[color:var(--ims-muted)]">
+          Financial workflows stay in the finance context.
+        </p>
       </Card>
     </div>
   );

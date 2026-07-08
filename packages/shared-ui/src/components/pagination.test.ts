@@ -26,6 +26,14 @@ describe('pagination helpers', () => {
   });
 
   it('shows a compact page window for long lists', () => {
-    expect(getPaginationPageNumbers(6, 12)).toEqual([1, 'ellipsis', 5, 6, 7, 'ellipsis', 12]);
+    expect(getPaginationPageNumbers(6, 12)).toEqual([
+      1,
+      'ellipsis',
+      5,
+      6,
+      7,
+      'ellipsis',
+      12,
+    ]);
   });
 });

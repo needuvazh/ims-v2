@@ -15,12 +15,13 @@ export default async function InquiriesPage(props: {
   // Assert user is allowed to read leads/CRM data
   const session = await assertPermission('lead.read');
 
-  const { branchScopeResolver, inquiryService, organizationService } = await import('../../lib/runtime');
+  const { branchScopeResolver, inquiryService, organizationService } =
+    await import('../../lib/runtime');
 
   // Resolve counselor's scoped allowed branches
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   // Counselor Scoping: if user lacks broad visibility, restrict read queries to counselor's assigned items
@@ -50,9 +51,14 @@ export default async function InquiriesPage(props: {
     search: searchParams.q,
   };
 
-  const { items: inquiries, total } = await inquiryService.findAll(filters, { page, limit });
+  const { items: inquiries, total } = await inquiryService.findAll(filters, {
+    page,
+    limit,
+  });
 
-  const branchesResult = await organizationService.listBranches({ pageSize: 100 });
+  const branchesResult = await organizationService.listBranches({
+    pageSize: 100,
+  });
   const branches =
     allowedBranchIds.length === 0
       ? branchesResult.items.map((b) => ({ id: b.id, name: b.branchName }))
@@ -62,7 +68,11 @@ export default async function InquiriesPage(props: {
 
   return (
     <div className="p-6">
-      <InquiriesClientList inquiries={inquiries} branches={branches} total={total} />
+      <InquiriesClientList
+        inquiries={inquiries}
+        branches={branches}
+        total={total}
+      />
     </div>
   );
 }

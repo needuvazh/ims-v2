@@ -1,6 +1,7 @@
 ## Why
 
 The Organization Management module defines the institute structure and operational boundaries (Institute, Branch, Department, Classroom) used by all other domains. While basic models exist for Institute, Branch, and Department, the current implementation lacks:
+
 1. **Classroom Lifecycle**: There is no Classroom entity representation in domain models, application services, repository interfaces, or tests, despite it being defined in the database schema.
 2. **Effective Dating Logic**: Modifying organizational records must support effective start and end dates to enable historical reporting and prevent active transactions on expired records.
 3. **Hierarchy and Navigation**: The system requires a unified organizational hierarchy tree (Institute -> Branches -> Departments & Classrooms) to visualize structure and guide portal navigation.
@@ -39,10 +40,12 @@ Completing this foundation ensures downstream domains like Scheduling (which nee
 ## Capabilities
 
 ### New Capabilities
+
 - `organization.classroom`: represents classroom lifecycle management (CRUD, capacity validation, effective dating).
 - `organization.hierarchy`: query-optimized view to fetch the complete structural tree of the institute.
 
 ### Modified Capabilities
+
 - `organization`: expanded branch and department models to include manager assignments, head assignments, and effective date constraints.
 
 ## Impact

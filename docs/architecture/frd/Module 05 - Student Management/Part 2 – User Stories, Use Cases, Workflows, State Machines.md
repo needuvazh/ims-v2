@@ -1,4 +1,5 @@
 # Part 2 – User Stories, Use Cases, Workflows, State Machines
+
 ## Module 5 – Student Management
 
 ## 1. Purpose
@@ -17,6 +18,7 @@ This part is aligned with the previously established module boundary:
 ## 2. User Stories
 
 The following user stories are prioritized using **MoSCoW**:
+
 - **Must**: required for go-live
 - **Should**: strongly recommended for near-term operational completeness
 - **Could**: useful enhancement
@@ -36,6 +38,7 @@ Must
 Prevents duplicate identities and ensures admission handoff creates a reusable student master.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Create student from approved admission
 
@@ -76,6 +79,7 @@ Must
 Supports operational speed without bypassing duplicate checks or branch controls.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Direct student registration
 
@@ -113,6 +117,7 @@ Must
 Preserves corporate billing lineage while unifying learner lifecycle into student/enrollment flow.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Convert corporate participant into student
 
@@ -145,6 +150,7 @@ Must
 Improves operational efficiency and reduces duplicate records.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Search and reuse student records
 
@@ -174,6 +180,7 @@ Must
 Keeps student master data accurate and operationally usable.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Update student profile
 
@@ -206,6 +213,7 @@ Must
 Supports governance, compliance, and operational lifecycle control.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Change student status
 
@@ -237,6 +245,7 @@ Must
 Improves data quality and reduces operational blocking.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Resolve duplicate cases
 
@@ -267,6 +276,7 @@ Must
 Maintains long-term identity integrity across branch and workflow histories.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Merge duplicate students
 
@@ -299,6 +309,7 @@ Should
 Supports branch operations and identity administration.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Issue and reissue student ID cards
 
@@ -330,6 +341,7 @@ Must
 Supports soft delete governance and recovery from operational errors.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Archive and restore student
 
@@ -363,6 +375,7 @@ Should
 Supports reporting and operational follow-up with privacy controls.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Export student data
 
@@ -393,6 +406,7 @@ Could
 Supports future self-service visibility without transferring master-data edit ownership.
 
 **Acceptance Criteria**
+
 ```gherkin
 Feature: Student self-view profile
 
@@ -423,6 +437,7 @@ Admission Counselor
 Student Administration Officer, System, Numbering Series Service, Audit Service
 
 **Preconditions**
+
 1. User is authenticated.
 2. User has `student.create`.
 3. User has write access to the admission branch.
@@ -430,6 +445,7 @@ Student Administration Officer, System, Numbering Series Service, Audit Service
 5. Admission is linked to a valid Person.
 
 **Main Success Scenario**
+
 1. Actor opens the approved admission.
 2. Actor selects the action to create student.
 3. System loads admission and linked person.
@@ -443,6 +459,7 @@ Student Administration Officer, System, Numbering Series Service, Audit Service
 11. System returns created student profile details.
 
 **Alternative Flows**
+
 - 5A. Existing student already exists for the same person:
   1. System stops new creation.
   2. System returns existing student as reusable result.
@@ -455,6 +472,7 @@ Student Administration Officer, System, Numbering Series Service, Audit Service
   1. System denies or conceals access.
 
 **Postconditions**
+
 - Either:
   - a new student profile exists, or
   - the existing student is returned and no duplicate is created.
@@ -471,12 +489,14 @@ Front Desk Executive
 Student Administration Officer, System, Duplicate Detection Service
 
 **Preconditions**
+
 1. User is authenticated.
 2. User has `student.create`.
 3. Direct registration is allowed in the actor’s branch.
 4. Branch write access is granted.
 
 **Main Success Scenario**
+
 1. Actor opens direct registration form.
 2. Actor enters student identity and contact data.
 3. System validates required fields and formats.
@@ -490,6 +510,7 @@ Student Administration Officer, System, Duplicate Detection Service
 11. System returns created student summary.
 
 **Alternative Flows**
+
 - 3A. Mandatory fields missing:
   1. System returns validation errors.
 - 5A. Blocking duplicate found:
@@ -501,6 +522,7 @@ Student Administration Officer, System, Duplicate Detection Service
   1. System fails with configuration error.
 
 **Postconditions**
+
 - Student profile exists or user is redirected to an existing reusable profile.
 - No unsafe duplicate is created.
 
@@ -515,12 +537,14 @@ Corporate Coordinator
 Corporate Training context, System
 
 **Preconditions**
+
 1. Corporate participant exists.
 2. Actor has `student.create`.
 3. Target branch is known and writable.
 4. Corporate participant data is active and valid.
 
 **Main Success Scenario**
+
 1. Actor opens corporate participant record.
 2. Actor initiates student conversion.
 3. System loads participant and linked person.
@@ -533,6 +557,7 @@ Corporate Training context, System
 10. System returns conversion result.
 
 **Alternative Flows**
+
 - 4A. Existing student already exists:
   1. System reuses existing student.
 - 5A. Blocking duplicate found:
@@ -541,6 +566,7 @@ Corporate Training context, System
   1. System returns existing linkage.
 
 **Postconditions**
+
 - Corporate participant is linked to a student profile.
 - Corporate lineage is preserved.
 
@@ -555,12 +581,14 @@ Student Administration Officer
 System, Audit Service
 
 **Preconditions**
+
 1. User has `student.update`.
 2. Student exists in scope.
 3. Student is not archived or locked by policy.
 4. User holds the latest version or update is conflict-free.
 
 **Main Success Scenario**
+
 1. Actor opens student detail.
 2. Actor edits allowed personal/contact fields.
 3. System validates formats and required values.
@@ -572,6 +600,7 @@ System, Audit Service
 9. System returns updated profile.
 
 **Alternative Flows**
+
 - 4A. Duplicate blocking match found:
   1. System rejects the update.
 - 5A. Version mismatch:
@@ -580,6 +609,7 @@ System, Audit Service
   1. System denies or conceals.
 
 **Postconditions**
+
 - Student data is updated or safely rejected.
 - Audit trail is preserved.
 
@@ -594,12 +624,14 @@ Branch Manager
 Student Administration Officer, Audit Service
 
 **Preconditions**
+
 1. User has `student.status.change`.
 2. Student exists in scope.
 3. Requested transition is allowed.
 4. Reason and effective date are supplied.
 
 **Main Success Scenario**
+
 1. Actor opens status change action.
 2. Actor selects target status and enters reason.
 3. System validates transition rules.
@@ -611,6 +643,7 @@ Student Administration Officer, Audit Service
 9. System returns success.
 
 **Alternative Flows**
+
 - 3A. Transition not allowed:
   1. System rejects request.
 - 5A. Archive blocked by active enrollment policy:
@@ -619,6 +652,7 @@ Student Administration Officer, Audit Service
   1. System rejects request.
 
 **Postconditions**
+
 - Student status and status history reflect the transition if successful.
 
 ---
@@ -632,11 +666,13 @@ Compliance Officer
 Student Administration Officer, System
 
 **Preconditions**
+
 1. Duplicate case exists and is open.
 2. Actor has `student.duplicate.resolve`.
 3. Duplicate case is within branch/reporting scope.
 
 **Main Success Scenario**
+
 1. Actor opens duplicate case.
 2. Actor reviews candidate records and match reasons.
 3. Actor selects a resolution type.
@@ -648,12 +684,14 @@ Student Administration Officer, System
 9. System removes case from open backlog.
 
 **Alternative Flows**
+
 - 5A. Case already resolved:
   1. System rejects request.
 - 2A. Candidate analysis insufficient:
   1. Actor leaves case open for later review.
 
 **Postconditions**
+
 - Duplicate case is resolved or remains open without partial corruption.
 
 ---
@@ -667,6 +705,7 @@ Student Administration Officer
 Compliance Officer, System, Downstream reference owners
 
 **Preconditions**
+
 1. Source and survivor students exist.
 2. Actor has `student.merge`.
 3. Both records are in allowed scope.
@@ -676,6 +715,7 @@ Compliance Officer, System, Downstream reference owners
 7. Downstream reassignment path is available.
 
 **Main Success Scenario**
+
 1. Actor opens merge wizard from duplicate workbench.
 2. Actor selects survivor and source records.
 3. Actor chooses field-level survivor values where required.
@@ -692,6 +732,7 @@ Compliance Officer, System, Downstream reference owners
 14. System returns success.
 
 **Alternative Flows**
+
 - 5A. Scope invalid across branches:
   1. System rejects merge.
 - 8A. Downstream reassignment fails:
@@ -700,6 +741,7 @@ Compliance Officer, System, Downstream reference owners
   1. System rejects merge.
 
 **Postconditions**
+
 - Exactly one surviving institutional student identity remains active.
 - Source is archived.
 - Merge lineage is preserved.
@@ -715,11 +757,13 @@ Branch Manager
 Student Administration Officer, System
 
 **Preconditions**
+
 1. Actor has `student.archive` or `student.restore`.
 2. Student exists in scope.
 3. Policy blockers are clear.
 
 **Main Success Scenario — Archive**
+
 1. Actor opens archive action.
 2. Actor enters archive reason.
 3. System validates archive policy.
@@ -728,6 +772,7 @@ Student Administration Officer, System
 6. System returns success.
 
 **Main Success Scenario — Restore**
+
 1. Actor opens restore action on archived record.
 2. Actor selects restore target status and enters reason.
 3. System validates restore rules.
@@ -737,11 +782,13 @@ Student Administration Officer, System
 7. System returns success.
 
 **Alternative Flows**
+
 - Archive blocked due to active enrollment policy.
 - Restore attempted on non-archived record.
 - Actor lacks scope or permission.
 
 **Postconditions**
+
 - Student is archived or restored safely.
 - Hard deletion never occurs.
 
@@ -754,6 +801,7 @@ Student Administration Officer, System
 ## 4.1 Workflow WF-SM-001 — Approved Admission to Student Creation
 
 ### Structured Workflow
+
 1. Admission is approved in Admission context.
 2. User initiates Create Student from Approved Admission.
 3. Student Management loads Admission and Person.
@@ -767,6 +815,7 @@ Student Administration Officer, System
 11. Student becomes available for Enrollment context.
 
 ### Mermaid Sequence Diagram
+
 ```mermaid
 sequenceDiagram
     actor Counselor as Admission Counselor
@@ -799,6 +848,7 @@ sequenceDiagram
 ## 4.2 Workflow WF-SM-002 — Direct Registration Workflow
 
 ### Structured Workflow
+
 1. Front Desk or Student Ops opens direct registration.
 2. User enters identity and contact fields.
 3. System validates required values and formats.
@@ -814,6 +864,7 @@ sequenceDiagram
 13. Return student detail.
 
 ### Mermaid Sequence Diagram
+
 ```mermaid
 sequenceDiagram
     actor FrontDesk as Front Desk Executive
@@ -850,6 +901,7 @@ sequenceDiagram
 ## 4.3 Workflow WF-SM-003 — Duplicate Resolution Workflow
 
 ### Structured Workflow
+
 1. System creates duplicate case from create/update attempt or batch scan.
 2. Duplicate case is visible in duplicate workbench.
 3. Authorized user reviews candidate items.
@@ -863,6 +915,7 @@ sequenceDiagram
 7. Audit and notification events are created as configured.
 
 ### ASCII Workflow
+
 ```text
 Student Create/Update
       |
@@ -890,6 +943,7 @@ Duplicate Screening
 ## 4.4 Workflow WF-SM-004 — Student Merge Workflow
 
 ### Structured Workflow
+
 1. User opens merge wizard from duplicate workbench.
 2. User selects survivor and source.
 3. User confirms field-level winner values.
@@ -904,6 +958,7 @@ Duplicate Screening
 12. Notifications are sent if configured.
 
 ### Mermaid Sequence Diagram
+
 ```mermaid
 sequenceDiagram
     actor Ops as Student Administration Officer
@@ -929,6 +984,7 @@ sequenceDiagram
 ## 4.5 Workflow WF-SM-005 — Archive and Restore Workflow
 
 ### Structured Workflow
+
 1. User requests archive or restore action.
 2. System validates permission and branch scope.
 3. System validates policy blockers.
@@ -944,6 +1000,7 @@ sequenceDiagram
 7. Trigger notifications if configured.
 
 ### ASCII Workflow
+
 ```text
 Open Student Detail
       |
@@ -970,6 +1027,7 @@ Policy Validation
 ## 4.6 Workflow WF-SM-006 — ID Card Issue / Reissue Workflow
 
 ### Structured Workflow
+
 1. Authorized user opens ID Card Management.
 2. For first issue:
    - provide card number and issue date.
@@ -984,6 +1042,7 @@ Policy Validation
 4.7 Workflow WF-SM-007 — Multi-Branch Student Preflight and OTP Claim
 
 ### Structured Workflow
+
 1. Counselor in Branch B initiates student registration and enters identity keys (Civil ID, Mobile, or Email).
 2. System performs global lookup:
    - If no match: Proceed to normal registration.
@@ -997,6 +1056,7 @@ Policy Validation
    - Source branch (Branch A) retains full historical access via its own Admission/Enrollment records.
 
 ### Mermaid Sequence Diagram
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -1025,6 +1085,7 @@ sequenceDiagram
 Only entities owned by or operationally controlled by Student Management are documented here.
 
 ### Entities with State Transitions in this Module
+
 1. **StudentProfile.current lifecycle status**
 2. **StudentDuplicateCase**
 3. **StudentExportLog**
@@ -1038,12 +1099,14 @@ Downstream entities like Lead, Enrollment, Invoice, Certificate are not owned by
 ## 5.1 State Machine SM-STATE-001 — StudentProfile Lifecycle
 
 ### States
+
 - `Pending`
 - `Active`
 - `Suspended`
 - `Archived`
 
 ### Mermaid State Diagram
+
 ```mermaid
 stateDiagram-v2
     [*] --> Pending
@@ -1059,21 +1122,22 @@ stateDiagram-v2
 
 ### Transition Rules Matrix
 
-| From Status | To Status | Allowed | Permission Required | Notes |
-|---|---|---|---|---|
-| Pending | Active | Yes | `student.create` or `student.status.change` | Creation completion or activation |
-| Pending | Suspended | No | n/a | Not allowed |
-| Pending | Archived | Yes | `student.archive` or `student.status.change` | Only if created record is rejected before activation |
-| Active | Suspended | Yes | `student.status.change` | Reason required |
-| Active | Archived | Yes | `student.archive` or `student.status.change` | Policy blockers may apply |
-| Suspended | Active | Yes | `student.status.change` | Reinstate |
-| Suspended | Archived | Yes | `student.archive` or `student.status.change` | Reason required |
-| Suspended | Pending | No | n/a | Not allowed |
-| Archived | Active | Yes | `student.restore` | Restore required |
-| Archived | Suspended | Conditional | `student.restore` | Allowed when restore-to-suspended policy exists |
-| Archived | Pending | No | n/a | Not allowed |
+| From Status | To Status | Allowed     | Permission Required                          | Notes                                                |
+| ----------- | --------- | ----------- | -------------------------------------------- | ---------------------------------------------------- |
+| Pending     | Active    | Yes         | `student.create` or `student.status.change`  | Creation completion or activation                    |
+| Pending     | Suspended | No          | n/a                                          | Not allowed                                          |
+| Pending     | Archived  | Yes         | `student.archive` or `student.status.change` | Only if created record is rejected before activation |
+| Active      | Suspended | Yes         | `student.status.change`                      | Reason required                                      |
+| Active      | Archived  | Yes         | `student.archive` or `student.status.change` | Policy blockers may apply                            |
+| Suspended   | Active    | Yes         | `student.status.change`                      | Reinstate                                            |
+| Suspended   | Archived  | Yes         | `student.archive` or `student.status.change` | Reason required                                      |
+| Suspended   | Pending   | No          | n/a                                          | Not allowed                                          |
+| Archived    | Active    | Yes         | `student.restore`                            | Restore required                                     |
+| Archived    | Suspended | Conditional | `student.restore`                            | Allowed when restore-to-suspended policy exists      |
+| Archived    | Pending   | No          | n/a                                          | Not allowed                                          |
 
 ### State Invariants
+
 - `Archived` implies `isDeleted = true`
 - `Archived` records are read-only until restored
 - Every non-creation transition requires reason
@@ -1084,6 +1148,7 @@ stateDiagram-v2
 ## 5.2 State Machine SM-STATE-002 — StudentDuplicateCase Lifecycle
 
 ### States
+
 - `Open`
 - `UnderReview`
 - `Merged`
@@ -1091,6 +1156,7 @@ stateDiagram-v2
 - `Cancelled`
 
 ### Mermaid State Diagram
+
 ```mermaid
 stateDiagram-v2
     [*] --> Open
@@ -1105,20 +1171,21 @@ stateDiagram-v2
 
 ### Transition Rules Matrix
 
-| From Status | To Status | Allowed | Permission Required | Notes |
-|---|---|---|---|---|
-| Open | UnderReview | Yes | `student.duplicate.read` | Optional work-state change |
-| Open | ResolvedNoDuplicate | Yes | `student.duplicate.resolve` | Resolution reason required |
-| Open | Merged | Yes | `student.merge` + `student.duplicate.resolve` | Merge must complete successfully |
-| Open | Cancelled | Yes | `student.duplicate.resolve` | Reason required |
-| UnderReview | ResolvedNoDuplicate | Yes | `student.duplicate.resolve` | Resolution reason required |
-| UnderReview | Merged | Yes | `student.merge` + `student.duplicate.resolve` | Merge-driven closure |
-| UnderReview | Cancelled | Yes | `student.duplicate.resolve` | Reason required |
-| ResolvedNoDuplicate | Open | No | n/a | Reopen not supported in current module |
-| Merged | Open | No | n/a | Final |
-| Cancelled | Open | No | n/a | Final |
+| From Status         | To Status           | Allowed | Permission Required                           | Notes                                  |
+| ------------------- | ------------------- | ------- | --------------------------------------------- | -------------------------------------- |
+| Open                | UnderReview         | Yes     | `student.duplicate.read`                      | Optional work-state change             |
+| Open                | ResolvedNoDuplicate | Yes     | `student.duplicate.resolve`                   | Resolution reason required             |
+| Open                | Merged              | Yes     | `student.merge` + `student.duplicate.resolve` | Merge must complete successfully       |
+| Open                | Cancelled           | Yes     | `student.duplicate.resolve`                   | Reason required                        |
+| UnderReview         | ResolvedNoDuplicate | Yes     | `student.duplicate.resolve`                   | Resolution reason required             |
+| UnderReview         | Merged              | Yes     | `student.merge` + `student.duplicate.resolve` | Merge-driven closure                   |
+| UnderReview         | Cancelled           | Yes     | `student.duplicate.resolve`                   | Reason required                        |
+| ResolvedNoDuplicate | Open                | No      | n/a                                           | Reopen not supported in current module |
+| Merged              | Open                | No      | n/a                                           | Final                                  |
+| Cancelled           | Open                | No      | n/a                                           | Final                                  |
 
 ### State Invariants
+
 - Resolved states require:
   - `resolutionType`
   - `resolutionReason`
@@ -1132,11 +1199,13 @@ stateDiagram-v2
 ## 5.3 State Machine SM-STATE-003 — Student Export Lifecycle
 
 ### States
+
 - `Queued`
 - `Completed`
 - `Failed`
 
 ### Mermaid State Diagram
+
 ```mermaid
 stateDiagram-v2
     [*] --> Queued
@@ -1146,14 +1215,15 @@ stateDiagram-v2
 
 ### Transition Rules Matrix
 
-| From Status | To Status | Allowed | Permission Required | Notes |
-|---|---|---|---|---|
-| Queued | Completed | Yes | Internal system / worker | Export file created successfully |
-| Queued | Failed | Yes | Internal system / worker | Generation failed |
-| Completed | Queued | No | n/a | Not reopened in-place |
-| Failed | Queued | No (new request required) | n/a | Retry should create or log new attempt per policy |
+| From Status | To Status | Allowed                   | Permission Required      | Notes                                             |
+| ----------- | --------- | ------------------------- | ------------------------ | ------------------------------------------------- |
+| Queued      | Completed | Yes                       | Internal system / worker | Export file created successfully                  |
+| Queued      | Failed    | Yes                       | Internal system / worker | Generation failed                                 |
+| Completed   | Queued    | No                        | n/a                      | Not reopened in-place                             |
+| Failed      | Queued    | No (new request required) | n/a                      | Retry should create or log new attempt per policy |
 
 ### State Invariants
+
 - Every export request creates an export log
 - `Completed` may include a file reference
 - `Failed` must capture failure reason in logs/ops telemetry
@@ -1166,16 +1236,19 @@ stateDiagram-v2
 This is represented partly by current student profile fields and partly by immutable history.
 
 ### Current Operational States
+
 - `NotIssued`
 - `Issued`
 
 ### Events
+
 - `Issue`
 - `Reissue`
 - `Revoke` (only if future policy adds explicit revoke path)
 - `Correct`
 
 ### Mermaid State Diagram
+
 ```mermaid
 stateDiagram-v2
     [*] --> NotIssued
@@ -1185,14 +1258,15 @@ stateDiagram-v2
 
 ### Transition Rules Matrix
 
-| Current State | Event | Result State | Allowed | Permission Required | Notes |
-|---|---|---|---|---|---|
-| NotIssued | Issue | Issued | Yes | `student.idcard.manage` | Unique card number required |
-| NotIssued | Reissue | No transition | No | n/a | Cannot reissue before initial issue |
-| Issued | Reissue | Issued | Yes | `student.idcard.manage` | New number must differ |
-| Issued | Issue (correction) | Issued | Conditional | `student.idcard.manage` | Should be treated as correction/reissue by policy |
+| Current State | Event              | Result State  | Allowed     | Permission Required     | Notes                                             |
+| ------------- | ------------------ | ------------- | ----------- | ----------------------- | ------------------------------------------------- |
+| NotIssued     | Issue              | Issued        | Yes         | `student.idcard.manage` | Unique card number required                       |
+| NotIssued     | Reissue            | No transition | No          | n/a                     | Cannot reissue before initial issue               |
+| Issued        | Reissue            | Issued        | Yes         | `student.idcard.manage` | New number must differ                            |
+| Issued        | Issue (correction) | Issued        | Conditional | `student.idcard.manage` | Should be treated as correction/reissue by policy |
 
 ### State Invariants
+
 - `Issued` requires current card number
 - current card number must be unique among active student profiles
 - every issue/reissue event writes history and audit
@@ -1203,12 +1277,14 @@ stateDiagram-v2
 ## 6. Cross-Workflow Relationship Summary
 
 ### Student Creation Sources
+
 - Approved Admission → Create or reuse student
 - Direct Registration → Create or reuse student
 - Corporate Participant Conversion → Create or reuse student
 - Online / Walk-In Handoff → Create or reuse student (if enabled)
 
 ### Student Master Downstream Consumers
+
 - Admission & Enrollment
 - Finance (reference only)
 - Attendance (reference only)

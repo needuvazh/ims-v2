@@ -29,72 +29,86 @@ export type Institute = {
   language: string | null;
 };
 
-export const createInstituteCommandSchema = z.object({
-  instituteCode: z.string().trim().min(2).max(50),
-  instituteName: z.string().trim().min(2).max(255),
-  registrationNumber: z.string().trim().nullable().optional(),
-  taxNumber: z.string().trim().nullable().optional(),
-  primaryEmail: z.string().trim().email().nullable().optional(),
-  primaryPhone: z.string().trim().nullable().optional(),
-  website: z.string().trim().url().nullable().optional(),
-  address: z.string().trim().nullable().optional(),
-  country: z.string().trim().nullable().optional(),
-  legalNameEnglish: z.string().trim().max(255).nullable().optional(),
-  legalNameArabic: z.string().trim().max(255).nullable().optional(),
-  tradeName: z.string().trim().max(255).nullable().optional(),
-  shortName: z.string().trim().max(100).nullable().optional(),
-  effectiveStartDate: z.coerce.date().nullable().optional(),
-  effectiveEndDate: z.coerce.date().nullable().optional(),
-  currency: z.string().trim().max(10).nullable().optional(),
-  timezone: z.string().trim().max(50).nullable().optional(),
-  language: z.string().trim().max(10).nullable().optional(),
-}).refine(
-  (data) => {
-    if (data.effectiveStartDate && data.effectiveEndDate) {
-      return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
-    }
-    return true;
-  },
-  {
-    message: 'Effective end date must be after or equal to effective start date',
-    path: ['effectiveEndDate'],
-  }
-);
+export const createInstituteCommandSchema = z
+  .object({
+    instituteCode: z.string().trim().min(2).max(50),
+    instituteName: z.string().trim().min(2).max(255),
+    registrationNumber: z.string().trim().nullable().optional(),
+    taxNumber: z.string().trim().nullable().optional(),
+    primaryEmail: z.string().trim().email().nullable().optional(),
+    primaryPhone: z.string().trim().nullable().optional(),
+    website: z.string().trim().url().nullable().optional(),
+    address: z.string().trim().nullable().optional(),
+    country: z.string().trim().nullable().optional(),
+    legalNameEnglish: z.string().trim().max(255).nullable().optional(),
+    legalNameArabic: z.string().trim().max(255).nullable().optional(),
+    tradeName: z.string().trim().max(255).nullable().optional(),
+    shortName: z.string().trim().max(100).nullable().optional(),
+    effectiveStartDate: z.coerce.date().nullable().optional(),
+    effectiveEndDate: z.coerce.date().nullable().optional(),
+    currency: z.string().trim().max(10).nullable().optional(),
+    timezone: z.string().trim().max(50).nullable().optional(),
+    language: z.string().trim().max(10).nullable().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.effectiveStartDate && data.effectiveEndDate) {
+        return (
+          new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+        );
+      }
+      return true;
+    },
+    {
+      message:
+        'Effective end date must be after or equal to effective start date',
+      path: ['effectiveEndDate'],
+    },
+  );
 
-export const updateInstituteCommandSchema = z.object({
-  instituteName: z.string().trim().min(2).max(255).optional(),
-  registrationNumber: z.string().trim().nullable().optional(),
-  taxNumber: z.string().trim().nullable().optional(),
-  primaryEmail: z.string().trim().email().nullable().optional(),
-  primaryPhone: z.string().trim().nullable().optional(),
-  website: z.string().trim().url().nullable().optional(),
-  address: z.string().trim().nullable().optional(),
-  country: z.string().trim().nullable().optional(),
-  legalNameEnglish: z.string().trim().max(255).nullable().optional(),
-  legalNameArabic: z.string().trim().max(255).nullable().optional(),
-  tradeName: z.string().trim().max(255).nullable().optional(),
-  shortName: z.string().trim().max(100).nullable().optional(),
-  effectiveStartDate: z.coerce.date().nullable().optional(),
-  effectiveEndDate: z.coerce.date().nullable().optional(),
-  currency: z.string().trim().max(10).nullable().optional(),
-  timezone: z.string().trim().max(50).nullable().optional(),
-  language: z.string().trim().max(10).nullable().optional(),
-  status: statusSchema.optional(),
-}).refine(
-  (data) => {
-    if (data.effectiveStartDate && data.effectiveEndDate) {
-      return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
-    }
-    return true;
-  },
-  {
-    message: 'Effective end date must be after or equal to effective start date',
-    path: ['effectiveEndDate'],
-  }
-);
+export const updateInstituteCommandSchema = z
+  .object({
+    instituteName: z.string().trim().min(2).max(255).optional(),
+    registrationNumber: z.string().trim().nullable().optional(),
+    taxNumber: z.string().trim().nullable().optional(),
+    primaryEmail: z.string().trim().email().nullable().optional(),
+    primaryPhone: z.string().trim().nullable().optional(),
+    website: z.string().trim().url().nullable().optional(),
+    address: z.string().trim().nullable().optional(),
+    country: z.string().trim().nullable().optional(),
+    legalNameEnglish: z.string().trim().max(255).nullable().optional(),
+    legalNameArabic: z.string().trim().max(255).nullable().optional(),
+    tradeName: z.string().trim().max(255).nullable().optional(),
+    shortName: z.string().trim().max(100).nullable().optional(),
+    effectiveStartDate: z.coerce.date().nullable().optional(),
+    effectiveEndDate: z.coerce.date().nullable().optional(),
+    currency: z.string().trim().max(10).nullable().optional(),
+    timezone: z.string().trim().max(50).nullable().optional(),
+    language: z.string().trim().max(10).nullable().optional(),
+    status: statusSchema.optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.effectiveStartDate && data.effectiveEndDate) {
+        return (
+          new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+        );
+      }
+      return true;
+    },
+    {
+      message:
+        'Effective end date must be after or equal to effective start date',
+      path: ['effectiveEndDate'],
+    },
+  );
 
-export type CreateInstituteCommand = z.infer<typeof createInstituteCommandSchema>;
-export type UpdateInstituteCommand = z.infer<typeof updateInstituteCommandSchema>;
+export type CreateInstituteCommand = z.infer<
+  typeof createInstituteCommandSchema
+>;
+export type UpdateInstituteCommand = z.infer<
+  typeof updateInstituteCommandSchema
+>;
 
 // ─── Branch ──────────────────────────────────────────────────────────────────
 
@@ -225,14 +239,17 @@ const branchBaseSchema = z.object({
 export const createBranchCommandSchema = branchBaseSchema.refine(
   (data) => {
     if (data.effectiveStartDate && data.effectiveEndDate) {
-      return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
+      return (
+        new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+      );
     }
     return true;
   },
   {
-    message: 'Effective end date must be after or equal to effective start date',
+    message:
+      'Effective end date must be after or equal to effective start date',
     path: ['effectiveEndDate'],
-  }
+  },
 );
 
 export const updateBranchCommandSchema = branchBaseSchema
@@ -241,14 +258,17 @@ export const updateBranchCommandSchema = branchBaseSchema
   .refine(
     (data) => {
       if (data.effectiveStartDate && data.effectiveEndDate) {
-        return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
+        return (
+          new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+        );
       }
       return true;
     },
     {
-      message: 'Effective end date must be after or equal to effective start date',
+      message:
+        'Effective end date must be after or equal to effective start date',
       path: ['effectiveEndDate'],
-    }
+    },
   );
 
 export type CreateBranchCommand = z.infer<typeof createBranchCommandSchema>;
@@ -282,14 +302,17 @@ const departmentBaseSchema = z.object({
 export const createDepartmentCommandSchema = departmentBaseSchema.refine(
   (data) => {
     if (data.effectiveStartDate && data.effectiveEndDate) {
-      return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
+      return (
+        new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+      );
     }
     return true;
   },
   {
-    message: 'Effective end date must be after or equal to effective start date',
+    message:
+      'Effective end date must be after or equal to effective start date',
     path: ['effectiveEndDate'],
-  }
+  },
 );
 
 export const updateDepartmentCommandSchema = departmentBaseSchema
@@ -298,18 +321,25 @@ export const updateDepartmentCommandSchema = departmentBaseSchema
   .refine(
     (data) => {
       if (data.effectiveStartDate && data.effectiveEndDate) {
-        return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
+        return (
+          new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+        );
       }
       return true;
     },
     {
-      message: 'Effective end date must be after or equal to effective start date',
+      message:
+        'Effective end date must be after or equal to effective start date',
       path: ['effectiveEndDate'],
-    }
+    },
   );
 
-export type CreateDepartmentCommand = z.infer<typeof createDepartmentCommandSchema>;
-export type UpdateDepartmentCommand = z.infer<typeof updateDepartmentCommandSchema>;
+export type CreateDepartmentCommand = z.infer<
+  typeof createDepartmentCommandSchema
+>;
+export type UpdateDepartmentCommand = z.infer<
+  typeof updateDepartmentCommandSchema
+>;
 
 // ─── Classroom ───────────────────────────────────────────────────────────────
 
@@ -337,14 +367,17 @@ const classroomBaseSchema = z.object({
 export const createClassroomCommandSchema = classroomBaseSchema.refine(
   (data) => {
     if (data.effectiveStartDate && data.effectiveEndDate) {
-      return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
+      return (
+        new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+      );
     }
     return true;
   },
   {
-    message: 'Effective end date must be after or equal to effective start date',
+    message:
+      'Effective end date must be after or equal to effective start date',
     path: ['effectiveEndDate'],
-  }
+  },
 );
 
 export const updateClassroomCommandSchema = classroomBaseSchema
@@ -353,18 +386,25 @@ export const updateClassroomCommandSchema = classroomBaseSchema
   .refine(
     (data) => {
       if (data.effectiveStartDate && data.effectiveEndDate) {
-        return new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate);
+        return (
+          new Date(data.effectiveEndDate) >= new Date(data.effectiveStartDate)
+        );
       }
       return true;
     },
     {
-      message: 'Effective end date must be after or equal to effective start date',
+      message:
+        'Effective end date must be after or equal to effective start date',
       path: ['effectiveEndDate'],
-    }
+    },
   );
 
-export type CreateClassroomCommand = z.infer<typeof createClassroomCommandSchema>;
-export type UpdateClassroomCommand = z.infer<typeof updateClassroomCommandSchema>;
+export type CreateClassroomCommand = z.infer<
+  typeof createClassroomCommandSchema
+>;
+export type UpdateClassroomCommand = z.infer<
+  typeof updateClassroomCommandSchema
+>;
 
 // ─── Pagination ──────────────────────────────────────────────────────────────
 
@@ -406,5 +446,3 @@ export interface ClassroomUsageVerifier {
 export interface BranchDependencyChecker {
   hasActiveDependencies(branchId: string): Promise<boolean>;
 }
-
-

@@ -45,10 +45,14 @@ export type UpdateCourseInput = Partial<CreateCourseInput>;
 export class CourseService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly courseRepository: ICourseRepository
+    private readonly courseRepository: ICourseRepository,
   ) {}
 
-  async createCourse(input: CreateCourseInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createCourse(
+    input: CreateCourseInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate course code format
       if (!CODE_REGEX.test(input.courseCode)) {
@@ -56,7 +60,10 @@ export class CourseService {
       }
 
       // Validate duplicate course code
-      const existingCode = await this.courseRepository.findByCode(input.courseCode, activeClient);
+      const existingCode = await this.courseRepository.findByCode(
+        input.courseCode,
+        activeClient,
+      );
       if (existingCode) {
         throw new DuplicateCourseCode();
       }
@@ -65,7 +72,10 @@ export class CourseService {
       if (!ARABIC_SCRIPT_REGEX.test(input.nameArabic)) {
         throw new Error('ERR_CRS_INVALID_ARABIC_SCRIPT');
       }
-      if (input.descriptionArabic && !ARABIC_SCRIPT_REGEX.test(input.descriptionArabic)) {
+      if (
+        input.descriptionArabic &&
+        !ARABIC_SCRIPT_REGEX.test(input.descriptionArabic)
+      ) {
         throw new Error('ERR_CRS_INVALID_ARABIC_SCRIPT');
       }
 
@@ -82,14 +92,17 @@ export class CourseService {
         input.nameEnglish,
         input.nameArabic,
         input.departmentId,
-        activeClient
+        activeClient,
       );
       if (existingName) {
         throw new DuplicateCourseName();
       }
 
       // Validate date range
-      if (input.effectiveEndDate && new Date(input.effectiveEndDate) <= new Date(input.effectiveStartDate)) {
+      if (
+        input.effectiveEndDate &&
+        new Date(input.effectiveEndDate) <= new Date(input.effectiveStartDate)
+      ) {
         throw new InvalidDateRange();
       }
 
@@ -111,7 +124,7 @@ export class CourseService {
           status: 'Draft',
           createdBy: actorId,
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -156,8 +169,14 @@ export class CourseService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async updateCourse(id: string, input: UpdateCourseInput, version: number, actorId?: string, tx?: Prisma.TransactionClient) {
-      const execute = async (activeClient: Prisma.TransactionClient) => {
+  async updateCourse(
+    id: string,
+    input: UpdateCourseInput,
+    version: number,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
+    const execute = async (activeClient: Prisma.TransactionClient) => {
       const course = await this.courseRepository.findById(id, activeClient);
       if (!course) {
         throw new Error('ERR_CRS_COURSE_NOT_FOUND');
@@ -167,7 +186,10 @@ export class CourseService {
       if (input.nameArabic && !ARABIC_SCRIPT_REGEX.test(input.nameArabic)) {
         throw new Error('ERR_CRS_INVALID_ARABIC_SCRIPT');
       }
-      if (input.descriptionArabic && !ARABIC_SCRIPT_REGEX.test(input.descriptionArabic)) {
+      if (
+        input.descriptionArabic &&
+        !ARABIC_SCRIPT_REGEX.test(input.descriptionArabic)
+      ) {
         throw new Error('ERR_CRS_INVALID_ARABIC_SCRIPT');
       }
 
@@ -180,7 +202,7 @@ export class CourseService {
           checkNameEn,
           checkNameAr,
           checkDept,
-          activeClient
+          activeClient,
         );
         if (existingName && existingName.id !== id) {
           throw new DuplicateCourseName();
@@ -188,18 +210,39 @@ export class CourseService {
       }
 
       // Validate date range
-      const checkStartDate = input.effectiveStartDate ? new Date(input.effectiveStartDate) : new Date(course.effectiveStartDate);
-      const checkEndDate = input.effectiveEndDate !== undefined ? (input.effectiveEndDate ? new Date(input.effectiveEndDate) : null) : (course.effectiveEndDate ? new Date(course.effectiveEndDate) : null);
+      const checkStartDate = input.effectiveStartDate
+        ? new Date(input.effectiveStartDate)
+        : new Date(course.effectiveStartDate);
+      const checkEndDate =
+        input.effectiveEndDate !== undefined
+          ? input.effectiveEndDate
+            ? new Date(input.effectiveEndDate)
+            : null
+          : course.effectiveEndDate
+            ? new Date(course.effectiveEndDate)
+            : null;
       if (checkEndDate && checkEndDate <= checkStartDate) {
         throw new InvalidDateRange();
       }
 
       // Immutable checks on published courses with active batches
-      const isClassificationChanged = input.courseClassification && input.courseClassification !== course.courseClassification;
-      const isDurationValueChanged = input.durationValue && input.durationValue !== course.durationValue;
-      const isDurationTypeChanged = input.durationType && input.durationType !== course.durationType;
-      if (course.status === 'Published' && (isClassificationChanged || isDurationValueChanged || isDurationTypeChanged)) {
-        const hasActive = await this.courseRepository.hasActiveBatches(id, activeClient);
+      const isClassificationChanged =
+        input.courseClassification &&
+        input.courseClassification !== course.courseClassification;
+      const isDurationValueChanged =
+        input.durationValue && input.durationValue !== course.durationValue;
+      const isDurationTypeChanged =
+        input.durationType && input.durationType !== course.durationType;
+      if (
+        course.status === 'Published' &&
+        (isClassificationChanged ||
+          isDurationValueChanged ||
+          isDurationTypeChanged)
+      ) {
+        const hasActive = await this.courseRepository.hasActiveBatches(
+          id,
+          activeClient,
+        );
         if (hasActive) {
           throw new ActiveCourseLocked();
         }
@@ -222,7 +265,7 @@ export class CourseService {
           updatedBy: actorId,
         },
         version,
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -274,9 +317,9 @@ export class CourseService {
     targetStatus: string,
     version: number,
     actorId?: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
-      const execute = async (activeClient: Prisma.TransactionClient) => {
+    const execute = async (activeClient: Prisma.TransactionClient) => {
       const course = await this.courseRepository.findById(id, activeClient);
       if (!course) {
         throw new Error('ERR_CRS_COURSE_NOT_FOUND');
@@ -322,7 +365,10 @@ export class CourseService {
 
       // Validate batches if target is Archived
       if (targetStatus === 'Archived') {
-        const hasActive = await this.courseRepository.hasActiveBatches(id, activeClient);
+        const hasActive = await this.courseRepository.hasActiveBatches(
+          id,
+          activeClient,
+        );
         if (hasActive) {
           throw new ActiveBatchesExist();
         }
@@ -337,7 +383,7 @@ export class CourseService {
             deletedBy: actorId,
           },
           version,
-          activeClient
+          activeClient,
         );
 
         // Audit Log
@@ -362,7 +408,12 @@ export class CourseService {
             eventType: 'CourseStatusChanged',
             aggregateType: 'Course',
             aggregateId: id,
-            payload: { id, oldStatus: currentStatus, newStatus: 'Archived', isDeleted: true },
+            payload: {
+              id,
+              oldStatus: currentStatus,
+              newStatus: 'Archived',
+              isDeleted: true,
+            },
             status: 'Pending',
             availableAt: new Date(),
           },
@@ -379,7 +430,7 @@ export class CourseService {
           updatedBy: actorId,
         },
         version,
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -422,9 +473,15 @@ export class CourseService {
   }
 
   async findAll(
-    filters: { categoryId?: string; status?: string; search?: string; sortBy?: string; sortOrder?: 'asc' | 'desc' },
+    filters: {
+      categoryId?: string;
+      status?: string;
+      search?: string;
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
+    },
     pagination: { page: number; limit: number },
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const client = tx || this.prisma;
     return this.courseRepository.findAll(filters, pagination, client);

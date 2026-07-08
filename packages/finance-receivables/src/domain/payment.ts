@@ -9,7 +9,7 @@ export const PaymentMethodSchema = z.enum([
   'Card',
   'Online',
   'Cheque',
-  'CorporateBilling'
+  'CorporateBilling',
 ]);
 
 export const PaymentStatusSchema = z.enum([
@@ -18,16 +18,18 @@ export const PaymentStatusSchema = z.enum([
   'Failed',
   'Reversed',
   'Refunded',
-  'PartiallyRefunded'
+  'PartiallyRefunded',
 ]);
 
 export const PaymentAllocationInputSchema = z.object({
   invoiceId: z.string().uuid(),
   installmentId: z.string().uuid().nullable().optional(),
-  allocatedAmount: z.number().positive()
+  allocatedAmount: z.number().positive(),
 });
 
-export type PaymentAllocationInput = z.infer<typeof PaymentAllocationInputSchema>;
+export type PaymentAllocationInput = z.infer<
+  typeof PaymentAllocationInputSchema
+>;
 
 export const CreatePaymentInputSchema = z.object({
   invoiceId: z.string().uuid(),
@@ -42,7 +44,7 @@ export const CreatePaymentInputSchema = z.object({
   remarks: z.string().optional().nullable(),
   receivedBy: z.string().uuid(),
   idempotencyKey: z.string().min(1),
-  allocations: z.array(PaymentAllocationInputSchema)
+  allocations: z.array(PaymentAllocationInputSchema),
 });
 
 export type CreatePaymentInput = z.infer<typeof CreatePaymentInputSchema>;
@@ -60,6 +62,8 @@ export function validatePaymentAllocations(input: CreatePaymentInput): void {
 
   const paymentAmount = new Decimal(input.amount);
   if (!totalAllocated.equals(paymentAmount)) {
-    throw new Error(`Total allocated amount (${totalAllocated.toString()}) does not match the payment amount (${paymentAmount.toString()})`);
+    throw new Error(
+      `Total allocated amount (${totalAllocated.toString()}) does not match the payment amount (${paymentAmount.toString()})`,
+    );
   }
 }

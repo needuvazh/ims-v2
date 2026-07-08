@@ -32,11 +32,13 @@ Trainer Management does not own course definitions, batches, sessions, timetable
 The system shall allow authorized Trainer Administrators, Academic Coordinators, Training Coordinators, Branch Managers, Auditors, and Reporting Users to search and list trainers within their permitted branch scope.
 
 **Preconditions**
+
 1. User is authenticated.
 2. User has `trainer.read` or an explicitly mapped reporting permission.
 3. Active branch context is valid for the user.
 
 **Inputs**
+
 - `branchId` constrained by authorized branch scope.
 - `searchText` matched against trainerCode and permitted Person display-name fields.
 - `trainerType`: FullTime, PartTime, Freelance.
@@ -50,6 +52,7 @@ The system shall allow authorized Trainer Administrators, Academic Coordinators,
 - `sortDirection`: asc or desc.
 
 **Processing Steps**
+
 1. Resolve authenticated user permissions and authorized branches.
 2. Reject requested branch scope outside authorized branches.
 3. Build a query excluding soft-deleted TrainerProfile rows.
@@ -61,6 +64,7 @@ The system shall allow authorized Trainer Administrators, Academic Coordinators,
 9. Exclude compensation amounts unless the user separately has `trainer.compensation.read`.
 
 **Outputs & Postconditions**
+
 - Paginated trainer summary list.
 - Total count matching the authorized query.
 - Applied filters metadata.
@@ -76,12 +80,14 @@ The system shall allow authorized Trainer Administrators, Academic Coordinators,
 Authorized users shall create a TrainerProfile linked to an existing canonical Person or to a newly created Person through the shared identity capability.
 
 **Preconditions**
+
 1. User has `trainer.create`.
 2. Target branch is in the user’s write-authorized branch scope.
 3. Referenced Person exists, or supplied person creation input passes shared Person validation.
 4. The Person is not already linked to a non-deleted TrainerProfile.
 
 **Inputs**
+
 - `personId` or validated Person creation command.
 - `branchId`.
 - `trainerCode` when manual numbering is allowed; otherwise generated from NumberingSeries.
@@ -93,6 +99,7 @@ Authorized users shall create a TrainerProfile linked to an existing canonical P
 - `effectiveEndDate` optional.
 
 **Processing Steps**
+
 1. Authorize action and branch.
 2. Resolve or create canonical Person using Party/Person rules.
 3. Check uniqueness of Person-to-TrainerProfile relation.
@@ -104,6 +111,7 @@ Authorized users shall create a TrainerProfile linked to an existing canonical P
 9. Record audit entry and publish in-process `TrainerCreated` event after successful transaction.
 
 **Outputs & Postconditions**
+
 - Created TrainerProfile identifier and trainerCode.
 - TrainerProfile is linked to exactly one Person and one operational branch.
 - Audit evidence exists.
@@ -118,14 +126,17 @@ Authorized users shall create a TrainerProfile linked to an existing canonical P
 Authorized users shall view a trainer detail record with data segmented by permission.
 
 **Preconditions**
+
 1. User has `trainer.read`.
 2. Trainer belongs to an accessible branch or is visible through permitted consolidated scope.
 
 **Inputs**
+
 - `trainerId`.
 - Optional `effectiveOn` date for effective-dated views.
 
 **Processing Steps**
+
 1. Enforce branch scope.
 2. Load non-deleted TrainerProfile and canonical Person display fields.
 3. Load non-deleted qualifications if qualification read permission exists.
@@ -137,6 +148,7 @@ Authorized users shall view a trainer detail record with data segmented by permi
 9. Return explicit section-level access indicators where data is intentionally withheld.
 
 **Outputs & Postconditions**
+
 - Complete authorized trainer detail view.
 - No unauthorized financial or branch data is exposed.
 
@@ -150,11 +162,13 @@ Authorized users shall view a trainer detail record with data segmented by permi
 Authorized users shall update mutable TrainerProfile attributes while preserving Person identity ownership and preventing lost updates.
 
 **Preconditions**
+
 1. User has `trainer.update`.
 2. Trainer is within writable branch scope.
 3. Submitted `version` matches current record version.
 
 **Inputs**
+
 - `trainerId`.
 - `version`.
 - `branchId` if branch reassignment is permitted by policy.
@@ -166,6 +180,7 @@ Authorized users shall update mutable TrainerProfile attributes while preserving
 - `reason` when sensitive fields change.
 
 **Processing Steps**
+
 1. Authorize user and branch.
 2. Load current record and reject stale version.
 3. Compare requested changes with current values.
@@ -177,6 +192,7 @@ Authorized users shall update mutable TrainerProfile attributes while preserving
 9. Publish `TrainerUpdated` in-process event.
 
 **Outputs & Postconditions**
+
 - Updated TrainerProfile.
 - Version incremented.
 - Audit trail persisted.
@@ -191,11 +207,13 @@ Authorized users shall update mutable TrainerProfile attributes while preserving
 Authorized users shall manage trainer operational status using controlled state transitions.
 
 **Preconditions**
+
 1. User has `trainer.status.manage`.
 2. Trainer is in writable branch scope.
 3. Requested transition is permitted.
 
 **Inputs**
+
 - `trainerId`.
 - `targetStatus`: Active, Inactive, Suspended.
 - `effectiveDate`.
@@ -203,6 +221,7 @@ Authorized users shall manage trainer operational status using controlled state 
 - `version`.
 
 **Processing Steps**
+
 1. Load trainer and validate optimistic version.
 2. Validate transition against BR-FTM status matrix.
 3. For activation, verify effective date validity and required Person linkage.
@@ -213,6 +232,7 @@ Authorized users shall manage trainer operational status using controlled state 
 8. Publish appropriate event: `TrainerActivated`, `TrainerDeactivated`, `TrainerSuspended`, and `TrainerStatusChanged`.
 
 **Outputs & Postconditions**
+
 - New trainer status.
 - Status history is auditable.
 - Invalid future delivery states are not silently created.
@@ -227,10 +247,12 @@ Authorized users shall manage trainer operational status using controlled state 
 Authorized users shall add, update, view, and soft delete structured TrainerQualification records.
 
 **Preconditions**
+
 1. User has `trainer.qualification.manage` for writes or `trainer.qualification.read` for reads.
 2. Trainer is accessible within branch scope.
 
 **Inputs**
+
 - `trainerId`.
 - `qualificationName` non-empty.
 - `institution` non-empty.
@@ -238,6 +260,7 @@ Authorized users shall add, update, view, and soft delete structured TrainerQual
 - `documentId` optional.
 
 **Processing Steps**
+
 1. Validate trainer access.
 2. Normalize text inputs according to application text rules without changing legal meaning.
 3. Validate year range.
@@ -248,6 +271,7 @@ Authorized users shall add, update, view, and soft delete structured TrainerQual
 8. Publish `TrainerQualificationAdded` or `TrainerQualificationUpdated` as applicable.
 
 **Outputs & Postconditions**
+
 - Structured qualification record linked to trainer.
 - Optional document reference retained.
 - Audit record generated for writes.
@@ -262,11 +286,13 @@ Authorized users shall add, update, view, and soft delete structured TrainerQual
 Authorized users shall configure recurring weekly availability windows for a trainer by branch and effective period.
 
 **Preconditions**
+
 1. User has `trainer.availability.manage`.
 2. Trainer and target branch are within authorized scope.
 3. TrainerProfile is not soft-deleted.
 
 **Inputs**
+
 - `trainerId`.
 - `dayOfWeek`: Monday through Sunday.
 - `startTime` local Oman business time.
@@ -277,6 +303,7 @@ Authorized users shall configure recurring weekly availability windows for a tra
 - `effectiveEndDate` optional.
 
 **Processing Steps**
+
 1. Validate branch scope.
 2. Validate dayOfWeek.
 3. Validate `startTime < endTime` and same-day recurring interval semantics.
@@ -288,6 +315,7 @@ Authorized users shall configure recurring weekly availability windows for a tra
 9. Publish `TrainerAvailabilityUpdated`.
 
 **Outputs & Postconditions**
+
 - Effective recurring availability window.
 - No conflicting duplicate active availability records for the same branch/day/effective intersection.
 
@@ -301,13 +329,16 @@ Authorized users shall configure recurring weekly availability windows for a tra
 The module shall provide deterministic validation for proposed availability changes and scheduling queries.
 
 **Preconditions**
+
 1. Trainer exists and is accessible.
 2. Candidate interval is supplied.
 
 **Inputs**
+
 - trainerId, branchId, date, startDateTime, endDateTime.
 
 **Processing Steps**
+
 1. Convert target timestamp handling to configured Oman GST business timezone for calendar-day/day-of-week evaluation.
 2. Require target end timestamp to be later than start timestamp.
 3. Determine local day of week.
@@ -317,6 +348,7 @@ The module shall provide deterministic validation for proposed availability chan
 7. Return explicit reason codes: AVAILABLE, NO_WINDOW, OUTSIDE_WINDOW, INACTIVE_TRAINER, BRANCH_MISMATCH, INVALID_INTERVAL.
 
 **Outputs & Postconditions**
+
 - Structured availability-validation result.
 - No schedule mutation occurs in this module.
 
@@ -330,11 +362,13 @@ The module shall provide deterministic validation for proposed availability chan
 Authorized Academic Coordinators or delegated administrators shall authorize trainers to deliver specific courses for defined effective periods.
 
 **Preconditions**
+
 1. User has `trainer.authorization.manage`.
 2. Trainer is accessible and not soft-deleted.
 3. Course exists in Course Catalog.
 
 **Inputs**
+
 - `trainerId`.
 - `courseId`.
 - `status`: Active, Inactive, Suspended, Expired.
@@ -343,6 +377,7 @@ Authorized Academic Coordinators or delegated administrators shall authorize tra
 - `reason` required for suspension or manual expiration.
 
 **Processing Steps**
+
 1. Validate permission and branch context.
 2. Validate course reference through Course Catalog read boundary.
 3. Validate effective date range.
@@ -353,6 +388,7 @@ Authorized Academic Coordinators or delegated administrators shall authorize tra
 8. Publish `TrainerCourseAuthorized` for activation and `TrainerCourseAuthorizationExpired` when authorization expires or is manually expired.
 
 **Outputs & Postconditions**
+
 - Effective course authorization record.
 - Eligibility queries can use authorization immediately after commit.
 
@@ -366,11 +402,13 @@ Authorized Academic Coordinators or delegated administrators shall authorize tra
 Training Coordinators and system consumers shall retrieve trainers eligible for a proposed course delivery slot.
 
 **Preconditions**
+
 1. User/system caller has `trainer.eligibility.read` or trusted internal module authorization.
 2. Course and branch exist.
 3. Date/time interval is valid.
 
 **Inputs**
+
 - `courseId`.
 - `branchId`.
 - `startDateTime`.
@@ -379,6 +417,7 @@ Training Coordinators and system consumers shall retrieve trainers eligible for 
 - optional specialization filter.
 
 **Processing Steps**
+
 1. Validate caller and branch scope.
 2. Select non-deleted trainers with Active status and effective profile period containing target date.
 3. Restrict by branch compatibility policy.
@@ -389,6 +428,7 @@ Training Coordinators and system consumers shall retrieve trainers eligible for 
 8. Sort by exact branch match, then trainerCode unless a defined business ranking rule is configured.
 
 **Outputs & Postconditions**
+
 - Eligible trainer list with authorization and availability evidence summary.
 - Read-only operation; no reservation is created.
 
@@ -402,11 +442,13 @@ Training Coordinators and system consumers shall retrieve trainers eligible for 
 Authorized Finance users or specifically delegated managers shall configure effective-dated trainer compensation rate structures.
 
 **Preconditions**
+
 1. User has `trainer.compensation.manage`.
 2. Trainer is accessible within permitted branch scope.
 3. Referenced batch/session exists when provided.
 
 **Inputs**
+
 - `trainerId`.
 - `batchId` optional.
 - `sessionId` optional.
@@ -418,6 +460,7 @@ Authorized Finance users or specifically delegated managers shall configure effe
 - `effectiveEndDate` optional.
 
 **Processing Steps**
+
 1. Authorize separate compensation management permission.
 2. Validate trainer and reference scope.
 3. Validate amount greater than zero and within database currency precision bounds.
@@ -431,6 +474,7 @@ Authorized Finance users or specifically delegated managers shall configure effe
 11. Publish `TrainerCompensationRateConfigured`.
 
 **Outputs & Postconditions**
+
 - Effective compensation rate record.
 - Compensation data is visible only to separately authorized readers.
 
@@ -444,10 +488,12 @@ Authorized Finance users or specifically delegated managers shall configure effe
 The module shall resolve the most specific active compensation rate for an authorized internal consumer.
 
 **Preconditions**
+
 1. Caller has `trainer.compensation.read` or trusted finance/payroll integration authorization.
 2. Trainer and target date are valid.
 
 **Inputs**
+
 - trainerId.
 - sessionId optional.
 - batchId optional.
@@ -455,6 +501,7 @@ The module shall resolve the most specific active compensation rate for an autho
 - paymentBasis optional filter.
 
 **Processing Steps**
+
 1. Select active, non-deleted rates whose effective period contains targetDate.
 2. Filter to trainerId.
 3. Apply optional paymentBasis filter.
@@ -463,6 +510,7 @@ The module shall resolve the most specific active compensation rate for an autho
 6. Return amount, basis, source rate ID, specificity level, and effective period.
 
 **Outputs & Postconditions**
+
 - Deterministically resolved rate or explicit NO_RATE / AMBIGUOUS_RATE outcome.
 - No payroll calculation occurs.
 
@@ -476,13 +524,16 @@ The module shall resolve the most specific active compensation rate for an autho
 Training Delivery shall be able to validate a trainer before creating or confirming BatchTrainer or Session assignment.
 
 **Preconditions**
+
 1. Trusted internal call or authorized user.
 2. Batch/course/branch references are supplied by Training Delivery.
 
 **Inputs**
+
 - trainerId, courseId, batchId, branchId, assignmentStart, assignmentEnd, assignmentRole.
 
 **Processing Steps**
+
 1. Verify trainer exists, is Active, non-deleted, and effective for assignment date.
 2. Verify branch compatibility.
 3. Verify active course authorization valid for assignment period.
@@ -491,6 +542,7 @@ Training Delivery shall be able to validate a trainer before creating or confirm
 6. Return all failed checks together where safe so coordinator can correct assignment.
 
 **Outputs & Postconditions**
+
 - Eligibility result: ELIGIBLE or NOT_ELIGIBLE.
 - Structured reasons: TRAINER_INACTIVE, PROFILE_NOT_EFFECTIVE, BRANCH_MISMATCH, COURSE_NOT_AUTHORIZED, AUTHORIZATION_EXPIRED, NOT_AVAILABLE, SCHEDULE_CONFLICT.
 - No BatchTrainer or Session mutation is made by Module 09.
@@ -505,13 +557,16 @@ Training Delivery shall be able to validate a trainer before creating or confirm
 Scheduling shall validate trainer availability before confirming timetable changes.
 
 **Preconditions**
+
 1. Trusted internal Scheduling call.
 2. Proposed schedule interval is valid.
 
 **Inputs**
+
 - trainerId, branchId, scheduledDate, startTime, endTime.
 
 **Processing Steps**
+
 1. Validate trainer status and profile effective date.
 2. Validate branch scope.
 3. Evaluate recurring availability window containment.
@@ -519,6 +574,7 @@ Scheduling shall validate trainer availability before confirming timetable chang
 5. Scheduling remains responsible for trainer double-booking and timetable conflict ownership.
 
 **Outputs & Postconditions**
+
 - Availability decision suitable for Scheduling validation.
 - No schedule record is created or changed.
 
@@ -532,15 +588,18 @@ Scheduling shall validate trainer availability before confirming timetable chang
 Authorized users shall view batches and sessions currently referencing a trainer.
 
 **Preconditions**
+
 1. User has `trainer.read`.
 2. Trainer is within branch scope.
 
 **Inputs**
+
 - trainerId.
 - date range.
 - assignment status filter.
 
 **Processing Steps**
+
 1. Validate branch access.
 2. Query Training Delivery read model for BatchTrainer references.
 3. Query Session references for trainerId.
@@ -548,6 +607,7 @@ Authorized users shall view batches and sessions currently referencing a trainer
 5. Return course, batch, session, role, dates, and statuses allowed by caller permissions.
 
 **Outputs & Postconditions**
+
 - Read-only assignment reference view.
 
 **Priority:** Should
@@ -560,16 +620,19 @@ Authorized users shall view batches and sessions currently referencing a trainer
 The system shall prevent physical deletion and provide controlled soft deletion or deactivation.
 
 **Preconditions**
+
 1. User has the manage permission for the target entity type.
 2. Target record is accessible.
 
 **Inputs**
+
 - entityType: TrainerProfile, TrainerQualification, TrainerAvailability, TrainerCourseAuthorization, TrainerCompensationRate.
 - entityId.
 - reason.
 - version where supported.
 
 **Processing Steps**
+
 1. Authorize action.
 2. Check active references and business constraints.
 3. TrainerProfile soft deletion is blocked while active/future BatchTrainer or Session references exist.
@@ -579,6 +642,7 @@ The system shall prevent physical deletion and provide controlled soft deletion 
 7. Exclude soft-deleted records from normal queries.
 
 **Outputs & Postconditions**
+
 - Record deactivated or soft-deleted according to rule.
 - Historical audit evidence remains.
 
@@ -592,11 +656,13 @@ The system shall prevent physical deletion and provide controlled soft deletion 
 Authorized users shall view and export trainer operational datasets.
 
 **Preconditions**
+
 1. `trainer.report.view` for viewing.
 2. `trainer.report.export` for export.
 3. Consolidated cross-branch access requires `trainer.report.consolidated.view` and appropriate branch access.
 
 **Inputs**
+
 - branch scope.
 - date range.
 - trainer status/type.
@@ -605,6 +671,7 @@ Authorized users shall view and export trainer operational datasets.
 - export format allowed by platform standard.
 
 **Processing Steps**
+
 1. Resolve authorized branch set.
 2. Apply report filters server-side.
 3. Read owned trainer data and authorized read models from dependent contexts.
@@ -613,6 +680,7 @@ Authorized users shall view and export trainer operational datasets.
 6. Record audit event for sensitive exports.
 
 **Outputs & Postconditions**
+
 - On-screen report or exported file.
 - Scope and filter metadata included.
 
@@ -626,12 +694,15 @@ Authorized users shall view and export trainer operational datasets.
 The system shall create immutable audit evidence for critical trainer management actions.
 
 **Preconditions**
+
 1. A critical action is attempted.
 
 **Inputs**
+
 - entityType, entityId, action, oldValue, newValue, performedBy, performedAt, ipAddress where available, reason where applicable, branch context, correlation ID.
 
 **Processing Steps**
+
 1. Classify action sensitivity.
 2. Redact protected identity values from generic logs while preserving approved audit representation.
 3. Persist AuditLog in coordination with Audit & Compliance.
@@ -639,6 +710,7 @@ The system shall create immutable audit evidence for critical trainer management
 5. Make audit records read-only to ordinary module users.
 
 **Outputs & Postconditions**
+
 - Immutable auditable action record for successful sensitive business changes.
 
 **Priority:** Must
@@ -651,14 +723,17 @@ The system shall create immutable audit evidence for critical trainer management
 Every Trainer Management operation shall enforce branch access on the server.
 
 **Preconditions**
+
 1. User is authenticated.
 
 **Inputs**
+
 - Session userId.
 - active branch context.
 - requested branchId or entity identifier.
 
 **Processing Steps**
+
 1. Resolve UserBranchAccess from IAM.
 2. Determine assigned branches, permitted child branches, and consolidated visibility.
 3. Intersect requested branch scope with permitted scope.
@@ -667,6 +742,7 @@ Every Trainer Management operation shall enforce branch access on the server.
 6. Do not trust browser filters or route parameters as authorization evidence.
 
 **Outputs & Postconditions**
+
 - Only permitted branch data can be viewed or changed.
 
 **Priority:** Must
@@ -679,12 +755,15 @@ Every Trainer Management operation shall enforce branch access on the server.
 The module shall publish domain events inside the modular monolith after successful state changes so in-process consumers can react without transferring ownership.
 
 **Preconditions**
+
 1. Business transaction commits successfully.
 
 **Inputs**
+
 - Event type and minimum identifiers needed by consumers.
 
 **Processing Steps**
+
 1. Create event from committed domain change.
 2. Include entity identifier, actor identifier, branch context, occurredAt in Oman-aware timestamp representation, and correlation ID.
 3. Dispatch using modular-monolith in-process application integration mechanism.
@@ -693,6 +772,7 @@ The module shall publish domain events inside the modular monolith after success
 
 **Outputs & Postconditions**
 Supported events include:
+
 - TrainerCreated
 - TrainerUpdated
 - TrainerActivated
@@ -712,53 +792,53 @@ Supported events include:
 
 ## 3. Business Rules
 
-| Rule ID | Business Rule | Enforcement |
-|---|---|---|
-| BR-FTM-001 | A Person may be linked to at most one non-deleted TrainerProfile. | Unique application/database constraint. |
-| BR-FTM-002 | TrainerProfile shall reference the shared Person model and shall not duplicate core identity fields. | Domain/schema boundary. |
-| BR-FTM-003 | `trainerCode` shall be unique among non-deleted trainer profiles and generated from configured numbering when configured. | Unique constraint + numbering service. |
-| BR-FTM-004 | `trainerType` is limited to FullTime, PartTime, Freelance. | Enum validation. |
-| BR-FTM-005 | Trainer is not automatically an Employee; employee lifecycle belongs to future HRMS. | Context boundary. |
-| BR-FTM-006 | Allowed trainer status transitions are Inactive→Active, Active→Inactive, Active→Suspended, Suspended→Active, Suspended→Inactive. Same-state transitions are idempotent reads/no-op updates and shall not create duplicate change events. | Domain state machine. |
-| BR-FTM-007 | Initial TrainerProfile status may be Inactive or Active; Suspended is not a valid initial state. | Create validation. |
-| BR-FTM-008 | A trainer cannot be activated before `effectiveStartDate` and cannot be considered active after `effectiveEndDate`. | Eligibility evaluation. |
-| BR-FTM-009 | `effectiveEndDate`, when present, must be on or after `effectiveStartDate`. | Validation for all effective-dated records. |
-| BR-FTM-010 | Trainer assignment validation requires active profile status and effective profile period coverage. | Eligibility service. |
-| BR-FTM-011 | Qualification `yearCompleted` cannot be later than the current Oman business calendar year. | Qualification validation. |
-| BR-FTM-012 | Qualification evidence is referenced through Document Management; Trainer Management does not own document storage or verification workflow. | Context boundary. |
-| BR-FTM-013 | Availability weekday must be one of Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. | Enum validation. |
-| BR-FTM-014 | Availability startTime must be earlier than endTime. Cross-midnight recurring windows shall be represented as two day-specific availability records. | Time validation. |
-| BR-FTM-015 | Exact duplicate or overlapping active availability windows for the same trainer, branch, weekday, and intersecting effective period are not allowed. | Overlap validation. |
-| BR-FTM-016 | A proposed time-bound assignment is available only when the requested interval is fully contained within an effective active availability window. | Availability algorithm. |
-| BR-FTM-017 | Availability timestamps and weekday calculations use Oman GST, UTC+4, as default business timezone. | Timezone rule. |
-| BR-FTM-018 | TrainerCourseAuthorization must reference an existing Course owned by Course Catalog. | Referential/domain validation. |
-| BR-FTM-019 | A trainer must have an active effective TrainerCourseAuthorization for the course before a course-specific assignment can be confirmed. | Eligibility validation. |
-| BR-FTM-020 | Overlapping active authorization periods for the same trainer and course are not allowed. | Overlap validation. |
-| BR-FTM-021 | Authorization status values are Active, Inactive, Suspended, Expired. An authorization with passed effectiveEndDate is treated as ineffective even if a stale status field has not yet been normalized. | Effective-state evaluation. |
-| BR-FTM-022 | Course authorization does not grant system access; IAM roles and permissions remain separate. | Security boundary. |
-| BR-FTM-023 | Trainer assignment must respect availability; Scheduling additionally owns double-booking and timetable conflict prevention. | Cross-context rule. |
-| BR-FTM-024 | Compensation payment basis is limited to Per Hour, Per Session, Per Student, Fixed. | Enum validation. |
-| BR-FTM-025 | Compensation amount must be greater than zero and use configured financial precision. | Numeric validation. |
-| BR-FTM-026 | Compensation rates are sensitive and require explicit compensation read/manage permissions independent of generic trainer read permission. | Authorization. |
-| BR-FTM-027 | At the same specificity level, trainer, payment basis, and effective date range shall not produce multiple simultaneously applicable active rates. | Ambiguity prevention. |
-| BR-FTM-028 | Rate resolution precedence is Session-specific, then Batch-specific, then Trainer-level. | Deterministic resolution algorithm. |
-| BR-FTM-029 | Trainer Management configures rate inputs only; payroll calculation and payment are outside current scope. | Context boundary. |
-| BR-FTM-030 | A TrainerProfile with active or future batch/session references cannot be soft-deleted. | Referential business constraint. |
-| BR-FTM-031 | No hard delete is allowed for trainer-owned business records. | Persistence rule. |
-| BR-FTM-032 | Soft-deleted records are excluded from normal search, eligibility, and resolution queries. | Query invariant. |
-| BR-FTM-033 | Sensitive actions require audit capture of actor, timestamp, entity, action, old value, new value, and reason where applicable. | Audit requirement. |
-| BR-FTM-034 | Branch scoping is enforced server-side for every read and write. | Security invariant. |
-| BR-FTM-035 | A user cannot expand branch scope by supplying a branchId in a client request. | Security invariant. |
-| BR-FTM-036 | Consolidated cross-branch reporting requires explicit consolidated reporting permission plus branch visibility. | Reporting authorization. |
-| BR-FTM-037 | Trainer profile updates shall use optimistic concurrency control through version checking or equivalent. | Concurrency rule. |
-| BR-FTM-038 | Person-owned fields must be changed through the Party/Person owning boundary, not through TrainerProfile mutation endpoints. | Ownership rule. |
-| BR-FTM-039 | BatchTrainer and Session assignment records are owned by Training Delivery and are never duplicated into Trainer Management. | Ownership rule. |
-| BR-FTM-040 | Course definitions are owned by Course Catalog; Trainer Management stores only course references in authorization records. | Ownership rule. |
-| BR-FTM-041 | Qualification document verification status is owned by Document Management. | Ownership rule. |
-| BR-FTM-042 | Domain events are published only after successful business-state commit and do not transfer aggregate ownership. | Integration rule. |
-| BR-FTM-043 | External message brokers shall not be introduced for this module under the current modular-monolith architecture. | Architecture constraint. |
-| BR-FTM-044 | English and Arabic shared Person display values shall be presented when available; TrainerProfile must not maintain duplicate localized person names. | Localization/ownership rule. |
-| BR-FTM-045 | All user-visible operational dates and times default to Oman GST unless a defined display conversion requirement exists. | Localization rule. |
+| Rule ID    | Business Rule                                                                                                                                                                                                                            | Enforcement                                 |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| BR-FTM-001 | A Person may be linked to at most one non-deleted TrainerProfile.                                                                                                                                                                        | Unique application/database constraint.     |
+| BR-FTM-002 | TrainerProfile shall reference the shared Person model and shall not duplicate core identity fields.                                                                                                                                     | Domain/schema boundary.                     |
+| BR-FTM-003 | `trainerCode` shall be unique among non-deleted trainer profiles and generated from configured numbering when configured.                                                                                                                | Unique constraint + numbering service.      |
+| BR-FTM-004 | `trainerType` is limited to FullTime, PartTime, Freelance.                                                                                                                                                                               | Enum validation.                            |
+| BR-FTM-005 | Trainer is not automatically an Employee; employee lifecycle belongs to future HRMS.                                                                                                                                                     | Context boundary.                           |
+| BR-FTM-006 | Allowed trainer status transitions are Inactive→Active, Active→Inactive, Active→Suspended, Suspended→Active, Suspended→Inactive. Same-state transitions are idempotent reads/no-op updates and shall not create duplicate change events. | Domain state machine.                       |
+| BR-FTM-007 | Initial TrainerProfile status may be Inactive or Active; Suspended is not a valid initial state.                                                                                                                                         | Create validation.                          |
+| BR-FTM-008 | A trainer cannot be activated before `effectiveStartDate` and cannot be considered active after `effectiveEndDate`.                                                                                                                      | Eligibility evaluation.                     |
+| BR-FTM-009 | `effectiveEndDate`, when present, must be on or after `effectiveStartDate`.                                                                                                                                                              | Validation for all effective-dated records. |
+| BR-FTM-010 | Trainer assignment validation requires active profile status and effective profile period coverage.                                                                                                                                      | Eligibility service.                        |
+| BR-FTM-011 | Qualification `yearCompleted` cannot be later than the current Oman business calendar year.                                                                                                                                              | Qualification validation.                   |
+| BR-FTM-012 | Qualification evidence is referenced through Document Management; Trainer Management does not own document storage or verification workflow.                                                                                             | Context boundary.                           |
+| BR-FTM-013 | Availability weekday must be one of Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.                                                                                                                                      | Enum validation.                            |
+| BR-FTM-014 | Availability startTime must be earlier than endTime. Cross-midnight recurring windows shall be represented as two day-specific availability records.                                                                                     | Time validation.                            |
+| BR-FTM-015 | Exact duplicate or overlapping active availability windows for the same trainer, branch, weekday, and intersecting effective period are not allowed.                                                                                     | Overlap validation.                         |
+| BR-FTM-016 | A proposed time-bound assignment is available only when the requested interval is fully contained within an effective active availability window.                                                                                        | Availability algorithm.                     |
+| BR-FTM-017 | Availability timestamps and weekday calculations use Oman GST, UTC+4, as default business timezone.                                                                                                                                      | Timezone rule.                              |
+| BR-FTM-018 | TrainerCourseAuthorization must reference an existing Course owned by Course Catalog.                                                                                                                                                    | Referential/domain validation.              |
+| BR-FTM-019 | A trainer must have an active effective TrainerCourseAuthorization for the course before a course-specific assignment can be confirmed.                                                                                                  | Eligibility validation.                     |
+| BR-FTM-020 | Overlapping active authorization periods for the same trainer and course are not allowed.                                                                                                                                                | Overlap validation.                         |
+| BR-FTM-021 | Authorization status values are Active, Inactive, Suspended, Expired. An authorization with passed effectiveEndDate is treated as ineffective even if a stale status field has not yet been normalized.                                  | Effective-state evaluation.                 |
+| BR-FTM-022 | Course authorization does not grant system access; IAM roles and permissions remain separate.                                                                                                                                            | Security boundary.                          |
+| BR-FTM-023 | Trainer assignment must respect availability; Scheduling additionally owns double-booking and timetable conflict prevention.                                                                                                             | Cross-context rule.                         |
+| BR-FTM-024 | Compensation payment basis is limited to Per Hour, Per Session, Per Student, Fixed.                                                                                                                                                      | Enum validation.                            |
+| BR-FTM-025 | Compensation amount must be greater than zero and use configured financial precision.                                                                                                                                                    | Numeric validation.                         |
+| BR-FTM-026 | Compensation rates are sensitive and require explicit compensation read/manage permissions independent of generic trainer read permission.                                                                                               | Authorization.                              |
+| BR-FTM-027 | At the same specificity level, trainer, payment basis, and effective date range shall not produce multiple simultaneously applicable active rates.                                                                                       | Ambiguity prevention.                       |
+| BR-FTM-028 | Rate resolution precedence is Session-specific, then Batch-specific, then Trainer-level.                                                                                                                                                 | Deterministic resolution algorithm.         |
+| BR-FTM-029 | Trainer Management configures rate inputs only; payroll calculation and payment are outside current scope.                                                                                                                               | Context boundary.                           |
+| BR-FTM-030 | A TrainerProfile with active or future batch/session references cannot be soft-deleted.                                                                                                                                                  | Referential business constraint.            |
+| BR-FTM-031 | No hard delete is allowed for trainer-owned business records.                                                                                                                                                                            | Persistence rule.                           |
+| BR-FTM-032 | Soft-deleted records are excluded from normal search, eligibility, and resolution queries.                                                                                                                                               | Query invariant.                            |
+| BR-FTM-033 | Sensitive actions require audit capture of actor, timestamp, entity, action, old value, new value, and reason where applicable.                                                                                                          | Audit requirement.                          |
+| BR-FTM-034 | Branch scoping is enforced server-side for every read and write.                                                                                                                                                                         | Security invariant.                         |
+| BR-FTM-035 | A user cannot expand branch scope by supplying a branchId in a client request.                                                                                                                                                           | Security invariant.                         |
+| BR-FTM-036 | Consolidated cross-branch reporting requires explicit consolidated reporting permission plus branch visibility.                                                                                                                          | Reporting authorization.                    |
+| BR-FTM-037 | Trainer profile updates shall use optimistic concurrency control through version checking or equivalent.                                                                                                                                 | Concurrency rule.                           |
+| BR-FTM-038 | Person-owned fields must be changed through the Party/Person owning boundary, not through TrainerProfile mutation endpoints.                                                                                                             | Ownership rule.                             |
+| BR-FTM-039 | BatchTrainer and Session assignment records are owned by Training Delivery and are never duplicated into Trainer Management.                                                                                                             | Ownership rule.                             |
+| BR-FTM-040 | Course definitions are owned by Course Catalog; Trainer Management stores only course references in authorization records.                                                                                                               | Ownership rule.                             |
+| BR-FTM-041 | Qualification document verification status is owned by Document Management.                                                                                                                                                              | Ownership rule.                             |
+| BR-FTM-042 | Domain events are published only after successful business-state commit and do not transfer aggregate ownership.                                                                                                                         | Integration rule.                           |
+| BR-FTM-043 | External message brokers shall not be introduced for this module under the current modular-monolith architecture.                                                                                                                        | Architecture constraint.                    |
+| BR-FTM-044 | English and Arabic shared Person display values shall be presented when available; TrainerProfile must not maintain duplicate localized person names.                                                                                    | Localization/ownership rule.                |
+| BR-FTM-045 | All user-visible operational dates and times default to Oman GST unless a defined display conversion requirement exists.                                                                                                                 | Localization rule.                          |
 
 ---
 
@@ -766,48 +846,48 @@ Supported events include:
 
 ### 4.1 TrainerProfile Status
 
-| From | To | Allowed | Conditions | Permission |
-|---|---|---:|---|---|
-| Inactive | Active | Yes | Effective period valid; no blocking integrity issue. | `trainer.status.manage` |
-| Inactive | Suspended | No | Trainer must first become Active. | Not applicable |
-| Active | Inactive | Yes | Reason required; future assignments must be resolved. | `trainer.status.manage` |
-| Active | Suspended | Yes | Reason required; future assignments must be resolved. | `trainer.status.manage` |
-| Suspended | Active | Yes | Suspension condition resolved; effective period valid. | `trainer.status.manage` |
-| Suspended | Inactive | Yes | Reason required. | `trainer.status.manage` |
+| From      | To        | Allowed | Conditions                                             | Permission              |
+| --------- | --------- | ------: | ------------------------------------------------------ | ----------------------- |
+| Inactive  | Active    |     Yes | Effective period valid; no blocking integrity issue.   | `trainer.status.manage` |
+| Inactive  | Suspended |      No | Trainer must first become Active.                      | Not applicable          |
+| Active    | Inactive  |     Yes | Reason required; future assignments must be resolved.  | `trainer.status.manage` |
+| Active    | Suspended |     Yes | Reason required; future assignments must be resolved.  | `trainer.status.manage` |
+| Suspended | Active    |     Yes | Suspension condition resolved; effective period valid. | `trainer.status.manage` |
+| Suspended | Inactive  |     Yes | Reason required.                                       | `trainer.status.manage` |
 
 ### 4.2 TrainerCourseAuthorization Status
 
-| From | To | Allowed | Conditions |
-|---|---|---:|---|
-| Inactive | Active | Yes | Effective dates valid; no overlapping active authorization. |
-| Active | Suspended | Yes | Reason required. |
-| Active | Inactive | Yes | Administrative withdrawal. |
-| Active | Expired | Yes | End date reached or authorized manual expiration. |
-| Suspended | Active | Yes | Suspension resolved and authorization remains effective. |
-| Suspended | Inactive | Yes | Administrative withdrawal. |
-| Suspended | Expired | Yes | Effective end date reached or authorized manual expiration. |
-| Expired | Active | No | Create a new authorization effective period instead of rewriting history. |
+| From      | To        | Allowed | Conditions                                                                |
+| --------- | --------- | ------: | ------------------------------------------------------------------------- |
+| Inactive  | Active    |     Yes | Effective dates valid; no overlapping active authorization.               |
+| Active    | Suspended |     Yes | Reason required.                                                          |
+| Active    | Inactive  |     Yes | Administrative withdrawal.                                                |
+| Active    | Expired   |     Yes | End date reached or authorized manual expiration.                         |
+| Suspended | Active    |     Yes | Suspension resolved and authorization remains effective.                  |
+| Suspended | Inactive  |     Yes | Administrative withdrawal.                                                |
+| Suspended | Expired   |     Yes | Effective end date reached or authorized manual expiration.               |
+| Expired   | Active    |      No | Create a new authorization effective period instead of rewriting history. |
 
 ---
 
 ## 5. Cross-Module Dependencies Mapping
 
-| Dependent Context | Direction | Data / Contract | Module 09 Responsibility | Other Context Responsibility |
-|---|---|---|---|---|
-| Identity & Access Management | Upstream | User identity, permissions, UserBranchAccess | Enforce permission and branch context | Own authentication, roles, permissions, branch access assignments |
-| Party / Person | Upstream shared identity | Person identity and localized display data | Reference Person; prevent duplicate trainer identity | Own Party and Person lifecycle/data |
-| Organization Management | Upstream | Branch reference and hierarchy | Validate trainer branch and availability branch references | Own Institute/Branch/Department/Classroom structure |
-| Configuration / Master Data | Upstream | NumberingSeries and configurable lookup values where used | Consume configuration without hardcoding business-critical values | Own numbering and lookup configuration |
-| Course Catalog Management | Upstream | Course reference | Own TrainerCourseAuthorization referencing Course | Own Course lifecycle, category, pricing, discounts, completion rules |
-| Training Delivery Management | Bidirectional | BatchTrainer, Session assignment references; eligibility validation | Provide trainer status, authorization, eligibility; display assignment references | Own Batch, BatchTrainer, Session and assignment lifecycle |
-| Scheduling, Calendar & Holiday | Bidirectional | Proposed schedule interval and conflict result | Provide availability validation | Own timetable, double-booking, classroom conflict, holiday and venue-block validation |
-| Document Management | Bidirectional reference | documentId and verification status | Store qualification evidence reference; display status | Own document binary metadata, verification and expiry workflow |
-| Exam, Result & Completion | Downstream consumer | Trainer reference | Provide valid trainer reference data | Own trainer recommendation, results, completion evaluation and approval |
-| Communication & Notification | Downstream consumer | Trainer reference/contact through Person | Emit relevant trainer events and references | Own templates, delivery request/logs and channel status |
-| Reporting & Executive Dashboards | Downstream consumer | Trainer roster, authorization, availability, qualification, utilization references | Provide governed source data/read models | Own dashboard/report definitions, snapshots and presentation |
-| Audit & Compliance | Bidirectional platform capability | AuditLog action contract | Produce auditable change facts | Own AuditLog and approval history capability |
-| Future HRMS | Future peer | Person reference and employee relationship | Keep Trainer independent from Employee | Own EmployeeProfile and employment lifecycle |
-| Future Payroll | Future downstream | Compensation rate inputs | Provide authorized effective compensation configuration | Own payroll calculation, approval, payslip and payment processes |
+| Dependent Context                | Direction                         | Data / Contract                                                                    | Module 09 Responsibility                                                          | Other Context Responsibility                                                          |
+| -------------------------------- | --------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Identity & Access Management     | Upstream                          | User identity, permissions, UserBranchAccess                                       | Enforce permission and branch context                                             | Own authentication, roles, permissions, branch access assignments                     |
+| Party / Person                   | Upstream shared identity          | Person identity and localized display data                                         | Reference Person; prevent duplicate trainer identity                              | Own Party and Person lifecycle/data                                                   |
+| Organization Management          | Upstream                          | Branch reference and hierarchy                                                     | Validate trainer branch and availability branch references                        | Own Institute/Branch/Department/Classroom structure                                   |
+| Configuration / Master Data      | Upstream                          | NumberingSeries and configurable lookup values where used                          | Consume configuration without hardcoding business-critical values                 | Own numbering and lookup configuration                                                |
+| Course Catalog Management        | Upstream                          | Course reference                                                                   | Own TrainerCourseAuthorization referencing Course                                 | Own Course lifecycle, category, pricing, discounts, completion rules                  |
+| Training Delivery Management     | Bidirectional                     | BatchTrainer, Session assignment references; eligibility validation                | Provide trainer status, authorization, eligibility; display assignment references | Own Batch, BatchTrainer, Session and assignment lifecycle                             |
+| Scheduling, Calendar & Holiday   | Bidirectional                     | Proposed schedule interval and conflict result                                     | Provide availability validation                                                   | Own timetable, double-booking, classroom conflict, holiday and venue-block validation |
+| Document Management              | Bidirectional reference           | documentId and verification status                                                 | Store qualification evidence reference; display status                            | Own document binary metadata, verification and expiry workflow                        |
+| Exam, Result & Completion        | Downstream consumer               | Trainer reference                                                                  | Provide valid trainer reference data                                              | Own trainer recommendation, results, completion evaluation and approval               |
+| Communication & Notification     | Downstream consumer               | Trainer reference/contact through Person                                           | Emit relevant trainer events and references                                       | Own templates, delivery request/logs and channel status                               |
+| Reporting & Executive Dashboards | Downstream consumer               | Trainer roster, authorization, availability, qualification, utilization references | Provide governed source data/read models                                          | Own dashboard/report definitions, snapshots and presentation                          |
+| Audit & Compliance               | Bidirectional platform capability | AuditLog action contract                                                           | Produce auditable change facts                                                    | Own AuditLog and approval history capability                                          |
+| Future HRMS                      | Future peer                       | Person reference and employee relationship                                         | Keep Trainer independent from Employee                                            | Own EmployeeProfile and employment lifecycle                                          |
+| Future Payroll                   | Future downstream                 | Compensation rate inputs                                                           | Provide authorized effective compensation configuration                           | Own payroll calculation, approval, payslip and payment processes                      |
 
 ---
 
@@ -833,13 +913,13 @@ type TrainerEligibilityResult = {
     scheduleConflictFree: boolean | null;
   };
   reasonCodes: Array<
-    | "TRAINER_INACTIVE"
-    | "PROFILE_NOT_EFFECTIVE"
-    | "BRANCH_MISMATCH"
-    | "COURSE_NOT_AUTHORIZED"
-    | "AUTHORIZATION_EXPIRED"
-    | "NOT_AVAILABLE"
-    | "SCHEDULE_CONFLICT"
+    | 'TRAINER_INACTIVE'
+    | 'PROFILE_NOT_EFFECTIVE'
+    | 'BRANCH_MISMATCH'
+    | 'COURSE_NOT_AUTHORIZED'
+    | 'AUTHORIZATION_EXPIRED'
+    | 'NOT_AVAILABLE'
+    | 'SCHEDULE_CONFLICT'
   >;
 };
 ```
@@ -850,12 +930,12 @@ type TrainerEligibilityResult = {
 type CompensationRateResolution = {
   trainerId: string;
   targetDate: string;
-  result: "RESOLVED" | "NO_RATE" | "AMBIGUOUS_RATE";
+  result: 'RESOLVED' | 'NO_RATE' | 'AMBIGUOUS_RATE';
   rate?: {
     compensationRateId: string;
-    paymentBasis: "PerHour" | "PerSession" | "PerStudent" | "Fixed";
+    paymentBasis: 'PerHour' | 'PerSession' | 'PerStudent' | 'Fixed';
     amount: string;
-    specificity: "Session" | "Batch" | "Trainer";
+    specificity: 'Session' | 'Batch' | 'Trainer';
     effectiveStartDate: string;
     effectiveEndDate: string | null;
   };

@@ -24,16 +24,28 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
     if (!branch) {
       const instId = createUuid(randomUUID());
       await prisma.institute.create({
-        data: { id: instId, instituteCode: 'FININST', instituteName: 'Finance Inst' }
+        data: {
+          id: instId,
+          instituteCode: 'FININST',
+          instituteName: 'Finance Inst',
+        },
       });
       branch = await prisma.branch.create({
-        data: { id: createUuid(randomUUID()), instituteId: instId, branchCode: 'FINBR', branchName: 'Finance Branch', status: 'Active' }
+        data: {
+          id: createUuid(randomUUID()),
+          instituteId: instId,
+          branchCode: 'FINBR',
+          branchName: 'Finance Branch',
+          status: 'Active',
+        },
       });
     }
     branchId = branch.id;
 
     // Setup Department
-    let dept = await prisma.department.findFirst({ where: { isDeleted: false } });
+    let dept = await prisma.department.findFirst({
+      where: { isDeleted: false },
+    });
     if (!dept) {
       dept = await prisma.department.create({
         data: {
@@ -41,14 +53,19 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
           branchId,
           departmentCode: `FDEPT-${Date.now().toString().slice(-4)}`,
           departmentName: 'Finance Dept',
-          status: 'Active'
-        }
+          status: 'Active',
+        },
       });
     }
 
     // Setup Course Category
     const category = await prisma.courseCategory.create({
-      data: { id: createUuid(randomUUID()), code: `FCAT-${Date.now().toString().slice(-4)}`, nameEnglish: 'Finance Test Category', nameArabic: 'تمويل' }
+      data: {
+        id: createUuid(randomUUID()),
+        code: `FCAT-${Date.now().toString().slice(-4)}`,
+        nameEnglish: 'Finance Test Category',
+        nameArabic: 'تمويل',
+      },
     });
 
     // Setup Course
@@ -66,7 +83,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         categoryId: category.id,
         departmentId: dept.id,
         allowWalkInCompletion: true,
-      }
+      },
     });
     courseId = course.id;
 
@@ -78,11 +95,11 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         status: 'Active',
         customerType: 'Individual',
         batchType: 'Regular',
-        basePrice: new Decimal(200.000), // 200 OMR base price
-        taxPercentage: new Decimal(5.000), // 5% Oman VAT
+        basePrice: new Decimal(200.0), // 200 OMR base price
+        taxPercentage: new Decimal(5.0), // 5% Oman VAT
         effectiveStartDate: new Date(),
-        currency: 'OMR'
-      }
+        currency: 'OMR',
+      },
     });
 
     // Setup Promo Codes
@@ -93,11 +110,11 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         courseId,
         discountType: 'Individual',
         discountMode: 'Percentage',
-        discountValue: new Decimal(10.000),
+        discountValue: new Decimal(10.0),
         discountCode: 'WELCOME10',
         effectiveStartDate: new Date(),
         status: 'Active',
-      }
+      },
     });
 
     // 2. Fixed discount: LOYAL5 (5 OMR off)
@@ -107,11 +124,11 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         courseId,
         discountType: 'Individual',
         discountMode: 'FixedAmount',
-        discountValue: new Decimal(5.000),
+        discountValue: new Decimal(5.0),
         discountCode: 'LOYAL5',
         effectiveStartDate: new Date(),
         status: 'Active',
-      }
+      },
     });
 
     // Setup Learning Batch
@@ -129,7 +146,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         startDate: new Date(),
         endDate: new Date(),
         createdBy: actorId,
-      }
+      },
     });
     batchId = batch.id;
 
@@ -143,7 +160,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         mobile: '+96899991111',
         gender: 'Male',
         dateOfBirth: new Date(1998, 5, 15),
-      }
+      },
     });
 
     const studentProfile = await prisma.studentProfile.create({
@@ -153,7 +170,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         branch: { connect: { id: branchId } },
         studentNumber: `S-FIN-${Date.now().toString().slice(-4)}`,
         status: 'Active',
-      }
+      },
     });
     studentProfileId = studentProfile.id;
 
@@ -168,7 +185,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         admissionNumber: `ADM-${Date.now().toString().slice(-5)}`,
         admissionStatus: 'Approved',
         admissionDate: new Date(),
-      }
+      },
     });
     admissionId = admission.id;
   });
@@ -205,7 +222,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         enrollmentType: 'Regular',
         actorId,
         promoCodes: ['INVALID_CODE_XYZ'],
-      })
+      }),
     ).rejects.toThrow('ERR_CRS_INVALID_PROMO_CODE');
   });
 
@@ -220,7 +237,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         mobile: `+9689999${Math.floor(1000 + Math.random() * 9000)}`,
         gender: 'Male',
         dateOfBirth: new Date(1998, 5, 15),
-      }
+      },
     });
 
     const studentProfile = await prisma.studentProfile.create({
@@ -230,7 +247,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         branch: { connect: { id: branchId } },
         studentNumber: `S-EVT-${Date.now().toString().slice(-4)}`,
         status: 'Active',
-      }
+      },
     });
 
     const admission = await prisma.admission.create({
@@ -243,7 +260,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
         admissionNumber: `ADM-EVT-${Date.now().toString().slice(-4)}`,
         admissionStatus: 'Approved',
         admissionDate: new Date(),
-      }
+      },
     });
 
     // 1. Create a clean enrollment
@@ -261,10 +278,12 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
     // 2. Transition enrollment to Submitted first, then Approve
     await prisma.enrollment.update({
       where: { id: enrollment.id },
-      data: { enrollmentStatus: 'Submitted' }
+      data: { enrollmentStatus: 'Submitted' },
     });
     await enrollmentService.approveEnrollment(enrollment.id, actorId);
-    const approved = await prisma.enrollment.findUnique({ where: { id: enrollment.id } });
+    const approved = await prisma.enrollment.findUnique({
+      where: { id: enrollment.id },
+    });
     expect(approved?.enrollmentStatus).toBe('Approved');
 
     // 3. Process the outbox event handler directly
@@ -273,7 +292,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
     // 4. Verify invoice details
     const invoice = await prisma.invoice.findFirst({
       where: { enrollmentId: enrollment.id, isDeleted: false },
-      include: { lineItems: true }
+      include: { lineItems: true },
     });
 
     expect(invoice).toBeDefined();
@@ -323,16 +342,16 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
             id: createUuid(randomUUID()),
             ownerId: walkIn.enrollment.id,
             ownerType: 'Enrollment',
-          }
+          },
         },
         verifications: {
           create: {
             id: createUuid(randomUUID()),
             outcome: 'Verified',
             verifiedAt: new Date(),
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     // 2. Record payment applying WELCOME10 promo code (10% off of walkin resolvedPrice 210 = 21 OMR. Net = 189).
@@ -342,7 +361,7 @@ describe('Enrollment Finance Flow & Promo Codes Integration', () => {
       actorId,
       'Paid discounted Walk-In',
       'Cash',
-      ['WELCOME10']
+      ['WELCOME10'],
     );
 
     // 3. Verify confirmation and status updates

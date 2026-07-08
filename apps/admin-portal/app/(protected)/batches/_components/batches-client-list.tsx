@@ -97,28 +97,35 @@ export function BatchesClientList({
   const searchParams = useSearchParams();
   const totalPages = Math.ceil(total / 10);
 
-  const currentSortBy = searchParams.get('sortBy') ?? defaultSortBy ?? 'startDate';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? defaultSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? defaultSortBy ?? 'startDate';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? defaultSortOrder;
 
   const [searchValue, setSearchValue] = useState(defaultSearch);
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -135,7 +142,8 @@ export function BatchesClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -156,23 +164,35 @@ export function BatchesClientList({
     }
   };
 
-  const getBranchName = (branchId: string) => branches.find((branch) => branch.id === branchId)?.branchName || 'Unknown Branch';
+  const getBranchName = (branchId: string) =>
+    branches.find((branch) => branch.id === branchId)?.branchName ||
+    'Unknown Branch';
 
   const requestedCourseId = searchParams.get('courseId') || '';
   const requestedBranchId = searchParams.get('branchId') || '';
   const requestedStatus = searchParams.get('status') || '';
 
-  const currentCourseId = courses.some((course) => course.id === requestedCourseId)
+  const currentCourseId = courses.some(
+    (course) => course.id === requestedCourseId,
+  )
     ? requestedCourseId
     : courses.some((course) => course.id === defaultCourseId)
       ? defaultCourseId
       : '';
-  const currentBranchId = branches.some((branch) => branch.id === requestedBranchId)
+  const currentBranchId = branches.some(
+    (branch) => branch.id === requestedBranchId,
+  )
     ? requestedBranchId
     : branches.some((branch) => branch.id === defaultBranchId)
       ? defaultBranchId
       : '';
-  const statusOptions = ['Draft', 'OpenForEnrollment', 'InProgress', 'Completed', 'Cancelled'];
+  const statusOptions = [
+    'Draft',
+    'OpenForEnrollment',
+    'InProgress',
+    'Completed',
+    'Cancelled',
+  ];
   const currentStatus = statusOptions.includes(requestedStatus)
     ? requestedStatus
     : statusOptions.includes(defaultStatus)
@@ -185,18 +205,28 @@ export function BatchesClientList({
       sortable: true,
       sortDirection: currentSortBy === 'batchCode' ? currentSortOrder : null,
       onSort: () => handleSort('batchCode'),
-      render: (batch: BatchListItem) => <span className="font-mono font-medium text-slate-800">{batch.batchCode}</span>,
+      render: (batch: BatchListItem) => (
+        <span className="font-mono font-medium text-slate-800">
+          {batch.batchCode}
+        </span>
+      ),
       headerClassName: 'w-[120px]',
     },
     {
       header: 'Batch Name',
       sortable: true,
-      sortDirection: currentSortBy === 'batchNameEnglish' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'batchNameEnglish' ? currentSortOrder : null,
       onSort: () => handleSort('batchNameEnglish'),
       render: (batch: BatchListItem) => (
         <div className="space-y-1">
-          <div className="font-semibold text-slate-800">{batch.batchNameEnglish}</div>
-          <div className="text-xs text-[var(--ims-muted)] font-arabic text-right" dir="rtl">
+          <div className="font-semibold text-slate-800">
+            {batch.batchNameEnglish}
+          </div>
+          <div
+            className="text-xs text-[var(--ims-muted)] font-arabic text-right"
+            dir="rtl"
+          >
             {batch.batchNameArabic}
           </div>
         </div>
@@ -207,11 +237,19 @@ export function BatchesClientList({
       sortable: true,
       sortDirection: currentSortBy === 'courseName' ? currentSortOrder : null,
       onSort: () => handleSort('courseName'),
-      render: (batch: BatchListItem) => <span className="text-[color:var(--ims-muted)]">{batch.course?.nameEnglish || 'N/A'}</span>,
+      render: (batch: BatchListItem) => (
+        <span className="text-[color:var(--ims-muted)]">
+          {batch.course?.nameEnglish || 'N/A'}
+        </span>
+      ),
     },
     {
       header: 'Branch',
-      render: (batch: BatchListItem) => <span className="text-[color:var(--ims-muted)]">{getBranchName(batch.branchId)}</span>,
+      render: (batch: BatchListItem) => (
+        <span className="text-[color:var(--ims-muted)]">
+          {getBranchName(batch.branchId)}
+        </span>
+      ),
     },
     {
       header: 'Dates',
@@ -220,7 +258,8 @@ export function BatchesClientList({
       onSort: () => handleSort('startDate'),
       render: (batch: BatchListItem) => (
         <span className="text-xs text-[color:var(--ims-muted)]">
-          {new Date(batch.startDate).toLocaleDateString()} - {new Date(batch.endDate).toLocaleDateString()}
+          {new Date(batch.startDate).toLocaleDateString()} -{' '}
+          {new Date(batch.endDate).toLocaleDateString()}
         </span>
       ),
       headerClassName: 'w-[180px]',
@@ -228,7 +267,8 @@ export function BatchesClientList({
     {
       header: 'Enrolled / Cap',
       sortable: true,
-      sortDirection: currentSortBy === 'currentEnrollmentCount' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'currentEnrollmentCount' ? currentSortOrder : null,
       onSort: () => handleSort('currentEnrollmentCount'),
       render: (batch: BatchListItem) => (
         <span className="text-[color:var(--ims-muted)]">
@@ -250,7 +290,12 @@ export function BatchesClientList({
       header: 'Actions',
       className: 'text-right',
       render: (batch: BatchListItem) => (
-        <Button variant="ghost" size="icon" onClick={() => router.push(`/batches/${batch.id}`)} title="Manage Batch">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push(`/batches/${batch.id}`)}
+          title="Manage Batch"
+        >
           <ArrowRight className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
         </Button>
       ),
@@ -263,8 +308,12 @@ export function BatchesClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{batch.batchCode}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{batch.batchNameEnglish}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {batch.batchCode}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {batch.batchNameEnglish}
+            </p>
           </div>
           {getStatusBadge(batch.status)}
         </div>
@@ -281,17 +330,24 @@ export function BatchesClientList({
           </div>
           <div className="col-span-2 space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Arabic Name</p>
-            <p className="truncate text-right font-arabic" dir="rtl">{batch.batchNameArabic}</p>
+            <p className="truncate text-right font-arabic" dir="rtl">
+              {batch.batchNameArabic}
+            </p>
           </div>
           <div className="col-span-2 space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Dates</p>
             <p className="truncate">
-              {new Date(batch.startDate).toLocaleDateString()} - {new Date(batch.endDate).toLocaleDateString()}
+              {new Date(batch.startDate).toLocaleDateString()} -{' '}
+              {new Date(batch.endDate).toLocaleDateString()}
             </p>
           </div>
           <div className="col-span-2 space-y-1">
-            <p className="font-semibold text-[var(--ims-muted)]">Enrolled / Capacity</p>
-            <p className="truncate">{batch.currentEnrollmentCount} / {batch.capacity}</p>
+            <p className="font-semibold text-[var(--ims-muted)]">
+              Enrolled / Capacity
+            </p>
+            <p className="truncate">
+              {batch.currentEnrollmentCount} / {batch.capacity}
+            </p>
           </div>
         </div>
       </CardContent>
@@ -317,12 +373,16 @@ export function BatchesClientList({
             Batches
           </h1>
           <p className="max-w-2xl text-sm text-[var(--ims-muted)]">
-            Manage course scheduling, classroom allocations, and trainer assignments.
+            Manage course scheduling, classroom allocations, and trainer
+            assignments.
           </p>
         </div>
 
         {canCreate && (
-          <Button onClick={() => router.push('/batches/new')} className="h-10 w-full gap-1.5 sm:w-auto sm:px-4">
+          <Button
+            onClick={() => router.push('/batches/new')}
+            className="h-10 w-full gap-1.5 sm:w-auto sm:px-4"
+          >
             <Plus className="h-4 w-4" />
             Create Batch
           </Button>
@@ -395,10 +455,15 @@ export function BatchesClientList({
           </FormLabel>
           <Select
             value={currentCourseId}
-            onChange={(e) => updateParams({ courseId: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ courseId: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Courses' },
-              ...courses.map((course) => ({ value: course.id, label: course.nameEnglish })),
+              ...courses.map((course) => ({
+                value: course.id,
+                label: course.nameEnglish,
+              })),
             ]}
             className="h-12"
             placeholder="All Courses"
@@ -411,10 +476,15 @@ export function BatchesClientList({
           </FormLabel>
           <Select
             value={currentBranchId}
-            onChange={(e) => updateParams({ branchId: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ branchId: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Branches' },
-              ...branches.map((branch) => ({ value: branch.id, label: branch.branchName })),
+              ...branches.map((branch) => ({
+                value: branch.id,
+                label: branch.branchName,
+              })),
             ]}
             className="h-12"
             placeholder="All Branches"
@@ -427,7 +497,9 @@ export function BatchesClientList({
           </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(e) => updateParams({ status: e.target.value, page: '1' })}
+            onChange={(e) =>
+              updateParams({ status: e.target.value, page: '1' })
+            }
             options={[
               { value: '', label: 'All Statuses' },
               { value: 'Draft', label: 'Draft' },
@@ -456,7 +528,14 @@ export function BatchesClientList({
         }
       />
 
-      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={10}
+        />
+      )}
     </div>
   );
 }

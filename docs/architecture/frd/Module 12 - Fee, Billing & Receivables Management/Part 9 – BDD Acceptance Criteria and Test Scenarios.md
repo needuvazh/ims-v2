@@ -12,23 +12,23 @@ All date-sensitive scenarios use `Asia/Muscat` unless explicitly stated. Monetar
 
 The examples use the following symbolic fixtures:
 
-| Fixture | Meaning |
-|---|---|
-| BR-A | Muscat branch directly assigned to User A |
-| BR-B | Sohar branch not assigned to User A |
-| BR-C | Child branch of BR-A |
-| STU-A | StudentProfile linked to Person A |
-| STU-B | Different StudentProfile |
-| ENR-A | Confirmed enrollment for STU-A in BR-A |
-| ENR-B | Confirmed enrollment in BR-B |
-| CORP-A | Corporate account managed by Corporate Account Manager A |
-| CORP-B | Unmanaged corporate account |
-| INV-A | Invoice in BR-A |
-| INV-B | Invoice in BR-B |
-| PAY-A | Posted payment against INV-A |
-| USER-ACC-A | Accountant assigned to BR-A |
-| USER-FM-A | Finance Manager assigned to BR-A |
-| USER-EXEC-C | Executive with consolidated permission and entitlement |
+| Fixture     | Meaning                                                   |
+| ----------- | --------------------------------------------------------- |
+| BR-A        | Muscat branch directly assigned to User A                 |
+| BR-B        | Sohar branch not assigned to User A                       |
+| BR-C        | Child branch of BR-A                                      |
+| STU-A       | StudentProfile linked to Person A                         |
+| STU-B       | Different StudentProfile                                  |
+| ENR-A       | Confirmed enrollment for STU-A in BR-A                    |
+| ENR-B       | Confirmed enrollment in BR-B                              |
+| CORP-A      | Corporate account managed by Corporate Account Manager A  |
+| CORP-B      | Unmanaged corporate account                               |
+| INV-A       | Invoice in BR-A                                           |
+| INV-B       | Invoice in BR-B                                           |
+| PAY-A       | Posted payment against INV-A                              |
+| USER-ACC-A  | Accountant assigned to BR-A                               |
+| USER-FM-A   | Finance Manager assigned to BR-A                          |
+| USER-EXEC-C | Executive with consolidated permission and entitlement    |
 | USER-EXEC-N | Executive permission without IAM consolidated entitlement |
 
 ## 3. Feature: Student Invoice Creation and Commercial Snapshot
@@ -1425,37 +1425,37 @@ Feature: Accessible finance UI behavior
 ## 38. Test Coverage Matrix
 
 | Requirement | Principal Scenario Sections |
-|---|---|
-| FR-FBR-001 | 3 |
-| FR-FBR-002 | 4 |
-| FR-FBR-003 | 5 |
-| FR-FBR-004 | 6 |
-| FR-FBR-005 | 7, 22 |
-| FR-FBR-006 | 8 |
-| FR-FBR-007 | 9 |
-| FR-FBR-008 | 10, 11, 12 |
-| FR-FBR-009 | 10, 11 |
-| FR-FBR-010 | 13 |
-| FR-FBR-011 | 10, 11 |
-| FR-FBR-012 | 14 |
-| FR-FBR-013 | 14 |
-| FR-FBR-014 | 15 |
-| FR-FBR-015 | 15, 36 |
-| FR-FBR-016 | 15, 36 |
-| FR-FBR-017 | 16 |
-| FR-FBR-018 | 17, 35 |
-| FR-FBR-019 | 17 |
-| FR-FBR-020 | 18, 29 |
-| FR-FBR-021 | 27 |
-| FR-FBR-022 | 23 |
-| FR-FBR-023 | 26 |
-| FR-FBR-024 | 32 |
-| FR-FBR-025 | 31 |
-| FR-FBR-026 | 19, 20 |
-| FR-FBR-027 | 13, 30 |
-| FR-FBR-028 | 14 |
-| FR-FBR-029 | 12 |
-| FR-FBR-030 | 19 |
+| ----------- | --------------------------- |
+| FR-FBR-001  | 3                           |
+| FR-FBR-002  | 4                           |
+| FR-FBR-003  | 5                           |
+| FR-FBR-004  | 6                           |
+| FR-FBR-005  | 7, 22                       |
+| FR-FBR-006  | 8                           |
+| FR-FBR-007  | 9                           |
+| FR-FBR-008  | 10, 11, 12                  |
+| FR-FBR-009  | 10, 11                      |
+| FR-FBR-010  | 13                          |
+| FR-FBR-011  | 10, 11                      |
+| FR-FBR-012  | 14                          |
+| FR-FBR-013  | 14                          |
+| FR-FBR-014  | 15                          |
+| FR-FBR-015  | 15, 36                      |
+| FR-FBR-016  | 15, 36                      |
+| FR-FBR-017  | 16                          |
+| FR-FBR-018  | 17, 35                      |
+| FR-FBR-019  | 17                          |
+| FR-FBR-020  | 18, 29                      |
+| FR-FBR-021  | 27                          |
+| FR-FBR-022  | 23                          |
+| FR-FBR-023  | 26                          |
+| FR-FBR-024  | 32                          |
+| FR-FBR-025  | 31                          |
+| FR-FBR-026  | 19, 20                      |
+| FR-FBR-027  | 13, 30                      |
+| FR-FBR-028  | 14                          |
+| FR-FBR-029  | 12                          |
+| FR-FBR-030  | 19                          |
 
 ## 39. Mandatory Authorization Regression Suite
 

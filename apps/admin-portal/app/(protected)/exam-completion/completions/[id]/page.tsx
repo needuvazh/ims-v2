@@ -9,12 +9,17 @@ import {
 import { CompletionDetailClient } from './_components/completion-detail-client';
 import { AdminDetailPageLayout } from '@ims/shared-ui';
 
-export const metadata = { title: 'Course Completion Detail - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Course Completion Detail - Admin Portal | ASTI IMS',
+};
 
-export default async function CompletionDetailPage(props: { params: Promise<{ id: string }> }) {
+export default async function CompletionDetailPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await props.params;
 
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   if (!uuidRegex.test(id)) {
     notFound();
   }
@@ -49,7 +54,10 @@ export default async function CompletionDetailPage(props: { params: Promise<{ id
   // 2. Fetch aggregate/timeline details using domain query handler
   const completionRepository = new PrismaCourseCompletionRepository(prisma);
   const approvalRepository = new PrismaCompletionApprovalRepository(prisma);
-  const handler = new GetCompletionDetailQueryHandler(completionRepository, approvalRepository);
+  const handler = new GetCompletionDetailQueryHandler(
+    completionRepository,
+    approvalRepository,
+  );
 
   const detail = await handler.execute({ completionId: id });
   if (!detail) {
@@ -65,7 +73,8 @@ export default async function CompletionDetailPage(props: { params: Promise<{ id
             ? `${completionDb.enrollment.studentProfile.person.firstName} ${completionDb.enrollment.studentProfile.person.lastName}`
             : 'Unknown Student',
           enrollmentNumber: completionDb.enrollment.enrollmentNumber,
-          courseName: completionDb.enrollment.course?.nameEnglish || 'Unknown Course',
+          courseName:
+            completionDb.enrollment.course?.nameEnglish || 'Unknown Course',
         }}
         permissions={session.permissions}
       />

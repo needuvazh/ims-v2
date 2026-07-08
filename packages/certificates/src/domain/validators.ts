@@ -55,11 +55,21 @@ export const RevokeCertificateSchema = z.object({
 });
 
 export type Language = z.infer<typeof LanguageSchema>;
-export type CertificateReadinessValidationInput = z.infer<typeof CertificateReadinessValidationInputSchema>;
-export type GenerateCertificateCommand = z.infer<typeof GenerateCertificateCommandSchema>;
-export type IssueCertificateCommand = z.infer<typeof IssueCertificateCommandSchema>;
-export type PublicVerificationInput = z.infer<typeof PublicVerificationInputSchema>;
+export type CertificateReadinessValidationInput = z.infer<
+  typeof CertificateReadinessValidationInputSchema
+>;
+export type GenerateCertificateCommand = z.infer<
+  typeof GenerateCertificateCommandSchema
+>;
+export type IssueCertificateCommand = z.infer<
+  typeof IssueCertificateCommandSchema
+>;
+export type PublicVerificationInput = z.infer<
+  typeof PublicVerificationInputSchema
+>;
 export type SubmitReissueRequest = z.infer<typeof SubmitReissueRequestSchema>;
 export type ReviewReissueRequest = z.infer<typeof ReviewReissueRequestSchema>;
-export type GenerateReplacementCertificate = z.infer<typeof GenerateReplacementCertificateSchema>;
+export type GenerateReplacementCertificate = z.infer<
+  typeof GenerateReplacementCertificateSchema
+>;
 export type RevokeCertificate = z.infer<typeof RevokeCertificateSchema>;

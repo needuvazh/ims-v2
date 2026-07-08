@@ -21,10 +21,13 @@ export class BranchAccessService {
     private readonly userBranchAccessRepository: IUserBranchAccessRepository,
     private readonly userRepository: IUserRepository,
     private readonly sessionRepository: ISessionRepository,
-    private readonly auditLogRepository: IAuditLogRepository
+    private readonly auditLogRepository: IAuditLogRepository,
   ) {}
 
-  private checkPermission(context: BranchAccessCommandContext, permission: string): void {
+  private checkPermission(
+    context: BranchAccessCommandContext,
+    permission: string,
+  ): void {
     if (!context.actorPermissions.includes(permission)) {
       throw createIamError('IAM-AUTHZ-001');
     }
@@ -35,7 +38,7 @@ export class BranchAccessService {
     branchId: Uuid,
     isDefault: boolean = false,
     reason: string | null = null,
-    context: BranchAccessCommandContext
+    context: BranchAccessCommandContext,
   ): Promise<UserBranchAccess> {
     this.checkPermission(context, 'iam.user.assign-branch');
 
@@ -44,7 +47,9 @@ export class BranchAccessService {
     const activeAssignments = existing.filter((b) => b.status === 'Active');
 
     // If it's already assigned and active, throw error or return existing
-    const alreadyAssigned = activeAssignments.find((b) => b.branchId === branchId);
+    const alreadyAssigned = activeAssignments.find(
+      (b) => b.branchId === branchId,
+    );
     if (alreadyAssigned) {
       return alreadyAssigned;
     }
@@ -94,7 +99,7 @@ export class BranchAccessService {
     userId: Uuid,
     branchId: Uuid,
     reason: string | null = null,
-    context: BranchAccessCommandContext
+    context: BranchAccessCommandContext,
   ): Promise<void> {
     this.checkPermission(context, 'iam.user.assign-branch');
 
@@ -102,12 +107,16 @@ export class BranchAccessService {
     const activeAssignments = existing.filter((b) => b.status === 'Active');
 
     if (activeAssignments.length <= 1) {
-      throw createIamError('IAM-SYS-001', { message: 'User must retain at least one branch assignment.' });
+      throw createIamError('IAM-SYS-001', {
+        message: 'User must retain at least one branch assignment.',
+      });
     }
 
     const targetAccess = activeAssignments.find((b) => b.branchId === branchId);
     if (!targetAccess) {
-      throw createIamError('IAM-SYS-001', { message: 'Branch assignment not found or already inactive.' });
+      throw createIamError('IAM-SYS-001', {
+        message: 'Branch assignment not found or already inactive.',
+      });
     }
 
     const now = new Date();
@@ -121,7 +130,9 @@ export class BranchAccessService {
     // If we revoked the default branch, assign default to another active branch
     if (targetAccess.isDefault) {
       targetAccess.isDefault = false;
-      const nextDefault = activeAssignments.find((b) => b.branchId !== branchId);
+      const nextDefault = activeAssignments.find(
+        (b) => b.branchId !== branchId,
+      );
       if (nextDefault) {
         nextDefault.isDefault = true;
         nextDefault.updatedAt = now;
@@ -161,7 +172,7 @@ export class BranchAccessService {
   async setDefaultBranch(
     userId: Uuid,
     branchId: Uuid,
-    context: BranchAccessCommandContext
+    context: BranchAccessCommandContext,
   ): Promise<void> {
     this.checkPermission(context, 'iam.user.assign-branch');
 
@@ -170,7 +181,9 @@ export class BranchAccessService {
 
     const targetAccess = activeAssignments.find((b) => b.branchId === branchId);
     if (!targetAccess) {
-      throw createIamError('IAM-SYS-001', { message: 'Target branch is not actively assigned to the user.' });
+      throw createIamError('IAM-SYS-001', {
+        message: 'Target branch is not actively assigned to the user.',
+      });
     }
 
     const now = new Date();
@@ -196,7 +209,9 @@ export class BranchAccessService {
       entityType: 'UserBranchAccess',
       entityId: targetAccess.id,
       action: 'iam.user.default-branch-changed',
-      oldValue: { defaultBranchId: activeAssignments.find((b) => b.isDefault)?.branchId },
+      oldValue: {
+        defaultBranchId: activeAssignments.find((b) => b.isDefault)?.branchId,
+      },
       newValue: { defaultBranchId: branchId },
       ipAddress: null,
       userAgent: null,
@@ -209,10 +224,12 @@ export class BranchAccessService {
   async switchActiveBranch(
     sessionJti: string,
     targetBranchId: Uuid,
-    userId: Uuid
+    userId: Uuid,
   ): Promise<void> {
     const existing = await this.userBranchAccessRepository.findByUser(userId);
-    const hasAccess = existing.some((b) => b.branchId === targetBranchId && b.status === 'Active');
+    const hasAccess = existing.some(
+      (b) => b.branchId === targetBranchId && b.status === 'Active',
+    );
 
     if (!hasAccess) {
       throw createIamError('IAM-AUTHZ-002');
@@ -242,10 +259,16 @@ export class BranchAccessService {
       reason: null,
     });
 
-    InMemoryMetrics.getInstance().increment('iam.branch.switch', 1, { userId, targetBranchId });
+    InMemoryMetrics.getInstance().increment('iam.branch.switch', 1, {
+      userId,
+      targetBranchId,
+    });
   }
 
-  async getUserBranchAccess(userId: Uuid, context: BranchAccessCommandContext): Promise<UserBranchAccess[]> {
+  async getUserBranchAccess(
+    userId: Uuid,
+    context: BranchAccessCommandContext,
+  ): Promise<UserBranchAccess[]> {
     this.checkPermission(context, 'iam.user.read');
     return this.userBranchAccessRepository.findByUser(userId);
   }

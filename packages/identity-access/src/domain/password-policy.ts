@@ -19,7 +19,9 @@ export const DEFAULT_PASSWORD_POLICY_CONFIG: PasswordPolicyConfig = {
 };
 
 export class PasswordPolicy {
-  constructor(private readonly config: PasswordPolicyConfig = DEFAULT_PASSWORD_POLICY_CONFIG) {}
+  constructor(
+    private readonly config: PasswordPolicyConfig = DEFAULT_PASSWORD_POLICY_CONFIG,
+  ) {}
 
   public isCompliant(password: string): boolean {
     if (password.length < this.config.minLength) {
@@ -44,7 +46,10 @@ export class PasswordPolicy {
     return true;
   }
 
-  public async isReused(password: string, hashedHistory: string[]): Promise<boolean> {
+  public async isReused(
+    password: string,
+    hashedHistory: string[],
+  ): Promise<boolean> {
     // History count check limit
     const historyToCheck = hashedHistory.slice(0, this.config.historyCount);
     for (const hash of historyToCheck) {

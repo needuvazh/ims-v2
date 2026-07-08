@@ -6,7 +6,9 @@ import { Home, ShieldCheck, Shield as ShieldIcon, Pencil } from 'lucide-react';
 export const metadata = { title: 'Edit Role - Identity | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function EditRolePage(props: { params: Promise<{ id: string }> }) {
+export default async function EditRolePage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const data = await loadIdentityData();
   const role = data.roles.find((r: any) => r.id === params.id);
@@ -23,10 +25,25 @@ export default async function EditRolePage(props: { params: Promise<{ id: string
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'IAM', href: '/iam', icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Roles', href: '/iam/roles', icon: <ShieldIcon className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Edit Role', icon: <Pencil className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'IAM',
+                href: '/iam',
+                icon: <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Roles',
+                href: '/iam/roles',
+                icon: <ShieldIcon className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Edit Role',
+                icon: <Pencil className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }

@@ -26,7 +26,11 @@ import {
   type CompensationBasis,
   type AuthorizationStatus,
 } from '../domain/trainer';
-import type { TrainerListFilters, ListQuery, TrainerManagementRepository } from '../domain/repositories';
+import type {
+  TrainerListFilters,
+  ListQuery,
+  TrainerManagementRepository,
+} from '../domain/repositories';
 
 type TrainerProfileRow = Prisma.TrainerProfileGetPayload<{
   include: {
@@ -95,7 +99,10 @@ function assertQueryPage(query: ListQuery) {
     throw new DomainError('invalid_value', 'Page must be a positive number.');
   }
   if (!Number.isFinite(query.pageSize) || query.pageSize < 1) {
-    throw new DomainError('invalid_value', 'Page size must be a positive number.');
+    throw new DomainError(
+      'invalid_value',
+      'Page size must be a positive number.',
+    );
   }
 }
 
@@ -247,14 +254,20 @@ function buildTrainerWhere(filters: TrainerListFilters) {
 
   if (filters.branchId) conditions.push({ branchId: filters.branchId });
   if (filters.status) conditions.push({ status: filters.status });
-  if (filters.trainerType) conditions.push({ trainerType: filters.trainerType });
+  if (filters.trainerType)
+    conditions.push({ trainerType: filters.trainerType });
   if (filters.specialization) {
-    conditions.push({ specialization: { contains: filters.specialization, mode: 'insensitive' } });
+    conditions.push({
+      specialization: { contains: filters.specialization, mode: 'insensitive' },
+    });
   }
   if (filters.effectiveOn) {
     conditions.push({
       effectiveStartDate: { lte: filters.effectiveOn },
-      OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: filters.effectiveOn } }],
+      OR: [
+        { effectiveEndDate: null },
+        { effectiveEndDate: { gte: filters.effectiveOn } },
+      ],
     });
   }
   if (filters.courseId) {
@@ -302,7 +315,10 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       query.sortBy === 'trainerCode'
         ? { trainerCode: direction }
         : query.sortBy === 'fullName'
-          ? [{ person: { firstName: direction } }, { person: { lastName: direction } }]
+          ? [
+              { person: { firstName: direction } },
+              { person: { lastName: direction } },
+            ]
           : query.sortBy === 'branchName'
             ? { branch: { branchName: direction } }
             : query.sortBy === 'trainerType'
@@ -333,7 +349,9 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       where: {
         id: trainerId,
         isDeleted: false,
-        ...(branchScope && branchScope.length > 0 ? { branchId: { in: branchScope } } : {}),
+        ...(branchScope && branchScope.length > 0
+          ? { branchId: { in: branchScope } }
+          : {}),
       },
       include: trainerSelect(),
     });
@@ -345,16 +363,25 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       where: {
         personId,
         isDeleted: false,
-        ...(branchScope && branchScope.length > 0 ? { branchId: { in: branchScope } } : {}),
+        ...(branchScope && branchScope.length > 0
+          ? { branchId: { in: branchScope } }
+          : {}),
       },
       include: trainerSelect(),
     });
     return row ? mapTrainerProfile(row) : null;
   }
 
-  async createTrainerProfile(input: Omit<TrainerProfileRecord, 'createdAt' | 'version' | 'isDeleted'> & { version?: number }): Promise<TrainerProfileRecord> {
-    validateEffectiveDateRange(input.effectiveStartDate, input.effectiveEndDate);
-    const row = await this.prisma.trainerProfile.create({
+  async createTrainerProfile(
+    input: Omit<TrainerProfileRecord, 'createdAt' | 'version' | 'isDeleted'> & {
+      version?: number;
+    },
+  ): Promise<TrainerProfileRecord> {
+    validateEffectiveDateRange(
+      input.effectiveStartDate,
+      input.effectiveEndDate,
+    );
+    const row = (await this.prisma.trainerProfile.create({
       data: {
         personId: input.personId,
         branchId: input.branchId,
@@ -372,20 +399,31 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         isDeleted: false,
       },
       include: trainerSelect(),
-    }) as TrainerProfileRow;
+    })) as TrainerProfileRow;
     return mapTrainerProfile(row);
   }
 
-  async updateTrainerProfile(trainerId: string, input: Partial<TrainerProfileRecord> & { version: number }): Promise<TrainerProfileRecord> {
-    const existing = await this.prisma.trainerProfile.findFirst({ where: { id: trainerId, isDeleted: false } });
+  async updateTrainerProfile(
+    trainerId: string,
+    input: Partial<TrainerProfileRecord> & { version: number },
+  ): Promise<TrainerProfileRecord> {
+    const existing = await this.prisma.trainerProfile.findFirst({
+      where: { id: trainerId, isDeleted: false },
+    });
     if (!existing) {
       throw new DomainError('not_found', 'Trainer profile not found.');
     }
     if (existing.version !== input.version) {
-      throw new DomainError('precondition_failed', 'Trainer profile was modified by another process.');
+      throw new DomainError(
+        'precondition_failed',
+        'Trainer profile was modified by another process.',
+      );
     }
 
-    validateEffectiveDateRange(input.effectiveStartDate ?? existing.effectiveStartDate, input.effectiveEndDate ?? existing.effectiveEndDate);
+    validateEffectiveDateRange(
+      input.effectiveStartDate ?? existing.effectiveStartDate,
+      input.effectiveEndDate ?? existing.effectiveEndDate,
+    );
 
     const row = await this.prisma.trainerProfile.update({
       where: { id: trainerId },
@@ -394,14 +432,28 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         ...(input.branchId ? { branchId: input.branchId } : {}),
         ...(input.trainerCode ? { trainerCode: input.trainerCode } : {}),
         ...(input.trainerType ? { trainerType: input.trainerType } : {}),
-        ...(input.specialization ? { specialization: input.specialization } : {}),
-        ...(input.qualificationSummary !== undefined ? { qualificationSummary: input.qualificationSummary } : {}),
+        ...(input.specialization
+          ? { specialization: input.specialization }
+          : {}),
+        ...(input.qualificationSummary !== undefined
+          ? { qualificationSummary: input.qualificationSummary }
+          : {}),
         ...(input.status ? { status: input.status } : {}),
-        ...(input.effectiveStartDate ? { effectiveStartDate: input.effectiveStartDate } : {}),
-        ...(input.effectiveEndDate !== undefined ? { effectiveEndDate: input.effectiveEndDate } : {}),
-        ...(input.deletedAt !== undefined ? { deletedAt: input.deletedAt } : {}),
-        ...(input.deletedBy !== undefined ? { deletedBy: input.deletedBy } : {}),
-        ...(input.isDeleted !== undefined ? { isDeleted: input.isDeleted } : {}),
+        ...(input.effectiveStartDate
+          ? { effectiveStartDate: input.effectiveStartDate }
+          : {}),
+        ...(input.effectiveEndDate !== undefined
+          ? { effectiveEndDate: input.effectiveEndDate }
+          : {}),
+        ...(input.deletedAt !== undefined
+          ? { deletedAt: input.deletedAt }
+          : {}),
+        ...(input.deletedBy !== undefined
+          ? { deletedBy: input.deletedBy }
+          : {}),
+        ...(input.isDeleted !== undefined
+          ? { isDeleted: input.isDeleted }
+          : {}),
         updatedAt: new Date(),
         version: { increment: 1 },
       },
@@ -410,15 +462,31 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return mapTrainerProfile(row);
   }
 
-  async transitionTrainerStatus(trainerId: string, input: { toStatus: TrainerStatus; effectiveAt: Date; reason: string; version: number }): Promise<TrainerProfileRecord> {
-    const existing = await this.prisma.trainerProfile.findFirst({ where: { id: trainerId, isDeleted: false } });
+  async transitionTrainerStatus(
+    trainerId: string,
+    input: {
+      toStatus: TrainerStatus;
+      effectiveAt: Date;
+      reason: string;
+      version: number;
+    },
+  ): Promise<TrainerProfileRecord> {
+    const existing = await this.prisma.trainerProfile.findFirst({
+      where: { id: trainerId, isDeleted: false },
+    });
     if (!existing) {
       throw new DomainError('not_found', 'Trainer profile not found.');
     }
     if (existing.version !== input.version) {
-      throw new DomainError('precondition_failed', 'Trainer profile was modified by another process.');
+      throw new DomainError(
+        'precondition_failed',
+        'Trainer profile was modified by another process.',
+      );
     }
-    validateEffectiveDateRange(existing.effectiveStartDate, existing.effectiveEndDate);
+    validateEffectiveDateRange(
+      existing.effectiveStartDate,
+      existing.effectiveEndDate,
+    );
 
     const row = await this.prisma.trainerProfile.update({
       where: { id: trainerId },
@@ -449,9 +517,18 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return { items: items.map(mapQualification), total };
   }
 
-  async createQualification(trainerId: string, input: Omit<TrainerQualificationRecord, 'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'>): Promise<TrainerQualificationRecord> {
-    validateEffectiveDateRange(input.effectiveStartDate, input.effectiveEndDate);
-    const row = await this.prisma.trainerQualification.create({
+  async createQualification(
+    trainerId: string,
+    input: Omit<
+      TrainerQualificationRecord,
+      'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'
+    >,
+  ): Promise<TrainerQualificationRecord> {
+    validateEffectiveDateRange(
+      input.effectiveStartDate,
+      input.effectiveEndDate,
+    );
+    const row = (await this.prisma.trainerQualification.create({
       data: {
         trainerId,
         qualificationName: input.qualificationName,
@@ -468,30 +545,58 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         isDeleted: false,
       },
       include: { trainer: { select: { id: true, branchId: true } } },
-    }) as QualificationRow;
+    })) as QualificationRow;
     return mapQualification(row);
   }
 
-  async updateQualification(trainerId: string, qualificationId: string, input: Partial<TrainerQualificationRecord> & { version: number }): Promise<TrainerQualificationRecord> {
-    const existing = await this.prisma.trainerQualification.findFirst({ where: { id: qualificationId, trainerId, isDeleted: false } });
-    if (!existing) throw new DomainError('not_found', 'Qualification not found.');
-    if (existing.version !== input.version) throw new DomainError('precondition_failed', 'Qualification was modified by another process.');
+  async updateQualification(
+    trainerId: string,
+    qualificationId: string,
+    input: Partial<TrainerQualificationRecord> & { version: number },
+  ): Promise<TrainerQualificationRecord> {
+    const existing = await this.prisma.trainerQualification.findFirst({
+      where: { id: qualificationId, trainerId, isDeleted: false },
+    });
+    if (!existing)
+      throw new DomainError('not_found', 'Qualification not found.');
+    if (existing.version !== input.version)
+      throw new DomainError(
+        'precondition_failed',
+        'Qualification was modified by another process.',
+      );
 
-    validateEffectiveDateRange(input.effectiveStartDate ?? existing.effectiveStartDate, input.effectiveEndDate ?? existing.effectiveEndDate);
+    validateEffectiveDateRange(
+      input.effectiveStartDate ?? existing.effectiveStartDate,
+      input.effectiveEndDate ?? existing.effectiveEndDate,
+    );
 
     const row = await this.prisma.trainerQualification.update({
       where: { id: qualificationId },
       data: {
-        ...(input.qualificationName ? { qualificationName: input.qualificationName } : {}),
+        ...(input.qualificationName
+          ? { qualificationName: input.qualificationName }
+          : {}),
         ...(input.institution ? { institution: input.institution } : {}),
         ...(input.yearCompleted ? { yearCompleted: input.yearCompleted } : {}),
-        ...(input.documentId !== undefined ? { documentId: input.documentId } : {}),
+        ...(input.documentId !== undefined
+          ? { documentId: input.documentId }
+          : {}),
         ...(input.status ? { status: input.status } : {}),
-        ...(input.effectiveStartDate ? { effectiveStartDate: input.effectiveStartDate } : {}),
-        ...(input.effectiveEndDate !== undefined ? { effectiveEndDate: input.effectiveEndDate } : {}),
-        ...(input.deletedAt !== undefined ? { deletedAt: input.deletedAt } : {}),
-        ...(input.deletedBy !== undefined ? { deletedBy: input.deletedBy } : {}),
-        ...(input.isDeleted !== undefined ? { isDeleted: input.isDeleted } : {}),
+        ...(input.effectiveStartDate
+          ? { effectiveStartDate: input.effectiveStartDate }
+          : {}),
+        ...(input.effectiveEndDate !== undefined
+          ? { effectiveEndDate: input.effectiveEndDate }
+          : {}),
+        ...(input.deletedAt !== undefined
+          ? { deletedAt: input.deletedAt }
+          : {}),
+        ...(input.deletedBy !== undefined
+          ? { deletedBy: input.deletedBy }
+          : {}),
+        ...(input.isDeleted !== undefined
+          ? { isDeleted: input.isDeleted }
+          : {}),
         updatedAt: new Date(),
         version: { increment: 1 },
       },
@@ -500,10 +605,22 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return mapQualification(row);
   }
 
-  async deleteQualification(trainerId: string, qualificationId: string, reason: string, version: number): Promise<void> {
-    const existing = await this.prisma.trainerQualification.findFirst({ where: { id: qualificationId, trainerId, isDeleted: false } });
-    if (!existing) throw new DomainError('not_found', 'Qualification not found.');
-    if (existing.version !== version) throw new DomainError('precondition_failed', 'Qualification was modified by another process.');
+  async deleteQualification(
+    trainerId: string,
+    qualificationId: string,
+    reason: string,
+    version: number,
+  ): Promise<void> {
+    const existing = await this.prisma.trainerQualification.findFirst({
+      where: { id: qualificationId, trainerId, isDeleted: false },
+    });
+    if (!existing)
+      throw new DomainError('not_found', 'Qualification not found.');
+    if (existing.version !== version)
+      throw new DomainError(
+        'precondition_failed',
+        'Qualification was modified by another process.',
+      );
     await this.prisma.trainerQualification.update({
       where: { id: qualificationId },
       data: {
@@ -531,9 +648,18 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return { items: items.map(mapAvailability), total };
   }
 
-  async createAvailability(trainerId: string, input: Omit<TrainerAvailabilityRecord, 'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'>): Promise<TrainerAvailabilityRecord> {
+  async createAvailability(
+    trainerId: string,
+    input: Omit<
+      TrainerAvailabilityRecord,
+      'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'
+    >,
+  ): Promise<TrainerAvailabilityRecord> {
     validateTimeOrder(input.startTime, input.endTime);
-    validateEffectiveDateRange(input.effectiveStartDate, input.effectiveEndDate);
+    validateEffectiveDateRange(
+      input.effectiveStartDate,
+      input.effectiveEndDate,
+    );
 
     const overlap = await this.prisma.trainerAvailability.findFirst({
       where: {
@@ -542,15 +668,31 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         dayOfWeek: input.dayOfWeek,
         isDeleted: false,
         status: 'Active',
-        effectiveStartDate: { lte: input.effectiveEndDate ?? input.effectiveStartDate },
-        OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: input.effectiveStartDate } }],
+        effectiveStartDate: {
+          lte: input.effectiveEndDate ?? input.effectiveStartDate,
+        },
+        OR: [
+          { effectiveEndDate: null },
+          { effectiveEndDate: { gte: input.effectiveStartDate } },
+        ],
       },
     });
-    if (overlap && overlaps(overlap.startTime, overlap.endTime, input.startTime, input.endTime)) {
-      throw new DomainError('conflict', 'Trainer availability overlaps an existing window.');
+    if (
+      overlap &&
+      overlaps(
+        overlap.startTime,
+        overlap.endTime,
+        input.startTime,
+        input.endTime,
+      )
+    ) {
+      throw new DomainError(
+        'conflict',
+        'Trainer availability overlaps an existing window.',
+      );
     }
 
-    const row = await this.prisma.trainerAvailability.create({
+    const row = (await this.prisma.trainerAvailability.create({
       data: {
         trainerId,
         branchId: input.branchId,
@@ -567,19 +709,33 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         isDeleted: false,
       },
       include: { trainer: { select: { id: true, branchId: true } } },
-    }) as AvailabilityRow;
+    })) as AvailabilityRow;
     return mapAvailability(row);
   }
 
-  async updateAvailability(trainerId: string, availabilityId: string, input: Partial<TrainerAvailabilityRecord> & { version: number }): Promise<TrainerAvailabilityRecord> {
-    const existing = await this.prisma.trainerAvailability.findFirst({ where: { id: availabilityId, trainerId, isDeleted: false } });
-    if (!existing) throw new DomainError('not_found', 'Availability not found.');
-    if (existing.version !== input.version) throw new DomainError('precondition_failed', 'Availability was modified by another process.');
+  async updateAvailability(
+    trainerId: string,
+    availabilityId: string,
+    input: Partial<TrainerAvailabilityRecord> & { version: number },
+  ): Promise<TrainerAvailabilityRecord> {
+    const existing = await this.prisma.trainerAvailability.findFirst({
+      where: { id: availabilityId, trainerId, isDeleted: false },
+    });
+    if (!existing)
+      throw new DomainError('not_found', 'Availability not found.');
+    if (existing.version !== input.version)
+      throw new DomainError(
+        'precondition_failed',
+        'Availability was modified by another process.',
+      );
 
     const startTime = input.startTime ?? existing.startTime;
     const endTime = input.endTime ?? existing.endTime;
     validateTimeOrder(startTime, endTime);
-    validateEffectiveDateRange(input.effectiveStartDate ?? existing.effectiveStartDate, input.effectiveEndDate ?? existing.effectiveEndDate);
+    validateEffectiveDateRange(
+      input.effectiveStartDate ?? existing.effectiveStartDate,
+      input.effectiveEndDate ?? existing.effectiveEndDate,
+    );
 
     const row = await this.prisma.trainerAvailability.update({
       where: { id: availabilityId },
@@ -589,11 +745,21 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         ...(input.startTime ? { startTime: input.startTime } : {}),
         ...(input.endTime ? { endTime: input.endTime } : {}),
         ...(input.status ? { status: input.status } : {}),
-        ...(input.effectiveStartDate ? { effectiveStartDate: input.effectiveStartDate } : {}),
-        ...(input.effectiveEndDate !== undefined ? { effectiveEndDate: input.effectiveEndDate } : {}),
-        ...(input.deletedAt !== undefined ? { deletedAt: input.deletedAt } : {}),
-        ...(input.deletedBy !== undefined ? { deletedBy: input.deletedBy } : {}),
-        ...(input.isDeleted !== undefined ? { isDeleted: input.isDeleted } : {}),
+        ...(input.effectiveStartDate
+          ? { effectiveStartDate: input.effectiveStartDate }
+          : {}),
+        ...(input.effectiveEndDate !== undefined
+          ? { effectiveEndDate: input.effectiveEndDate }
+          : {}),
+        ...(input.deletedAt !== undefined
+          ? { deletedAt: input.deletedAt }
+          : {}),
+        ...(input.deletedBy !== undefined
+          ? { deletedBy: input.deletedBy }
+          : {}),
+        ...(input.isDeleted !== undefined
+          ? { isDeleted: input.isDeleted }
+          : {}),
         updatedAt: new Date(),
         version: { increment: 1 },
       },
@@ -602,10 +768,22 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return mapAvailability(row);
   }
 
-  async deleteAvailability(trainerId: string, availabilityId: string, reason: string, version: number): Promise<void> {
-    const existing = await this.prisma.trainerAvailability.findFirst({ where: { id: availabilityId, trainerId, isDeleted: false } });
-    if (!existing) throw new DomainError('not_found', 'Availability not found.');
-    if (existing.version !== version) throw new DomainError('precondition_failed', 'Availability was modified by another process.');
+  async deleteAvailability(
+    trainerId: string,
+    availabilityId: string,
+    reason: string,
+    version: number,
+  ): Promise<void> {
+    const existing = await this.prisma.trainerAvailability.findFirst({
+      where: { id: availabilityId, trainerId, isDeleted: false },
+    });
+    if (!existing)
+      throw new DomainError('not_found', 'Availability not found.');
+    if (existing.version !== version)
+      throw new DomainError(
+        'precondition_failed',
+        'Availability was modified by another process.',
+      );
     await this.prisma.trainerAvailability.update({
       where: { id: availabilityId },
       data: {
@@ -617,17 +795,34 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     });
   }
 
-  async validateAvailability(trainerId: string, branchId: string, date: Date, startTime: string, endTime: string) {
+  async validateAvailability(
+    trainerId: string,
+    branchId: string,
+    date: Date,
+    startTime: string,
+    endTime: string,
+  ) {
     validateTimeOrder(startTime, endTime);
     const trainer = await this.prisma.trainerProfile.findFirst({
       where: { id: trainerId, branchId, isDeleted: false, status: 'Active' },
       select: { id: true, effectiveStartDate: true, effectiveEndDate: true },
     });
-    if (!trainer || !isEffectiveOn(trainer.effectiveStartDate, trainer.effectiveEndDate, date)) {
+    if (
+      !trainer ||
+      !isEffectiveOn(trainer.effectiveStartDate, trainer.effectiveEndDate, date)
+    ) {
       return { available: false };
     }
 
-    const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()] as AvailabilityDay;
+    const dayOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ][date.getDay()] as AvailabilityDay;
     const availability = await this.prisma.trainerAvailability.findFirst({
       where: {
         trainerId,
@@ -640,7 +835,15 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       },
       orderBy: { createdAt: 'desc' },
     });
-    if (!availability || !overlaps(availability.startTime, availability.endTime, startTime, endTime)) {
+    if (
+      !availability ||
+      !overlaps(
+        availability.startTime,
+        availability.endTime,
+        startTime,
+        endTime,
+      )
+    ) {
       return { available: false };
     }
 
@@ -652,7 +855,10 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         sessionDate: date,
         OR: [
           {
-            AND: [{ startTime: { lt: endTime } }, { endTime: { gt: startTime } }],
+            AND: [
+              { startTime: { lt: endTime } },
+              { endTime: { gt: startTime } },
+            ],
           },
         ],
       },
@@ -682,9 +888,18 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return { items: items.map(mapAuthorization), total };
   }
 
-  async createAuthorization(trainerId: string, input: Omit<TrainerAuthorizationRecord, 'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'>): Promise<TrainerAuthorizationRecord> {
-    validateEffectiveDateRange(input.effectiveStartDate, input.effectiveEndDate);
-    const row = await this.prisma.trainerCourseAuthorization.create({
+  async createAuthorization(
+    trainerId: string,
+    input: Omit<
+      TrainerAuthorizationRecord,
+      'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'
+    >,
+  ): Promise<TrainerAuthorizationRecord> {
+    validateEffectiveDateRange(
+      input.effectiveStartDate,
+      input.effectiveEndDate,
+    );
+    const row = (await this.prisma.trainerCourseAuthorization.create({
       data: {
         trainerId,
         courseId: input.courseId,
@@ -699,14 +914,30 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         isDeleted: false,
       },
       include: { course: true },
-    }) as AuthorizationRow;
+    })) as AuthorizationRow;
     return mapAuthorization(row);
   }
 
-  async transitionAuthorization(trainerId: string, authorizationId: string, input: { toStatus: AuthorizationStatus; effectiveAt: Date; reason: string; version: number }): Promise<TrainerAuthorizationRecord> {
-    const existing = await this.prisma.trainerCourseAuthorization.findFirst({ where: { id: authorizationId, trainerId, isDeleted: false } });
-    if (!existing) throw new DomainError('not_found', 'Authorization not found.');
-    if (existing.version !== input.version) throw new DomainError('precondition_failed', 'Authorization was modified by another process.');
+  async transitionAuthorization(
+    trainerId: string,
+    authorizationId: string,
+    input: {
+      toStatus: AuthorizationStatus;
+      effectiveAt: Date;
+      reason: string;
+      version: number;
+    },
+  ): Promise<TrainerAuthorizationRecord> {
+    const existing = await this.prisma.trainerCourseAuthorization.findFirst({
+      where: { id: authorizationId, trainerId, isDeleted: false },
+    });
+    if (!existing)
+      throw new DomainError('not_found', 'Authorization not found.');
+    if (existing.version !== input.version)
+      throw new DomainError(
+        'precondition_failed',
+        'Authorization was modified by another process.',
+      );
     const row = await this.prisma.trainerCourseAuthorization.update({
       where: { id: authorizationId },
       data: {
@@ -760,9 +991,18 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return { items: items.map(mapCompensation), total };
   }
 
-  async createCompensationRate(trainerId: string, input: Omit<TrainerCompensationRateRecord, 'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'>): Promise<TrainerCompensationRateRecord> {
-    validateEffectiveDateRange(input.effectiveStartDate, input.effectiveEndDate);
-    const row = await this.prisma.trainerCompensationRate.create({
+  async createCompensationRate(
+    trainerId: string,
+    input: Omit<
+      TrainerCompensationRateRecord,
+      'id' | 'trainerId' | 'version' | 'isDeleted' | 'createdAt'
+    >,
+  ): Promise<TrainerCompensationRateRecord> {
+    validateEffectiveDateRange(
+      input.effectiveStartDate,
+      input.effectiveEndDate,
+    );
+    const row = (await this.prisma.trainerCompensationRate.create({
       data: {
         trainerId,
         batchId: input.batchId,
@@ -804,32 +1044,60 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
           },
         },
       },
-    }) as CompensationRow;
+    })) as CompensationRow;
     return mapCompensation(row);
   }
 
-  async updateCompensationRate(trainerId: string, rateId: string, input: Partial<TrainerCompensationRateRecord> & { version: number }): Promise<TrainerCompensationRateRecord> {
-    const existing = await this.prisma.trainerCompensationRate.findFirst({ where: { id: rateId, trainerId, isDeleted: false } });
-    if (!existing) throw new DomainError('not_found', 'Compensation rate not found.');
-    if (existing.version !== input.version) throw new DomainError('precondition_failed', 'Compensation rate was modified by another process.');
+  async updateCompensationRate(
+    trainerId: string,
+    rateId: string,
+    input: Partial<TrainerCompensationRateRecord> & { version: number },
+  ): Promise<TrainerCompensationRateRecord> {
+    const existing = await this.prisma.trainerCompensationRate.findFirst({
+      where: { id: rateId, trainerId, isDeleted: false },
+    });
+    if (!existing)
+      throw new DomainError('not_found', 'Compensation rate not found.');
+    if (existing.version !== input.version)
+      throw new DomainError(
+        'precondition_failed',
+        'Compensation rate was modified by another process.',
+      );
 
-    validateEffectiveDateRange(input.effectiveStartDate ?? existing.effectiveStartDate, input.effectiveEndDate ?? existing.effectiveEndDate);
+    validateEffectiveDateRange(
+      input.effectiveStartDate ?? existing.effectiveStartDate,
+      input.effectiveEndDate ?? existing.effectiveEndDate,
+    );
 
     const row = await this.prisma.trainerCompensationRate.update({
       where: { id: rateId },
       data: {
         ...(input.batchId !== undefined ? { batchId: input.batchId } : {}),
-        ...(input.sessionId !== undefined ? { sessionId: input.sessionId } : {}),
+        ...(input.sessionId !== undefined
+          ? { sessionId: input.sessionId }
+          : {}),
         ...(input.paymentBasis ? { paymentBasis: input.paymentBasis } : {}),
-        ...(input.amount !== undefined ? { amount: new Prisma.Decimal(input.amount) } : {}),
+        ...(input.amount !== undefined
+          ? { amount: new Prisma.Decimal(input.amount) }
+          : {}),
         ...(input.currency ? { currency: input.currency } : {}),
         ...(input.status ? { status: input.status } : {}),
         ...(input.remarks !== undefined ? { remarks: input.remarks } : {}),
-        ...(input.effectiveStartDate ? { effectiveStartDate: input.effectiveStartDate } : {}),
-        ...(input.effectiveEndDate !== undefined ? { effectiveEndDate: input.effectiveEndDate } : {}),
-        ...(input.deletedAt !== undefined ? { deletedAt: input.deletedAt } : {}),
-        ...(input.deletedBy !== undefined ? { deletedBy: input.deletedBy } : {}),
-        ...(input.isDeleted !== undefined ? { isDeleted: input.isDeleted } : {}),
+        ...(input.effectiveStartDate
+          ? { effectiveStartDate: input.effectiveStartDate }
+          : {}),
+        ...(input.effectiveEndDate !== undefined
+          ? { effectiveEndDate: input.effectiveEndDate }
+          : {}),
+        ...(input.deletedAt !== undefined
+          ? { deletedAt: input.deletedAt }
+          : {}),
+        ...(input.deletedBy !== undefined
+          ? { deletedBy: input.deletedBy }
+          : {}),
+        ...(input.isDeleted !== undefined
+          ? { isDeleted: input.isDeleted }
+          : {}),
         updatedAt: new Date(),
         version: { increment: 1 },
       },
@@ -861,7 +1129,13 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return mapCompensation(row);
   }
 
-  async resolveCompensationRate(input: { trainerId: string; paymentBasis: CompensationBasis; effectiveOn: Date; batchId?: string; sessionId?: string }) {
+  async resolveCompensationRate(input: {
+    trainerId: string;
+    paymentBasis: CompensationBasis;
+    effectiveOn: Date;
+    batchId?: string;
+    sessionId?: string;
+  }) {
     const candidates = await this.prisma.trainerCompensationRate.findMany({
       where: {
         trainerId: input.trainerId,
@@ -869,7 +1143,10 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         isDeleted: false,
         status: 'Active',
         effectiveStartDate: { lte: input.effectiveOn },
-        OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: input.effectiveOn } }],
+        OR: [
+          { effectiveEndDate: null },
+          { effectiveEndDate: { gte: input.effectiveOn } },
+        ],
       },
       orderBy: [{ effectiveStartDate: 'desc' }, { createdAt: 'desc' }],
       take: 10,
@@ -900,14 +1177,21 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     });
 
     const exact =
-      candidates.find((rate) => input.sessionId && rate.sessionId === input.sessionId) ??
-      candidates.find((rate) => input.batchId && rate.batchId === input.batchId) ??
+      candidates.find(
+        (rate) => input.sessionId && rate.sessionId === input.sessionId,
+      ) ??
+      candidates.find(
+        (rate) => input.batchId && rate.batchId === input.batchId,
+      ) ??
       candidates.find((rate) => !rate.sessionId && !rate.batchId) ??
       candidates[0];
     return exact ? mapCompensation(exact) : null;
   }
 
-  async listAssignmentReferences(trainerId: string, query: ListQuery & { kind?: 'Batch' | 'Session' | 'All' }) {
+  async listAssignmentReferences(
+    trainerId: string,
+    query: ListQuery & { kind?: 'Batch' | 'Session' | 'All' },
+  ) {
     assertQueryPage(query);
     const batchAssignments = await this.prisma.batchTrainer.findMany({
       where: { trainerId, isDeleted: false },
@@ -955,16 +1239,27 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
           }))),
     ];
 
-    const filtered = items.slice((query.page - 1) * query.pageSize, query.page * query.pageSize);
+    const filtered = items.slice(
+      (query.page - 1) * query.pageSize,
+      query.page * query.pageSize,
+    );
     return { items: filtered, total: items.length };
   }
 
-  async listReports(reportCode: string, filters: Record<string, unknown>, query: ListQuery) {
+  async listReports(
+    reportCode: string,
+    filters: Record<string, unknown>,
+    query: ListQuery,
+  ) {
     assertQueryPage(query);
     const where: Prisma.TrainerProfileWhereInput = {
       isDeleted: false,
-      ...(typeof filters.branchId === 'string' ? { branchId: filters.branchId } : {}),
-      ...(typeof filters.trainerType === 'string' ? { trainerType: filters.trainerType } : {}),
+      ...(typeof filters.branchId === 'string'
+        ? { branchId: filters.branchId }
+        : {}),
+      ...(typeof filters.trainerType === 'string'
+        ? { trainerType: filters.trainerType }
+        : {}),
       ...(typeof filters.status === 'string' ? { status: filters.status } : {}),
     };
 
@@ -984,7 +1279,8 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       reportCode,
       trainerId: trainer.id as Uuid,
       trainerCode: trainer.trainerCode,
-      displayNameEn: `${trainer.person.firstName} ${trainer.person.lastName}`.trim(),
+      displayNameEn:
+        `${trainer.person.firstName} ${trainer.person.lastName}`.trim(),
       displayNameAr: null,
       branchId: trainer.branchId as Uuid,
       branchCode: trainer.branch.branchCode,
@@ -1000,14 +1296,28 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       compensationConfigured: trainer.compensationRates.length > 0,
     }));
 
-    const slice = rows.slice((query.page - 1) * query.pageSize, query.page * query.pageSize);
+    const slice = rows.slice(
+      (query.page - 1) * query.pageSize,
+      query.page * query.pageSize,
+    );
     return { items: slice, total: rows.length };
   }
 
-  async listAuditHistory(trainerId: string, query: ListQuery & { action?: string; entityType?: string; fromDate?: Date; toDate?: Date }) {
+  async listAuditHistory(
+    trainerId: string,
+    query: ListQuery & {
+      action?: string;
+      entityType?: string;
+      fromDate?: Date;
+      toDate?: Date;
+    },
+  ) {
     assertQueryPage(query);
     const where: Prisma.AuditLogWhereInput = {
-      OR: [{ entityId: trainerId }, { entityType: 'TrainerProfile', entityId: trainerId }],
+      OR: [
+        { entityId: trainerId },
+        { entityType: 'TrainerProfile', entityId: trainerId },
+      ],
       ...(query.action ? { action: query.action } : {}),
       ...(query.entityType ? { entityType: query.entityType } : {}),
       ...(query.fromDate || query.toDate
@@ -1033,7 +1343,18 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     return { items, total };
   }
 
-  async findEligibleTrainers(input: { courseId: string; branchId: string; targetDate: Date; startTime?: string; endTime?: string; trainerType?: TrainerType; q?: string }, query: ListQuery) {
+  async findEligibleTrainers(
+    input: {
+      courseId: string;
+      branchId: string;
+      targetDate: Date;
+      startTime?: string;
+      endTime?: string;
+      trainerType?: TrainerType;
+      q?: string;
+    },
+    query: ListQuery,
+  ) {
     assertQueryPage(query);
     const trainers = await this.prisma.trainerProfile.findMany({
       where: {
@@ -1046,8 +1367,16 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
               OR: [
                 { trainerCode: { contains: input.q, mode: 'insensitive' } },
                 { specialization: { contains: input.q, mode: 'insensitive' } },
-                { person: { firstName: { contains: input.q, mode: 'insensitive' } } },
-                { person: { lastName: { contains: input.q, mode: 'insensitive' } } },
+                {
+                  person: {
+                    firstName: { contains: input.q, mode: 'insensitive' },
+                  },
+                },
+                {
+                  person: {
+                    lastName: { contains: input.q, mode: 'insensitive' },
+                  },
+                },
               ],
             }
           : {}),
@@ -1061,7 +1390,10 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
             isDeleted: false,
             status: 'Active',
             effectiveStartDate: { lte: input.targetDate },
-            OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: input.targetDate } }],
+            OR: [
+              { effectiveEndDate: null },
+              { effectiveEndDate: { gte: input.targetDate } },
+            ],
           },
         },
         availability: {
@@ -1070,36 +1402,80 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
             isDeleted: false,
             status: 'Active',
             effectiveStartDate: { lte: input.targetDate },
-            OR: [{ effectiveEndDate: null }, { effectiveEndDate: { gte: input.targetDate } }],
+            OR: [
+              { effectiveEndDate: null },
+              { effectiveEndDate: { gte: input.targetDate } },
+            ],
           },
         },
       },
     });
 
-    const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][input.targetDate.getDay()];
-    const results: Array<TrainerEligibilityResult & { trainerId: string; trainerCode: string; displayName: { en: string; ar?: string | null }; trainerType?: string; branchName?: string; status?: string }> = [];
+    const dayOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ][input.targetDate.getDay()];
+    const results: Array<
+      TrainerEligibilityResult & {
+        trainerId: string;
+        trainerCode: string;
+        displayName: { en: string; ar?: string | null };
+        trainerType?: string;
+        branchName?: string;
+        status?: string;
+      }
+    > = [];
 
     for (const trainer of trainers) {
       const authorization = trainer.authorizations[0];
-      const availability = trainer.availability.find((slot) => slot.dayOfWeek === dayOfWeek && (!input.startTime || !input.endTime || overlaps(slot.startTime, slot.endTime, input.startTime, input.endTime)));
+      const availability = trainer.availability.find(
+        (slot) =>
+          slot.dayOfWeek === dayOfWeek &&
+          (!input.startTime ||
+            !input.endTime ||
+            overlaps(
+              slot.startTime,
+              slot.endTime,
+              input.startTime,
+              input.endTime,
+            )),
+      );
       results.push({
         trainerId: trainer.id,
         trainerCode: trainer.trainerCode,
-        displayName: { en: `${trainer.person.firstName} ${trainer.person.lastName}`.trim(), ar: null },
+        displayName: {
+          en: `${trainer.person.firstName} ${trainer.person.lastName}`.trim(),
+          ar: null,
+        },
         trainerType: trainer.trainerType,
         branchName: trainer.branch?.branchName,
         status: trainer.status,
         eligible: Boolean(authorization && availability),
-        reasonCodes: authorization && availability ? [] : [
-          !authorization ? 'COURSE_NOT_AUTHORIZED' : 'TRAINER_NOT_AVAILABLE',
-        ],
+        reasonCodes:
+          authorization && availability
+            ? []
+            : [
+                !authorization
+                  ? 'COURSE_NOT_AUTHORIZED'
+                  : 'TRAINER_NOT_AVAILABLE',
+              ],
         authorizationId: authorization?.id,
         availabilityId: availability?.id,
-        schedulingConflictCheckRequired: Boolean(input.startTime && input.endTime),
+        schedulingConflictCheckRequired: Boolean(
+          input.startTime && input.endTime,
+        ),
       });
     }
 
-    const slice = results.slice((query.page - 1) * query.pageSize, query.page * query.pageSize);
+    const slice = results.slice(
+      (query.page - 1) * query.pageSize,
+      query.page * query.pageSize,
+    );
     return { items: slice, total: results.length };
   }
 }

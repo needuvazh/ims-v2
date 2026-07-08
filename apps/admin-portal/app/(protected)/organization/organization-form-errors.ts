@@ -34,7 +34,9 @@ function getFirstFieldName(path: (string | number)[]): string | null {
   return String(path[0]);
 }
 
-function getPrismaTargetFields(error: Prisma.PrismaClientKnownRequestError): string[] {
+function getPrismaTargetFields(
+  error: Prisma.PrismaClientKnownRequestError,
+): string[] {
   const target = error.meta?.target;
 
   if (Array.isArray(target)) {
@@ -63,7 +65,10 @@ function getFieldErrorFromZodError(error: ZodError): Record<string, string> {
   return fieldErrors;
 }
 
-function getFieldErrorFromDomainError(error: DomainError, maps?: ErrorFieldMaps): Record<string, string> {
+function getFieldErrorFromDomainError(
+  error: DomainError,
+  maps?: ErrorFieldMaps,
+): Record<string, string> {
   if (!maps?.domain) {
     return {};
   }
@@ -89,8 +94,9 @@ function getFieldErrorFromPrismaError(
   for (const targetField of targetFields) {
     const mappedField = maps.prisma[targetField];
     if (mappedField) {
-      const message = maps.prismaMessages?.[targetField]
-        ?? 'This value already exists. Please use a different value.';
+      const message =
+        maps.prismaMessages?.[targetField] ??
+        'This value already exists. Please use a different value.';
       return { [mappedField]: message };
     }
   }
@@ -116,7 +122,8 @@ export function buildOrganizationActionFailure(
     const fieldErrors = getFieldErrorFromDomainError(error, maps);
     return {
       error: error.message,
-      fieldErrors: Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined,
+      fieldErrors:
+        Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined,
       values,
     };
   }

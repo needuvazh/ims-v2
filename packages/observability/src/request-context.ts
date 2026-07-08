@@ -33,9 +33,13 @@ export const requestHeaderNames = {
   legacyTraceId: 'x-ims-trace-id',
 } as const;
 
-function normalizeHeaderValue(value: string | string[] | undefined | null): string | null {
+function normalizeHeaderValue(
+  value: string | string[] | undefined | null,
+): string | null {
   if (Array.isArray(value)) {
-    const first = value.find((entry) => typeof entry === 'string' && entry.length > 0);
+    const first = value.find(
+      (entry) => typeof entry === 'string' && entry.length > 0,
+    );
     return first ?? null;
   }
 
@@ -122,8 +126,12 @@ export function extractRequestId(source: HeaderBag): string | null {
   );
 }
 
-export function createRequestContext(source?: HeaderBag, overrides: RequestContextInput = {}): RequestContext {
-  const requestId = overrides.requestId ?? extractRequestId(source) ?? createRequestId();
+export function createRequestContext(
+  source?: HeaderBag,
+  overrides: RequestContextInput = {},
+): RequestContext {
+  const requestId =
+    overrides.requestId ?? extractRequestId(source) ?? createRequestId();
   const traceId = overrides.traceId ?? extractTraceId(source);
 
   return {
@@ -138,11 +146,17 @@ export function createRequestContext(source?: HeaderBag, overrides: RequestConte
   };
 }
 
-export function createCorrelationContext(source?: HeaderBag, overrides: RequestContextInput = {}): CorrelationContext {
+export function createCorrelationContext(
+  source?: HeaderBag,
+  overrides: RequestContextInput = {},
+): CorrelationContext {
   return createRequestContext(source, overrides);
 }
 
-export function applyRequestContextHeaders(target: Headers, context: Pick<RequestContext, 'requestId' | 'traceId'>): void {
+export function applyRequestContextHeaders(
+  target: Headers,
+  context: Pick<RequestContext, 'requestId' | 'traceId'>,
+): void {
   target.set(requestHeaderNames.requestId, context.requestId);
   target.set(requestHeaderNames.correlationId, context.requestId);
 

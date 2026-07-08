@@ -1,5 +1,7 @@
 # ASTI IMS: Functional Requirement Document
+
 ## Module 03: Lead & Inquiry Management
+
 ### Part 9 – BDD Acceptance Criteria and Test Scenarios
 
 ---
@@ -7,6 +9,7 @@
 ## 1. Feature: Manual Inquiry Validation and Duplicate Check
 
 ### 1.1 Scenario: Validate phone format and mandatory parameters
+
 ```gherkin
 Feature: Inquiry Form Input Validation
   As a Counselor
@@ -34,6 +37,7 @@ Feature: Inquiry Form Input Validation
 ```
 
 ### 1.2 Scenario: Duplicate check alerts and override logic
+
 ```gherkin
 Scenario: Warn user of matching mobile number during creation
   Given the Counselor is logged in to the Muscat branch
@@ -59,6 +63,7 @@ Scenario: Allow counselor to force create duplicate lead after confirmation
 ## 2. Feature: Lead Stage Transitions and Invariants
 
 ### 2.1 Scenario: Validate preconditions for Won stage
+
 ```gherkin
 Feature: Lead Stage Transition Policies
   As a Counselor or Branch Admin
@@ -80,6 +85,7 @@ Feature: Lead Stage Transition Policies
 ```
 
 ### 2.2 Scenario: Enforce lost reason capture
+
 ```gherkin
 Scenario: Prevent lead from transitioning to Lost without reason code
   Given the Counselor is logged in and assigned to lead "LD-2026-MCT-00104"
@@ -91,6 +97,7 @@ Scenario: Prevent lead from transitioning to Lost without reason code
 ```
 
 ### 2.3 Scenario: Block backward transitions from terminal state
+
 ```gherkin
 Scenario Outline: Block illegal transition out of Converted state
   Given the Counselor is logged in
@@ -114,6 +121,7 @@ Scenario Outline: Block illegal transition out of Converted state
 ## 3. Feature: Follow-up Scheduling Boundaries
 
 ### 3.1 Scenario: Verify future date-time constraints
+
 ```gherkin
 Feature: Follow-up Schedule Validation
   As a Counselor
@@ -139,6 +147,7 @@ Feature: Follow-up Schedule Validation
 ## 4. Feature: Branch Data Isolation and Access Controls
 
 ### 4.1 Scenario: Block counselor access to leads in unauthorized branches
+
 ```gherkin
 Feature: Branch Data Isolation Scoping
   As a Branch Admin
@@ -156,6 +165,7 @@ Feature: Branch Data Isolation Scoping
 ```
 
 ### 4.2 Scenario: Block counselor access to unauthorized counselor portfolios
+
 ```gherkin
 Scenario: Counselor A attempts to edit Lead assigned to Counselor B
   Given Counselor "Said Al-Masri" is logged in
@@ -169,6 +179,7 @@ Scenario: Counselor A attempts to edit Lead assigned to Counselor B
 ```
 
 ### 4.3 Scenario: Allow Branch Admin access to all branch leads
+
 ```gherkin
 Scenario: Branch Admin accesses any lead within their branch scope
   Given Branch Admin "Mona Al-Said" is logged in

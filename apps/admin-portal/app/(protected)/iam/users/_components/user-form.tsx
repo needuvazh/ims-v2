@@ -3,14 +3,14 @@
 import { useActionState, useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserPlus, Save } from 'lucide-react';
+import { Alert, Button, Checkbox, Input, Select } from '@ims/shared-ui';
 import {
-  Alert,
-  Button,
-  Checkbox,
-  Input,
-  Select,
-} from '@ims/shared-ui';
-import { createUserAction, updateUserAction, checkEmailExistsAction, checkMobileExistsAction, type ActionResult } from '../actions';
+  createUserAction,
+  updateUserAction,
+  checkEmailExistsAction,
+  checkMobileExistsAction,
+  type ActionResult,
+} from '../actions';
 import { createUserFormSchema, updateUserFormSchema } from '../schema';
 
 type UserProfile = {
@@ -45,7 +45,12 @@ function toDateInputValue(value?: Date | null) {
   return new Date(value).toISOString().slice(0, 10);
 }
 
-export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormProps) {
+export function IamUserForm({
+  mode,
+  initialData,
+  roles,
+  branches,
+}: IamUserFormProps) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -54,32 +59,63 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
     if (!formRef.current) return true;
     const formData = new FormData(formRef.current);
 
-    const roleIds = formData.getAll('roleIds').map((value) => String(value)).filter((value) => value.trim() !== '');
-    const branchIds = formData.getAll('branchIds').map((value) => String(value)).filter((value) => value.trim() !== '');
+    const roleIds = formData
+      .getAll('roleIds')
+      .map((value) => String(value))
+      .filter((value) => value.trim() !== '');
+    const branchIds = formData
+      .getAll('branchIds')
+      .map((value) => String(value))
+      .filter((value) => value.trim() !== '');
 
     const payload: any = {
-      firstName: formData.get('firstName') ? String(formData.get('firstName')) : '',
-      lastName: formData.get('lastName') ? String(formData.get('lastName')) : '',
+      firstName: formData.get('firstName')
+        ? String(formData.get('firstName'))
+        : '',
+      lastName: formData.get('lastName')
+        ? String(formData.get('lastName'))
+        : '',
       mobile: formData.get('mobile') ? String(formData.get('mobile')) : '',
-      nationalId: formData.get('nationalId') ? String(formData.get('nationalId')) : null,
-      nationality: formData.get('nationality') ? String(formData.get('nationality')) : null,
-      dateOfBirth: formData.get('dateOfBirth') && String(formData.get('dateOfBirth')) !== '' ? String(formData.get('dateOfBirth')) : null,
+      nationalId: formData.get('nationalId')
+        ? String(formData.get('nationalId'))
+        : null,
+      nationality: formData.get('nationality')
+        ? String(formData.get('nationality'))
+        : null,
+      dateOfBirth:
+        formData.get('dateOfBirth') &&
+        String(formData.get('dateOfBirth')) !== ''
+          ? String(formData.get('dateOfBirth'))
+          : null,
       gender: formData.get('gender') ? String(formData.get('gender')) : null,
       status: String(formData.get('status') ?? 'PendingActivation'),
       roleIds,
       branchIds,
-      defaultBranchId: formData.get('defaultBranchId') ? String(formData.get('defaultBranchId')) : null,
-      effectiveStartDate: formData.get('effectiveStartDate') && String(formData.get('effectiveStartDate')) !== '' ? String(formData.get('effectiveStartDate')) : null,
-      effectiveEndDate: formData.get('effectiveEndDate') && String(formData.get('effectiveEndDate')) !== '' ? String(formData.get('effectiveEndDate')) : null,
+      defaultBranchId: formData.get('defaultBranchId')
+        ? String(formData.get('defaultBranchId'))
+        : null,
+      effectiveStartDate:
+        formData.get('effectiveStartDate') &&
+        String(formData.get('effectiveStartDate')) !== ''
+          ? String(formData.get('effectiveStartDate'))
+          : null,
+      effectiveEndDate:
+        formData.get('effectiveEndDate') &&
+        String(formData.get('effectiveEndDate')) !== ''
+          ? String(formData.get('effectiveEndDate'))
+          : null,
     };
 
     if (mode === 'create') {
-      payload.email = formData.get('email') ? String(formData.get('email')) : '';
+      payload.email = formData.get('email')
+        ? String(formData.get('email'))
+        : '';
     }
 
     console.log(`[validateField] validating field: ${name}`, { payload });
 
-    const schema = mode === 'edit' ? updateUserFormSchema : createUserFormSchema;
+    const schema =
+      mode === 'edit' ? updateUserFormSchema : createUserFormSchema;
     const validation = schema.safeParse(payload);
 
     // Clear error for this field first
@@ -90,9 +126,14 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
     });
 
     if (!validation.success) {
-      const issue = validation.error.issues.find((issue) => issue.path[0] === name);
+      const issue = validation.error.issues.find(
+        (issue) => issue.path[0] === name,
+      );
       if (issue) {
-        console.log(`[validateField] Zod validation issue found for ${name}:`, issue.message);
+        console.log(
+          `[validateField] Zod validation issue found for ${name}:`,
+          issue.message,
+        );
         setFieldErrors((prev) => ({
           ...prev,
           [name]: issue.message,
@@ -111,7 +152,8 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
         if (exists) {
           setFieldErrors((prev) => ({
             ...prev,
-            email: 'Email already exists. Please use a different email address.',
+            email:
+              'Email already exists. Please use a different email address.',
           }));
           return false;
         }
@@ -121,7 +163,8 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
     // Async check duplicate mobile
     if (name === 'mobile') {
       const mobileVal = payload.mobile.trim();
-      const isDifferent = mode === 'create' || mobileVal !== (initialData?.mobile ?? '');
+      const isDifferent =
+        mode === 'create' || mobileVal !== (initialData?.mobile ?? '');
       if (mobileVal && isDifferent) {
         console.log(`[validateField] checking duplicate mobile: ${mobileVal}`);
         const exists = await checkMobileExistsAction(mobileVal);
@@ -129,7 +172,8 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
         if (exists) {
           setFieldErrors((prev) => ({
             ...prev,
-            mobile: 'Mobile number already exists. Please use a different mobile number.',
+            mobile:
+              'Mobile number already exists. Please use a different mobile number.',
           }));
           return false;
         }
@@ -139,7 +183,9 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
     return true;
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const name = e.target.name;
     if (name) {
       validateField(name);
@@ -149,30 +195,61 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
       // 1. Client-side validation
-      const roleIds = formData.getAll('roleIds').map((value) => String(value)).filter((value) => value.trim() !== '');
-      const branchIds = formData.getAll('branchIds').map((value) => String(value)).filter((value) => value.trim() !== '');
-      
+      const roleIds = formData
+        .getAll('roleIds')
+        .map((value) => String(value))
+        .filter((value) => value.trim() !== '');
+      const branchIds = formData
+        .getAll('branchIds')
+        .map((value) => String(value))
+        .filter((value) => value.trim() !== '');
+
       const payload: any = {
-        firstName: formData.get('firstName') ? String(formData.get('firstName')) : '',
-        lastName: formData.get('lastName') ? String(formData.get('lastName')) : '',
+        firstName: formData.get('firstName')
+          ? String(formData.get('firstName'))
+          : '',
+        lastName: formData.get('lastName')
+          ? String(formData.get('lastName'))
+          : '',
         mobile: formData.get('mobile') ? String(formData.get('mobile')) : '',
-        nationalId: formData.get('nationalId') ? String(formData.get('nationalId')) : null,
-        nationality: formData.get('nationality') ? String(formData.get('nationality')) : null,
-        dateOfBirth: formData.get('dateOfBirth') && String(formData.get('dateOfBirth')) !== '' ? String(formData.get('dateOfBirth')) : null,
+        nationalId: formData.get('nationalId')
+          ? String(formData.get('nationalId'))
+          : null,
+        nationality: formData.get('nationality')
+          ? String(formData.get('nationality'))
+          : null,
+        dateOfBirth:
+          formData.get('dateOfBirth') &&
+          String(formData.get('dateOfBirth')) !== ''
+            ? String(formData.get('dateOfBirth'))
+            : null,
         gender: formData.get('gender') ? String(formData.get('gender')) : null,
         status: String(formData.get('status') ?? 'PendingActivation'),
         roleIds,
         branchIds,
-        defaultBranchId: formData.get('defaultBranchId') ? String(formData.get('defaultBranchId')) : null,
-        effectiveStartDate: formData.get('effectiveStartDate') && String(formData.get('effectiveStartDate')) !== '' ? String(formData.get('effectiveStartDate')) : null,
-        effectiveEndDate: formData.get('effectiveEndDate') && String(formData.get('effectiveEndDate')) !== '' ? String(formData.get('effectiveEndDate')) : null,
+        defaultBranchId: formData.get('defaultBranchId')
+          ? String(formData.get('defaultBranchId'))
+          : null,
+        effectiveStartDate:
+          formData.get('effectiveStartDate') &&
+          String(formData.get('effectiveStartDate')) !== ''
+            ? String(formData.get('effectiveStartDate'))
+            : null,
+        effectiveEndDate:
+          formData.get('effectiveEndDate') &&
+          String(formData.get('effectiveEndDate')) !== ''
+            ? String(formData.get('effectiveEndDate'))
+            : null,
       };
 
       if (mode === 'create') {
-        payload.email = formData.get('email') ? String(formData.get('email')) : '';
+        payload.email = formData.get('email')
+          ? String(formData.get('email'))
+          : '';
       }
 
-      const schema = mode === 'edit' ? updateUserFormSchema : createUserFormSchema;
+      const schema =
+        mode === 'edit' ? updateUserFormSchema : createUserFormSchema;
       const validation = schema.safeParse(payload);
       const errors: Record<string, string> = {};
 
@@ -193,18 +270,21 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
       if (mode === 'create' && payload.email && !errors.email) {
         const exists = await checkEmailExistsAction(payload.email.trim());
         if (exists) {
-          errors.email = 'Email already exists. Please use a different email address.';
+          errors.email =
+            'Email already exists. Please use a different email address.';
         }
       }
 
       // Check duplicate mobile
       if (payload.mobile && !errors.mobile) {
         const mobileVal = payload.mobile.trim();
-        const isDifferent = mode === 'create' || mobileVal !== (initialData?.mobile ?? '');
+        const isDifferent =
+          mode === 'create' || mobileVal !== (initialData?.mobile ?? '');
         if (isDifferent) {
           const exists = await checkMobileExistsAction(mobileVal);
           if (exists) {
-            errors.mobile = 'Mobile number already exists. Please use a different mobile number.';
+            errors.mobile =
+              'Mobile number already exists. Please use a different mobile number.';
           }
         }
       }
@@ -229,9 +309,10 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
       }
 
       // 2. Submit to server Action
-      const result = mode === 'edit' && initialData
-        ? await updateUserAction(initialData.id, prev, formData)
-        : await createUserAction(prev, formData);
+      const result =
+        mode === 'edit' && initialData
+          ? await updateUserAction(initialData.id, prev, formData)
+          : await createUserAction(prev, formData);
       if (result.success) {
         router.push('/iam/users');
       }
@@ -243,20 +324,30 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
   // State for selections
   const getInitialRoles = () => {
     if (state?.values?.roleIds !== undefined) {
-      return new Set(state.values.roleIds ? state.values.roleIds.split(',').filter(Boolean) : []);
+      return new Set(
+        state.values.roleIds
+          ? state.values.roleIds.split(',').filter(Boolean)
+          : [],
+      );
     }
     return new Set(initialData?.roleIds ?? []);
   };
 
   const getInitialBranches = () => {
     if (state?.values?.branchIds !== undefined) {
-      return new Set(state.values.branchIds ? state.values.branchIds.split(',').filter(Boolean) : []);
+      return new Set(
+        state.values.branchIds
+          ? state.values.branchIds.split(',').filter(Boolean)
+          : [],
+      );
     }
     return new Set(initialData?.branchIds ?? []);
   };
 
-  const [selectedRoleIds, setSelectedRoleIds] = useState<Set<string>>(getInitialRoles);
-  const [selectedBranchIds, setSelectedBranchIds] = useState<Set<string>>(getInitialBranches);
+  const [selectedRoleIds, setSelectedRoleIds] =
+    useState<Set<string>>(getInitialRoles);
+  const [selectedBranchIds, setSelectedBranchIds] =
+    useState<Set<string>>(getInitialBranches);
   const [defaultBranch, setDefaultBranch] = useState<string>(() => {
     if (state?.values?.defaultBranchId !== undefined) {
       return state.values.defaultBranchId;
@@ -266,12 +357,16 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
 
   useEffect(() => {
     if (state?.values) {
-      const rolesArr = state.values.roleIds ? state.values.roleIds.split(',').filter(Boolean) : [];
+      const rolesArr = state.values.roleIds
+        ? state.values.roleIds.split(',').filter(Boolean)
+        : [];
       setSelectedRoleIds(new Set(rolesArr));
-      
-      const branchesArr = state.values.branchIds ? state.values.branchIds.split(',').filter(Boolean) : [];
+
+      const branchesArr = state.values.branchIds
+        ? state.values.branchIds.split(',').filter(Boolean)
+        : [];
       setSelectedBranchIds(new Set(branchesArr));
-      
+
       setDefaultBranch(state.values.defaultBranchId ?? '');
     }
   }, [state?.values]);
@@ -289,72 +384,80 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
   return (
     <form ref={formRef} action={formAction} noValidate className="space-y-8">
       {state.error && <Alert variant="error" description={state.error} />}
-      
+
       {/* 1. Personal Information */}
       <div className="bg-[color:var(--ims-surface)] rounded-2xl border border-[color:var(--ims-border)] overflow-hidden shadow-sm">
         <div className="relative h-32 overflow-hidden bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900">
-          <img 
-            src="/images/personal_info_header.jpg" 
-            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay" 
-            alt="Personal Information Banner" 
+          <img
+            src="/images/personal_info_header.jpg"
+            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay"
+            alt="Personal Information Banner"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-955/80 via-slate-955/20 to-transparent flex items-end p-6">
             <div>
-              <h3 className="text-xl font-bold text-white tracking-wide">Personal Information</h3>
-              <p className="text-xs text-slate-200 opacity-90">Basic user profile details</p>
+              <h3 className="text-xl font-bold text-white tracking-wide">
+                Personal Information
+              </h3>
+              <p className="text-xs text-slate-200 opacity-90">
+                Basic user profile details
+              </p>
             </div>
           </div>
         </div>
         <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Input 
-            name="firstName" 
-            label="First Name" 
-            required 
+          <Input
+            name="firstName"
+            label="First Name"
+            required
             defaultValue={state.values?.firstName ?? initialData?.firstName}
             disabled={isView}
             errorText={fieldErrors.firstName}
             onBlur={handleBlur}
           />
-          <Input 
-            name="lastName" 
-            label="Last Name" 
-            required 
+          <Input
+            name="lastName"
+            label="Last Name"
+            required
             defaultValue={state.values?.lastName ?? initialData?.lastName}
             disabled={isView}
             errorText={fieldErrors.lastName}
             onBlur={handleBlur}
           />
-          <Input 
-            name="email" 
-            type="email" 
-            label="Email" 
-            required 
+          <Input
+            name="email"
+            type="email"
+            label="Email"
+            required
             defaultValue={state.values?.email ?? initialData?.email}
             disabled={isView || mode === 'edit'}
             errorText={fieldErrors.email}
             onBlur={handleBlur}
           />
-          <Input 
-            name="mobile" 
-            label="Mobile Number" 
+          <Input
+            name="mobile"
+            label="Mobile Number"
             required
             defaultValue={state.values?.mobile ?? initialData?.mobile ?? ''}
             disabled={isView}
             errorText={fieldErrors.mobile}
             onBlur={handleBlur}
           />
-          <Input 
-            name="nationalId" 
-            label="National ID" 
-            defaultValue={state.values?.nationalId ?? initialData?.nationalId ?? ''}
+          <Input
+            name="nationalId"
+            label="National ID"
+            defaultValue={
+              state.values?.nationalId ?? initialData?.nationalId ?? ''
+            }
             disabled={isView}
             errorText={fieldErrors.nationalId}
             onBlur={handleBlur}
           />
-          <Input 
-            name="nationality" 
-            label="Nationality" 
-            defaultValue={state.values?.nationality ?? initialData?.nationality ?? ''}
+          <Input
+            name="nationality"
+            label="Nationality"
+            defaultValue={
+              state.values?.nationality ?? initialData?.nationality ?? ''
+            }
             disabled={isView}
             errorText={fieldErrors.nationality}
             onBlur={handleBlur}
@@ -363,7 +466,11 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
             name="dateOfBirth"
             type="date"
             label="Date of Birth"
-            defaultValue={state.values?.dateOfBirth ? toDateInputValue(new Date(state.values.dateOfBirth)) : toDateInputValue(initialData?.dateOfBirth)}
+            defaultValue={
+              state.values?.dateOfBirth
+                ? toDateInputValue(new Date(state.values.dateOfBirth))
+                : toDateInputValue(initialData?.dateOfBirth)
+            }
             disabled={isView}
             errorText={fieldErrors.dateOfBirth}
             onBlur={handleBlur}
@@ -389,15 +496,19 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
       {/* 2. Account Settings */}
       <div className="bg-[color:var(--ims-surface)] rounded-2xl border border-[color:var(--ims-border)] overflow-hidden shadow-sm">
         <div className="relative h-32 overflow-hidden bg-gradient-to-r from-amber-800 via-orange-900 to-rose-955">
-          <img 
-            src="/images/account_settings_header.jpg" 
-            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay" 
-            alt="Account Settings Banner" 
+          <img
+            src="/images/account_settings_header.jpg"
+            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay"
+            alt="Account Settings Banner"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-955/80 via-slate-955/20 to-transparent flex items-end p-6">
             <div>
-              <h3 className="text-xl font-bold text-white tracking-wide">Account Settings</h3>
-              <p className="text-xs text-slate-200 opacity-90">Password and status configurations</p>
+              <h3 className="text-xl font-bold text-white tracking-wide">
+                Account Settings
+              </h3>
+              <p className="text-xs text-slate-200 opacity-90">
+                Password and status configurations
+              </p>
             </div>
           </div>
         </div>
@@ -406,7 +517,9 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
             name="status"
             label="Initial Status"
             placeholder="Select status"
-            defaultValue={state.values?.status ?? initialData?.status ?? 'PendingActivation'}
+            defaultValue={
+              state.values?.status ?? initialData?.status ?? 'PendingActivation'
+            }
             options={[
               { value: 'PendingActivation', label: 'Pending Activation' },
               { value: 'Active', label: 'Active' },
@@ -422,7 +535,11 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
             name="effectiveStartDate"
             type="date"
             label="Effective Start Date"
-            defaultValue={state.values?.effectiveStartDate ? toDateInputValue(new Date(state.values.effectiveStartDate)) : toDateInputValue(initialData?.effectiveStartDate)}
+            defaultValue={
+              state.values?.effectiveStartDate
+                ? toDateInputValue(new Date(state.values.effectiveStartDate))
+                : toDateInputValue(initialData?.effectiveStartDate)
+            }
             disabled={isView}
             errorText={fieldErrors.effectiveStartDate}
             onBlur={handleBlur}
@@ -431,7 +548,11 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
             name="effectiveEndDate"
             type="date"
             label="Effective End Date"
-            defaultValue={state.values?.effectiveEndDate ? toDateInputValue(new Date(state.values.effectiveEndDate)) : toDateInputValue(initialData?.effectiveEndDate ?? null)}
+            defaultValue={
+              state.values?.effectiveEndDate
+                ? toDateInputValue(new Date(state.values.effectiveEndDate))
+                : toDateInputValue(initialData?.effectiveEndDate ?? null)
+            }
             disabled={isView}
             errorText={fieldErrors.effectiveEndDate}
             onBlur={handleBlur}
@@ -442,23 +563,34 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
       {/* 3. Role Assignment */}
       <div className="bg-[color:var(--ims-surface)] rounded-2xl border border-[color:var(--ims-border)] overflow-hidden shadow-sm">
         <div className="relative h-32 overflow-hidden bg-gradient-to-r from-emerald-900 via-teal-900 to-cyan-955">
-          <img 
-            src="/images/role_assignment_header.jpg" 
-            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay" 
-            alt="Role Assignment Banner" 
+          <img
+            src="/images/role_assignment_header.jpg"
+            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay"
+            alt="Role Assignment Banner"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-955/80 via-slate-955/20 to-transparent flex items-end p-6">
             <div>
-              <h3 className="text-xl font-bold text-white tracking-wide">Role Assignment</h3>
-              <p className="text-xs text-slate-200 opacity-90">Configure security roles and policies</p>
+              <h3 className="text-xl font-bold text-white tracking-wide">
+                Role Assignment
+              </h3>
+              <p className="text-xs text-slate-200 opacity-90">
+                Configure security roles and policies
+              </p>
             </div>
           </div>
         </div>
         <div className="p-6 space-y-4">
-          {fieldErrors.roleIds && <p className="text-sm text-red-500 font-medium">{fieldErrors.roleIds}</p>}
+          {fieldErrors.roleIds && (
+            <p className="text-sm text-red-500 font-medium">
+              {fieldErrors.roleIds}
+            </p>
+          )}
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {roles.map((role) => (
-              <label key={role.id} className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 cursor-pointer hover:bg-[color:var(--ims-border)]/20 transition-colors">
+              <label
+                key={role.id}
+                className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 cursor-pointer hover:bg-[color:var(--ims-border)]/20 transition-colors"
+              >
                 <Checkbox
                   name="roleIds"
                   value={role.id}
@@ -473,7 +605,9 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
                   }}
                   className="mt-1"
                 />
-                <span className="text-sm font-medium text-[color:var(--ims-ink)]">{role.roleName}</span>
+                <span className="text-sm font-medium text-[color:var(--ims-ink)]">
+                  {role.roleName}
+                </span>
               </label>
             ))}
           </div>
@@ -483,23 +617,34 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
       {/* 4. Branch Scope */}
       <div className="bg-[color:var(--ims-surface)] rounded-2xl border border-[color:var(--ims-border)] overflow-hidden shadow-sm">
         <div className="relative h-32 overflow-hidden bg-gradient-to-r from-rose-900 via-pink-900 to-purple-955">
-          <img 
-            src="/images/branch_scope_header.jpg" 
-            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay" 
-            alt="Branch Scope Banner" 
+          <img
+            src="/images/branch_scope_header.jpg"
+            className="w-full h-full object-cover opacity-70 absolute inset-0 mix-blend-overlay"
+            alt="Branch Scope Banner"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-955/80 via-slate-955/20 to-transparent flex items-end p-6">
             <div>
-              <h3 className="text-xl font-bold text-white tracking-wide">Branch Scope</h3>
-              <p className="text-xs text-slate-200 opacity-90">Define access boundaries and default locations</p>
+              <h3 className="text-xl font-bold text-white tracking-wide">
+                Branch Scope
+              </h3>
+              <p className="text-xs text-slate-200 opacity-90">
+                Define access boundaries and default locations
+              </p>
             </div>
           </div>
         </div>
         <div className="p-6 space-y-4">
-          {fieldErrors.branchIds && <p className="text-sm text-red-500 font-medium">{fieldErrors.branchIds}</p>}
+          {fieldErrors.branchIds && (
+            <p className="text-sm text-red-500 font-medium">
+              {fieldErrors.branchIds}
+            </p>
+          )}
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {branches.map((branch) => (
-              <label key={branch.id} className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 cursor-pointer hover:bg-[color:var(--ims-border)]/20 transition-colors">
+              <label
+                key={branch.id}
+                className="flex items-start gap-3 rounded-xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 cursor-pointer hover:bg-[color:var(--ims-border)]/20 transition-colors"
+              >
                 <Checkbox
                   name="branchIds"
                   value={branch.id}
@@ -520,7 +665,9 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
                   }}
                   className="mt-1"
                 />
-                <span className="text-sm font-medium text-[color:var(--ims-ink)]">{branch.branchName}</span>
+                <span className="text-sm font-medium text-[color:var(--ims-ink)]">
+                  {branch.branchName}
+                </span>
               </label>
             ))}
           </div>
@@ -550,14 +697,22 @@ export function IamUserForm({ mode, initialData, roles, branches }: IamUserFormP
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-6 border-t border-[color:var(--ims-border)]/50">
-          <Button type="button" variant="secondary" onClick={() => router.push('/iam/users')}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => router.push('/iam/users')}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={isPending}>
             {mode === 'create' ? (
-              <><UserPlus className="h-4 w-4 mr-2" /> Create User</>
+              <>
+                <UserPlus className="h-4 w-4 mr-2" /> Create User
+              </>
             ) : (
-              <><Save className="h-4 w-4 mr-2" /> Save Changes</>
+              <>
+                <Save className="h-4 w-4 mr-2" /> Save Changes
+              </>
             )}
           </Button>
         </div>

@@ -18,31 +18,52 @@ describe('Batch Waitlist Integration Tests', () => {
   const actorId = createUuid('ebf48e69-a033-4985-aac6-e3c467b89c78');
 
   const dummySchedulingService = {
-    getSessionsForTrainer: async () => []
+    getSessionsForTrainer: async () => [],
   };
 
   beforeAll(async () => {
     batchRepository = new BatchRepository(prisma);
-    batchService = new BatchService(prisma, batchRepository, dummySchedulingService as any);
+    batchService = new BatchService(
+      prisma,
+      batchRepository,
+      dummySchedulingService as any,
+    );
 
     // Find/create branch
     let branch = await prisma.branch.findFirst({ where: { isDeleted: false } });
     if (!branch) {
       const instId = createUuid(randomUUID());
       await prisma.institute.create({
-        data: { id: instId, instituteCode: 'TINST', instituteName: 'Test Inst' }
+        data: {
+          id: instId,
+          instituteCode: 'TINST',
+          instituteName: 'Test Inst',
+        },
       });
       branch = await prisma.branch.create({
-        data: { id: createUuid(randomUUID()), instituteId: instId, branchCode: 'TBR', branchName: 'Test Branch', status: 'Active' }
+        data: {
+          id: createUuid(randomUUID()),
+          instituteId: instId,
+          branchCode: 'TBR',
+          branchName: 'Test Branch',
+          status: 'Active',
+        },
       });
     }
     branchId = branch.id;
 
     // Find/create published course
-    let course = await prisma.course.findFirst({ where: { status: 'Published', isDeleted: false } });
+    let course = await prisma.course.findFirst({
+      where: { status: 'Published', isDeleted: false },
+    });
     if (!course) {
       const category = await prisma.courseCategory.create({
-        data: { id: createUuid(randomUUID()), code: 'TCAT', nameEnglish: 'Test Category', nameArabic: 'فئة' }
+        data: {
+          id: createUuid(randomUUID()),
+          code: 'TCAT',
+          nameEnglish: 'Test Category',
+          nameArabic: 'فئة',
+        },
       });
       course = await prisma.course.create({
         data: {
@@ -55,13 +76,21 @@ describe('Batch Waitlist Integration Tests', () => {
           durationType: 'Weeks',
           durationValue: 4,
           effectiveStartDate: new Date(),
-        }
+        },
       });
       await prisma.coursePricing.create({
-        data: { id: createUuid(randomUUID()), courseId: course.id, status: 'Active' }
+        data: {
+          id: createUuid(randomUUID()),
+          courseId: course.id,
+          status: 'Active',
+        },
       });
       await prisma.courseCompletionRule.create({
-        data: { id: createUuid(randomUUID()), courseId: course.id, status: 'Active' }
+        data: {
+          id: createUuid(randomUUID()),
+          courseId: course.id,
+          status: 'Active',
+        },
       });
     }
     courseId = course.id;
@@ -73,9 +102,19 @@ describe('Batch Waitlist Integration Tests', () => {
 
     await prisma.person.createMany({
       data: [
-        { id: p1, firstName: 'WStudent', lastName: 'One', mobile: `+96650${Math.floor(1000000 + Math.random() * 9000000)}` },
-        { id: p2, firstName: 'WStudent', lastName: 'Two', mobile: `+96650${Math.floor(1000000 + Math.random() * 9000000)}` }
-      ]
+        {
+          id: p1,
+          firstName: 'WStudent',
+          lastName: 'One',
+          mobile: `+96650${Math.floor(1000000 + Math.random() * 9000000)}`,
+        },
+        {
+          id: p2,
+          firstName: 'WStudent',
+          lastName: 'Two',
+          mobile: `+96650${Math.floor(1000000 + Math.random() * 9000000)}`,
+        },
+      ],
     });
 
     studentProfileId1 = randomUUID();
@@ -83,16 +122,31 @@ describe('Batch Waitlist Integration Tests', () => {
 
     await prisma.studentProfile.createMany({
       data: [
-        { id: studentProfileId1, personId: p1, studentNumber: `S-WL-${Math.floor(1000 + Math.random() * 9000)}`, status: 'Active' },
-        { id: studentProfileId2, personId: p2, studentNumber: `S-WL-${Math.floor(1000 + Math.random() * 9000)}`, status: 'Active' }
-      ]
+        {
+          id: studentProfileId1,
+          personId: p1,
+          studentNumber: `S-WL-${Math.floor(1000 + Math.random() * 9000)}`,
+          status: 'Active',
+        },
+        {
+          id: studentProfileId2,
+          personId: p2,
+          studentNumber: `S-WL-${Math.floor(1000 + Math.random() * 9000)}`,
+          status: 'Active',
+        },
+      ],
     });
 
     // Create lead
     const p3 = randomUUID();
     personIds.push(p3);
     await prisma.person.create({
-      data: { id: p3, firstName: 'WLead', lastName: 'One', mobile: `+96650${Math.floor(1000000 + Math.random() * 9000000)}` }
+      data: {
+        id: p3,
+        firstName: 'WLead',
+        lastName: 'One',
+        mobile: `+96650${Math.floor(1000000 + Math.random() * 9000000)}`,
+      },
     });
 
     leadId = randomUUID();
@@ -107,7 +161,7 @@ describe('Batch Waitlist Integration Tests', () => {
         person: { connect: { id: p3 } },
         branch: { connect: { id: branchId } },
         interestedCourse: { connect: { id: courseId } },
-      }
+      },
     });
 
     // Create test user and branch access for actorId to satisfy branch scoping check
@@ -125,16 +179,16 @@ describe('Batch Waitlist Integration Tests', () => {
             firstName: 'Test',
             lastName: 'Actor',
             mobile: `+96650${Math.floor(1000000 + Math.random() * 9000000)}`,
-          }
+          },
         },
         branchAccess: {
           create: {
             id: randomUUID(),
             branchId: branchId,
             status: 'Active',
-          }
-        }
-      }
+          },
+        },
+      },
     });
   });
 
@@ -142,7 +196,9 @@ describe('Batch Waitlist Integration Tests', () => {
     // Cleanup profiles
     await prisma.userBranchAccess.deleteMany({ where: { userId: actorId } });
     await prisma.user.deleteMany({ where: { id: actorId } });
-    await prisma.studentProfile.deleteMany({ where: { id: { in: [studentProfileId1, studentProfileId2] } } });
+    await prisma.studentProfile.deleteMany({
+      where: { id: { in: [studentProfileId1, studentProfileId2] } },
+    });
     await prisma.lead.deleteMany({ where: { id: leadId } });
     await prisma.person.deleteMany({ where: { id: { in: personIds } } });
   });
@@ -163,12 +219,20 @@ describe('Batch Waitlist Integration Tests', () => {
         currentEnrollmentCount: 1,
         waitingListEnabled: true,
         status: 'OpenForEnrollment',
-      }
+      },
     });
 
     // Enqueue candidate 1 & 2
-    const wl1 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId1, actorId });
-    const wl2 = await batchService.enqueueWaitlist({ batchId: batch.id, leadId, actorId });
+    const wl1 = await batchService.enqueueWaitlist({
+      batchId: batch.id,
+      studentProfileId: studentProfileId1,
+      actorId,
+    });
+    const wl2 = await batchService.enqueueWaitlist({
+      batchId: batch.id,
+      leadId,
+      actorId,
+    });
 
     expect(wl1.queuePosition).toBe(1);
     expect(wl2.queuePosition).toBe(2);
@@ -177,8 +241,12 @@ describe('Batch Waitlist Integration Tests', () => {
     await batchService.releaseSeatAndPromote(batch.id, actorId);
 
     // Candidate 1 should be promoted, Candidate 2 shifts to #1
-    const wl1Updated = await prisma.waitingList.findUnique({ where: { id: wl1.id } });
-    const wl2Updated = await prisma.waitingList.findUnique({ where: { id: wl2.id } });
+    const wl1Updated = await prisma.waitingList.findUnique({
+      where: { id: wl1.id },
+    });
+    const wl2Updated = await prisma.waitingList.findUnique({
+      where: { id: wl2.id },
+    });
 
     expect(wl1Updated?.status).toBe('Promoted');
     expect(wl2Updated?.status).toBe('Waiting');
@@ -205,30 +273,49 @@ describe('Batch Waitlist Integration Tests', () => {
         currentEnrollmentCount: 1,
         waitingListEnabled: true,
         status: 'OpenForEnrollment',
-      }
+      },
     });
 
     // Add student1 & student2 to waitlist
-    const wl1 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId1, actorId });
-    const wl2 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId2, actorId });
+    const wl1 = await batchService.enqueueWaitlist({
+      batchId: batch.id,
+      studentProfileId: studentProfileId1,
+      actorId,
+    });
+    const wl2 = await batchService.enqueueWaitlist({
+      batchId: batch.id,
+      studentProfileId: studentProfileId2,
+      actorId,
+    });
 
     // Manually simulate student1 promoted
     const correlationId = randomUUID();
     await prisma.waitingList.update({
       where: { id: wl1.id },
-      data: { status: 'Promoted', promotionCorrelationId: correlationId }
+      data: { status: 'Promoted', promotionCorrelationId: correlationId },
     });
     await prisma.batch.update({
       where: { id: batch.id },
-      data: { currentEnrollmentCount: 2 }
+      data: { currentEnrollmentCount: 2 },
     });
 
     // Revert promotion of student 1 due to validation error
-    await batchService.revertPromotion(batch.id, studentProfileId1, null, correlationId, 'Verification Failed', actorId);
+    await batchService.revertPromotion(
+      batch.id,
+      studentProfileId1,
+      null,
+      correlationId,
+      'Verification Failed',
+      actorId,
+    );
 
     // student 1 should be Held, student 2 should be automatically Promoted
-    const wl1Updated = await prisma.waitingList.findUnique({ where: { id: wl1.id } });
-    const wl2Updated = await prisma.waitingList.findUnique({ where: { id: wl2.id } });
+    const wl1Updated = await prisma.waitingList.findUnique({
+      where: { id: wl1.id },
+    });
+    const wl2Updated = await prisma.waitingList.findUnique({
+      where: { id: wl2.id },
+    });
 
     expect(wl1Updated?.status).toBe('Held');
     expect(wl1Updated?.statusReason).toBe('Verification Failed');
@@ -255,20 +342,34 @@ describe('Batch Waitlist Integration Tests', () => {
         currentEnrollmentCount: 1,
         waitingListEnabled: true,
         status: 'OpenForEnrollment',
-      }
+      },
     });
 
     // Enqueue candidate 1 & 2
-    const wl1 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId1, actorId });
-    const wl2 = await batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: studentProfileId2, actorId });
+    const wl1 = await batchService.enqueueWaitlist({
+      batchId: batch.id,
+      studentProfileId: studentProfileId1,
+      actorId,
+    });
+    const wl2 = await batchService.enqueueWaitlist({
+      batchId: batch.id,
+      studentProfileId: studentProfileId2,
+      actorId,
+    });
 
     // Increase capacity bounds from 1 to 3
     await batchService.updateBatch(batch.id, { capacity: 3 }, 1, actorId);
 
     // Both candidates should be promoted automatically
-    const wl1Updated = await prisma.waitingList.findUnique({ where: { id: wl1.id } });
-    const wl2Updated = await prisma.waitingList.findUnique({ where: { id: wl2.id } });
-    const batchUpdated = await prisma.batch.findUnique({ where: { id: batch.id } });
+    const wl1Updated = await prisma.waitingList.findUnique({
+      where: { id: wl1.id },
+    });
+    const wl2Updated = await prisma.waitingList.findUnique({
+      where: { id: wl2.id },
+    });
+    const batchUpdated = await prisma.batch.findUnique({
+      where: { id: batch.id },
+    });
 
     expect(wl1Updated?.status).toBe('Promoted');
     expect(wl2Updated?.status).toBe('Promoted');
@@ -295,7 +396,7 @@ describe('Batch Waitlist Integration Tests', () => {
         currentEnrollmentCount: 1,
         waitingListEnabled: true,
         status: 'OpenForEnrollment',
-      }
+      },
     });
 
     // Trigger parallel waitlist enqueues
@@ -309,28 +410,44 @@ describe('Batch Waitlist Integration Tests', () => {
       tempPersons.push(pId);
       tempStudents.push(sId);
       await prisma.person.create({
-        data: { id: pId, firstName: `ConStudent-${i}`, lastName: 'Test', mobile: `+96653${Math.floor(1000000 + Math.random() * 9000000)}` }
+        data: {
+          id: pId,
+          firstName: `ConStudent-${i}`,
+          lastName: 'Test',
+          mobile: `+96653${Math.floor(1000000 + Math.random() * 9000000)}`,
+        },
       });
       await prisma.studentProfile.create({
-        data: { id: sId, personId: pId, studentNumber: `S-CON-${i}-${Math.floor(1000 + Math.random() * 9000)}`, status: 'Active' }
+        data: {
+          id: sId,
+          personId: pId,
+          studentNumber: `S-CON-${i}-${Math.floor(1000 + Math.random() * 9000)}`,
+          status: 'Active',
+        },
       });
     }
 
     // Run parallel enqueues!
     const promises = tempStudents.map((sId) => {
-      return batchService.enqueueWaitlist({ batchId: batch.id, studentProfileId: sId, actorId });
+      return batchService.enqueueWaitlist({
+        batchId: batch.id,
+        studentProfileId: sId,
+        actorId,
+      });
     });
 
     const results = await Promise.all(promises);
 
     // Verify queue positions are sequential (1, 2, 3, 4) with no duplicates or gaps
-    const positions = results.map(r => r.queuePosition).sort((a, b) => a - b);
+    const positions = results.map((r) => r.queuePosition).sort((a, b) => a - b);
     expect(positions).toEqual([1, 2, 3, 4]);
 
     // Cleanup
     await prisma.waitingList.deleteMany({ where: { batchId: batch.id } });
     await prisma.batch.delete({ where: { id: batch.id } });
-    await prisma.studentProfile.deleteMany({ where: { id: { in: tempStudents } } });
+    await prisma.studentProfile.deleteMany({
+      where: { id: { in: tempStudents } },
+    });
     await prisma.person.deleteMany({ where: { id: { in: tempPersons } } });
   });
 });

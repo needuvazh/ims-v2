@@ -1,1 +1,111 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md", "label": "design.md", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L1"}, {"id": "student_profile_lookup_design_context", "label": "Context", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L1"}, {"id": "student_profile_lookup_design_technical_approach", "label": "Technical Approach", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L9"}, {"id": "student_profile_lookup_design_1_person_lookup_global_deduplication_check", "label": "1. `person-lookup` (Global Deduplication Check)", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L11"}, {"id": "student_profile_lookup_design_2_student_profile_lookup_branch_directory_search", "label": "2. `student-profile-lookup` (Branch Directory Search)", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L22"}, {"id": "student_profile_lookup_design_3_api_boundary_enforcement_refactoring", "label": "3. API Boundary Enforcement & Refactoring", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L27"}, {"id": "student_profile_lookup_design_permission_matrix_api_contract_integration", "label": "Permission Matrix & API Contract Integration", "file_type": "document", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L41"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md", "target": "student_profile_lookup_design_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md", "target": "student_profile_lookup_design_technical_approach", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L9", "weight": 1.0}, {"source": "student_profile_lookup_design_technical_approach", "target": "student_profile_lookup_design_1_person_lookup_global_deduplication_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L11", "weight": 1.0}, {"source": "student_profile_lookup_design_technical_approach", "target": "student_profile_lookup_design_2_student_profile_lookup_branch_directory_search", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L22", "weight": 1.0}, {"source": "student_profile_lookup_design_technical_approach", "target": "student_profile_lookup_design_3_api_boundary_enforcement_refactoring", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L27", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md", "target": "student_profile_lookup_design_permission_matrix_api_contract_integration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/student-profile-lookup/design.md", "source_location": "L41", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md",
+      "label": "design.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_profile_lookup_design_context",
+      "label": "Context",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_profile_lookup_design_technical_approach",
+      "label": "Technical Approach",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "student_profile_lookup_design_1_person_lookup_global_deduplication_check",
+      "label": "1. `person-lookup` (Global Deduplication Check)",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "student_profile_lookup_design_2_student_profile_lookup_branch_directory_search",
+      "label": "2. `student-profile-lookup` (Branch Directory Search)",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "student_profile_lookup_design_3_api_boundary_enforcement_refactoring",
+      "label": "3. API Boundary Enforcement & Refactoring",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "student_profile_lookup_design_permission_matrix_api_contract_integration",
+      "label": "Permission Matrix & API Contract Integration",
+      "file_type": "document",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L41"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md",
+      "target": "student_profile_lookup_design_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md",
+      "target": "student_profile_lookup_design_technical_approach",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_design_technical_approach",
+      "target": "student_profile_lookup_design_1_person_lookup_global_deduplication_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_design_technical_approach",
+      "target": "student_profile_lookup_design_2_student_profile_lookup_branch_directory_search",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "student_profile_lookup_design_technical_approach",
+      "target": "student_profile_lookup_design_3_api_boundary_enforcement_refactoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_student_profile_lookup_design_md",
+      "target": "student_profile_lookup_design_permission_matrix_api_contract_integration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/student-profile-lookup/design.md",
+      "source_location": "L41",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

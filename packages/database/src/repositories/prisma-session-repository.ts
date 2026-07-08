@@ -86,10 +86,7 @@ export class PrismaSessionRepository implements ISessionRepository {
   async findByHashedRefreshToken(hash: string): Promise<UserSessionDto | null> {
     const row = await this.prisma.userSession.findFirst({
       where: {
-        OR: [
-          { tokenHash: hash },
-          { previousTokenHash: hash },
-        ],
+        OR: [{ tokenHash: hash }, { previousTokenHash: hash }],
       } as any,
     });
     return row ? this.mapSession(row) : null;

@@ -9,34 +9,43 @@
  * - Request cancellation
  */
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { useState, useRef, useEffect } from 'react'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useState, useRef, useEffect } from 'react';
 
 /**
  * Pattern 1: Async Validation in Zod Schema
  */
-const usernameSchema = z.string()
+const usernameSchema = z
+  .string()
   .min(3, 'Username must be at least 3 characters')
   .max(20, 'Username must not exceed 20 characters')
-  .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores')
-  .refine(async (username) => {
-    // Check if username is available via API
-    const response = await fetch(`/api/check-username?username=${encodeURIComponent(username)}`)
-    const { available } = await response.json()
-    return available
-  }, {
-    message: 'Username is already taken',
-  })
+  .regex(
+    /^[a-zA-Z0-9_]+$/,
+    'Username can only contain letters, numbers, and underscores',
+  )
+  .refine(
+    async (username) => {
+      // Check if username is available via API
+      const response = await fetch(
+        `/api/check-username?username=${encodeURIComponent(username)}`,
+      );
+      const { available } = await response.json();
+      return available;
+    },
+    {
+      message: 'Username is already taken',
+    },
+  );
 
 const signupSchemaWithAsync = z.object({
   username: usernameSchema,
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
-})
+});
 
-type SignupFormData = z.infer<typeof signupSchemaWithAsync>
+type SignupFormData = z.infer<typeof signupSchemaWithAsync>;
 
 export function AsyncValidationForm() {
   const {
@@ -51,14 +60,17 @@ export function AsyncValidationForm() {
       email: '',
       password: '',
     },
-  })
+  });
 
   const onSubmit = async (data: SignupFormData) => {
-    console.log('Form data:', data)
-  }
+    console.log('Form data:', data);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 max-w-md mx-auto"
+    >
       <h2 className="text-2xl font-bold">Sign Up</h2>
 
       <div>
@@ -124,7 +136,7 @@ export function AsyncValidationForm() {
         {isSubmitting ? 'Signing up...' : 'Sign Up'}
       </button>
     </form>
-  )
+  );
 }
 
 /**
@@ -132,14 +144,18 @@ export function AsyncValidationForm() {
  * Better performance - more control over when validation happens
  */
 const manualValidationSchema = z.object({
-  username: z.string()
+  username: z
+    .string()
     .min(3, 'Username must be at least 3 characters')
     .max(20, 'Username must not exceed 20 characters')
-    .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'Username can only contain letters, numbers, and underscores',
+    ),
   email: z.string().email('Invalid email address'),
-})
+});
 
-type ManualValidationData = z.infer<typeof manualValidationSchema>
+type ManualValidationData = z.infer<typeof manualValidationSchema>;
 
 export function DebouncedAsyncValidationForm() {
   const {
@@ -155,126 +171,129 @@ export function DebouncedAsyncValidationForm() {
       username: '',
       email: '',
     },
-  })
+  });
 
-  const [isCheckingUsername, setIsCheckingUsername] = useState(false)
-  const [isCheckingEmail, setIsCheckingEmail] = useState(false)
-  const abortControllerRef = useRef<AbortController | null>(null)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+  const [isCheckingEmail, setIsCheckingEmail] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const username = watch('username')
-  const email = watch('email')
+  const username = watch('username');
+  const email = watch('email');
 
   // Debounced username validation
   useEffect(() => {
     // Clear previous timeout
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+      clearTimeout(timeoutRef.current);
     }
 
     // Skip if username is too short (already handled by Zod)
     if (!username || username.length < 3) {
-      setIsCheckingUsername(false)
-      return
+      setIsCheckingUsername(false);
+      return;
     }
 
     // Debounce: wait 500ms after user stops typing
     timeoutRef.current = setTimeout(async () => {
       // Cancel previous request
       if (abortControllerRef.current) {
-        abortControllerRef.current.abort()
+        abortControllerRef.current.abort();
       }
 
       // Create new abort controller
-      abortControllerRef.current = new AbortController()
+      abortControllerRef.current = new AbortController();
 
-      setIsCheckingUsername(true)
-      clearErrors('username')
+      setIsCheckingUsername(true);
+      clearErrors('username');
 
       try {
         const response = await fetch(
           `/api/check-username?username=${encodeURIComponent(username)}`,
-          { signal: abortControllerRef.current.signal }
-        )
+          { signal: abortControllerRef.current.signal },
+        );
 
-        const { available } = await response.json()
+        const { available } = await response.json();
 
         if (!available) {
           setError('username', {
             type: 'async',
             message: 'Username is already taken',
-          })
+          });
         }
       } catch (error: any) {
         if (error.name !== 'AbortError') {
-          console.error('Username check error:', error)
+          console.error('Username check error:', error);
         }
       } finally {
-        setIsCheckingUsername(false)
+        setIsCheckingUsername(false);
       }
-    }, 500) // 500ms debounce
+    }, 500); // 500ms debounce
 
     return () => {
       if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+        clearTimeout(timeoutRef.current);
       }
-    }
-  }, [username, setError, clearErrors])
+    };
+  }, [username, setError, clearErrors]);
 
   // Debounced email validation
   useEffect(() => {
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+      clearTimeout(timeoutRef.current);
     }
 
     // Basic email validation first (handled by Zod)
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setIsCheckingEmail(false)
-      return
+      setIsCheckingEmail(false);
+      return;
     }
 
     timeoutRef.current = setTimeout(async () => {
-      setIsCheckingEmail(true)
-      clearErrors('email')
+      setIsCheckingEmail(true);
+      clearErrors('email');
 
       try {
         const response = await fetch(
-          `/api/check-email?email=${encodeURIComponent(email)}`
-        )
+          `/api/check-email?email=${encodeURIComponent(email)}`,
+        );
 
-        const { available } = await response.json()
+        const { available } = await response.json();
 
         if (!available) {
           setError('email', {
             type: 'async',
             message: 'Email is already registered',
-          })
+          });
         }
       } catch (error) {
-        console.error('Email check error:', error)
+        console.error('Email check error:', error);
       } finally {
-        setIsCheckingEmail(false)
+        setIsCheckingEmail(false);
       }
-    }, 500)
+    }, 500);
 
     return () => {
       if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+        clearTimeout(timeoutRef.current);
       }
-    }
-  }, [email, setError, clearErrors])
+    };
+  }, [email, setError, clearErrors]);
 
   const onSubmit = async (data: ManualValidationData) => {
     // Final check before submission
     if (isCheckingUsername || isCheckingEmail) {
-      return
+      return;
     }
 
-    console.log('Form data:', data)
-  }
+    console.log('Form data:', data);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 max-w-md mx-auto"
+    >
       <h2 className="text-2xl font-bold">Create Account</h2>
 
       <div>
@@ -380,23 +399,25 @@ export function DebouncedAsyncValidationForm() {
         {isSubmitting ? 'Creating account...' : 'Create Account'}
       </button>
     </form>
-  )
+  );
 }
 
 /**
  * Mock API endpoints for testing
  */
-export async function checkUsernameAvailability(username: string): Promise<boolean> {
+export async function checkUsernameAvailability(
+  username: string,
+): Promise<boolean> {
   // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   // Mock: usernames starting with 'test' are taken
-  return !username.toLowerCase().startsWith('test')
+  return !username.toLowerCase().startsWith('test');
 }
 
 export async function checkEmailAvailability(email: string): Promise<boolean> {
-  await new Promise(resolve => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   // Mock: emails with 'test' are taken
-  return !email.toLowerCase().includes('test')
+  return !email.toLowerCase().includes('test');
 }

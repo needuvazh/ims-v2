@@ -1,7 +1,12 @@
 import { prisma } from '@ims/database';
 import { assertPermission } from '@/lib/auth-guard';
 import { ResultsClientList } from './_components/results-client-list';
-import { AdminListPageLayout, PageHeader, LinkButton, Breadcrumbs } from '@ims/shared-ui';
+import {
+  AdminListPageLayout,
+  PageHeader,
+  LinkButton,
+  Breadcrumbs,
+} from '@ims/shared-ui';
 import Link from 'next/link';
 import { Home, Layers, Calendar, ClipboardList } from 'lucide-react';
 
@@ -12,7 +17,8 @@ export default async function ResultsPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const session = await assertPermission('result.view');
-  const isSuperAdmin = session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+  const isSuperAdmin =
+    session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
 
   const { examId, status, page: pageStr } = searchParams;
   const page = pageStr ? parseInt(pageStr, 10) : 1;
@@ -91,11 +97,22 @@ export default async function ResultsPage(props: {
       prisma.result.findMany({
         where,
         include: {
-          exam: { select: { examName: true, maxMarks: true, passMarks: true, status: true } },
+          exam: {
+            select: {
+              examName: true,
+              maxMarks: true,
+              passMarks: true,
+              status: true,
+            },
+          },
           enrollment: {
             select: {
               enrollmentNumber: true,
-              studentProfile: { select: { person: { select: { firstName: true, lastName: true } } } },
+              studentProfile: {
+                select: {
+                  person: { select: { firstName: true, lastName: true } },
+                },
+              },
             },
           },
         },
@@ -131,28 +148,52 @@ export default async function ResultsPage(props: {
     <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
         eyebrow="Evaluation & Training"
-        title={examDetails ? `Results: ${examDetails.examName}` : 'Exam Results'}
+        title={
+          examDetails ? `Results: ${examDetails.examName}` : 'Exam Results'
+        }
         description={
           examDetails
             ? `${examDetails.course.nameEnglish} • ${examDetails.batch.batchNameEnglish}`
             : 'Record and validate exam marks rosters across branch cohorts.'
         }
-        backUrl={examDetails ? `/exam-completion/exams/${examDetails.id}` : undefined}
+        backUrl={
+          examDetails ? `/exam-completion/exams/${examDetails.id}` : undefined
+        }
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5" /> },
-              { label: 'Exams', href: '/exam-completion/exams', icon: <Layers className="h-3.5 w-3.5" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5" />,
+              },
+              {
+                label: 'Exams',
+                href: '/exam-completion/exams',
+                icon: <Layers className="h-3.5 w-3.5" />,
+              },
               ...(examDetails
-                ? [{ label: examDetails.examName, href: `/exam-completion/exams/${examDetails.id}`, icon: <Calendar className="h-3.5 w-3.5" /> }]
+                ? [
+                    {
+                      label: examDetails.examName,
+                      href: `/exam-completion/exams/${examDetails.id}`,
+                      icon: <Calendar className="h-3.5 w-3.5" />,
+                    },
+                  ]
                 : []),
-              { label: 'Results', icon: <ClipboardList className="h-3.5 w-3.5" /> },
+              {
+                label: 'Results',
+                icon: <ClipboardList className="h-3.5 w-3.5" />,
+              },
             ]}
           />
         }
         actions={
           examDetails && (
-            <LinkButton href={`/exam-completion/exams/${examDetails.id}`} variant="outline">
+            <LinkButton
+              href={`/exam-completion/exams/${examDetails.id}`}
+              variant="outline"
+            >
               Back to Exam
             </LinkButton>
           )

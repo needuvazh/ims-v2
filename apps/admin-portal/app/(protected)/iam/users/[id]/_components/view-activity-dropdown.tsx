@@ -48,7 +48,9 @@ export function ViewActivityDropdown() {
     >
       <Button variant="secondary" onClick={() => setIsOpen(!isOpen)}>
         <span>View Activity</span>
-        <ChevronDown className={`ml-1.5 h-4 w-4 shrink-0 opacity-60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown
+          className={`ml-1.5 h-4 w-4 shrink-0 opacity-60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+        />
       </Button>
 
       {isOpen && (

@@ -7,10 +7,10 @@ export const metadata = { title: 'Create User - IAM | IMS Admin' };
 export default async function IamCreateUserPage() {
   await assertPermission('iam.user.create');
   const { roleService, organizationService } = await import('@/lib/runtime');
-  
+
   const [rolesResult, branchResult] = await Promise.all([
     roleService.listRoles(),
-    organizationService.listBranches({ pageSize: 1000 })
+    organizationService.listBranches({ pageSize: 1000 }),
   ]);
 
   return (
@@ -30,10 +30,10 @@ export default async function IamCreateUserPage() {
           />
         }
       />
-      <IamUserForm 
-        mode="create" 
-        roles={rolesResult.filter((r: any) => r.status === 'Active')} 
-        branches={branchResult.items} 
+      <IamUserForm
+        mode="create"
+        roles={rolesResult.filter((r: any) => r.status === 'Active')}
+        branches={branchResult.items}
       />
     </div>
   );

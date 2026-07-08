@@ -1,1 +1,95 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_batch_delivery_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L1"}, {"id": "batch_delivery_spec_modified_requirements", "label": "MODIFIED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L1"}, {"id": "batch_delivery_spec_requirement_trainer_assignment_scheduling_conflicts", "label": "Requirement: Trainer Assignment & Scheduling Conflicts", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L3"}, {"id": "batch_delivery_spec_scenario_trainer_already_assigned_to_overlapping_session", "label": "Scenario: Trainer already assigned to overlapping session", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L6"}, {"id": "batch_delivery_spec_requirement_session_lifecycle_integration", "label": "Requirement: Session Lifecycle Integration", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L10"}, {"id": "batch_delivery_spec_scenario_marking_session_as_conflict_due_to_external_change", "label": "Scenario: Marking session as conflict due to external change", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L13"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_batch_delivery_spec_md", "target": "batch_delivery_spec_modified_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "batch_delivery_spec_modified_requirements", "target": "batch_delivery_spec_requirement_trainer_assignment_scheduling_conflicts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "batch_delivery_spec_requirement_trainer_assignment_scheduling_conflicts", "target": "batch_delivery_spec_scenario_trainer_already_assigned_to_overlapping_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "batch_delivery_spec_modified_requirements", "target": "batch_delivery_spec_requirement_session_lifecycle_integration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L10", "weight": 1.0}, {"source": "batch_delivery_spec_requirement_session_lifecycle_integration", "target": "batch_delivery_spec_scenario_marking_session_as_conflict_due_to_external_change", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md", "source_location": "L13", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_batch_delivery_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "batch_delivery_spec_modified_requirements",
+      "label": "MODIFIED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "batch_delivery_spec_requirement_trainer_assignment_scheduling_conflicts",
+      "label": "Requirement: Trainer Assignment & Scheduling Conflicts",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "batch_delivery_spec_scenario_trainer_already_assigned_to_overlapping_session",
+      "label": "Scenario: Trainer already assigned to overlapping session",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "batch_delivery_spec_requirement_session_lifecycle_integration",
+      "label": "Requirement: Session Lifecycle Integration",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L10"
+    },
+    {
+      "id": "batch_delivery_spec_scenario_marking_session_as_conflict_due_to_external_change",
+      "label": "Scenario: Marking session as conflict due to external change",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L13"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_batch_delivery_spec_md",
+      "target": "batch_delivery_spec_modified_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "batch_delivery_spec_modified_requirements",
+      "target": "batch_delivery_spec_requirement_trainer_assignment_scheduling_conflicts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "batch_delivery_spec_requirement_trainer_assignment_scheduling_conflicts",
+      "target": "batch_delivery_spec_scenario_trainer_already_assigned_to_overlapping_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "batch_delivery_spec_modified_requirements",
+      "target": "batch_delivery_spec_requirement_session_lifecycle_integration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "batch_delivery_spec_requirement_session_lifecycle_integration",
+      "target": "batch_delivery_spec_scenario_marking_session_as_conflict_due_to_external_change",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/batch-delivery/spec.md",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

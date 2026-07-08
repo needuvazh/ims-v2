@@ -3,7 +3,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Building2, Clock3, Eye, Edit2, Layers, Plus, Search, Users, X } from 'lucide-react';
+import {
+  Building2,
+  Clock3,
+  Eye,
+  Edit2,
+  Layers,
+  Plus,
+  Search,
+  Users,
+  X,
+} from 'lucide-react';
 import {
   Badge,
   Button,
@@ -22,7 +32,13 @@ import {
 } from '@ims/shared-ui';
 
 type SortOrder = 'asc' | 'desc';
-type SortField = 'departmentCode' | 'departmentName' | 'branchName' | 'headName' | 'effectiveStartDate' | 'status';
+type SortField =
+  | 'departmentCode'
+  | 'departmentName'
+  | 'branchName'
+  | 'headName'
+  | 'effectiveStartDate'
+  | 'status';
 
 type DepartmentItem = {
   id: string;
@@ -58,7 +74,14 @@ const STATUS_OPTIONS = [
   { value: 'Archived', label: 'Archived' },
 ];
 
-const SORT_FIELDS = new Set<SortField>(['departmentCode', 'departmentName', 'branchName', 'headName', 'effectiveStartDate', 'status']);
+const SORT_FIELDS = new Set<SortField>([
+  'departmentCode',
+  'departmentName',
+  'branchName',
+  'headName',
+  'effectiveStartDate',
+  'status',
+]);
 
 function getStatusVariant(status: string) {
   switch (status) {
@@ -74,8 +97,14 @@ function getStatusVariant(status: string) {
   }
 }
 
-function compareNullableText(left: string | null | undefined, right: string | null | undefined) {
-  return new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare(left ?? '', right ?? '');
+function compareNullableText(
+  left: string | null | undefined,
+  right: string | null | undefined,
+) {
+  return new Intl.Collator(undefined, {
+    numeric: true,
+    sensitivity: 'base',
+  }).compare(left ?? '', right ?? '');
 }
 
 function formatDateForDisplay(date: string | null | undefined) {
@@ -102,34 +131,58 @@ export function DepartmentsClientList({
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(initialSearch);
 
-  const branchById = useMemo(() => new Map(branches.map((b) => [b.id, b.name])), [branches]);
-  const headById = useMemo(() => new Map(users.map((u) => [u.id, u.fullName])), [users]);
+  const branchById = useMemo(
+    () => new Map(branches.map((b) => [b.id, b.name])),
+    [branches],
+  );
+  const headById = useMemo(
+    () => new Map(users.map((u) => [u.id, u.fullName])),
+    [users],
+  );
   const branchCount = branches.length;
 
-  const currentSortBy = (searchParams.get('sortBy') as SortField | null) ?? (SORT_FIELDS.has(initialSortBy as SortField) ? (initialSortBy as SortField) : 'departmentName');
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    (searchParams.get('sortBy') as SortField | null) ??
+    (SORT_FIELDS.has(initialSortBy as SortField)
+      ? (initialSortBy as SortField)
+      : 'departmentName');
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
   const currentStatus = searchParams.get('status') ?? initialStatus ?? '';
   const currentBranchId = searchParams.get('branchId') ?? initialBranchId ?? '';
-  const currentPage = Math.max(parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1, 1);
-  const currentLimit = Math.max(parseInt(searchParams.get('limit') ?? String(initialLimit), 10) || initialLimit || 10, 1);
+  const currentPage = Math.max(
+    parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1,
+    1,
+  );
+  const currentLimit = Math.max(
+    parseInt(searchParams.get('limit') ?? String(initialLimit), 10) ||
+      initialLimit ||
+      10,
+    1,
+  );
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -146,7 +199,8 @@ export function DepartmentsClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: SortField) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -168,7 +222,9 @@ export function DepartmentsClientList({
         }
 
         const branchName = branchById.get(dept.branchId) ?? '';
-        const headName = dept.departmentHeadId ? headById.get(dept.departmentHeadId) ?? '' : '';
+        const headName = dept.departmentHeadId
+          ? (headById.get(dept.departmentHeadId) ?? '')
+          : '';
         return [dept.departmentCode, dept.departmentName, branchName, headName]
           .filter(Boolean)
           .some((value) => String(value).toLowerCase().includes(q));
@@ -177,63 +233,108 @@ export function DepartmentsClientList({
         const direction = currentSortOrder === 'asc' ? 1 : -1;
 
         if (!SORT_FIELDS.has(currentSortBy)) {
-          return compareNullableText(left.departmentName, right.departmentName) * direction;
+          return (
+            compareNullableText(left.departmentName, right.departmentName) *
+            direction
+          );
         }
 
         const leftBranch = branchById.get(left.branchId) ?? '';
         const rightBranch = branchById.get(right.branchId) ?? '';
-        const leftHead = left.departmentHeadId ? headById.get(left.departmentHeadId) ?? '' : '';
-        const rightHead = right.departmentHeadId ? headById.get(right.departmentHeadId) ?? '' : '';
+        const leftHead = left.departmentHeadId
+          ? (headById.get(left.departmentHeadId) ?? '')
+          : '';
+        const rightHead = right.departmentHeadId
+          ? (headById.get(right.departmentHeadId) ?? '')
+          : '';
 
         switch (currentSortBy) {
           case 'departmentCode':
-            return compareNullableText(left.departmentCode, right.departmentCode) * direction;
+            return (
+              compareNullableText(left.departmentCode, right.departmentCode) *
+              direction
+            );
           case 'departmentName':
-            return compareNullableText(left.departmentName, right.departmentName) * direction;
+            return (
+              compareNullableText(left.departmentName, right.departmentName) *
+              direction
+            );
           case 'branchName':
             return compareNullableText(leftBranch, rightBranch) * direction;
           case 'headName':
             return compareNullableText(leftHead, rightHead) * direction;
           case 'effectiveStartDate':
-            return compareNullableText(left.effectiveStartDate, right.effectiveStartDate) * direction;
+            return (
+              compareNullableText(
+                left.effectiveStartDate,
+                right.effectiveStartDate,
+              ) * direction
+            );
           case 'status':
             return compareNullableText(left.status, right.status) * direction;
           default:
-            return compareNullableText(left.departmentName, right.departmentName) * direction;
+            return (
+              compareNullableText(left.departmentName, right.departmentName) *
+              direction
+            );
         }
       });
-  }, [currentSortBy, currentSortOrder, currentStatus, currentBranchId, departments, branchById, headById, searchParams]);
+  }, [
+    currentSortBy,
+    currentSortOrder,
+    currentStatus,
+    currentBranchId,
+    departments,
+    branchById,
+    headById,
+    searchParams,
+  ]);
 
   const total = filteredDepartments.length;
   const totalPages = Math.max(Math.ceil(total / currentLimit), 1);
   const safePage = Math.min(currentPage, totalPages);
-  const paginatedDepartments = filteredDepartments.slice((safePage - 1) * currentLimit, safePage * currentLimit);
+  const paginatedDepartments = filteredDepartments.slice(
+    (safePage - 1) * currentLimit,
+    safePage * currentLimit,
+  );
 
   const stats = {
     total: departments.length,
     active: departments.filter((dept) => dept.status === 'Active').length,
     draft: departments.filter((dept) => dept.status === 'Draft').length,
-    inactive: departments.filter((dept) => dept.status === 'Inactive' || dept.status === 'Archived').length,
+    inactive: departments.filter(
+      (dept) => dept.status === 'Inactive' || dept.status === 'Archived',
+    ).length,
   };
 
   const columns = [
     {
       header: 'Code',
       sortable: true,
-      sortDirection: currentSortBy === 'departmentCode' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'departmentCode' ? currentSortOrder : null,
       onSort: () => handleSort('departmentCode'),
-      render: (dept: DepartmentItem) => <span className="font-mono text-xs font-semibold text-slate-600">{dept.departmentCode}</span>,
+      render: (dept: DepartmentItem) => (
+        <span className="font-mono text-xs font-semibold text-slate-600">
+          {dept.departmentCode}
+        </span>
+      ),
       headerClassName: 'w-[120px]',
     },
     {
       header: 'Department',
       sortable: true,
-      sortDirection: currentSortBy === 'departmentName' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'departmentName' ? currentSortOrder : null,
       onSort: () => handleSort('departmentName'),
       render: (dept: DepartmentItem) => (
         <div className="space-y-1">
-          <div className="font-semibold text-slate-800">{dept.departmentName}</div>
-          <div className="text-xs text-[color:var(--ims-muted)]">{branchById.get(dept.branchId) ?? '—'}</div>
+          <div className="font-semibold text-slate-800">
+            {dept.departmentName}
+          </div>
+          <div className="text-xs text-[color:var(--ims-muted)]">
+            {branchById.get(dept.branchId) ?? '—'}
+          </div>
         </div>
       ),
     },
@@ -242,17 +343,28 @@ export function DepartmentsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'headName' ? currentSortOrder : null,
       onSort: () => handleSort('headName'),
-      render: (dept: DepartmentItem) => <span className="text-sm text-slate-700">{dept.departmentHeadId ? headById.get(dept.departmentHeadId) ?? '—' : '—'}</span>,
+      render: (dept: DepartmentItem) => (
+        <span className="text-sm text-slate-700">
+          {dept.departmentHeadId
+            ? (headById.get(dept.departmentHeadId) ?? '—')
+            : '—'}
+        </span>
+      ),
     },
     {
       header: 'Dates',
       sortable: true,
-      sortDirection: currentSortBy === 'effectiveStartDate' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'effectiveStartDate' ? currentSortOrder : null,
       onSort: () => handleSort('effectiveStartDate'),
       render: (dept: DepartmentItem) => (
         <div className="text-xs">
-          <div>Start: {formatDateForDisplay(dept.effectiveStartDate) || '—'}</div>
-          <div className="text-[color:var(--ims-muted)]">End: {formatDateForDisplay(dept.effectiveEndDate) || 'Indefinite'}</div>
+          <div>
+            Start: {formatDateForDisplay(dept.effectiveStartDate) || '—'}
+          </div>
+          <div className="text-[color:var(--ims-muted)]">
+            End: {formatDateForDisplay(dept.effectiveEndDate) || 'Indefinite'}
+          </div>
         </div>
       ),
       headerClassName: 'w-[180px]',
@@ -262,7 +374,9 @@ export function DepartmentsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (dept: DepartmentItem) => <Badge variant={getStatusVariant(dept.status)}>{dept.status}</Badge>,
+      render: (dept: DepartmentItem) => (
+        <Badge variant={getStatusVariant(dept.status)}>{dept.status}</Badge>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
@@ -272,14 +386,22 @@ export function DepartmentsClientList({
         <div className="flex items-center justify-end gap-2">
           <SimpleTooltip content="View Details" side="top">
             <Link href={`/organization/departments/${dept.id}`}>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+              >
                 <Eye className="h-4 w-4" />
               </Button>
             </Link>
           </SimpleTooltip>
           <SimpleTooltip content="Edit Department" side="top">
             <Link href={`/organization/departments/${dept.id}/edit`}>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+              >
                 <Edit2 className="h-4 w-4" />
               </Button>
             </Link>
@@ -295,8 +417,12 @@ export function DepartmentsClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{dept.departmentCode}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{dept.departmentName}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {dept.departmentCode}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {dept.departmentName}
+            </p>
           </div>
           <Badge variant={getStatusVariant(dept.status)}>{dept.status}</Badge>
         </div>
@@ -309,26 +435,40 @@ export function DepartmentsClientList({
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">Head</p>
-            <p className="truncate">{dept.departmentHeadId ? headById.get(dept.departmentHeadId) ?? '—' : '—'}</p>
+            <p className="truncate">
+              {dept.departmentHeadId
+                ? (headById.get(dept.departmentHeadId) ?? '—')
+                : '—'}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">Start</p>
-            <p className="truncate">{formatDateForDisplay(dept.effectiveStartDate) || '—'}</p>
+            <p className="truncate">
+              {formatDateForDisplay(dept.effectiveStartDate) || '—'}
+            </p>
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">End</p>
-            <p className="truncate">{formatDateForDisplay(dept.effectiveEndDate) || 'Indefinite'}</p>
+            <p className="truncate">
+              {formatDateForDisplay(dept.effectiveEndDate) || 'Indefinite'}
+            </p>
           </div>
         </div>
       </CardContent>
       <CardFooter className="p-card-p pt-0">
         <div className="flex w-full gap-2">
-          <Link href={`/organization/departments/${dept.id}`} className="flex-1">
+          <Link
+            href={`/organization/departments/${dept.id}`}
+            className="flex-1"
+          >
             <Button variant="outline" size="sm" className="w-full text-[11px]">
               <Eye className="mr-1.5 h-3.5 w-3.5" /> View
             </Button>
           </Link>
-          <Link href={`/organization/departments/${dept.id}/edit`} className="flex-1">
+          <Link
+            href={`/organization/departments/${dept.id}/edit`}
+            className="flex-1"
+          >
             <Button variant="outline" size="sm" className="w-full text-[11px]">
               <Edit2 className="mr-1.5 h-3.5 w-3.5" /> Edit
             </Button>
@@ -338,7 +478,9 @@ export function DepartmentsClientList({
     </Card>
   );
 
-  const hasVisibleFilters = Boolean(searchValue || currentStatus || currentBranchId);
+  const hasVisibleFilters = Boolean(
+    searchValue || currentStatus || currentBranchId,
+  );
 
   return (
     <div className="space-y-4 sm:space-y-5 lg:space-y-6">
@@ -348,7 +490,9 @@ export function DepartmentsClientList({
             <Layers className="h-6 w-6 shrink-0 text-indigo-600 sm:h-8 sm:w-8" />
             Departments
           </h1>
-          <p className="mt-1 text-sm text-[var(--ims-muted)]">Manage department structures within branches.</p>
+          <p className="mt-1 text-sm text-[var(--ims-muted)]">
+            Manage department structures within branches.
+          </p>
         </div>
         {branches.length > 0 && (
           <Link href="/organization/departments/create">
@@ -361,15 +505,41 @@ export function DepartmentsClientList({
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-5">
-        <StatCard title="Total Departments" value={stats.total} description="Visible in your scope" icon={<Layers className="h-5 w-5" />} tone="indigo" />
-        <StatCard title="Active" value={stats.active} description="Operational departments" icon={<Building2 className="h-5 w-5" />} tone="emerald" />
-        <StatCard title="Draft" value={stats.draft} description="Pending configuration" icon={<Clock3 className="h-5 w-5" />} tone="amber" />
-        <StatCard title="Inactive" value={stats.inactive} description="Archived or suspended" icon={<Users className="h-5 w-5" />} tone="rose" />
+        <StatCard
+          title="Total Departments"
+          value={stats.total}
+          description="Visible in your scope"
+          icon={<Layers className="h-5 w-5" />}
+          tone="indigo"
+        />
+        <StatCard
+          title="Active"
+          value={stats.active}
+          description="Operational departments"
+          icon={<Building2 className="h-5 w-5" />}
+          tone="emerald"
+        />
+        <StatCard
+          title="Draft"
+          value={stats.draft}
+          description="Pending configuration"
+          icon={<Clock3 className="h-5 w-5" />}
+          tone="amber"
+        />
+        <StatCard
+          title="Inactive"
+          value={stats.inactive}
+          description="Archived or suspended"
+          icon={<Users className="h-5 w-5" />}
+          tone="rose"
+        />
       </div>
 
       <div className="grid gap-4 xl:grid-cols-6">
         <div className="min-w-0 xl:col-span-2">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Search</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Search
+          </FormLabel>
           <div className="relative">
             <Input
               value={searchValue}
@@ -395,21 +565,32 @@ export function DepartmentsClientList({
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Branch</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Branch
+          </FormLabel>
           <Select
             value={currentBranchId}
-            onChange={(event) => updateParams({ branchId: event.target.value, page: '1' })}
-            options={[{ value: '', label: 'All Branches' }, ...branches.map((b) => ({ value: b.id, label: b.name }))]}
+            onChange={(event) =>
+              updateParams({ branchId: event.target.value, page: '1' })
+            }
+            options={[
+              { value: '', label: 'All Branches' },
+              ...branches.map((b) => ({ value: b.id, label: b.name })),
+            ]}
             className="h-12"
             placeholder="All Branches"
           />
         </div>
 
         <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Status</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Status
+          </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(event) => updateParams({ status: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ status: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Statuses' }, ...STATUS_OPTIONS]}
             className="h-12"
             placeholder="All Statuses"
@@ -417,10 +598,14 @@ export function DepartmentsClientList({
         </div>
 
         <div className="min-w-0 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Sort</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Sort
+          </FormLabel>
           <Select
             value={currentSortBy}
-            onChange={(event) => updateParams({ sortBy: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ sortBy: event.target.value, page: '1' })
+            }
             options={[
               { value: 'departmentName', label: 'Department Name' },
               { value: 'departmentCode', label: 'Department Code' },
@@ -435,10 +620,14 @@ export function DepartmentsClientList({
         </div>
 
         <div className="min-w-0 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">Order</FormLabel>
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            Order
+          </FormLabel>
           <Select
             value={currentSortOrder}
-            onChange={(event) => updateParams({ sortOrder: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ sortOrder: event.target.value, page: '1' })
+            }
             options={[
               { value: 'asc', label: 'Ascending' },
               { value: 'desc', label: 'Descending' },
@@ -451,11 +640,20 @@ export function DepartmentsClientList({
 
       {hasVisibleFilters && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-[color:var(--ims-muted)]">
-          <span className="font-semibold uppercase tracking-[0.18em]">Active filters</span>
+          <span className="font-semibold uppercase tracking-[0.18em]">
+            Active filters
+          </span>
           {searchValue && <Badge variant="muted">Search</Badge>}
           {currentBranchId && <Badge variant="muted">Branch</Badge>}
           {currentStatus && <Badge variant="muted">Status</Badge>}
-          <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => updateParams({ q: null, branchId: null, status: null, page: '1' })}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-7 px-2 text-xs"
+            onClick={() =>
+              updateParams({ q: null, branchId: null, status: null, page: '1' })
+            }
+          >
             Clear all
           </Button>
         </div>
@@ -470,12 +668,23 @@ export function DepartmentsClientList({
           <EmptyState
             icon={<Layers className="h-6 w-6" />}
             title="No departments found"
-            description={branchCount === 0 ? 'You must create a branch before adding departments.' : 'No departments match the current search or filter criteria.'}
+            description={
+              branchCount === 0
+                ? 'You must create a branch before adding departments.'
+                : 'No departments match the current search or filter criteria.'
+            }
           />
         }
       />
 
-      {totalPages > 1 && <Pagination page={safePage} totalPages={totalPages} totalCount={total} limit={currentLimit} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={safePage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={currentLimit}
+        />
+      )}
     </div>
   );
 }

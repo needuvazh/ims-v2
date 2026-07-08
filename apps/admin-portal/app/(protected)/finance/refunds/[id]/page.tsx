@@ -8,13 +8,7 @@ import {
   Card,
   PageHeader,
 } from '@ims/shared-ui';
-import {
-  ArrowLeft,
-  Clock3,
-  CreditCard,
-  FileText,
-  User,
-} from 'lucide-react';
+import { ArrowLeft, Clock3, CreditCard, FileText, User } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { RefundActionsClient } from '../_components/refund-actions-client';
@@ -24,7 +18,9 @@ export const metadata = { title: 'Refund Detail - Admin Portal | ASTI IMS' };
 function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5 py-2.5 border-b border-slate-100 last:border-0">
-      <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">{label}</span>
+      <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+        {label}
+      </span>
       <span className="text-sm font-semibold text-slate-800">{value}</span>
     </div>
   );
@@ -81,13 +77,16 @@ export default async function RefundDetailPage({
 
   if (!refund) notFound();
 
-  const displayName = (user: {
-    email: string;
-    username: string;
-    person: { firstName: string; lastName: string } | null;
-  } | null) => {
+  const displayName = (
+    user: {
+      email: string;
+      username: string;
+      person: { firstName: string; lastName: string } | null;
+    } | null,
+  ) => {
     if (!user) return '—';
-    if (user.person) return `${user.person.firstName} ${user.person.lastName}`.trim();
+    if (user.person)
+      return `${user.person.firstName} ${user.person.lastName}`.trim();
     return user.email || user.username;
   };
 
@@ -95,7 +94,9 @@ export default async function RefundDetailPage({
     { label: 'Requested', done: true, date: refund.requestedAt, outcome: null },
     {
       label: 'Under Review',
-      done: ['UnderReview', 'Approved', 'Rejected', 'Executed'].includes(refund.status),
+      done: ['UnderReview', 'Approved', 'Rejected', 'Executed'].includes(
+        refund.status,
+      ),
       date: null,
       outcome: null,
     },
@@ -103,11 +104,12 @@ export default async function RefundDetailPage({
       label: 'Decision',
       done: ['Approved', 'Rejected', 'Executed'].includes(refund.status),
       date: refund.decidedAt,
-      outcome: refund.status === 'Approved' || refund.status === 'Executed'
-        ? 'Approved'
-        : refund.status === 'Rejected'
-        ? 'Rejected'
-        : null,
+      outcome:
+        refund.status === 'Approved' || refund.status === 'Executed'
+          ? 'Approved'
+          : refund.status === 'Rejected'
+            ? 'Rejected'
+            : null,
     },
     {
       label: 'Executed',
@@ -167,8 +169,14 @@ export default async function RefundDetailPage({
             <h3 className="text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
               <FileText className="h-4 w-4 text-slate-400" /> Refund Details
             </h3>
-            <InfoRow label="Refund Number" value={<span className="font-mono">{refund.refundNumber}</span>} />
-            <InfoRow label="Refund Type" value={<Badge variant="outline">{refund.refundType}</Badge>} />
+            <InfoRow
+              label="Refund Number"
+              value={<span className="font-mono">{refund.refundNumber}</span>}
+            />
+            <InfoRow
+              label="Refund Type"
+              value={<Badge variant="outline">{refund.refundType}</Badge>}
+            />
             <InfoRow
               label="Amount"
               value={
@@ -178,17 +186,26 @@ export default async function RefundDetailPage({
               }
             />
             <InfoRow label="Reason Code" value={refund.reasonCode} />
-            <InfoRow label="Reason / Narrative" value={refund.reasonNarrative} />
+            <InfoRow
+              label="Reason / Narrative"
+              value={refund.reasonNarrative}
+            />
             {refund.decisionReason && (
               <InfoRow
                 label="Decision Reason"
-                value={<span className="text-slate-600 italic">{refund.decisionReason}</span>}
+                value={
+                  <span className="text-slate-600 italic">
+                    {refund.decisionReason}
+                  </span>
+                }
               />
             )}
             {refund.executionReference && (
               <InfoRow
                 label="Execution Reference"
-                value={<span className="font-mono">{refund.executionReference}</span>}
+                value={
+                  <span className="font-mono">{refund.executionReference}</span>
+                }
               />
             )}
           </Card>
@@ -196,18 +213,27 @@ export default async function RefundDetailPage({
           {/* Payment Link */}
           <Card className="p-5">
             <h3 className="text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-              <CreditCard className="h-4 w-4 text-slate-400" /> Linked Payment &amp; Invoice
+              <CreditCard className="h-4 w-4 text-slate-400" /> Linked Payment
+              &amp; Invoice
             </h3>
             <InfoRow
               label="Payment ID"
-              value={<span className="font-mono text-slate-600">{refund.payment.id.slice(0, 8)}…</span>}
+              value={
+                <span className="font-mono text-slate-600">
+                  {refund.payment.id.slice(0, 8)}…
+                </span>
+              }
             />
-            <InfoRow label="Payment Method" value={refund.payment.paymentMethod} />
+            <InfoRow
+              label="Payment Method"
+              value={refund.payment.paymentMethod}
+            />
             <InfoRow
               label="Payment Amount"
               value={
                 <span className="font-mono">
-                  {Number(refund.payment.amount).toFixed(3)} {refund.payment.currency}
+                  {Number(refund.payment.amount).toFixed(3)}{' '}
+                  {refund.payment.currency}
                 </span>
               }
             />
@@ -244,12 +270,16 @@ export default async function RefundDetailPage({
                         : 'bg-white border-slate-300'
                     }`}
                   />
-                  <p className={`text-xs font-semibold ${step.done ? 'text-slate-800' : 'text-slate-400'}`}>
+                  <p
+                    className={`text-xs font-semibold ${step.done ? 'text-slate-800' : 'text-slate-400'}`}
+                  >
                     {step.label}
                     {step.outcome && (
                       <span
                         className={`ml-1.5 text-xs font-bold ${
-                          step.outcome === 'Approved' ? 'text-emerald-600' : 'text-rose-600'
+                          step.outcome === 'Approved'
+                            ? 'text-emerald-600'
+                            : 'text-rose-600'
                         }`}
                       >
                         — {step.outcome}
@@ -274,7 +304,10 @@ export default async function RefundDetailPage({
             <h3 className="text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
               <User className="h-4 w-4 text-slate-400" /> People
             </h3>
-            <InfoRow label="Requested By" value={displayName(refund.requester)} />
+            <InfoRow
+              label="Requested By"
+              value={displayName(refund.requester)}
+            />
             <InfoRow label="Decided By" value={displayName(refund.decider)} />
             <InfoRow
               label="Branch"

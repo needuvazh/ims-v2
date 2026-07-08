@@ -1,8 +1,18 @@
 import { PrismaClient, Prisma } from '@prisma/client';
 import { PrismaFinanceRepository } from '../infrastructure/prisma-finance-repository';
-import { CreateInvoiceInput, calculateInvoice, resolveAgingBucket } from '../domain/invoice';
-import { CreateInstallmentPlanInput, validateInstallmentPlan } from '../domain/installment-plan';
-import { CreatePaymentInput, validatePaymentAllocations } from '../domain/payment';
+import {
+  CreateInvoiceInput,
+  calculateInvoice,
+  resolveAgingBucket,
+} from '../domain/invoice';
+import {
+  CreateInstallmentPlanInput,
+  validateInstallmentPlan,
+} from '../domain/installment-plan';
+import {
+  CreatePaymentInput,
+  validatePaymentAllocations,
+} from '../domain/payment';
 import { RequestRefundInput, validateRefundAmount } from '../domain/refund';
 import { checkCorporateCredit } from '../domain/corporate-credit';
 import { Decimal } from 'decimal.js';
@@ -17,11 +27,17 @@ export class FinanceService {
   }
 
   // 1. Create Invoice
-  async createInvoice(input: CreateInvoiceInput, tx?: Prisma.TransactionClient) {
+  async createInvoice(
+    input: CreateInvoiceInput,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       // Perform domain calculations
       const calculated = calculateInvoice(input);
-      const invoiceNumber = await this.repo.getNextInvoiceNumber(input.branchId, client);
+      const invoiceNumber = await this.repo.getNextInvoiceNumber(
+        input.branchId,
+        client,
+      );
 
       const invoice = await this.repo.createInvoice(
         {
@@ -38,9 +54,9 @@ export class FinanceService {
           dueDate: input.dueDate,
           currency: input.currency,
           sourceQuotationId: input.sourceQuotationId,
-          sourceSalesOrderId: input.sourceSalesOrderId
+          sourceSalesOrderId: input.sourceSalesOrderId,
         },
-        client
+        client,
       );
 
       // Create initial Receivable
@@ -52,15 +68,21 @@ export class FinanceService {
           dueDate: invoice.dueDate,
           outstandingAmount: invoice.outstandingAmount.toNumber(),
           status: 'Open',
-          agingBucket
+          agingBucket,
         },
-        client
+        client,
       );
 
       // Handle installment plan generation/validation
       if (input.subCategory === 'Installment') {
-        if (!input.numberOfInstallments || !input.installments || input.installments.length === 0) {
-          throw new Error('Installment details (numberOfInstallments, installments) are required when subCategory is Installment');
+        if (
+          !input.numberOfInstallments ||
+          !input.installments ||
+          input.installments.length === 0
+        ) {
+          throw new Error(
+            'Installment details (numberOfInstallments, installments) are required when subCategory is Installment',
+          );
         }
 
         // Validate installments
@@ -74,8 +96,8 @@ export class FinanceService {
           installments: input.installments.map((inst, index) => ({
             sequenceNumber: index + 1,
             dueDate: inst.dueDate,
-            amount: inst.amount
-          }))
+            amount: inst.amount,
+          })),
         };
 
         validateInstallmentPlan(planInput);
@@ -84,7 +106,7 @@ export class FinanceService {
         const plan = await this.repo.createInstallmentPlan(planInput, client);
         await client.installmentPlan.update({
           where: { id: plan.id },
-          data: { status: 'Active', activatedAt: new Date() }
+          data: { status: 'Active', activatedAt: new Date() },
         });
 
         // Publish outbox event for the installment plan
@@ -97,10 +119,10 @@ export class FinanceService {
               installmentPlanId: plan.id,
               invoiceId: plan.invoiceId,
               numberOfInstallments: plan.numberOfInstallments,
-              totalAmount: plan.totalAmount.toNumber()
+              totalAmount: plan.totalAmount.toNumber(),
             },
-            availableAt: new Date()
-          }
+            availableAt: new Date(),
+          },
         });
       }
 
@@ -118,10 +140,10 @@ export class FinanceService {
             studentProfileId: invoice.studentProfileId,
             corporateAccountId: invoice.corporateAccountId,
             enrollmentId: invoice.enrollmentId,
-            branchId: invoice.branchId
+            branchId: invoice.branchId,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
 
       return invoice;
@@ -131,7 +153,10 @@ export class FinanceService {
   }
 
   // 2. Create Installment Plan
-  async createInstallmentPlan(input: CreateInstallmentPlanInput, tx?: Prisma.TransactionClient) {
+  async createInstallmentPlan(
+    input: CreateInstallmentPlanInput,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       // Domain validation
       validateInstallmentPlan(input);
@@ -148,7 +173,7 @@ export class FinanceService {
       // Update installment plan status to Active
       await client.installmentPlan.update({
         where: { id: plan.id },
-        data: { status: 'Active', activatedAt: new Date() }
+        data: { status: 'Active', activatedAt: new Date() },
       });
 
       // Publish outbox event
@@ -161,10 +186,10 @@ export class FinanceService {
             installmentPlanId: plan.id,
             invoiceId: plan.invoiceId,
             numberOfInstallments: plan.numberOfInstallments,
-            totalAmount: plan.totalAmount.toNumber()
+            totalAmount: plan.totalAmount.toNumber(),
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
 
       return plan;
@@ -174,7 +199,10 @@ export class FinanceService {
   }
 
   // 3. Record Payment
-  async recordPayment(input: CreatePaymentInput, tx?: Prisma.TransactionClient) {
+  async recordPayment(
+    input: CreatePaymentInput,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       // Domain validation
       validatePaymentAllocations(input);
@@ -185,38 +213,48 @@ export class FinanceService {
         throw new Error('ERR_FIN_INVOICE_NOT_FOUND');
       }
 
-      const paymentNumber = await this.repo.getNextPaymentNumber(input.branchId, client);
-      
+      const paymentNumber = await this.repo.getNextPaymentNumber(
+        input.branchId,
+        client,
+      );
+
       // Auto allocation if allocations array is empty
       let allocations = [...input.allocations];
       if (allocations.length === 0) {
         // If there's an active installment plan, allocate to the pending installments in order
         if (invoice.installmentPlans && invoice.installmentPlans.length > 0) {
-          const activePlan = invoice.installmentPlans.find(p => p.status === 'Active');
+          const activePlan = invoice.installmentPlans.find(
+            (p) => p.status === 'Active',
+          );
           if (activePlan) {
             let remainingPayment = new Decimal(input.amount);
             for (const inst of activePlan.installments) {
               if (remainingPayment.isZero()) break;
 
-              const instOutstanding = new Decimal(inst.amount.toString()).minus(new Decimal(inst.paidAmount.toString()));
+              const instOutstanding = new Decimal(inst.amount.toString()).minus(
+                new Decimal(inst.paidAmount.toString()),
+              );
               if (instOutstanding.greaterThan(0)) {
-                const allocateAmt = Decimal.min(remainingPayment, instOutstanding);
+                const allocateAmt = Decimal.min(
+                  remainingPayment,
+                  instOutstanding,
+                );
                 allocations.push({
                   invoiceId: invoice.id,
                   installmentId: inst.id,
-                  allocatedAmount: allocateAmt.toNumber()
+                  allocatedAmount: allocateAmt.toNumber(),
                 });
                 remainingPayment = remainingPayment.minus(allocateAmt);
               }
             }
           }
         }
-        
+
         // If still remaining payment or no installment plan, allocate to the invoice directly
         if (allocations.length === 0) {
           allocations.push({
             invoiceId: invoice.id,
-            allocatedAmount: input.amount
+            allocatedAmount: input.amount,
           });
         }
       }
@@ -227,51 +265,72 @@ export class FinanceService {
           ...input,
           paymentNumber,
           allocations,
-          status: 'Posted'
+          status: 'Posted',
         },
-        client
+        client,
       );
 
       // Post Payment: update invoice paid & outstanding amounts
-      const newPaidAmount = new Decimal(invoice.paidAmount.toString()).plus(new Decimal(input.amount));
-      const newOutstandingAmount = new Decimal(invoice.totalAmount.toString()).minus(newPaidAmount);
+      const newPaidAmount = new Decimal(invoice.paidAmount.toString()).plus(
+        new Decimal(input.amount),
+      );
+      const newOutstandingAmount = new Decimal(
+        invoice.totalAmount.toString(),
+      ).minus(newPaidAmount);
       let newInvoiceStatus: any = 'PartiallyPaid';
       if (newOutstandingAmount.lessThanOrEqualTo(0)) {
         newInvoiceStatus = 'Paid';
       }
 
-      await this.repo.updateInvoiceStatus(invoice.id, newInvoiceStatus, newPaidAmount.toNumber(), newOutstandingAmount.toNumber(), client);
+      await this.repo.updateInvoiceStatus(
+        invoice.id,
+        newInvoiceStatus,
+        newPaidAmount.toNumber(),
+        newOutstandingAmount.toNumber(),
+        client,
+      );
 
       // Update individual installments if payment was allocated to them
       for (const alloc of allocations) {
         if (alloc.installmentId) {
           const installment = await client.installment.findUnique({
-            where: { id: alloc.installmentId }
+            where: { id: alloc.installmentId },
           });
           if (installment) {
             const currentPaid = new Decimal(installment.paidAmount.toString());
-            const newInstPaid = currentPaid.plus(new Decimal(alloc.allocatedAmount));
+            const newInstPaid = currentPaid.plus(
+              new Decimal(alloc.allocatedAmount),
+            );
             const expectedAmt = new Decimal(installment.amount.toString());
-            const instStatus = newInstPaid.greaterThanOrEqualTo(expectedAmt) ? 'Paid' : 'PartiallyPaid';
+            const instStatus = newInstPaid.greaterThanOrEqualTo(expectedAmt)
+              ? 'Paid'
+              : 'PartiallyPaid';
 
-            await this.repo.updateInstallmentPaidAmount(alloc.installmentId, newInstPaid.toNumber(), instStatus, client);
+            await this.repo.updateInstallmentPaidAmount(
+              alloc.installmentId,
+              newInstPaid.toNumber(),
+              instStatus,
+              client,
+            );
           }
         }
       }
 
       // Check if installment plan is fully completed
       if (invoice.installmentPlans && invoice.installmentPlans.length > 0) {
-        const activePlan = invoice.installmentPlans.find(p => p.status === 'Active');
+        const activePlan = invoice.installmentPlans.find(
+          (p) => p.status === 'Active',
+        );
         if (activePlan) {
           // Refresh plan installments
           const planInsts = await client.installment.findMany({
-            where: { installmentPlanId: activePlan.id }
+            where: { installmentPlanId: activePlan.id },
           });
-          const allPaid = planInsts.every(inst => inst.status === 'Paid');
+          const allPaid = planInsts.every((inst) => inst.status === 'Paid');
           if (allPaid) {
             await client.installmentPlan.update({
               where: { id: activePlan.id },
-              data: { status: 'Completed', completedAt: new Date() }
+              data: { status: 'Completed', completedAt: new Date() },
             });
           }
         }
@@ -284,13 +343,15 @@ export class FinanceService {
           branchId: input.branchId,
           amount: payment.amount.toNumber(),
           currency: payment.currency,
-          issuedBy: input.receivedBy
+          issuedBy: input.receivedBy,
         },
-        client
+        client,
       );
 
       // Update Receivable
-      const recStatus = newOutstandingAmount.lessThanOrEqualTo(0) ? 'Settled' : 'PartiallyPaid';
+      const recStatus = newOutstandingAmount.lessThanOrEqualTo(0)
+        ? 'Settled'
+        : 'PartiallyPaid';
       await this.repo.upsertReceivable(
         {
           invoiceId: invoice.id,
@@ -298,15 +359,20 @@ export class FinanceService {
           dueDate: invoice.dueDate,
           outstandingAmount: newOutstandingAmount.toNumber(),
           status: recStatus,
-          agingBucket: resolveAgingBucket(invoice.dueDate, new Date())
+          agingBucket: resolveAgingBucket(invoice.dueDate, new Date()),
         },
-        client
+        client,
       );
 
       // If corporate, update corporate outstanding balance
       if (invoice.corporateAccountId) {
         // Decrease outstanding by the paid amount
-        await this.repo.updateCorporateOutstanding(invoice.corporateAccountId, invoice.branchId, -input.amount, client);
+        await this.repo.updateCorporateOutstanding(
+          invoice.corporateAccountId,
+          invoice.branchId,
+          -input.amount,
+          client,
+        );
       }
 
       // Publish outbox event
@@ -322,10 +388,10 @@ export class FinanceService {
             receiptId: receipt.id,
             receiptNumber: receipt.receiptNumber,
             amount: payment.amount.toNumber(),
-            currency: payment.currency
+            currency: payment.currency,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
 
       return { payment, receipt };
@@ -335,7 +401,10 @@ export class FinanceService {
   }
 
   // 4. Request Refund
-  async requestRefund(input: RequestRefundInput, tx?: Prisma.TransactionClient) {
+  async requestRefund(
+    input: RequestRefundInput,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       // Find payment
       const payment = await this.repo.findPaymentById(input.paymentId, client);
@@ -345,21 +414,34 @@ export class FinanceService {
 
       // Check already refunded amount
       const refunds = await client.refund.findMany({
-        where: { paymentId: payment.id, status: { in: ['Requested', 'Approved', 'Executed'] } }
+        where: {
+          paymentId: payment.id,
+          status: { in: ['Requested', 'Approved', 'Executed'] },
+        },
       });
-      const refundedTotal = refunds.reduce((sum, r) => sum.plus(new Decimal(r.amount.toString())), new Decimal(0));
+      const refundedTotal = refunds.reduce(
+        (sum, r) => sum.plus(new Decimal(r.amount.toString())),
+        new Decimal(0),
+      );
 
-      validateRefundAmount(input.amount, payment.amount.toNumber(), refundedTotal.toNumber());
+      validateRefundAmount(
+        input.amount,
+        payment.amount.toNumber(),
+        refundedTotal.toNumber(),
+      );
 
-      const refundNumber = await this.repo.getNextRefundNumber(input.branchId, client);
+      const refundNumber = await this.repo.getNextRefundNumber(
+        input.branchId,
+        client,
+      );
 
       const refund = await this.repo.createRefund(
         {
           ...input,
           refundNumber,
-          status: 'Requested'
+          status: 'Requested',
         },
-        client
+        client,
       );
 
       // Publish outbox event
@@ -372,10 +454,10 @@ export class FinanceService {
             refundId: refund.id,
             refundNumber: refund.refundNumber,
             paymentId: refund.paymentId,
-            amount: refund.amount.toNumber()
+            amount: refund.amount.toNumber(),
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
 
       return refund;
@@ -385,7 +467,12 @@ export class FinanceService {
   }
 
   // 5. Approve Refund
-  async approveRefund(refundId: string, deciderId: string, decisionReason: string, tx?: Prisma.TransactionClient) {
+  async approveRefund(
+    refundId: string,
+    deciderId: string,
+    decisionReason: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       const refund = await this.repo.findRefundById(refundId, client);
       if (!refund) {
@@ -395,7 +482,13 @@ export class FinanceService {
         throw new Error('ERR_FIN_REFUND_NOT_PENDING');
       }
 
-      const updated = await this.repo.updateRefundStatus(refundId, 'Approved', deciderId, decisionReason, client);
+      const updated = await this.repo.updateRefundStatus(
+        refundId,
+        'Approved',
+        deciderId,
+        decisionReason,
+        client,
+      );
 
       // Publish outbox event
       await client.outboxEvent.create({
@@ -406,10 +499,10 @@ export class FinanceService {
           payload: {
             refundId: refund.id,
             paymentId: refund.paymentId,
-            approvedBy: deciderId
+            approvedBy: deciderId,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
 
       return updated;
@@ -419,7 +512,11 @@ export class FinanceService {
   }
 
   // 6. Execute Refund
-  async executeRefund(refundId: string, executionRef: string, tx?: Prisma.TransactionClient) {
+  async executeRefund(
+    refundId: string,
+    executionRef: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const run = async (client: Prisma.TransactionClient) => {
       const refund = await this.repo.findRefundById(refundId, client);
       if (!refund) {
@@ -435,19 +532,31 @@ export class FinanceService {
         data: {
           status: 'Executed',
           executedAt: new Date(),
-          executionReference: executionRef
-        }
+          executionReference: executionRef,
+        },
       });
 
       // Update the invoice paidAmount and outstandingAmount (reversing the paid amount)
       const invoice = await this.repo.findInvoiceById(refund.invoiceId, client);
       if (invoice) {
         const refundedAmt = new Decimal(refund.amount.toString());
-        const newPaidAmount = new Decimal(invoice.paidAmount.toString()).minus(refundedAmt);
-        const newOutstandingAmount = new Decimal(invoice.outstandingAmount.toString()).plus(refundedAmt);
-        const status = newOutstandingAmount.greaterThan(0) ? 'PartiallyPaid' : 'Paid';
+        const newPaidAmount = new Decimal(invoice.paidAmount.toString()).minus(
+          refundedAmt,
+        );
+        const newOutstandingAmount = new Decimal(
+          invoice.outstandingAmount.toString(),
+        ).plus(refundedAmt);
+        const status = newOutstandingAmount.greaterThan(0)
+          ? 'PartiallyPaid'
+          : 'Paid';
 
-        await this.repo.updateInvoiceStatus(invoice.id, status, newPaidAmount.toNumber(), newOutstandingAmount.toNumber(), client);
+        await this.repo.updateInvoiceStatus(
+          invoice.id,
+          status,
+          newPaidAmount.toNumber(),
+          newOutstandingAmount.toNumber(),
+          client,
+        );
 
         // Also update Receivable outstanding
         await this.repo.upsertReceivable(
@@ -457,14 +566,19 @@ export class FinanceService {
             dueDate: invoice.dueDate,
             outstandingAmount: newOutstandingAmount.toNumber(),
             status: newOutstandingAmount.greaterThan(0) ? 'Open' : 'Settled',
-            agingBucket: resolveAgingBucket(invoice.dueDate, new Date())
+            agingBucket: resolveAgingBucket(invoice.dueDate, new Date()),
           },
-          client
+          client,
         );
 
         // If corporate, update corporate outstanding (increase exposure again due to refund)
         if (invoice.corporateAccountId) {
-          await this.repo.updateCorporateOutstanding(invoice.corporateAccountId, invoice.branchId, refund.amount.toNumber(), client);
+          await this.repo.updateCorporateOutstanding(
+            invoice.corporateAccountId,
+            invoice.branchId,
+            refund.amount.toNumber(),
+            client,
+          );
         }
       }
 
@@ -478,10 +592,10 @@ export class FinanceService {
             refundId: refund.id,
             paymentId: refund.paymentId,
             amount: refund.amount.toNumber(),
-            executionReference: executionRef
+            executionReference: executionRef,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
 
       return updated;
@@ -491,16 +605,25 @@ export class FinanceService {
   }
 
   // 7. Verify Corporate Credit
-  async verifyCorporateCreditLimit(corporateAccountId: string, branchId: string, newAmount: number, tx?: Prisma.TransactionClient): Promise<boolean> {
+  async verifyCorporateCreditLimit(
+    corporateAccountId: string,
+    branchId: string,
+    newAmount: number,
+    tx?: Prisma.TransactionClient,
+  ): Promise<boolean> {
     const client = tx || this.prisma;
 
-    const creditData = await this.repo.getCorporateCreditLimit(corporateAccountId, branchId, client);
+    const creditData = await this.repo.getCorporateCreditLimit(
+      corporateAccountId,
+      branchId,
+      client,
+    );
     const result = checkCorporateCredit({
       creditLimit: creditData.creditLimit,
       currentOutstanding: creditData.currentOutstanding,
       committedAmount: creditData.committedAmount,
       blockOnCreditLimit: creditData.blockOnCreditLimit,
-      requestedAmount: newAmount
+      requestedAmount: newAmount,
     });
 
     if (!result.passed) {
@@ -513,10 +636,10 @@ export class FinanceService {
           payload: {
             corporateAccountId,
             requestedAmount: newAmount,
-            message: result.message
+            message: result.message,
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
       throw new Error(result.message);
     }
@@ -530,10 +653,10 @@ export class FinanceService {
         payload: {
           corporateAccountId,
           requestedAmount: newAmount,
-          message: result.message
+          message: result.message,
         },
-        availableAt: new Date()
-      }
+        availableAt: new Date(),
+      },
     });
 
     return true;
@@ -552,7 +675,7 @@ export class FinanceService {
 
       const updated = await client.invoice.update({
         where: { id: invoiceId },
-        data: { status: 'Issued', issuedAt: new Date() }
+        data: { status: 'Issued', issuedAt: new Date() },
       });
 
       // Publish outbox event
@@ -564,10 +687,10 @@ export class FinanceService {
           payload: {
             invoiceId,
             invoiceNumber: invoice.invoiceNumber,
-            totalAmount: invoice.totalAmount.toNumber()
+            totalAmount: invoice.totalAmount.toNumber(),
           },
-          availableAt: new Date()
-        }
+          availableAt: new Date(),
+        },
       });
 
       return updated;

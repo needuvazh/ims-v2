@@ -11,8 +11,10 @@ const updateInstituteCommandSchema = createInstituteCommandSchema
   .omit({ instituteCode: true })
   .partial();
 
-console.log('empty:', updateInstituteCommandSchema.parse({ taxNumber: "" }));
-console.log('val:', updateInstituteCommandSchema.parse({ taxNumber: "123" }));
+console.log('empty:', updateInstituteCommandSchema.parse({ taxNumber: '' }));
+console.log('val:', updateInstituteCommandSchema.parse({ taxNumber: '123' }));
 console.log('null:', updateInstituteCommandSchema.parse({ taxNumber: null }));
-console.log('undefined:', updateInstituteCommandSchema.parse({ taxNumber: undefined }));
-
+console.log(
+  'undefined:',
+  updateInstituteCommandSchema.parse({ taxNumber: undefined }),
+);

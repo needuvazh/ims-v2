@@ -9,7 +9,13 @@ import {
 import { ScheduleFollowUpSchema } from '@ims/crm-leads';
 import type { Uuid } from '@ims/shared-kernel';
 
-function problemJson(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problemJson(
+  status: number,
+  title: string,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -18,7 +24,7 @@ function problemJson(status: number, title: string, detail: string, errorCode: s
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
@@ -42,18 +48,23 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
     status = 403;
     code = 'ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION';
-    messageEn = 'You are not authorized to access leads assigned to other counselors.';
+    messageEn =
+      'You are not authorized to access leads assigned to other counselors.';
     messageAr = 'غير مصرح لك بالوصول إلى المهتمين المسندين لموظفين آخرين.';
   } else if (msg.includes('ERR_CRM_PAST_FOLLOWUP_DATE')) {
     status = 422;
     code = 'ERR_CRM_PAST_FOLLOWUP_DATE';
-    messageEn = 'Follow-up scheduled time must be set in the future (current time + 5 minutes).';
-    messageAr = 'تاريخ المتابعة المجدولة يجب أن يكون في المستقبل (٥ دقائق كحد أدنى).';
+    messageEn =
+      'Follow-up scheduled time must be set in the future (current time + 5 minutes).';
+    messageAr =
+      'تاريخ المتابعة المجدولة يجب أن يكون في المستقبل (٥ دقائق كحد أدنى).';
   } else if (msg.includes('ERR_CRM_INVALID_STAGE_TRANSITION')) {
     status = 422;
     code = 'ERR_CRM_INVALID_STAGE_TRANSITION';
-    messageEn = 'Cannot schedule follow-up on a lead in a terminal stage (Converted, Won, or Lost).';
-    messageAr = 'لا يمكن جدولة متابعة لمهتم في مرحلة نهائية (مكتمل، فائز، أو مفقود).';
+    messageEn =
+      'Cannot schedule follow-up on a lead in a terminal stage (Converted, Won, or Lost).';
+    messageAr =
+      'لا يمكن جدولة متابعة لمهتم في مرحلة نهائية (مكتمل، فائز، أو مفقود).';
   }
 
   return NextResponse.json(
@@ -64,79 +75,102 @@ function crmErrorResponse(error: Error) {
       messageArabic: messageAr,
       statusCode: status,
     },
-    { status }
+    { status },
   );
 }
 
-export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: leadId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'followup.create', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'followup.create', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    let payload: unknown;
-    try {
-      payload = await request.json();
-    } catch {
-      return problemJson(400, 'Invalid request body', 'Request body must be valid JSON.', 'CRM-VAL-FOLLOWUP-INVALID_JSON');
-    }
+        let payload: unknown;
+        try {
+          payload = await request.json();
+        } catch {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Request body must be valid JSON.',
+            'CRM-VAL-FOLLOWUP-INVALID_JSON',
+          );
+        }
 
-    const parsed = ScheduleFollowUpSchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(
-        400,
-        'Invalid request body',
-        'Follow-up schedule details are invalid.',
-        'CRM-VAL-FOLLOWUP-INVALID_BODY',
-        parsed.error.issues.map((issue) => ({
-          field: issue.path.join('.') || 'body',
-          message: issue.message,
-        }))
-      );
-    }
+        const parsed = ScheduleFollowUpSchema.safeParse(payload);
+        if (!parsed.success) {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Follow-up schedule details are invalid.',
+            'CRM-VAL-FOLLOWUP-INVALID_BODY',
+            parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.') || 'body',
+              message: issue.message,
+            })),
+          );
+        }
 
-    try {
-      const { branchScopeResolver, followUpService, leadService } = await import('../../../../../../lib/runtime');
-      
-      const lead = await leadService.getLeadById(leadId);
-      if (!lead) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-      }
+        try {
+          const { branchScopeResolver, followUpService, leadService } =
+            await import('../../../../../../lib/runtime');
 
-      // Branch Scoping check
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(lead.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          const lead = await leadService.getLeadById(leadId);
+          if (!lead) {
+            throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+          }
 
-      // Counselor scoping check
-      const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-      if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
-      }
+          // Branch Scoping check
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(lead.branchId as Uuid)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const result = await followUpService.scheduleFollowUp(leadId, parsed.data, session.userId);
+          // Counselor scoping check
+          const hasGlobalRead =
+            session.permissions.includes('crm.leads.read.all');
+          if (!hasGlobalRead && lead.counselorId !== session.userId) {
+            throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
+          }
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: result,
-        },
-        { status: 201 }
-      );
+          const result = await followUpService.scheduleFollowUp(
+            leadId,
+            parsed.data,
+            session.userId,
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/leads/[id]/follow-ups',
-        method: request.method,
-        status: 'success',
-      });
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: result,
+            },
+            { status: 201 },
+          );
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.leads.follow-ups.create.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/leads/[id]/follow-ups' });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/leads/[id]/follow-ups',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.leads.follow-ups.create.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/leads/[id]/follow-ups' },
+  );
 }

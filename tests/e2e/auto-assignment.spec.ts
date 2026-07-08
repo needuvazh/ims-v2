@@ -51,13 +51,14 @@ async function processAutoAssignment(inquiryId: string, branchId: string) {
         },
       });
       return { counselorId: counselor.id, count: activeLeadsCount };
-    })
+    }),
   );
 
   // 3. Find counselor with lowest workload
   const minCount = Math.min(...workloads.map((w) => w.count));
   const candidateCounselors = workloads.filter((w) => w.count === minCount);
-  const selected = candidateCounselors[Math.floor(Math.random() * candidateCounselors.length)];
+  const selected =
+    candidateCounselors[Math.floor(Math.random() * candidateCounselors.length)];
   const assignedCounselorId = selected.counselorId;
 
   // 4. Update inquiry and emit event
@@ -326,7 +327,7 @@ test.describe('Auto-Assignment Workflow Integration', () => {
         inquiryId,
         counselorId: counselorBId,
         inquiryNumber: inqNum,
-      })
+      }),
     );
   });
 });

@@ -981,10 +981,9 @@ Every module consumes IAM services for authentication, authorization, permission
 
 At the completion of Part 2, the IAM specification now includes:
 
-* Detailed user stories
-* Enterprise use cases
-* End-to-end business workflows
-* Lifecycle state machines
-* Sequence diagrams
-* Cross-module interaction model
-
+- Detailed user stories
+- Enterprise use cases
+- End-to-end business workflows
+- Lifecycle state machines
+- Sequence diagrams
+- Cross-module interaction model

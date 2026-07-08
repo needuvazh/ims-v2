@@ -1,8 +1,15 @@
 import { ResultRepository } from '../../domain/interfaces/ResultRepository';
 import { ExamRepository } from '../../domain/interfaces/ExamRepository';
 import { EnrollmentReader } from '../../domain/interfaces/EnrollmentReader';
-import { ResultAggregate, RecordResultCommand, RESULT_STATUSES } from '../../domain/aggregates/Result';
-import { ResultInvalidStateError, ResultDuplicateError } from '../../domain/errors';
+import {
+  ResultAggregate,
+  RecordResultCommand,
+  RESULT_STATUSES,
+} from '../../domain/aggregates/Result';
+import {
+  ResultInvalidStateError,
+  ResultDuplicateError,
+} from '../../domain/errors';
 
 export interface RecordResultInput {
   examId: string;
@@ -26,21 +33,34 @@ export class RecordResultCommandHandler {
     }
 
     if (exam.status !== 'OpenForResultEntry') {
-      throw new ResultInvalidStateError(`Exam ${input.examId} is not open for result entry (status: ${exam.status})`);
+      throw new ResultInvalidStateError(
+        `Exam ${input.examId} is not open for result entry (status: ${exam.status})`,
+      );
     }
 
-    const enrollment = await this.enrollmentReader.getEnrollmentById(input.enrollmentId);
+    const enrollment = await this.enrollmentReader.getEnrollmentById(
+      input.enrollmentId,
+    );
     if (!enrollment) {
-      throw new ResultInvalidStateError(`Enrollment ${input.enrollmentId} not found`);
+      throw new ResultInvalidStateError(
+        `Enrollment ${input.enrollmentId} not found`,
+      );
     }
 
     if (enrollment.batchId !== exam.batchId) {
-      throw new ResultInvalidStateError(`Enrollment ${input.enrollmentId} does not belong to exam batch`);
+      throw new ResultInvalidStateError(
+        `Enrollment ${input.enrollmentId} does not belong to exam batch`,
+      );
     }
 
-    const existing = await this.resultRepository.findByExamAndEnrollment(input.examId, input.enrollmentId);
+    const existing = await this.resultRepository.findByExamAndEnrollment(
+      input.examId,
+      input.enrollmentId,
+    );
     if (existing && existing.resultStatus !== RESULT_STATUSES.PENDING) {
-      throw new ResultDuplicateError(`Result already exists for exam ${input.examId} and enrollment ${input.enrollmentId}`);
+      throw new ResultDuplicateError(
+        `Result already exists for exam ${input.examId} and enrollment ${input.enrollmentId}`,
+      );
     }
 
     const command: RecordResultCommand = {

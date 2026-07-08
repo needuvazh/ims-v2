@@ -12,17 +12,25 @@ interface Props {
   isSystemRole: boolean;
 }
 
-export function RoleLifecycleDropdown({ roleId, currentStatus, isSystemRole }: Props) {
+export function RoleLifecycleDropdown({
+  roleId,
+  currentStatus,
+  isSystemRole,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const handleArchive = () => {
     setIsOpen(false);
-    if (!confirm('Are you sure you want to archive this role? Assigned users will lose associated permissions.')) {
+    if (
+      !confirm(
+        'Are you sure you want to archive this role? Assigned users will lose associated permissions.',
+      )
+    ) {
       return;
     }
-    
+
     startTransition(async () => {
       const result = await archiveRoleAction(roleId);
       if (result.success) {
@@ -39,7 +47,11 @@ export function RoleLifecycleDropdown({ roleId, currentStatus, isSystemRole }: P
 
   return (
     <div className="relative inline-block text-left">
-      <Button variant="secondary" onClick={() => setIsOpen(!isOpen)} disabled={isPending}>
+      <Button
+        variant="secondary"
+        onClick={() => setIsOpen(!isOpen)}
+        disabled={isPending}
+      >
         {isPending ? 'Processing...' : 'Actions'}
         <MoreVertical className="ml-2 h-4 w-4" />
       </Button>

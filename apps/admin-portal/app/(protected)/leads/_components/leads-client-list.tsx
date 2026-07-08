@@ -38,40 +38,237 @@ interface LeadsClientListProps {
 
 type SortOrder = 'asc' | 'desc';
 
-export function LeadsClientList({ leads, branches, total }: LeadsClientListProps) {
+export function LeadsClientList({
+  leads,
+  branches,
+  total,
+}: LeadsClientListProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = searchParams.get('page') ? parseInt(searchParams.get('page')!, 10) : 1;
+  const currentPage = searchParams.get('page')
+    ? parseInt(searchParams.get('page')!, 10)
+    : 1;
   const totalPages = Math.ceil(total / 10);
 
-  const currentSortBy = (searchParams.get('sortBy') as LeadSortField | null) ?? 'createdAt';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? 'desc';
+  const currentSortBy =
+    (searchParams.get('sortBy') as LeadSortField | null) ?? 'createdAt';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? 'desc';
 
   const [convertingLead, setConvertingLead] = useState<any | null>(null);
-  const [docLink1, setDocLink1] = useState('');
-  const [docLink2, setDocLink2] = useState('');
+  const [requirements, setRequirements] = useState<any[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<
+    Record<string, { url: string; fileName: string; id?: string }>
+  >({});
+  const [uploadingStates, setUploadingStates] = useState<
+    Record<string, boolean>
+  >({});
+
+  // Fetch dynamic requirements and existing documents when a lead is selected for conversion
+  useEffect(() => {
+    if (!convertingLead) {
+      setRequirements([]);
+      setUploadedFiles({});
+      setUploadingStates({});
+      return;
+    }
+
+    const loadData = async () => {
+      try {
+        const reqsRes = await fetch(
+          `/api/v1/documents/requirements?targetEntity=STUDENT&branchId=${convertingLead.branchId}&courseId=${convertingLead.interestedCourseId || ''}`,
+        );
+        if (reqsRes.ok) {
+          const result = await reqsRes.json();
+          setRequirements(result.data || []);
+        }
+
+        const docsRes = await fetch(
+          `/api/v1/documents?ownerId=${convertingLead.personId}&ownerType=Person`,
+        );
+        if (docsRes.ok) {
+          const result = await docsRes.json();
+          const docs = result.data?.documents || [];
+          const mapped: Record<
+            string,
+            { url: string; fileName: string; id?: string }
+          > = {};
+          for (const d of docs) {
+            mapped[d.documentType] = {
+              url: d.fileKey,
+              fileName: d.fileName,
+              id: d.id,
+            };
+          }
+          setUploadedFiles(mapped);
+        }
+      } catch (err) {
+        console.error('Failed to load conversion checklist', err);
+      }
+    };
+
+    loadData();
+  }, [convertingLead]);
+
+  const handleLeadDocUpload = async (
+    documentType: string,
+    file: File | undefined,
+  ) => {
+    if (!file || !convertingLead) return;
+
+    setUploadingStates((prev) => ({ ...prev, [documentType]: true }));
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('ownerId', convertingLead.personId);
+      formData.append('documentType', documentType);
+      formData.append('branchId', convertingLead.branchId);
+
+      const res = await fetch('/api/v1/documents/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.messageEnglish || 'Failed to upload file');
+      }
+
+      setUploadedFiles((prev) => ({
+        ...prev,
+        [documentType]: {
+          url: result.data.url,
+          fileName: result.data.fileName,
+          id: result.data.id,
+        },
+      }));
+      toast.success(`Uploaded ${result.data.fileName} successfully!`);
+      router.refresh();
+    } catch (err: any) {
+      toast.error(err.message || 'File upload failed');
+    } finally {
+      setUploadingStates((prev) => ({ ...prev, [documentType]: false }));
+    }
+  };
+
+  const handleClearDoc = async (documentType: string) => {
+    const targetFile = uploadedFiles[documentType];
+    if (!targetFile) return;
+
+    if (
+      !confirm(
+        'Are you sure you want to delete this document? The entire document will be deleted.',
+      )
+    ) {
+      return;
+    }
+
+    if (targetFile.id) {
+      try {
+        const res = await fetch(`/api/v1/documents/${targetFile.id}`, {
+          method: 'DELETE',
+        });
+        const result = await res.json();
+        if (!res.ok) {
+          throw new Error(result.messageEnglish || 'Failed to delete document');
+        }
+        toast.success('Document deleted successfully!');
+      } catch (err: any) {
+        toast.error(err.message || 'Failed to delete document');
+        return;
+      }
+    }
+
+    setUploadedFiles((prev) => {
+      const copy = { ...prev };
+      delete copy[documentType];
+      return copy;
+    });
+    router.refresh();
+  };
+
   const [docError, setDocError] = useState<string | null>(null);
   const [isConverting, setIsConverting] = useState(false);
-  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const handleConvertSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setDocError(null);
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
+    const missingMandatory = requirements
+      .filter((r) => r.isMandatory && !uploadedFiles[r.documentType])
+      .map((r) => r.documentType.replace(/_/g, ' '));
+
+    if (missingMandatory.length > 0) {
+      setDocError(
+        `The following required documents are missing: ${missingMandatory.join(', ')}`,
+      );
+      return;
+    }
+
+    try {
+      setIsConverting(true);
+      const docsPayload = Object.entries(uploadedFiles).map(([docType, f]) => ({
+        documentType: docType,
+        fileKey: f.url,
+        fileName: f.fileName,
+        fileType: 'application/pdf', // fallback
+        expiryDate: null,
+      }));
+
+      const response = await convertLeadAction(convertingLead.id, docsPayload);
+      const res = response as any;
+      if (res && !res.success) {
+        setDocError(
+          res.error ||
+            'Conversion failed. Make sure lead has valid DOB and Email.',
+        );
       } else {
-        params.set(key, value);
+        toast.success('Lead converted to student successfully!');
+        setConvertingLead(null);
+        setUploadedFiles({});
+        router.refresh();
       }
-    });
+    } catch (err: any) {
+      setDocError(err.message || 'An unexpected conversion error occurred.');
+    } finally {
+      setIsConverting(false);
+    }
+  };
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
+  const [nationalIdValue, setNationalIdValue] = useState(
+    searchParams.get('nationalId') || '',
+  );
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
+
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
+  }, [searchParams]);
+
+  useEffect(() => {
+    const nextNationalId = searchParams.get('nationalId') || '';
+    setNationalIdValue((current) =>
+      current === nextNationalId ? current : nextNationalId,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -87,8 +284,22 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
     return () => clearTimeout(timeout);
   }, [searchParams, searchValue, updateParams]);
 
+  useEffect(() => {
+    const currentNationalId = searchParams.get('nationalId') || '';
+    if (nationalIdValue === currentNationalId) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      updateParams({ nationalId: nationalIdValue || null, page: '1' });
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchParams, nationalIdValue, updateParams]);
+
   const handleSort = (field: LeadSortField) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -122,54 +333,37 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
     }).format(date);
   };
 
-  const handleConvertSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setDocError(null);
-
-    if (!docLink1.trim()) {
-      setDocError('At least one identity document URL (e.g. National ID scan link) is mandatory.');
-      return;
-    }
-
-    try {
-      setIsConverting(true);
-      const links = [docLink1.trim()];
-      if (docLink2.trim()) {
-        links.push(docLink2.trim());
-      }
-
-      const response = await convertLeadAction(convertingLead.id, links);
-      const res = response as any;
-      if (res && !res.success) {
-        setDocError(res.error || 'Conversion failed. Make sure lead has valid DOB and Email.');
-      } else {
-        toast.success('Lead converted to student successfully!');
-        setConvertingLead(null);
-        setDocLink1('');
-        setDocLink2('');
-        router.refresh();
-      }
-    } catch (err: any) {
-      setDocError(err.message || 'An unexpected conversion error occurred.');
-    } finally {
-      setIsConverting(false);
-    }
-  };
-
   const columns = [
     {
       header: 'Lead Number',
       sortable: true,
       sortDirection: currentSortBy === 'leadNumber' ? currentSortOrder : null,
       onSort: () => handleSort('leadNumber'),
-      render: (lead: any) => <span className="font-mono text-xs font-semibold tracking-wider text-[color:var(--ims-muted)]">{lead.leadNumber}</span>,
+      render: (lead: any) => (
+        <span className="font-mono text-xs font-semibold tracking-wider text-[color:var(--ims-muted)]">
+          {lead.leadNumber}
+        </span>
+      ),
     },
     {
       header: 'Name',
       sortable: true,
       sortDirection: currentSortBy === 'name' ? currentSortOrder : null,
       onSort: () => handleSort('name'),
-      render: (lead: any) => <span className="font-medium text-[color:var(--ims-ink)]">{lead.firstName} {lead.lastName}</span>,
+      render: (lead: any) => (
+        <span className="font-medium text-[color:var(--ims-ink)]">
+          {lead.firstName} {lead.lastName}
+        </span>
+      ),
+    },
+    {
+      header: 'ID Number',
+      render: (lead: any) =>
+        lead.nationalId || (
+          <span className="text-xs italic text-[color:var(--ims-muted)]">
+            N/A
+          </span>
+        ),
     },
     {
       header: 'Phone',
@@ -183,7 +377,12 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
       sortable: true,
       sortDirection: currentSortBy === 'email' ? currentSortOrder : null,
       onSort: () => handleSort('email'),
-      render: (lead: any) => lead.email || <span className="text-xs italic text-[color:var(--ims-muted)]">N/A</span>,
+      render: (lead: any) =>
+        lead.email || (
+          <span className="text-xs italic text-[color:var(--ims-muted)]">
+            N/A
+          </span>
+        ),
     },
     {
       header: 'Branch',
@@ -194,14 +393,17 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
     },
     {
       header: 'Course',
-      render: (lead: any) => lead.interestedCourse?.nameEnglish || lead.interestedCourseId,
+      render: (lead: any) =>
+        lead.interestedCourse?.nameEnglish || lead.interestedCourseId,
     },
     {
       header: 'Stage',
       sortable: true,
       sortDirection: currentSortBy === 'stage' ? currentSortOrder : null,
       onSort: () => handleSort('stage'),
-      render: (lead: any) => <Badge variant={getStageBadgeVariant(lead.stage)}>{lead.stage}</Badge>,
+      render: (lead: any) => (
+        <Badge variant={getStageBadgeVariant(lead.stage)}>{lead.stage}</Badge>
+      ),
     },
     {
       header: 'Date & Time',
@@ -241,15 +443,17 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
             </Button>
           </SimpleTooltip>
 
-          <SimpleTooltip content="Edit Details">
-            <Button
-              variant="outline"
-              className="h-8 w-8 p-0 flex items-center justify-center"
-              onClick={() => router.push(`/leads/${lead.id}/edit`)}
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
-          </SimpleTooltip>
+          {lead.stage !== 'Converted' && (
+            <SimpleTooltip content="Edit Details">
+              <Button
+                variant="outline"
+                className="h-8 w-8 p-0 flex items-center justify-center"
+                onClick={() => router.push(`/leads/${lead.id}/edit`)}
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+            </SimpleTooltip>
+          )}
 
           {lead.stage !== 'Converted' && (
             <SimpleTooltip content="Convert to Student">
@@ -288,24 +492,34 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
             <p className="truncate">{lead.phone}</p>
           </div>
           <div className="space-y-1">
-            <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
-            <p className="truncate">{lead.branch?.name || 'N/A'}</p>
+            <p className="font-semibold text-[var(--ims-muted)]">ID Number</p>
+            <p className="truncate">{lead.nationalId || 'N/A'}</p>
           </div>
           <div className="col-span-2 space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Email</p>
             <p className="truncate">{lead.email || 'N/A'}</p>
           </div>
           <div className="col-span-2 space-y-1">
+            <p className="font-semibold text-[var(--ims-muted)]">Branch</p>
+            <p className="truncate">{lead.branch?.name || 'N/A'}</p>
+          </div>
+          <div className="col-span-2 space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Course</p>
-            <p className="truncate">{lead.interestedCourse?.nameEnglish || lead.interestedCourseId}</p>
+            <p className="truncate">
+              {lead.interestedCourse?.nameEnglish || lead.interestedCourseId}
+            </p>
           </div>
           <div className="space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Created</p>
-            <p className="text-[11px] leading-5 text-[color:var(--ims-ink)]">{formatDateTime(lead.createdAt)}</p>
+            <p className="text-[11px] leading-5 text-[color:var(--ims-ink)]">
+              {formatDateTime(lead.createdAt)}
+            </p>
           </div>
           <div className="space-y-1">
             <p className="font-semibold text-[var(--ims-muted)]">Updated</p>
-            <p className="text-[11px] leading-5 text-[color:var(--ims-ink)]">{formatDateTime(lead.updatedAt)}</p>
+            <p className="text-[11px] leading-5 text-[color:var(--ims-ink)]">
+              {formatDateTime(lead.updatedAt)}
+            </p>
           </div>
         </div>
       </CardContent>
@@ -318,14 +532,16 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
         >
           <Eye className="mr-1.5 h-3.5 w-3.5" /> View
         </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          className="flex-1 text-[11px]"
-          onClick={() => router.push(`/leads/${lead.id}/edit`)}
-        >
-          <Pencil className="mr-1.5 h-3.5 w-3.5" /> Edit
-        </Button>
+        {lead.stage !== 'Converted' && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1 text-[11px]"
+            onClick={() => router.push(`/leads/${lead.id}/edit`)}
+          >
+            <Pencil className="mr-1.5 h-3.5 w-3.5" /> Edit
+          </Button>
+        )}
         {lead.stage !== 'Converted' && (
           <Button
             size="sm"
@@ -385,13 +601,16 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
           </h1>
         </div>
 
-        <Button className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4" onClick={() => router.push('/leads/create')}>
+        <Button
+          className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4"
+          onClick={() => router.push('/leads/create')}
+        >
           <User className="h-4 w-4 sm:mr-2" />
           <span className="sr-only sm:not-sr-only">Create Lead</span>
         </Button>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,2.2fr)_repeat(3,minmax(0,1fr))]">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))]">
         <div className="min-w-0">
           <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
             Search
@@ -402,7 +621,7 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
               onChange={(e) => {
                 setSearchValue(e.target.value);
               }}
-              placeholder="Search leads by name, phone, or email..."
+              placeholder="Search leads by name, phone, email, or ID..."
               leftIcon={<Search className="h-4 w-4" />}
               className="h-12 pr-10"
             />
@@ -422,6 +641,36 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
           </div>
         </div>
 
+        {/* ID Number Filter */}
+        <div className="min-w-0">
+          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+            ID Number
+          </FormLabel>
+          <div className="relative">
+            <Input
+              value={nationalIdValue}
+              onChange={(e) => {
+                setNationalIdValue(e.target.value);
+              }}
+              placeholder="Filter by ID..."
+              className="h-12 pr-10"
+            />
+            {nationalIdValue && (
+              <button
+                type="button"
+                onClick={() => {
+                  setNationalIdValue('');
+                  updateParams({ nationalId: null, page: '1' });
+                }}
+                aria-label="Clear ID filter"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
+
         {filterRow.map((filter) => (
           <div key={filter.key} className="min-w-0">
             <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
@@ -429,11 +678,10 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
             </FormLabel>
             <Select
               value={searchParams.get(filter.key) || ''}
-              onChange={(e) => updateParams({ [filter.key]: e.target.value, page: '1' })}
-              options={[
-                { value: '', label: 'All' },
-                ...filter.options,
-              ]}
+              onChange={(e) =>
+                updateParams({ [filter.key]: e.target.value, page: '1' })
+              }
+              options={[{ value: '', label: 'All' }, ...filter.options]}
               className="h-12"
               placeholder={`All ${filter.label.toLowerCase()}`}
             />
@@ -455,15 +703,26 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
         }
       />
 
-      {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} totalCount={total} limit={10} />}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={10}
+        />
+      )}
 
-      <Dialog open={!!convertingLead} onOpenChange={(open) => !open && setConvertingLead(null)}>
+      <Dialog
+        open={!!convertingLead}
+        onOpenChange={(open) => !open && setConvertingLead(null)}
+      >
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Convert Lead to Student</DialogTitle>
             <DialogDescription>
-              To complete the admissions handoff, please upload or enter URL links for at least one identity document
-              (e.g., Omani Civil ID scan, passport copy).
+              To complete the admissions handoff, please upload or enter URL
+              links for at least one identity document (e.g., Omani Civil ID
+              scan, passport copy).
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleConvertSubmit} className="space-y-4 py-2">
@@ -473,37 +732,65 @@ export function LeadsClientList({ leads, branches, total }: LeadsClientListProps
               </div>
             )}
 
-            <FormField>
-              <FormLabel required>Identity Document URL (Civil ID Scan)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://storage.example.com/docs/civil_id.pdf"
-                  value={docLink1}
-                  onChange={(e) => setDocLink1(e.target.value)}
-                  required
-                />
-              </FormControl>
-              <span className="text-[10px] text-[color:var(--ims-muted)]">
-                Civil ID scan or equivalent national registration document.
-              </span>
-            </FormField>
-
-            <FormField>
-              <FormLabel>Secondary Document URL (Optional)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://storage.example.com/docs/passport.pdf"
-                  value={docLink2}
-                  onChange={(e) => setDocLink2(e.target.value)}
-                />
-              </FormControl>
-            </FormField>
+            {requirements.map((req) => {
+              const file = uploadedFiles[req.documentType];
+              const isUploading = uploadingStates[req.documentType];
+              return (
+                <FormField key={req.documentType}>
+                  <FormLabel required={req.isMandatory}>
+                    {req.documentType.replace(/_/g, ' ')}{' '}
+                    {req.isMandatory ? '' : '(Optional)'}
+                  </FormLabel>
+                  <FormControl>
+                    {file ? (
+                      <div className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs">
+                        <span className="truncate max-w-[200px] font-mono font-medium">
+                          {file.fileName}
+                        </span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleClearDoc(req.documentType)}
+                          className="h-5 px-1.5 text-xs text-rose-600 hover:bg-rose-50"
+                          disabled={isConverting}
+                        >
+                          Clear
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-1">
+                        <input
+                          type="file"
+                          onChange={(e) => {
+                            const f = e.target.files?.[0];
+                            handleLeadDocUpload(req.documentType, f);
+                          }}
+                          disabled={isConverting || isUploading}
+                          className="block w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
+                        />
+                        {isUploading && (
+                          <span className="text-[10px] text-slate-500 italic">
+                            Uploading to store...
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </FormControl>
+                </FormField>
+              );
+            })}
 
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setConvertingLead(null)} disabled={isConverting}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setConvertingLead(null)}
+                disabled={isConverting}
+              >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isConverting || !docLink1.trim()}>
+              <Button type="submit" disabled={isConverting}>
                 {isConverting ? 'Converting...' : 'Complete Admissions Handoff'}
               </Button>
             </DialogFooter>

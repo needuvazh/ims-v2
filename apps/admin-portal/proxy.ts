@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { decodeSession, sessionCookieName } from '@ims/shared-auth';
-import { applyRequestContextHeaders, createRequestContext } from '@ims/observability';
+import {
+  applyRequestContextHeaders,
+  createRequestContext,
+} from '@ims/observability';
 
 const protectedRoutes = ['/dashboard', '/organization', '/iam', '/ui-preview'];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const session = await decodeSession(request.cookies.get(sessionCookieName)?.value);
-  const requestContext = createRequestContext(request.headers, { route: pathname, method: request.method });
+  const session = await decodeSession(
+    request.cookies.get(sessionCookieName)?.value,
+  );
+  const requestContext = createRequestContext(request.headers, {
+    route: pathname,
+    method: request.method,
+  });
   const forwardedHeaders = new Headers(request.headers);
   applyRequestContextHeaders(forwardedHeaders, requestContext);
 

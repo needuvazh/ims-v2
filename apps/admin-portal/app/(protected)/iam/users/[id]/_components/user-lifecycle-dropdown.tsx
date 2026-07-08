@@ -2,7 +2,17 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { MoreVertical, CheckCircle, Ban, Archive, KeyRound, Mail, LockOpen, Copy, Check } from 'lucide-react';
+import {
+  MoreVertical,
+  CheckCircle,
+  Ban,
+  Archive,
+  KeyRound,
+  Mail,
+  LockOpen,
+  Copy,
+  Check,
+} from 'lucide-react';
 import {
   Button,
   DropdownMenu,
@@ -43,7 +53,15 @@ export function UserLifecycleDropdown({ userId, currentStatus }: Props) {
     }
   };
 
-  const handleAction = (action: 'activate' | 'suspend' | 'archive' | 'unlock' | 'adminResetPassword' | 'resendActivationEmail') => {
+  const handleAction = (
+    action:
+      | 'activate'
+      | 'suspend'
+      | 'archive'
+      | 'unlock'
+      | 'adminResetPassword'
+      | 'resendActivationEmail',
+  ) => {
     startTransition(async () => {
       const result = await userLifecycleAction(userId, action);
       if (result.success) {
@@ -75,31 +93,48 @@ export function UserLifecycleDropdown({ userId, currentStatus }: Props) {
 
         <DropdownMenuContent align="end" className="w-56 z-50">
           {currentStatus === 'PendingActivation' && (
-            <DropdownMenuItem onClick={() => handleAction('resendActivationEmail')} className="flex items-center text-gray-700">
+            <DropdownMenuItem
+              onClick={() => handleAction('resendActivationEmail')}
+              className="flex items-center text-gray-700"
+            >
               <Mail className="mr-2 h-4 w-4" />
               Resend Activation Email
             </DropdownMenuItem>
           )}
-          {(currentStatus === 'PendingActivation' || currentStatus === 'Suspended' || currentStatus === 'Locked') && (
-            <DropdownMenuItem onClick={() => handleAction('activate')} className="flex items-center text-green-600">
+          {(currentStatus === 'PendingActivation' ||
+            currentStatus === 'Suspended' ||
+            currentStatus === 'Locked') && (
+            <DropdownMenuItem
+              onClick={() => handleAction('activate')}
+              className="flex items-center text-green-600"
+            >
               <CheckCircle className="mr-2 h-4 w-4" />
               Activate User
             </DropdownMenuItem>
           )}
           {currentStatus === 'Locked' && (
-            <DropdownMenuItem onClick={() => handleAction('unlock')} className="flex items-center text-blue-600">
+            <DropdownMenuItem
+              onClick={() => handleAction('unlock')}
+              className="flex items-center text-blue-600"
+            >
               <LockOpen className="mr-2 h-4 w-4" />
               Unlock Account
             </DropdownMenuItem>
           )}
           {currentStatus === 'Active' && (
-            <DropdownMenuItem onClick={() => handleAction('suspend')} className="flex items-center text-yellow-600">
+            <DropdownMenuItem
+              onClick={() => handleAction('suspend')}
+              className="flex items-center text-yellow-600"
+            >
               <Ban className="mr-2 h-4 w-4" />
               Suspend User
             </DropdownMenuItem>
           )}
           {currentStatus !== 'Archived' && (
-            <DropdownMenuItem onClick={() => handleAction('adminResetPassword')} className="flex items-center text-gray-700">
+            <DropdownMenuItem
+              onClick={() => handleAction('adminResetPassword')}
+              className="flex items-center text-gray-700"
+            >
               <KeyRound className="mr-2 h-4 w-4" />
               Admin Reset Password
             </DropdownMenuItem>
@@ -109,7 +144,11 @@ export function UserLifecycleDropdown({ userId, currentStatus }: Props) {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
-                  if (confirm('Are you sure you want to archive this user? This will revoke all active sessions and access.')) {
+                  if (
+                    confirm(
+                      'Are you sure you want to archive this user? This will revoke all active sessions and access.',
+                    )
+                  ) {
                     handleAction('archive');
                   }
                 }}
@@ -170,4 +209,3 @@ export function UserLifecycleDropdown({ userId, currentStatus }: Props) {
     </>
   );
 }
-

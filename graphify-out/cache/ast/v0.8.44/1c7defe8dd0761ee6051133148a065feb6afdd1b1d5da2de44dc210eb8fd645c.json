@@ -1,1 +1,319 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_frd_generation_guide_md", "label": "FRD_Generation_Guide.md", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L1"}, {"id": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "label": "ASTI IMS: FRD Generation Guide", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L1"}, {"id": "frd_frd_generation_guide_1_why_frd_generation_needs_guardrails", "label": "1. Why FRD Generation Needs Guardrails", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L9"}, {"id": "frd_frd_generation_guide_the_solution", "label": "The solution", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L16"}, {"id": "frd_frd_generation_guide_2_target_directory_and_file_structure", "label": "2. Target Directory and File Structure", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L27"}, {"id": "frd_frd_generation_guide_3_master_system_prompt_template", "label": "3. Master System Prompt Template", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L52"}, {"id": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "label": "4. Part-by-Part Prompt Sequence", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L80"}, {"id": "frd_frd_generation_guide_step_1_main_index_and_part_1", "label": "Step 1: Main Index and Part 1", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L84"}, {"id": "frd_frd_generation_guide_step_2_part_2_user_stories_and_use_cases", "label": "Step 2: Part 2 - User Stories and Use Cases", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L119"}, {"id": "frd_frd_generation_guide_step_3_part_3_screen_specifications_and_ui_components", "label": "Step 3: Part 3 - Screen Specifications and UI Components", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L131"}, {"id": "frd_frd_generation_guide_step_4_part_4_database_entities_and_crud_matrix", "label": "Step 4: Part 4 - Database Entities and CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L144"}, {"id": "frd_frd_generation_guide_step_5_part_5_api_contracts", "label": "Step 5: Part 5 - API Contracts", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L156"}, {"id": "frd_frd_generation_guide_step_6_part_6_permission_matrix", "label": "Step 6: Part 6 - Permission Matrix", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L166"}, {"id": "frd_frd_generation_guide_step_7_part_7_validation_rules_error_catalog_notifications", "label": "Step 7: Part 7 - Validation Rules, Error Catalog, Notifications", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L177"}, {"id": "frd_frd_generation_guide_step_8_part_8_reports_dashboards_kpis_analytics", "label": "Step 8: Part 8 - Reports, Dashboards, KPIs, Analytics", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L189"}, {"id": "frd_frd_generation_guide_step_9_part_9_bdd_acceptance_criteria_and_test_scenarios", "label": "Step 9: Part 9 - BDD Acceptance Criteria and Test Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L202"}, {"id": "frd_frd_generation_guide_step_10_part_10_security_architecture_and_nfr", "label": "Step 10: Part 10 - Security Architecture and NFR", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L213"}, {"id": "frd_frd_generation_guide_step_11_part_11_deployment_operations_observability_runbooks", "label": "Step 11: Part 11 - Deployment, Operations, Observability, Runbooks", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L224"}, {"id": "frd_frd_generation_guide_5_ddd_er_model_validation_workflow", "label": "5. DDD / ER Model Validation Workflow", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L238"}, {"id": "frd_frd_generation_guide_6_verification_checklist", "label": "6. Verification Checklist", "file_type": "document", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L267"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_frd_generation_guide_md", "target": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L1", "weight": 1.0}, {"source": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "target": "frd_frd_generation_guide_1_why_frd_generation_needs_guardrails", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L9", "weight": 1.0}, {"source": "frd_frd_generation_guide_1_why_frd_generation_needs_guardrails", "target": "frd_frd_generation_guide_the_solution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L16", "weight": 1.0}, {"source": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "target": "frd_frd_generation_guide_2_target_directory_and_file_structure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L27", "weight": 1.0}, {"source": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "target": "frd_frd_generation_guide_3_master_system_prompt_template", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L52", "weight": 1.0}, {"source": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "target": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L80", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_1_main_index_and_part_1", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L84", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_2_part_2_user_stories_and_use_cases", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L119", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_3_part_3_screen_specifications_and_ui_components", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L131", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_4_part_4_database_entities_and_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L144", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_5_part_5_api_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L156", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_6_part_6_permission_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L166", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_7_part_7_validation_rules_error_catalog_notifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L177", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_8_part_8_reports_dashboards_kpis_analytics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L189", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_9_part_9_bdd_acceptance_criteria_and_test_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L202", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_10_part_10_security_architecture_and_nfr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L213", "weight": 1.0}, {"source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence", "target": "frd_frd_generation_guide_step_11_part_11_deployment_operations_observability_runbooks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L224", "weight": 1.0}, {"source": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "target": "frd_frd_generation_guide_5_ddd_er_model_validation_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L238", "weight": 1.0}, {"source": "frd_frd_generation_guide_asti_ims_frd_generation_guide", "target": "frd_frd_generation_guide_6_verification_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/FRD_Generation_Guide.md", "source_location": "L267", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_frd_generation_guide_md",
+      "label": "FRD_Generation_Guide.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "label": "ASTI IMS: FRD Generation Guide",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "frd_frd_generation_guide_1_why_frd_generation_needs_guardrails",
+      "label": "1. Why FRD Generation Needs Guardrails",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "frd_frd_generation_guide_the_solution",
+      "label": "The solution",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "frd_frd_generation_guide_2_target_directory_and_file_structure",
+      "label": "2. Target Directory and File Structure",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "frd_frd_generation_guide_3_master_system_prompt_template",
+      "label": "3. Master System Prompt Template",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L52"
+    },
+    {
+      "id": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "label": "4. Part-by-Part Prompt Sequence",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L80"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_1_main_index_and_part_1",
+      "label": "Step 1: Main Index and Part 1",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L84"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_2_part_2_user_stories_and_use_cases",
+      "label": "Step 2: Part 2 - User Stories and Use Cases",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L119"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_3_part_3_screen_specifications_and_ui_components",
+      "label": "Step 3: Part 3 - Screen Specifications and UI Components",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L131"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_4_part_4_database_entities_and_crud_matrix",
+      "label": "Step 4: Part 4 - Database Entities and CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L144"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_5_part_5_api_contracts",
+      "label": "Step 5: Part 5 - API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_6_part_6_permission_matrix",
+      "label": "Step 6: Part 6 - Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L166"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_7_part_7_validation_rules_error_catalog_notifications",
+      "label": "Step 7: Part 7 - Validation Rules, Error Catalog, Notifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L177"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_8_part_8_reports_dashboards_kpis_analytics",
+      "label": "Step 8: Part 8 - Reports, Dashboards, KPIs, Analytics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L189"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_9_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "label": "Step 9: Part 9 - BDD Acceptance Criteria and Test Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L202"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_10_part_10_security_architecture_and_nfr",
+      "label": "Step 10: Part 10 - Security Architecture and NFR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L213"
+    },
+    {
+      "id": "frd_frd_generation_guide_step_11_part_11_deployment_operations_observability_runbooks",
+      "label": "Step 11: Part 11 - Deployment, Operations, Observability, Runbooks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L224"
+    },
+    {
+      "id": "frd_frd_generation_guide_5_ddd_er_model_validation_workflow",
+      "label": "5. DDD / ER Model Validation Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L238"
+    },
+    {
+      "id": "frd_frd_generation_guide_6_verification_checklist",
+      "label": "6. Verification Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L267"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_frd_generation_guide_md",
+      "target": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "target": "frd_frd_generation_guide_1_why_frd_generation_needs_guardrails",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_1_why_frd_generation_needs_guardrails",
+      "target": "frd_frd_generation_guide_the_solution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "target": "frd_frd_generation_guide_2_target_directory_and_file_structure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "target": "frd_frd_generation_guide_3_master_system_prompt_template",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "target": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_1_main_index_and_part_1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_2_part_2_user_stories_and_use_cases",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_3_part_3_screen_specifications_and_ui_components",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_4_part_4_database_entities_and_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_5_part_5_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_6_part_6_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_7_part_7_validation_rules_error_catalog_notifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_8_part_8_reports_dashboards_kpis_analytics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_9_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_10_part_10_security_architecture_and_nfr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L213",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_4_part_by_part_prompt_sequence",
+      "target": "frd_frd_generation_guide_step_11_part_11_deployment_operations_observability_runbooks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "target": "frd_frd_generation_guide_5_ddd_er_model_validation_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "frd_frd_generation_guide_asti_ims_frd_generation_guide",
+      "target": "frd_frd_generation_guide_6_verification_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/FRD_Generation_Guide.md",
+      "source_location": "L267",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

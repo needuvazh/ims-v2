@@ -62,16 +62,16 @@ Transactional mutation of Certificate-owned records
 
 ## 2.1 Validation Layers
 
-| Layer | Responsibility | Typical Failure | Owner |
-|---|---|---|---|
-| L1 Transport | JSON shape, type, required fields, basic formats, list limits | `VALIDATION_ERROR` | Certificate API/application boundary |
-| L2 Authentication | Valid authenticated identity for non-public routes | `UNAUTHENTICATED` | IAM/platform auth |
-| L3 Authorization | Fine-grained permission and access mode | `PERMISSION_DENIED` | IAM decision; Certificate enforces |
-| L4 Scope | Branch, self, trainer, consolidated scope | `BRANCH_SCOPE_DENIED`, `NOT_FOUND` | IAM scope resolver; Certificate enforces |
-| L5 Aggregate | Certificate state, duplicate prevention, reissue lineage, verification behavior | `INVALID_STATE_TRANSITION`, domain-specific 409/422 | Certificate Management |
-| L6 Cross-context gate | Completion approved, payment gate passed, enrollment source references consistent | `COMPLETION_NOT_APPROVED`, `PAYMENT_VALIDATION_FAILED`, `SOURCE_REFERENCE_INCONSISTENT` | Owning context supplies truth; Certificate orchestrates |
-| L7 Persistence | uniqueness, FK integrity, optimistic version | `VERSION_CONFLICT`, `DUPLICATE_*`, `REFERENCE_NOT_FOUND` | Certificate repository/database |
-| L8 Side-effect integration | audit command acceptance, notification request acceptance, reporting publication | integration error or retry record per architecture | Owning integration boundary |
+| Layer                      | Responsibility                                                                    | Typical Failure                                                                         | Owner                                                   |
+| -------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| L1 Transport               | JSON shape, type, required fields, basic formats, list limits                     | `VALIDATION_ERROR`                                                                      | Certificate API/application boundary                    |
+| L2 Authentication          | Valid authenticated identity for non-public routes                                | `UNAUTHENTICATED`                                                                       | IAM/platform auth                                       |
+| L3 Authorization           | Fine-grained permission and access mode                                           | `PERMISSION_DENIED`                                                                     | IAM decision; Certificate enforces                      |
+| L4 Scope                   | Branch, self, trainer, consolidated scope                                         | `BRANCH_SCOPE_DENIED`, `NOT_FOUND`                                                      | IAM scope resolver; Certificate enforces                |
+| L5 Aggregate               | Certificate state, duplicate prevention, reissue lineage, verification behavior   | `INVALID_STATE_TRANSITION`, domain-specific 409/422                                     | Certificate Management                                  |
+| L6 Cross-context gate      | Completion approved, payment gate passed, enrollment source references consistent | `COMPLETION_NOT_APPROVED`, `PAYMENT_VALIDATION_FAILED`, `SOURCE_REFERENCE_INCONSISTENT` | Owning context supplies truth; Certificate orchestrates |
+| L7 Persistence             | uniqueness, FK integrity, optimistic version                                      | `VERSION_CONFLICT`, `DUPLICATE_*`, `REFERENCE_NOT_FOUND`                                | Certificate repository/database                         |
+| L8 Side-effect integration | audit command acceptance, notification request acceptance, reporting publication  | integration error or retry record per architecture                                      | Owning integration boundary                             |
 
 ## 2.2 Validation Result Contract
 
@@ -150,18 +150,18 @@ interface CertificateReadinessValidationResult {
 
 ### Validation Rules
 
-| Rule ID | Rule | Failure Code | Owner |
-|---|---|---|---|
-| VR-CERT-001 | `enrollmentId` must resolve to one current Enrollment. | `ENROLLMENT_NOT_FOUND` | Enrollment decision/reference |
-| VR-CERT-002 | Enrollment must resolve student, course, batch, and branch source references. | `SOURCE_REFERENCE_INCOMPLETE` | Certificate orchestration using Enrollment truth |
-| VR-CERT-003 | Student/course/batch/branch references used for the Certificate must belong to the same Enrollment journey. | `SOURCE_REFERENCE_INCONSISTENT` | Certificate |
-| VR-CERT-004 | Completion decision must be approved before normal generation. | `COMPLETION_NOT_APPROVED` | Completion |
-| VR-CERT-005 | When `paymentValidationRequired=true`, Finance must return a passed validation decision. | `PAYMENT_VALIDATION_FAILED` | Finance |
-| VR-CERT-006 | Normal generation must not create another active issued certificate for the same enrollment. | `DUPLICATE_ACTIVE_CERTIFICATE` | Certificate |
-| VR-CERT-007 | Requested language must be `en` or `ar`. | `UNSUPPORTED_CERTIFICATE_LANGUAGE` | Certificate/shared locale contract |
-| VR-CERT-008 | An active Certificate NumberingSeries must be resolvable through Configuration. | `CERTIFICATE_NUMBERING_UNAVAILABLE` | Configuration |
-| VR-CERT-009 | Actor must have `certificate.generate`. | `PERMISSION_DENIED` | IAM |
-| VR-CERT-010 | Enrollment branch must fall within actor's effective branch scope. | `BRANCH_SCOPE_DENIED` | IAM |
+| Rule ID     | Rule                                                                                                        | Failure Code                        | Owner                                            |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------ |
+| VR-CERT-001 | `enrollmentId` must resolve to one current Enrollment.                                                      | `ENROLLMENT_NOT_FOUND`              | Enrollment decision/reference                    |
+| VR-CERT-002 | Enrollment must resolve student, course, batch, and branch source references.                               | `SOURCE_REFERENCE_INCOMPLETE`       | Certificate orchestration using Enrollment truth |
+| VR-CERT-003 | Student/course/batch/branch references used for the Certificate must belong to the same Enrollment journey. | `SOURCE_REFERENCE_INCONSISTENT`     | Certificate                                      |
+| VR-CERT-004 | Completion decision must be approved before normal generation.                                              | `COMPLETION_NOT_APPROVED`           | Completion                                       |
+| VR-CERT-005 | When `paymentValidationRequired=true`, Finance must return a passed validation decision.                    | `PAYMENT_VALIDATION_FAILED`         | Finance                                          |
+| VR-CERT-006 | Normal generation must not create another active issued certificate for the same enrollment.                | `DUPLICATE_ACTIVE_CERTIFICATE`      | Certificate                                      |
+| VR-CERT-007 | Requested language must be `en` or `ar`.                                                                    | `UNSUPPORTED_CERTIFICATE_LANGUAGE`  | Certificate/shared locale contract               |
+| VR-CERT-008 | An active Certificate NumberingSeries must be resolvable through Configuration.                             | `CERTIFICATE_NUMBERING_UNAVAILABLE` | Configuration                                    |
+| VR-CERT-009 | Actor must have `certificate.generate`.                                                                     | `PERMISSION_DENIED`                 | IAM                                              |
+| VR-CERT-010 | Enrollment branch must fall within actor's effective branch scope.                                          | `BRANCH_SCOPE_DENIED`               | IAM                                              |
 
 The readiness endpoint may display individual blockers, but the generate command must execute these checks again against current authoritative state.
 
@@ -181,12 +181,12 @@ interface GenerateCertificateCommand {
 
 ### Structural Validation
 
-| Field | Rule |
-|---|---|
-| `enrollmentId` | Required, non-empty opaque identifier; maximum 128 characters. |
-| `language` | Required; exact value `en` or `ar`. |
-| `idempotencyKey` | Required; 8–128 characters; allowed printable URL-safe identifier characters; same key must not be reused for a different payload. |
-| `requestedBranchId` | Optional; may narrow but never expand effective scope. |
+| Field               | Rule                                                                                                                               |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `enrollmentId`      | Required, non-empty opaque identifier; maximum 128 characters.                                                                     |
+| `language`          | Required; exact value `en` or `ar`.                                                                                                |
+| `idempotencyKey`    | Required; 8–128 characters; allowed printable URL-safe identifier characters; same key must not be reused for a different payload. |
+| `requestedBranchId` | Optional; may narrow but never expand effective scope.                                                                             |
 
 ### Domain Validation
 
@@ -219,17 +219,17 @@ interface IssueCertificateCommand {
 
 ### Rules
 
-| Rule ID | Rule | Failure Code |
-|---|---|---|
-| VR-CERT-011 | Certificate must exist and be visible in actor scope. | `CERTIFICATE_NOT_FOUND` or concealed `NOT_FOUND` |
-| VR-CERT-012 | Actor must have `certificate.issue`. | `PERMISSION_DENIED` |
-| VR-CERT-013 | Current lifecycle status must allow issuance. | `INVALID_STATE_TRANSITION` |
-| VR-CERT-014 | Artifact reference must exist and be retrievable according to storage contract. | `CERTIFICATE_ARTIFACT_UNAVAILABLE` |
-| VR-CERT-015 | Verification code and certificate number must exist and satisfy uniqueness constraints. | `CERTIFICATE_INTEGRITY_ERROR` |
-| VR-CERT-016 | Completion approval must still be authoritative at command time. | `COMPLETION_NOT_APPROVED` |
-| VR-CERT-017 | Required payment validation must still pass at command time. | `PAYMENT_VALIDATION_FAILED` |
-| VR-CERT-018 | `expectedVersion` must match. | `VERSION_CONFLICT` |
-| VR-CERT-019 | Replayed idempotency key with same payload returns prior result; different payload fails. | `IDEMPOTENCY_KEY_CONFLICT` |
+| Rule ID     | Rule                                                                                      | Failure Code                                     |
+| ----------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| VR-CERT-011 | Certificate must exist and be visible in actor scope.                                     | `CERTIFICATE_NOT_FOUND` or concealed `NOT_FOUND` |
+| VR-CERT-012 | Actor must have `certificate.issue`.                                                      | `PERMISSION_DENIED`                              |
+| VR-CERT-013 | Current lifecycle status must allow issuance.                                             | `INVALID_STATE_TRANSITION`                       |
+| VR-CERT-014 | Artifact reference must exist and be retrievable according to storage contract.           | `CERTIFICATE_ARTIFACT_UNAVAILABLE`               |
+| VR-CERT-015 | Verification code and certificate number must exist and satisfy uniqueness constraints.   | `CERTIFICATE_INTEGRITY_ERROR`                    |
+| VR-CERT-016 | Completion approval must still be authoritative at command time.                          | `COMPLETION_NOT_APPROVED`                        |
+| VR-CERT-017 | Required payment validation must still pass at command time.                              | `PAYMENT_VALIDATION_FAILED`                      |
+| VR-CERT-018 | `expectedVersion` must match.                                                             | `VERSION_CONFLICT`                               |
+| VR-CERT-019 | Replayed idempotency key with same payload returns prior result; different payload fails. | `IDEMPOTENCY_KEY_CONFLICT`                       |
 
 Post-success validation:
 
@@ -320,17 +320,17 @@ interface SubmitReissueRequestCommand {
 
 ### Validation Rules
 
-| Rule ID | Rule | Failure Code |
-|---|---|---|
-| VR-CERT-020 | Certificate must exist. | `CERTIFICATE_NOT_FOUND` |
-| VR-CERT-021 | Requester must be authenticated. | `UNAUTHENTICATED` |
-| VR-CERT-022 | Internal requester requires `certificate.reissue.request`; student requester requires self-scope entitlement. | `PERMISSION_DENIED` |
-| VR-CERT-023 | Student requester must own the enrollment-linked student identity. | `NOT_FOUND` or `SELF_SCOPE_DENIED` internally |
-| VR-CERT-024 | Reason is mandatory after trim. | `REISSUE_REASON_REQUIRED` |
-| VR-CERT-025 | Reason length must be 10–1000 characters. | `REISSUE_REASON_INVALID_LENGTH` |
-| VR-CERT-026 | No other non-terminal reissue request may exist for the same original certificate. | `REISSUE_REQUEST_ALREADY_OPEN` |
-| VR-CERT-027 | A request must not directly create a replacement certificate. | `REISSUE_APPROVAL_REQUIRED` |
-| VR-CERT-028 | `requestedBy` is derived from authenticated identity, never trusted from request body. | `VALIDATION_ERROR` if supplied in prohibited body shape |
+| Rule ID     | Rule                                                                                                          | Failure Code                                            |
+| ----------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| VR-CERT-020 | Certificate must exist.                                                                                       | `CERTIFICATE_NOT_FOUND`                                 |
+| VR-CERT-021 | Requester must be authenticated.                                                                              | `UNAUTHENTICATED`                                       |
+| VR-CERT-022 | Internal requester requires `certificate.reissue.request`; student requester requires self-scope entitlement. | `PERMISSION_DENIED`                                     |
+| VR-CERT-023 | Student requester must own the enrollment-linked student identity.                                            | `NOT_FOUND` or `SELF_SCOPE_DENIED` internally           |
+| VR-CERT-024 | Reason is mandatory after trim.                                                                               | `REISSUE_REASON_REQUIRED`                               |
+| VR-CERT-025 | Reason length must be 10–1000 characters.                                                                     | `REISSUE_REASON_INVALID_LENGTH`                         |
+| VR-CERT-026 | No other non-terminal reissue request may exist for the same original certificate.                            | `REISSUE_REQUEST_ALREADY_OPEN`                          |
+| VR-CERT-027 | A request must not directly create a replacement certificate.                                                 | `REISSUE_APPROVAL_REQUIRED`                             |
+| VR-CERT-028 | `requestedBy` is derived from authenticated identity, never trusted from request body.                        | `VALIDATION_ERROR` if supplied in prohibited body shape |
 
 ---
 
@@ -401,15 +401,15 @@ interface RevokeCertificateCommand {
 
 Rules:
 
-| Rule ID | Rule | Failure Code |
-|---|---|---|
-| VR-CERT-030 | Actor must have `certificate.revoke`. | `PERMISSION_DENIED` |
-| VR-CERT-031 | Certificate must be inside effective scope unless actor has explicitly approved global compliance authority. | `BRANCH_SCOPE_DENIED` |
-| VR-CERT-032 | Reason is mandatory, 10–1000 characters. | `REVOCATION_REASON_REQUIRED` / `REVOCATION_REASON_INVALID_LENGTH` |
-| VR-CERT-033 | Current state must allow revocation. | `INVALID_STATE_TRANSITION` |
-| VR-CERT-034 | Already revoked certificate cannot be revoked again as a new transition. | `CERTIFICATE_ALREADY_REVOKED` |
-| VR-CERT-035 | Expected version must match. | `VERSION_CONFLICT` |
-| VR-CERT-036 | Public verification must resolve revoked certificate as `REVOKED`. | `CERTIFICATE_INTEGRITY_ERROR` if postcondition fails |
+| Rule ID     | Rule                                                                                                         | Failure Code                                                      |
+| ----------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| VR-CERT-030 | Actor must have `certificate.revoke`.                                                                        | `PERMISSION_DENIED`                                               |
+| VR-CERT-031 | Certificate must be inside effective scope unless actor has explicitly approved global compliance authority. | `BRANCH_SCOPE_DENIED`                                             |
+| VR-CERT-032 | Reason is mandatory, 10–1000 characters.                                                                     | `REVOCATION_REASON_REQUIRED` / `REVOCATION_REASON_INVALID_LENGTH` |
+| VR-CERT-033 | Current state must allow revocation.                                                                         | `INVALID_STATE_TRANSITION`                                        |
+| VR-CERT-034 | Already revoked certificate cannot be revoked again as a new transition.                                     | `CERTIFICATE_ALREADY_REVOKED`                                     |
+| VR-CERT-035 | Expected version must match.                                                                                 | `VERSION_CONFLICT`                                                |
+| VR-CERT-036 | Public verification must resolve revoked certificate as `REVOKED`.                                           | `CERTIFICATE_INTEGRITY_ERROR` if postcondition fails              |
 
 **ER gap:** The ER supports `certificateStatus` but does not define structured `revokedAt`, `revokedBy`, or `revocationReason`. Until schema extension is approved, reason and actor evidence must be preserved in AuditLog/Approval history as applicable; this document does not invent Certificate columns.
 
@@ -487,68 +487,68 @@ Rules:
 
 ## 4.2 Comprehensive Validation Ownership Matrix
 
-| Validation Rule ID | Validation Rule | Classification | Owning Context / Kernel | Certificate Responsibility |
-|---|---|---|---|---|
-| VR-CERT-001 | Enrollment must exist. | DELEGATED | Admission & Enrollment | Request authoritative read; do not duplicate Enrollment. |
-| VR-CERT-002 | Enrollment source references must resolve. | DELEGATED | Admission & Enrollment plus owning reference contexts | Consume source projection/read contract. |
-| VR-CERT-003 | Certificate student/course/batch/branch must describe the same enrollment journey. | MODULE | Certificate Management | Validate consistency before persistence. |
-| VR-CERT-004 | Completion must be approved. | DELEGATED | Exam, Result & Completion | Consume approved completion decision only. |
-| VR-CERT-005 | Required payment validation must pass. | DELEGATED | Finance & Receivables | Consume payment-validation decision only. |
-| VR-CERT-006 | No duplicate active normal certificate for same enrollment. | MODULE | Certificate Management | Enforce aggregate/repository uniqueness strategy. |
-| VR-CERT-007 | Certificate language is supported. | MODULE + SHARED-KERNEL ONLY | Certificate owns allowed artifact languages; locale type may be shared | Validate `en`/`ar`; shared locale parsing only. |
-| VR-CERT-008 | Active certificate numbering series must exist. | DELEGATED | Configuration / Master Data | Request allocation; fail safely if unavailable. |
-| VR-CERT-009 | Actor has generation permission. | DELEGATED | IAM | Enforce IAM decision. |
-| VR-CERT-010 | Target branch is in effective scope. | DELEGATED | IAM | Enforce scope; never trust request branch alone. |
-| VR-CERT-011 | Certificate exists and is visible. | MODULE + DELEGATED scope | Certificate + IAM | Repository lookup constrained by scope. |
-| VR-CERT-012 | Actor may issue. | DELEGATED | IAM | Require `certificate.issue`. |
-| VR-CERT-013 | Current certificate state permits issuance. | MODULE | Certificate Management | State-machine guard. |
-| VR-CERT-014 | Certificate artifact is available before issuance/download. | MODULE with Storage infrastructure dependency | Certificate Management | Verify owned artifact reference/storage outcome. |
-| VR-CERT-015 | Certificate number and verification code integrity holds. | MODULE | Certificate Management | Enforce required and unique values. |
-| VR-CERT-016 | Completion approval remains valid at issue time. | DELEGATED | Exam, Result & Completion | Revalidate current authoritative decision. |
-| VR-CERT-017 | Payment gate remains valid at issue time. | DELEGATED | Finance & Receivables | Revalidate current authoritative decision. |
-| VR-CERT-018 | Aggregate version matches. | SHARED-KERNEL ONLY + MODULE enforcement | Shared persistence convention; Certificate aggregate | Compare and reject stale writes. |
-| VR-CERT-019 | Idempotency key semantics hold. | SHARED-KERNEL ONLY + MODULE command semantics | Shared application infrastructure; Certificate command handler | Bind key to command payload/result. |
-| VR-CERT-020 | Reissue certificate reference exists. | MODULE | Certificate Management | Validate owned aggregate reference. |
-| VR-CERT-021 | Reissue requester is authenticated. | DELEGATED | IAM/platform auth | Require valid identity. |
-| VR-CERT-022 | Requester has reissue entitlement. | DELEGATED | IAM | Enforce permission/self entitlement. |
-| VR-CERT-023 | Student requester owns the target certificate journey. | DELEGATED + MODULE mapping | IAM/Person/Enrollment truth; Certificate query | Resolve self scope without duplicating identity. |
-| VR-CERT-024 | Reissue reason is mandatory. | MODULE | Certificate Management | Validate normalized reason. |
-| VR-CERT-025 | Reissue reason length is 10–1000. | MODULE | Certificate Management | Enforce field rule. |
-| VR-CERT-026 | Only one non-terminal reissue request per original certificate. | MODULE | Certificate Management | Enforce query/constraint transactionally. |
-| VR-CERT-027 | Reissue request cannot directly create replacement. | MODULE | Certificate Management | Require approval state first. |
-| VR-CERT-028 | `requestedBy` comes from auth identity. | DELEGATED identity + MODULE assignment | IAM + Certificate | Server assigns requester. |
-| VR-CERT-029 | Reissue approval history is authoritative outside Certificate transaction fields. | DELEGATED | Audit & Compliance | Submit approval/audit evidence; do not own ApprovalHistory. |
-| VR-CERT-030 | Revoker has permission. | DELEGATED | IAM | Require `certificate.revoke`. |
-| VR-CERT-031 | Revocation target is in allowed branch/global scope. | DELEGATED | IAM | Enforce decision. |
-| VR-CERT-032 | Revocation reason is mandatory and bounded. | MODULE | Certificate Management | Validate command; preserve evidence through Audit gap strategy. |
-| VR-CERT-033 | Current lifecycle state permits revocation. | MODULE | Certificate Management | State-machine guard. |
-| VR-CERT-034 | Repeated revocation is rejected/idempotently represented. | MODULE | Certificate Management | Prevent duplicate state transition. |
-| VR-CERT-035 | Revocation version matches. | SHARED-KERNEL ONLY + MODULE | Shared persistence convention + Certificate | Optimistic concurrency. |
-| VR-CERT-036 | Revoked certificate cannot verify as valid. | MODULE | Certificate Management | Public/internal verification postcondition. |
-| VR-CERT-037 | Public verification input is an opaque code only. | MODULE | Certificate Management | Reject PII-based lookup alternatives. |
-| VR-CERT-038 | Public response is privacy-minimized. | MODULE with security policy | Certificate Management | Return approved DTO only. |
-| VR-CERT-039 | Public endpoint rate limit is satisfied. | SHARED-KERNEL ONLY / platform security | Platform security/infrastructure | Apply policy; Certificate defines need, not rate-limit storage model. |
-| VR-CERT-040 | Verification attempt retention/privacy policy is respected. | DELEGATED policy + MODULE record | Security/compliance policy; CertificateVerification owner | Persist only approved fields/retention. |
-| VR-CERT-041 | Notification recipient exists and contact destination is authoritative. | DELEGATED | Communication + Person/Enrollment | Pass person reference; Communication resolves channel/contact policy. |
-| VR-CERT-042 | Notification payload excludes prohibited PII/finance/assessment data. | MODULE + SHARED security policy | Certificate producer + shared security policy | Minimize payload. |
-| VR-CERT-043 | Notification template exists and is active. | DELEGATED | Communication & Notification | Communication validates. |
-| VR-CERT-044 | Notification provider delivery succeeds. | DELEGATED | Communication & Notification | Never reinterpret delivery state. |
-| VR-CERT-045 | Sensitive lifecycle action is auditable. | DELEGATED persistence, MODULE trigger obligation | Audit & Compliance | Emit/submit audit command after/beside transaction per architecture. |
-| VR-CERT-046 | Audit record contains who/what/when/old/new/reason where applicable. | DELEGATED | Audit & Compliance | Supply required event facts; Audit owns record. |
-| VR-CERT-047 | Registry pagination values are bounded. | SHARED-KERNEL ONLY + MODULE endpoint rule | Shared API convention / Certificate API | Validate query. |
-| VR-CERT-048 | Search/sort fields use allow-list. | MODULE | Certificate Management | Prevent unsupported/unsafe query construction. |
-| VR-CERT-049 | Consolidated report scope requires permission and consolidated entitlement. | DELEGATED | IAM + Reporting | Enforce before query/report request. |
-| VR-CERT-050 | Report calculation does not mutate certificates. | DELEGATED ownership boundary | Reporting & Dashboards | Publish facts/read only; no transactional write API. |
-| VR-CERT-051 | Artifact and language rendering use current hardcoded template policy. | MODULE | Certificate Management | No template CRUD/configuration model. |
-| VR-CERT-052 | QR payload contains no direct PII. | MODULE | Certificate Management | Encode opaque verification reference only. |
-| VR-CERT-053 | Replacement request is approved before generation. | MODULE | Certificate Management | State guard, with approval evidence integration. |
-| VR-CERT-054 | `newCertificateId` is empty before first replacement generation. | MODULE | Certificate Management | Prevent duplicate replacement. |
-| VR-CERT-055 | Replacement receives unique number and verification code. | MODULE + DELEGATED numbering | Certificate + Configuration | Allocate/validate uniqueness. |
-| VR-CERT-056 | Original and replacement lineage remains queryable. | MODULE | Certificate Management | Preserve request link and records; no hard delete. |
-| VR-CERT-057 | Soft-deleted operational records are excluded from ordinary views. | SHARED-KERNEL ONLY + MODULE repository policy | Shared repo convention / Certificate | Apply standard soft-delete filter. |
-| VR-CERT-058 | No hard-delete command exists. | MODULE architecture rule | Certificate Management | Do not expose DELETE transaction APIs. |
-| VR-CERT-059 | API timestamps use ISO-8601 UTC. | SHARED-KERNEL ONLY | Shared API/date-time kernel | Serialize consistently. |
-| VR-CERT-060 | Business display timezone is `Asia/Muscat` by default. | SHARED-KERNEL ONLY / localization policy | Shared localization/config | UI/report display conversion; persistence remains UTC. |
+| Validation Rule ID | Validation Rule                                                                    | Classification                                   | Owning Context / Kernel                                                | Certificate Responsibility                                            |
+| ------------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| VR-CERT-001        | Enrollment must exist.                                                             | DELEGATED                                        | Admission & Enrollment                                                 | Request authoritative read; do not duplicate Enrollment.              |
+| VR-CERT-002        | Enrollment source references must resolve.                                         | DELEGATED                                        | Admission & Enrollment plus owning reference contexts                  | Consume source projection/read contract.                              |
+| VR-CERT-003        | Certificate student/course/batch/branch must describe the same enrollment journey. | MODULE                                           | Certificate Management                                                 | Validate consistency before persistence.                              |
+| VR-CERT-004        | Completion must be approved.                                                       | DELEGATED                                        | Exam, Result & Completion                                              | Consume approved completion decision only.                            |
+| VR-CERT-005        | Required payment validation must pass.                                             | DELEGATED                                        | Finance & Receivables                                                  | Consume payment-validation decision only.                             |
+| VR-CERT-006        | No duplicate active normal certificate for same enrollment.                        | MODULE                                           | Certificate Management                                                 | Enforce aggregate/repository uniqueness strategy.                     |
+| VR-CERT-007        | Certificate language is supported.                                                 | MODULE + SHARED-KERNEL ONLY                      | Certificate owns allowed artifact languages; locale type may be shared | Validate `en`/`ar`; shared locale parsing only.                       |
+| VR-CERT-008        | Active certificate numbering series must exist.                                    | DELEGATED                                        | Configuration / Master Data                                            | Request allocation; fail safely if unavailable.                       |
+| VR-CERT-009        | Actor has generation permission.                                                   | DELEGATED                                        | IAM                                                                    | Enforce IAM decision.                                                 |
+| VR-CERT-010        | Target branch is in effective scope.                                               | DELEGATED                                        | IAM                                                                    | Enforce scope; never trust request branch alone.                      |
+| VR-CERT-011        | Certificate exists and is visible.                                                 | MODULE + DELEGATED scope                         | Certificate + IAM                                                      | Repository lookup constrained by scope.                               |
+| VR-CERT-012        | Actor may issue.                                                                   | DELEGATED                                        | IAM                                                                    | Require `certificate.issue`.                                          |
+| VR-CERT-013        | Current certificate state permits issuance.                                        | MODULE                                           | Certificate Management                                                 | State-machine guard.                                                  |
+| VR-CERT-014        | Certificate artifact is available before issuance/download.                        | MODULE with Storage infrastructure dependency    | Certificate Management                                                 | Verify owned artifact reference/storage outcome.                      |
+| VR-CERT-015        | Certificate number and verification code integrity holds.                          | MODULE                                           | Certificate Management                                                 | Enforce required and unique values.                                   |
+| VR-CERT-016        | Completion approval remains valid at issue time.                                   | DELEGATED                                        | Exam, Result & Completion                                              | Revalidate current authoritative decision.                            |
+| VR-CERT-017        | Payment gate remains valid at issue time.                                          | DELEGATED                                        | Finance & Receivables                                                  | Revalidate current authoritative decision.                            |
+| VR-CERT-018        | Aggregate version matches.                                                         | SHARED-KERNEL ONLY + MODULE enforcement          | Shared persistence convention; Certificate aggregate                   | Compare and reject stale writes.                                      |
+| VR-CERT-019        | Idempotency key semantics hold.                                                    | SHARED-KERNEL ONLY + MODULE command semantics    | Shared application infrastructure; Certificate command handler         | Bind key to command payload/result.                                   |
+| VR-CERT-020        | Reissue certificate reference exists.                                              | MODULE                                           | Certificate Management                                                 | Validate owned aggregate reference.                                   |
+| VR-CERT-021        | Reissue requester is authenticated.                                                | DELEGATED                                        | IAM/platform auth                                                      | Require valid identity.                                               |
+| VR-CERT-022        | Requester has reissue entitlement.                                                 | DELEGATED                                        | IAM                                                                    | Enforce permission/self entitlement.                                  |
+| VR-CERT-023        | Student requester owns the target certificate journey.                             | DELEGATED + MODULE mapping                       | IAM/Person/Enrollment truth; Certificate query                         | Resolve self scope without duplicating identity.                      |
+| VR-CERT-024        | Reissue reason is mandatory.                                                       | MODULE                                           | Certificate Management                                                 | Validate normalized reason.                                           |
+| VR-CERT-025        | Reissue reason length is 10–1000.                                                  | MODULE                                           | Certificate Management                                                 | Enforce field rule.                                                   |
+| VR-CERT-026        | Only one non-terminal reissue request per original certificate.                    | MODULE                                           | Certificate Management                                                 | Enforce query/constraint transactionally.                             |
+| VR-CERT-027        | Reissue request cannot directly create replacement.                                | MODULE                                           | Certificate Management                                                 | Require approval state first.                                         |
+| VR-CERT-028        | `requestedBy` comes from auth identity.                                            | DELEGATED identity + MODULE assignment           | IAM + Certificate                                                      | Server assigns requester.                                             |
+| VR-CERT-029        | Reissue approval history is authoritative outside Certificate transaction fields.  | DELEGATED                                        | Audit & Compliance                                                     | Submit approval/audit evidence; do not own ApprovalHistory.           |
+| VR-CERT-030        | Revoker has permission.                                                            | DELEGATED                                        | IAM                                                                    | Require `certificate.revoke`.                                         |
+| VR-CERT-031        | Revocation target is in allowed branch/global scope.                               | DELEGATED                                        | IAM                                                                    | Enforce decision.                                                     |
+| VR-CERT-032        | Revocation reason is mandatory and bounded.                                        | MODULE                                           | Certificate Management                                                 | Validate command; preserve evidence through Audit gap strategy.       |
+| VR-CERT-033        | Current lifecycle state permits revocation.                                        | MODULE                                           | Certificate Management                                                 | State-machine guard.                                                  |
+| VR-CERT-034        | Repeated revocation is rejected/idempotently represented.                          | MODULE                                           | Certificate Management                                                 | Prevent duplicate state transition.                                   |
+| VR-CERT-035        | Revocation version matches.                                                        | SHARED-KERNEL ONLY + MODULE                      | Shared persistence convention + Certificate                            | Optimistic concurrency.                                               |
+| VR-CERT-036        | Revoked certificate cannot verify as valid.                                        | MODULE                                           | Certificate Management                                                 | Public/internal verification postcondition.                           |
+| VR-CERT-037        | Public verification input is an opaque code only.                                  | MODULE                                           | Certificate Management                                                 | Reject PII-based lookup alternatives.                                 |
+| VR-CERT-038        | Public response is privacy-minimized.                                              | MODULE with security policy                      | Certificate Management                                                 | Return approved DTO only.                                             |
+| VR-CERT-039        | Public endpoint rate limit is satisfied.                                           | SHARED-KERNEL ONLY / platform security           | Platform security/infrastructure                                       | Apply policy; Certificate defines need, not rate-limit storage model. |
+| VR-CERT-040        | Verification attempt retention/privacy policy is respected.                        | DELEGATED policy + MODULE record                 | Security/compliance policy; CertificateVerification owner              | Persist only approved fields/retention.                               |
+| VR-CERT-041        | Notification recipient exists and contact destination is authoritative.            | DELEGATED                                        | Communication + Person/Enrollment                                      | Pass person reference; Communication resolves channel/contact policy. |
+| VR-CERT-042        | Notification payload excludes prohibited PII/finance/assessment data.              | MODULE + SHARED security policy                  | Certificate producer + shared security policy                          | Minimize payload.                                                     |
+| VR-CERT-043        | Notification template exists and is active.                                        | DELEGATED                                        | Communication & Notification                                           | Communication validates.                                              |
+| VR-CERT-044        | Notification provider delivery succeeds.                                           | DELEGATED                                        | Communication & Notification                                           | Never reinterpret delivery state.                                     |
+| VR-CERT-045        | Sensitive lifecycle action is auditable.                                           | DELEGATED persistence, MODULE trigger obligation | Audit & Compliance                                                     | Emit/submit audit command after/beside transaction per architecture.  |
+| VR-CERT-046        | Audit record contains who/what/when/old/new/reason where applicable.               | DELEGATED                                        | Audit & Compliance                                                     | Supply required event facts; Audit owns record.                       |
+| VR-CERT-047        | Registry pagination values are bounded.                                            | SHARED-KERNEL ONLY + MODULE endpoint rule        | Shared API convention / Certificate API                                | Validate query.                                                       |
+| VR-CERT-048        | Search/sort fields use allow-list.                                                 | MODULE                                           | Certificate Management                                                 | Prevent unsupported/unsafe query construction.                        |
+| VR-CERT-049        | Consolidated report scope requires permission and consolidated entitlement.        | DELEGATED                                        | IAM + Reporting                                                        | Enforce before query/report request.                                  |
+| VR-CERT-050        | Report calculation does not mutate certificates.                                   | DELEGATED ownership boundary                     | Reporting & Dashboards                                                 | Publish facts/read only; no transactional write API.                  |
+| VR-CERT-051        | Artifact and language rendering use current hardcoded template policy.             | MODULE                                           | Certificate Management                                                 | No template CRUD/configuration model.                                 |
+| VR-CERT-052        | QR payload contains no direct PII.                                                 | MODULE                                           | Certificate Management                                                 | Encode opaque verification reference only.                            |
+| VR-CERT-053        | Replacement request is approved before generation.                                 | MODULE                                           | Certificate Management                                                 | State guard, with approval evidence integration.                      |
+| VR-CERT-054        | `newCertificateId` is empty before first replacement generation.                   | MODULE                                           | Certificate Management                                                 | Prevent duplicate replacement.                                        |
+| VR-CERT-055        | Replacement receives unique number and verification code.                          | MODULE + DELEGATED numbering                     | Certificate + Configuration                                            | Allocate/validate uniqueness.                                         |
+| VR-CERT-056        | Original and replacement lineage remains queryable.                                | MODULE                                           | Certificate Management                                                 | Preserve request link and records; no hard delete.                    |
+| VR-CERT-057        | Soft-deleted operational records are excluded from ordinary views.                 | SHARED-KERNEL ONLY + MODULE repository policy    | Shared repo convention / Certificate                                   | Apply standard soft-delete filter.                                    |
+| VR-CERT-058        | No hard-delete command exists.                                                     | MODULE architecture rule                         | Certificate Management                                                 | Do not expose DELETE transaction APIs.                                |
+| VR-CERT-059        | API timestamps use ISO-8601 UTC.                                                   | SHARED-KERNEL ONLY                               | Shared API/date-time kernel                                            | Serialize consistently.                                               |
+| VR-CERT-060        | Business display timezone is `Asia/Muscat` by default.                             | SHARED-KERNEL ONLY / localization policy         | Shared localization/config                                             | UI/report display conversion; persistence remains UTC.                |
 
 ---
 
@@ -585,88 +585,88 @@ interface ApiError {
 
 ## 5.2 Transport and Authentication Errors
 
-| HTTP | Error Code | Trigger | Client Action |
-|---:|---|---|---|
-| 400 | `VALIDATION_ERROR` | One or more request fields fail schema validation. | Correct highlighted fields. |
-| 400 | `INVALID_DATE_RANGE` | `from` is after `to` or range violates endpoint policy. | Correct date range. |
-| 400 | `UNSUPPORTED_SORT_FIELD` | Sort field not in allow-list. | Use documented sort field. |
-| 400 | `UNSUPPORTED_CERTIFICATE_LANGUAGE` | Language is not `en` or `ar`. | Select supported language. |
-| 401 | `UNAUTHENTICATED` | Missing/invalid session on protected route. | Reauthenticate. |
-| 403 | `PERMISSION_DENIED` | Required fine-grained permission absent. | Request authorized access; do not retry unchanged. |
-| 403 | `BRANCH_SCOPE_DENIED` | Resource branch outside effective IAM scope. | Change to authorized branch/resource. |
-| 403 | `CONSOLIDATED_SCOPE_DENIED` | Consolidated entitlement absent. | Use branch-level view or request entitlement. |
-| 404 | `NOT_FOUND` | Resource absent or intentionally concealed. | Refresh/search authorized scope. |
-| 415 | `UNSUPPORTED_MEDIA_TYPE` | Invalid request media type. | Send supported content type. |
-| 429 | `RATE_LIMIT_EXCEEDED` | Public verification abuse threshold exceeded. | Retry after policy window. |
+| HTTP | Error Code                         | Trigger                                                 | Client Action                                      |
+| ---: | ---------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
+|  400 | `VALIDATION_ERROR`                 | One or more request fields fail schema validation.      | Correct highlighted fields.                        |
+|  400 | `INVALID_DATE_RANGE`               | `from` is after `to` or range violates endpoint policy. | Correct date range.                                |
+|  400 | `UNSUPPORTED_SORT_FIELD`           | Sort field not in allow-list.                           | Use documented sort field.                         |
+|  400 | `UNSUPPORTED_CERTIFICATE_LANGUAGE` | Language is not `en` or `ar`.                           | Select supported language.                         |
+|  401 | `UNAUTHENTICATED`                  | Missing/invalid session on protected route.             | Reauthenticate.                                    |
+|  403 | `PERMISSION_DENIED`                | Required fine-grained permission absent.                | Request authorized access; do not retry unchanged. |
+|  403 | `BRANCH_SCOPE_DENIED`              | Resource branch outside effective IAM scope.            | Change to authorized branch/resource.              |
+|  403 | `CONSOLIDATED_SCOPE_DENIED`        | Consolidated entitlement absent.                        | Use branch-level view or request entitlement.      |
+|  404 | `NOT_FOUND`                        | Resource absent or intentionally concealed.             | Refresh/search authorized scope.                   |
+|  415 | `UNSUPPORTED_MEDIA_TYPE`           | Invalid request media type.                             | Send supported content type.                       |
+|  429 | `RATE_LIMIT_EXCEEDED`              | Public verification abuse threshold exceeded.           | Retry after policy window.                         |
 
 ## 5.3 Certificate Eligibility and Generation Errors
 
-| HTTP | Error Code | Trigger | Owner | Retryability |
-|---:|---|---|---|---|
-| 404 | `ENROLLMENT_NOT_FOUND` | Enrollment reference cannot be resolved for authorized internal command. | Enrollment | No until data corrected |
-| 422 | `SOURCE_REFERENCE_INCOMPLETE` | Required student/course/batch/branch reference missing. | Enrollment/reference owners + Certificate orchestration | No until source corrected |
-| 422 | `SOURCE_REFERENCE_INCONSISTENT` | Certificate source references do not correspond to same enrollment journey. | Certificate | No; investigate integrity |
-| 422 | `COMPLETION_NOT_APPROVED` | Completion context does not report approved completion. | Completion | Yes after upstream state changes |
-| 422 | `PAYMENT_VALIDATION_FAILED` | Required Finance gate not passed. | Finance | Yes after Finance state changes |
-| 422 | `CERTIFICATE_NOT_ELIGIBLE` | One or more authoritative gates block generation. | Orchestration summary | Conditional |
-| 409 | `DUPLICATE_ACTIVE_CERTIFICATE` | Normal generation would create duplicate active certificate. | Certificate | No; use existing or approved reissue flow |
-| 503 | `CERTIFICATE_NUMBERING_UNAVAILABLE` | NumberingSeries unavailable/inactive or allocation service fails. | Configuration | Yes after configuration/service recovery |
-| 409 | `CERTIFICATE_NUMBER_CONFLICT` | Allocated/persisted number violates uniqueness. | Certificate + Configuration investigation | Retry only via safe allocation logic |
-| 409 | `VERIFICATION_CODE_CONFLICT` | Generated verification code collides. | Certificate | Internally retry bounded generation; surface only if exhausted |
-| 422 | `CERTIFICATE_RENDER_FAILED` | Artifact rendering failed. | Certificate/infrastructure | Retry according to operation policy |
-| 422 | `CERTIFICATE_ARTIFACT_UNAVAILABLE` | Required generated artifact missing/unavailable. | Certificate/infrastructure | Conditional |
-| 409 | `CERTIFICATE_INTEGRITY_ERROR` | Invariant/postcondition failure. | Certificate | No blind retry; investigate |
+| HTTP | Error Code                          | Trigger                                                                     | Owner                                                   | Retryability                                                   |
+| ---: | ----------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------- |
+|  404 | `ENROLLMENT_NOT_FOUND`              | Enrollment reference cannot be resolved for authorized internal command.    | Enrollment                                              | No until data corrected                                        |
+|  422 | `SOURCE_REFERENCE_INCOMPLETE`       | Required student/course/batch/branch reference missing.                     | Enrollment/reference owners + Certificate orchestration | No until source corrected                                      |
+|  422 | `SOURCE_REFERENCE_INCONSISTENT`     | Certificate source references do not correspond to same enrollment journey. | Certificate                                             | No; investigate integrity                                      |
+|  422 | `COMPLETION_NOT_APPROVED`           | Completion context does not report approved completion.                     | Completion                                              | Yes after upstream state changes                               |
+|  422 | `PAYMENT_VALIDATION_FAILED`         | Required Finance gate not passed.                                           | Finance                                                 | Yes after Finance state changes                                |
+|  422 | `CERTIFICATE_NOT_ELIGIBLE`          | One or more authoritative gates block generation.                           | Orchestration summary                                   | Conditional                                                    |
+|  409 | `DUPLICATE_ACTIVE_CERTIFICATE`      | Normal generation would create duplicate active certificate.                | Certificate                                             | No; use existing or approved reissue flow                      |
+|  503 | `CERTIFICATE_NUMBERING_UNAVAILABLE` | NumberingSeries unavailable/inactive or allocation service fails.           | Configuration                                           | Yes after configuration/service recovery                       |
+|  409 | `CERTIFICATE_NUMBER_CONFLICT`       | Allocated/persisted number violates uniqueness.                             | Certificate + Configuration investigation               | Retry only via safe allocation logic                           |
+|  409 | `VERIFICATION_CODE_CONFLICT`        | Generated verification code collides.                                       | Certificate                                             | Internally retry bounded generation; surface only if exhausted |
+|  422 | `CERTIFICATE_RENDER_FAILED`         | Artifact rendering failed.                                                  | Certificate/infrastructure                              | Retry according to operation policy                            |
+|  422 | `CERTIFICATE_ARTIFACT_UNAVAILABLE`  | Required generated artifact missing/unavailable.                            | Certificate/infrastructure                              | Conditional                                                    |
+|  409 | `CERTIFICATE_INTEGRITY_ERROR`       | Invariant/postcondition failure.                                            | Certificate                                             | No blind retry; investigate                                    |
 
 ## 5.4 Lifecycle and Concurrency Errors
 
-| HTTP | Error Code | Trigger | Client Behavior |
-|---:|---|---|---|
-| 409 | `INVALID_STATE_TRANSITION` | Requested from/to status transition is not permitted. | Refresh detail and show current status. |
-| 409 | `VERSION_CONFLICT` | Expected aggregate version is stale. | Reload current record; require user review before retry. |
-| 409 | `IDEMPOTENCY_KEY_CONFLICT` | Same key reused with different payload. | Generate a new key for a genuinely new command. |
-| 409 | `CERTIFICATE_ALREADY_ISSUED` | Issue command targets already-issued certificate and is not an idempotent replay. | Show current issued state. |
-| 409 | `CERTIFICATE_ALREADY_REVOKED` | Revocation command targets already revoked state. | Show revoked state; no new mutation. |
-| 422 | `REVOCATION_REASON_REQUIRED` | Normalized reason empty. | Enter reason. |
-| 422 | `REVOCATION_REASON_INVALID_LENGTH` | Reason outside 10–1000 chars. | Correct input. |
+| HTTP | Error Code                         | Trigger                                                                           | Client Behavior                                          |
+| ---: | ---------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------- |
+|  409 | `INVALID_STATE_TRANSITION`         | Requested from/to status transition is not permitted.                             | Refresh detail and show current status.                  |
+|  409 | `VERSION_CONFLICT`                 | Expected aggregate version is stale.                                              | Reload current record; require user review before retry. |
+|  409 | `IDEMPOTENCY_KEY_CONFLICT`         | Same key reused with different payload.                                           | Generate a new key for a genuinely new command.          |
+|  409 | `CERTIFICATE_ALREADY_ISSUED`       | Issue command targets already-issued certificate and is not an idempotent replay. | Show current issued state.                               |
+|  409 | `CERTIFICATE_ALREADY_REVOKED`      | Revocation command targets already revoked state.                                 | Show revoked state; no new mutation.                     |
+|  422 | `REVOCATION_REASON_REQUIRED`       | Normalized reason empty.                                                          | Enter reason.                                            |
+|  422 | `REVOCATION_REASON_INVALID_LENGTH` | Reason outside 10–1000 chars.                                                     | Correct input.                                           |
 
 ## 5.5 Reissue and Replacement Errors
 
-| HTTP | Error Code | Trigger | Client Behavior |
-|---:|---|---|---|
-| 422 | `REISSUE_REASON_REQUIRED` | Reason empty after trim. | Enter meaningful reason. |
-| 422 | `REISSUE_REASON_INVALID_LENGTH` | Reason outside 10–1000 chars. | Correct reason length. |
-| 409 | `REISSUE_REQUEST_ALREADY_OPEN` | Existing non-terminal request for original certificate. | Navigate to existing request. |
-| 422 | `REISSUE_APPROVAL_REQUIRED` | Attempt to create replacement without approved request. | Complete approval workflow. |
-| 422 | `REISSUE_NOT_APPROVED` | Replacement generation target is not approved. | Wait for/complete approval. |
-| 409 | `REISSUE_REQUEST_TERMINAL` | Decision command targets terminal request. | Refresh; show final decision. |
-| 422 | `REISSUE_REJECTION_REMARKS_REQUIRED` | Rejection submitted without required remarks. | Enter rejection reason. |
-| 409 | `REPLACEMENT_ALREADY_GENERATED` | `newCertificateId` already present or transaction already completed. | Open existing replacement. |
-| 409 | `REPLACEMENT_LINEAGE_CONFLICT` | Lineage relationship conflicts with authoritative request state. | Investigate; no blind retry. |
+| HTTP | Error Code                           | Trigger                                                              | Client Behavior               |
+| ---: | ------------------------------------ | -------------------------------------------------------------------- | ----------------------------- |
+|  422 | `REISSUE_REASON_REQUIRED`            | Reason empty after trim.                                             | Enter meaningful reason.      |
+|  422 | `REISSUE_REASON_INVALID_LENGTH`      | Reason outside 10–1000 chars.                                        | Correct reason length.        |
+|  409 | `REISSUE_REQUEST_ALREADY_OPEN`       | Existing non-terminal request for original certificate.              | Navigate to existing request. |
+|  422 | `REISSUE_APPROVAL_REQUIRED`          | Attempt to create replacement without approved request.              | Complete approval workflow.   |
+|  422 | `REISSUE_NOT_APPROVED`               | Replacement generation target is not approved.                       | Wait for/complete approval.   |
+|  409 | `REISSUE_REQUEST_TERMINAL`           | Decision command targets terminal request.                           | Refresh; show final decision. |
+|  422 | `REISSUE_REJECTION_REMARKS_REQUIRED` | Rejection submitted without required remarks.                        | Enter rejection reason.       |
+|  409 | `REPLACEMENT_ALREADY_GENERATED`      | `newCertificateId` already present or transaction already completed. | Open existing replacement.    |
+|  409 | `REPLACEMENT_LINEAGE_CONFLICT`       | Lineage relationship conflicts with authoritative request state.     | Investigate; no blind retry.  |
 
 ## 5.6 Verification Errors and Public Outcomes
 
 Internal verification may use structured errors; public verification should minimize distinguishability.
 
-| Surface | Condition | Response |
-|---|---|---|
-| Public | Code valid and active | `status=VALID` with approved public facts |
-| Public | Code resolves revoked certificate | `status=REVOKED` |
-| Public | Code resolves replacement/superseded policy | `status=REPLACED`, only after lineage policy is formally resolved |
-| Public | Code invalid or not found | `status=INVALID_OR_NOT_FOUND` |
-| Public | Rate limit exceeded | HTTP 429 with generic message; no certificate details |
-| Internal | Certificate missing in authorized scope | `NOT_FOUND` |
+| Surface  | Condition                                                            | Response                                                                                       |
+| -------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Public   | Code valid and active                                                | `status=VALID` with approved public facts                                                      |
+| Public   | Code resolves revoked certificate                                    | `status=REVOKED`                                                                               |
+| Public   | Code resolves replacement/superseded policy                          | `status=REPLACED`, only after lineage policy is formally resolved                              |
+| Public   | Code invalid or not found                                            | `status=INVALID_OR_NOT_FOUND`                                                                  |
+| Public   | Rate limit exceeded                                                  | HTTP 429 with generic message; no certificate details                                          |
+| Internal | Certificate missing in authorized scope                              | `NOT_FOUND`                                                                                    |
 | Internal | Verification persistence fails but authoritative validation succeeds | Verification result policy plus observability alert; exact failure mode belongs in NFR/runbook |
 
 ## 5.7 Integration Errors
 
-| HTTP / Handling | Error Code | Trigger | Boundary Rule |
-|---|---|---|---|
-| 503 | `COMPLETION_SERVICE_UNAVAILABLE` | Completion read port unavailable in modular application/runtime dependency. | Do not infer eligibility locally. |
-| 503 | `PAYMENT_VALIDATION_UNAVAILABLE` | Finance validation decision unavailable. | Fail closed when payment gate is required. |
-| 503 | `NUMBERING_SERVICE_UNAVAILABLE` | Number allocation unavailable. | Do not invent ad hoc number. |
-| 500/operational retry | `AUDIT_RECORDING_FAILED` | Required audit boundary fails. | Sensitive action consistency policy must be defined in architecture; do not silently ignore. |
-| asynchronous/operational | `NOTIFICATION_REQUEST_FAILED` | Communication request not accepted. | Certificate transaction remains committed; retry/operational handling per architecture. |
-| asynchronous/operational | `REPORTING_PUBLICATION_FAILED` | Reporting lifecycle fact publication fails. | Core Certificate transaction remains source of truth; repair read model. |
+| HTTP / Handling          | Error Code                       | Trigger                                                                     | Boundary Rule                                                                                |
+| ------------------------ | -------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 503                      | `COMPLETION_SERVICE_UNAVAILABLE` | Completion read port unavailable in modular application/runtime dependency. | Do not infer eligibility locally.                                                            |
+| 503                      | `PAYMENT_VALIDATION_UNAVAILABLE` | Finance validation decision unavailable.                                    | Fail closed when payment gate is required.                                                   |
+| 503                      | `NUMBERING_SERVICE_UNAVAILABLE`  | Number allocation unavailable.                                              | Do not invent ad hoc number.                                                                 |
+| 500/operational retry    | `AUDIT_RECORDING_FAILED`         | Required audit boundary fails.                                              | Sensitive action consistency policy must be defined in architecture; do not silently ignore. |
+| asynchronous/operational | `NOTIFICATION_REQUEST_FAILED`    | Communication request not accepted.                                         | Certificate transaction remains committed; retry/operational handling per architecture.      |
+| asynchronous/operational | `REPORTING_PUBLICATION_FAILED`   | Reporting lifecycle fact publication fails.                                 | Core Certificate transaction remains source of truth; repair read model.                     |
 
 ---
 
@@ -709,28 +709,28 @@ For Certificate Management:
 
 ## 6.3 System Notification Event Matrix
 
-| Source Domain Event / Fact | Notification Request | Recipient | Default Channels | Trigger Condition | Payload Minimum | Owner of Delivery |
-|---|---|---|---|---|---|---|
-| `CertificateEligible` | `CERTIFICATE_ELIGIBLE_INTERNAL_ALERT` | Certificate operations queue/users selected by Communication/IAM policy | System notification; optional email | Eligibility becomes actionable and no certificate exists | enrollment reference, learner display name, course, batch, branch | Communication |
-| `CertificateGenerated` | `CERTIFICATE_GENERATED_INTERNAL_NOTICE` | Certificate operator/operational queue where configured | System notification | Generation transaction committed | certificate ID/reference, certificate number, branch, generated timestamp | Communication |
-| `CertificateGenerated` followed by successful issuance policy | `CERTIFICATE_AVAILABLE_TO_LEARNER` | Enrollment-linked learner Person | Email/SMS/WhatsApp/System per configured policy | Certificate is issued/available according to lifecycle policy | learner display name, course name, certificate number, secure portal link; no finance data | Communication |
-| `CertificateReissued` | `CERTIFICATE_REISSUED_TO_LEARNER` | Enrollment-linked learner Person | Email/SMS/WhatsApp/System per policy | Replacement generation and lineage link committed | new certificate number, course, issue/reissue date, secure portal link | Communication |
-| `CertificateReissued` | `CERTIFICATE_REISSUE_COMPLETED_INTERNAL` | Requester and certificate operations users as policy permits | System notification; optional email | Approved request has replacement linked | request reference, original certificate number, replacement certificate number, completion time | Communication |
-| `CertificateVerified` | `CERTIFICATE_VERIFICATION_SECURITY_ALERT` | Security/compliance operations | System notification/email only when risk policy threshold met | Suspicious verification pattern/risk detector says notify; not every ordinary verification | aggregate risk facts, masked network metadata per policy, certificate reference | Communication + security policy |
-| `CertificateVerified` | No learner message by default | None | None | Ordinary public verification | Verification is recorded/observed without notifying learner unless policy explicitly requires | N/A |
-| Revocation command success | **Gap: formal source event name absent** | Learner + compliance/operations likely required | TBD by policy | Only after DDD event contract is approved | certificate number, revocation effective time, reason category only if disclosure policy allows, support contact | Communication after event contract approval |
+| Source Domain Event / Fact                                    | Notification Request                      | Recipient                                                               | Default Channels                                              | Trigger Condition                                                                          | Payload Minimum                                                                                                  | Owner of Delivery                           |
+| ------------------------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `CertificateEligible`                                         | `CERTIFICATE_ELIGIBLE_INTERNAL_ALERT`     | Certificate operations queue/users selected by Communication/IAM policy | System notification; optional email                           | Eligibility becomes actionable and no certificate exists                                   | enrollment reference, learner display name, course, batch, branch                                                | Communication                               |
+| `CertificateGenerated`                                        | `CERTIFICATE_GENERATED_INTERNAL_NOTICE`   | Certificate operator/operational queue where configured                 | System notification                                           | Generation transaction committed                                                           | certificate ID/reference, certificate number, branch, generated timestamp                                        | Communication                               |
+| `CertificateGenerated` followed by successful issuance policy | `CERTIFICATE_AVAILABLE_TO_LEARNER`        | Enrollment-linked learner Person                                        | Email/SMS/WhatsApp/System per configured policy               | Certificate is issued/available according to lifecycle policy                              | learner display name, course name, certificate number, secure portal link; no finance data                       | Communication                               |
+| `CertificateReissued`                                         | `CERTIFICATE_REISSUED_TO_LEARNER`         | Enrollment-linked learner Person                                        | Email/SMS/WhatsApp/System per policy                          | Replacement generation and lineage link committed                                          | new certificate number, course, issue/reissue date, secure portal link                                           | Communication                               |
+| `CertificateReissued`                                         | `CERTIFICATE_REISSUE_COMPLETED_INTERNAL`  | Requester and certificate operations users as policy permits            | System notification; optional email                           | Approved request has replacement linked                                                    | request reference, original certificate number, replacement certificate number, completion time                  | Communication                               |
+| `CertificateVerified`                                         | `CERTIFICATE_VERIFICATION_SECURITY_ALERT` | Security/compliance operations                                          | System notification/email only when risk policy threshold met | Suspicious verification pattern/risk detector says notify; not every ordinary verification | aggregate risk facts, masked network metadata per policy, certificate reference                                  | Communication + security policy             |
+| `CertificateVerified`                                         | No learner message by default             | None                                                                    | None                                                          | Ordinary public verification                                                               | Verification is recorded/observed without notifying learner unless policy explicitly requires                    | N/A                                         |
+| Revocation command success                                    | **Gap: formal source event name absent**  | Learner + compliance/operations likely required                         | TBD by policy                                                 | Only after DDD event contract is approved                                                  | certificate number, revocation effective time, reason category only if disclosure policy allows, support contact | Communication after event contract approval |
 
 ### 6.4 Notifications That Must Not Be Triggered by Certificate Management
 
-| Notification | Why Not Owned Here | Owning Context |
-|---|---|---|
-| Exam scheduled reminder | Exam scheduling fact is not Certificate-owned. | Exam, Result & Completion + Communication |
-| Result published/pass-fail notice | Result ownership is outside Certificate. | Exam, Result & Completion + Communication |
-| Attendance shortage alert | Attendance owns participation/low-attendance facts. | Attendance + Communication |
-| Payment due/overdue reminder | Certificate cannot derive invoice status. | Finance & Receivables + Communication |
-| Payment receipt notification | Receipt/payment are Finance-owned. | Finance & Receivables + Communication |
-| Completion approval notification | Completion owns approval state. | Exam, Result & Completion + Communication |
-| Role/permission change alert | IAM owns authorization changes. | IAM + Audit/Communication |
+| Notification                      | Why Not Owned Here                                  | Owning Context                            |
+| --------------------------------- | --------------------------------------------------- | ----------------------------------------- |
+| Exam scheduled reminder           | Exam scheduling fact is not Certificate-owned.      | Exam, Result & Completion + Communication |
+| Result published/pass-fail notice | Result ownership is outside Certificate.            | Exam, Result & Completion + Communication |
+| Attendance shortage alert         | Attendance owns participation/low-attendance facts. | Attendance + Communication                |
+| Payment due/overdue reminder      | Certificate cannot derive invoice status.           | Finance & Receivables + Communication     |
+| Payment receipt notification      | Receipt/payment are Finance-owned.                  | Finance & Receivables + Communication     |
+| Completion approval notification  | Completion owns approval state.                     | Exam, Result & Completion + Communication |
+| Role/permission change alert      | IAM owns authorization changes.                     | IAM + Audit/Communication                 |
 
 ---
 
@@ -740,14 +740,14 @@ For Certificate Management:
 
 ```ts
 interface CertificateAvailableNotificationPayload {
-  certificateId: string;          // internal reference for template link building
+  certificateId: string; // internal reference for template link building
   certificateNumber: string;
   recipientPersonId: string;
   learnerDisplayName: string;
   courseDisplayName: string;
   issuedDate: string;
   certificateLanguage: 'en' | 'ar';
-  portalPath: string;             // relative approved route, not arbitrary URL input
+  portalPath: string; // relative approved route, not arbitrary URL input
   correlationId: string;
 }
 ```
@@ -808,25 +808,25 @@ The risk detector and threshold source are security/NFR design concerns. The Cer
 
 Recommended logical deduplication identities:
 
-| Notification | Logical Deduplication Key |
-|---|---|
-| Eligibility internal alert | `CertificateEligible:{enrollmentId}:{eligibilityDecisionVersion}` |
-| Generated internal notice | `CertificateGenerated:{certificateId}:{version}` |
-| Learner certificate available | `CertificateAvailable:{certificateId}:{issuedStateVersion}` |
-| Reissue completed | `CertificateReissued:{reissueRequestId}:{replacementCertificateId}` |
-| Verification security alert | Risk-policy-generated correlation key, not one notification per ordinary verification attempt |
+| Notification                  | Logical Deduplication Key                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------------------------- |
+| Eligibility internal alert    | `CertificateEligible:{enrollmentId}:{eligibilityDecisionVersion}`                             |
+| Generated internal notice     | `CertificateGenerated:{certificateId}:{version}`                                              |
+| Learner certificate available | `CertificateAvailable:{certificateId}:{issuedStateVersion}`                                   |
+| Reissue completed             | `CertificateReissued:{reissueRequestId}:{replacementCertificateId}`                           |
+| Verification security alert   | Risk-policy-generated correlation key, not one notification per ordinary verification attempt |
 
 Communication owns storage and enforcement of notification deduplication. Certificate Management provides stable event correlation facts.
 
 ## 8.2 Failure Semantics
 
-| Failure | Certificate Transaction | Required Handling |
-|---|---|---|
-| Template missing/inactive | Remains committed | Communication marks failure; operational alert; do not roll back certificate. |
-| Channel provider unavailable | Remains committed | Communication retry/runbook. |
-| Recipient has no usable contact channel | Remains committed | Communication records non-deliverable status; portal remains source of access. |
-| Notification request handoff fails | Remains committed unless architecture defines same-transaction durable request; never silently lose | Record operational failure and retry using approved modular-monolith job pattern. |
-| Duplicate event delivery | No duplicate certificate mutation | Communication deduplication returns existing result/no-op. |
+| Failure                                 | Certificate Transaction                                                                             | Required Handling                                                                 |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Template missing/inactive               | Remains committed                                                                                   | Communication marks failure; operational alert; do not roll back certificate.     |
+| Channel provider unavailable            | Remains committed                                                                                   | Communication retry/runbook.                                                      |
+| Recipient has no usable contact channel | Remains committed                                                                                   | Communication records non-deliverable status; portal remains source of access.    |
+| Notification request handoff fails      | Remains committed unless architecture defines same-transaction durable request; never silently lose | Record operational failure and retry using approved modular-monolith job pattern. |
+| Duplicate event delivery                | No duplicate certificate mutation                                                                   | Communication deduplication returns existing result/no-op.                        |
 
 ---
 
@@ -843,14 +843,14 @@ Communication owns storage and enforcement of notification deduplication. Certif
 
 Examples:
 
-| Code | User Presentation |
-|---|---|
-| `COMPLETION_NOT_APPROVED` | Certificate cannot be generated yet because completion has not been approved. |
-| `PAYMENT_VALIDATION_FAILED` | Certificate processing is blocked because the required payment validation has not passed. |
-| `DUPLICATE_ACTIVE_CERTIFICATE` | An active certificate already exists for this enrollment. Open the existing certificate or use the approved reissue process. |
-| `VERSION_CONFLICT` | This record changed after you opened it. Reload the latest version before continuing. |
-| `BRANCH_SCOPE_DENIED` | You do not have access to this branch's certificate data. |
-| `CERTIFICATE_NUMBERING_UNAVAILABLE` | Certificate numbering is currently unavailable. No certificate was generated. |
+| Code                                | User Presentation                                                                                                            |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `COMPLETION_NOT_APPROVED`           | Certificate cannot be generated yet because completion has not been approved.                                                |
+| `PAYMENT_VALIDATION_FAILED`         | Certificate processing is blocked because the required payment validation has not passed.                                    |
+| `DUPLICATE_ACTIVE_CERTIFICATE`      | An active certificate already exists for this enrollment. Open the existing certificate or use the approved reissue process. |
+| `VERSION_CONFLICT`                  | This record changed after you opened it. Reload the latest version before continuing.                                        |
+| `BRANCH_SCOPE_DENIED`               | You do not have access to this branch's certificate data.                                                                    |
+| `CERTIFICATE_NUMBERING_UNAVAILABLE` | Certificate numbering is currently unavailable. No certificate was generated.                                                |
 
 ## 9.3 Sensitive Error Concealment
 
@@ -865,21 +865,21 @@ For student self-service and public verification:
 
 # 10. Validation-to-Requirement Traceability
 
-| Validation Area | FRD Requirements | Business Rules |
-|---|---|---|
-| Readiness and source consistency | FR-CERT-001 to FR-CERT-005, FR-CERT-034, FR-CERT-039 | BR-CERT-001 to BR-CERT-007, BR-CERT-044, BR-CERT-051 |
-| Numbering and verification identity | FR-CERT-006 to FR-CERT-008 | BR-CERT-008 to BR-CERT-011, BR-CERT-047, BR-CERT-052 |
-| Rendering and bilingual artifact | FR-CERT-009 to FR-CERT-010 | BR-CERT-012 to BR-CERT-015, BR-CERT-048 |
-| Certificate creation and issue | FR-CERT-011 to FR-CERT-013, FR-CERT-033, FR-CERT-037, FR-CERT-038 | BR-CERT-006, BR-CERT-041 to BR-CERT-044 |
-| Registry/detail/download | FR-CERT-014 to FR-CERT-016 | BR-CERT-031 to BR-CERT-036, BR-CERT-045 |
-| Public verification | FR-CERT-017 to FR-CERT-020 | BR-CERT-017 to BR-CERT-019, BR-CERT-030, BR-CERT-046, BR-CERT-053 |
-| Reissue and replacement | FR-CERT-021 to FR-CERT-026 | BR-CERT-020 to BR-CERT-027, BR-CERT-054 |
-| Revocation | FR-CERT-027 | BR-CERT-028 to BR-CERT-030 |
-| Permission and branch scope | FR-CERT-028 to FR-CERT-029 | BR-CERT-031 to BR-CERT-036 |
-| Audit | FR-CERT-030 | BR-CERT-037 to BR-CERT-038 |
-| Notifications | FR-CERT-031 | BR-CERT-039 |
-| Reporting facts | FR-CERT-032, FR-CERT-036 | BR-CERT-040 |
-| Soft delete and history | FR-CERT-035, FR-CERT-040 | BR-CERT-025, BR-CERT-028, BR-CERT-035, BR-CERT-040 |
+| Validation Area                     | FRD Requirements                                                  | Business Rules                                                    |
+| ----------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Readiness and source consistency    | FR-CERT-001 to FR-CERT-005, FR-CERT-034, FR-CERT-039              | BR-CERT-001 to BR-CERT-007, BR-CERT-044, BR-CERT-051              |
+| Numbering and verification identity | FR-CERT-006 to FR-CERT-008                                        | BR-CERT-008 to BR-CERT-011, BR-CERT-047, BR-CERT-052              |
+| Rendering and bilingual artifact    | FR-CERT-009 to FR-CERT-010                                        | BR-CERT-012 to BR-CERT-015, BR-CERT-048                           |
+| Certificate creation and issue      | FR-CERT-011 to FR-CERT-013, FR-CERT-033, FR-CERT-037, FR-CERT-038 | BR-CERT-006, BR-CERT-041 to BR-CERT-044                           |
+| Registry/detail/download            | FR-CERT-014 to FR-CERT-016                                        | BR-CERT-031 to BR-CERT-036, BR-CERT-045                           |
+| Public verification                 | FR-CERT-017 to FR-CERT-020                                        | BR-CERT-017 to BR-CERT-019, BR-CERT-030, BR-CERT-046, BR-CERT-053 |
+| Reissue and replacement             | FR-CERT-021 to FR-CERT-026                                        | BR-CERT-020 to BR-CERT-027, BR-CERT-054                           |
+| Revocation                          | FR-CERT-027                                                       | BR-CERT-028 to BR-CERT-030                                        |
+| Permission and branch scope         | FR-CERT-028 to FR-CERT-029                                        | BR-CERT-031 to BR-CERT-036                                        |
+| Audit                               | FR-CERT-030                                                       | BR-CERT-037 to BR-CERT-038                                        |
+| Notifications                       | FR-CERT-031                                                       | BR-CERT-039                                                       |
+| Reporting facts                     | FR-CERT-032, FR-CERT-036                                          | BR-CERT-040                                                       |
+| Soft delete and history             | FR-CERT-035, FR-CERT-040                                          | BR-CERT-025, BR-CERT-028, BR-CERT-035, BR-CERT-040                |
 
 ---
 
@@ -887,19 +887,19 @@ For student self-service and public verification:
 
 ## 11.1 Alignment Table
 
-| Concern | DDD Position | ER Position | Part 7 Treatment |
-|---|---|---|---|
-| Certificate ownership | Certificate context owns generation, verification, reissue, revocation. | `Certificate`, `CertificateVerification`, `CertificateReissueRequest`. | Module-owned validators cover lifecycle and lineage. |
-| Completion eligibility | Completion context evaluates rules; Certificate consumes eligibility. | `CourseCompletion` and `CompletionApproval` outside Certificate-owned entities. | Delegated validation; never recalculated here. |
-| Payment validation | Finance owns invoice/payment truth. | Invoice/Payment/Receipt/Receivable outside Certificate. | Delegated gate; fail closed when required. |
-| Enrollment centrality | Certificate links to Enrollment; all learner types converge on Enrollment. | `Certificate.enrollmentId`; Enrollment links student/course/batch/branch. | Source consistency validation is enrollment-centric. |
-| Unique verification | Verification code must be unique. | `Certificate.verificationCode`. | Module uniqueness validation; physical Prisma constraint pending verification. |
-| Verification history | Certificate owns verification. | `CertificateVerification`. | Module record validation with privacy retention caveat. |
-| Reissue | Management approval required; Certificate owns reissue transaction. | `CertificateReissueRequest` plus Audit `ApprovalRequest` type. | Module request validation; Audit-owned approval history. |
-| Revocation | Certificate owns revocation. | Status exists, dedicated revocation metadata absent. | Status validation plus explicit ER gap; no invented columns. |
-| Notification | Communication owns templates, requests, logs, delivery. | `CommunicationTemplate`, `NotificationRequest`, `NotificationLog`. | Certificate emits minimal request facts only. |
-| Branch access | IAM owns permission and branch access. | `UserBranchAccess` fields include consolidated/child branch controls. | Delegated IAM decision, server-side enforcement. |
-| Audit | Audit context owns audit records/history. | `AuditLog`, `ApprovalRequest`, `ApprovalHistory`. | Certificate triggers required audit integration; no local audit table. |
+| Concern                | DDD Position                                                               | ER Position                                                                     | Part 7 Treatment                                                               |
+| ---------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Certificate ownership  | Certificate context owns generation, verification, reissue, revocation.    | `Certificate`, `CertificateVerification`, `CertificateReissueRequest`.          | Module-owned validators cover lifecycle and lineage.                           |
+| Completion eligibility | Completion context evaluates rules; Certificate consumes eligibility.      | `CourseCompletion` and `CompletionApproval` outside Certificate-owned entities. | Delegated validation; never recalculated here.                                 |
+| Payment validation     | Finance owns invoice/payment truth.                                        | Invoice/Payment/Receipt/Receivable outside Certificate.                         | Delegated gate; fail closed when required.                                     |
+| Enrollment centrality  | Certificate links to Enrollment; all learner types converge on Enrollment. | `Certificate.enrollmentId`; Enrollment links student/course/batch/branch.       | Source consistency validation is enrollment-centric.                           |
+| Unique verification    | Verification code must be unique.                                          | `Certificate.verificationCode`.                                                 | Module uniqueness validation; physical Prisma constraint pending verification. |
+| Verification history   | Certificate owns verification.                                             | `CertificateVerification`.                                                      | Module record validation with privacy retention caveat.                        |
+| Reissue                | Management approval required; Certificate owns reissue transaction.        | `CertificateReissueRequest` plus Audit `ApprovalRequest` type.                  | Module request validation; Audit-owned approval history.                       |
+| Revocation             | Certificate owns revocation.                                               | Status exists, dedicated revocation metadata absent.                            | Status validation plus explicit ER gap; no invented columns.                   |
+| Notification           | Communication owns templates, requests, logs, delivery.                    | `CommunicationTemplate`, `NotificationRequest`, `NotificationLog`.              | Certificate emits minimal request facts only.                                  |
+| Branch access          | IAM owns permission and branch access.                                     | `UserBranchAccess` fields include consolidated/child branch controls.           | Delegated IAM decision, server-side enforcement.                               |
+| Audit                  | Audit context owns audit records/history.                                  | `AuditLog`, `ApprovalRequest`, `ApprovalHistory`.                               | Certificate triggers required audit integration; no local audit table.         |
 
 ## 11.2 Known Gaps and Required Decisions
 

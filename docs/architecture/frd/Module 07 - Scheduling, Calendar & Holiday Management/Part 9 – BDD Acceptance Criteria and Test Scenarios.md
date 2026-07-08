@@ -4,15 +4,15 @@
 
 ## 1. Document Control
 
-| Field | Value |
-|---|---|
-| Product | Al Saud Training Institute Integrated Institute Management System |
-| Module | Module 07 – Scheduling, Calendar & Holiday Management |
-| Module Code | SCH |
-| Part | 9 – BDD Acceptance Criteria and Test Scenarios |
-| Test Style | Gherkin feature scenarios, scenario outlines, authorization guard tests, branch isolation tests |
-| Primary Timezone | Asia/Muscat, Gulf Standard Time UTC+4 |
-| Scope | Admin portal, trainer portal, student portal, reporting, audit, and notification triggers for scheduling context |
+| Field            | Value                                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Product          | Al Saud Training Institute Integrated Institute Management System                                                |
+| Module           | Module 07 – Scheduling, Calendar & Holiday Management                                                            |
+| Module Code      | SCH                                                                                                              |
+| Part             | 9 – BDD Acceptance Criteria and Test Scenarios                                                                   |
+| Test Style       | Gherkin feature scenarios, scenario outlines, authorization guard tests, branch isolation tests                  |
+| Primary Timezone | Asia/Muscat, Gulf Standard Time UTC+4                                                                            |
+| Scope            | Admin portal, trainer portal, student portal, reporting, audit, and notification triggers for scheduling context |
 
 ---
 
@@ -20,27 +20,27 @@
 
 The scenarios below assume the following deterministic test data unless a scenario overrides it.
 
-| Test Data Code | Value |
-|---|---|
-| Branch A | `MCT-HQ`, Muscat Head Office, active branch |
-| Branch B | `SOH-BR`, Sohar Branch, active branch |
-| Course A | `HSE-101`, Health and Safety Training |
-| Batch A | `MCT-HSE-2026-07-A`, Branch A, Course A, start date `2026-07-05`, end date `2026-07-31` |
-| Batch B | `SOH-HSE-2026-07-A`, Branch B, Course A, start date `2026-07-05`, end date `2026-07-31` |
-| Classroom A1 | `MCT-CR-01`, Branch A, active, capacity 25 |
-| Classroom A2 | `MCT-CR-02`, Branch A, active, capacity 20 |
-| Classroom B1 | `SOH-CR-01`, Branch B, active, capacity 25 |
-| Trainer A | `TR-MCT-001`, active trainer assigned to Branch A |
-| Trainer B | `TR-SOH-001`, active trainer assigned to Branch B |
-| Working Hours | Sunday to Thursday, 08:00 to 18:00 Asia/Muscat |
-| Holiday A | `2026-07-23`, Branch A, active public holiday |
-| Venue Block A | Classroom A1 blocked on `2026-07-15`, 10:00 to 12:00 |
-| Super Admin | Has all scheduling permissions and consolidated branch access |
-| Branch Admin A | Assigned to Branch A with branch-scoped scheduling administration permissions |
-| Training Coordinator A | Assigned to Branch A with session create/update/publish permissions |
-| Trainer User A | Linked to Trainer A and can view own schedule |
-| Student User A | Enrolled in Batch A and can view own batch timetable |
-| Unauthorized User | No scheduling permissions |
+| Test Data Code         | Value                                                                                   |
+| ---------------------- | --------------------------------------------------------------------------------------- |
+| Branch A               | `MCT-HQ`, Muscat Head Office, active branch                                             |
+| Branch B               | `SOH-BR`, Sohar Branch, active branch                                                   |
+| Course A               | `HSE-101`, Health and Safety Training                                                   |
+| Batch A                | `MCT-HSE-2026-07-A`, Branch A, Course A, start date `2026-07-05`, end date `2026-07-31` |
+| Batch B                | `SOH-HSE-2026-07-A`, Branch B, Course A, start date `2026-07-05`, end date `2026-07-31` |
+| Classroom A1           | `MCT-CR-01`, Branch A, active, capacity 25                                              |
+| Classroom A2           | `MCT-CR-02`, Branch A, active, capacity 20                                              |
+| Classroom B1           | `SOH-CR-01`, Branch B, active, capacity 25                                              |
+| Trainer A              | `TR-MCT-001`, active trainer assigned to Branch A                                       |
+| Trainer B              | `TR-SOH-001`, active trainer assigned to Branch B                                       |
+| Working Hours          | Sunday to Thursday, 08:00 to 18:00 Asia/Muscat                                          |
+| Holiday A              | `2026-07-23`, Branch A, active public holiday                                           |
+| Venue Block A          | Classroom A1 blocked on `2026-07-15`, 10:00 to 12:00                                    |
+| Super Admin            | Has all scheduling permissions and consolidated branch access                           |
+| Branch Admin A         | Assigned to Branch A with branch-scoped scheduling administration permissions           |
+| Training Coordinator A | Assigned to Branch A with session create/update/publish permissions                     |
+| Trainer User A         | Linked to Trainer A and can view own schedule                                           |
+| Student User A         | Enrolled in Batch A and can view own batch timetable                                    |
+| Unauthorized User      | No scheduling permissions                                                               |
 
 ---
 
@@ -898,42 +898,42 @@ Scenario: English report export
 
 ## 16. Boundary Condition Matrix
 
-| Test ID | Condition | Expected Result | Error Code |
-|---|---|---|---|
-| TC-SCH-BND-001 | Session start time equals end time | Reject | `ERR_SCH_INVALID_TIME_RANGE` |
-| TC-SCH-BND-002 | Session end time before start time | Reject | `ERR_SCH_INVALID_TIME_RANGE` |
-| TC-SCH-BND-003 | Session starts exactly when another session ends for same trainer | Allow | None |
-| TC-SCH-BND-004 | Session ends exactly when another session starts for same classroom | Allow | None |
-| TC-SCH-BND-005 | Session overlaps by one minute with same trainer | Reject | `ERR_SCH_TRAINER_DOUBLE_BOOKED` |
-| TC-SCH-BND-006 | Session overlaps by one minute with same classroom | Reject | `ERR_SCH_CLASSROOM_DOUBLE_BOOKED` |
-| TC-SCH-BND-007 | Session date equals batch start date | Allow if other validations pass | None |
-| TC-SCH-BND-008 | Session date equals batch end date | Allow if other validations pass | None |
-| TC-SCH-BND-009 | Session date one day before batch start | Reject unless override permission | `ERR_SCH_OUTSIDE_BATCH_DATE_RANGE` |
-| TC-SCH-BND-010 | Session date one day after batch end | Reject unless override permission | `ERR_SCH_OUTSIDE_BATCH_DATE_RANGE` |
-| TC-SCH-BND-011 | Holiday exists in another branch only | Allow for current branch | None |
-| TC-SCH-BND-012 | Venue block exists for another classroom only | Allow for selected classroom | None |
-| TC-SCH-BND-013 | Branch-level venue block exists | Reject all classroom sessions in branch during block | `ERR_SCH_VENUE_BLOCK_CONFLICT` |
-| TC-SCH-BND-014 | Draft session delete requested | Soft delete if no dependencies | None |
-| TC-SCH-BND-015 | Published session delete requested | Reject; use cancellation | `ERR_SCH_PUBLISHED_SESSION_DELETE_NOT_ALLOWED` |
-| TC-SCH-BND-016 | Report requested for unassigned branch | Reject | `ERR_BRANCH_SCOPE_DENIED` |
-| TC-SCH-BND-017 | Consolidated export without permission | Reject | `ERR_SCH_CONSOLIDATED_PERMISSION_REQUIRED` |
-| TC-SCH-BND-018 | Arabic text missing for holiday name | Fallback to English with missing translation indicator in admin edit screen | None |
-| TC-SCH-BND-019 | Duplicate session number in same batch | Reject or require explicit renumber action based on configuration | `ERR_SCH_DUPLICATE_SESSION_NUMBER` |
-| TC-SCH-BND-020 | Recurrence produces zero dates | Reject | `ERR_SCH_RECURRENCE_NO_DATES` |
+| Test ID        | Condition                                                           | Expected Result                                                             | Error Code                                     |
+| -------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------- |
+| TC-SCH-BND-001 | Session start time equals end time                                  | Reject                                                                      | `ERR_SCH_INVALID_TIME_RANGE`                   |
+| TC-SCH-BND-002 | Session end time before start time                                  | Reject                                                                      | `ERR_SCH_INVALID_TIME_RANGE`                   |
+| TC-SCH-BND-003 | Session starts exactly when another session ends for same trainer   | Allow                                                                       | None                                           |
+| TC-SCH-BND-004 | Session ends exactly when another session starts for same classroom | Allow                                                                       | None                                           |
+| TC-SCH-BND-005 | Session overlaps by one minute with same trainer                    | Reject                                                                      | `ERR_SCH_TRAINER_DOUBLE_BOOKED`                |
+| TC-SCH-BND-006 | Session overlaps by one minute with same classroom                  | Reject                                                                      | `ERR_SCH_CLASSROOM_DOUBLE_BOOKED`              |
+| TC-SCH-BND-007 | Session date equals batch start date                                | Allow if other validations pass                                             | None                                           |
+| TC-SCH-BND-008 | Session date equals batch end date                                  | Allow if other validations pass                                             | None                                           |
+| TC-SCH-BND-009 | Session date one day before batch start                             | Reject unless override permission                                           | `ERR_SCH_OUTSIDE_BATCH_DATE_RANGE`             |
+| TC-SCH-BND-010 | Session date one day after batch end                                | Reject unless override permission                                           | `ERR_SCH_OUTSIDE_BATCH_DATE_RANGE`             |
+| TC-SCH-BND-011 | Holiday exists in another branch only                               | Allow for current branch                                                    | None                                           |
+| TC-SCH-BND-012 | Venue block exists for another classroom only                       | Allow for selected classroom                                                | None                                           |
+| TC-SCH-BND-013 | Branch-level venue block exists                                     | Reject all classroom sessions in branch during block                        | `ERR_SCH_VENUE_BLOCK_CONFLICT`                 |
+| TC-SCH-BND-014 | Draft session delete requested                                      | Soft delete if no dependencies                                              | None                                           |
+| TC-SCH-BND-015 | Published session delete requested                                  | Reject; use cancellation                                                    | `ERR_SCH_PUBLISHED_SESSION_DELETE_NOT_ALLOWED` |
+| TC-SCH-BND-016 | Report requested for unassigned branch                              | Reject                                                                      | `ERR_BRANCH_SCOPE_DENIED`                      |
+| TC-SCH-BND-017 | Consolidated export without permission                              | Reject                                                                      | `ERR_SCH_CONSOLIDATED_PERMISSION_REQUIRED`     |
+| TC-SCH-BND-018 | Arabic text missing for holiday name                                | Fallback to English with missing translation indicator in admin edit screen | None                                           |
+| TC-SCH-BND-019 | Duplicate session number in same batch                              | Reject or require explicit renumber action based on configuration           | `ERR_SCH_DUPLICATE_SESSION_NUMBER`             |
+| TC-SCH-BND-020 | Recurrence produces zero dates                                      | Reject                                                                      | `ERR_SCH_RECURRENCE_NO_DATES`                  |
 
 ---
 
 ## 17. Regression Test Checklist
 
-| Area | Regression Checks |
-|---|---|
-| Calendar | Create, update, activate, close, archive, soft delete, overlap prevention, branch scope. |
-| Holiday | Create, update, activate, deactivate, duplicate prevention, schedule impact validation. |
-| Venue Block | Branch-level and classroom-level blocks, overlap detection, cancellation, audit. |
-| Session | Draft, publish, conflict check, cancel, reschedule, soft delete, optimistic locking. |
-| Recurrence | Weekly generation, skipped dates, holiday conflicts, conflict drafts, run summary. |
-| Timetable | Admin daily/weekly/monthly views, trainer own schedule, student own schedule. |
-| Reports | KPI cards, utilization reports, conflict reports, exports, consolidated guards. |
-| Security | Authentication, permission checks, branch isolation, ownership scope. |
-| Audit | Old/new values, reason capture, sensitive action logging, denied action logging. |
-| Bilingual | English LTR, Arabic RTL, PDF/XLSX export labels, localized course/holiday names. |
+| Area        | Regression Checks                                                                        |
+| ----------- | ---------------------------------------------------------------------------------------- |
+| Calendar    | Create, update, activate, close, archive, soft delete, overlap prevention, branch scope. |
+| Holiday     | Create, update, activate, deactivate, duplicate prevention, schedule impact validation.  |
+| Venue Block | Branch-level and classroom-level blocks, overlap detection, cancellation, audit.         |
+| Session     | Draft, publish, conflict check, cancel, reschedule, soft delete, optimistic locking.     |
+| Recurrence  | Weekly generation, skipped dates, holiday conflicts, conflict drafts, run summary.       |
+| Timetable   | Admin daily/weekly/monthly views, trainer own schedule, student own schedule.            |
+| Reports     | KPI cards, utilization reports, conflict reports, exports, consolidated guards.          |
+| Security    | Authentication, permission checks, branch isolation, ownership scope.                    |
+| Audit       | Old/new values, reason capture, sensitive action logging, denied action logging.         |
+| Bilingual   | English LTR, Arabic RTL, PDF/XLSX export labels, localized course/holiday names.         |

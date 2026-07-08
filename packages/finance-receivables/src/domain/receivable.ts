@@ -5,14 +5,16 @@ export const ReceivableStatusSchema = z.enum([
   'PartiallyPaid',
   'Overdue',
   'Settled',
-  'WrittenOff'
+  'WrittenOff',
 ]);
 
 export type ReceivableStatus = z.infer<typeof ReceivableStatusSchema>;
 
 export const UpdateReceivableStatusInputSchema = z.object({
   id: z.string().uuid(),
-  status: ReceivableStatusSchema
+  status: ReceivableStatusSchema,
 });
 
-export type UpdateReceivableStatusInput = z.infer<typeof UpdateReceivableStatusInputSchema>;
+export type UpdateReceivableStatusInput = z.infer<
+  typeof UpdateReceivableStatusInputSchema
+>;

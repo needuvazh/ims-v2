@@ -1,5 +1,8 @@
 import { expect, test, vi } from 'vitest';
-import { LeadAnalyticsReadService, UserContext } from './lead-analytics-read-service';
+import {
+  LeadAnalyticsReadService,
+  UserContext,
+} from './lead-analytics-read-service';
 
 test('LeadAnalyticsReadService scoping with counselor context (no LEAD_VIEW_ALL_IN_BRANCH)', async () => {
   const mockPrisma = {
@@ -38,7 +41,7 @@ test('LeadAnalyticsReadService scoping with counselor context (no LEAD_VIEW_ALL_
         branchId: 'branch-1',
         counselorId: 'user-counselor',
       },
-    })
+    }),
   );
 
   const conversionRate = await service.getLeadConversionRate(context);
@@ -52,9 +55,9 @@ test('LeadAnalyticsReadService scoping with counselor context (no LEAD_VIEW_ALL_
 test('LeadAnalyticsReadService scoping with manager context (has LEAD_VIEW_ALL_IN_BRANCH)', async () => {
   const mockPrisma = {
     lead: {
-      groupBy: vi.fn().mockResolvedValue([
-        { stage: 'New', _count: { id: 10 } },
-      ]),
+      groupBy: vi
+        .fn()
+        .mockResolvedValue([{ stage: 'New', _count: { id: 10 } }]),
       count: vi.fn().mockImplementation(({ where }) => {
         expect(where.branchId).toBe('branch-1');
         expect(where.counselorId).toBeUndefined(); // Bypass counselor scoping
@@ -72,15 +75,13 @@ test('LeadAnalyticsReadService scoping with manager context (has LEAD_VIEW_ALL_I
   };
 
   const distribution = await service.getLeadStatusDistribution(context);
-  expect(distribution).toEqual([
-    { stage: 'New', count: 10 },
-  ]);
+  expect(distribution).toEqual([{ stage: 'New', count: 10 }]);
   expect(mockPrisma.lead.groupBy).toHaveBeenCalledWith(
     expect.objectContaining({
       where: {
         isDeleted: false,
         branchId: 'branch-1',
       },
-    })
+    }),
   );
 });

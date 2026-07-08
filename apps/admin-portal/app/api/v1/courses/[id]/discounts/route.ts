@@ -18,10 +18,19 @@ const discountPostSchema = z.object({
   discountValue: z.number().positive(),
   requiresApproval: z.boolean().optional(),
   effectiveStartDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  effectiveEndDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().optional(),
+  effectiveEndDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .nullable()
+    .optional(),
 });
 
-function problemJson(status: number, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problemJson(
+  status: number,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -30,18 +39,25 @@ function problemJson(status: number, detail: string, errorCode: string, invalidF
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
-export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id } = await props.params;
 
   let payload: unknown;
   try {
     payload = await request.json();
   } catch {
-    return problemJson(400, 'Request body must be valid JSON.', 'CRS-VAL-DISCOUNTS-INVALID_JSON');
+    return problemJson(
+      400,
+      'Request body must be valid JSON.',
+      'CRS-VAL-DISCOUNTS-INVALID_JSON',
+    );
   }
 
   const parsed = discountPostSchema.safeParse(payload);
@@ -53,142 +69,166 @@ export async function POST(request: Request, props: { params: Promise<{ id: stri
       parsed.error.issues.map((issue) => ({
         field: issue.path.join('.') || 'body',
         message: issue.message,
-      }))
+      })),
     );
   }
 
-  return withRouteObservability(request.headers, async () => withPermission(request, 'course.catalog.create', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'course.catalog.create', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { courseDiscountService } = await import('../../../../../../lib/runtime');
+        try {
+          const { courseDiscountService } =
+            await import('../../../../../../lib/runtime');
 
-      const discountInput = {
-        ...parsed.data,
-        courseId: id,
-      };
+          const discountInput = {
+            ...parsed.data,
+            courseId: id,
+          };
 
-      const result = await courseDiscountService.createDiscount(discountInput, session.userId);
+          const result = await courseDiscountService.createDiscount(
+            discountInput,
+            session.userId,
+          );
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: result,
-        },
-        { status: 201 }
-      );
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: result,
+            },
+            { status: 201 },
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/courses/[id]/discounts',
-        method: request.method,
-        status: 'success',
-      });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/courses/[id]/discounts',
+            method: request.method,
+            status: 'success',
+          });
 
-      return response;
-    } catch (error) {
-      logger.error('api.courses.discounts.create.failed', { status: 'failed', error: error as Error });
-      const msg = (error as Error).message;
-      let status = 500;
-      let code = 'ERR_SYSTEM';
-      let messageEn = 'An unexpected error occurred.';
+          return response;
+        } catch (error) {
+          logger.error('api.courses.discounts.create.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          const msg = (error as Error).message;
+          let status = 500;
+          let code = 'ERR_SYSTEM';
+          let messageEn = 'An unexpected error occurred.';
 
-      if (msg.includes('ERR_CRS_COURSE_NOT_FOUND')) {
-        status = 404;
-        code = 'ERR_CRS_COURSE_NOT_FOUND';
-        messageEn = 'Course not found.';
-      } else if (msg.includes('ERR_CRS_INVALID_DATE_RANGE')) {
-        status = 400;
-        code = 'ERR_CRS_INVALID_DATE_RANGE';
-        messageEn = 'Effective end date must be after effective start date.';
-      } else if (msg.includes('ERR_CRS_MULTIPLE_ACTIVE_DISCOUNTS')) {
-        status = 422;
-        code = 'ERR_CRS_MULTIPLE_ACTIVE_DISCOUNTS';
-        messageEn = 'Overlapping active discount already exists for this combination.';
-      }
+          if (msg.includes('ERR_CRS_COURSE_NOT_FOUND')) {
+            status = 404;
+            code = 'ERR_CRS_COURSE_NOT_FOUND';
+            messageEn = 'Course not found.';
+          } else if (msg.includes('ERR_CRS_INVALID_DATE_RANGE')) {
+            status = 400;
+            code = 'ERR_CRS_INVALID_DATE_RANGE';
+            messageEn =
+              'Effective end date must be after effective start date.';
+          } else if (msg.includes('ERR_CRS_MULTIPLE_ACTIVE_DISCOUNTS')) {
+            status = 422;
+            code = 'ERR_CRS_MULTIPLE_ACTIVE_DISCOUNTS';
+            messageEn =
+              'Overlapping active discount already exists for this combination.';
+          }
 
-      return NextResponse.json(
-        {
-          success: false,
-          errorCode: code,
-          messageEnglish: messageEn,
-          statusCode: status,
-        },
-        { status }
-      );
-    }
-  }), { route: '/api/v1/courses/[id]/discounts' });
+          return NextResponse.json(
+            {
+              success: false,
+              errorCode: code,
+              messageEnglish: messageEn,
+              statusCode: status,
+            },
+            { status },
+          );
+        }
+      }),
+    { route: '/api/v1/courses/[id]/discounts' },
+  );
 }
 
-export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id } = await props.params;
 
-  return withRouteObservability(request.headers, async () => withPermission(request, 'course.catalog.view', async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'course.catalog.view', async () => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const params = new URL(request.url).searchParams;
-      const branchId = params.get('branchId') || undefined;
-      const status = params.get('status') || undefined;
-      const q = params.get('q') || '';
-      
-      const page = parseInt(params.get('page') || '1', 10);
-      const limit = parseInt(params.get('limit') || '10', 10);
-      const skip = (page - 1) * limit;
+        try {
+          const params = new URL(request.url).searchParams;
+          const branchId = params.get('branchId') || undefined;
+          const status = params.get('status') || undefined;
+          const q = params.get('q') || '';
 
-      const sortBy = params.get('sortBy') || 'effectiveStartDate';
-      const sortOrder = (params.get('sortOrder') as 'asc' | 'desc') || 'desc';
+          const page = parseInt(params.get('page') || '1', 10);
+          const limit = parseInt(params.get('limit') || '10', 10);
+          const skip = (page - 1) * limit;
 
-      const where: Prisma.CourseDiscountWhereInput = {
-        courseId: id,
-        isDeleted: false,
-        branchId: branchId === undefined ? undefined : (branchId || null),
-        status: status as any || undefined,
-      };
+          const sortBy = params.get('sortBy') || 'effectiveStartDate';
+          const sortOrder =
+            (params.get('sortOrder') as 'asc' | 'desc') || 'desc';
 
-      if (q) {
-        where.OR = [
-          { discountType: { contains: q, mode: 'insensitive' } },
-        ];
-      }
+          const where: Prisma.CourseDiscountWhereInput = {
+            courseId: id,
+            isDeleted: false,
+            branchId: branchId === undefined ? undefined : branchId || null,
+            status: (status as any) || undefined,
+          };
 
-      const total = await prisma.courseDiscount.count({ where });
+          if (q) {
+            where.OR = [{ discountType: { contains: q, mode: 'insensitive' } }];
+          }
 
-      const records = await prisma.courseDiscount.findMany({
-        where,
-        orderBy: { [sortBy]: sortOrder },
-        skip,
-        take: limit,
-      });
+          const total = await prisma.courseDiscount.count({ where });
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: records,
-          total,
-        },
-        { status: 200 }
-      );
+          const records = await prisma.courseDiscount.findMany({
+            where,
+            orderBy: { [sortBy]: sortOrder },
+            skip,
+            take: limit,
+          });
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/courses/[id]/discounts',
-        method: request.method,
-        status: 'success',
-      });
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: records,
+              total,
+            },
+            { status: 200 },
+          );
 
-      return response;
-    } catch (error) {
-      logger.error('api.courses.discounts.list.failed', { status: 'failed', error: error as Error });
-      return NextResponse.json(
-        {
-          success: false,
-          errorCode: 'ERR_SYSTEM',
-          messageEnglish: (error as Error).message,
-          statusCode: 500,
-        },
-        { status: 500 }
-      );
-    }
-  }), { route: '/api/v1/courses/[id]/discounts' });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/courses/[id]/discounts',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.courses.discounts.list.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return NextResponse.json(
+            {
+              success: false,
+              errorCode: 'ERR_SYSTEM',
+              messageEnglish: (error as Error).message,
+              statusCode: 500,
+            },
+            { status: 500 },
+          );
+        }
+      }),
+    { route: '/api/v1/courses/[id]/discounts' },
+  );
 }
 
 const discountPatchSchema = z.object({
@@ -196,14 +236,21 @@ const discountPatchSchema = z.object({
   action: z.enum(['disable']),
 });
 
-export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id } = await props.params;
 
   let payload: unknown;
   try {
     payload = await request.json();
   } catch {
-    return problemJson(400, 'Request body must be valid JSON.', 'CRS-VAL-DISCOUNTS-INVALID_JSON');
+    return problemJson(
+      400,
+      'Request body must be valid JSON.',
+      'CRS-VAL-DISCOUNTS-INVALID_JSON',
+    );
   }
 
   const parsed = discountPatchSchema.safeParse(payload);
@@ -215,58 +262,78 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
       parsed.error.issues.map((issue) => ({
         field: issue.path.join('.') || 'body',
         message: issue.message,
-      }))
+      })),
     );
   }
 
-  return withRouteObservability(request.headers, async () => withPermission(request, 'course.catalog.create', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'course.catalog.create', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { courseDiscountService } = await import('../../../../../../lib/runtime');
+        try {
+          const { courseDiscountService } =
+            await import('../../../../../../lib/runtime');
 
-      if (parsed.data.action === 'disable') {
-        const result = await courseDiscountService.disableDiscount(parsed.data.id, session.userId);
-        const response = NextResponse.json(
-          {
-            success: true,
-            data: result,
-          },
-          { status: 200 }
-        );
+          if (parsed.data.action === 'disable') {
+            const result = await courseDiscountService.disableDiscount(
+              parsed.data.id,
+              session.userId,
+            );
+            const response = NextResponse.json(
+              {
+                success: true,
+                data: result,
+              },
+              { status: 200 },
+            );
 
-        applyObservabilityResponseHeaders(response.headers, request.headers, {
-          route: '/api/v1/courses/[id]/discounts',
-          method: request.method,
-          status: 'success',
-        });
+            applyObservabilityResponseHeaders(
+              response.headers,
+              request.headers,
+              {
+                route: '/api/v1/courses/[id]/discounts',
+                method: request.method,
+                status: 'success',
+              },
+            );
 
-        return response;
-      }
+            return response;
+          }
 
-      return problemJson(400, 'Unsupported patch action.', 'CRS-VAL-DISCOUNTS-UNSUPPORTED_ACTION');
-    } catch (error) {
-      logger.error('api.courses.discounts.patch.failed', { status: 'failed', error: error as Error });
-      const msg = (error as Error).message;
-      let status = 500;
-      let code = 'ERR_SYSTEM';
-      let messageEn = 'An unexpected error occurred.';
+          return problemJson(
+            400,
+            'Unsupported patch action.',
+            'CRS-VAL-DISCOUNTS-UNSUPPORTED_ACTION',
+          );
+        } catch (error) {
+          logger.error('api.courses.discounts.patch.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          const msg = (error as Error).message;
+          let status = 500;
+          let code = 'ERR_SYSTEM';
+          let messageEn = 'An unexpected error occurred.';
 
-      if (msg.includes('ERR_CRS_DISCOUNT_NOT_FOUND')) {
-        status = 404;
-        code = 'ERR_CRS_DISCOUNT_NOT_FOUND';
-        messageEn = 'Discount override not found.';
-      }
+          if (msg.includes('ERR_CRS_DISCOUNT_NOT_FOUND')) {
+            status = 404;
+            code = 'ERR_CRS_DISCOUNT_NOT_FOUND';
+            messageEn = 'Discount override not found.';
+          }
 
-      return NextResponse.json(
-        {
-          success: false,
-          errorCode: code,
-          messageEnglish: messageEn,
-          statusCode: status,
-        },
-        { status }
-      );
-    }
-  }), { route: '/api/v1/courses/[id]/discounts' });
+          return NextResponse.json(
+            {
+              success: false,
+              errorCode: code,
+              messageEnglish: messageEn,
+              statusCode: status,
+            },
+            { status },
+          );
+        }
+      }),
+    { route: '/api/v1/courses/[id]/discounts' },
+  );
 }

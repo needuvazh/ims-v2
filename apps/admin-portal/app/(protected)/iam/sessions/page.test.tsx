@@ -15,18 +15,21 @@ vi.mock('../../../lib/runtime', () => ({
 }));
 
 vi.mock('../../../lib/auth-guard', () => ({
-  getSession: () => Promise.resolve({
-    userId: 'actor-id',
-    permissions: ['iam.session.read', 'iam.session.write'],
-    activeBranchId: 'branch-id',
-  }),
+  getSession: () =>
+    Promise.resolve({
+      userId: 'actor-id',
+      permissions: ['iam.session.read', 'iam.session.write'],
+      activeBranchId: 'branch-id',
+    }),
 }));
 
 describe('IamSessionsPage', () => {
   it('renders instructions to find sessions when no query is provided', async () => {
     const page = await IamSessionsPage({ searchParams: Promise.resolve({}) });
     const html = renderToStaticMarkup(page);
-    expect(html).toContain('Choose a user ID or email to inspect active sessions');
+    expect(html).toContain(
+      'Choose a user ID or email to inspect active sessions',
+    );
   });
 
   it('renders sessions when a valid user id is provided', async () => {
@@ -48,7 +51,9 @@ describe('IamSessionsPage', () => {
     ]);
 
     const page = await IamSessionsPage({
-      searchParams: Promise.resolve({ query: '3bafd9a9-987a-46b8-adfb-0af496bd58cd' }),
+      searchParams: Promise.resolve({
+        query: '3bafd9a9-987a-46b8-adfb-0af496bd58cd',
+      }),
     });
     const html = renderToStaticMarkup(page);
     expect(html).toContain('Active Sessions');

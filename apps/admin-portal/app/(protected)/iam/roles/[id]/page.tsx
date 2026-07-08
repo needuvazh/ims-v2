@@ -8,12 +8,14 @@ import Link from 'next/link';
 export const metadata = { title: 'View Role - IAM | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function IamViewRolePage(props: { params: Promise<{ id: string }> }) {
+export default async function IamViewRolePage(props: {
+  params: Promise<{ id: string }>;
+}) {
   await assertPermission('iam.role.read');
   const params = await props.params;
-  
+
   const { roleService } = await import('@/lib/runtime');
-  
+
   const rolesData = await roleService.listRoles();
   const role = rolesData.find((r: any) => r.id === params.id);
 
@@ -45,7 +47,11 @@ export default async function IamViewRolePage(props: { params: Promise<{ id: str
         }
         actions={
           <div className="flex items-center gap-3">
-            <RoleLifecycleDropdown roleId={params.id} currentStatus={role.status} isSystemRole={role.isSystemRole} />
+            <RoleLifecycleDropdown
+              roleId={params.id}
+              currentStatus={role.status}
+              isSystemRole={role.isSystemRole}
+            />
             <Link href={`/iam/roles/${params.id}/permissions`}>
               <Button variant="secondary">Manage Permissions</Button>
             </Link>

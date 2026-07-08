@@ -1,4 +1,8 @@
-import { CompletionInvalidStateError, CompletionDuplicateError, CompletionEvidenceStaleError } from '../errors';
+import {
+  CompletionInvalidStateError,
+  CompletionDuplicateError,
+  CompletionEvidenceStaleError,
+} from '../errors';
 
 export type CompletionStatus =
   | 'Pending'
@@ -65,7 +69,10 @@ export interface EvaluateCompletionCommand {
 export class CourseCompletionAggregate {
   constructor(public readonly state: CourseCompletion) {}
 
-  static create(command: EvaluateCompletionCommand, id?: string): CourseCompletionAggregate {
+  static create(
+    command: EvaluateCompletionCommand,
+    id?: string,
+  ): CourseCompletionAggregate {
     const completion: CourseCompletion = {
       id: id || crypto.randomUUID(),
       enrollmentId: command.enrollmentId,
@@ -99,13 +106,17 @@ export class CourseCompletionAggregate {
   }): CourseCompletion {
     const updated: CourseCompletion = {
       ...this.state,
-      attendancePercentage: evidence.attendancePercentage ?? this.state.attendancePercentage,
-      attendanceOutcome: evidence.attendanceOutcome ?? this.state.attendanceOutcome,
+      attendancePercentage:
+        evidence.attendancePercentage ?? this.state.attendancePercentage,
+      attendanceOutcome:
+        evidence.attendanceOutcome ?? this.state.attendanceOutcome,
       examOutcome: evidence.examOutcome ?? this.state.examOutcome,
       paymentOutcome: evidence.paymentOutcome ?? this.state.paymentOutcome,
-      attendanceUpdatedAt: evidence.attendanceUpdatedAt ?? this.state.attendanceUpdatedAt,
+      attendanceUpdatedAt:
+        evidence.attendanceUpdatedAt ?? this.state.attendanceUpdatedAt,
       resultUpdatedAt: evidence.resultUpdatedAt ?? this.state.resultUpdatedAt,
-      paymentUpdatedAt: evidence.paymentUpdatedAt ?? this.state.paymentUpdatedAt,
+      paymentUpdatedAt:
+        evidence.paymentUpdatedAt ?? this.state.paymentUpdatedAt,
       lastEvaluatedAt: new Date(),
       evidenceStale: false,
       version: this.state.version + 1,
@@ -128,7 +139,9 @@ export class CourseCompletionAggregate {
 
   evaluate(): CourseCompletion {
     if (this.state.evidenceStale) {
-      throw new CompletionEvidenceStaleError('Cannot evaluate completion with stale evidence');
+      throw new CompletionEvidenceStaleError(
+        'Cannot evaluate completion with stale evidence',
+      );
     }
 
     if (
@@ -136,12 +149,16 @@ export class CourseCompletionAggregate {
       this.state.completionStatus !== COMPLETION_STATUSES.EVIDENCE_INCOMPLETE &&
       this.state.completionStatus !== COMPLETION_STATUSES.REEVALUATION_REQUIRED
     ) {
-      throw new CompletionInvalidStateError(`Cannot evaluate completion in status: ${this.state.completionStatus}`);
+      throw new CompletionInvalidStateError(
+        `Cannot evaluate completion in status: ${this.state.completionStatus}`,
+      );
     }
 
     const attendanceMet = this.state.attendanceOutcome === 'Met';
-    const examMet = !this.state.examRequired || this.state.examOutcome === 'Pass';
-    const paymentMet = !this.state.paymentRequired || this.state.paymentOutcome === 'Cleared';
+    const examMet =
+      !this.state.examRequired || this.state.examOutcome === 'Pass';
+    const paymentMet =
+      !this.state.paymentRequired || this.state.paymentOutcome === 'Cleared';
 
     if (!attendanceMet || !examMet || !paymentMet) {
       const updated: CourseCompletion = {
@@ -175,8 +192,13 @@ export class CourseCompletionAggregate {
   }
 
   recommendByTrainer(): CourseCompletion {
-    if (this.state.completionStatus !== COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION) {
-      throw new CompletionInvalidStateError(`Cannot recommend completion in status: ${this.state.completionStatus}`);
+    if (
+      this.state.completionStatus !==
+      COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION
+    ) {
+      throw new CompletionInvalidStateError(
+        `Cannot recommend completion in status: ${this.state.completionStatus}`,
+      );
     }
 
     const updated: CourseCompletion = {
@@ -190,8 +212,13 @@ export class CourseCompletionAggregate {
   }
 
   reviewByCoordinator(approved: boolean): CourseCompletion {
-    if (this.state.completionStatus !== COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW) {
-      throw new CompletionInvalidStateError(`Cannot review completion in status: ${this.state.completionStatus}`);
+    if (
+      this.state.completionStatus !==
+      COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW
+    ) {
+      throw new CompletionInvalidStateError(
+        `Cannot review completion in status: ${this.state.completionStatus}`,
+      );
     }
 
     if (approved) {
@@ -215,8 +242,13 @@ export class CourseCompletionAggregate {
   }
 
   finalApproval(approved: boolean): CourseCompletion {
-    if (this.state.completionStatus !== COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL) {
-      throw new CompletionInvalidStateError(`Cannot approve completion in status: ${this.state.completionStatus}`);
+    if (
+      this.state.completionStatus !==
+      COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL
+    ) {
+      throw new CompletionInvalidStateError(
+        `Cannot approve completion in status: ${this.state.completionStatus}`,
+      );
     }
 
     if (approved) {
@@ -242,7 +274,9 @@ export class CourseCompletionAggregate {
 
   requestReevaluation(): CourseCompletion {
     if (this.state.completionStatus !== COMPLETION_STATUSES.APPROVED) {
-      throw new CompletionInvalidStateError(`Cannot request reevaluation in status: ${this.state.completionStatus}`);
+      throw new CompletionInvalidStateError(
+        `Cannot request reevaluation in status: ${this.state.completionStatus}`,
+      );
     }
 
     const updated: CourseCompletion = {
@@ -257,8 +291,12 @@ export class CourseCompletionAggregate {
   }
 
   approveException(): CourseCompletion {
-    if (this.state.completionStatus !== COMPLETION_STATUSES.REEVALUATION_REQUIRED) {
-      throw new CompletionInvalidStateError(`Cannot approve exception in status: ${this.state.completionStatus}`);
+    if (
+      this.state.completionStatus !== COMPLETION_STATUSES.REEVALUATION_REQUIRED
+    ) {
+      throw new CompletionInvalidStateError(
+        `Cannot approve exception in status: ${this.state.completionStatus}`,
+      );
     }
 
     const updated: CourseCompletion = {

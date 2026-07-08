@@ -1,1 +1,1375 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_md", "label": "Part 11 - Deployment, Operations, Observability, Runbooks.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "label": "Part 11 - Deployment, Operations, Observability, Runbooks", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_module_07_scheduling_calendar_holiday_management", "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L3"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_operational_scope", "label": "1. Operational Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L14"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_1_owned_runtime_capabilities", "label": "1.1 Owned Runtime Capabilities", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L18"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture", "label": "2. Deployment Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L34"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_1_monorepo_placement", "label": "2.1 Monorepo Placement", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L36"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_2_deployable_units", "label": "2.2 Deployable Units", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L62"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_3_environment_configuration", "label": "3. Environment Configuration", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L77"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements", "label": "4. Database Deployment Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L96"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_1_owned_tables", "label": "4.1 Owned Tables", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L98"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_2_migration_safety_rules", "label": "4.2 Migration Safety Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L113"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_3_required_indexes", "label": "4.3 Required Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L124"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup", "label": "5. Observability Setup", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L141"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_1_logging_principles", "label": "5.1 Logging Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L143"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_2_structured_log_format", "label": "5.2 Structured Log Format", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L147"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_3_required_log_events", "label": "5.3 Required Log Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L174"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries", "label": "6. Distributed Tracing Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L191"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_1_trace_spans", "label": "6.1 Trace Spans", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L195"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_2_cross_module_trace_boundaries", "label": "6.2 Cross-Module Trace Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L210"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation", "label": "7. Metrics Instrumentation", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L224"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_1_application_metrics", "label": "7.1 Application Metrics", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L226"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_2_business_metrics", "label": "7.2 Business Metrics", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L243"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_8_alerts_and_thresholds", "label": "8. Alerts and Thresholds", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L260"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks", "label": "9. Health Checks", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L276"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_1_module_health_endpoint", "label": "9.1 Module Health Endpoint", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L278"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_2_health_check_response", "label": "9.2 Health Check Response", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L286"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_3_health_status_rules", "label": "9.3 Health Status Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L318"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery", "label": "10. Backup and Recovery", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L330"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_1_backup_requirements", "label": "10.1 Backup Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L332"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_2_recovery_point_and_time_objectives", "label": "10.2 Recovery Point and Time Objectives", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L342"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_3_recovery_validation", "label": "10.3 Recovery Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L354"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist", "label": "11. Release and Deployment Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L370"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_1_pre_deployment", "label": "11.1 Pre-Deployment", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L372"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_2_deployment", "label": "11.2 Deployment", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L390"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_3_post_deployment_smoke_tests", "label": "11.3 Post-Deployment Smoke Tests", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L407"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow", "label": "12. Runbook 1 \u2013 Calendar Page Is Slow", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L422"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L424"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L430"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L444"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap", "label": "13. Runbook 2 \u2013 Conflict Detection Allows Overlap", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L452"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_454", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L454"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_460", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L460"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_474", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L474"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails", "label": "14. Runbook 3 \u2013 Bulk Import Fails", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L482"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_484", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L484"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_490", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L490"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_505", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L505"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer", "label": "15. Runbook 4 \u2013 Published Sessions Not Visible to Trainer", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L513"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_515", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L515"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_521", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L521"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_534", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L534"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student", "label": "16. Runbook 5 \u2013 Published Sessions Not Visible to Student", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L542"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_544", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L544"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_549", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L549"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_562", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L562"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation", "label": "17. Runbook 6 \u2013 Audit Write Failure During Mutation", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L569"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_571", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L571"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_577", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L577"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_590", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L590"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible", "label": "18. Runbook 7 \u2013 Wrong Branch Data Visible", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L598"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_600", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L600"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_606", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L606"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_620", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L620"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling", "label": "19. Runbook 8 \u2013 Venue Block Does Not Prevent Scheduling", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L628"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_630", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L630"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_635", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L635"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_648", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L648"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions", "label": "20. Runbook 9 \u2013 Holiday Calendar Change Affects Published Sessions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L655"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_657", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L657"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_662", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L662"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_673", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L673"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails", "label": "21. Runbook 10 \u2013 Report Export Fails", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L680"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_682", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L682"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_688", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L688"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_701", "label": "Resolution Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L701"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_data_repair_guidelines", "label": "22. Data Repair Guidelines", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L708"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_1_example_validation_query_categories", "label": "22.1 Example Validation Query Categories", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L721"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards", "label": "23. Operational Dashboards", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L737"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_1_technical_dashboard_widgets", "label": "23.1 Technical Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L739"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_2_business_operations_dashboard_widgets", "label": "23.2 Business Operations Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L752"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_24_scheduled_maintenance_jobs", "label": "24. Scheduled Maintenance Jobs", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L767"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_25_incident_severity_matrix", "label": "25. Incident Severity Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L782"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_26_support_handoff_information", "label": "26. Support Handoff Information", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L793"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_27_operational_acceptance_criteria", "label": "27. Operational Acceptance Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L813"}, {"id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_28_final_operations_checklist", "label": "28. Final Operations Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L846"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_md", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_module_07_scheduling_calendar_holiday_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L3", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_operational_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L14", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_operational_scope", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_1_owned_runtime_capabilities", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L18", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L34", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_1_monorepo_placement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L36", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_2_deployable_units", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L62", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_3_environment_configuration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L77", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L96", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_1_owned_tables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L98", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_2_migration_safety_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L113", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_3_required_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L124", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L141", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_1_logging_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L143", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_2_structured_log_format", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L147", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_3_required_log_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L174", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L191", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_1_trace_spans", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L195", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_2_cross_module_trace_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L210", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L224", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_1_application_metrics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L226", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_2_business_metrics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L243", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_8_alerts_and_thresholds", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L260", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L276", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_1_module_health_endpoint", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L278", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_2_health_check_response", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L286", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_3_health_status_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L318", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L330", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_1_backup_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L332", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_2_recovery_point_and_time_objectives", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L342", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_3_recovery_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L354", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L370", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_1_pre_deployment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L372", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_2_deployment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L390", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_3_post_deployment_smoke_tests", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L407", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L422", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L424", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L430", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L444", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L452", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_454", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L454", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_460", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L460", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_474", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L474", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L482", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_484", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L484", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_490", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L490", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_505", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L505", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L513", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_515", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L515", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_521", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L521", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_534", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L534", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L542", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_544", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L544", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_549", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L549", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_562", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L562", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L569", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_571", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L571", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_577", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L577", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_590", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L590", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L598", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_600", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L600", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_606", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L606", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_620", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L620", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L628", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_630", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L630", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_635", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L635", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_648", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L648", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L655", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_657", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L657", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_662", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L662", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_673", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L673", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L680", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_682", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L682", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_688", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L688", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_701", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L701", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_data_repair_guidelines", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L708", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_data_repair_guidelines", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_1_example_validation_query_categories", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L721", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L737", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_1_technical_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L739", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_2_business_operations_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L752", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_24_scheduled_maintenance_jobs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L767", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_25_incident_severity_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L782", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_26_support_handoff_information", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L793", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_27_operational_acceptance_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L813", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_28_final_operations_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L846", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_md",
+      "label": "Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "label": "Part 11 - Deployment, Operations, Observability, Runbooks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_module_07_scheduling_calendar_holiday_management",
+      "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_operational_scope",
+      "label": "1. Operational Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_1_owned_runtime_capabilities",
+      "label": "1.1 Owned Runtime Capabilities",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture",
+      "label": "2. Deployment Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_1_monorepo_placement",
+      "label": "2.1 Monorepo Placement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_2_deployable_units",
+      "label": "2.2 Deployable Units",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_3_environment_configuration",
+      "label": "3. Environment Configuration",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements",
+      "label": "4. Database Deployment Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L96"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_1_owned_tables",
+      "label": "4.1 Owned Tables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_2_migration_safety_rules",
+      "label": "4.2 Migration Safety Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L113"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_3_required_indexes",
+      "label": "4.3 Required Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup",
+      "label": "5. Observability Setup",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L141"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_1_logging_principles",
+      "label": "5.1 Logging Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L143"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_2_structured_log_format",
+      "label": "5.2 Structured Log Format",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L147"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_3_required_log_events",
+      "label": "5.3 Required Log Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L174"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries",
+      "label": "6. Distributed Tracing Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L191"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_1_trace_spans",
+      "label": "6.1 Trace Spans",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L195"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_2_cross_module_trace_boundaries",
+      "label": "6.2 Cross-Module Trace Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L210"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation",
+      "label": "7. Metrics Instrumentation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L224"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_1_application_metrics",
+      "label": "7.1 Application Metrics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L226"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_2_business_metrics",
+      "label": "7.2 Business Metrics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L243"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_8_alerts_and_thresholds",
+      "label": "8. Alerts and Thresholds",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L260"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks",
+      "label": "9. Health Checks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L276"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_1_module_health_endpoint",
+      "label": "9.1 Module Health Endpoint",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L278"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_2_health_check_response",
+      "label": "9.2 Health Check Response",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L286"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_3_health_status_rules",
+      "label": "9.3 Health Status Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L318"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery",
+      "label": "10. Backup and Recovery",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L330"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_1_backup_requirements",
+      "label": "10.1 Backup Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L332"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_2_recovery_point_and_time_objectives",
+      "label": "10.2 Recovery Point and Time Objectives",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L342"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_3_recovery_validation",
+      "label": "10.3 Recovery Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L354"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist",
+      "label": "11. Release and Deployment Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L370"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_1_pre_deployment",
+      "label": "11.1 Pre-Deployment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L372"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_2_deployment",
+      "label": "11.2 Deployment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L390"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_3_post_deployment_smoke_tests",
+      "label": "11.3 Post-Deployment Smoke Tests",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L407"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow",
+      "label": "12. Runbook 1 \u2013 Calendar Page Is Slow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L422"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L424"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L430"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L444"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap",
+      "label": "13. Runbook 2 \u2013 Conflict Detection Allows Overlap",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L452"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_454",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L454"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_460",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L460"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_474",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L474"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails",
+      "label": "14. Runbook 3 \u2013 Bulk Import Fails",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L482"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_484",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L484"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_490",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L490"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_505",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L505"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer",
+      "label": "15. Runbook 4 \u2013 Published Sessions Not Visible to Trainer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L513"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_515",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L515"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_521",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L521"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_534",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L534"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student",
+      "label": "16. Runbook 5 \u2013 Published Sessions Not Visible to Student",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L542"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_544",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L544"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_549",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L549"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_562",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L562"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation",
+      "label": "17. Runbook 6 \u2013 Audit Write Failure During Mutation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L569"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_571",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L571"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_577",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L577"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_590",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L590"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible",
+      "label": "18. Runbook 7 \u2013 Wrong Branch Data Visible",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L598"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_600",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L600"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_606",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L606"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_620",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L620"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling",
+      "label": "19. Runbook 8 \u2013 Venue Block Does Not Prevent Scheduling",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L628"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_630",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L630"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_635",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L635"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_648",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L648"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions",
+      "label": "20. Runbook 9 \u2013 Holiday Calendar Change Affects Published Sessions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L655"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_657",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L657"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_662",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L662"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_673",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L673"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails",
+      "label": "21. Runbook 10 \u2013 Report Export Fails",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L680"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_682",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L682"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_688",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L688"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_701",
+      "label": "Resolution Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L701"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_data_repair_guidelines",
+      "label": "22. Data Repair Guidelines",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L708"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_1_example_validation_query_categories",
+      "label": "22.1 Example Validation Query Categories",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L721"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards",
+      "label": "23. Operational Dashboards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L737"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_1_technical_dashboard_widgets",
+      "label": "23.1 Technical Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L739"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_2_business_operations_dashboard_widgets",
+      "label": "23.2 Business Operations Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L752"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_24_scheduled_maintenance_jobs",
+      "label": "24. Scheduled Maintenance Jobs",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L767"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_25_incident_severity_matrix",
+      "label": "25. Incident Severity Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L782"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_26_support_handoff_information",
+      "label": "26. Support Handoff Information",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L793"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_27_operational_acceptance_criteria",
+      "label": "27. Operational Acceptance Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L813"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_28_final_operations_checklist",
+      "label": "28. Final Operations Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L846"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_md",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_module_07_scheduling_calendar_holiday_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_operational_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_operational_scope",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_1_1_owned_runtime_capabilities",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_1_monorepo_placement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_deployment_architecture",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_2_2_deployable_units",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_3_environment_configuration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_1_owned_tables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_2_migration_safety_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_database_deployment_requirements",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_4_3_required_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_1_logging_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L143",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_2_structured_log_format",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_observability_setup",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_5_3_required_log_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_1_trace_spans",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_distributed_tracing_boundaries",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_6_2_cross_module_trace_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L210",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_1_application_metrics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_metrics_instrumentation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_7_2_business_metrics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L243",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_8_alerts_and_thresholds",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_1_module_health_endpoint",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L278",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_2_health_check_response",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L286",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_health_checks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_9_3_health_status_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L318",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L330",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_1_backup_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L332",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_2_recovery_point_and_time_objectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L342",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_backup_and_recovery",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_10_3_recovery_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L354",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L370",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_1_pre_deployment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_2_deployment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L390",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_release_and_deployment_checklist",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_11_3_post_deployment_smoke_tests",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L407",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L422",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L424",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L430",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_12_runbook_1_calendar_page_is_slow",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L444",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_454",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L454",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_460",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L460",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_13_runbook_2_conflict_detection_allows_overlap",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_474",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L474",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L482",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_484",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L484",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_490",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L490",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_14_runbook_3_bulk_import_fails",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_505",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L505",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L513",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_515",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L515",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_521",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L521",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_15_runbook_4_published_sessions_not_visible_to_trainer",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_534",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L534",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L542",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_544",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L544",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_549",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L549",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_16_runbook_5_published_sessions_not_visible_to_student",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_562",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L562",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L569",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_571",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L571",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_577",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L577",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_17_runbook_6_audit_write_failure_during_mutation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_590",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L590",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L598",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_600",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L600",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_606",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L606",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_18_runbook_7_wrong_branch_data_visible",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_620",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L620",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L628",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_630",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L630",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_635",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L635",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_19_runbook_8_venue_block_does_not_prevent_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_648",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L648",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L655",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_657",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L657",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_662",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L662",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_20_runbook_9_holiday_calendar_change_affects_published_sessions",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_673",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L673",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L680",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_symptoms_682",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L682",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_steps_688",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L688",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_21_runbook_10_report_export_fails",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_resolution_criteria_701",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L701",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_data_repair_guidelines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L708",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_data_repair_guidelines",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_22_1_example_validation_query_categories",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L721",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L737",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_1_technical_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L739",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_operational_dashboards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_23_2_business_operations_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L752",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_24_scheduled_maintenance_jobs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L767",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_25_incident_severity_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L782",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_26_support_handoff_information",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L793",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_27_operational_acceptance_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L813",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_07_scheduling_calendar_holiday_management_part_11_deployment_operations_observability_runbooks_28_final_operations_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L846",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -586,6 +586,7 @@ This project has a knowledge graph at graphify-out/ with god nodes, community st
 When the user types `/graphify`, invoke the `skill` tool with `skill: "graphify"` before doing anything else.
 
 Rules:
+
 - For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
 - Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
 - If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
@@ -593,6 +594,7 @@ Rules:
 - After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
 
 ## Frontend UI Standards
+
 ## Responsive UI Implementation Standard
 
 When working on frontend UI changes, the agent must treat responsiveness as a system-level requirement, not as a page-level polish task.
@@ -607,32 +609,32 @@ Avoid desktop-first assumptions unless the component is explicitly desktop-only.
 
 All UI changes must be validated at the following viewport widths:
 
-* 375px — mobile
-* 768px — tablet
-* 1024px — small laptop
-* 1280px — standard desktop
-* 1536px — wide desktop
+- 375px — mobile
+- 768px — tablet
+- 1024px — small laptop
+- 1280px — standard desktop
+- 1536px — wide desktop
 
 At each width, verify:
 
-* No horizontal page overflow
-* No clipped text
-* No overlapping buttons, filters, headers, or actions
-* No excessive vertical whitespace
-* No oversized headings on mobile/tablet
-* Cards, tables, forms, and headers adapt correctly
-* Primary actions remain visible and usable
-* Sidebar, drawer, and header behavior remains usable
-* Tables do not break the page layout
+- No horizontal page overflow
+- No clipped text
+- No overlapping buttons, filters, headers, or actions
+- No excessive vertical whitespace
+- No oversized headings on mobile/tablet
+- Cards, tables, forms, and headers adapt correctly
+- Primary actions remain visible and usable
+- Sidebar, drawer, and header behavior remains usable
+- Tables do not break the page layout
 
 ### Responsive Breakpoint Model
 
 Use the following layout tiers:
 
-* Mobile: `320px–639px`
-* Tablet: `640px–1023px`
-* Laptop: `1024px–1439px`
-* Wide desktop: `1440px+`
+- Mobile: `320px–639px`
+- Tablet: `640px–1023px`
+- Laptop: `1024px–1439px`
+- Wide desktop: `1440px+`
 
 The UI must not jump directly from mobile behavior to large desktop behavior. Tablet layouts must be considered separately.
 
@@ -642,12 +644,12 @@ Do not use large fixed spacing as a default.
 
 Avoid using classes such as:
 
-* `py-20`
-* `py-24`
-* `py-28`
-* `px-8`
-* `gap-10`
-* `gap-12`
+- `py-20`
+- `py-24`
+- `py-28`
+- `px-8`
+- `gap-10`
+- `gap-12`
 
 unless the screen is a public marketing/hero section and the larger spacing is intentionally scoped to larger breakpoints.
 
@@ -679,9 +681,9 @@ Do not use large fixed heading sizes as the default.
 
 Avoid using:
 
-* `text-5xl`
-* `text-6xl`
-* `text-7xl`
+- `text-5xl`
+- `text-6xl`
+- `text-7xl`
 
 outside public marketing hero sections.
 
@@ -720,46 +722,46 @@ Classify each page or component into one of these density modes:
 
 Use for:
 
-* Admin dashboards
-* List pages
-* Table-heavy pages
-* Data-heavy screens
+- Admin dashboards
+- List pages
+- Table-heavy pages
+- Data-heavy screens
 
 Rules:
 
-* Smaller padding
-* Tighter gaps
-* Compact headers
-* Avoid decorative whitespace
+- Smaller padding
+- Tighter gaps
+- Compact headers
+- Avoid decorative whitespace
 
 #### Standard
 
 Use for:
 
-* Forms
-* Detail pages
-* Settings pages
-* Profile pages
+- Forms
+- Detail pages
+- Settings pages
+- Profile pages
 
 Rules:
 
-* Balanced spacing
-* Readable form layout
-* Sections should stack cleanly on mobile/tablet
+- Balanced spacing
+- Readable form layout
+- Sections should stack cleanly on mobile/tablet
 
 #### Hero
 
 Use only for:
 
-* Public landing pages
-* Marketing sections
-* CTA-heavy public screens
+- Public landing pages
+- Marketing sections
+- CTA-heavy public screens
 
 Rules:
 
-* Larger typography allowed
-* Larger vertical spacing allowed
-* Must still scale down aggressively on mobile/tablet
+- Larger typography allowed
+- Larger vertical spacing allowed
+- Must still scale down aggressively on mobile/tablet
 
 ### Shared Component Requirements
 
@@ -767,35 +769,35 @@ The agent must update shared components first whenever possible instead of apply
 
 High-priority shared components:
 
-* `AppShell`
-* `PublicShell`
-* `PageHeader`
-* `Card`
-* `StatCard`
-* `Table`
-* `FilterBar`
-* `HeroSection`
-* `SectionHeading`
-* CTA blocks
+- `AppShell`
+- `PublicShell`
+- `PageHeader`
+- `Card`
+- `StatCard`
+- `Table`
+- `FilterBar`
+- `HeroSection`
+- `SectionHeading`
+- CTA blocks
 
 #### PageHeader
 
 Required behavior:
 
-* Mobile: title, description, and actions stack vertically
-* Tablet: actions may wrap or move to a second row
-* Desktop: title/description left, actions right
-* Must not overflow horizontally
-* Must not use oversized fixed typography
+- Mobile: title, description, and actions stack vertically
+- Tablet: actions may wrap or move to a second row
+- Desktop: title/description left, actions right
+- Must not overflow horizontally
+- Must not use oversized fixed typography
 
 #### Card / StatCard
 
 Required behavior:
 
-* Padding must reduce on mobile/tablet
-* Large numbers must scale down
-* Cards must stack cleanly on mobile
-* Grid layouts must use responsive column counts
+- Padding must reduce on mobile/tablet
+- Large numbers must scale down
+- Cards must stack cleanly on mobile
+- Grid layouts must use responsive column counts
 
 Example:
 
@@ -807,21 +809,21 @@ grid-cols-1 sm:grid-cols-2 xl:grid-cols-4
 
 Required behavior:
 
-* Mobile: single-column layout
-* Tablet: two-column or wrapped layout
-* Desktop: inline layout if space allows
-* Buttons must not overflow
-* Search input must remain usable
+- Mobile: single-column layout
+- Tablet: two-column or wrapped layout
+- Desktop: inline layout if space allows
+- Buttons must not overflow
+- Search input must remain usable
 
 #### Table
 
 Required behavior:
 
-* Desktop: normal table
-* Tablet: horizontal scroll is acceptable
-* Mobile: horizontal scroll or card-row layout
-* Table must not cause full-page horizontal overflow
-* Important row actions must remain accessible
+- Desktop: normal table
+- Tablet: horizontal scroll is acceptable
+- Mobile: horizontal scroll or card-row layout
+- Table must not cause full-page horizontal overflow
+- Important row actions must remain accessible
 
 ### App Shell Requirements
 
@@ -829,12 +831,12 @@ The app shell must be responsive by default.
 
 Required behavior:
 
-* Sidebar should be fixed only on `lg+`
-* Mobile should use drawer navigation
-* Tablet should use drawer or collapsed rail behavior
-* Header height should reduce on mobile/tablet
-* Header actions should collapse or wrap before they overflow
-* Search/profile/actions should not crowd the header
+- Sidebar should be fixed only on `lg+`
+- Mobile should use drawer navigation
+- Tablet should use drawer or collapsed rail behavior
+- Header height should reduce on mobile/tablet
+- Header actions should collapse or wrap before they overflow
+- Search/profile/actions should not crowd the header
 
 Avoid fixed shell assumptions such as always-large headers, always-wide sidebars, or desktop-only navigation behavior.
 
@@ -885,14 +887,14 @@ Do not start by randomly fixing individual pages unless the issue is isolated to
 
 Before marking UI work complete, verify:
 
-* The change does not introduce horizontal overflow
-* Mobile layout is intentionally designed, not accidentally stacked
-* Tablet layout is checked separately from mobile and desktop
-* Large spacing is not used by default
-* Large typography is not used outside hero/marketing sections
-* Shared components are updated instead of duplicating fixes
-* Tables and filters remain usable on small screens
-* The UI is validated at 375px, 768px, 1024px, 1280px, and 1536px
+- The change does not introduce horizontal overflow
+- Mobile layout is intentionally designed, not accidentally stacked
+- Tablet layout is checked separately from mobile and desktop
+- Large spacing is not used by default
+- Large typography is not used outside hero/marketing sections
+- Shared components are updated instead of duplicating fixes
+- Tables and filters remain usable on small screens
+- The UI is validated at 375px, 768px, 1024px, 1280px, and 1536px
 
 ### Acceptance Criteria Example
 

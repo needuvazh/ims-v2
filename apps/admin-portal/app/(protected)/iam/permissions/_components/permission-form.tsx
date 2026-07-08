@@ -3,14 +3,12 @@
 import { useActionState, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldCheck, Save } from 'lucide-react';
+import { Alert, Button, Input, Select, Textarea } from '@ims/shared-ui';
 import {
-  Alert,
-  Button,
-  Input,
-  Select,
-  Textarea,
-} from '@ims/shared-ui';
-import { createPermissionAction, updatePermissionAction, type ActionResult } from '../actions';
+  createPermissionAction,
+  updatePermissionAction,
+  type ActionResult,
+} from '../actions';
 
 const initialState: ActionResult = { success: false };
 
@@ -24,9 +22,10 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [state, formAction, isPending] = useActionState(
     async (prev: ActionResult, formData: FormData) => {
-      const result = mode === 'edit' && initialData?.id
-        ? await updatePermissionAction(initialData.id, prev, formData)
-        : await createPermissionAction(prev, formData);
+      const result =
+        mode === 'edit' && initialData?.id
+          ? await updatePermissionAction(initialData.id, prev, formData)
+          : await createPermissionAction(prev, formData);
       if (result.success) {
         router.push('/iam/permissions');
       }
@@ -50,25 +49,35 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
   const isView = mode === 'view';
 
   return (
-    <form action={formAction} noValidate className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)] shadow-sm">
+    <form
+      action={formAction}
+      noValidate
+      className="space-y-6 bg-[color:var(--ims-surface)] p-6 rounded-2xl border border-[color:var(--ims-border)] shadow-sm"
+    >
       {state.error && <Alert variant="error" description={state.error} />}
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input 
-          name="permissionCode" 
-          label="Permission Code" 
-          placeholder="iam.user.create" 
-          required 
-          defaultValue={state.values?.permissionCode ?? initialData?.permissionCode}
+        <Input
+          name="permissionCode"
+          label="Permission Code"
+          placeholder="iam.user.create"
+          required
+          defaultValue={
+            state.values?.permissionCode ?? initialData?.permissionCode
+          }
           disabled={isView || mode === 'edit'} // Code is immutable after creation
-          data-testid="perm-code-input" 
+          data-testid="perm-code-input"
           errorText={fieldErrors.permissionCode}
         />
         <Select
           name="permissionType"
           label="Type"
           placeholder="Select type"
-          defaultValue={state.values?.permissionType ?? initialData?.permissionType ?? 'Action'}
+          defaultValue={
+            state.values?.permissionType ??
+            initialData?.permissionType ??
+            'Action'
+          }
           options={[
             { value: 'Action', label: 'Action' },
             { value: 'Menu', label: 'Menu' },
@@ -79,29 +88,29 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
           disabled={isView}
           errorText={fieldErrors.permissionType}
         />
-        
-        <Input 
-          name="moduleCode" 
-          label="Module" 
-          placeholder="iam" 
+
+        <Input
+          name="moduleCode"
+          label="Module"
+          placeholder="iam"
           defaultValue={state.values?.moduleCode ?? initialData?.moduleCode}
           disabled={isView}
           errorText={fieldErrors.moduleCode}
         />
-        
-        <Input 
-          name="featureCode" 
-          label="Feature" 
-          placeholder="user" 
+
+        <Input
+          name="featureCode"
+          label="Feature"
+          placeholder="user"
           defaultValue={state.values?.featureCode ?? initialData?.featureCode}
           disabled={isView}
           errorText={fieldErrors.featureCode}
         />
-        
-        <Input 
-          name="actionCode" 
-          label="Action" 
-          placeholder="create" 
+
+        <Input
+          name="actionCode"
+          label="Action"
+          placeholder="create"
           defaultValue={state.values?.actionCode ?? initialData?.actionCode}
           disabled={isView}
           errorText={fieldErrors.actionCode}
@@ -122,25 +131,39 @@ export function PermissionForm({ mode, initialData }: PermissionFormProps) {
         />
       </div>
 
-      <Textarea 
-        name="description" 
-        label="Description" 
-        placeholder="Allows creating new users." 
-        defaultValue={state.values?.description ?? initialData?.description ?? ''}
+      <Textarea
+        name="description"
+        label="Description"
+        placeholder="Allows creating new users."
+        defaultValue={
+          state.values?.description ?? initialData?.description ?? ''
+        }
         disabled={isView}
         errorText={fieldErrors.description}
       />
 
       {!isView && (
         <div className="flex justify-end gap-3 pt-4">
-          <Button type="button" variant="secondary" onClick={() => router.push('/iam/permissions')}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => router.push('/iam/permissions')}
+          >
             Cancel
           </Button>
-          <Button type="submit" loading={isPending} data-testid="perm-submit-btn">
+          <Button
+            type="submit"
+            loading={isPending}
+            data-testid="perm-submit-btn"
+          >
             {mode === 'create' ? (
-              <><ShieldCheck className="h-4 w-4 mr-2" /> Create Permission</>
+              <>
+                <ShieldCheck className="h-4 w-4 mr-2" /> Create Permission
+              </>
             ) : (
-              <><Save className="h-4 w-4 mr-2" /> Save Changes</>
+              <>
+                <Save className="h-4 w-4 mr-2" /> Save Changes
+              </>
             )}
           </Button>
         </div>

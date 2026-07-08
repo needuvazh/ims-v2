@@ -1,1 +1,143 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_completion_reevaluation_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L1"}, {"id": "completion_reevaluation_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L1"}, {"id": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034", "label": "Requirement: Completion Reevaluation Trigger (FR-EXC-034)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L3"}, {"id": "completion_reevaluation_spec_scenario_reevaluate_after_result_correction", "label": "Scenario: Reevaluate after Result correction", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L6"}, {"id": "completion_reevaluation_spec_scenario_reject_untraceable_result_correction_trigger", "label": "Scenario: Reject untraceable Result correction trigger", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L14"}, {"id": "completion_reevaluation_spec_requirement_reevaluation_exception_handling_fr_exc_035", "label": "Requirement: Reevaluation Exception Handling (FR-EXC-035)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L18"}, {"id": "completion_reevaluation_spec_scenario_enter_exception_path_when_approved_outcome_becomes_invalid", "label": "Scenario: Enter exception path when approved outcome becomes invalid", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L21"}, {"id": "completion_reevaluation_spec_requirement_reevaluation_branch_isolation_fr_exc_036", "label": "Requirement: Reevaluation Branch Isolation (FR-EXC-036)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L28"}, {"id": "completion_reevaluation_spec_scenario_reject_cross_branch_reevaluation", "label": "Scenario: Reject cross-branch reevaluation", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L31"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_completion_reevaluation_spec_md", "target": "completion_reevaluation_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "completion_reevaluation_spec_added_requirements", "target": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034", "target": "completion_reevaluation_spec_scenario_reevaluate_after_result_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034", "target": "completion_reevaluation_spec_scenario_reject_untraceable_result_correction_trigger", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L14", "weight": 1.0}, {"source": "completion_reevaluation_spec_added_requirements", "target": "completion_reevaluation_spec_requirement_reevaluation_exception_handling_fr_exc_035", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L18", "weight": 1.0}, {"source": "completion_reevaluation_spec_requirement_reevaluation_exception_handling_fr_exc_035", "target": "completion_reevaluation_spec_scenario_enter_exception_path_when_approved_outcome_becomes_invalid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L21", "weight": 1.0}, {"source": "completion_reevaluation_spec_added_requirements", "target": "completion_reevaluation_spec_requirement_reevaluation_branch_isolation_fr_exc_036", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L28", "weight": 1.0}, {"source": "completion_reevaluation_spec_requirement_reevaluation_branch_isolation_fr_exc_036", "target": "completion_reevaluation_spec_scenario_reject_cross_branch_reevaluation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md", "source_location": "L31", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_completion_reevaluation_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "completion_reevaluation_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034",
+      "label": "Requirement: Completion Reevaluation Trigger (FR-EXC-034)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "completion_reevaluation_spec_scenario_reevaluate_after_result_correction",
+      "label": "Scenario: Reevaluate after Result correction",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "completion_reevaluation_spec_scenario_reject_untraceable_result_correction_trigger",
+      "label": "Scenario: Reject untraceable Result correction trigger",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "completion_reevaluation_spec_requirement_reevaluation_exception_handling_fr_exc_035",
+      "label": "Requirement: Reevaluation Exception Handling (FR-EXC-035)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "completion_reevaluation_spec_scenario_enter_exception_path_when_approved_outcome_becomes_invalid",
+      "label": "Scenario: Enter exception path when approved outcome becomes invalid",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "completion_reevaluation_spec_requirement_reevaluation_branch_isolation_fr_exc_036",
+      "label": "Requirement: Reevaluation Branch Isolation (FR-EXC-036)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "completion_reevaluation_spec_scenario_reject_cross_branch_reevaluation",
+      "label": "Scenario: Reject cross-branch reevaluation",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L31"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_completion_reevaluation_spec_md",
+      "target": "completion_reevaluation_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_reevaluation_spec_added_requirements",
+      "target": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034",
+      "target": "completion_reevaluation_spec_scenario_reevaluate_after_result_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_reevaluation_spec_requirement_completion_reevaluation_trigger_fr_exc_034",
+      "target": "completion_reevaluation_spec_scenario_reject_untraceable_result_correction_trigger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_reevaluation_spec_added_requirements",
+      "target": "completion_reevaluation_spec_requirement_reevaluation_exception_handling_fr_exc_035",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_reevaluation_spec_requirement_reevaluation_exception_handling_fr_exc_035",
+      "target": "completion_reevaluation_spec_scenario_enter_exception_path_when_approved_outcome_becomes_invalid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_reevaluation_spec_added_requirements",
+      "target": "completion_reevaluation_spec_requirement_reevaluation_branch_isolation_fr_exc_036",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "completion_reevaluation_spec_requirement_reevaluation_branch_isolation_fr_exc_036",
+      "target": "completion_reevaluation_spec_scenario_reject_cross_branch_reevaluation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/completion-reevaluation/spec.md",
+      "source_location": "L31",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

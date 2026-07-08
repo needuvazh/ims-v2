@@ -22,47 +22,65 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
-export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: admissionId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'admission.read', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'admission.read', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { branchScopeResolver, admissionQueryService } = await import('../../../../../lib/runtime');
+        try {
+          const { branchScopeResolver, admissionQueryService } =
+            await import('../../../../../lib/runtime');
 
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
 
-      const detail = await admissionQueryService.getAdmissionDetail(
-        admissionId,
-        allowedBranches.map((b) => b as string)
-      );
+          const detail = await admissionQueryService.getAdmissionDetail(
+            admissionId,
+            allowedBranches.map((b) => b as string),
+          );
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: detail,
-        },
-        { status: 200 }
-      );
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: detail,
+            },
+            { status: 200 },
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/admissions/[id]',
-        method: request.method,
-        status: 'success',
-      });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/admissions/[id]',
+            method: request.method,
+            status: 'success',
+          });
 
-      return response;
-    } catch (error) {
-      logger.error('api.admissions.get.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/admissions/[id]' });
+          return response;
+        } catch (error) {
+          logger.error('api.admissions.get.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return errorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/admissions/[id]' },
+  );
 }

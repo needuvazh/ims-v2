@@ -9,6 +9,7 @@ We will introduce the initial Course Catalog models and CRUD APIs, including dep
 ## Capabilities
 
 ### New Capabilities
+
 - `course-catalog`: Covers bilingual course category hierarchies, bilingual course creation, updates, and status state machine transitions.
 
 ### Modified Capabilities

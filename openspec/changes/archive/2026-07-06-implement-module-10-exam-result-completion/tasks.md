@@ -125,7 +125,7 @@
 
 ## 10. Permission Seeds
 
-- [x] 10.1 Define permission seed data for exam.*, result.*, completion.*, report.* permissions
+- [x] 10.1 Define permission seed data for exam._, result._, completion._, report._ permissions
 - [x] 10.2 Define default role bundles: Academic Administrator, Academic Coordinator, Trainer, Branch Manager, Auditor, Read-Only Academic, Executive Viewer
 - [x] 10.3 Implement permission seed script
 - [x] 10.4 Register menu permissions for exam-completion module

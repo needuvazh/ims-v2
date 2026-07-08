@@ -12,15 +12,23 @@ export type ResetPasswordState = {
 export async function resetPasswordAction(
   token: string,
   prevState: ResetPasswordState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ResetPasswordState> {
   const password = formData.get('password') as string;
   const confirmPassword = formData.get('confirmPassword') as string;
 
-  const result = resetPasswordFormSchema.safeParse({ token, password, confirmPassword });
+  const result = resetPasswordFormSchema.safeParse({
+    token,
+    password,
+    confirmPassword,
+  });
   if (!result.success) {
     const errorMap = result.error.flatten().fieldErrors;
-    const errorMsg = errorMap.token?.[0] || errorMap.password?.[0] || errorMap.confirmPassword?.[0] || 'Invalid inputs.';
+    const errorMsg =
+      errorMap.token?.[0] ||
+      errorMap.password?.[0] ||
+      errorMap.confirmPassword?.[0] ||
+      'Invalid inputs.';
     return {
       error: errorMsg,
     };
@@ -35,7 +43,10 @@ export async function resetPasswordAction(
       success: true,
     };
   } catch (error: unknown) {
-    if (error instanceof Error && (error.name === 'IamError' || 'errorCode' in error)) {
+    if (
+      error instanceof Error &&
+      (error.name === 'IamError' || 'errorCode' in error)
+    ) {
       return {
         error: (error as any).messageEn || error.message,
       };
@@ -46,7 +57,8 @@ export async function resetPasswordAction(
       };
     }
     return {
-      error: 'An unexpected error occurred or the recovery link is invalid/expired.',
+      error:
+        'An unexpected error occurred or the recovery link is invalid/expired.',
     };
   }
 }

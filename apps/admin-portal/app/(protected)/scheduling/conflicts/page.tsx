@@ -26,8 +26,12 @@ export default async function ConflictDashboardPage(props: {
   const data = await loadConflictDashboardData(searchParams);
 
   const sessions = data.sessions.map((session) => {
-    const classroomName = data.classrooms.find((classroom) => classroom.id === session.classroomId)?.classroomName ?? null;
-    const branchName = data.branches.find((branch) => branch.id === session.batch.branchId)?.branchName ?? 'Unknown branch';
+    const classroomName =
+      data.classrooms.find((classroom) => classroom.id === session.classroomId)
+        ?.classroomName ?? null;
+    const branchName =
+      data.branches.find((branch) => branch.id === session.batch.branchId)
+        ?.branchName ?? 'Unknown branch';
 
     return {
       id: session.id,
@@ -60,9 +64,22 @@ export default async function ConflictDashboardPage(props: {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Scheduling', href: '/scheduling', icon: <MapPinned className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Conflicts', icon: <LayoutDashboard className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Scheduling',
+                href: '/scheduling',
+                icon: <MapPinned className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Conflicts',
+                icon: (
+                  <LayoutDashboard className="h-3.5 w-3.5 text-slate-500" />
+                ),
+              },
             ]}
           />
         }
@@ -107,7 +124,10 @@ export default async function ConflictDashboardPage(props: {
                 {
                   key: 'branchId',
                   label: 'Branch',
-                  options: data.branches.map((branch) => ({ value: branch.id, label: branch.branchName })),
+                  options: data.branches.map((branch) => ({
+                    value: branch.id,
+                    label: branch.branchName,
+                  })),
                 },
               ]
             : []),
@@ -134,7 +154,10 @@ export default async function ConflictDashboardPage(props: {
         ]}
       />
 
-      <ConflictDashboardClient sessions={sessions} classrooms={data.classrooms} />
+      <ConflictDashboardClient
+        sessions={sessions}
+        classrooms={data.classrooms}
+      />
     </AdminListPageLayout>
   );
 }

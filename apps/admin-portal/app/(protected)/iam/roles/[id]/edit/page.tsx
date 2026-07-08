@@ -4,12 +4,14 @@ import { assertPermission } from '@/lib/auth-guard';
 
 export const metadata = { title: 'Edit Role - IAM | IMS Admin' };
 
-export default async function IamEditRolePage(props: { params: Promise<{ id: string }> }) {
+export default async function IamEditRolePage(props: {
+  params: Promise<{ id: string }>;
+}) {
   await assertPermission('iam.role.update');
   const params = await props.params;
 
   const { roleService } = await import('@/lib/runtime');
-  
+
   const rolesData = await roleService.listRoles();
   const role = rolesData.find((r: any) => r.id === params.id);
 

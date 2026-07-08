@@ -1,4 +1,5 @@
 # Functional Requirement Document (Part 4)
+
 ## Module 04: Admission & Enrollment Management - Database Schema & CRUD Matrix
 
 ---
@@ -8,90 +9,98 @@
 This module owns the admission and enrollment lifecycle data. The current Prisma schema still contains a legacy `Student` model, so the implementation must refactor the database to the target model below.
 
 ### 1.1 `Person` (shared reference, owned elsewhere)
-* Shared identity record.
-* Read-only from this module except via lookup/link flows.
-* Fields: `id`, `firstName`, `lastName`, `mobile`, `email`, `nationalId`, `nationality`, `dateOfBirth`, `gender`, audit fields, soft delete fields.
+
+- Shared identity record.
+- Read-only from this module except via lookup/link flows.
+- Fields: `id`, `firstName`, `lastName`, `mobile`, `email`, `nationalId`, `nationality`, `dateOfBirth`, `gender`, audit fields, soft delete fields.
 
 ### 1.2 `StudentProfile`
-* Purpose: learner profile linked 1:1 to `Person`.
-* Fields: `id`, `personId`, `studentNumber`, `status`, `idCardIssued`, `idCardNumber`, `joinedAt`, audit fields, soft delete fields.
-* Constraints:
-  * `personId` unique.
-  * `studentNumber` unique.
-  * One active profile per person.
+
+- Purpose: learner profile linked 1:1 to `Person`.
+- Fields: `id`, `personId`, `studentNumber`, `status`, `idCardIssued`, `idCardNumber`, `joinedAt`, audit fields, soft delete fields.
+- Constraints:
+  - `personId` unique.
+  - `studentNumber` unique.
+  - One active profile per person.
 
 ### 1.3 `Admission`
-* Purpose: administrative admission record for a student profile in a branch.
-* Fields: `id`, `admissionNumber`, `personId`, `studentProfileId`, `branchId`, `leadId?`, `admissionDate`, `admissionStatus`, `submittedAt?`, `approvedAt?`, `approvedBy?`, `remarks?`, audit fields, soft delete fields.
-* Constraints:
-  * `admissionNumber` unique.
-  * `studentProfileId` required.
-  * `branchId` required.
-  * `leadId` is optional and read-only to CRM ownership.
+
+- Purpose: administrative admission record for a student profile in a branch.
+- Fields: `id`, `admissionNumber`, `personId`, `studentProfileId`, `branchId`, `leadId?`, `admissionDate`, `admissionStatus`, `submittedAt?`, `approvedAt?`, `approvedBy?`, `remarks?`, audit fields, soft delete fields.
+- Constraints:
+  - `admissionNumber` unique.
+  - `studentProfileId` required.
+  - `branchId` required.
+  - `leadId` is optional and read-only to CRM ownership.
 
 ### 1.4 `Enrollment`
-* Purpose: central aggregate for course and batch assignment.
-* Fields: `id`, `enrollmentNumber`, `studentProfileId`, `corporateParticipantId?`, `admissionId`, `courseId`, `batchId`, `branchId`, `enrollmentType`, `enrollmentStatus`, `pricingSource`, `resolvedPrice`, `resolvedDiscount`, `finalAmount`, `paymentValidationRequired`, `completionStatus`, `certificateStatus`, `confirmedAt?`, `completedAt?`, audit fields, soft delete fields.
-* Constraints:
-  * `courseId` required.
-  * `batchId` required.
-  * `branchId` required.
-  * `enrollmentNumber` unique.
-  * `studentProfileId` required.
+
+- Purpose: central aggregate for course and batch assignment.
+- Fields: `id`, `enrollmentNumber`, `studentProfileId`, `corporateParticipantId?`, `admissionId`, `courseId`, `batchId`, `branchId`, `enrollmentType`, `enrollmentStatus`, `pricingSource`, `resolvedPrice`, `resolvedDiscount`, `finalAmount`, `paymentValidationRequired`, `completionStatus`, `certificateStatus`, `confirmedAt?`, `completedAt?`, audit fields, soft delete fields.
+- Constraints:
+  - `courseId` required.
+  - `batchId` required.
+  - `branchId` required.
+  - `enrollmentNumber` unique.
+  - `studentProfileId` required.
 
 ### 1.5 `WalkInEnrollment`
-* Purpose: specialized walk-in strategy record linked 1:1 to enrollment.
-* Fields: `id`, `enrollmentId`, `walkInDate`, `counterUserId`, `paymentCollected`, `confirmationIssued`, `remarks`, audit fields, soft delete fields.
+
+- Purpose: specialized walk-in strategy record linked 1:1 to enrollment.
+- Fields: `id`, `enrollmentId`, `walkInDate`, `counterUserId`, `paymentCollected`, `confirmationIssued`, `remarks`, audit fields, soft delete fields.
 
 ### 1.6 `WalkInConfirmation`
-* Purpose: printable confirmation artifact for walk-in flows.
-* Fields: `id`, `walkInEnrollmentId`, `confirmationNumber`, `issuedAt`, `issuedBy`, `documentUrl`, audit fields, soft delete fields.
+
+- Purpose: printable confirmation artifact for walk-in flows.
+- Fields: `id`, `walkInEnrollmentId`, `confirmationNumber`, `issuedAt`, `issuedBy`, `documentUrl`, audit fields, soft delete fields.
 
 ### 1.7 Enums
-* `EnrollmentType`: `Regular`, `Corporate`, `WalkIn`, `Online`
-* `EnrollmentStatus`: `Draft`, `Submitted`, `Approved`, `Confirmed`, `Active`, `Completed`, `Cancelled`, `Dropped`, `CertificateIssued`
-* `PricingSource`: `BatchLevel`, `BranchLevel`, `GlobalDefault`
-* `AdmissionStatus`: `Draft`, `Submitted`, `Approved`, `Rejected`, `Cancelled`
-* `StudentStatus`: `Active`, `Suspended`, `Inactive`
+
+- `EnrollmentType`: `Regular`, `Corporate`, `WalkIn`, `Online`
+- `EnrollmentStatus`: `Draft`, `Submitted`, `Approved`, `Confirmed`, `Active`, `Completed`, `Cancelled`, `Dropped`, `CertificateIssued`
+- `PricingSource`: `BatchLevel`, `BranchLevel`, `GlobalDefault`
+- `AdmissionStatus`: `Draft`, `Submitted`, `Approved`, `Rejected`, `Cancelled`
+- `StudentStatus`: `Active`, `Suspended`, `Inactive`
 
 ---
 
 ## 2. Relationship Matrix
 
-| Entity | Relationship |
-| ------ | ------------ |
-| `Person` | 1 to 0..1 `StudentProfile` |
-| `StudentProfile` | 1 to many `Admission` |
-| `StudentProfile` | 1 to many `Enrollment` |
-| `Admission` | many to 1 `Person` |
-| `Admission` | many to 1 `Branch` |
-| `Admission` | many to 1 `StudentProfile` |
-| `Admission` | 0..1 to 1 `Lead` (logical reference only) |
-| `Enrollment` | many to 1 `StudentProfile` |
-| `Enrollment` | many to 1 `Admission` |
-| `Enrollment` | many to 1 `Course` |
-| `Enrollment` | many to 1 `Batch` |
-| `Enrollment` | many to 1 `Branch` |
-| `Enrollment` | 0..1 to `CorporateParticipant` (external reference) |
-| `WalkInEnrollment` | 1 to 1 `Enrollment` |
-| `WalkInConfirmation` | 1 to 1 `WalkInEnrollment` |
+| Entity               | Relationship                                        |
+| -------------------- | --------------------------------------------------- |
+| `Person`             | 1 to 0..1 `StudentProfile`                          |
+| `StudentProfile`     | 1 to many `Admission`                               |
+| `StudentProfile`     | 1 to many `Enrollment`                              |
+| `Admission`          | many to 1 `Person`                                  |
+| `Admission`          | many to 1 `Branch`                                  |
+| `Admission`          | many to 1 `StudentProfile`                          |
+| `Admission`          | 0..1 to 1 `Lead` (logical reference only)           |
+| `Enrollment`         | many to 1 `StudentProfile`                          |
+| `Enrollment`         | many to 1 `Admission`                               |
+| `Enrollment`         | many to 1 `Course`                                  |
+| `Enrollment`         | many to 1 `Batch`                                   |
+| `Enrollment`         | many to 1 `Branch`                                  |
+| `Enrollment`         | 0..1 to `CorporateParticipant` (external reference) |
+| `WalkInEnrollment`   | 1 to 1 `Enrollment`                                 |
+| `WalkInConfirmation` | 1 to 1 `WalkInEnrollment`                           |
 
 ---
 
 ## 3. CRUD Matrix and Scoped Access
 
-| Actor | Entity | Allowed Actions | Scope |
-| ---- | ---- | ---- | ---- |
-| Super Admin | All module entities | Create, Read, Update, Soft Delete, Audit | Global |
-| Branch Manager | Admission | Read, Approve, Reject, Cancel | Active branch |
-| Branch Manager | Enrollment | Read, Approve, Cancel, Drop | Active branch |
-| Registrar | Person | Lookup, create-link | Branch-scoped lookup only |
-| Registrar | StudentProfile | Create, Read, Update, Soft Delete | Active branch |
-| Registrar | Admission | Create, Read, Submit, Cancel | Active branch |
-| Registrar | Enrollment | Create, Read, Submit, Cancel | Active branch |
-| Counselor | Admission | Create, Read, Submit | Assigned branch or assigned lead only |
-| Counselor | Enrollment | Create, Read, Submit | Assigned branch or assigned lead only |
-| Accountant | Enrollment | Read | Branch-scoped |
+| Actor          | Entity              | Allowed Actions                          | Scope                                 |
+| -------------- | ------------------- | ---------------------------------------- | ------------------------------------- |
+| Super Admin    | All module entities | Create, Read, Update, Soft Delete, Audit | Global                                |
+| Branch Manager | Admission           | Read, Approve, Reject, Cancel            | Active branch                         |
+| Branch Manager | Enrollment          | Read, Approve, Cancel, Drop              | Active branch                         |
+| Registrar      | Person              | Lookup, create-link                      | Branch-scoped lookup only             |
+| Registrar      | StudentProfile      | Create, Read, Update, Soft Delete        | Active branch                         |
+| Registrar      | Admission           | Create, Read, Submit, Cancel             | Active branch                         |
+| Registrar      | Enrollment          | Create, Read, Submit, Cancel             | Active branch                         |
+| Counselor      | Admission           | Create, Read, Submit                     | Assigned branch or assigned lead only |
+| Counselor      | Enrollment          | Create, Read, Submit                     | Assigned branch or assigned lead only |
+| Accountant     | Enrollment          | Read                                     | Branch-scoped                         |
+
 ---
 
 ## 4. Prisma Refactor Notes

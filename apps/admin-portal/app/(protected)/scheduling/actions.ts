@@ -1,13 +1,23 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { assertAnyPermission, getSession, assertBranchScope } from '../../lib/auth-guard';
+import {
+  assertAnyPermission,
+  getSession,
+  assertBranchScope,
+} from '../../lib/auth-guard';
 import { prisma } from '@ims/database';
-import type { CreateVenueBlockCommand, UpdateVenueBlockCommand } from '@ims/scheduling';
+import type {
+  CreateVenueBlockCommand,
+  UpdateVenueBlockCommand,
+} from '@ims/scheduling';
 
 export async function createVenueBlockAction(data: CreateVenueBlockCommand) {
   try {
-    await assertAnyPermission(['scheduling.venueBlock.create', 'schedule.manage']);
+    await assertAnyPermission([
+      'scheduling.venueBlock.create',
+      'schedule.manage',
+    ]);
     await assertBranchScope(data.branchId);
     const session = await getSession();
     if (data.classroomId) {
@@ -25,7 +35,7 @@ export async function createVenueBlockAction(data: CreateVenueBlockCommand) {
     const { schedulingCalendarService } = await import('../../lib/runtime');
     const result = await schedulingCalendarService.createVenueBlock(data, {
       actorId: session.userId,
-      branchId: data.branchId
+      branchId: data.branchId,
     });
 
     revalidatePath('/scheduling/venues');
@@ -35,9 +45,16 @@ export async function createVenueBlockAction(data: CreateVenueBlockCommand) {
   }
 }
 
-export async function updateVenueBlockAction(id: string, version: number, data: UpdateVenueBlockCommand) {
+export async function updateVenueBlockAction(
+  id: string,
+  version: number,
+  data: UpdateVenueBlockCommand,
+) {
   try {
-    await assertAnyPermission(['scheduling.venueBlock.update', 'schedule.manage']);
+    await assertAnyPermission([
+      'scheduling.venueBlock.update',
+      'schedule.manage',
+    ]);
     const session = await getSession();
 
     const existing = await prisma.venueBlock.findUnique({
@@ -59,10 +76,15 @@ export async function updateVenueBlockAction(id: string, version: number, data: 
     }
 
     const { schedulingCalendarService } = await import('../../lib/runtime');
-    const result = await schedulingCalendarService.updateVenueBlock(id, data, version, {
-      actorId: session.userId,
-      branchId: existing.branchId,
-    });
+    const result = await schedulingCalendarService.updateVenueBlock(
+      id,
+      data,
+      version,
+      {
+        actorId: session.userId,
+        branchId: existing.branchId,
+      },
+    );
 
     revalidatePath('/scheduling/venues');
     revalidatePath(`/scheduling/venues/${id}/edit`);
@@ -74,11 +96,16 @@ export async function updateVenueBlockAction(id: string, version: number, data: 
 
 export async function listVenueBlocksAction(branchId: string) {
   try {
-    await assertAnyPermission(['scheduling.venueBlock.read', 'schedule.manage']);
+    await assertAnyPermission([
+      'scheduling.venueBlock.read',
+      'schedule.manage',
+    ]);
     await assertBranchScope(branchId);
 
     const { schedulingCalendarService } = await import('../../lib/runtime');
-    const result = await schedulingCalendarService.listVenueBlocks({ branchId });
+    const result = await schedulingCalendarService.listVenueBlocks({
+      branchId,
+    });
 
     return { success: true as const, data: result };
   } catch (error: any) {
@@ -95,12 +122,12 @@ export async function getConflictDashboardAction(branchId: string) {
       where: {
         batch: { branchId },
         scheduleStatus: 'Conflict',
-        isDeleted: false
+        isDeleted: false,
       },
       include: {
-        batch: true
+        batch: true,
       },
-      orderBy: { sessionDate: 'asc' }
+      orderBy: { sessionDate: 'asc' },
     });
 
     return { success: true as const, data: sessions };
@@ -109,9 +136,16 @@ export async function getConflictDashboardAction(branchId: string) {
   }
 }
 
-export async function resolveConflictAction(sessionId: string, action: 'RESCHEDULE' | 'CHANGE_VENUE' | 'CANCEL', payload: any) {
+export async function resolveConflictAction(
+  sessionId: string,
+  action: 'RESCHEDULE' | 'CHANGE_VENUE' | 'CANCEL',
+  payload: any,
+) {
   try {
-    await assertAnyPermission(['scheduling.session.reschedule', 'schedule.manage']);
+    await assertAnyPermission([
+      'scheduling.session.reschedule',
+      'schedule.manage',
+    ]);
     const sessionContext = await getSession();
 
     const session = await prisma.session.findUnique({
@@ -136,7 +170,9 @@ export async function resolveConflictAction(sessionId: string, action: 'RESCHEDU
     const normalizedPayload =
       action === 'RESCHEDULE'
         ? {
-            scheduledDate: payload?.scheduledDate ? new Date(payload.scheduledDate) : undefined,
+            scheduledDate: payload?.scheduledDate
+              ? new Date(payload.scheduledDate)
+              : undefined,
             startTime: payload?.startTime,
             endTime: payload?.endTime,
           }
@@ -146,10 +182,15 @@ export async function resolveConflictAction(sessionId: string, action: 'RESCHEDU
             }
           : {};
 
-    await schedulingCalendarService.resolveConflict(sessionId, action, normalizedPayload, {
-      actorId: sessionContext.userId,
-      instituteId: branch.instituteId
-    });
+    await schedulingCalendarService.resolveConflict(
+      sessionId,
+      action,
+      normalizedPayload,
+      {
+        actorId: sessionContext.userId,
+        instituteId: branch.instituteId,
+      },
+    );
 
     revalidatePath('/scheduling/conflicts');
     revalidatePath(`/batches/${session.batchId}`);
@@ -161,10 +202,16 @@ export async function resolveConflictAction(sessionId: string, action: 'RESCHEDU
 
 export async function ignoreConflictAction(sessionId: string, reason: string) {
   try {
-    await assertAnyPermission(['scheduling.override.holiday', 'schedule.manage']); // Simplified check
+    await assertAnyPermission([
+      'scheduling.override.holiday',
+      'schedule.manage',
+    ]); // Simplified check
     const sessionContext = await getSession();
 
-    const session = await prisma.session.findUnique({ where: { id: sessionId }, include: { batch: { select: { branchId: true } } } });
+    const session = await prisma.session.findUnique({
+      where: { id: sessionId },
+      include: { batch: { select: { branchId: true } } },
+    });
     if (!session) throw new Error('ERR_SCH_SESSION_NOT_FOUND');
     await assertBranchScope(session.batch.branchId);
     const branch = await prisma.branch.findUnique({
@@ -175,7 +222,7 @@ export async function ignoreConflictAction(sessionId: string, reason: string) {
 
     const { schedulingCalendarService } = await import('../../lib/runtime');
     await schedulingCalendarService.ignoreConflict(sessionId, reason, {
-      actorId: sessionContext.userId
+      actorId: sessionContext.userId,
     });
 
     revalidatePath('/scheduling/conflicts');

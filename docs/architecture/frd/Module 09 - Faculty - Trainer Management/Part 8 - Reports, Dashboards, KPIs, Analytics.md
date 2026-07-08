@@ -27,16 +27,16 @@ All reporting behavior shall enforce:
 
 ### 2.1 Source-of-Truth Rules
 
-| Reporting Subject | Source of Truth | Module 09 Use |
-|---|---|---|
-| Trainer profile status/type/branch | Faculty / Trainer Management | Owned operational reporting |
-| Person name and contact display | Person / Party | Read-only projection |
-| Qualification evidence status | Document Management | Read-only verification projection |
-| Course name/code | Course Catalog | Read-only projection |
-| Batch and Session assignment | Training Delivery | Read-only assignment projection |
-| Session schedule | Scheduling | Read-only timetable projection |
-| Audit history | Audit & Compliance | Read-only audit projection |
-| Enterprise KPI snapshots | Reporting & Dashboards | Consumer-facing enterprise analytics |
+| Reporting Subject                  | Source of Truth              | Module 09 Use                        |
+| ---------------------------------- | ---------------------------- | ------------------------------------ |
+| Trainer profile status/type/branch | Faculty / Trainer Management | Owned operational reporting          |
+| Person name and contact display    | Person / Party               | Read-only projection                 |
+| Qualification evidence status      | Document Management          | Read-only verification projection    |
+| Course name/code                   | Course Catalog               | Read-only projection                 |
+| Batch and Session assignment       | Training Delivery            | Read-only assignment projection      |
+| Session schedule                   | Scheduling                   | Read-only timetable projection       |
+| Audit history                      | Audit & Compliance           | Read-only audit projection           |
+| Enterprise KPI snapshots           | Reporting & Dashboards       | Consumer-facing enterprise analytics |
 
 ### 2.2 Reporting Scope Modes
 
@@ -66,23 +66,23 @@ Where an entity uses lifecycle values other than Active/Inactive, the entity-spe
 
 ### 3.1 KPI Summary
 
-| KPI ID | KPI Name | Formula | Grain | Refresh | Permission |
-|---|---|---|---|---|---|
-| KPI-FTM-001 | Active Trainer Count | Count of current-effective Active trainers | Branch / Institute | Near real-time, ≤5 min | `trainer.report.view` |
-| KPI-FTM-002 | Trainer Availability Coverage | Trainers with at least one valid availability window ÷ Active trainers × 100 | Branch | ≤15 min | `trainer.report.availability-coverage.view` |
-| KPI-FTM-003 | Course Authorization Coverage | Active trainer-course authorization pairs ÷ required course coverage pairs × 100 | Branch / Course | ≤15 min | `trainer.report.authorization-coverage.view` |
-| KPI-FTM-004 | Courses Without Authorized Trainer | Count of published/approved courses in scope with zero current-effective authorized trainer | Branch / Institute | ≤15 min | `trainer.report.authorization-coverage.view` |
-| KPI-FTM-005 | Trainer Assignment Utilization | Assigned delivery minutes ÷ available minutes × 100 | Trainer / Branch / Period | Hourly | `trainer.report.utilization-reference.view` |
-| KPI-FTM-006 | Unassigned Active Trainer Rate | Active trainers with zero assignment in period ÷ Active trainers × 100 | Branch / Period | Hourly | `trainer.report.utilization-reference.view` |
-| KPI-FTM-007 | Qualification Evidence Coverage | Qualifications with approved evidence ÷ qualifications requiring evidence × 100 | Branch | Daily | `trainer.report.qualification-compliance.view` |
-| KPI-FTM-008 | Qualification Compliance Exception Count | Count of active trainers with required qualification evidence missing/rejected/expired | Branch | Daily | `trainer.report.qualification-compliance.view` |
-| KPI-FTM-009 | Expiring Course Authorization Count | Active authorizations ending within configured threshold | Branch / Threshold | Daily | `trainer.report.authorization-coverage.view` |
-| KPI-FTM-010 | Compensation Configuration Coverage | Eligible assigned trainers with resolvable rate ÷ eligible assigned trainers requiring rate × 100 | Branch / Period | Hourly | `trainer.report.compensation-coverage.view` + `trainer.compensation.read` |
-| KPI-FTM-011 | Ambiguous Compensation Rate Count | Count of rate-resolution attempts with more than one equal-specificity effective candidate | Branch / Period | Near real-time | `trainer.report.compensation-coverage.view` + `trainer.compensation.read` |
-| KPI-FTM-012 | Eligibility Rejection Rate | Rejected eligibility validations ÷ total eligibility validations × 100 | Branch / Period | Hourly | `trainer.report.view` |
-| KPI-FTM-013 | Availability Conflict Rejection Rate | Availability overlap/time-bound validation failures ÷ availability mutation attempts × 100 | Branch / Period | Hourly | `trainer.report.availability-coverage.view` |
-| KPI-FTM-014 | Trainer Status Stability Rate | 1 − disruptive status transitions ÷ average active trainers | Branch / Period | Daily | `trainer.report.view` |
-| KPI-FTM-015 | Trainer Master Data Completeness | Weighted completed required trainer-role fields ÷ weighted required fields × 100 | Trainer / Branch | ≤15 min | `trainer.report.roster.view` |
+| KPI ID      | KPI Name                                 | Formula                                                                                           | Grain                     | Refresh                | Permission                                                                |
+| ----------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------- | ---------------------- | ------------------------------------------------------------------------- |
+| KPI-FTM-001 | Active Trainer Count                     | Count of current-effective Active trainers                                                        | Branch / Institute        | Near real-time, ≤5 min | `trainer.report.view`                                                     |
+| KPI-FTM-002 | Trainer Availability Coverage            | Trainers with at least one valid availability window ÷ Active trainers × 100                      | Branch                    | ≤15 min                | `trainer.report.availability-coverage.view`                               |
+| KPI-FTM-003 | Course Authorization Coverage            | Active trainer-course authorization pairs ÷ required course coverage pairs × 100                  | Branch / Course           | ≤15 min                | `trainer.report.authorization-coverage.view`                              |
+| KPI-FTM-004 | Courses Without Authorized Trainer       | Count of published/approved courses in scope with zero current-effective authorized trainer       | Branch / Institute        | ≤15 min                | `trainer.report.authorization-coverage.view`                              |
+| KPI-FTM-005 | Trainer Assignment Utilization           | Assigned delivery minutes ÷ available minutes × 100                                               | Trainer / Branch / Period | Hourly                 | `trainer.report.utilization-reference.view`                               |
+| KPI-FTM-006 | Unassigned Active Trainer Rate           | Active trainers with zero assignment in period ÷ Active trainers × 100                            | Branch / Period           | Hourly                 | `trainer.report.utilization-reference.view`                               |
+| KPI-FTM-007 | Qualification Evidence Coverage          | Qualifications with approved evidence ÷ qualifications requiring evidence × 100                   | Branch                    | Daily                  | `trainer.report.qualification-compliance.view`                            |
+| KPI-FTM-008 | Qualification Compliance Exception Count | Count of active trainers with required qualification evidence missing/rejected/expired            | Branch                    | Daily                  | `trainer.report.qualification-compliance.view`                            |
+| KPI-FTM-009 | Expiring Course Authorization Count      | Active authorizations ending within configured threshold                                          | Branch / Threshold        | Daily                  | `trainer.report.authorization-coverage.view`                              |
+| KPI-FTM-010 | Compensation Configuration Coverage      | Eligible assigned trainers with resolvable rate ÷ eligible assigned trainers requiring rate × 100 | Branch / Period           | Hourly                 | `trainer.report.compensation-coverage.view` + `trainer.compensation.read` |
+| KPI-FTM-011 | Ambiguous Compensation Rate Count        | Count of rate-resolution attempts with more than one equal-specificity effective candidate        | Branch / Period           | Near real-time         | `trainer.report.compensation-coverage.view` + `trainer.compensation.read` |
+| KPI-FTM-012 | Eligibility Rejection Rate               | Rejected eligibility validations ÷ total eligibility validations × 100                            | Branch / Period           | Hourly                 | `trainer.report.view`                                                     |
+| KPI-FTM-013 | Availability Conflict Rejection Rate     | Availability overlap/time-bound validation failures ÷ availability mutation attempts × 100        | Branch / Period           | Hourly                 | `trainer.report.availability-coverage.view`                               |
+| KPI-FTM-014 | Trainer Status Stability Rate            | 1 − disruptive status transitions ÷ average active trainers                                       | Branch / Period           | Daily                  | `trainer.report.view`                                                     |
+| KPI-FTM-015 | Trainer Master Data Completeness         | Weighted completed required trainer-role fields ÷ weighted required fields × 100                  | Trainer / Branch          | ≤15 min                | `trainer.report.roster.view`                                              |
 
 ---
 
@@ -306,17 +306,17 @@ If average active trainer population is zero, return `null`.
 
 Required weighted fields:
 
-| Field Group | Weight |
-|---|---:|
-| Valid Person link | 15 |
-| Trainer code | 10 |
-| Trainer type | 10 |
-| Branch | 10 |
-| Specialization | 10 |
-| Effective dates | 10 |
-| At least one qualification | 10 |
-| At least one valid availability window | 10 |
-| At least one active course authorization | 15 |
+| Field Group                              | Weight |
+| ---------------------------------------- | -----: |
+| Valid Person link                        |     15 |
+| Trainer code                             |     10 |
+| Trainer type                             |     10 |
+| Branch                                   |     10 |
+| Specialization                           |     10 |
+| Effective dates                          |     10 |
+| At least one qualification               |     10 |
+| At least one valid availability window   |     10 |
+| At least one active course authorization |     15 |
 
 ```text
 completenessPct = achievedWeight / 100 * 100
@@ -348,14 +348,14 @@ The score measures operational readiness; it does not replace eligibility valida
 
 ### 5.2 Metric Summary Widgets
 
-| Widget ID | Widget | KPI | Permission | Click Behavior |
-|---|---|---|---|---|
-| W-FTM-001 | Active Trainers | KPI-FTM-001 | `trainer.report.view` | Open filtered Trainer Directory |
-| W-FTM-002 | Availability Coverage | KPI-FTM-002 | `trainer.report.availability-coverage.view` | Open coverage report |
-| W-FTM-003 | Courses Without Authorized Trainer | KPI-FTM-004 | `trainer.report.authorization-coverage.view` | Open authorization gap report |
-| W-FTM-004 | Qualification Exceptions | KPI-FTM-008 | `trainer.report.qualification-compliance.view` | Open qualification compliance report |
-| W-FTM-005 | Compensation Coverage | KPI-FTM-010 | compensation report + read permissions | Open compensation coverage report |
-| W-FTM-006 | Eligibility Rejection Rate | KPI-FTM-012 | `trainer.report.view` | Open eligibility diagnostics report |
+| Widget ID | Widget                             | KPI         | Permission                                     | Click Behavior                       |
+| --------- | ---------------------------------- | ----------- | ---------------------------------------------- | ------------------------------------ |
+| W-FTM-001 | Active Trainers                    | KPI-FTM-001 | `trainer.report.view`                          | Open filtered Trainer Directory      |
+| W-FTM-002 | Availability Coverage              | KPI-FTM-002 | `trainer.report.availability-coverage.view`    | Open coverage report                 |
+| W-FTM-003 | Courses Without Authorized Trainer | KPI-FTM-004 | `trainer.report.authorization-coverage.view`   | Open authorization gap report        |
+| W-FTM-004 | Qualification Exceptions           | KPI-FTM-008 | `trainer.report.qualification-compliance.view` | Open qualification compliance report |
+| W-FTM-005 | Compensation Coverage              | KPI-FTM-010 | compensation report + read permissions         | Open compensation coverage report    |
+| W-FTM-006 | Eligibility Rejection Rate         | KPI-FTM-012 | `trainer.report.view`                          | Open eligibility diagnostics report  |
 
 ### 5.3 Chart Widgets
 
@@ -705,11 +705,11 @@ Raw compensation fields are never included.
 
 ### 8.4 Export Rules
 
-| Format | Interactive Threshold | Max Rows | Notes |
-|---|---:|---:|---|
-| PDF | 1,000 recommended | 5,000 | landscape for wide reports; repeated table headers |
-| XLSX | 50,000 | 50,000 | typed dates/numbers; frozen header; autofilter |
-| CSV | 50,000 | 50,000 | UTF-8 BOM for Arabic compatibility; formula-injection neutralization |
+| Format | Interactive Threshold | Max Rows | Notes                                                                |
+| ------ | --------------------: | -------: | -------------------------------------------------------------------- |
+| PDF    |     1,000 recommended |    5,000 | landscape for wide reports; repeated table headers                   |
+| XLSX   |                50,000 |   50,000 | typed dates/numbers; frozen header; autofilter                       |
+| CSV    |                50,000 |   50,000 | UTF-8 BOM for Arabic compatibility; formula-injection neutralization |
 
 If export size exceeds the limit, return `ERR_FTM_REPORT_EXPORT_LIMIT_EXCEEDED`.
 
@@ -730,16 +730,16 @@ For any exported text value beginning with `=`, `+`, `-`, or `@`, the export lay
 
 ## 9. Dashboard Permission Scope
 
-| Widget / Report Family | Base Permission | Additional Permission | Scope Rule |
-|---|---|---|---|
-| Trainer roster | `trainer.report.view` | `trainer.report.roster.view` | Effective branch scope |
-| Authorization | `trainer.report.view` | authorization report permission | Effective branch scope |
-| Availability | `trainer.report.view` | availability report permission | Effective branch scope |
-| Utilization | `trainer.report.view` | utilization report permission | Effective branch scope; assignment read projection |
-| Qualification compliance | `trainer.report.view` | qualification report permission | Effective branch scope |
-| Compensation coverage | `trainer.report.view` | compensation report + compensation read | Effective branch scope; field-level protection |
-| Consolidated selector | report-specific permission | `trainer.report.consolidated.view` | Accessible branches only |
-| Export | report view permission | `trainer.report.export` | Same row and field scope as on-screen report |
+| Widget / Report Family   | Base Permission            | Additional Permission                   | Scope Rule                                         |
+| ------------------------ | -------------------------- | --------------------------------------- | -------------------------------------------------- |
+| Trainer roster           | `trainer.report.view`      | `trainer.report.roster.view`            | Effective branch scope                             |
+| Authorization            | `trainer.report.view`      | authorization report permission         | Effective branch scope                             |
+| Availability             | `trainer.report.view`      | availability report permission          | Effective branch scope                             |
+| Utilization              | `trainer.report.view`      | utilization report permission           | Effective branch scope; assignment read projection |
+| Qualification compliance | `trainer.report.view`      | qualification report permission         | Effective branch scope                             |
+| Compensation coverage    | `trainer.report.view`      | compensation report + compensation read | Effective branch scope; field-level protection     |
+| Consolidated selector    | report-specific permission | `trainer.report.consolidated.view`      | Accessible branches only                           |
+| Export                   | report view permission     | `trainer.report.export`                 | Same row and field scope as on-screen report       |
 
 ---
 
@@ -914,15 +914,15 @@ missing_component_codes
 
 ## 11. Read Model Refresh and Consistency
 
-| Read Model | Consistency Expectation | Maximum Staleness |
-|---|---|---:|
-| Trainer roster | Near real-time | 5 minutes |
-| Authorization coverage | Near real-time | 15 minutes |
-| Availability weekly | Near real-time | 15 minutes |
-| Utilization reference | Operational | 60 minutes |
-| Qualification compliance | Operational compliance | 24 hours, or event refresh |
-| Compensation coverage | Operational finance-sensitive | 60 minutes |
-| Master data completeness | Near real-time | 15 minutes |
+| Read Model               | Consistency Expectation       |          Maximum Staleness |
+| ------------------------ | ----------------------------- | -------------------------: |
+| Trainer roster           | Near real-time                |                  5 minutes |
+| Authorization coverage   | Near real-time                |                 15 minutes |
+| Availability weekly      | Near real-time                |                 15 minutes |
+| Utilization reference    | Operational                   |                 60 minutes |
+| Qualification compliance | Operational compliance        | 24 hours, or event refresh |
+| Compensation coverage    | Operational finance-sensitive |                 60 minutes |
+| Master data completeness | Near real-time                |                 15 minutes |
 
 Interactive eligibility validation and compensation rate resolution shall never rely solely on stale reporting views.
 
@@ -997,18 +997,18 @@ Metrics shall not contain trainer names, Civil IDs, phone numbers, email address
 
 ## 15. Report-to-FR Traceability
 
-| Report / KPI Area | Primary FRs |
-|---|---|
+| Report / KPI Area                   | Primary FRs                                    |
+| ----------------------------------- | ---------------------------------------------- |
 | Trainer roster and search analytics | FR-FTM-001, FR-FTM-003, FR-FTM-017, FR-FTM-019 |
-| Status metrics and history | FR-FTM-005, FR-FTM-017, FR-FTM-018 |
-| Qualification compliance | FR-FTM-006, FR-FTM-017 |
-| Availability coverage | FR-FTM-007, FR-FTM-008, FR-FTM-014, FR-FTM-017 |
-| Authorization coverage | FR-FTM-009, FR-FTM-010, FR-FTM-017 |
-| Eligibility analytics | FR-FTM-010, FR-FTM-013, FR-FTM-014 |
-| Compensation coverage | FR-FTM-011, FR-FTM-012, FR-FTM-017, FR-FTM-019 |
-| Assignment utilization reference | FR-FTM-015, FR-FTM-017 |
-| Audit/status history | FR-FTM-018 |
-| Branch-consolidated analytics | FR-FTM-019 |
+| Status metrics and history          | FR-FTM-005, FR-FTM-017, FR-FTM-018             |
+| Qualification compliance            | FR-FTM-006, FR-FTM-017                         |
+| Availability coverage               | FR-FTM-007, FR-FTM-008, FR-FTM-014, FR-FTM-017 |
+| Authorization coverage              | FR-FTM-009, FR-FTM-010, FR-FTM-017             |
+| Eligibility analytics               | FR-FTM-010, FR-FTM-013, FR-FTM-014             |
+| Compensation coverage               | FR-FTM-011, FR-FTM-012, FR-FTM-017, FR-FTM-019 |
+| Assignment utilization reference    | FR-FTM-015, FR-FTM-017                         |
+| Audit/status history                | FR-FTM-018                                     |
+| Branch-consolidated analytics       | FR-FTM-019                                     |
 
 ---
 

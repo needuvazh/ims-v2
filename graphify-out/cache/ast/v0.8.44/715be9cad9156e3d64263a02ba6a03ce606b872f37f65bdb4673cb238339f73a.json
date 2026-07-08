@@ -1,0 +1,655 @@
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "label": "Part 6 \u2013 Permission Matrix.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_part_6_permission_matrix",
+      "label": "Part 6 \u2013 Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_module_13_document_management",
+      "label": "Module 13 \u2013 Document Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_2_authorization_principles",
+      "label": "2. Authorization Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_3_scope_classification_legend",
+      "label": "3. Scope Classification Legend",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_4_canonical_permission_catalog",
+      "label": "4. Canonical Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_4_1_action_level_permissions",
+      "label": "4.1 Action-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L57"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_canonical_naming_decision",
+      "label": "Canonical naming decision",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L76"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_4_2_menu_level_permissions",
+      "label": "4.2 Menu-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L88"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_menu_implication_rules",
+      "label": "Menu implication rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L101"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_4_3_report_level_permissions",
+      "label": "4.3 Report-Level Permissions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L110"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_report_permission_composition",
+      "label": "Report permission composition",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_5_business_roles",
+      "label": "5. Business Roles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L145"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_6_action_level_business_role_matrix",
+      "label": "6. Action-Level Business Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L168"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_7_menu_level_business_role_matrix",
+      "label": "7. Menu-Level Business Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L198"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_portal_navigation_note",
+      "label": "Portal navigation note",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L211"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_8_report_level_business_role_matrix",
+      "label": "8. Report-Level Business Role Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L217"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_consolidated_report_rule",
+      "label": "Consolidated report rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L231"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "label": "9. Recommended Role Bundles and Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L237"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_1_document_administrator",
+      "label": "9.1 Document Administrator",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L239"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_2_document_verifier",
+      "label": "9.2 Document Verifier",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L266"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_3_compliance_officer",
+      "label": "9.3 Compliance Officer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L284"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_4_branch_manager",
+      "label": "9.4 Branch Manager",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L319"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_5_head_office_operations_manager",
+      "label": "9.5 Head Office Operations Manager",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L340"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_6_auditor_compliance_reviewer",
+      "label": "9.6 Auditor / Compliance Reviewer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L346"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_7_reporting_mis_analyst",
+      "label": "9.7 Reporting / MIS Analyst",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L362"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_9_8_reconciliation_operator",
+      "label": "9.8 Reconciliation Operator",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L379"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_10_branch_scoping_rules_by_owner_type",
+      "label": "10. Branch-Scoping Rules by Owner Type",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L393"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_branch_hierarchy_evaluation",
+      "label": "Branch hierarchy evaluation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L402"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_prohibited_patterns",
+      "label": "Prohibited patterns",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L414"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_11_permission_to_api_enforcement_matrix",
+      "label": "11. Permission-to-API Enforcement Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L427"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_12_permission_to_screen_enforcement_matrix",
+      "label": "12. Permission-to-Screen Enforcement Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L451"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_13_segregation_of_duties",
+      "label": "13. Segregation of Duties",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L469"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_14_permission_and_state_interaction_rules",
+      "label": "14. Permission and State Interaction Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L483"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_15_reporting_scope_rules",
+      "label": "15. Reporting Scope Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L500"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_16_audit_requirements_for_permission_sensitive_actions",
+      "label": "16. Audit Requirements for Permission-Sensitive Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L513"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_17_ddd_ownership_check",
+      "label": "17. DDD Ownership Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L531"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_18_er_and_ddd_alignment_notes",
+      "label": "18. ER and DDD Alignment Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L551"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_19_open_permission_decisions_gaps",
+      "label": "19. Open Permission Decisions / Gaps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L563"
+    },
+    {
+      "id": "module_13_document_management_part_6_permission_matrix_20_final_consistency_check",
+      "label": "20. Final Consistency Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L577"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_part_6_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_13_document_management_part_6_permission_matrix_module_13_document_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_13_document_management_part_6_permission_matrix_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_2_authorization_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_3_scope_classification_legend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_4_canonical_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_4_canonical_permission_catalog",
+      "target": "module_13_document_management_part_6_permission_matrix_4_1_action_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_4_1_action_level_permissions",
+      "target": "module_13_document_management_part_6_permission_matrix_canonical_naming_decision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_4_canonical_permission_catalog",
+      "target": "module_13_document_management_part_6_permission_matrix_4_2_menu_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_4_2_menu_level_permissions",
+      "target": "module_13_document_management_part_6_permission_matrix_menu_implication_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_4_canonical_permission_catalog",
+      "target": "module_13_document_management_part_6_permission_matrix_4_3_report_level_permissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_4_3_report_level_permissions",
+      "target": "module_13_document_management_part_6_permission_matrix_report_permission_composition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_5_business_roles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_6_action_level_business_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_7_menu_level_business_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_7_menu_level_business_role_matrix",
+      "target": "module_13_document_management_part_6_permission_matrix_portal_navigation_note",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_8_report_level_business_role_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_8_report_level_business_role_matrix",
+      "target": "module_13_document_management_part_6_permission_matrix_consolidated_report_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L231",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L237",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_1_document_administrator",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L239",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_2_document_verifier",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_3_compliance_officer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_4_branch_manager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_5_head_office_operations_manager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L340",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_6_auditor_compliance_reviewer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L346",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_7_reporting_mis_analyst",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_9_recommended_role_bundles_and_scope",
+      "target": "module_13_document_management_part_6_permission_matrix_9_8_reconciliation_operator",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_10_branch_scoping_rules_by_owner_type",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L393",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_10_branch_scoping_rules_by_owner_type",
+      "target": "module_13_document_management_part_6_permission_matrix_branch_hierarchy_evaluation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L402",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_6_permission_matrix_10_branch_scoping_rules_by_owner_type",
+      "target": "module_13_document_management_part_6_permission_matrix_prohibited_patterns",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L414",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_11_permission_to_api_enforcement_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_12_permission_to_screen_enforcement_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L451",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_13_segregation_of_duties",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L469",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_14_permission_and_state_interaction_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L483",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_15_reporting_scope_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L500",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_16_audit_requirements_for_permission_sensitive_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L513",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_17_ddd_ownership_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L531",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_18_er_and_ddd_alignment_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L551",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_19_open_permission_decisions_gaps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L563",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_6_permission_matrix_md",
+      "target": "module_13_document_management_part_6_permission_matrix_20_final_consistency_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L577",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

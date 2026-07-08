@@ -11,7 +11,10 @@ export interface AuditQueryCommandContext {
 export class AuditQueryService {
   constructor(private readonly auditLogRepository: IAuditLogRepository) {}
 
-  private checkPermission(context: AuditQueryCommandContext, permission: string): void {
+  private checkPermission(
+    context: AuditQueryCommandContext,
+    permission: string,
+  ): void {
     if (!context.actorPermissions.includes(permission)) {
       throw createIamError('IAM-AUTHZ-001');
     }
@@ -30,7 +33,7 @@ export class AuditQueryService {
     },
     page: number,
     pageSize: number,
-    context: AuditQueryCommandContext
+    context: AuditQueryCommandContext,
   ): Promise<{ items: AuditLogDto[]; total: number }> {
     this.checkPermission(context, 'iam.audit.read');
 
@@ -42,13 +45,20 @@ export class AuditQueryService {
     return this.auditLogRepository.list(filters, page, pageSize);
   }
 
-  async getAuditLogById(id: Uuid, context: AuditQueryCommandContext): Promise<AuditLogDto> {
+  async getAuditLogById(
+    id: Uuid,
+    context: AuditQueryCommandContext,
+  ): Promise<AuditLogDto> {
     this.checkPermission(context, 'iam.audit.read');
     const log = await this.auditLogRepository.findById(id);
     if (!log) throw createIamError('IAM-SYS-001');
 
     // Enforce branch scope if set
-    if (context.activeBranchId && log.branchId && log.branchId !== context.activeBranchId) {
+    if (
+      context.activeBranchId &&
+      log.branchId &&
+      log.branchId !== context.activeBranchId
+    ) {
       throw createIamError('IAM-AUTHZ-002');
     }
 

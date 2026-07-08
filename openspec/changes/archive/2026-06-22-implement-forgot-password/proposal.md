@@ -3,6 +3,7 @@
 The current Identity & Access Management (IAM) implementation is missing self-service password recovery options (Forgot Password & Reset Password flows). Users who forget their credentials must contact an administrator for manual password resets, creating operational overhead and security friction.
 
 Implementing a secure, self-service password recovery workflow will:
+
 1. Improve user experience by allowing secure credentials recovery directly from the Login page.
 2. Reduce administrative burden by automating password reset token generation and validation.
 3. Protect against enumeration attacks by returning generic success notifications at the reset request boundary.
@@ -30,9 +31,11 @@ Implementing a secure, self-service password recovery workflow will:
 ## Capabilities
 
 ### New Capabilities
+
 - `forgot-password-flow`: End-to-end self-service credential recovery, validating token constraints and updating user credentials.
 
 ### Modified Capabilities
+
 - `database`: Added `PasswordResetToken` model and database relationship mapping user reset history.
 - `identity-access`: Added application workflows for password reset tokens generation and validation.
 - `admin-portal`: New auth screens (`/forgot-password` and `/reset-password`) for password recovery.

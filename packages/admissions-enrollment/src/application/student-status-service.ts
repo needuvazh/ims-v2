@@ -12,11 +12,11 @@ import { PrismaClient, StudentStatus, Prisma } from '@prisma/client';
  * Archived can be restored by policy.
  */
 const ALLOWED_TRANSITIONS: Record<string, StudentStatus[]> = {
-  Pending:   ['Active'],
-  Active:    ['Suspended', 'Archived'],
+  Pending: ['Active'],
+  Active: ['Suspended', 'Archived'],
   Suspended: ['Active', 'Archived'],
-  Inactive:  ['Active', 'Archived'],
-  Archived:  ['Active', 'Suspended'],
+  Inactive: ['Active', 'Archived'],
+  Archived: ['Active', 'Suspended'],
 };
 
 export class StudentStatusService {
@@ -39,20 +39,37 @@ export class StudentStatusService {
     effectiveDate?: Date;
     tx?: Prisma.TransactionClient;
   }): Promise<void> {
-    const { studentProfileId, newStatus, changeReason, actorId, branchId, effectiveDate } = params;
+    const {
+      studentProfileId,
+      newStatus,
+      changeReason,
+      actorId,
+      branchId,
+      effectiveDate,
+    } = params;
 
     const run = async (client: Prisma.TransactionClient) => {
       // 1. Load the current profile
       const profile = await client.studentProfile.findUnique({
         where: { id: studentProfileId },
-        select: { id: true, studentStatus: true, isDeleted: true, branchId: true, deletedAt: true, deletedBy: true }
+        select: {
+          id: true,
+          studentStatus: true,
+          isDeleted: true,
+          branchId: true,
+          deletedAt: true,
+          deletedBy: true,
+        },
       });
 
       if (!profile) {
         throw new Error('ERR_STU_STATUS_PROFILE_NOT_FOUND');
       }
 
-      const isArchivedRestore = profile.isDeleted && profile.studentStatus === 'Archived' && newStatus === 'Active';
+      const isArchivedRestore =
+        profile.isDeleted &&
+        profile.studentStatus === 'Archived' &&
+        newStatus === 'Active';
       if (profile.isDeleted && !isArchivedRestore) {
         throw new Error('ERR_STU_STATUS_PROFILE_NOT_FOUND');
       }
@@ -63,7 +80,7 @@ export class StudentStatusService {
       const allowed = ALLOWED_TRANSITIONS[oldStatus] ?? [];
       if (!allowed.includes(newStatus)) {
         throw new Error(
-          `ERR_STU_STATUS_INVALID_TRANSITION: ${oldStatus} → ${newStatus} is not permitted`
+          `ERR_STU_STATUS_INVALID_TRANSITION: ${oldStatus} → ${newStatus} is not permitted`,
         );
       }
 
@@ -81,7 +98,7 @@ export class StudentStatusService {
           effectiveEndDate: effectiveStart,
           updatedAt: now,
           updatedBy: actorId,
-        }
+        },
       });
 
       // 4. Write the new status history row
@@ -98,7 +115,7 @@ export class StudentStatusService {
           status: 'Active',
           createdBy: actorId,
           updatedBy: actorId,
-        }
+        },
       });
 
       // 5. Update the StudentProfile itself
@@ -109,16 +126,31 @@ export class StudentStatusService {
           status: newStatus,
           updatedAt: now,
           updatedBy: actorId,
-          isDeleted: newStatus === 'Archived' ? true : isArchivedRestore ? false : profile.isDeleted,
-          deletedAt: newStatus === 'Archived' ? effectiveStart : isArchivedRestore ? null : profile.deletedAt,
-          deletedBy: newStatus === 'Archived' ? actorId : isArchivedRestore ? null : profile.deletedBy,
+          isDeleted:
+            newStatus === 'Archived'
+              ? true
+              : isArchivedRestore
+                ? false
+                : profile.isDeleted,
+          deletedAt:
+            newStatus === 'Archived'
+              ? effectiveStart
+              : isArchivedRestore
+                ? null
+                : profile.deletedAt,
+          deletedBy:
+            newStatus === 'Archived'
+              ? actorId
+              : isArchivedRestore
+                ? null
+                : profile.deletedBy,
           // When archiving, set effectiveEndDate to today
           ...(newStatus === 'Archived'
             ? { effectiveEndDate: effectiveStart }
             : isArchivedRestore
               ? { effectiveEndDate: null }
               : {}),
-        }
+        },
       });
 
       // 6. Write an AuditLog entry
@@ -133,7 +165,7 @@ export class StudentStatusService {
           module: 'AdmissionsEnrollment',
           oldValue: { status: oldStatus },
           newValue: { status: newStatus, changeReason },
-        }
+        },
       });
     };
 

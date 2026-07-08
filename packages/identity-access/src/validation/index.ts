@@ -13,7 +13,10 @@ import {
   permissionTypeSchema,
 } from '../domain/permission';
 import { updateSecurityPolicyCommandSchema } from '../domain/security-policy';
-import { PasswordPolicy, DEFAULT_PASSWORD_POLICY_CONFIG } from '../domain/password-policy';
+import {
+  PasswordPolicy,
+  DEFAULT_PASSWORD_POLICY_CONFIG,
+} from '../domain/password-policy';
 
 const passwordPolicy = new PasswordPolicy(DEFAULT_PASSWORD_POLICY_CONFIG);
 
@@ -31,27 +34,39 @@ export const ForgotPasswordSchema = z.object({
   email: z.string().trim().email({ message: 'Invalid email format' }),
 });
 
-export const ResetPasswordSchema = z.object({
-  token: z.string().min(1, { message: 'Reset token is required' }),
-  newPassword: z.string().min(1, { message: 'Invalid password format' }).refine((value) => passwordPolicy.isCompliant(value), {
-    message: 'Invalid password format',
-  }),
-  confirmPassword: z.string().min(1, { message: 'Passwords do not match' }),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: 'Passwords do not match',
-  path: ['confirmPassword'],
-});
+export const ResetPasswordSchema = z
+  .object({
+    token: z.string().min(1, { message: 'Reset token is required' }),
+    newPassword: z
+      .string()
+      .min(1, { message: 'Invalid password format' })
+      .refine((value) => passwordPolicy.isCompliant(value), {
+        message: 'Invalid password format',
+      }),
+    confirmPassword: z.string().min(1, { message: 'Passwords do not match' }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
-export const ChangePasswordSchema = z.object({
-  currentPassword: z.string().min(1, { message: 'Current password is required' }),
-  newPassword: z.string().min(1, { message: 'Invalid password format' }).refine((value) => passwordPolicy.isCompliant(value), {
-    message: 'Invalid password format',
-  }),
-  confirmPassword: z.string().min(1, { message: 'Passwords do not match' }),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: 'Passwords do not match',
-  path: ['confirmPassword'],
-});
+export const ChangePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(1, { message: 'Current password is required' }),
+    newPassword: z
+      .string()
+      .min(1, { message: 'Invalid password format' })
+      .refine((value) => passwordPolicy.isCompliant(value), {
+        message: 'Invalid password format',
+      }),
+    confirmPassword: z.string().min(1, { message: 'Passwords do not match' }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 export const CreateUserSchema = createUserCommandSchema;
 export const UpdateUserSchema = updateUserCommandSchema;

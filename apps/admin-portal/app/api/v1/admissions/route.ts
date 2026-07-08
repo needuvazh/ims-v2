@@ -36,63 +36,78 @@ function errorResponse(error: Error) {
   }
 
   return NextResponse.json(
-    { success: false, errorCode: code, messageEnglish: msg, statusCode: status },
-    { status }
+    {
+      success: false,
+      errorCode: code,
+      messageEnglish: msg,
+      statusCode: status,
+    },
+    { status },
   );
 }
 
 export async function POST(request: Request) {
-  return withRouteObservability(request.headers, async () => withPermission(request, 'admission.create', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'admission.create', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const body = await request.json();
-      const parsed = CreateAdmissionRequestSchema.parse(body);
+        try {
+          const body = await request.json();
+          const parsed = CreateAdmissionRequestSchema.parse(body);
 
-      const targetBranchId = parsed.branchId || session.activeBranchId;
-      if (!targetBranchId) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          const targetBranchId = parsed.branchId || session.activeBranchId;
+          if (!targetBranchId) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      const { branchScopeResolver, admissionService } = await import('../../../../lib/runtime');
+          const { branchScopeResolver, admissionService } =
+            await import('../../../../lib/runtime');
 
-      // Verify branch permission scope
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(targetBranchId as Uuid)) {
-        throw new Error('ERR_AUTH_BRANCH_DENIED');
-      }
+          // Verify branch permission scope
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(targetBranchId as Uuid)) {
+            throw new Error('ERR_AUTH_BRANCH_DENIED');
+          }
 
-      const result = await admissionService.createAdmissionDraftDirect(
-        {
-          studentProfileId: parsed.studentProfileId,
-          courseId: parsed.courseId || null,
-          leadId: parsed.leadId || null,
-        },
-        targetBranchId,
-        session.userId
-      );
+          const result = await admissionService.createAdmissionDraftDirect(
+            {
+              studentProfileId: parsed.studentProfileId,
+              courseId: parsed.courseId || null,
+              leadId: parsed.leadId || null,
+            },
+            targetBranchId,
+            session.userId,
+          );
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          admissionId: result.admissionId,
-        },
-        { status: 201 }
-      );
+          const response = NextResponse.json(
+            {
+              success: true,
+              admissionId: result.admissionId,
+            },
+            { status: 201 },
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/admissions',
-        method: request.method,
-        status: 'success',
-      });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/admissions',
+            method: request.method,
+            status: 'success',
+          });
 
-      return response;
-    } catch (error) {
-      logger.error('api.admissions.create.failed', { status: 'failed', error: error as Error });
-      return errorResponse(error as Error);
-    }
-  }), { route: '/api/v1/admissions' });
+          return response;
+        } catch (error) {
+          logger.error('api.admissions.create.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return errorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/admissions' },
+  );
 }

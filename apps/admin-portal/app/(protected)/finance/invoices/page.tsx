@@ -1,10 +1,32 @@
 import { assertPermission } from '@/lib/auth-guard';
-import { Card, CardHeader, CardContent, PageHeader, ResponsiveDataTable, Badge, Button, StatCard, AdminListPageLayout, EmptyState, DataTableFilter } from '@ims/shared-ui';
-import { Search, FileText, Eye, Plus, CheckCircle2, Clock3, RotateCcw } from 'lucide-react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  PageHeader,
+  ResponsiveDataTable,
+  Badge,
+  Button,
+  StatCard,
+  AdminListPageLayout,
+  EmptyState,
+  DataTableFilter,
+} from '@ims/shared-ui';
+import {
+  Search,
+  FileText,
+  Eye,
+  Plus,
+  CheckCircle2,
+  Clock3,
+  RotateCcw,
+} from 'lucide-react';
 import Link from 'next/link';
 import { InvoiceActionsClient } from './_components/invoice-actions-client';
 
-export const metadata = { title: 'Invoices & Billings - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Invoices & Billings - Admin Portal | ASTI IMS',
+};
 
 export default async function InvoicesListPage(props: {
   searchParams: Promise<{
@@ -23,7 +45,7 @@ export default async function InvoicesListPage(props: {
   const { prisma, branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   // Fetch branches for filter selection
@@ -37,36 +59,38 @@ export default async function InvoicesListPage(props: {
     where: {
       branchId: branchFilter ? branchFilter : { in: allowedBranchIds },
       ...(statusFilter ? { status: statusFilter as any } : {}),
-      OR: query ? [
-        { invoiceNumber: { contains: query, mode: 'insensitive' } },
-      ] : undefined
+      OR: query
+        ? [{ invoiceNumber: { contains: query, mode: 'insensitive' } }]
+        : undefined,
     },
     orderBy: { createdAt: 'desc' },
     include: {
       studentProfile: {
         include: {
-          person: true
-        }
+          person: true,
+        },
       },
       corporateAccount: true,
       refunds: {
         where: { isDeleted: false, status: { in: ['Approved', 'Executed'] } },
-        select: { id: true, amount: true, status: true }
-      }
-    }
+        select: { id: true, amount: true, status: true },
+      },
+    },
   });
 
   // Serialize Prisma objects -> plain objects to prevent Next.js Client Component errors
-  const serializedInvoices = JSON.parse(JSON.stringify(invoices)).map((inv: any) => ({
-    ...inv,
-    totalAmount: Number(inv.totalAmount),
-    paidAmount: Number(inv.paidAmount),
-    outstandingAmount: Number(inv.outstandingAmount),
-    refunds: (inv.refunds || []).map((r: any) => ({
-      ...r,
-      amount: Number(r.amount)
-    }))
-  }));
+  const serializedInvoices = JSON.parse(JSON.stringify(invoices)).map(
+    (inv: any) => ({
+      ...inv,
+      totalAmount: Number(inv.totalAmount),
+      paidAmount: Number(inv.paidAmount),
+      outstandingAmount: Number(inv.outstandingAmount),
+      refunds: (inv.refunds || []).map((r: any) => ({
+        ...r,
+        amount: Number(r.amount),
+      })),
+    }),
+  );
 
   const totals = serializedInvoices.reduce(
     (acc: any, inv: any) => {
@@ -75,7 +99,7 @@ export default async function InvoicesListPage(props: {
       acc.paid = acc.paid + inv.paidAmount;
       return acc;
     },
-    { total: 0, outstanding: 0, paid: 0 }
+    { total: 0, outstanding: 0, paid: 0 },
   );
 
   const columns = [
@@ -85,28 +109,44 @@ export default async function InvoicesListPage(props: {
         <span className="font-mono font-bold text-slate-600 text-xs">
           {inv.invoiceNumber}
         </span>
-      )
+      ),
     },
     {
       header: 'Payer',
       render: (inv: any) => {
         if (inv.studentProfile) {
           const p = inv.studentProfile.person;
-          return <span className="font-semibold text-slate-800">{p.firstName} {p.lastName}</span>;
+          return (
+            <span className="font-semibold text-slate-800">
+              {p.firstName} {p.lastName}
+            </span>
+          );
         }
         if (inv.corporateAccount) {
-          return <span className="font-semibold text-slate-800">{inv.corporateAccount.accountName}</span>;
+          return (
+            <span className="font-semibold text-slate-800">
+              {inv.corporateAccount.accountName}
+            </span>
+          );
         }
         return <span className="text-slate-400">N/A</span>;
-      }
+      },
     },
     {
       header: 'Invoice Date',
-      render: (inv: any) => <span className="text-xs text-slate-500">{new Date(inv.invoiceDate).toLocaleDateString()}</span>
+      render: (inv: any) => (
+        <span className="text-xs text-slate-500">
+          {new Date(inv.invoiceDate).toLocaleDateString()}
+        </span>
+      ),
     },
     {
       header: 'Due Date',
-      render: (inv: any) => <span className="text-xs text-slate-500">{new Date(inv.dueDate).toLocaleDateString()}</span>
+      render: (inv: any) => (
+        <span className="text-xs text-slate-500">
+          {new Date(inv.dueDate).toLocaleDateString()}
+        </span>
+      ),
     },
     {
       header: 'Total Amount',
@@ -114,32 +154,39 @@ export default async function InvoicesListPage(props: {
         <span className="font-semibold text-slate-900 font-mono text-xs">
           {Number(inv.totalAmount).toFixed(3)} {inv.currency}
         </span>
-      )
+      ),
     },
     {
       header: 'Outstanding',
       render: (inv: any) => {
-        const refundedAmt = (inv.refunds || []).reduce((s: number, r: any) => s + Number(r.amount), 0);
+        const refundedAmt = (inv.refunds || []).reduce(
+          (s: number, r: any) => s + Number(r.amount),
+          0,
+        );
         const hasRefund = refundedAmt > 0;
         return (
           <div className="flex flex-col gap-0.5">
-            <span className={`font-semibold font-mono text-xs ${hasRefund ? 'text-orange-600' : 'text-rose-600'}`}>
+            <span
+              className={`font-semibold font-mono text-xs ${hasRefund ? 'text-orange-600' : 'text-rose-600'}`}
+            >
               {Number(inv.outstandingAmount).toFixed(3)} {inv.currency}
             </span>
             {hasRefund && (
               <span className="text-xs text-orange-500 flex items-center gap-1">
-                <RotateCcw className="h-3 w-3" /> {refundedAmt.toFixed(3)} refunded
+                <RotateCcw className="h-3 w-3" /> {refundedAmt.toFixed(3)}{' '}
+                refunded
               </span>
             )}
           </div>
         );
-      }
+      },
     },
     {
       header: 'Status',
       render: (inv: any) => {
         const hasRefund = (inv.refunds || []).length > 0;
-        let variant: 'success' | 'warning' | 'error' | 'info' | 'outline' = 'outline';
+        let variant: 'success' | 'warning' | 'error' | 'info' | 'outline' =
+          'outline';
         if (inv.status === 'Paid') variant = 'success';
         if (inv.status === 'PartiallyPaid') variant = 'warning';
         if (inv.status === 'Overdue') variant = 'error';
@@ -148,27 +195,40 @@ export default async function InvoicesListPage(props: {
           <div className="flex flex-col gap-1">
             <Badge variant={variant}>{inv.status}</Badge>
             {hasRefund && (
-              <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50 gap-1">
+              <Badge
+                variant="outline"
+                className="text-orange-600 border-orange-200 bg-orange-50 gap-1"
+              >
                 <RotateCcw className="h-3 w-3" /> Refunded
               </Badge>
             )}
           </div>
         );
-      }
+      },
     },
     {
       header: 'Actions',
-      render: (inv: any) => (
-        <InvoiceActionsClient invoice={inv} />
-      )
-    }
+      render: (inv: any) => <InvoiceActionsClient invoice={inv} />,
+    },
   ];
 
   const renderCard = (invoice: any) => (
     <Card className="p-4 space-y-2">
       <div className="flex justify-between items-center">
-        <span className="font-mono font-bold text-slate-800">{invoice.invoiceNumber}</span>
-        <Badge variant={invoice.status === 'Paid' ? 'success' : invoice.status === 'PartiallyPaid' ? 'warning' : invoice.status === 'Overdue' ? 'error' : 'outline'}>
+        <span className="font-mono font-bold text-slate-800">
+          {invoice.invoiceNumber}
+        </span>
+        <Badge
+          variant={
+            invoice.status === 'Paid'
+              ? 'success'
+              : invoice.status === 'PartiallyPaid'
+                ? 'warning'
+                : invoice.status === 'Overdue'
+                  ? 'error'
+                  : 'outline'
+          }
+        >
           {invoice.status}
         </Badge>
       </div>
@@ -229,7 +289,10 @@ export default async function InvoicesListPage(props: {
             {
               key: 'branchId',
               label: 'Branch',
-              options: branches.map(b => ({ label: b.branchName, value: b.id }))
+              options: branches.map((b) => ({
+                label: b.branchName,
+                value: b.id,
+              })),
             },
             {
               key: 'status',
@@ -241,8 +304,8 @@ export default async function InvoicesListPage(props: {
                 { label: 'Partially Paid', value: 'PartiallyPaid' },
                 { label: 'Overdue', value: 'Overdue' },
                 { label: 'Cancelled', value: 'Cancelled' },
-              ]
-            }
+              ],
+            },
           ]}
         />
 

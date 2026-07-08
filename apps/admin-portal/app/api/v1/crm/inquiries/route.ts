@@ -18,7 +18,13 @@ const querySchema = z.object({
   search: z.string().trim().optional(),
 });
 
-function problemJson(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problemJson(
+  status: number,
+  title: string,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -27,7 +33,7 @@ function problemJson(status: number, title: string, detail: string, errorCode: s
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
@@ -56,7 +62,8 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_COUNSELOR_INACTIVE')) {
     status = 422;
     code = 'ERR_CRM_COUNSELOR_INACTIVE';
-    messageEn = 'Assigned counselor is inactive or unauthorized for this branch.';
+    messageEn =
+      'Assigned counselor is inactive or unauthorized for this branch.';
     messageAr = 'الموظف المسؤول غير نشط أو غير مصرح له بالعمل في هذا الفرع.';
   }
 
@@ -68,168 +75,200 @@ function crmErrorResponse(error: Error) {
       messageArabic: messageAr,
       statusCode: status,
     },
-    { status }
+    { status },
   );
 }
 
 export async function GET(request: Request) {
-  return withRouteObservability(request.headers, async () => withPermission(request, 'lead.read', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'lead.read', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const params = new URL(request.url).searchParams;
-      const parsed = querySchema.safeParse({
-        page: params.get('page') ?? undefined,
-        limit: params.get('limit') ?? undefined,
-        branchId: params.get('branchId') ?? undefined,
-        status: params.get('status') ?? undefined,
-        search: params.get('search') ?? undefined,
-      });
+        try {
+          const params = new URL(request.url).searchParams;
+          const parsed = querySchema.safeParse({
+            page: params.get('page') ?? undefined,
+            limit: params.get('limit') ?? undefined,
+            branchId: params.get('branchId') ?? undefined,
+            status: params.get('status') ?? undefined,
+            search: params.get('search') ?? undefined,
+          });
 
-      if (!parsed.success) {
-        return problemJson(
-          400,
-          'Invalid query parameters',
-          'One or more query parameters are invalid.',
-          'CRM-VAL-INQUIRIES-INVALID_QUERY',
-          parsed.error.issues.map((issue) => ({
-            field: issue.path.join('.') || 'query',
-            message: issue.message,
-          }))
-        );
-      }
+          if (!parsed.success) {
+            return problemJson(
+              400,
+              'Invalid query parameters',
+              'One or more query parameters are invalid.',
+              'CRM-VAL-INQUIRIES-INVALID_QUERY',
+              parsed.error.issues.map((issue) => ({
+                field: issue.path.join('.') || 'query',
+                message: issue.message,
+              })),
+            );
+          }
 
-      const { branchScopeResolver, inquiryService } = await import('../../../../lib/runtime');
-      
-      // Resolve allowed branches for active user
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
+          const { branchScopeResolver, inquiryService } =
+            await import('../../../../lib/runtime');
 
-      if (parsed.data.branchId && !allowedBranches.includes(parsed.data.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          // Resolve allowed branches for active user
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
 
-      // Counselor Scoping: if user lacks global crm.leads.read.all permission, restrict to counselorId = userId
-      const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-      const counselorId = hasGlobalRead ? undefined : session.userId;
+          if (
+            parsed.data.branchId &&
+            !allowedBranches.includes(parsed.data.branchId as Uuid)
+          ) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const result = await inquiryService.findAll(
-        {
-          branchId: parsed.data.branchId,
-          branchIds: allowedBranches,
-          status: parsed.data.status,
-          search: parsed.data.search,
-          counselorId,
-        },
-        {
-          page: parsed.data.page,
-          limit: parsed.data.limit,
-        }
-      );
+          // Counselor Scoping: if user lacks global crm.leads.read.all permission, restrict to counselorId = userId
+          const hasGlobalRead =
+            session.permissions.includes('crm.leads.read.all');
+          const counselorId = hasGlobalRead ? undefined : session.userId;
 
-      // Mask PII by default in the list response
-      const maskedInquiries = result.items.map((inquiry: any) => ({
-        ...inquiry,
-        mobile: maskPhone(inquiry.mobile),
-        email: maskEmail(inquiry.email),
-      }));
-
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: {
-            inquiries: maskedInquiries,
-            pagination: {
-              total: result.total,
+          const result = await inquiryService.findAll(
+            {
+              branchId: parsed.data.branchId,
+              branchIds: allowedBranches,
+              status: parsed.data.status,
+              search: parsed.data.search,
+              counselorId,
+            },
+            {
               page: parsed.data.page,
               limit: parsed.data.limit,
-              pages: Math.ceil(result.total / parsed.data.limit),
             },
-          },
-        },
-        { status: 200 }
-      );
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/inquiries',
-        method: request.method,
-        status: 'success',
-      });
+          // Mask PII by default in the list response
+          const maskedInquiries = result.items.map((inquiry: any) => ({
+            ...inquiry,
+            mobile: maskPhone(inquiry.mobile),
+            email: maskEmail(inquiry.email),
+          }));
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.inquiries.list.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/inquiries' });
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: {
+                inquiries: maskedInquiries,
+                pagination: {
+                  total: result.total,
+                  page: parsed.data.page,
+                  limit: parsed.data.limit,
+                  pages: Math.ceil(result.total / parsed.data.limit),
+                },
+              },
+            },
+            { status: 200 },
+          );
+
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/inquiries',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.inquiries.list.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/inquiries' },
+  );
 }
 
 export async function POST(request: Request) {
-  return withRouteObservability(request.headers, async () => withPermission(request, 'lead.create', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'lead.create', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    let payload: unknown;
-    try {
-      payload = await request.json();
-    } catch {
-      return problemJson(400, 'Invalid request body', 'Request body must be valid JSON.', 'CRM-VAL-INQUIRIES-INVALID_JSON');
-    }
+        let payload: unknown;
+        try {
+          payload = await request.json();
+        } catch {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Request body must be valid JSON.',
+            'CRM-VAL-INQUIRIES-INVALID_JSON',
+          );
+        }
 
-    const parsed = IngestInquirySchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(
-        400,
-        'Invalid request body',
-        'Inquiry details are invalid.',
-        'CRM-VAL-INQUIRIES-INVALID_BODY',
-        parsed.error.issues.map((issue) => ({
-          field: issue.path.join('.') || 'body',
-          message: issue.message,
-        }))
-      );
-    }
+        const parsed = IngestInquirySchema.safeParse(payload);
+        if (!parsed.success) {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Inquiry details are invalid.',
+            'CRM-VAL-INQUIRIES-INVALID_BODY',
+            parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.') || 'body',
+              message: issue.message,
+            })),
+          );
+        }
 
-    try {
-      const { branchScopeResolver, inquiryService } = await import('../../../../lib/runtime');
+        try {
+          const { branchScopeResolver, inquiryService } =
+            await import('../../../../lib/runtime');
 
-      // Verify branch assignment scope
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(parsed.data.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          // Verify branch assignment scope
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(parsed.data.branchId as Uuid)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const result = await inquiryService.captureInquiry(parsed.data, session.userId);
+          const result = await inquiryService.captureInquiry(
+            parsed.data,
+            session.userId,
+          );
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: {
-            inquiryId: result.id,
-            inquiryNumber: result.inquiryNumber,
-            status: result.status,
-            isDuplicate: result.isDuplicate,
-            duplicateRefId: result.duplicateRefId,
-            createdAt: result.createdAt,
-          },
-        },
-        { status: 201 }
-      );
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: {
+                inquiryId: result.id,
+                inquiryNumber: result.inquiryNumber,
+                status: result.status,
+                isDuplicate: result.isDuplicate,
+                duplicateRefId: result.duplicateRefId,
+                createdAt: result.createdAt,
+              },
+            },
+            { status: 201 },
+          );
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/inquiries',
-        method: request.method,
-        status: 'success',
-      });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/inquiries',
+            method: request.method,
+            status: 'success',
+          });
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.inquiries.create.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/inquiries' });
+          return response;
+        } catch (error) {
+          logger.error('api.crm.inquiries.create.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/inquiries' },
+  );
 }

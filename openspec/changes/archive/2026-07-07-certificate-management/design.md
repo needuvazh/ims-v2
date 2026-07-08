@@ -5,6 +5,7 @@ ASTI IMS lacks database models and backend services to issue, verify, reissue, o
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Add `Certificate`, `CertificateVerification`, and `CertificateReissueRequest` models to the Prisma schema.
 - Establish a `1:N` relationship between `Enrollment` and `Certificate` to support replacement histories.
 - Enforce that at most one certificate is active (`Generated` or `Issued`) per enrollment via a partial unique index in the database.
@@ -15,6 +16,7 @@ ASTI IMS lacks database models and backend services to issue, verify, reissue, o
 - Log sensitive operations in the Audit & Compliance context.
 
 **Non-Goals:**
+
 - Modifying course completion rules (owned by Course Catalog).
 - Recalculating grades, attendance percentage, or completion approval (owned by Completion).
 - Modifying or allocating invoices/payments/receipts (owned by Finance).
@@ -23,6 +25,7 @@ ASTI IMS lacks database models and backend services to issue, verify, reissue, o
 ## Decisions
 
 ### 1. Database Schema Additions
+
 We will add three models and update existing models in `schema.prisma`.
 
 ```prisma
@@ -133,15 +136,19 @@ model CertificateReissueRequest {
 We will also update `Enrollment` (add `certificates Certificate[]`) and `User` (add relation mappings to Certificate and ReissueRequest).
 
 ### 2. Active 1:1 Constraint Implementation
+
 In the Prisma schema, the relation between `Enrollment` and `Certificate` is defined as `1:N` (`certificates Certificate[]` on `Enrollment`) to support replacement lineage.
 To guarantee that at most one certificate is active, we will add a custom PostgreSQL partial unique index in a custom migration:
+
 ```sql
-CREATE UNIQUE INDEX certificates_active_enrollment_idx ON certificates (enrollment_id) 
+CREATE UNIQUE INDEX certificates_active_enrollment_idx ON certificates (enrollment_id)
 WHERE certificate_status IN ('Generated', 'Issued');
 ```
 
 ### 3. Hexagonal Package Architecture
+
 We will create `packages/certificates` containing:
+
 - `domain/`: Business entities and validators.
 - `application/`: Application services (`GenerateCertificateService`, `IssueCertificateService`, `ReissueCertificateService`, `VerificationService`, `RevocationService`).
 - `ports/`: Outgoing interfaces for `EnrollmentReadPort`, `CompletionReadPort`, `FinanceValidationPort`, and `NumberingPort`.

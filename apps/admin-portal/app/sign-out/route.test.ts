@@ -15,7 +15,10 @@ vi.mock('../lib/runtime', () => ({
 
 vi.mock('../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
 }));
 
 describe('sign-out route', () => {
@@ -32,7 +35,9 @@ describe('sign-out route', () => {
     const { GET } = await import('./route');
     const response = await GET(new Request('https://ims.example.com/sign-out'));
 
-    expect(response.headers.get('location')).toBe('https://ims.example.com/sign-in');
+    expect(response.headers.get('location')).toBe(
+      'https://ims.example.com/sign-in',
+    );
     expect(revokeSessionByHashMock).toHaveBeenCalledTimes(1);
   });
 });

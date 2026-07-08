@@ -116,44 +116,27 @@ These schemas are illustrative application contracts. The repository's existing 
 ## 3.1 Common Scalar Schemas
 
 ```ts
-import { z } from "zod";
+import { z } from 'zod';
 
-export const EntityIdSchema = z
-  .string()
-  .trim()
-  .min(1)
-  .max(128);
+export const EntityIdSchema = z.string().trim().min(1).max(128);
 
-export const VersionSchema = z
-  .number()
-  .int()
-  .min(1);
+export const VersionSchema = z.number().int().min(1);
 
-export const IsoDateSchema = z
-  .string()
-  .regex(/^\d{4}-\d{2}-\d{2}$/);
+export const IsoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
-export const ReasonSchema = z
-  .string()
-  .trim()
-  .min(3)
-  .max(2000);
+export const ReasonSchema = z.string().trim().min(3).max(2000);
 
-export const OptionalRemarksSchema = z
-  .string()
-  .trim()
-  .max(4000)
-  .optional();
+export const OptionalRemarksSchema = z.string().trim().max(4000).optional();
 
-export const DecimalStringSchema = z
-  .string()
-  .regex(/^-?\d+(\.\d{1,2})?$/);
+export const DecimalStringSchema = z.string().regex(/^-?\d+(\.\d{1,2})?$/);
 
-export const PositiveDecimalStringSchema =
-  DecimalStringSchema.refine((value) => Number(value) > 0);
+export const PositiveDecimalStringSchema = DecimalStringSchema.refine(
+  (value) => Number(value) > 0,
+);
 
-export const NonNegativeDecimalStringSchema =
-  DecimalStringSchema.refine((value) => Number(value) >= 0);
+export const NonNegativeDecimalStringSchema = DecimalStringSchema.refine(
+  (value) => Number(value) >= 0,
+);
 ```
 
 ## 3.2 Pagination Schema
@@ -161,11 +144,7 @@ export const NonNegativeDecimalStringSchema =
 ```ts
 export const PaginationSchema = z.object({
   page: z.number().int().min(1).default(1),
-  size: z.union([
-    z.literal(25),
-    z.literal(50),
-    z.literal(100),
-  ]).default(25),
+  size: z.union([z.literal(25), z.literal(50), z.literal(100)]).default(25),
 });
 ```
 
@@ -206,8 +185,8 @@ export const CreateExamSchema = z
     if (Number(value.passMarks) > Number(value.maxMarks)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["passMarks"],
-        message: "Pass marks cannot exceed maximum marks.",
+        path: ['passMarks'],
+        message: 'Pass marks cannot exceed maximum marks.',
       });
     }
   });
@@ -242,8 +221,8 @@ export const UpdateExamSchema = z
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["passMarks"],
-        message: "Pass marks cannot exceed maximum marks.",
+        path: ['passMarks'],
+        message: 'Pass marks cannot exceed maximum marks.',
       });
     }
   });
@@ -352,8 +331,8 @@ export const BulkResultValidationSchema = z
       if (existing !== undefined) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["rows", index, "enrollmentId"],
-          message: "Duplicate enrollment in bulk result payload.",
+          path: ['rows', index, 'enrollmentId'],
+          message: 'Duplicate enrollment in bulk result payload.',
         });
       } else {
         seen.set(row.enrollmentId, index);
@@ -367,13 +346,16 @@ export const BulkResultValidationSchema = z
 ```ts
 export const BulkResultSubmitSchema = z.object({
   validationToken: z.string().trim().min(16).max(2048).optional(),
-  rows: z.array(
-    z.object({
-      enrollmentId: EntityIdSchema,
-      marksObtained: NonNegativeDecimalStringSchema,
-      expectedVersion: VersionSchema.optional(),
-    })
-  ).min(1).max(1000),
+  rows: z
+    .array(
+      z.object({
+        enrollmentId: EntityIdSchema,
+        marksObtained: NonNegativeDecimalStringSchema,
+        expectedVersion: VersionSchema.optional(),
+      }),
+    )
+    .min(1)
+    .max(1000),
 });
 ```
 
@@ -389,12 +371,15 @@ export const FinalizeResultSchema = z.object({
 
 ```ts
 export const FinalizeResultSetSchema = z.object({
-  results: z.array(
-    z.object({
-      resultId: EntityIdSchema,
-      expectedVersion: VersionSchema,
-    })
-  ).min(1).max(1000),
+  results: z
+    .array(
+      z.object({
+        resultId: EntityIdSchema,
+        expectedVersion: VersionSchema,
+      }),
+    )
+    .min(1)
+    .max(1000),
 });
 ```
 
@@ -450,10 +435,10 @@ These values are server-derived.
 
 ```ts
 export const ReevaluationTriggerTypeSchema = z.enum([
-  "RESULT_CORRECTED",
-  "ATTENDANCE_CORRECTED",
-  "PAYMENT_VALIDATION_CHANGED",
-  "MANUAL_REEVALUATION",
+  'RESULT_CORRECTED',
+  'ATTENDANCE_CORRECTED',
+  'PAYMENT_VALIDATION_CHANGED',
+  'MANUAL_REEVALUATION',
 ]);
 
 export const ReevaluateCompletionSchema = z.object({
@@ -543,24 +528,17 @@ export const FinalRejectionSchema = z.object({
 
 ```ts
 export const AcademicExportTypeSchema = z.enum([
-  "EXAM_REGISTER",
-  "RESULT_REGISTER",
-  "MISSING_RESULT_REPORT",
-  "COMPLETION_EVALUATION_REPORT",
-  "COMPLETION_APPROVAL_REPORT",
-  "REEVALUATION_EXCEPTION_REPORT",
+  'EXAM_REGISTER',
+  'RESULT_REGISTER',
+  'MISSING_RESULT_REPORT',
+  'COMPLETION_EVALUATION_REPORT',
+  'COMPLETION_APPROVAL_REPORT',
+  'REEVALUATION_EXCEPTION_REPORT',
 ]);
 
-export const ExportFormatSchema = z.enum([
-  "CSV",
-  "XLSX",
-  "PDF",
-]);
+export const ExportFormatSchema = z.enum(['CSV', 'XLSX', 'PDF']);
 
-export const ExportLanguageSchema = z.enum([
-  "en",
-  "ar",
-]);
+export const ExportLanguageSchema = z.enum(['en', 'ar']);
 
 export const AcademicExportSchema = z.object({
   exportType: AcademicExportTypeSchema,
@@ -594,83 +572,83 @@ result set size within sync/async policy
 
 ## 8.1 Exam Validation Rules
 
-| Rule ID | Rule | Owner |
-|---|---|---|
-| VAL-EXC-001 | Exam Name is required and non-blank after trim | Module 10 |
-| VAL-EXC-002 | Exam Date must be valid ISO date | Shared Kernel |
-| VAL-EXC-003 | Maximum Marks must be greater than zero | Module 10 |
-| VAL-EXC-004 | Pass Marks must be zero or greater | Module 10 |
-| VAL-EXC-005 | Pass Marks must not exceed Maximum Marks | Module 10 |
-| VAL-EXC-006 | Course must exist | Course Catalog delegated |
-| VAL-EXC-007 | Batch must exist | Training Delivery delegated |
-| VAL-EXC-008 | Batch must belong to selected Course | Training Delivery/Course relationship delegated, enforced by Module 10 application service |
-| VAL-EXC-009 | Batch branch must be in mutation scope | IAM shared authorization |
-| VAL-EXC-010 | Semantic duplicate Exam must be rejected | Module 10 |
-| VAL-EXC-011 | Exam state transition must be allowed | Module 10 |
-| VAL-EXC-012 | Standard edit must not invalidate finalized Result evidence | Module 10 |
-| VAL-EXC-013 | Exam cancellation requires reason where policy mandates | Module 10 |
-| VAL-EXC-014 | Exam archive is soft only | Shared persistence convention + Module 10 enforcement |
-| VAL-EXC-015 | Exam mutation version must match | Shared concurrency convention |
+| Rule ID     | Rule                                                        | Owner                                                                                      |
+| ----------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| VAL-EXC-001 | Exam Name is required and non-blank after trim              | Module 10                                                                                  |
+| VAL-EXC-002 | Exam Date must be valid ISO date                            | Shared Kernel                                                                              |
+| VAL-EXC-003 | Maximum Marks must be greater than zero                     | Module 10                                                                                  |
+| VAL-EXC-004 | Pass Marks must be zero or greater                          | Module 10                                                                                  |
+| VAL-EXC-005 | Pass Marks must not exceed Maximum Marks                    | Module 10                                                                                  |
+| VAL-EXC-006 | Course must exist                                           | Course Catalog delegated                                                                   |
+| VAL-EXC-007 | Batch must exist                                            | Training Delivery delegated                                                                |
+| VAL-EXC-008 | Batch must belong to selected Course                        | Training Delivery/Course relationship delegated, enforced by Module 10 application service |
+| VAL-EXC-009 | Batch branch must be in mutation scope                      | IAM shared authorization                                                                   |
+| VAL-EXC-010 | Semantic duplicate Exam must be rejected                    | Module 10                                                                                  |
+| VAL-EXC-011 | Exam state transition must be allowed                       | Module 10                                                                                  |
+| VAL-EXC-012 | Standard edit must not invalidate finalized Result evidence | Module 10                                                                                  |
+| VAL-EXC-013 | Exam cancellation requires reason where policy mandates     | Module 10                                                                                  |
+| VAL-EXC-014 | Exam archive is soft only                                   | Shared persistence convention + Module 10 enforcement                                      |
+| VAL-EXC-015 | Exam mutation version must match                            | Shared concurrency convention                                                              |
 
 ## 8.2 Result Validation Rules
 
-| Rule ID | Rule | Owner |
-|---|---|---|
-| VAL-EXC-016 | Result must reference existing Exam | Module 10 |
-| VAL-EXC-017 | Enrollment must exist | Admission & Enrollment delegated |
-| VAL-EXC-018 | Enrollment Course must equal Exam Course | Module 10 orchestration using Enrollment and Exam facts |
-| VAL-EXC-019 | Enrollment Batch must equal Exam Batch | Module 10 orchestration using Enrollment and Exam facts |
-| VAL-EXC-020 | Enrollment branch must equal Exam Batch branch | Module 10 orchestration |
-| VAL-EXC-021 | Marks must be non-negative | Module 10 |
-| VAL-EXC-022 | Marks must not exceed Exam maxMarks | Module 10 |
-| VAL-EXC-023 | Pass/fail Result status must be derived from marks and passMarks | Module 10 |
-| VAL-EXC-024 | Client-supplied contradictory Result status must not be trusted | Module 10 |
-| VAL-EXC-025 | One active Result per Exam + Enrollment | Module 10 |
-| VAL-EXC-026 | Ordinary Result update forbidden after finalization | Module 10 |
-| VAL-EXC-027 | Finalized Result correction requires `result.correct` | IAM permission + Module 10 |
-| VAL-EXC-028 | Correction requires business reason | Module 10 |
-| VAL-EXC-029 | Corrected marks must differ from current marks | Module 10 |
-| VAL-EXC-030 | Correction must trigger/mark completion reevaluation when impacted | Module 10 |
-| VAL-EXC-031 | Bulk payload cannot contain duplicate Enrollment rows | Module 10 |
-| VAL-EXC-032 | Bulk result rows must all be branch-authorized | IAM + Module 10 orchestration |
-| VAL-EXC-033 | Bulk transaction must not silently partially succeed | Shared transaction convention + Module 10 |
+| Rule ID     | Rule                                                               | Owner                                                   |
+| ----------- | ------------------------------------------------------------------ | ------------------------------------------------------- |
+| VAL-EXC-016 | Result must reference existing Exam                                | Module 10                                               |
+| VAL-EXC-017 | Enrollment must exist                                              | Admission & Enrollment delegated                        |
+| VAL-EXC-018 | Enrollment Course must equal Exam Course                           | Module 10 orchestration using Enrollment and Exam facts |
+| VAL-EXC-019 | Enrollment Batch must equal Exam Batch                             | Module 10 orchestration using Enrollment and Exam facts |
+| VAL-EXC-020 | Enrollment branch must equal Exam Batch branch                     | Module 10 orchestration                                 |
+| VAL-EXC-021 | Marks must be non-negative                                         | Module 10                                               |
+| VAL-EXC-022 | Marks must not exceed Exam maxMarks                                | Module 10                                               |
+| VAL-EXC-023 | Pass/fail Result status must be derived from marks and passMarks   | Module 10                                               |
+| VAL-EXC-024 | Client-supplied contradictory Result status must not be trusted    | Module 10                                               |
+| VAL-EXC-025 | One active Result per Exam + Enrollment                            | Module 10                                               |
+| VAL-EXC-026 | Ordinary Result update forbidden after finalization                | Module 10                                               |
+| VAL-EXC-027 | Finalized Result correction requires `result.correct`              | IAM permission + Module 10                              |
+| VAL-EXC-028 | Correction requires business reason                                | Module 10                                               |
+| VAL-EXC-029 | Corrected marks must differ from current marks                     | Module 10                                               |
+| VAL-EXC-030 | Correction must trigger/mark completion reevaluation when impacted | Module 10                                               |
+| VAL-EXC-031 | Bulk payload cannot contain duplicate Enrollment rows              | Module 10                                               |
+| VAL-EXC-032 | Bulk result rows must all be branch-authorized                     | IAM + Module 10 orchestration                           |
+| VAL-EXC-033 | Bulk transaction must not silently partially succeed               | Shared transaction convention + Module 10               |
 
 ## 8.3 Completion Validation Rules
 
-| Rule ID | Rule | Owner |
-|---|---|---|
-| VAL-EXC-034 | Enrollment must exist and be valid for completion evaluation | Admission & Enrollment delegated |
-| VAL-EXC-035 | Enrollment must have Course and Batch | Admission & Enrollment delegated |
-| VAL-EXC-036 | Active CourseCompletionRule must resolve | Course Catalog delegated |
-| VAL-EXC-037 | Attendance percentage/outcome must come from Attendance owner | Attendance delegated |
-| VAL-EXC-038 | Exam evidence must come from Module 10 Result truth | Module 10 |
-| VAL-EXC-039 | Payment validation must come from Finance owner | Finance delegated |
-| VAL-EXC-040 | Missing required evidence must never be treated as passed | Module 10 |
-| VAL-EXC-041 | Unavailable dependency must never false-approve completion | Module 10 orchestration |
-| VAL-EXC-042 | One active CourseCompletion per Enrollment | Module 10 |
-| VAL-EXC-043 | Manual approval starts only after mandatory criteria pass | Module 10 |
-| VAL-EXC-044 | Certificate eligibility requires approved completion and rule allowance | Module 10 evaluates eligibility using Course rule |
-| VAL-EXC-045 | Module 10 must not create Certificate | Certificate context boundary |
-| VAL-EXC-046 | Approved completion invalidated by evidence change must enter controlled reevaluation/exception path | Module 10 |
-| VAL-EXC-047 | Prior approval history must not be deleted during reevaluation | Module 10 + Audit convention |
-| VAL-EXC-048 | Reevaluation trigger must be traceable | Module 10 |
-| VAL-EXC-049 | Current evidence must be reloaded during reevaluation | Module 10 orchestration |
-| VAL-EXC-050 | Completion mutation version must match | Shared concurrency convention |
+| Rule ID     | Rule                                                                                                 | Owner                                             |
+| ----------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| VAL-EXC-034 | Enrollment must exist and be valid for completion evaluation                                         | Admission & Enrollment delegated                  |
+| VAL-EXC-035 | Enrollment must have Course and Batch                                                                | Admission & Enrollment delegated                  |
+| VAL-EXC-036 | Active CourseCompletionRule must resolve                                                             | Course Catalog delegated                          |
+| VAL-EXC-037 | Attendance percentage/outcome must come from Attendance owner                                        | Attendance delegated                              |
+| VAL-EXC-038 | Exam evidence must come from Module 10 Result truth                                                  | Module 10                                         |
+| VAL-EXC-039 | Payment validation must come from Finance owner                                                      | Finance delegated                                 |
+| VAL-EXC-040 | Missing required evidence must never be treated as passed                                            | Module 10                                         |
+| VAL-EXC-041 | Unavailable dependency must never false-approve completion                                           | Module 10 orchestration                           |
+| VAL-EXC-042 | One active CourseCompletion per Enrollment                                                           | Module 10                                         |
+| VAL-EXC-043 | Manual approval starts only after mandatory criteria pass                                            | Module 10                                         |
+| VAL-EXC-044 | Certificate eligibility requires approved completion and rule allowance                              | Module 10 evaluates eligibility using Course rule |
+| VAL-EXC-045 | Module 10 must not create Certificate                                                                | Certificate context boundary                      |
+| VAL-EXC-046 | Approved completion invalidated by evidence change must enter controlled reevaluation/exception path | Module 10                                         |
+| VAL-EXC-047 | Prior approval history must not be deleted during reevaluation                                       | Module 10 + Audit convention                      |
+| VAL-EXC-048 | Reevaluation trigger must be traceable                                                               | Module 10                                         |
+| VAL-EXC-049 | Current evidence must be reloaded during reevaluation                                                | Module 10 orchestration                           |
+| VAL-EXC-050 | Completion mutation version must match                                                               | Shared concurrency convention                     |
 
 ## 8.4 Approval Validation Rules
 
-| Rule ID | Rule | Owner |
-|---|---|---|
-| VAL-EXC-051 | Trainer Recommendation requires correct workflow state | Module 10 |
-| VAL-EXC-052 | Trainer must be assigned/authorized for Batch | Training Delivery/Trainer context delegated |
-| VAL-EXC-053 | Trainer Recommendation cannot be skipped when manual approval is required | Module 10 |
-| VAL-EXC-054 | Coordinator Review requires approved Trainer Recommendation | Module 10 |
-| VAL-EXC-055 | Final Approval requires approved Coordinator Review | Module 10 |
-| VAL-EXC-056 | Rejection requires remarks | Module 10 |
-| VAL-EXC-057 | Approval action requires stage-specific permission | IAM + Module 10 |
-| VAL-EXC-058 | Approval action requires mutation access to entity branch | IAM shared authorization |
-| VAL-EXC-059 | Approval cannot proceed on stale evidence | Module 10 |
-| VAL-EXC-060 | Approval stage version must match | Shared concurrency convention |
+| Rule ID     | Rule                                                                      | Owner                                       |
+| ----------- | ------------------------------------------------------------------------- | ------------------------------------------- |
+| VAL-EXC-051 | Trainer Recommendation requires correct workflow state                    | Module 10                                   |
+| VAL-EXC-052 | Trainer must be assigned/authorized for Batch                             | Training Delivery/Trainer context delegated |
+| VAL-EXC-053 | Trainer Recommendation cannot be skipped when manual approval is required | Module 10                                   |
+| VAL-EXC-054 | Coordinator Review requires approved Trainer Recommendation               | Module 10                                   |
+| VAL-EXC-055 | Final Approval requires approved Coordinator Review                       | Module 10                                   |
+| VAL-EXC-056 | Rejection requires remarks                                                | Module 10                                   |
+| VAL-EXC-057 | Approval action requires stage-specific permission                        | IAM + Module 10                             |
+| VAL-EXC-058 | Approval action requires mutation access to entity branch                 | IAM shared authorization                    |
+| VAL-EXC-059 | Approval cannot proceed on stale evidence                                 | Module 10                                   |
+| VAL-EXC-060 | Approval stage version must match                                         | Shared concurrency convention               |
 
 ---
 
@@ -710,110 +688,110 @@ The error response format follows Part 5:
 
 # 10. Exam Error Catalog
 
-| Error Code | HTTP | Trigger | User-Facing Meaning |
-|---|---:|---|---|
-| `EXAM_NOT_FOUND` | 404 | Exam missing or inaccessible | Exam could not be found |
-| `EXAM_NAME_REQUIRED` | 400 | Blank Exam name | Exam name is required |
-| `EXAM_DATE_INVALID` | 400/422 | Invalid date/policy | Exam date is invalid |
-| `MAX_MARKS_INVALID` | 400 | maxMarks <= 0 | Maximum marks must be greater than zero |
-| `PASS_MARKS_INVALID` | 400 | passMarks < 0 | Pass marks cannot be negative |
-| `PASS_MARKS_EXCEED_MAX` | 400 | passMarks > maxMarks | Pass marks cannot exceed maximum marks |
-| `COURSE_NOT_FOUND` | 404 | Course unresolved | Selected course is not available |
-| `BATCH_NOT_FOUND` | 404 | Batch unresolved | Selected batch is not available |
-| `COURSE_BATCH_MISMATCH` | 422 | Batch belongs to different Course | Selected batch does not belong to selected course |
-| `DUPLICATE_EXAM` | 409 | Semantic duplicate | A matching active exam already exists |
-| `EXAM_INVALID_STATE_TRANSITION` | 409 | Invalid lifecycle transition | Requested exam action is not allowed in current state |
-| `EXAM_FIELD_IMMUTABLE` | 409 | Protected field edit | Field cannot be changed in current state |
-| `RESULT_EVIDENCE_WOULD_BE_INVALIDATED` | 422 | Edit conflicts with finalized Result | Standard edit would invalidate academic evidence |
-| `CANCELLATION_REASON_REQUIRED` | 400 | Cancel without reason | Cancellation reason is required |
-| `EXAM_ARCHIVE_NOT_ALLOWED` | 422 | Unsafe archive attempt | Exam cannot be archived in current state |
-| `EXAM_NOT_READY_FOR_RESULT_ENTRY` | 422 | Activate preconditions fail | Exam is not ready for Result entry |
-| `RESULT_COMPLETENESS_POLICY_FAILED` | 422 | Close policy fails | Exam cannot be closed because Result requirements are not satisfied |
+| Error Code                             |    HTTP | Trigger                              | User-Facing Meaning                                                 |
+| -------------------------------------- | ------: | ------------------------------------ | ------------------------------------------------------------------- |
+| `EXAM_NOT_FOUND`                       |     404 | Exam missing or inaccessible         | Exam could not be found                                             |
+| `EXAM_NAME_REQUIRED`                   |     400 | Blank Exam name                      | Exam name is required                                               |
+| `EXAM_DATE_INVALID`                    | 400/422 | Invalid date/policy                  | Exam date is invalid                                                |
+| `MAX_MARKS_INVALID`                    |     400 | maxMarks <= 0                        | Maximum marks must be greater than zero                             |
+| `PASS_MARKS_INVALID`                   |     400 | passMarks < 0                        | Pass marks cannot be negative                                       |
+| `PASS_MARKS_EXCEED_MAX`                |     400 | passMarks > maxMarks                 | Pass marks cannot exceed maximum marks                              |
+| `COURSE_NOT_FOUND`                     |     404 | Course unresolved                    | Selected course is not available                                    |
+| `BATCH_NOT_FOUND`                      |     404 | Batch unresolved                     | Selected batch is not available                                     |
+| `COURSE_BATCH_MISMATCH`                |     422 | Batch belongs to different Course    | Selected batch does not belong to selected course                   |
+| `DUPLICATE_EXAM`                       |     409 | Semantic duplicate                   | A matching active exam already exists                               |
+| `EXAM_INVALID_STATE_TRANSITION`        |     409 | Invalid lifecycle transition         | Requested exam action is not allowed in current state               |
+| `EXAM_FIELD_IMMUTABLE`                 |     409 | Protected field edit                 | Field cannot be changed in current state                            |
+| `RESULT_EVIDENCE_WOULD_BE_INVALIDATED` |     422 | Edit conflicts with finalized Result | Standard edit would invalidate academic evidence                    |
+| `CANCELLATION_REASON_REQUIRED`         |     400 | Cancel without reason                | Cancellation reason is required                                     |
+| `EXAM_ARCHIVE_NOT_ALLOWED`             |     422 | Unsafe archive attempt               | Exam cannot be archived in current state                            |
+| `EXAM_NOT_READY_FOR_RESULT_ENTRY`      |     422 | Activate preconditions fail          | Exam is not ready for Result entry                                  |
+| `RESULT_COMPLETENESS_POLICY_FAILED`    |     422 | Close policy fails                   | Exam cannot be closed because Result requirements are not satisfied |
 
 ---
 
 # 11. Result Error Catalog
 
-| Error Code | HTTP | Trigger | User-Facing Meaning |
-|---|---:|---|---|
-| `RESULT_NOT_FOUND` | 404 | Result missing/inaccessible | Result could not be found |
-| `ENROLLMENT_NOT_FOUND` | 404 | Enrollment unresolved | Enrollment could not be found |
-| `ENROLLMENT_NOT_ELIGIBLE_FOR_EXAM` | 422 | Course/Batch mismatch | Enrollment is not valid for this Exam |
-| `MARKS_REQUIRED` | 400 | Marks omitted | Marks are required |
-| `MARKS_NEGATIVE` | 400 | Marks < 0 | Marks cannot be negative |
-| `MARKS_EXCEED_MAXIMUM` | 422 | Marks > Exam maxMarks | Marks exceed Exam maximum |
-| `RESULT_DUPLICATE` | 409 | Active Result already exists | Result already exists for this Exam and Enrollment |
-| `RESULT_ALREADY_FINALIZED` | 409 | Ordinary edit after finalize | Finalized Result requires correction workflow |
-| `RESULT_NOT_FINALIZABLE` | 422 | Finalization preconditions fail | Result cannot be finalized |
-| `RESULT_INVALID_STATE_TRANSITION` | 409 | Invalid Result lifecycle action | Requested Result action is invalid |
-| `CORRECTION_REASON_REQUIRED` | 400 | Correction without reason | Correction reason is required |
-| `RESULT_NOT_CORRECTABLE` | 409 | Correction state invalid | Result cannot be corrected in current state |
-| `CORRECTED_MARKS_UNCHANGED` | 422 | New marks equal old marks | Corrected marks must differ from current marks |
-| `BULK_RESULT_DUPLICATE_ENROLLMENT` | 400 | Duplicate Enrollment row | Enrollment appears more than once |
-| `BULK_RESULT_VALIDATION_FAILED` | 422 | One or more invalid rows | Bulk Result validation failed |
-| `BULK_RESULT_PAYLOAD_CHANGED_AFTER_VALIDATION` | 409 | Validation token mismatch | Submission changed after validation |
-| `RESULT_SET_FINALIZATION_FAILED` | 422 | Selected set invalid | One or more Results cannot be finalized |
+| Error Code                                     | HTTP | Trigger                         | User-Facing Meaning                                |
+| ---------------------------------------------- | ---: | ------------------------------- | -------------------------------------------------- |
+| `RESULT_NOT_FOUND`                             |  404 | Result missing/inaccessible     | Result could not be found                          |
+| `ENROLLMENT_NOT_FOUND`                         |  404 | Enrollment unresolved           | Enrollment could not be found                      |
+| `ENROLLMENT_NOT_ELIGIBLE_FOR_EXAM`             |  422 | Course/Batch mismatch           | Enrollment is not valid for this Exam              |
+| `MARKS_REQUIRED`                               |  400 | Marks omitted                   | Marks are required                                 |
+| `MARKS_NEGATIVE`                               |  400 | Marks < 0                       | Marks cannot be negative                           |
+| `MARKS_EXCEED_MAXIMUM`                         |  422 | Marks > Exam maxMarks           | Marks exceed Exam maximum                          |
+| `RESULT_DUPLICATE`                             |  409 | Active Result already exists    | Result already exists for this Exam and Enrollment |
+| `RESULT_ALREADY_FINALIZED`                     |  409 | Ordinary edit after finalize    | Finalized Result requires correction workflow      |
+| `RESULT_NOT_FINALIZABLE`                       |  422 | Finalization preconditions fail | Result cannot be finalized                         |
+| `RESULT_INVALID_STATE_TRANSITION`              |  409 | Invalid Result lifecycle action | Requested Result action is invalid                 |
+| `CORRECTION_REASON_REQUIRED`                   |  400 | Correction without reason       | Correction reason is required                      |
+| `RESULT_NOT_CORRECTABLE`                       |  409 | Correction state invalid        | Result cannot be corrected in current state        |
+| `CORRECTED_MARKS_UNCHANGED`                    |  422 | New marks equal old marks       | Corrected marks must differ from current marks     |
+| `BULK_RESULT_DUPLICATE_ENROLLMENT`             |  400 | Duplicate Enrollment row        | Enrollment appears more than once                  |
+| `BULK_RESULT_VALIDATION_FAILED`                |  422 | One or more invalid rows        | Bulk Result validation failed                      |
+| `BULK_RESULT_PAYLOAD_CHANGED_AFTER_VALIDATION` |  409 | Validation token mismatch       | Submission changed after validation                |
+| `RESULT_SET_FINALIZATION_FAILED`               |  422 | Selected set invalid            | One or more Results cannot be finalized            |
 
 ---
 
 # 12. Completion Error Catalog
 
-| Error Code | HTTP | Trigger | User-Facing Meaning |
-|---|---:|---|---|
-| `COURSE_COMPLETION_NOT_FOUND` | 404 | Completion missing | Completion record could not be found |
-| `ENROLLMENT_NOT_ELIGIBLE_FOR_COMPLETION_EVALUATION` | 422 | Enrollment lifecycle invalid | Enrollment cannot be evaluated for completion |
-| `COURSE_COMPLETION_RULE_NOT_CONFIGURED` | 424 | Rule missing | Completion rule is not configured |
-| `ATTENDANCE_EVIDENCE_MISSING` | 422 | Required attendance evidence missing | Attendance evidence is incomplete |
-| `ATTENDANCE_DEPENDENCY_UNAVAILABLE` | 503 | Attendance source unavailable | Attendance validation is temporarily unavailable |
-| `EXAM_EVIDENCE_MISSING` | 422 | Required Result missing | Required Exam Result is missing |
-| `PAYMENT_VALIDATION_FAILED` | 422 | Finance says fail | Payment validation failed |
-| `FINANCE_DEPENDENCY_UNAVAILABLE` | 503 | Finance source unavailable | Payment validation is temporarily unavailable |
-| `COMPLETION_EVIDENCE_INCOMPLETE` | 422 | Missing required evidence | Completion evidence is incomplete |
-| `COMPLETION_EVIDENCE_STALE` | 422/409 | Evidence changed | Completion evidence changed and must be reevaluated |
-| `COMPLETION_INVALID_STATE_TRANSITION` | 409 | Invalid workflow transition | Completion action is invalid in current state |
-| `REEVALUATION_NOT_ALLOWED` | 409 | Invalid reevaluation state | Completion cannot be reevaluated now |
-| `INVALID_REEVALUATION_TRIGGER` | 422 | Trigger invalid/untraceable | Reevaluation trigger is invalid |
-| `CERTIFICATE_NOT_ALLOWED_BY_COURSE_RULE` | 422 | Rule disallows certificate | Course rule does not allow certificate issuance |
-| `COMPLETION_ALREADY_APPROVED` | 409 | Duplicate approval attempt | Completion is already approved |
-| `COMPLETION_ALREADY_REJECTED` | 409 | Duplicate rejection attempt | Completion is already rejected |
+| Error Code                                          |    HTTP | Trigger                              | User-Facing Meaning                                 |
+| --------------------------------------------------- | ------: | ------------------------------------ | --------------------------------------------------- |
+| `COURSE_COMPLETION_NOT_FOUND`                       |     404 | Completion missing                   | Completion record could not be found                |
+| `ENROLLMENT_NOT_ELIGIBLE_FOR_COMPLETION_EVALUATION` |     422 | Enrollment lifecycle invalid         | Enrollment cannot be evaluated for completion       |
+| `COURSE_COMPLETION_RULE_NOT_CONFIGURED`             |     424 | Rule missing                         | Completion rule is not configured                   |
+| `ATTENDANCE_EVIDENCE_MISSING`                       |     422 | Required attendance evidence missing | Attendance evidence is incomplete                   |
+| `ATTENDANCE_DEPENDENCY_UNAVAILABLE`                 |     503 | Attendance source unavailable        | Attendance validation is temporarily unavailable    |
+| `EXAM_EVIDENCE_MISSING`                             |     422 | Required Result missing              | Required Exam Result is missing                     |
+| `PAYMENT_VALIDATION_FAILED`                         |     422 | Finance says fail                    | Payment validation failed                           |
+| `FINANCE_DEPENDENCY_UNAVAILABLE`                    |     503 | Finance source unavailable           | Payment validation is temporarily unavailable       |
+| `COMPLETION_EVIDENCE_INCOMPLETE`                    |     422 | Missing required evidence            | Completion evidence is incomplete                   |
+| `COMPLETION_EVIDENCE_STALE`                         | 422/409 | Evidence changed                     | Completion evidence changed and must be reevaluated |
+| `COMPLETION_INVALID_STATE_TRANSITION`               |     409 | Invalid workflow transition          | Completion action is invalid in current state       |
+| `REEVALUATION_NOT_ALLOWED`                          |     409 | Invalid reevaluation state           | Completion cannot be reevaluated now                |
+| `INVALID_REEVALUATION_TRIGGER`                      |     422 | Trigger invalid/untraceable          | Reevaluation trigger is invalid                     |
+| `CERTIFICATE_NOT_ALLOWED_BY_COURSE_RULE`            |     422 | Rule disallows certificate           | Course rule does not allow certificate issuance     |
+| `COMPLETION_ALREADY_APPROVED`                       |     409 | Duplicate approval attempt           | Completion is already approved                      |
+| `COMPLETION_ALREADY_REJECTED`                       |     409 | Duplicate rejection attempt          | Completion is already rejected                      |
 
 ---
 
 # 13. Approval Error Catalog
 
-| Error Code | HTTP | Trigger | User-Facing Meaning |
-|---|---:|---|---|
-| `INVALID_APPROVAL_STAGE` | 409 | Stage action out of order | Approval action is not valid in current stage |
-| `TRAINER_NOT_AUTHORIZED_FOR_BATCH` | 403 | Trainer assignment fails | Trainer is not authorized for this Batch |
-| `TRAINER_RECOMMENDATION_REQUIRED` | 422 | Coordinator action too early | Trainer Recommendation is required first |
-| `COORDINATOR_APPROVAL_REQUIRED` | 422 | Final action too early | Coordinator Review approval is required first |
-| `REJECTION_REASON_REQUIRED` | 400 | Reject without reason | Rejection reason is required |
-| `APPROVAL_ALREADY_RECORDED` | 409 | Duplicate stage action | Approval decision already exists |
-| `APPROVAL_EVIDENCE_STALE` | 409/422 | Evidence changed | Approval cannot continue until reevaluation |
-| `APPROVAL_ACTOR_INELIGIBLE` | 403 | Actor domain rule fails | Actor is not eligible for this approval action |
-| `APPROVAL_BRANCH_FORBIDDEN` | 403 | Branch mutation denied | User cannot approve for this branch |
+| Error Code                         |    HTTP | Trigger                      | User-Facing Meaning                            |
+| ---------------------------------- | ------: | ---------------------------- | ---------------------------------------------- |
+| `INVALID_APPROVAL_STAGE`           |     409 | Stage action out of order    | Approval action is not valid in current stage  |
+| `TRAINER_NOT_AUTHORIZED_FOR_BATCH` |     403 | Trainer assignment fails     | Trainer is not authorized for this Batch       |
+| `TRAINER_RECOMMENDATION_REQUIRED`  |     422 | Coordinator action too early | Trainer Recommendation is required first       |
+| `COORDINATOR_APPROVAL_REQUIRED`    |     422 | Final action too early       | Coordinator Review approval is required first  |
+| `REJECTION_REASON_REQUIRED`        |     400 | Reject without reason        | Rejection reason is required                   |
+| `APPROVAL_ALREADY_RECORDED`        |     409 | Duplicate stage action       | Approval decision already exists               |
+| `APPROVAL_EVIDENCE_STALE`          | 409/422 | Evidence changed             | Approval cannot continue until reevaluation    |
+| `APPROVAL_ACTOR_INELIGIBLE`        |     403 | Actor domain rule fails      | Actor is not eligible for this approval action |
+| `APPROVAL_BRANCH_FORBIDDEN`        |     403 | Branch mutation denied       | User cannot approve for this branch            |
 
 ---
 
 # 14. Shared Error Catalog
 
-| Error Code | HTTP | Meaning |
-|---|---:|---|
-| `VALIDATION_ERROR` | 400 | Generic input validation failure |
-| `UNAUTHENTICATED` | 401 | No valid session |
-| `FORBIDDEN` | 403 | Missing permission |
-| `BRANCH_MUTATION_FORBIDDEN` | 403 | Read access exists but mutation scope denied |
-| `NOT_FOUND` | 404 | Resource unavailable in authorized scope |
-| `CONCURRENCY_CONFLICT` | 409 | Version mismatch |
-| `DUPLICATE_RESOURCE` | 409 | Unique/business duplicate |
-| `DEPENDENCY_VALIDATION_FAILED` | 424 | Delegated validation failed |
-| `DEPENDENCY_UNAVAILABLE` | 503 | Required dependency unavailable |
-| `RATE_LIMITED` | 429 | Request rate limit exceeded |
-| `INTERNAL_ERROR` | 500 | Unexpected failure |
-| `UNSUPPORTED_EXPORT_FORMAT` | 400 | Export format unsupported |
-| `UNSUPPORTED_EXPORT_COLUMN` | 400 | Export column not allowed |
-| `NO_DATA_FOR_EXPORT` | 422 | Export filters return no rows |
-| `UNSUPPORTED_ENTITY_TYPE` | 400 | Audit/search target unsupported |
+| Error Code                     | HTTP | Meaning                                      |
+| ------------------------------ | ---: | -------------------------------------------- |
+| `VALIDATION_ERROR`             |  400 | Generic input validation failure             |
+| `UNAUTHENTICATED`              |  401 | No valid session                             |
+| `FORBIDDEN`                    |  403 | Missing permission                           |
+| `BRANCH_MUTATION_FORBIDDEN`    |  403 | Read access exists but mutation scope denied |
+| `NOT_FOUND`                    |  404 | Resource unavailable in authorized scope     |
+| `CONCURRENCY_CONFLICT`         |  409 | Version mismatch                             |
+| `DUPLICATE_RESOURCE`           |  409 | Unique/business duplicate                    |
+| `DEPENDENCY_VALIDATION_FAILED` |  424 | Delegated validation failed                  |
+| `DEPENDENCY_UNAVAILABLE`       |  503 | Required dependency unavailable              |
+| `RATE_LIMITED`                 |  429 | Request rate limit exceeded                  |
+| `INTERNAL_ERROR`               |  500 | Unexpected failure                           |
+| `UNSUPPORTED_EXPORT_FORMAT`    |  400 | Export format unsupported                    |
+| `UNSUPPORTED_EXPORT_COLUMN`    |  400 | Export column not allowed                    |
+| `NO_DATA_FOR_EXPORT`           |  422 | Export filters return no rows                |
+| `UNSUPPORTED_ENTITY_TYPE`      |  400 | Audit/search target unsupported              |
 
 ---
 
@@ -866,37 +844,37 @@ Therefore Module 10 emits business events or notification intents but does not p
 
 ## 16.1 Exam Notification Events
 
-| Event Code | Trigger | Primary Recipients | Channel Priority | Template Code |
-|---|---|---|---|---|
-| `EXC_EXAM_SCHEDULED` | Exam becomes Scheduled | Assigned Trainer, Academic Coordinator | System, Email | `exam_scheduled` |
-| `EXC_EXAM_RESCHEDULED` | Exam date changes | Assigned Trainer, affected Students where policy allows, Coordinator | System, Email, SMS optional | `exam_rescheduled` |
-| `EXC_EXAM_CANCELLED` | Exam cancelled | Assigned Trainer, affected Students where policy allows, Coordinator | System, Email, SMS optional | `exam_cancelled` |
-| `EXC_EXAM_OPENED_FOR_RESULTS` | Exam opens for Result entry | Assigned Trainer(s) | System, Email | `exam_result_entry_opened` |
-| `EXC_RESULTS_MISSING_REMINDER` | Missing Results remain after configured threshold | Assigned Trainer, Coordinator | System, Email | `missing_results_reminder` |
+| Event Code                     | Trigger                                           | Primary Recipients                                                   | Channel Priority            | Template Code              |
+| ------------------------------ | ------------------------------------------------- | -------------------------------------------------------------------- | --------------------------- | -------------------------- |
+| `EXC_EXAM_SCHEDULED`           | Exam becomes Scheduled                            | Assigned Trainer, Academic Coordinator                               | System, Email               | `exam_scheduled`           |
+| `EXC_EXAM_RESCHEDULED`         | Exam date changes                                 | Assigned Trainer, affected Students where policy allows, Coordinator | System, Email, SMS optional | `exam_rescheduled`         |
+| `EXC_EXAM_CANCELLED`           | Exam cancelled                                    | Assigned Trainer, affected Students where policy allows, Coordinator | System, Email, SMS optional | `exam_cancelled`           |
+| `EXC_EXAM_OPENED_FOR_RESULTS`  | Exam opens for Result entry                       | Assigned Trainer(s)                                                  | System, Email               | `exam_result_entry_opened` |
+| `EXC_RESULTS_MISSING_REMINDER` | Missing Results remain after configured threshold | Assigned Trainer, Coordinator                                        | System, Email               | `missing_results_reminder` |
 
 ## 16.2 Result Notification Events
 
-| Event Code | Trigger | Primary Recipients | Channel Priority | Template Code |
-|---|---|---|---|---|
-| `EXC_RESULT_RECORDED` | Result recorded | Academic Coordinator; Student only if publication policy permits | System | `result_recorded_internal` |
-| `EXC_RESULT_FINALIZED` | Result finalized | Academic Coordinator; Student only if result publication policy permits | System, Email optional | `result_finalized` |
-| `EXC_RESULT_CORRECTED` | Finalized Result corrected | Academic Administrator, Coordinator, impacted workflow actors | System, Email | `result_corrected` |
-| `EXC_RESULT_CORRECTION_IMPACT` | Correction changes completion eligibility | Coordinator, Branch Manager when applicable | System, Email | `result_correction_completion_impact` |
+| Event Code                     | Trigger                                   | Primary Recipients                                                      | Channel Priority       | Template Code                         |
+| ------------------------------ | ----------------------------------------- | ----------------------------------------------------------------------- | ---------------------- | ------------------------------------- |
+| `EXC_RESULT_RECORDED`          | Result recorded                           | Academic Coordinator; Student only if publication policy permits        | System                 | `result_recorded_internal`            |
+| `EXC_RESULT_FINALIZED`         | Result finalized                          | Academic Coordinator; Student only if result publication policy permits | System, Email optional | `result_finalized`                    |
+| `EXC_RESULT_CORRECTED`         | Finalized Result corrected                | Academic Administrator, Coordinator, impacted workflow actors           | System, Email          | `result_corrected`                    |
+| `EXC_RESULT_CORRECTION_IMPACT` | Correction changes completion eligibility | Coordinator, Branch Manager when applicable                             | System, Email          | `result_correction_completion_impact` |
 
 ## 16.3 Completion Workflow Notifications
 
-| Event Code | Trigger | Primary Recipients | Channel Priority | Template Code |
-|---|---|---|---|---|
-| `EXC_COMPLETION_EVALUATION_READY` | Enrollment ready for evaluation | Academic Coordinator | System | `completion_evaluation_ready` |
-| `EXC_COMPLETION_EVALUATION_FAILED` | Evaluation cannot complete due to configuration/evidence issue | Academic Admin, Coordinator | System, Email | `completion_evaluation_failed` |
-| `EXC_TRAINER_RECOMMENDATION_REQUIRED` | Completion enters Trainer Recommendation stage | Assigned Trainer | System, Email | `trainer_recommendation_required` |
-| `EXC_COORDINATOR_REVIEW_REQUIRED` | Trainer Recommendation approved | Academic Coordinator | System, Email | `coordinator_review_required` |
-| `EXC_FINAL_APPROVAL_REQUIRED` | Coordinator Review approved | Branch Manager / final approver pool | System, Email | `final_completion_approval_required` |
-| `EXC_COMPLETION_REJECTED` | Any rejection terminal outcome | Relevant prior actors, Academic Admin | System, Email | `completion_rejected` |
-| `EXC_COMPLETION_APPROVED` | Final completion approved | Academic Coordinator, Trainer, Student when policy allows | System, Email | `completion_approved` |
-| `EXC_REEVALUATION_REQUIRED` | Evidence change invalidates current evaluation basis | Academic Admin, Coordinator | System, Email | `completion_reevaluation_required` |
-| `EXC_REEVALUATION_EXCEPTION` | Prior approval becomes questionable | Academic Admin, Branch Manager | System, Email, escalation | `completion_reevaluation_exception` |
-| `EXC_CERTIFICATE_ELIGIBLE` | Completion approved and certificate conditions pass | Certificate Management consumer; Student notification only after Certificate context confirms issue | Internal event first | `certificate_eligible_internal` |
+| Event Code                            | Trigger                                                        | Primary Recipients                                                                                  | Channel Priority          | Template Code                        |
+| ------------------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------- | ------------------------------------ |
+| `EXC_COMPLETION_EVALUATION_READY`     | Enrollment ready for evaluation                                | Academic Coordinator                                                                                | System                    | `completion_evaluation_ready`        |
+| `EXC_COMPLETION_EVALUATION_FAILED`    | Evaluation cannot complete due to configuration/evidence issue | Academic Admin, Coordinator                                                                         | System, Email             | `completion_evaluation_failed`       |
+| `EXC_TRAINER_RECOMMENDATION_REQUIRED` | Completion enters Trainer Recommendation stage                 | Assigned Trainer                                                                                    | System, Email             | `trainer_recommendation_required`    |
+| `EXC_COORDINATOR_REVIEW_REQUIRED`     | Trainer Recommendation approved                                | Academic Coordinator                                                                                | System, Email             | `coordinator_review_required`        |
+| `EXC_FINAL_APPROVAL_REQUIRED`         | Coordinator Review approved                                    | Branch Manager / final approver pool                                                                | System, Email             | `final_completion_approval_required` |
+| `EXC_COMPLETION_REJECTED`             | Any rejection terminal outcome                                 | Relevant prior actors, Academic Admin                                                               | System, Email             | `completion_rejected`                |
+| `EXC_COMPLETION_APPROVED`             | Final completion approved                                      | Academic Coordinator, Trainer, Student when policy allows                                           | System, Email             | `completion_approved`                |
+| `EXC_REEVALUATION_REQUIRED`           | Evidence change invalidates current evaluation basis           | Academic Admin, Coordinator                                                                         | System, Email             | `completion_reevaluation_required`   |
+| `EXC_REEVALUATION_EXCEPTION`          | Prior approval becomes questionable                            | Academic Admin, Branch Manager                                                                      | System, Email, escalation | `completion_reevaluation_exception`  |
+| `EXC_CERTIFICATE_ELIGIBLE`            | Completion approved and certificate conditions pass            | Certificate Management consumer; Student notification only after Certificate context confirms issue | Internal event first      | `certificate_eligible_internal`      |
 
 ---
 
@@ -907,7 +885,7 @@ Therefore Module 10 emits business events or notification intents but does not p
 ```ts
 type ExamScheduledEvent = {
   eventId: string;
-  eventType: "ExamScheduled";
+  eventType: 'ExamScheduled';
   occurredAt: string;
   examId: string;
   courseId: string;
@@ -923,7 +901,7 @@ type ExamScheduledEvent = {
 ```ts
 type ExamRescheduledEvent = {
   eventId: string;
-  eventType: "ExamRescheduled";
+  eventType: 'ExamRescheduled';
   occurredAt: string;
   examId: string;
   batchId: string;
@@ -940,7 +918,7 @@ type ExamRescheduledEvent = {
 ```ts
 type ResultCorrectedEvent = {
   eventId: string;
-  eventType: "ResultCorrected";
+  eventType: 'ResultCorrected';
   occurredAt: string;
   resultId: string;
   examId: string;
@@ -960,7 +938,7 @@ type ResultCorrectedEvent = {
 ```ts
 type CompletionEvaluationCompletedEvent = {
   eventId: string;
-  eventType: "CompletionEvaluationCompleted";
+  eventType: 'CompletionEvaluationCompleted';
   occurredAt: string;
   courseCompletionId: string;
   enrollmentId: string;
@@ -968,10 +946,10 @@ type CompletionEvaluationCompletedEvent = {
   completionStatus: string;
   manualApprovalRequired: boolean;
   nextAction:
-    | "NONE"
-    | "TRAINER_RECOMMENDATION"
-    | "COORDINATOR_REVIEW"
-    | "FINAL_APPROVAL";
+    | 'NONE'
+    | 'TRAINER_RECOMMENDATION'
+    | 'COORDINATOR_REVIEW'
+    | 'FINAL_APPROVAL';
 };
 ```
 
@@ -980,7 +958,7 @@ type CompletionEvaluationCompletedEvent = {
 ```ts
 type CourseCompletionApprovedEvent = {
   eventId: string;
-  eventType: "CourseCompletionApproved";
+  eventType: 'CourseCompletionApproved';
   occurredAt: string;
   courseCompletionId: string;
   enrollmentId: string;
@@ -999,16 +977,16 @@ type CourseCompletionApprovedEvent = {
 ```ts
 type CompletionReevaluationRequiredEvent = {
   eventId: string;
-  eventType: "CompletionReevaluationRequired";
+  eventType: 'CompletionReevaluationRequired';
   occurredAt: string;
   courseCompletionId: string;
   enrollmentId: string;
   branchId: string;
   triggerType:
-    | "RESULT_CORRECTED"
-    | "ATTENDANCE_CORRECTED"
-    | "PAYMENT_VALIDATION_CHANGED"
-    | "MANUAL_REEVALUATION";
+    | 'RESULT_CORRECTED'
+    | 'ATTENDANCE_CORRECTED'
+    | 'PAYMENT_VALIDATION_CHANGED'
+    | 'MANUAL_REEVALUATION';
   triggerReference?: string;
   previousCompletionStatus: string;
 };
@@ -1224,57 +1202,57 @@ Meaning:
 - `SHARED-KERNEL`: generic platform rule/convention.
 - `ORCHESTRATED`: Module 10 combines facts from multiple owners without taking ownership of those facts.
 
-| Validation Rule | Classification | Owner / Source | Module 10 Behavior |
-|---|---|---|---|
-| Exam name required | MODULE | Module 10 | Validate directly |
-| ISO date syntax | SHARED-KERNEL | Shared validation | Reuse common schema |
-| maxMarks > 0 | MODULE | Module 10 | Validate directly |
-| passMarks >= 0 | MODULE | Module 10 | Validate directly |
-| passMarks <= maxMarks | MODULE | Module 10 | Validate directly |
-| Course exists | DELEGATED | Course Catalog | Resolve/read |
-| Batch exists | DELEGATED | Training Delivery | Resolve/read |
-| Batch belongs to Course | ORCHESTRATED | Training Delivery + Course reference | Compare authoritative IDs |
-| Batch branch access | SHARED-KERNEL | IAM branch policy | Apply authorization result |
-| Semantic duplicate Exam | MODULE | Module 10 | Reject |
-| Exam transition allowed | MODULE | Module 10 | Validate state machine |
-| Standard edit cannot invalidate finalized Result | MODULE | Module 10 | Reject unsafe edit |
-| Cancellation reason required | MODULE | Module 10 | Validate |
-| Soft delete only | SHARED-KERNEL | Repository convention | Enforce |
-| Version match | SHARED-KERNEL | Concurrency convention | Enforce |
-| Exam exists for Result | MODULE | Module 10 | Resolve |
-| Enrollment exists | DELEGATED | Admission & Enrollment | Resolve |
-| Enrollment Course matches Exam Course | ORCHESTRATED | Enrollment + Module 10 | Compare facts |
-| Enrollment Batch matches Exam Batch | ORCHESTRATED | Enrollment + Module 10 | Compare facts |
-| Enrollment branch matches Exam branch | ORCHESTRATED | Enrollment + Training Delivery | Compare facts |
-| Marks non-negative | MODULE | Module 10 | Validate |
-| Marks <= maxMarks | MODULE | Module 10 | Validate |
-| Result status derived from marks | MODULE | Module 10 | Derive |
-| One Result per Exam + Enrollment | MODULE | Module 10 | Unique invariant |
-| Result finalization rule | MODULE | Module 10 | Validate |
-| Result correction permission | SHARED-KERNEL + MODULE | IAM + Module 10 | Authorize and validate state |
-| Correction reason required | MODULE | Module 10 | Validate |
-| Bulk duplicate Enrollment rows | MODULE | Module 10 | Validate |
-| Bulk branch authorization | SHARED-KERNEL + ORCHESTRATED | IAM + Enrollment/Exam | Authorize |
-| Enrollment completion eligibility | DELEGATED | Admission & Enrollment | Resolve lifecycle validity |
-| CourseCompletionRule | DELEGATED | Course Catalog | Consume |
-| Attendance percentage | DELEGATED | Attendance | Consume |
-| Exam pass evidence | MODULE | Module 10 | Resolve Result |
-| Payment validation | DELEGATED | Finance | Consume |
-| Missing required evidence blocks approval | MODULE | Module 10 | Evaluate |
-| Dependency unavailable blocks false approval | MODULE | Module 10 orchestration | Fail safe |
-| One CourseCompletion per Enrollment | MODULE | Module 10 | Unique invariant |
-| Manual approval stage sequencing | MODULE | Module 10 | Enforce |
-| Trainer assigned to Batch | DELEGATED | Training Delivery | Consume assignment truth |
-| Trainer identity | DELEGATED | Faculty/Trainer + Person | Resolve |
-| Stage-specific permission | SHARED-KERNEL + MODULE | IAM + Module 10 | Authorize action |
-| Branch mutation access | SHARED-KERNEL | IAM | Enforce |
-| Evidence stale check | MODULE + ORCHESTRATED | Module 10 using dependency versions/timestamps | Block approval |
-| Certificate allowed by Course rule | ORCHESTRATED | Course Catalog + Module 10 | Evaluate eligibility |
-| Certificate issue state | DELEGATED | Certificate Management | Read/notify only |
-| Audit reason retention | SHARED-KERNEL | Audit & Compliance | Write through convention |
-| Export format validation | SHARED-KERNEL | Platform export convention | Validate |
-| Export branch intersection | SHARED-KERNEL | IAM | Enforce |
-| Export allowed columns | MODULE | Module 10 report contract | Validate allowlist |
+| Validation Rule                                  | Classification               | Owner / Source                                 | Module 10 Behavior           |
+| ------------------------------------------------ | ---------------------------- | ---------------------------------------------- | ---------------------------- |
+| Exam name required                               | MODULE                       | Module 10                                      | Validate directly            |
+| ISO date syntax                                  | SHARED-KERNEL                | Shared validation                              | Reuse common schema          |
+| maxMarks > 0                                     | MODULE                       | Module 10                                      | Validate directly            |
+| passMarks >= 0                                   | MODULE                       | Module 10                                      | Validate directly            |
+| passMarks <= maxMarks                            | MODULE                       | Module 10                                      | Validate directly            |
+| Course exists                                    | DELEGATED                    | Course Catalog                                 | Resolve/read                 |
+| Batch exists                                     | DELEGATED                    | Training Delivery                              | Resolve/read                 |
+| Batch belongs to Course                          | ORCHESTRATED                 | Training Delivery + Course reference           | Compare authoritative IDs    |
+| Batch branch access                              | SHARED-KERNEL                | IAM branch policy                              | Apply authorization result   |
+| Semantic duplicate Exam                          | MODULE                       | Module 10                                      | Reject                       |
+| Exam transition allowed                          | MODULE                       | Module 10                                      | Validate state machine       |
+| Standard edit cannot invalidate finalized Result | MODULE                       | Module 10                                      | Reject unsafe edit           |
+| Cancellation reason required                     | MODULE                       | Module 10                                      | Validate                     |
+| Soft delete only                                 | SHARED-KERNEL                | Repository convention                          | Enforce                      |
+| Version match                                    | SHARED-KERNEL                | Concurrency convention                         | Enforce                      |
+| Exam exists for Result                           | MODULE                       | Module 10                                      | Resolve                      |
+| Enrollment exists                                | DELEGATED                    | Admission & Enrollment                         | Resolve                      |
+| Enrollment Course matches Exam Course            | ORCHESTRATED                 | Enrollment + Module 10                         | Compare facts                |
+| Enrollment Batch matches Exam Batch              | ORCHESTRATED                 | Enrollment + Module 10                         | Compare facts                |
+| Enrollment branch matches Exam branch            | ORCHESTRATED                 | Enrollment + Training Delivery                 | Compare facts                |
+| Marks non-negative                               | MODULE                       | Module 10                                      | Validate                     |
+| Marks <= maxMarks                                | MODULE                       | Module 10                                      | Validate                     |
+| Result status derived from marks                 | MODULE                       | Module 10                                      | Derive                       |
+| One Result per Exam + Enrollment                 | MODULE                       | Module 10                                      | Unique invariant             |
+| Result finalization rule                         | MODULE                       | Module 10                                      | Validate                     |
+| Result correction permission                     | SHARED-KERNEL + MODULE       | IAM + Module 10                                | Authorize and validate state |
+| Correction reason required                       | MODULE                       | Module 10                                      | Validate                     |
+| Bulk duplicate Enrollment rows                   | MODULE                       | Module 10                                      | Validate                     |
+| Bulk branch authorization                        | SHARED-KERNEL + ORCHESTRATED | IAM + Enrollment/Exam                          | Authorize                    |
+| Enrollment completion eligibility                | DELEGATED                    | Admission & Enrollment                         | Resolve lifecycle validity   |
+| CourseCompletionRule                             | DELEGATED                    | Course Catalog                                 | Consume                      |
+| Attendance percentage                            | DELEGATED                    | Attendance                                     | Consume                      |
+| Exam pass evidence                               | MODULE                       | Module 10                                      | Resolve Result               |
+| Payment validation                               | DELEGATED                    | Finance                                        | Consume                      |
+| Missing required evidence blocks approval        | MODULE                       | Module 10                                      | Evaluate                     |
+| Dependency unavailable blocks false approval     | MODULE                       | Module 10 orchestration                        | Fail safe                    |
+| One CourseCompletion per Enrollment              | MODULE                       | Module 10                                      | Unique invariant             |
+| Manual approval stage sequencing                 | MODULE                       | Module 10                                      | Enforce                      |
+| Trainer assigned to Batch                        | DELEGATED                    | Training Delivery                              | Consume assignment truth     |
+| Trainer identity                                 | DELEGATED                    | Faculty/Trainer + Person                       | Resolve                      |
+| Stage-specific permission                        | SHARED-KERNEL + MODULE       | IAM + Module 10                                | Authorize action             |
+| Branch mutation access                           | SHARED-KERNEL                | IAM                                            | Enforce                      |
+| Evidence stale check                             | MODULE + ORCHESTRATED        | Module 10 using dependency versions/timestamps | Block approval               |
+| Certificate allowed by Course rule               | ORCHESTRATED                 | Course Catalog + Module 10                     | Evaluate eligibility         |
+| Certificate issue state                          | DELEGATED                    | Certificate Management                         | Read/notify only             |
+| Audit reason retention                           | SHARED-KERNEL                | Audit & Compliance                             | Write through convention     |
+| Export format validation                         | SHARED-KERNEL                | Platform export convention                     | Validate                     |
+| Export branch intersection                       | SHARED-KERNEL                | IAM                                            | Enforce                      |
+| Export allowed columns                           | MODULE                       | Module 10 report contract                      | Validate allowlist           |
 
 ---
 
@@ -1357,44 +1335,44 @@ Database must not replace domain checks that require cross-context facts.
 
 # 25. Notification Ownership Comparison
 
-| Notification Concern | Owner | Module 10 Role |
-|---|---|---|
-| Domain event occurrence | Module 10 | Emit |
-| Recipient business context | Module 10 + owning context facts | Provide references |
-| Template storage | Communication | No ownership |
-| Language rendering | Communication | Supply locale/person reference |
-| Email delivery | Communication | No ownership |
-| SMS delivery | Communication | No ownership |
-| WhatsApp delivery | Communication | No ownership |
-| Retry/provider tracking | Communication | No ownership |
-| Notification history | Communication | Read if needed |
-| Deduplication key input | Module 10 event ID | Provide stable event identity |
-| Audit of business action | Audit & Compliance | Module emits/writes through convention |
+| Notification Concern       | Owner                            | Module 10 Role                         |
+| -------------------------- | -------------------------------- | -------------------------------------- |
+| Domain event occurrence    | Module 10                        | Emit                                   |
+| Recipient business context | Module 10 + owning context facts | Provide references                     |
+| Template storage           | Communication                    | No ownership                           |
+| Language rendering         | Communication                    | Supply locale/person reference         |
+| Email delivery             | Communication                    | No ownership                           |
+| SMS delivery               | Communication                    | No ownership                           |
+| WhatsApp delivery          | Communication                    | No ownership                           |
+| Retry/provider tracking    | Communication                    | No ownership                           |
+| Notification history       | Communication                    | Read if needed                         |
+| Deduplication key input    | Module 10 event ID               | Provide stable event identity          |
+| Audit of business action   | Audit & Compliance               | Module emits/writes through convention |
 
 ---
 
 # 26. Domain Event to Notification Mapping
 
-| Domain Event | Notification Event | Notify? | Reason |
-|---|---|---:|---|
-| `ExamCreated` | none by default | No | Draft creation is internal |
-| `ExamScheduled` | `EXC_EXAM_SCHEDULED` | Yes | Operational action required |
-| `ExamRescheduled` | `EXC_EXAM_RESCHEDULED` | Yes | Schedule changed |
-| `ExamCancelled` | `EXC_EXAM_CANCELLED` | Yes | High-impact operational change |
-| `ResultRecorded` | `EXC_RESULT_RECORDED` | Conditional | Internal operational awareness |
-| `ResultFinalized` | `EXC_RESULT_FINALIZED` | Conditional | Depends on publication policy |
-| `ResultCorrected` | `EXC_RESULT_CORRECTED` | Yes | Sensitive academic change |
-| `CompletionEvaluationRequested` | none | Usually No | Internal process event |
-| `CompletionEvaluationCompleted` | next-stage event | Conditional | Notify next actor if action required |
-| `CompletionEvaluationFailed` | `EXC_COMPLETION_EVALUATION_FAILED` | Yes | Requires operational resolution |
-| `CompletionRecommendationRequested` | `EXC_TRAINER_RECOMMENDATION_REQUIRED` | Yes | Trainer action required |
-| `CompletionRecommended` | `EXC_COORDINATOR_REVIEW_REQUIRED` | Yes | Coordinator action required |
-| `CoordinatorReviewApproved` | `EXC_FINAL_APPROVAL_REQUIRED` | Yes | Final approver action required |
-| `CourseCompletionApproved` | `EXC_COMPLETION_APPROVED` | Yes | Final outcome |
-| `CourseCompletionRejected` | `EXC_COMPLETION_REJECTED` | Yes | Final/negative outcome |
-| `CompletionReevaluationRequired` | `EXC_REEVALUATION_REQUIRED` | Yes | Operational exception |
-| `CompletionReevaluated` | depends on changed outcome | Conditional | Notify only material outcome change |
-| `CertificateEligible` | internal handoff | Internal | Certificate context owns issue notification |
+| Domain Event                        | Notification Event                    |     Notify? | Reason                                      |
+| ----------------------------------- | ------------------------------------- | ----------: | ------------------------------------------- |
+| `ExamCreated`                       | none by default                       |          No | Draft creation is internal                  |
+| `ExamScheduled`                     | `EXC_EXAM_SCHEDULED`                  |         Yes | Operational action required                 |
+| `ExamRescheduled`                   | `EXC_EXAM_RESCHEDULED`                |         Yes | Schedule changed                            |
+| `ExamCancelled`                     | `EXC_EXAM_CANCELLED`                  |         Yes | High-impact operational change              |
+| `ResultRecorded`                    | `EXC_RESULT_RECORDED`                 | Conditional | Internal operational awareness              |
+| `ResultFinalized`                   | `EXC_RESULT_FINALIZED`                | Conditional | Depends on publication policy               |
+| `ResultCorrected`                   | `EXC_RESULT_CORRECTED`                |         Yes | Sensitive academic change                   |
+| `CompletionEvaluationRequested`     | none                                  |  Usually No | Internal process event                      |
+| `CompletionEvaluationCompleted`     | next-stage event                      | Conditional | Notify next actor if action required        |
+| `CompletionEvaluationFailed`        | `EXC_COMPLETION_EVALUATION_FAILED`    |         Yes | Requires operational resolution             |
+| `CompletionRecommendationRequested` | `EXC_TRAINER_RECOMMENDATION_REQUIRED` |         Yes | Trainer action required                     |
+| `CompletionRecommended`             | `EXC_COORDINATOR_REVIEW_REQUIRED`     |         Yes | Coordinator action required                 |
+| `CoordinatorReviewApproved`         | `EXC_FINAL_APPROVAL_REQUIRED`         |         Yes | Final approver action required              |
+| `CourseCompletionApproved`          | `EXC_COMPLETION_APPROVED`             |         Yes | Final outcome                               |
+| `CourseCompletionRejected`          | `EXC_COMPLETION_REJECTED`             |         Yes | Final/negative outcome                      |
+| `CompletionReevaluationRequired`    | `EXC_REEVALUATION_REQUIRED`           |         Yes | Operational exception                       |
+| `CompletionReevaluated`             | depends on changed outcome            | Conditional | Notify only material outcome change         |
+| `CertificateEligible`               | internal handoff                      |    Internal | Certificate context owns issue notification |
 
 ---
 
@@ -1551,35 +1529,35 @@ reconciliation
 
 # 31. Validation-to-Error Mapping
 
-| Validation Rule | Error Code |
-|---|---|
-| Exam name blank | `EXAM_NAME_REQUIRED` |
-| maxMarks <= 0 | `MAX_MARKS_INVALID` |
-| passMarks < 0 | `PASS_MARKS_INVALID` |
-| passMarks > maxMarks | `PASS_MARKS_EXCEED_MAX` |
-| Course missing | `COURSE_NOT_FOUND` |
-| Batch missing | `BATCH_NOT_FOUND` |
-| Course/Batch mismatch | `COURSE_BATCH_MISMATCH` |
-| duplicate Exam | `DUPLICATE_EXAM` |
-| invalid Exam transition | `EXAM_INVALID_STATE_TRANSITION` |
-| marks < 0 | `MARKS_NEGATIVE` |
-| marks > max | `MARKS_EXCEED_MAXIMUM` |
-| invalid Enrollment for Exam | `ENROLLMENT_NOT_ELIGIBLE_FOR_EXAM` |
-| duplicate Result | `RESULT_DUPLICATE` |
-| standard edit after finalize | `RESULT_ALREADY_FINALIZED` |
-| missing correction reason | `CORRECTION_REASON_REQUIRED` |
-| unchanged corrected marks | `CORRECTED_MARKS_UNCHANGED` |
-| missing completion rule | `COURSE_COMPLETION_RULE_NOT_CONFIGURED` |
-| attendance unavailable | `ATTENDANCE_DEPENDENCY_UNAVAILABLE` |
-| payment validation unavailable | `FINANCE_DEPENDENCY_UNAVAILABLE` |
-| stale completion evidence | `COMPLETION_EVIDENCE_STALE` |
-| invalid reevaluation trigger | `INVALID_REEVALUATION_TRIGGER` |
-| trainer not assigned | `TRAINER_NOT_AUTHORIZED_FOR_BATCH` |
-| missing trainer stage | `TRAINER_RECOMMENDATION_REQUIRED` |
-| missing coordinator stage | `COORDINATOR_APPROVAL_REQUIRED` |
-| reject without remarks | `REJECTION_REASON_REQUIRED` |
-| stale version | `CONCURRENCY_CONFLICT` |
-| mutation outside branch | `BRANCH_MUTATION_FORBIDDEN` |
+| Validation Rule                | Error Code                              |
+| ------------------------------ | --------------------------------------- |
+| Exam name blank                | `EXAM_NAME_REQUIRED`                    |
+| maxMarks <= 0                  | `MAX_MARKS_INVALID`                     |
+| passMarks < 0                  | `PASS_MARKS_INVALID`                    |
+| passMarks > maxMarks           | `PASS_MARKS_EXCEED_MAX`                 |
+| Course missing                 | `COURSE_NOT_FOUND`                      |
+| Batch missing                  | `BATCH_NOT_FOUND`                       |
+| Course/Batch mismatch          | `COURSE_BATCH_MISMATCH`                 |
+| duplicate Exam                 | `DUPLICATE_EXAM`                        |
+| invalid Exam transition        | `EXAM_INVALID_STATE_TRANSITION`         |
+| marks < 0                      | `MARKS_NEGATIVE`                        |
+| marks > max                    | `MARKS_EXCEED_MAXIMUM`                  |
+| invalid Enrollment for Exam    | `ENROLLMENT_NOT_ELIGIBLE_FOR_EXAM`      |
+| duplicate Result               | `RESULT_DUPLICATE`                      |
+| standard edit after finalize   | `RESULT_ALREADY_FINALIZED`              |
+| missing correction reason      | `CORRECTION_REASON_REQUIRED`            |
+| unchanged corrected marks      | `CORRECTED_MARKS_UNCHANGED`             |
+| missing completion rule        | `COURSE_COMPLETION_RULE_NOT_CONFIGURED` |
+| attendance unavailable         | `ATTENDANCE_DEPENDENCY_UNAVAILABLE`     |
+| payment validation unavailable | `FINANCE_DEPENDENCY_UNAVAILABLE`        |
+| stale completion evidence      | `COMPLETION_EVIDENCE_STALE`             |
+| invalid reevaluation trigger   | `INVALID_REEVALUATION_TRIGGER`          |
+| trainer not assigned           | `TRAINER_NOT_AUTHORIZED_FOR_BATCH`      |
+| missing trainer stage          | `TRAINER_RECOMMENDATION_REQUIRED`       |
+| missing coordinator stage      | `COORDINATOR_APPROVAL_REQUIRED`         |
+| reject without remarks         | `REJECTION_REASON_REQUIRED`             |
+| stale version                  | `CONCURRENCY_CONFLICT`                  |
+| mutation outside branch        | `BRANCH_MUTATION_FORBIDDEN`             |
 
 ---
 

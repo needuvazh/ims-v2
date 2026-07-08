@@ -34,10 +34,13 @@ export const EXAM_RESULT_COMPLETION_ERROR_CODES = {
   BRANCH_MUTATION_FORBIDDEN: 'BRANCH_MUTATION_FORBIDDEN',
 } as const;
 
-export type ExamResultCompletionErrorCode = typeof EXAM_RESULT_COMPLETION_ERROR_CODES[keyof typeof EXAM_RESULT_COMPLETION_ERROR_CODES];
+export type ExamResultCompletionErrorCode =
+  (typeof EXAM_RESULT_COMPLETION_ERROR_CODES)[keyof typeof EXAM_RESULT_COMPLETION_ERROR_CODES];
 
 // HTTP status mapping for error codes
-export function getHttpStatusCodeForErrorCode(errorCode: ExamResultCompletionErrorCode): number {
+export function getHttpStatusCodeForErrorCode(
+  errorCode: ExamResultCompletionErrorCode,
+): number {
   const notFoundCodes: ExamResultCompletionErrorCode[] = [
     EXAM_RESULT_COMPLETION_ERROR_CODES.EXAM_NOT_FOUND,
     EXAM_RESULT_COMPLETION_ERROR_CODES.RESULT_NOT_FOUND,

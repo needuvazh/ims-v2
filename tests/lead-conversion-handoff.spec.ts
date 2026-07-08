@@ -1,6 +1,9 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { prisma } from '../packages/database/src/client';
-import { leadConversionOrchestrator, leadService } from '../apps/admin-portal/app/lib/runtime';
+import {
+  leadConversionOrchestrator,
+  leadService,
+} from '../apps/admin-portal/app/lib/runtime';
 import { createUuid } from '../packages/shared-kernel/src/value-objects';
 import { randomUUID } from 'crypto';
 
@@ -34,17 +37,21 @@ describe('Lead to Admission Handoff Integration', () => {
     branchId = branch.id;
 
     // 2. Fetch or create a Course
-    let course = await prisma.course.findFirst({ where: { status: 'Published' } });
+    let course = await prisma.course.findFirst({
+      where: { status: 'Published' },
+    });
     if (!course) {
-      const dept = await prisma.department.findFirst() || await prisma.department.create({
-        data: {
-          id: createUuid(randomUUID()),
-          branchId,
-          departmentCode: 'DEPT-HANDOFF',
-          departmentName: 'Handoff Department',
-          status: 'Active',
-        },
-      });
+      const dept =
+        (await prisma.department.findFirst()) ||
+        (await prisma.department.create({
+          data: {
+            id: createUuid(randomUUID()),
+            branchId,
+            departmentCode: 'DEPT-HANDOFF',
+            departmentName: 'Handoff Department',
+            status: 'Active',
+          },
+        }));
       course = await prisma.course.create({
         data: {
           id: createUuid(randomUUID()),
@@ -62,7 +69,9 @@ describe('Lead to Admission Handoff Integration', () => {
     courseId = course.id;
 
     // 3. Fetch or create a Counselor User
-    let counselor = await prisma.user.findFirst({ where: { status: 'Active' } });
+    let counselor = await prisma.user.findFirst({
+      where: { status: 'Active' },
+    });
     if (!counselor) {
       const person = await prisma.person.create({
         data: {
@@ -131,7 +140,11 @@ describe('Lead to Admission Handoff Integration', () => {
       },
     ];
 
-    const result = await leadConversionOrchestrator.convertLeadToAdmission(lead.id, documents, counselorId);
+    const result = await leadConversionOrchestrator.convertLeadToAdmission(
+      lead.id,
+      documents,
+      counselorId,
+    );
     expect(result.admissionId).toBeDefined();
 
     const admission = await prisma.admission.findUnique({
@@ -190,7 +203,11 @@ describe('Lead to Admission Handoff Integration', () => {
     ];
 
     await expect(
-      leadConversionOrchestrator.convertLeadToAdmission(lead.id, documents, counselorId)
+      leadConversionOrchestrator.convertLeadToAdmission(
+        lead.id,
+        documents,
+        counselorId,
+      ),
     ).rejects.toThrow('ERR_ADM_AGE_LIMIT');
   });
 
@@ -261,7 +278,11 @@ describe('Lead to Admission Handoff Integration', () => {
     ];
 
     await expect(
-      leadConversionOrchestrator.convertLeadToAdmission(lead.id, documents, counselorId)
+      leadConversionOrchestrator.convertLeadToAdmission(
+        lead.id,
+        documents,
+        counselorId,
+      ),
     ).rejects.toThrow('ERR_ADM_ACTIVE_ADMISSION_EXISTS');
   });
 
@@ -310,7 +331,11 @@ describe('Lead to Admission Handoff Integration', () => {
 
     // 3. Conversion must reject due to age limit
     await expect(
-      leadConversionOrchestrator.convertLeadToAdmission(lead.id, documents, counselorId)
+      leadConversionOrchestrator.convertLeadToAdmission(
+        lead.id,
+        documents,
+        counselorId,
+      ),
     ).rejects.toThrow('ERR_ADM_AGE_LIMIT');
 
     // 4. Assert lead stage remains Qualified (not Converted)
@@ -318,7 +343,9 @@ describe('Lead to Admission Handoff Integration', () => {
     expect(leadAfter?.stage).toBe('Qualified');
 
     // 5. Assert no admission record was created
-    const admissionCount = await prisma.admission.count({ where: { leadId: lead.id } });
+    const admissionCount = await prisma.admission.count({
+      where: { leadId: lead.id },
+    });
     expect(admissionCount).toBe(0);
 
     // 6. Assert no outbox events committed for Lead Won/Converted
@@ -376,7 +403,11 @@ describe('Lead to Admission Handoff Integration', () => {
 
     // 3. Conversion must reject due to stage precondition
     await expect(
-      leadConversionOrchestrator.convertLeadToAdmission(lead.id, documents, counselorId)
+      leadConversionOrchestrator.convertLeadToAdmission(
+        lead.id,
+        documents,
+        counselorId,
+      ),
     ).rejects.toThrow('ERR_CRM_INVALID_STAGE_TRANSITION');
 
     // 4. Assert lead stage remains New
@@ -384,4 +415,3 @@ describe('Lead to Admission Handoff Integration', () => {
     expect(leadAfter?.stage).toBe('New');
   });
 });
-

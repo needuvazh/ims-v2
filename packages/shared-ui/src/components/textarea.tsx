@@ -12,7 +12,17 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { className, label, helperText, errorText, resizable = true, id, required, disabled, ...props },
+    {
+      className,
+      label,
+      helperText,
+      errorText,
+      resizable = true,
+      id,
+      required,
+      disabled,
+      ...props
+    },
     ref,
   ) => {
     const generatedId = useId();
@@ -24,10 +34,16 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="flex w-full flex-col gap-1.5">
         {label && (
-          <label htmlFor={textareaId} className="text-sm font-medium text-[color:var(--ims-ink)]">
+          <label
+            htmlFor={textareaId}
+            className="text-sm font-medium text-[color:var(--ims-ink)]"
+          >
             {label}
             {required && (
-              <span className="ml-1 text-[color:var(--ims-error)]" aria-hidden="true">
+              <span
+                className="ml-1 text-[color:var(--ims-error)]"
+                aria-hidden="true"
+              >
                 *
               </span>
             )}
@@ -39,20 +55,31 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           required={required}
           disabled={disabled}
           aria-invalid={hasError}
-          aria-describedby={hasError ? errorId : helperText ? helperId : undefined}
+          aria-describedby={
+            hasError ? errorId : helperText ? helperId : undefined
+          }
           className={cn(
             'min-h-[100px] w-full rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] px-4 py-3 text-sm text-[color:var(--ims-ink)] shadow-[0_8px_24px_rgba(16,36,58,0.04)] outline-none transition-all placeholder:text-[color:var(--ims-muted)] focus:border-[color:var(--ims-brass)] focus:ring-2 focus:ring-[color:var(--ims-brass-soft)] disabled:cursor-not-allowed disabled:opacity-50',
             !resizable && 'resize-none',
-            hasError && 'border-[color:var(--ims-error)] focus:border-[color:var(--ims-error)] focus:ring-[rgba(185,28,28,0.2)]',
+            hasError &&
+              'border-[color:var(--ims-error)] focus:border-[color:var(--ims-error)] focus:ring-[rgba(185,28,28,0.2)]',
             className,
           )}
           {...props}
         />
         {helperText && !hasError && (
-          <p id={helperId} className="text-xs text-[color:var(--ims-muted)]">{helperText}</p>
+          <p id={helperId} className="text-xs text-[color:var(--ims-muted)]">
+            {helperText}
+          </p>
         )}
         {hasError && (
-          <p id={errorId} role="alert" className="text-xs text-[color:var(--ims-error)]">{errorText}</p>
+          <p
+            id={errorId}
+            role="alert"
+            className="text-xs text-[color:var(--ims-error)]"
+          >
+            {errorText}
+          </p>
         )}
       </div>
     );

@@ -1,6 +1,7 @@
 ## Why
 
 The Course Catalog and configuration override screens under ASTI IMS required comprehensive feature enhancements to collect proper inputs and display overrides cleanly:
+
 1. **Forms for Data Collection**: The `/courses-catalog/new` and `/edit` forms needed structured inputs for public exposition, syllabus, and SEO details rather than basic mockups.
 2. **Branch & Batch Override Cleanups**: Pricing and discount configurations displayed target branch overrides multiple times and included redundant batch select options.
 3. **Configuration DataTables**: Fee structure overrides, discount segments, and graduation rules lists needed to support full-page density layout, sorting, pagination, and server-side filtering.
@@ -18,9 +19,11 @@ The Course Catalog and configuration override screens under ASTI IMS required co
 ## Capabilities
 
 ### New Capabilities
+
 - None.
 
 ### Modified Capabilities
+
 - `course-catalog`: Course forms collect structured SEO parameters and expose category breadcrumbs dynamically. Graduation Completion Rules support paginated search tables.
 - `course-pricing-discounts`: Pricing overrides and discount configurations support multi-select branch overrides, and their list blocks are upgraded to filterable paginated datatables.
 

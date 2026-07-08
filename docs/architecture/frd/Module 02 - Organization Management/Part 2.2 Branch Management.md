@@ -16,22 +16,22 @@ For ASTI, I recommend treating **Branch** as an **Aggregate Root** with its own 
 
 **Dependencies**
 
-* Organization Management (2.1)
-* Identity & Access Management
+- Organization Management (2.1)
+- Identity & Access Management
 
 **Dependent Modules**
 
-* CRM
-* Student Management
-* Admissions
-* Course Management
-* Batch Management
-* Scheduling
-* Attendance
-* Finance
-* HR
-* Reporting
-* Website
+- CRM
+- Student Management
+- Admissions
+- Course Management
+- Batch Management
+- Scheduling
+- Attendance
+- Finance
+- HR
+- Reporting
+- Website
 
 ---
 
@@ -41,15 +41,15 @@ The Branch Management module manages the operational locations of the institute.
 
 A branch represents an independently operating training location with its own:
 
-* Management
-* Students
-* Trainers
-* Courses
-* Batches
-* Timetables
-* Finance
-* Reports
-* Operational policies
+- Management
+- Students
+- Trainers
+- Courses
+- Batches
+- Timetables
+- Finance
+- Reports
+- Operational policies
 
 Every operational transaction in ASTI must belong to a branch.
 
@@ -59,16 +59,16 @@ Every operational transaction in ASTI must belong to a branch.
 
 The system shall enable administrators to:
 
-* Create branches
-* Configure operational settings
-* Configure branch contacts
-* Configure branch hierarchy
-* Configure branch working hours
-* Configure reporting hierarchy
-* Assign branch managers
-* Control branch lifecycle
-* Support branch-level reporting
-* Support branch-level security
+- Create branches
+- Configure operational settings
+- Configure branch contacts
+- Configure branch hierarchy
+- Configure branch working hours
+- Configure reporting hierarchy
+- Assign branch managers
+- Control branch lifecycle
+- Support branch-level reporting
+- Support branch-level security
 
 ---
 
@@ -76,24 +76,24 @@ The system shall enable administrators to:
 
 ### Included
 
-* Branch Master
-* Branch Contacts
-* Branch Configuration
-* Branch Status
-* Branch Hierarchy
-* Branch Manager Assignment
-* Branch Policies
-* Branch Calendar Association
-* Branch Working Hours Association
+- Branch Master
+- Branch Contacts
+- Branch Configuration
+- Branch Status
+- Branch Hierarchy
+- Branch Manager Assignment
+- Branch Policies
+- Branch Calendar Association
+- Branch Working Hours Association
 
 ### Excluded
 
-* Buildings
-* Departments
-* Classrooms
-* Users
-* Students
-* Finance
+- Buildings
+- Departments
+- Classrooms
+- Users
+- Students
+- Finance
 
 Handled by other modules.
 
@@ -217,29 +217,29 @@ The system shall allow an authorized administrator to create a branch.
 
 ### Fields
 
-* Branch Code
-* Branch Name (English)
-* Branch Name (Arabic)
-* Short Name
-* Organization
-* Parent Branch (optional)
-* Branch Type
-* Phone
-* Email
-* Website
-* Status
+- Branch Code
+- Branch Name (English)
+- Branch Name (Arabic)
+- Short Name
+- Organization
+- Parent Branch (optional)
+- Branch Type
+- Phone
+- Email
+- Website
+- Status
 
 ### Business Rules
 
-* Branch Code must be unique within the organization.
-* Branch Name is mandatory.
-* Organization is mandatory.
+- Branch Code must be unique within the organization.
+- Branch Name is mandatory.
+- Organization is mandatory.
 
 ### Acceptance Criteria
 
-* Branch created successfully.
-* Status = Draft.
-* Audit log generated.
+- Branch created successfully.
+- Status = Draft.
+- Audit log generated.
 
 ---
 
@@ -249,12 +249,12 @@ The system shall allow an authorized administrator to create a branch.
 
 Allow administrators to configure:
 
-* Description
-* Logo
-* Branch Banner
-* Public Information
-* Branch Services
-* Contact Details
+- Description
+- Logo
+- Branch Banner
+- Public Information
+- Branch Services
+- Contact Details
 
 ---
 
@@ -264,16 +264,16 @@ Allow administrators to configure:
 
 Store:
 
-* Building Number
-* Street
-* Area
-* City
-* Governorate
-* Country
-* Postal Code
-* Latitude
-* Longitude
-* Google Map URL
+- Building Number
+- Street
+- Area
+- City
+- Governorate
+- Country
+- Postal Code
+- Latitude
+- Longitude
+- Google Map URL
 
 ---
 
@@ -285,13 +285,13 @@ Support multiple contacts.
 
 Types:
 
-* Reception
-* Admissions
-* Finance
-* HR
-* Emergency
-* Corporate Training
-* General Inquiry
+- Reception
+- Admissions
+- Finance
+- HR
+- Emergency
+- Corporate Training
+- General Inquiry
 
 One contact must be marked as Primary.
 
@@ -305,9 +305,9 @@ The system shall allow assigning one active Branch Manager.
 
 Business Rules:
 
-* Manager must be an active employee.
-* Only one Primary Branch Manager.
-* Historical manager assignments must be retained.
+- Manager must be an active employee.
+- Only one Primary Branch Manager.
+- Historical manager assignments must be retained.
 
 ---
 
@@ -331,8 +331,8 @@ Head Office
 
 Business Rules:
 
-* No circular hierarchy.
-* Child branch cannot have multiple parents.
+- No circular hierarchy.
+- Child branch cannot have multiple parents.
 
 ---
 
@@ -342,14 +342,14 @@ Business Rules:
 
 Settings include:
 
-* Default Currency
-* Default Language
-* Time Zone
-* Fiscal Year
-* Academic Year
-* Week Start Day
-* Attendance Policy
-* Working Calendar
+- Default Currency
+- Default Language
+- Time Zone
+- Fiscal Year
+- Academic Year
+- Week Start Day
+- Attendance Policy
+- Working Calendar
 
 ---
 
@@ -359,12 +359,12 @@ Settings include:
 
 Examples:
 
-* Admission Policy
-* Attendance Policy
-* Certificate Policy
-* Refund Policy
-* Discount Approval Policy
-* Late Fee Policy
+- Admission Policy
+- Attendance Policy
+- Certificate Policy
+- Refund Policy
+- Discount Approval Policy
+- Late Fee Policy
 
 Policies should be configurable and inherited from the organization by default, with branch-level overrides where permitted.
 
@@ -376,11 +376,11 @@ Policies should be configurable and inherited from the organization by default, 
 
 Activation requires:
 
-* Valid address
-* Primary contact
-* Branch manager assigned
-* Working hours configured
-* Holiday calendar assigned
+- Valid address
+- Primary contact
+- Branch manager assigned
+- Working hours configured
+- Holiday calendar assigned
 
 ---
 
@@ -390,10 +390,10 @@ Activation requires:
 
 Effects:
 
-* No new admissions.
-* No new enrollments.
-* No new batches.
-* Existing operations remain accessible in read-only mode where appropriate.
+- No new admissions.
+- No new enrollments.
+- No new batches.
+- Existing operations remain accessible in read-only mode where appropriate.
 
 ---
 
@@ -403,11 +403,11 @@ Effects:
 
 Closing a branch requires:
 
-* No running batches.
-* No active classroom schedules.
-* No pending admissions.
-* No unpaid critical financial transactions.
-* No active trainer assignments.
+- No running batches.
+- No active classroom schedules.
+- No pending admissions.
+- No unpaid critical financial transactions.
+- No active trainer assignments.
 
 The system should present dependency validation before closure.
 
@@ -421,9 +421,9 @@ Archiving is allowed only after successful closure.
 
 Archived branches:
 
-* Are excluded from operational screens.
-* Remain available for historical reporting.
-* Cannot be modified.
+- Are excluded from operational screens.
+- Remain available for historical reporting.
+- Cannot be modified.
 
 ---
 
@@ -433,12 +433,12 @@ Archived branches:
 
 Support search by:
 
-* Branch Code
-* Branch Name
-* City
-* Manager
-* Status
-* Type
+- Branch Code
+- Branch Name
+- City
+- Manager
+- Status
+- Type
 
 ---
 
@@ -448,14 +448,14 @@ Support search by:
 
 Display:
 
-* Active Students
-* Running Batches
-* Today's Attendance
-* Active Trainers
-* Revenue Summary
-* Outstanding Fees
-* Upcoming Classes
-* Pending Approvals
+- Active Students
+- Running Batches
+- Today's Attendance
+- Active Trainers
+- Revenue Summary
+- Outstanding Fees
+- Upcoming Classes
+- Pending Approvals
 
 ---
 
@@ -514,31 +514,31 @@ Operational
 
 ### Columns
 
-* Code
-* Branch Name
-* City
-* Manager
-* Status
-* Active Students
-* Running Batches
-* Last Updated
+- Code
+- Branch Name
+- City
+- Manager
+- Status
+- Active Students
+- Running Batches
+- Last Updated
 
 ### Filters
 
-* Status
-* City
-* Branch Type
-* Manager
-* Organization
+- Status
+- City
+- Branch Type
+- Manager
+- Organization
 
 ### Actions
 
-* View
-* Edit
-* Activate
-* Suspend
-* Close
-* Archive
+- View
+- Edit
+- Activate
+- Suspend
+- Close
+- Archive
 
 ---
 
@@ -572,13 +572,13 @@ Operational KPI dashboard for a single branch.
 
 # 13. Validation Rules
 
-* Branch Code must be unique.
-* Branch Name is mandatory.
-* Email must be valid.
-* Phone must match country format.
-* Latitude and Longitude must be valid.
-* Parent branch cannot reference itself.
-* Duplicate branch names within the same city should generate a warning (not necessarily block creation).
+- Branch Code must be unique.
+- Branch Name is mandatory.
+- Email must be valid.
+- Phone must match country format.
+- Latitude and Longitude must be valid.
+- Parent branch cannot reference itself.
+- Duplicate branch names within the same city should generate a warning (not necessarily block creation).
 
 ---
 
@@ -601,13 +601,13 @@ Operational KPI dashboard for a single branch.
 
 Generate in-app notifications for:
 
-* Branch Created
-* Branch Activated
-* Branch Suspended
-* Branch Closed
-* Branch Archived
-* Branch Manager Assigned
-* Operational Settings Changed
+- Branch Created
+- Branch Activated
+- Branch Suspended
+- Branch Closed
+- Branch Archived
+- Branch Manager Assigned
+- Operational Settings Changed
 
 Email notifications may be enabled later based on communication module configuration.
 
@@ -617,62 +617,62 @@ Email notifications may be enabled later based on communication module configura
 
 Audit every change to:
 
-* Profile
-* Address
-* Contacts
-* Manager assignment
-* Policies
-* Operational settings
-* Status changes
+- Profile
+- Address
+- Contacts
+- Manager assignment
+- Policies
+- Operational settings
+- Status changes
 
 Audit records must include:
 
-* User
-* Date & Time
-* Previous Value
-* New Value
-* IP Address
-* Device Information
-* Branch Context
+- User
+- Date & Time
+- Previous Value
+- New Value
+- IP Address
+- Device Information
+- Branch Context
 
 ---
 
 # 17. Reports
 
-* Branch Directory
-* Branch Performance Summary
-* Branch Contact Directory
-* Branch Status Report
-* Branch Manager Report
-* Branch Configuration Report
-* Branch Operational Readiness Report
+- Branch Directory
+- Branch Performance Summary
+- Branch Contact Directory
+- Branch Status Report
+- Branch Manager Report
+- Branch Configuration Report
+- Branch Operational Readiness Report
 
 ---
 
 # 18. Dashboard Widgets
 
-* Total Branches
-* Active Branches
-* Branches Under Maintenance
-* Suspended Branches
-* Active Students by Branch
-* Running Batches by Branch
-* Revenue by Branch
-* Outstanding Fees by Branch
+- Total Branches
+- Active Branches
+- Branches Under Maintenance
+- Suspended Branches
+- Active Students by Branch
+- Running Batches by Branch
+- Revenue by Branch
+- Outstanding Fees by Branch
 
 ---
 
 # 19. Domain Events
 
-* `BranchCreated`
-* `BranchUpdated`
-* `BranchManagerAssigned`
-* `BranchActivated`
-* `BranchSuspended`
-* `BranchClosed`
-* `BranchArchived`
-* `BranchSettingsUpdated`
-* `BranchPolicyUpdated`
+- `BranchCreated`
+- `BranchUpdated`
+- `BranchManagerAssigned`
+- `BranchActivated`
+- `BranchSuspended`
+- `BranchClosed`
+- `BranchArchived`
+- `BranchSettingsUpdated`
+- `BranchPolicyUpdated`
 
 ---
 
@@ -680,34 +680,34 @@ Audit records must include:
 
 ### Aggregate Root
 
-* Branch
+- Branch
 
 ### Child Entities
 
-* Branch
-* BranchAddress
-* BranchContact
-* BranchManager
-* BranchSettings
-* BranchPolicy
-* BranchCalendar
-* BranchWorkingHours
-* BranchAudit
+- Branch
+- BranchAddress
+- BranchContact
+- BranchManager
+- BranchSettings
+- BranchPolicy
+- BranchCalendar
+- BranchWorkingHours
+- BranchAudit
 
 ---
 
 # 21. API Summary
 
-* `POST /branches`
-* `GET /branches`
-* `GET /branches/{branchId}`
-* `PUT /branches/{branchId}`
-* `PATCH /branches/{branchId}/activate`
-* `PATCH /branches/{branchId}/suspend`
-* `PATCH /branches/{branchId}/close`
-* `PATCH /branches/{branchId}/archive`
-* `GET /branches/{branchId}/dashboard`
-* `GET /branches/hierarchy`
+- `POST /branches`
+- `GET /branches`
+- `GET /branches/{branchId}`
+- `PUT /branches/{branchId}`
+- `PATCH /branches/{branchId}/activate`
+- `PATCH /branches/{branchId}/suspend`
+- `PATCH /branches/{branchId}/close`
+- `PATCH /branches/{branchId}/archive`
+- `GET /branches/{branchId}/dashboard`
+- `GET /branches/hierarchy`
 
 ---
 
@@ -731,8 +731,8 @@ Audit records must include:
 
 To make Branch Management enterprise-ready, I recommend:
 
-* **Branch capability flags** (e.g., `supportsCorporateTraining`, `supportsWalkInAdmissions`, `supportsOnlineRegistration`, `supportsCertification`) so future business expansion can be enabled without code changes.
-* **Branch operational metrics** (maximum students, maximum concurrent batches, classroom utilization targets) to support dashboards and future AI forecasting.
-* **Branch-level feature toggles** for gradual rollout of modules such as Finance, Corporate Training, or AI capabilities.
-* **Effective-date configuration** so policy and settings changes can be scheduled instead of taking effect immediately.
-* **Complete inheritance model**, where organization defaults cascade to branches unless an explicit branch override exists, ensuring consistent configuration with minimal duplication.
+- **Branch capability flags** (e.g., `supportsCorporateTraining`, `supportsWalkInAdmissions`, `supportsOnlineRegistration`, `supportsCertification`) so future business expansion can be enabled without code changes.
+- **Branch operational metrics** (maximum students, maximum concurrent batches, classroom utilization targets) to support dashboards and future AI forecasting.
+- **Branch-level feature toggles** for gradual rollout of modules such as Finance, Corporate Training, or AI capabilities.
+- **Effective-date configuration** so policy and settings changes can be scheduled instead of taking effect immediately.
+- **Complete inheritance model**, where organization defaults cascade to branches unless an explicit branch override exists, ensuring consistent configuration with minimal duplication.

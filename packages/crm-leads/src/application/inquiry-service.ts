@@ -8,26 +8,30 @@ export class InquiryApplicationService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly inquiryRepository: IInquiryRepository,
-    private readonly leadRepository: ILeadRepository
+    private readonly leadRepository: ILeadRepository,
   ) {}
 
-  async captureInquiry(input: IngestInquiryInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async captureInquiry(
+    input: IngestInquiryInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (client: Prisma.TransactionClient) => {
       // 1. Duplicate Verification Engine (30-day check)
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      
+
       const existing = await this.inquiryRepository.findByMobileOrEmailInBranch(
         input.branchId,
         input.mobile,
         input.email,
         thirtyDaysAgo,
-        client
+        client,
       );
 
       let isDuplicate = false;
       let duplicateRefId: string | null = null;
-      
+
       if (existing) {
         if (!input.bypassDuplicateBlock) {
           throw new Error('ERR_CRM_DUPLICATE_LEAD_DETECTED');
@@ -58,14 +62,16 @@ export class InquiryApplicationService {
           isDuplicate,
           duplicateRefId,
         },
-        client
+        client,
       );
 
       // 4. Transactional Outbox Event
       await client.outboxEvent.create({
         data: {
           id: createUuid(randomUUID()),
-          eventType: input.utmSource ? 'WebsiteInquirySubmitted' : 'InquiryCreated',
+          eventType: input.utmSource
+            ? 'WebsiteInquirySubmitted'
+            : 'InquiryCreated',
           aggregateType: 'Inquiry',
           aggregateId: result.id,
           payload: {
@@ -108,7 +114,11 @@ export class InquiryApplicationService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async promoteToLead(inquiryId: string, input: QualifyInquiryInput, actorId?: string) {
+  async promoteToLead(
+    inquiryId: string,
+    input: QualifyInquiryInput,
+    actorId?: string,
+  ) {
     return this.prisma.$transaction(async (tx) => {
       // 1. Fetch and validate Inquiry
       const inquiry = await this.inquiryRepository.findById(inquiryId, tx);
@@ -130,7 +140,9 @@ export class InquiryApplicationService {
       }
 
       // 2. Person aggregate resolution (Reuse profile by mobile or email to satisfy unique constraints)
-      const personConditions: Prisma.PersonWhereInput[] = [{ mobile: inquiry.mobile }];
+      const personConditions: Prisma.PersonWhereInput[] = [
+        { mobile: inquiry.mobile },
+      ];
       if (inquiry.email) {
         personConditions.push({ email: inquiry.email });
       }
@@ -176,7 +188,7 @@ export class InquiryApplicationService {
           leadNumber,
           inquiryId,
         },
-        tx
+        tx,
       );
 
       // 5. Update Inquiry Status
@@ -281,10 +293,15 @@ export class InquiryApplicationService {
   }
 
   async findAll(
-    filters: { branchId?: string; branchIds?: string[]; status?: string; search?: string; counselorId?: string },
-    pagination: { page: number; limit: number }
+    filters: {
+      branchId?: string;
+      branchIds?: string[];
+      status?: string;
+      search?: string;
+      counselorId?: string;
+    },
+    pagination: { page: number; limit: number },
   ) {
     return this.inquiryRepository.findAll(filters, pagination, this.prisma);
   }
 }
-

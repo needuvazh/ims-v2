@@ -103,24 +103,40 @@ export function CertificatesClientView({
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const triggerGenerate = async (enrollmentId: string, language: 'en' | 'ar') => {
+  const triggerGenerate = async (
+    enrollmentId: string,
+    language: 'en' | 'ar',
+  ) => {
     setLoading(`gen-${enrollmentId}`);
     const key = `idem-${enrollmentId}-${Date.now()}`;
-    const res = await generateCertificateAction({ enrollmentId, language, idempotencyKey: key });
+    const res = await generateCertificateAction({
+      enrollmentId,
+      language,
+      idempotencyKey: key,
+    });
     setLoading(null);
 
     if (res.success) {
-      toast.success('Certificate generated successfully! It is now in the Generated queue.');
+      toast.success(
+        'Certificate generated successfully! It is now in the Generated queue.',
+      );
       router.refresh();
     } else {
       toast.error(res.error || 'Failed to generate certificate');
     }
   };
 
-  const triggerIssue = async (certificateId: string, expectedVersion: number) => {
+  const triggerIssue = async (
+    certificateId: string,
+    expectedVersion: number,
+  ) => {
     setLoading(`issue-${certificateId}`);
     const key = `idem-issue-${certificateId}-${Date.now()}`;
-    const res = await issueCertificateAction({ certificateId, expectedVersion, idempotencyKey: key });
+    const res = await issueCertificateAction({
+      certificateId,
+      expectedVersion,
+      idempotencyKey: key,
+    });
     setLoading(null);
 
     if (res.success) {
@@ -154,7 +170,11 @@ export function CertificatesClientView({
     }
   };
 
-  const reviewReissue = async (requestId: string, decision: 'APPROVE' | 'REJECT', version: number) => {
+  const reviewReissue = async (
+    requestId: string,
+    decision: 'APPROVE' | 'REJECT',
+    version: number,
+  ) => {
     setLoading(`review-${requestId}`);
     const res = await reviewReissueRequestAction({
       requestId,
@@ -165,14 +185,19 @@ export function CertificatesClientView({
     setLoading(null);
 
     if (res.success) {
-      toast.success(`Reissue request successfully ${decision === 'APPROVE' ? 'Approved' : 'Rejected'}!`);
+      toast.success(
+        `Reissue request successfully ${decision === 'APPROVE' ? 'Approved' : 'Rejected'}!`,
+      );
       router.refresh();
     } else {
       toast.error(res.error || 'Failed to process review');
     }
   };
 
-  const generateReplacement = async (reissueRequestId: string, version: number) => {
+  const generateReplacement = async (
+    reissueRequestId: string,
+    version: number,
+  ) => {
     setLoading(`replace-${reissueRequestId}`);
     const key = `idem-replace-${reissueRequestId}-${Date.now()}`;
     const res = await generateReplacementCertificateAction({
@@ -222,8 +247,12 @@ export function CertificatesClientView({
           <CardContent className="pt-6">
             <div className="flex justify-between items-center">
               <div>
-                <p className="text-sm font-medium text-indigo-600">Total Issued</p>
-                <h3 className="text-3xl font-bold text-indigo-900 mt-1">{metrics.totalIssued}</h3>
+                <p className="text-sm font-medium text-indigo-600">
+                  Total Issued
+                </p>
+                <h3 className="text-3xl font-bold text-indigo-900 mt-1">
+                  {metrics.totalIssued}
+                </h3>
               </div>
               <div className="p-3 bg-indigo-500/10 rounded-xl">
                 <Award className="h-6 w-6 text-indigo-600" />
@@ -236,8 +265,12 @@ export function CertificatesClientView({
           <CardContent className="pt-6">
             <div className="flex justify-between items-center">
               <div>
-                <p className="text-sm font-medium text-amber-600">Draft / Generated</p>
-                <h3 className="text-3xl font-bold text-amber-900 mt-1">{metrics.totalGenerated}</h3>
+                <p className="text-sm font-medium text-amber-600">
+                  Draft / Generated
+                </p>
+                <h3 className="text-3xl font-bold text-amber-900 mt-1">
+                  {metrics.totalGenerated}
+                </h3>
               </div>
               <div className="p-3 bg-amber-500/10 rounded-xl">
                 <CheckCircle className="h-6 w-6 text-amber-600" />
@@ -251,7 +284,9 @@ export function CertificatesClientView({
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-sm font-medium text-red-600">Revoked</p>
-                <h3 className="text-3xl font-bold text-red-900 mt-1">{metrics.totalRevoked}</h3>
+                <h3 className="text-3xl font-bold text-red-900 mt-1">
+                  {metrics.totalRevoked}
+                </h3>
               </div>
               <div className="p-3 bg-red-500/10 rounded-xl">
                 <ShieldAlert className="h-6 w-6 text-red-600" />
@@ -264,8 +299,12 @@ export function CertificatesClientView({
           <CardContent className="pt-6">
             <div className="flex justify-between items-center">
               <div>
-                <p className="text-sm font-medium text-sky-600">Pending Reissues</p>
-                <h3 className="text-3xl font-bold text-sky-900 mt-1">{metrics.pendingReissues}</h3>
+                <p className="text-sm font-medium text-sky-600">
+                  Pending Reissues
+                </p>
+                <h3 className="text-3xl font-bold text-sky-900 mt-1">
+                  {metrics.pendingReissues}
+                </h3>
               </div>
               <div className="p-3 bg-sky-500/10 rounded-xl">
                 <RotateCcw className="h-6 w-6 text-sky-600" />
@@ -314,8 +353,13 @@ export function CertificatesClientView({
         <Card className="shadow-sm border border-gray-200/80">
           <CardHeader>
             <CardTitle>Certificate Registry</CardTitle>
-            <CardDescription>Search and manage generated, issued, or revoked certificates.</CardDescription>
-            <form onSubmit={handleSearchSubmit} className="flex gap-2 mt-4 max-w-md">
+            <CardDescription>
+              Search and manage generated, issued, or revoked certificates.
+            </CardDescription>
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex gap-2 mt-4 max-w-md"
+            >
               <Input
                 placeholder="Search certificate number, student name..."
                 value={search}
@@ -329,7 +373,9 @@ export function CertificatesClientView({
           </CardHeader>
           <CardContent>
             {certificates.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">No certificates found.</div>
+              <div className="text-center py-12 text-gray-400">
+                No certificates found.
+              </div>
             ) : (
               <Table>
                 <TableHeader>
@@ -345,33 +391,47 @@ export function CertificatesClientView({
                 </TableHeader>
                 <TableBody>
                   {certificates.map((cert) => (
-                    <TableRow key={cert.id} className="hover:bg-gray-50/50 transition-colors">
-                      <TableCell className="font-semibold text-gray-900">{cert.certificateNumber}</TableCell>
+                    <TableRow
+                      key={cert.id}
+                      className="hover:bg-gray-50/50 transition-colors"
+                    >
+                      <TableCell className="font-semibold text-gray-900">
+                        {cert.certificateNumber}
+                      </TableCell>
                       <TableCell>
                         <div className="font-medium text-gray-800">
-                          {cert.enrollment.studentProfile.person.firstName} {cert.enrollment.studentProfile.person.lastName}
+                          {cert.enrollment.studentProfile.person.firstName}{' '}
+                          {cert.enrollment.studentProfile.person.lastName}
                         </div>
-                        <div className="text-xs text-gray-400">{cert.enrollment.studentProfile.studentNumber}</div>
+                        <div className="text-xs text-gray-400">
+                          {cert.enrollment.studentProfile.studentNumber}
+                        </div>
                       </TableCell>
-                      <TableCell>{cert.enrollment.course.nameEnglish}</TableCell>
-                      <TableCell className="uppercase text-xs font-bold text-gray-500">{cert.language}</TableCell>
+                      <TableCell>
+                        {cert.enrollment.course.nameEnglish}
+                      </TableCell>
+                      <TableCell className="uppercase text-xs font-bold text-gray-500">
+                        {cert.language}
+                      </TableCell>
                       <TableCell>
                         <Badge
                           variant={
                             cert.certificateStatus === 'Issued'
                               ? 'success'
                               : cert.certificateStatus === 'Revoked'
-                              ? 'error'
-                              : cert.certificateStatus === 'Replaced'
-                              ? 'muted'
-                              : 'warning'
+                                ? 'error'
+                                : cert.certificateStatus === 'Replaced'
+                                  ? 'muted'
+                                  : 'warning'
                           }
                         >
                           {cert.certificateStatus}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-sm text-gray-500">
-                        {cert.issuedDate ? new Date(cert.issuedDate).toLocaleDateString() : '—'}
+                        {cert.issuedDate
+                          ? new Date(cert.issuedDate).toLocaleDateString()
+                          : '—'}
                       </TableCell>
                       <TableCell className="text-right space-x-2">
                         {cert.certificateStatus === 'Generated' && (
@@ -380,7 +440,9 @@ export function CertificatesClientView({
                             onClick={() => triggerIssue(cert.id, cert.version)}
                             disabled={loading !== null}
                           >
-                            {loading === `issue-${cert.id}` ? 'Issuing...' : 'Issue'}
+                            {loading === `issue-${cert.id}`
+                              ? 'Issuing...'
+                              : 'Issue'}
                           </Button>
                         )}
                         {cert.certificateStatus === 'Issued' && (
@@ -404,7 +466,11 @@ export function CertificatesClientView({
                             </Button>
                           </>
                         )}
-                        <a href={cert.certificateUrl} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={cert.certificateUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <Button size="sm" variant="outline">
                             <ExternalLink className="h-3.5 w-3.5" />
                           </Button>
@@ -424,11 +490,16 @@ export function CertificatesClientView({
         <Card className="shadow-sm border border-gray-200/80">
           <CardHeader>
             <CardTitle>Certificate Readiness Queue</CardTitle>
-            <CardDescription>Enrollments that have approved completions and are ready for certificate generation.</CardDescription>
+            <CardDescription>
+              Enrollments that have approved completions and are ready for
+              certificate generation.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {readinessQueue.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">All completions have active certificates.</div>
+              <div className="text-center py-12 text-gray-400">
+                All completions have active certificates.
+              </div>
             ) : (
               <Table>
                 <TableHeader>
@@ -443,22 +514,35 @@ export function CertificatesClientView({
                 </TableHeader>
                 <TableBody>
                   {readinessQueue.map((item) => (
-                    <TableRow key={item.enrollmentId} className="hover:bg-gray-50/50 transition-colors">
-                      <TableCell className="font-semibold text-gray-700">{item.enrollmentNumber}</TableCell>
+                    <TableRow
+                      key={item.enrollmentId}
+                      className="hover:bg-gray-50/50 transition-colors"
+                    >
+                      <TableCell className="font-semibold text-gray-700">
+                        {item.enrollmentNumber}
+                      </TableCell>
                       <TableCell>
-                        <div className="font-medium text-gray-800">{item.studentName}</div>
-                        <div className="text-xs text-gray-400">{item.studentNumber}</div>
+                        <div className="font-medium text-gray-800">
+                          {item.studentName}
+                        </div>
+                        <div className="text-xs text-gray-400">
+                          {item.studentNumber}
+                        </div>
                       </TableCell>
                       <TableCell>{item.courseName}</TableCell>
                       <TableCell>{item.branchName}</TableCell>
                       <TableCell>
                         {item.paymentValidationRequired ? (
-                          <Badge variant={item.paymentPassed ? 'success' : 'error'} className="flex items-center gap-1 w-fit">
+                          <Badge
+                            variant={item.paymentPassed ? 'success' : 'error'}
+                            className="flex items-center gap-1 w-fit"
+                          >
                             {item.paymentPassed ? (
                               'Validation Passed'
                             ) : (
                               <>
-                                <AlertTriangle className="h-3 w-3" /> Unpaid Dues
+                                <AlertTriangle className="h-3 w-3" /> Unpaid
+                                Dues
                               </>
                             )}
                           </Badge>
@@ -470,16 +554,22 @@ export function CertificatesClientView({
                         <Button
                           size="sm"
                           disabled={!item.paymentPassed || loading !== null}
-                          onClick={() => triggerGenerate(item.enrollmentId, 'en')}
+                          onClick={() =>
+                            triggerGenerate(item.enrollmentId, 'en')
+                          }
                           className="bg-indigo-600 hover:bg-indigo-700"
                         >
-                          {loading === `gen-${item.enrollmentId}` ? 'Generating...' : 'Generate (EN)'}
+                          {loading === `gen-${item.enrollmentId}`
+                            ? 'Generating...'
+                            : 'Generate (EN)'}
                         </Button>
                         <Button
                           size="sm"
                           variant="secondary"
                           disabled={!item.paymentPassed || loading !== null}
-                          onClick={() => triggerGenerate(item.enrollmentId, 'ar')}
+                          onClick={() =>
+                            triggerGenerate(item.enrollmentId, 'ar')
+                          }
                         >
                           Generate (AR)
                         </Button>
@@ -498,11 +588,16 @@ export function CertificatesClientView({
         <Card className="shadow-sm border border-gray-200/80">
           <CardHeader>
             <CardTitle>Reissue Approvals & Replacement</CardTitle>
-            <CardDescription>Review certificate reissue requests submitted by counselors and generate replacements.</CardDescription>
+            <CardDescription>
+              Review certificate reissue requests submitted by counselors and
+              generate replacements.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {reissueRequests.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">No reissue requests found.</div>
+              <div className="text-center py-12 text-gray-400">
+                No reissue requests found.
+              </div>
             ) : (
               <Table>
                 <TableHeader>
@@ -517,14 +612,29 @@ export function CertificatesClientView({
                 </TableHeader>
                 <TableBody>
                   {reissueRequests.map((req) => (
-                    <TableRow key={req.id} className="hover:bg-gray-50/50 transition-colors">
-                      <TableCell className="font-semibold text-gray-700">{req.certificate.certificateNumber}</TableCell>
+                    <TableRow
+                      key={req.id}
+                      className="hover:bg-gray-50/50 transition-colors"
+                    >
+                      <TableCell className="font-semibold text-gray-700">
+                        {req.certificate.certificateNumber}
+                      </TableCell>
                       <TableCell>
                         <div className="font-medium text-gray-800">
-                          {req.certificate.enrollment.studentProfile.person.firstName} {req.certificate.enrollment.studentProfile.person.lastName}
+                          {
+                            req.certificate.enrollment.studentProfile.person
+                              .firstName
+                          }{' '}
+                          {
+                            req.certificate.enrollment.studentProfile.person
+                              .lastName
+                          }
                         </div>
                       </TableCell>
-                      <TableCell className="max-w-xs truncate text-sm text-gray-600" title={req.reason}>
+                      <TableCell
+                        className="max-w-xs truncate text-sm text-gray-600"
+                        title={req.reason}
+                      >
                         {req.reason}
                       </TableCell>
                       <TableCell>
@@ -533,22 +643,26 @@ export function CertificatesClientView({
                             req.status === 'Completed'
                               ? 'success'
                               : req.status === 'Approved'
-                              ? 'info'
-                              : req.status === 'Rejected'
-                              ? 'error'
-                              : 'warning'
+                                ? 'info'
+                                : req.status === 'Rejected'
+                                  ? 'error'
+                                  : 'warning'
                           }
                         >
                           {req.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">{req.requestedByUser.username}</TableCell>
+                      <TableCell className="text-sm text-gray-500">
+                        {req.requestedByUser.username}
+                      </TableCell>
                       <TableCell className="text-right space-x-2">
                         {req.status === 'PendingReview' && (
                           <>
                             <Button
                               size="sm"
-                              onClick={() => reviewReissue(req.id, 'APPROVE', req.version)}
+                              onClick={() =>
+                                reviewReissue(req.id, 'APPROVE', req.version)
+                              }
                               disabled={loading !== null}
                               className="bg-emerald-600 hover:bg-emerald-700"
                             >
@@ -557,7 +671,9 @@ export function CertificatesClientView({
                             <Button
                               size="sm"
                               variant="destructive"
-                              onClick={() => reviewReissue(req.id, 'REJECT', req.version)}
+                              onClick={() =>
+                                reviewReissue(req.id, 'REJECT', req.version)
+                              }
                               disabled={loading !== null}
                             >
                               Reject
@@ -567,11 +683,15 @@ export function CertificatesClientView({
                         {req.status === 'Approved' && (
                           <Button
                             size="sm"
-                            onClick={() => generateReplacement(req.id, req.version)}
+                            onClick={() =>
+                              generateReplacement(req.id, req.version)
+                            }
                             disabled={loading !== null}
                             className="bg-indigo-600 hover:bg-indigo-700"
                           >
-                            {loading === `replace-${req.id}` ? 'Replacing...' : 'Generate Replacement'}
+                            {loading === `replace-${req.id}`
+                              ? 'Replacing...'
+                              : 'Generate Replacement'}
                           </Button>
                         )}
                       </TableCell>
@@ -589,9 +709,13 @@ export function CertificatesClientView({
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 animate-fade-in">
           <Card className="w-full max-w-md bg-white shadow-2xl p-6 relative rounded-2xl border border-gray-100">
             <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-              <RotateCcw className="h-5 w-5 text-indigo-600" /> Request Certificate Reissue
+              <RotateCcw className="h-5 w-5 text-indigo-600" /> Request
+              Certificate Reissue
             </h3>
-            <p className="text-sm text-gray-500 mt-1">Please specify a clear reason for requesting a reissue. This requires manager approval.</p>
+            <p className="text-sm text-gray-500 mt-1">
+              Please specify a clear reason for requesting a reissue. This
+              requires manager approval.
+            </p>
 
             <textarea
               className="w-full border border-gray-300 rounded-xl p-3 mt-4 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
@@ -602,9 +726,19 @@ export function CertificatesClientView({
             />
 
             <div className="flex justify-end gap-2 mt-6">
-              <Button variant="secondary" onClick={() => setReissueCertId(null)}>Cancel</Button>
-              <Button onClick={submitReissue} disabled={loading === 'submitting-reissue'}>
-                {loading === 'submitting-reissue' ? 'Submitting...' : 'Submit Request'}
+              <Button
+                variant="secondary"
+                onClick={() => setReissueCertId(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={submitReissue}
+                disabled={loading === 'submitting-reissue'}
+              >
+                {loading === 'submitting-reissue'
+                  ? 'Submitting...'
+                  : 'Submit Request'}
               </Button>
             </div>
           </Card>
@@ -618,7 +752,10 @@ export function CertificatesClientView({
             <h3 className="text-lg font-bold text-red-900 flex items-center gap-2">
               <ShieldAlert className="h-5 w-5 text-red-600" /> Revoke Credential
             </h3>
-            <p className="text-sm text-gray-500 mt-1">This operation is irreversible. The certificate status will be changed to Revoked and public verifiers will see a REVOKED alert.</p>
+            <p className="text-sm text-gray-500 mt-1">
+              This operation is irreversible. The certificate status will be
+              changed to Revoked and public verifiers will see a REVOKED alert.
+            </p>
 
             <textarea
               className="w-full border border-gray-300 rounded-xl p-3 mt-4 text-sm focus:ring-2 focus:ring-red-500 outline-none"
@@ -629,9 +766,17 @@ export function CertificatesClientView({
             />
 
             <div className="flex justify-end gap-2 mt-6">
-              <Button variant="secondary" onClick={() => setRevokeCertId(null)}>Cancel</Button>
-              <Button variant="destructive" onClick={submitRevoke} disabled={loading === 'submitting-revoke'}>
-                {loading === 'submitting-revoke' ? 'Revoking...' : 'Confirm Revocation'}
+              <Button variant="secondary" onClick={() => setRevokeCertId(null)}>
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={submitRevoke}
+                disabled={loading === 'submitting-revoke'}
+              >
+                {loading === 'submitting-revoke'
+                  ? 'Revoking...'
+                  : 'Confirm Revocation'}
               </Button>
             </div>
           </Card>

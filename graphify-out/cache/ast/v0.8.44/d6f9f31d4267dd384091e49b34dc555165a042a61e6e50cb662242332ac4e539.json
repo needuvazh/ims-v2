@@ -1,1 +1,191 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_enrollment_pricing_resolution_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L1"}, {"id": "enrollment_pricing_resolution_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L1"}, {"id": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution", "label": "Requirement: Enrollment Pricing Hierarchy Resolution", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L3"}, {"id": "enrollment_pricing_resolution_spec_scenario_resolve_batch_level_pricing_first", "label": "Scenario: Resolve batch-level pricing first", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L6"}, {"id": "enrollment_pricing_resolution_spec_scenario_fall_back_to_branch_level_pricing", "label": "Scenario: Fall back to branch-level pricing", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L10"}, {"id": "enrollment_pricing_resolution_spec_scenario_fall_back_to_global_pricing", "label": "Scenario: Fall back to global pricing", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L14"}, {"id": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization", "label": "Requirement: Enrollment Discount Authorization", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L20"}, {"id": "enrollment_pricing_resolution_spec_scenario_reject_manual_discount_above_branch_threshold_without_permission", "label": "Scenario: Reject manual discount above branch threshold without permission", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L23"}, {"id": "enrollment_pricing_resolution_spec_scenario_apply_valid_discount_and_snapshot_final_amount", "label": "Scenario: Apply valid discount and snapshot final amount", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L27"}, {"id": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility", "label": "Requirement: Enrollment Pricing Panel Visibility", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L33"}, {"id": "enrollment_pricing_resolution_spec_scenario_show_resolved_pricing_panel", "label": "Scenario: Show resolved pricing panel", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L36"}, {"id": "enrollment_pricing_resolution_spec_scenario_refresh_pricing_before_submission", "label": "Scenario: Refresh pricing before submission", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L40"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_enrollment_pricing_resolution_spec_md", "target": "enrollment_pricing_resolution_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_added_requirements", "target": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution", "target": "enrollment_pricing_resolution_spec_scenario_resolve_batch_level_pricing_first", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L6", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution", "target": "enrollment_pricing_resolution_spec_scenario_fall_back_to_branch_level_pricing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L10", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution", "target": "enrollment_pricing_resolution_spec_scenario_fall_back_to_global_pricing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L14", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_added_requirements", "target": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L20", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization", "target": "enrollment_pricing_resolution_spec_scenario_reject_manual_discount_above_branch_threshold_without_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L23", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization", "target": "enrollment_pricing_resolution_spec_scenario_apply_valid_discount_and_snapshot_final_amount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L27", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_added_requirements", "target": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L33", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility", "target": "enrollment_pricing_resolution_spec_scenario_show_resolved_pricing_panel", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L36", "weight": 1.0}, {"source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility", "target": "enrollment_pricing_resolution_spec_scenario_refresh_pricing_before_submission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md", "source_location": "L40", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_enrollment_pricing_resolution_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution",
+      "label": "Requirement: Enrollment Pricing Hierarchy Resolution",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_scenario_resolve_batch_level_pricing_first",
+      "label": "Scenario: Resolve batch-level pricing first",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_scenario_fall_back_to_branch_level_pricing",
+      "label": "Scenario: Fall back to branch-level pricing",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L10"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_scenario_fall_back_to_global_pricing",
+      "label": "Scenario: Fall back to global pricing",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization",
+      "label": "Requirement: Enrollment Discount Authorization",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_scenario_reject_manual_discount_above_branch_threshold_without_permission",
+      "label": "Scenario: Reject manual discount above branch threshold without permission",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_scenario_apply_valid_discount_and_snapshot_final_amount",
+      "label": "Scenario: Apply valid discount and snapshot final amount",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility",
+      "label": "Requirement: Enrollment Pricing Panel Visibility",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_scenario_show_resolved_pricing_panel",
+      "label": "Scenario: Show resolved pricing panel",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "enrollment_pricing_resolution_spec_scenario_refresh_pricing_before_submission",
+      "label": "Scenario: Refresh pricing before submission",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L40"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_enrollment_pricing_resolution_spec_md",
+      "target": "enrollment_pricing_resolution_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_added_requirements",
+      "target": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution",
+      "target": "enrollment_pricing_resolution_spec_scenario_resolve_batch_level_pricing_first",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution",
+      "target": "enrollment_pricing_resolution_spec_scenario_fall_back_to_branch_level_pricing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_hierarchy_resolution",
+      "target": "enrollment_pricing_resolution_spec_scenario_fall_back_to_global_pricing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_added_requirements",
+      "target": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization",
+      "target": "enrollment_pricing_resolution_spec_scenario_reject_manual_discount_above_branch_threshold_without_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_requirement_enrollment_discount_authorization",
+      "target": "enrollment_pricing_resolution_spec_scenario_apply_valid_discount_and_snapshot_final_amount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_added_requirements",
+      "target": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility",
+      "target": "enrollment_pricing_resolution_spec_scenario_show_resolved_pricing_panel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_pricing_resolution_spec_requirement_enrollment_pricing_panel_visibility",
+      "target": "enrollment_pricing_resolution_spec_scenario_refresh_pricing_before_submission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/enrollment-pricing-resolution/spec.md",
+      "source_location": "L40",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

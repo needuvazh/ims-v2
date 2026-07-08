@@ -1,4 +1,14 @@
-import { Breadcrumbs, PageHeader, Button, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@ims/shared-ui';
+import {
+  Breadcrumbs,
+  PageHeader,
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from '@ims/shared-ui';
 import { IamUserForm } from '../_components/user-form';
 import { loadUserProfile } from '../shared-data';
 import { assertPermission } from '../../../../../lib/auth-guard';
@@ -9,16 +19,19 @@ import { ChevronDown } from 'lucide-react';
 export const metadata = { title: 'View User - IAM | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function IamViewUserPage(props: { params: Promise<{ id: string }> }) {
+export default async function IamViewUserPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   await assertPermission('iam.user.read');
   const params = await props.params;
-  
-  const { roleService, organizationService } = await import('../../../../../lib/runtime');
-  
+
+  const { roleService, organizationService } =
+    await import('../../../../../lib/runtime');
+
   const [userProfile, rolesResult, branchResult] = await Promise.all([
     loadUserProfile(params.id),
     roleService.listRoles(),
-    organizationService.listBranches({ pageSize: 1000 })
+    organizationService.listBranches({ pageSize: 1000 }),
   ]);
 
   return (
@@ -39,7 +52,10 @@ export default async function IamViewUserPage(props: { params: Promise<{ id: str
         }
         actions={
           <div className="flex items-center gap-3">
-            <UserLifecycleDropdown userId={params.id} currentStatus={userProfile.status} />
+            <UserLifecycleDropdown
+              userId={params.id}
+              currentStatus={userProfile.status}
+            />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="secondary">
@@ -51,17 +67,26 @@ export default async function IamViewUserPage(props: { params: Promise<{ id: str
                 <DropdownMenuLabel>Activity & Logs</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href={`/iam/sessions?userId=${userProfile.id}`} className="w-full flex items-center">
+                  <Link
+                    href={`/iam/sessions?userId=${userProfile.id}`}
+                    className="w-full flex items-center"
+                  >
                     Active Sessions
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/iam/login-history?userId=${userProfile.id}`} className="w-full flex items-center">
+                  <Link
+                    href={`/iam/login-history?userId=${userProfile.id}`}
+                    className="w-full flex items-center"
+                  >
                     Login History
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/iam/audit`} className="w-full flex items-center">
+                  <Link
+                    href={`/iam/audit`}
+                    className="w-full flex items-center"
+                  >
                     Audit Trail
                   </Link>
                 </DropdownMenuItem>
@@ -79,11 +104,11 @@ export default async function IamViewUserPage(props: { params: Promise<{ id: str
           </div>
         }
       />
-      <IamUserForm 
-        mode="view" 
+      <IamUserForm
+        mode="view"
         initialData={userProfile}
-        roles={rolesResult} 
-        branches={branchResult.items} 
+        roles={rolesResult}
+        branches={branchResult.items}
       />
     </div>
   );

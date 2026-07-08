@@ -10,15 +10,29 @@ export interface IUserRepository {
   findByEmail(email: string, includeDeleted?: boolean): Promise<User | null>;
   findByUsername(username: string): Promise<User | null>;
   findPersonById(id: Uuid): Promise<Person | null>;
-  findPersonByMobile(mobile: string, includeDeleted?: boolean): Promise<Person | null>;
+  findPersonByMobile(
+    mobile: string,
+    includeDeleted?: boolean,
+  ): Promise<Person | null>;
   create(user: User, person: Person): Promise<User>;
   update(user: User, person?: Person): Promise<User>;
   archive(userId: Uuid, actorId?: Uuid): Promise<void>;
-  search(filters: UserListFilters, page: number, pageSize: number): Promise<{ items: User[]; total: number }>;
+  search(
+    filters: UserListFilters,
+    page: number,
+    pageSize: number,
+  ): Promise<{ items: User[]; total: number }>;
   getPasswordHash(userId: Uuid): Promise<string | null>;
   updatePassword(userId: Uuid, passwordHash: string): Promise<void>;
-  createResetToken(data: { id: Uuid; userId: Uuid; tokenHash: string; expiresAt: Date }): Promise<void>;
-  findResetTokenByHash(tokenHash: string): Promise<{ userId: Uuid; expiresAt: Date; usedAt: Date | null } | null>;
+  createResetToken(data: {
+    id: Uuid;
+    userId: Uuid;
+    tokenHash: string;
+    expiresAt: Date;
+  }): Promise<void>;
+  findResetTokenByHash(
+    tokenHash: string,
+  ): Promise<{ userId: Uuid; expiresAt: Date; usedAt: Date | null } | null>;
   markResetTokenAsUsed(tokenHash: string): Promise<void>;
 }
 
@@ -28,14 +42,45 @@ export interface IRoleRepository {
   create(role: Role): Promise<Role>;
   update(role: Role): Promise<Role>;
   archive(roleId: Uuid, actorId?: Uuid): Promise<void>;
-  search(page: number, pageSize: number): Promise<{ items: Role[]; total: number }>;
-  
+  search(
+    page: number,
+    pageSize: number,
+  ): Promise<{ items: Role[]; total: number }>;
+
   assignRoleToUser(userId: Uuid, roleId: Uuid, actorId: Uuid): Promise<void>;
-  revokeRoleFromUser(userId: Uuid, roleId: Uuid, actorId: Uuid, reason: string | null): Promise<void>;
-  listRolesForUser(userId: Uuid): Promise<{ role: Role; status: string; revokedAt: Date | null; revokedBy: string | null; reason: string | null }[]>;
-  listUsersForRole(roleId: Uuid): Promise<{ userId: Uuid; username: string; status: string; fullName: string | null }[]>;
-  
-  assignPermissionToRole(roleId: Uuid, permissionId: Uuid, actorId: Uuid): Promise<void>;
+  revokeRoleFromUser(
+    userId: Uuid,
+    roleId: Uuid,
+    actorId: Uuid,
+    reason: string | null,
+  ): Promise<void>;
+  listRolesForUser(
+    userId: Uuid,
+  ): Promise<
+    {
+      role: Role;
+      status: string;
+      revokedAt: Date | null;
+      revokedBy: string | null;
+      reason: string | null;
+    }[]
+  >;
+  listUsersForRole(
+    roleId: Uuid,
+  ): Promise<
+    {
+      userId: Uuid;
+      username: string;
+      status: string;
+      fullName: string | null;
+    }[]
+  >;
+
+  assignPermissionToRole(
+    roleId: Uuid,
+    permissionId: Uuid,
+    actorId: Uuid,
+  ): Promise<void>;
   removePermissionFromRole(roleId: Uuid, permissionId: Uuid): Promise<void>;
   listPermissionsForRole(roleId: Uuid): Promise<Permission[]>;
 }
@@ -54,7 +99,12 @@ export interface IUserBranchAccessRepository {
   findById(id: Uuid): Promise<UserBranchAccess | null>;
   assign(access: UserBranchAccess): Promise<UserBranchAccess>;
   update(access: UserBranchAccess): Promise<UserBranchAccess>;
-  remove(userId: Uuid, branchId: Uuid, actorId?: Uuid, reason?: string | null): Promise<void>;
+  remove(
+    userId: Uuid,
+    branchId: Uuid,
+    actorId?: Uuid,
+    reason?: string | null,
+  ): Promise<void>;
   setDefault(userId: Uuid, branchId: Uuid, actorId?: Uuid): Promise<void>;
   resolveChildBranchIds(branchId: Uuid): Promise<Uuid[]>;
 }
@@ -151,16 +201,20 @@ export interface AuditLogDto {
 
 export interface IAuditLogRepository {
   append(log: AuditLogDto): Promise<void>;
-  list(filters: {
-    entityType?: string;
-    entityId?: string;
-    action?: string;
-    performerId?: string;
-    startDate?: Date;
-    endDate?: Date;
-    branchId?: string;
-    module?: string;
-  }, page: number, pageSize: number): Promise<{ items: AuditLogDto[]; total: number }>;
+  list(
+    filters: {
+      entityType?: string;
+      entityId?: string;
+      action?: string;
+      performerId?: string;
+      startDate?: Date;
+      endDate?: Date;
+      branchId?: string;
+      module?: string;
+    },
+    page: number,
+    pageSize: number,
+  ): Promise<{ items: AuditLogDto[]; total: number }>;
   findById(id: Uuid): Promise<AuditLogDto | null>;
 }
 
@@ -225,7 +279,12 @@ export interface IExportJobRepository {
   update(job: ExportJobDto): Promise<ExportJobDto>;
   findById(id: Uuid): Promise<ExportJobDto | null>;
   listByUser(userId: Uuid): Promise<ExportJobDto[]>;
-  updateStatus(id: Uuid, status: ExportJobDto['status'], fileUrl?: string | null, errorMessage?: string | null): Promise<ExportJobDto>;
+  updateStatus(
+    id: Uuid,
+    status: ExportJobDto['status'],
+    fileUrl?: string | null,
+    errorMessage?: string | null,
+  ): Promise<ExportJobDto>;
 }
 
 export interface LoginHistoryDto {
@@ -245,6 +304,19 @@ export interface LoginHistoryDto {
 
 export interface ILoginHistoryRepository {
   append(record: LoginHistoryDto): Promise<void>;
-  findByUser(userId: Uuid, page: number, pageSize: number): Promise<{ items: LoginHistoryDto[]; total: number }>;
-  list(filters: { branchId?: string; status?: string; startDate?: Date; endDate?: Date }, page: number, pageSize: number): Promise<{ items: LoginHistoryDto[]; total: number }>;
+  findByUser(
+    userId: Uuid,
+    page: number,
+    pageSize: number,
+  ): Promise<{ items: LoginHistoryDto[]; total: number }>;
+  list(
+    filters: {
+      branchId?: string;
+      status?: string;
+      startDate?: Date;
+      endDate?: Date;
+    },
+    page: number,
+    pageSize: number,
+  ): Promise<{ items: LoginHistoryDto[]; total: number }>;
 }

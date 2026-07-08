@@ -32,9 +32,18 @@ export interface NumberingPort {
 }
 
 export interface AuditPort {
-  logAction(action: string, actorId: string, resourceId: string, details?: Record<string, any>): Promise<void>;
+  logAction(
+    action: string,
+    actorId: string,
+    resourceId: string,
+    details?: Record<string, any>,
+  ): Promise<void>;
 }
 
 export interface NotificationPort {
-  requestNotification(templateCode: string, recipientId: string, placeholders: Record<string, string>): Promise<void>;
+  requestNotification(
+    templateCode: string,
+    recipientId: string,
+    placeholders: Record<string, string>,
+  ): Promise<void>;
 }

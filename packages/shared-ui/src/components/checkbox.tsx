@@ -3,14 +3,20 @@
 import { forwardRef, type InputHTMLAttributes, useId } from 'react';
 import { cn } from '../utils/cn';
 
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface CheckboxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type'
+> {
   label?: string;
   description?: string;
   errorText?: string;
 }
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, label, description, errorText, id, disabled, ...props }, ref) => {
+  (
+    { className, label, description, errorText, id, disabled, ...props },
+    ref,
+  ) => {
     const generatedId = useId();
     const checkboxId = id ?? generatedId;
     const errorId = `${checkboxId}-error`;
@@ -47,13 +53,19 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                 </label>
               )}
               {description && (
-                <p className="text-xs text-[color:var(--ims-muted)]">{description}</p>
+                <p className="text-xs text-[color:var(--ims-muted)]">
+                  {description}
+                </p>
               )}
             </div>
           )}
         </div>
         {hasError && (
-          <p id={errorId} role="alert" className="text-xs text-[color:var(--ims-error)]">
+          <p
+            id={errorId}
+            role="alert"
+            className="text-xs text-[color:var(--ims-error)]"
+          >
             {errorText}
           </p>
         )}

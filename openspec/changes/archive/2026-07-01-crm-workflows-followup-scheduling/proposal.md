@@ -13,17 +13,19 @@ The current CRM foundations (introduced in Change 1: `crm-core-models-apis`) per
 ## Capabilities
 
 ### New Capabilities
+
 - `crm-followup-workflows`: Orchestrates the background jobs for auto-assigning leads and handles composite follow-up scheduling transactions.
 
 ### Modified Capabilities
+
 - `crm-core-models-apis`: Updates the `Lead` aggregate behavior to maintain `nextFollowUpDate` and enforces automated stage transitions when follow-ups are scheduled.
 
 ## Impact
 
-*   **Owning Context**: Lead, Enquiry & CRM Management
-*   **Affected Contexts**: 
-    *   *Identity & Access* (for fetching active counselor lists and workloads per branch).
-*   **Data Ownership**: `Lead`, `FollowUp`, `LeadStageHistory`.
-*   **Performance Impact**: Eliminates `JOIN`s on the `FollowUp` table for "Due Today" UI queries.
-*   **Concurrency Impact**: Mitigates race conditions by enforcing optimistic concurrency checking on `Lead.version` during composite follow-up mutations.
-*   **Event/Outbox Impact**: Introduces background worker subscription for `WebsiteInquirySubmitted` and automatically emits `LeadAssigned` and `LeadStageChanged` events.
+- **Owning Context**: Lead, Enquiry & CRM Management
+- **Affected Contexts**:
+  - _Identity & Access_ (for fetching active counselor lists and workloads per branch).
+- **Data Ownership**: `Lead`, `FollowUp`, `LeadStageHistory`.
+- **Performance Impact**: Eliminates `JOIN`s on the `FollowUp` table for "Due Today" UI queries.
+- **Concurrency Impact**: Mitigates race conditions by enforcing optimistic concurrency checking on `Lead.version` during composite follow-up mutations.
+- **Event/Outbox Impact**: Introduces background worker subscription for `WebsiteInquirySubmitted` and automatically emits `LeadAssigned` and `LeadStageChanged` events.

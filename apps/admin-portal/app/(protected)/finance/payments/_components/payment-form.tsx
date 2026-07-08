@@ -5,17 +5,33 @@ import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Input, Select, Button, FormField, FormLabel, FormControl, FormError, Alert } from '@ims/shared-ui';
+import {
+  Input,
+  Select,
+  Button,
+  FormField,
+  FormLabel,
+  FormControl,
+  FormError,
+  Alert,
+} from '@ims/shared-ui';
 import { toast } from 'sonner';
 import { recordPaymentAction } from '../../invoices/actions';
 
 const recordPaymentFormSchema = z.object({
   invoiceId: z.string().uuid('Please select an invoice'),
   amount: z.coerce.number().positive('Amount must be positive'),
-  paymentMethod: z.enum(['Cash', 'BankTransfer', 'Card', 'Online', 'Cheque', 'CorporateBilling']),
+  paymentMethod: z.enum([
+    'Cash',
+    'BankTransfer',
+    'Card',
+    'Online',
+    'Cheque',
+    'CorporateBilling',
+  ]),
   paymentDate: z.string().min(1, 'Payment date is required'),
   referenceNumber: z.string().optional().nullable(),
-  remarks: z.string().optional().nullable()
+  remarks: z.string().optional().nullable(),
 });
 
 type PaymentFormData = z.infer<typeof recordPaymentFormSchema>;
@@ -41,7 +57,7 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
     control,
     setValue,
     watch,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm<PaymentFormData>({
     resolver: zodResolver(recordPaymentFormSchema),
     defaultValues: {
@@ -50,8 +66,8 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
       paymentMethod: 'Cash',
       paymentDate: new Date().toISOString().split('T')[0],
       referenceNumber: '',
-      remarks: ''
-    }
+      remarks: '',
+    },
   });
 
   const watchInvoiceId = watch('invoiceId');
@@ -76,12 +92,14 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
       const payload = {
         ...data,
         branchId: selectedInvoice.branchId,
-        paymentDate: new Date(data.paymentDate)
+        paymentDate: new Date(data.paymentDate),
       };
 
       const res = await recordPaymentAction(payload);
       if (res.success) {
-        toast.success(`Payment recorded successfully: ${res.data?.paymentNumber || ''}`);
+        toast.success(
+          `Payment recorded successfully: ${res.data?.paymentNumber || ''}`,
+        );
         router.push('/finance/payments');
         router.refresh();
       } else {
@@ -94,7 +112,10 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto pb-12">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 max-w-2xl mx-auto pb-12"
+    >
       {errorState && (
         <Alert variant="error" title="Reconciliation Failed">
           {errorState}
@@ -102,7 +123,9 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
       )}
 
       <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <h4 className="font-bold text-slate-800 text-sm border-b pb-2">Receipt Details</h4>
+        <h4 className="font-bold text-slate-800 text-sm border-b pb-2">
+          Receipt Details
+        </h4>
 
         <FormField>
           <FormLabel>Select Unpaid / Active Invoice</FormLabel>
@@ -120,32 +143,50 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
                   }}
                   options={invoices.map((inv) => ({
                     value: inv.id,
-                    label: `${inv.invoiceNumber} - ${inv.payerName} (Total: ${inv.totalAmount.toFixed(3)} OMR, Due: ${inv.outstandingAmount.toFixed(3)} OMR)`
+                    label: `${inv.invoiceNumber} - ${inv.payerName} (Total: ${inv.totalAmount.toFixed(3)} OMR, Due: ${inv.outstandingAmount.toFixed(3)} OMR)`,
                   }))}
                 />
               )}
             />
           </FormControl>
-          {errors.invoiceId && <FormError>{errors.invoiceId.message}</FormError>}
+          {errors.invoiceId && (
+            <FormError>{errors.invoiceId.message}</FormError>
+          )}
         </FormField>
 
         {selectedInvoice && (
           <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg text-xs border border-slate-200">
             <div>
-              <span className="text-slate-400 block font-medium">Customer Payer</span>
-              <span className="font-semibold text-slate-700">{selectedInvoice.payerName}</span>
+              <span className="text-slate-400 block font-medium">
+                Customer Payer
+              </span>
+              <span className="font-semibold text-slate-700">
+                {selectedInvoice.payerName}
+              </span>
             </div>
             <div>
-              <span className="text-slate-400 block font-medium">Invoice Number</span>
-              <span className="font-mono font-semibold text-slate-700">{selectedInvoice.invoiceNumber}</span>
+              <span className="text-slate-400 block font-medium">
+                Invoice Number
+              </span>
+              <span className="font-mono font-semibold text-slate-700">
+                {selectedInvoice.invoiceNumber}
+              </span>
             </div>
             <div>
-              <span className="text-slate-400 block font-medium">Invoice Total</span>
-              <span className="font-mono font-semibold text-slate-700">{selectedInvoice.totalAmount.toFixed(3)} OMR</span>
+              <span className="text-slate-400 block font-medium">
+                Invoice Total
+              </span>
+              <span className="font-mono font-semibold text-slate-700">
+                {selectedInvoice.totalAmount.toFixed(3)} OMR
+              </span>
             </div>
             <div>
-              <span className="text-slate-400 block font-medium">Remaining Outstanding Balance</span>
-              <span className="font-mono font-bold text-emerald-600">{selectedInvoice.outstandingAmount.toFixed(3)} OMR</span>
+              <span className="text-slate-400 block font-medium">
+                Remaining Outstanding Balance
+              </span>
+              <span className="font-mono font-bold text-emerald-600">
+                {selectedInvoice.outstandingAmount.toFixed(3)} OMR
+              </span>
             </div>
           </div>
         )}
@@ -167,13 +208,18 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
                       { value: 'Card', label: 'Card Swipe / POS' },
                       { value: 'Online', label: 'Online Payment Gateway' },
                       { value: 'Cheque', label: 'Cheque Payment' },
-                      { value: 'CorporateBilling', label: 'Corporate B2B Billing' }
+                      {
+                        value: 'CorporateBilling',
+                        label: 'Corporate B2B Billing',
+                      },
                     ]}
                   />
                 )}
               />
             </FormControl>
-            {errors.paymentMethod && <FormError>{errors.paymentMethod.message}</FormError>}
+            {errors.paymentMethod && (
+              <FormError>{errors.paymentMethod.message}</FormError>
+            )}
           </FormField>
 
           <FormField>
@@ -201,7 +247,9 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
                 className="w-full"
               />
             </FormControl>
-            {errors.paymentDate && <FormError>{errors.paymentDate.message}</FormError>}
+            {errors.paymentDate && (
+              <FormError>{errors.paymentDate.message}</FormError>
+            )}
           </FormField>
 
           <FormField>
@@ -213,7 +261,9 @@ export function PaymentForm({ invoices }: PaymentFormProps) {
                 className="w-full"
               />
             </FormControl>
-            {errors.referenceNumber && <FormError>{errors.referenceNumber.message}</FormError>}
+            {errors.referenceNumber && (
+              <FormError>{errors.referenceNumber.message}</FormError>
+            )}
           </FormField>
         </div>
 

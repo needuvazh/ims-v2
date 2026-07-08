@@ -29,11 +29,21 @@ export default async function BranchesPage(props: {
           city: branch.city,
           country: branch.country,
           status: branch.status,
-          effectiveStartDate: branch.effectiveStartDate ? new Date(branch.effectiveStartDate).toISOString() : null,
-          effectiveEndDate: branch.effectiveEndDate ? new Date(branch.effectiveEndDate).toISOString() : null,
+          effectiveStartDate: branch.effectiveStartDate
+            ? new Date(branch.effectiveStartDate).toISOString()
+            : null,
+          effectiveEndDate: branch.effectiveEndDate
+            ? new Date(branch.effectiveEndDate).toISOString()
+            : null,
         }))}
-        users={data.users.map((user) => ({ id: user.id, fullName: user.fullName }))}
-        institutes={data.institutes.map((institute) => ({ id: institute.id, name: institute.instituteName }))}
+        users={data.users.map((user) => ({
+          id: user.id,
+          fullName: user.fullName,
+        }))}
+        institutes={data.institutes.map((institute) => ({
+          id: institute.id,
+          name: institute.instituteName,
+        }))}
         initialSearch={searchParams.q || ''}
         initialStatus={searchParams.status || ''}
         initialSortBy={searchParams.sortBy || 'branchName'}

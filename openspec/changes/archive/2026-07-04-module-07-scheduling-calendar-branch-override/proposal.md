@@ -14,9 +14,11 @@ ASTI needs one canonical business calendar for the institute, but some branches 
 ## Capabilities
 
 ### New Capabilities
+
 - `business-calendar`: Institute calendar management with branch/year override rules, lifecycle, and scheduling resolution behavior.
 
 ### Modified Capabilities
+
 - None.
 
 ## Impact

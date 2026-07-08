@@ -1,5 +1,7 @@
 # ASTI IMS: Functional Requirement Document
+
 ## Module 03: Lead & Inquiry Management
+
 ### Part 7 – Validation Rules, Error Catalog, Notifications
 
 ---
@@ -9,28 +11,32 @@
 This section specifies the validation schemas and rules evaluated at the API boundaries and application domain layer.
 
 ### 1.1 Phone Number Syntax Validation (Zod & Regex)
+
 To accommodate both domestic and international callers, phone numbers must conform to Omani mobile numbering standards or standard E.164 international numbering schemas.
 
-* **Regular Expression (Omani Mobile)**: `^(?:\+968)?[79]\d{7}$`
-  * Matches optional country code (+968) followed by active GSM prefixes (7 or 9) and exactly 7 digits.
-* **Regular Expression (International)**: `^\+[1-9]\d{1,14}$`
-  * Matches E.164 international numbering specifications.
-* **Pre-processing & Normalization Logic**:
-  * Strips spaces, hyphens, and parentheses.
-  * Replaces double zero `00` prefix with `+`.
-  * If a number has 11 digits and starts with `9687` or `9689`, the system automatically prepends `+` to normalize it to the Omani country code format (`+968...`).
-  * If a number is not Omani but matches E.164 prefix, it is normalized to start with `+`.
+- **Regular Expression (Omani Mobile)**: `^(?:\+968)?[79]\d{7}$`
+  - Matches optional country code (+968) followed by active GSM prefixes (7 or 9) and exactly 7 digits.
+- **Regular Expression (International)**: `^\+[1-9]\d{1,14}$`
+  - Matches E.164 international numbering specifications.
+- **Pre-processing & Normalization Logic**:
+  - Strips spaces, hyphens, and parentheses.
+  - Replaces double zero `00` prefix with `+`.
+  - If a number has 11 digits and starts with `9687` or `9689`, the system automatically prepends `+` to normalize it to the Omani country code format (`+968...`).
+  - If a number is not Omani but matches E.164 prefix, it is normalized to start with `+`.
 
 ### 1.2 Follow-up Schedule Validation (BR-LEAD-009)
-* **Rule**: All scheduled date and times for client interactions must occur in the future.
-* **Invariant Constraint**: `scheduled_date >= current_time + 5 minutes`.
-* **Execution Boundary**: 
-  * Enforced during scheduling mutations on `followUpDate` (Schedule Follow-up: `/api/v1/crm/leads/{id}/follow-ups`).
-  * Enforced during outcome logging on `nextFollowUpDate` (Log Outcome: `/api/v1/crm/leads/follow-ups/{id}`) whenever the `scheduleNext` flag is set to `true`.
-  * Prevents counselors from logging retroactive entries or scheduling near-instant timeouts.
+
+- **Rule**: All scheduled date and times for client interactions must occur in the future.
+- **Invariant Constraint**: `scheduled_date >= current_time + 5 minutes`.
+- **Execution Boundary**:
+  - Enforced during scheduling mutations on `followUpDate` (Schedule Follow-up: `/api/v1/crm/leads/{id}/follow-ups`).
+  - Enforced during outcome logging on `nextFollowUpDate` (Log Outcome: `/api/v1/crm/leads/follow-ups/{id}`) whenever the `scheduleNext` flag is set to `true`.
+  - Prevents counselors from logging retroactive entries or scheduling near-instant timeouts.
 
 ### 1.3 Lead Conversion Won Invariants
+
 Before a lead can transition from `Qualified` or `Negotiation` to `Won`, the following conditions must be met:
+
 1. `email` field is not null and matches RFC 5322 format.
 2. `phone` is valid and contains no warning flags.
 3. `interestedCourseId` refers to an active course.
@@ -38,20 +44,23 @@ Before a lead can transition from `Qualified` or `Negotiation` to `Won`, the fol
 5. The associated `Person` record must contain a valid birthdate (`dateOfBirth` is not null).
 
 ### 1.4 Data Masking Policy
+
 To comply with data privacy and security requirements, Personal Identifiable Information (PII) must be masked by default when returning data to clients.
-* **Fields Affected**: `email`, `phone` (and `mobile`), and `nationalId`.
-* **Masking Format**: 
-  * Email: `"s******i@gmail.com"` (show first and last character of local part).
-  * Phone/Mobile: `"+968 91***567"` (mask middle digits).
-  * National ID: `"12******89"` (mask middle digits).
-* **Application Boundary**: This masking applies to **both** listing API responses (`GET /api/v1/crm/leads`, `GET /api/v1/crm/inquiries`) and detailed workspace responses (`GET /api/v1/crm/leads/{id}`).
-* **Reveal Mechanism**: Unmasking PII requires explicit UI invocation of the `/api/v1/crm/leads/{id}/reveal-pii` endpoint, which evaluates the strict `lead.reveal_pii` permission and logs the access reason in the audit trail.
+
+- **Fields Affected**: `email`, `phone` (and `mobile`), and `nationalId`.
+- **Masking Format**:
+  - Email: `"s******i@gmail.com"` (show first and last character of local part).
+  - Phone/Mobile: `"+968 91***567"` (mask middle digits).
+  - National ID: `"12******89"` (mask middle digits).
+- **Application Boundary**: This masking applies to **both** listing API responses (`GET /api/v1/crm/leads`, `GET /api/v1/crm/inquiries`) and detailed workspace responses (`GET /api/v1/crm/leads/{id}`).
+- **Reveal Mechanism**: Unmasking PII requires explicit UI invocation of the `/api/v1/crm/leads/{id}/reveal-pii` endpoint, which evaluates the strict `lead.reveal_pii` permission and logs the access reason in the audit trail.
 
 ---
 
 ## 2. Structured Error Code Catalog
 
 Custom errors generated by the Lead CRM context use a structured JSON block:
+
 ```json
 {
   "success": false,
@@ -67,20 +76,20 @@ Custom errors generated by the Lead CRM context use a structured JSON block:
 
 ### 2.1 Error Matrix
 
-| Error Code | HTTP Status | Message (English) | Message (Arabic) |
-| :--- | :---: | :--- | :--- |
-| `ERR_CRM_DUPLICATE_LEAD_DETECTED` | 422 | A lead with this mobile number or email already exists. | يوجد بالفعل ملف مهتم بهذا الرقم أو البريد الإلكتروني. |
-| `ERR_CRM_BRANCH_SCOPE_VIOLATION` | 403 | You are not authorized to access lead data in this branch. | غير مصرح لك بالوصول إلى بيانات المهتمين في هذا الفرع. |
-| `ERR_CRM_WON_PRECONDITIONS_MISSED` | 422 | Cannot mark lead Won. Missing mandatory contact details or documents. | لا يمكن تحويل المهتم لرابح. البيانات أو الوثائق ناقصة. |
-| `ERR_CRM_INVALID_STAGE_TRANSITION` | 422 | Forbidden stage transition. Pipeline rules violated. | تغيير غير مسموح به في مرحلة المتابعة. |
-| `ERR_CRM_PAST_FOLLOWUP_DATE` | 422 | Follow-up scheduled time must be set in the future. | تاريخ المتابعة المجدولة يجب أن يكون في المستقبل. |
-| `ERR_CRM_INQUIRY_NOT_FOUND` | 404 | Inquiry record not found. | لم يتم العثور على سجل الاستفسار. |
-| `ERR_CRM_LEAD_NOT_FOUND` | 404 | Lead record not found. | لم يتم العثور على سجل المهتم. |
-| `ERR_CRM_COUNSELOR_INACTIVE` | 422 | Assigned counselor is inactive or unauthorized for this branch. | الموظف المسؤول غير نشط أو غير مصرح له بالعمل في هذا الفرع. |
-| `ERR_CRM_SOURCE_INACTIVE` | 422 | Selected lead source is inactive or out of effective dates. | مصدر المهتم المختار غير نشط أو غير صالح حالياً. |
-| `ERR_CRM_LOST_REASON_REQUIRED` | 422 | Lost reason code and notes are mandatory. | كود وسبب الإغلاق كخاسر مطلوبين. |
-| `ERR_CRM_CONCURRENCY_VIOLATION` | 409 | The record has been updated by another counselor. Please refresh. | تم تحديث السجل بواسطة مستخدم آخر. يرجى التحديث. |
-| `ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION` | 403 | You are not authorized to access this lead as it is assigned to another counselor. | غير مصرح لك بالوصول لهذا المهتم لأنه مخصص لمستشار آخر. |
+| Error Code                              | HTTP Status | Message (English)                                                                  | Message (Arabic)                                           |
+| :-------------------------------------- | :---------: | :--------------------------------------------------------------------------------- | :--------------------------------------------------------- |
+| `ERR_CRM_DUPLICATE_LEAD_DETECTED`       |     422     | A lead with this mobile number or email already exists.                            | يوجد بالفعل ملف مهتم بهذا الرقم أو البريد الإلكتروني.      |
+| `ERR_CRM_BRANCH_SCOPE_VIOLATION`        |     403     | You are not authorized to access lead data in this branch.                         | غير مصرح لك بالوصول إلى بيانات المهتمين في هذا الفرع.      |
+| `ERR_CRM_WON_PRECONDITIONS_MISSED`      |     422     | Cannot mark lead Won. Missing mandatory contact details or documents.              | لا يمكن تحويل المهتم لرابح. البيانات أو الوثائق ناقصة.     |
+| `ERR_CRM_INVALID_STAGE_TRANSITION`      |     422     | Forbidden stage transition. Pipeline rules violated.                               | تغيير غير مسموح به في مرحلة المتابعة.                      |
+| `ERR_CRM_PAST_FOLLOWUP_DATE`            |     422     | Follow-up scheduled time must be set in the future.                                | تاريخ المتابعة المجدولة يجب أن يكون في المستقبل.           |
+| `ERR_CRM_INQUIRY_NOT_FOUND`             |     404     | Inquiry record not found.                                                          | لم يتم العثور على سجل الاستفسار.                           |
+| `ERR_CRM_LEAD_NOT_FOUND`                |     404     | Lead record not found.                                                             | لم يتم العثور على سجل المهتم.                              |
+| `ERR_CRM_COUNSELOR_INACTIVE`            |     422     | Assigned counselor is inactive or unauthorized for this branch.                    | الموظف المسؤول غير نشط أو غير مصرح له بالعمل في هذا الفرع. |
+| `ERR_CRM_SOURCE_INACTIVE`               |     422     | Selected lead source is inactive or out of effective dates.                        | مصدر المهتم المختار غير نشط أو غير صالح حالياً.            |
+| `ERR_CRM_LOST_REASON_REQUIRED`          |     422     | Lost reason code and notes are mandatory.                                          | كود وسبب الإغلاق كخاسر مطلوبين.                            |
+| `ERR_CRM_CONCURRENCY_VIOLATION`         |     409     | The record has been updated by another counselor. Please refresh.                  | تم تحديث السجل بواسطة مستخدم آخر. يرجى التحديث.            |
+| `ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION` |     403     | You are not authorized to access this lead as it is assigned to another counselor. | غير مصرح لك بالوصول لهذا المهتم لأنه مخصص لمستشار آخر.     |
 
 ---
 
@@ -89,41 +98,45 @@ Custom errors generated by the Lead CRM context use a structured JSON block:
 Domain events in this context trigger asynchronous messaging tasks through the notifications engine.
 
 ### 3.1 Event: `WebsiteInquirySubmitted`
-* **Trigger**: Web form submitted successfully.
-* **Recipient**: Prospect (Email & SMS) and Branch counselor on duty (WhatsApp alert).
-* **Channel: Email (Prospect)**:
-  * **Template ID**: `crm_web_inquiry_prospect_en` / `crm_web_inquiry_prospect_ar`
-  * **Subject**: "We received your inquiry - ASTI" / "تلقينا استفسارك - معهد آل سعود"
-  * **Variables**: `{{firstName}}`, `{{courseName}}`
-* **Channel: SMS (Prospect)**:
-  * **Template ID**: `crm_web_inquiry_prospect_sms`
-  * **Body**: "Dear {{firstName}}, thank you for contacting ASTI. A counselor will reach you shortly regarding {{courseName}}."
-* **Channel: WhatsApp (Counselor)**:
-  * **Template ID**: `crm_web_inquiry_counselor_wa`
-  * **Body**: "New Web Inquiry: {{firstName}} {{lastName}} is interested in {{courseName}}. Please call {{phone}}."
+
+- **Trigger**: Web form submitted successfully.
+- **Recipient**: Prospect (Email & SMS) and Branch counselor on duty (WhatsApp alert).
+- **Channel: Email (Prospect)**:
+  - **Template ID**: `crm_web_inquiry_prospect_en` / `crm_web_inquiry_prospect_ar`
+  - **Subject**: "We received your inquiry - ASTI" / "تلقينا استفسارك - معهد آل سعود"
+  - **Variables**: `{{firstName}}`, `{{courseName}}`
+- **Channel: SMS (Prospect)**:
+  - **Template ID**: `crm_web_inquiry_prospect_sms`
+  - **Body**: "Dear {{firstName}}, thank you for contacting ASTI. A counselor will reach you shortly regarding {{courseName}}."
+- **Channel: WhatsApp (Counselor)**:
+  - **Template ID**: `crm_web_inquiry_counselor_wa`
+  - **Body**: "New Web Inquiry: {{firstName}} {{lastName}} is interested in {{courseName}}. Please call {{phone}}."
 
 ### 3.2 Event: `LeadAssigned`
-* **Trigger**: Lead reassigned to a new counselor.
-* **Recipient**: Counselor (Push Notification & Email).
-* **Channel: Email**:
-  * **Template ID**: `crm_lead_assigned_counselor`
-  * **Subject**: "New Lead Assigned: {{leadNumber}}"
-  * **Variables**: `{{counselorName}}`, `{{leadNumber}}`, `{{prospectName}}`, `{{courseName}}`
+
+- **Trigger**: Lead reassigned to a new counselor.
+- **Recipient**: Counselor (Push Notification & Email).
+- **Channel: Email**:
+  - **Template ID**: `crm_lead_assigned_counselor`
+  - **Subject**: "New Lead Assigned: {{leadNumber}}"
+  - **Variables**: `{{counselorName}}`, `{{leadNumber}}`, `{{prospectName}}`, `{{courseName}}`
 
 ### 3.3 Event: `FollowUpOverdue`
-* **Trigger**: Scheduled follow-up remains open 60 minutes past its scheduled timestamp.
-* **Recipient**: Counselor and Branch Admin (Push Notification).
-* **Channel: Push / In-App Notification**:
-  * **Template ID**: `crm_followup_overdue_alert`
-  * **Body**: "Overdue Alert: Scheduled follow-up for {{prospectName}} ({{leadNumber}}) was due at {{scheduledTime}}."
+
+- **Trigger**: Scheduled follow-up remains open 60 minutes past its scheduled timestamp.
+- **Recipient**: Counselor and Branch Admin (Push Notification).
+- **Channel: Push / In-App Notification**:
+  - **Template ID**: `crm_followup_overdue_alert`
+  - **Body**: "Overdue Alert: Scheduled follow-up for {{prospectName}} ({{leadNumber}}) was due at {{scheduledTime}}."
 
 ### 3.4 Event: `LeadConvertedToAdmission`
-* **Trigger**: Handoff complete, student profile created in database.
-* **Recipient**: Student (Email & SMS) and Counselor (In-app update).
-* **Channel: Email (Student)**:
-  * **Template ID**: `crm_lead_converted_student_welcome`
-  * **Subject**: "Welcome to ASTI! Your Student Account is Ready"
-  * **Variables**: `{{firstName}}`, `{{studentNumber}}`, `{{courseName}}`, `{{loginPortalLink}}`
-* **Channel: SMS (Student)**:
-  * **Template ID**: `crm_lead_converted_student_sms`
-  * **Body**: "Welcome {{firstName}}! Your ASTI Student Number is {{studentNumber}}. Log in to your portal here: {{loginPortalLink}}."
+
+- **Trigger**: Handoff complete, student profile created in database.
+- **Recipient**: Student (Email & SMS) and Counselor (In-app update).
+- **Channel: Email (Student)**:
+  - **Template ID**: `crm_lead_converted_student_welcome`
+  - **Subject**: "Welcome to ASTI! Your Student Account is Ready"
+  - **Variables**: `{{firstName}}`, `{{studentNumber}}`, `{{courseName}}`, `{{loginPortalLink}}`
+- **Channel: SMS (Student)**:
+  - **Template ID**: `crm_lead_converted_student_sms`
+  - **Body**: "Welcome {{firstName}}! Your ASTI Student Number is {{studentNumber}}. Log in to your portal here: {{loginPortalLink}}."

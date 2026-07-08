@@ -5,7 +5,7 @@
 - [x] 1.3 Add relation mappings for `issuedCertificates`, `reissueRequestsRequested`, and `reissueRequestsApproved` to the `User` model in `schema.prisma`.
 - [x] 1.4 Generate the Prisma migration via `pnpm --filter database prisma migrate dev --name add_certificate_models --create-only`.
 - [x] 1.5 Add a custom SQL statement in the generated migration file to create the partial unique index:
-  `CREATE UNIQUE INDEX certificates_active_enrollment_idx ON certificates (enrollment_id) WHERE certificate_status IN ('Generated', 'Issued');`.
+      `CREATE UNIQUE INDEX certificates_active_enrollment_idx ON certificates (enrollment_id) WHERE certificate_status IN ('Generated', 'Issued');`.
 - [x] 1.6 Run the migration via `pnpm --filter database prisma migrate dev` and verify that client generation succeeds.
 
 ## 2. Scaffolding Domain Package

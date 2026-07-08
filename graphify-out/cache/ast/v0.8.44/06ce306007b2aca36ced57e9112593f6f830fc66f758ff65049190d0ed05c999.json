@@ -1,1 +1,559 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_md", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "label": "1. Introduction", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "label": "2. Detailed Functional Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L20"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_001_create_exam", "label": "FR-EXC-001 \u2014 Create Exam", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L22"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_002_manage_exam_lifecycle", "label": "FR-EXC-002 \u2014 Manage Exam Lifecycle", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L55"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_003_search_and_view_exams", "label": "FR-EXC-003 \u2014 Search and View Exams", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L86"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_004_load_eligible_exam_roster", "label": "FR-EXC-004 \u2014 Load Eligible Exam Roster", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L106"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_005_record_individual_result", "label": "FR-EXC-005 \u2014 Record Individual Result", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L128"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_006_bulk_record_results", "label": "FR-EXC-006 \u2014 Bulk Record Results", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L156"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_007_finalize_results", "label": "FR-EXC-007 \u2014 Finalize Results", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L182"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_008_correct_finalized_result", "label": "FR-EXC-008 \u2014 Correct Finalized Result", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L198"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_009_monitor_missing_results", "label": "FR-EXC-009 \u2014 Monitor Missing Results", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L222"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_010_evaluate_completion_eligibility", "label": "FR-EXC-010 \u2014 Evaluate Completion Eligibility", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L238"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_011_maintain_one_course_completion_per_enrollment", "label": "FR-EXC-011 \u2014 Maintain One Course Completion per Enrollment", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L270"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_012_trainer_recommendation", "label": "FR-EXC-012 \u2014 Trainer Recommendation", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L286"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_013_academic_coordinator_review", "label": "FR-EXC-013 \u2014 Academic Coordinator Review", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L308"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_014_branch_manager_final_approval", "label": "FR-EXC-014 \u2014 Branch Manager Final Approval", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L324"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_015_re_evaluate_completion_after_evidence_change", "label": "FR-EXC-015 \u2014 Re-evaluate Completion After Evidence Change", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L340"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_016_expose_certificate_eligibility_outcome", "label": "FR-EXC-016 \u2014 Expose Certificate Eligibility Outcome", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L356"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_017_synchronize_completion_outcome_with_enrollment_boundary", "label": "FR-EXC-017 \u2014 Synchronize Completion Outcome with Enrollment Boundary", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L372"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_018_enforce_branch_isolation", "label": "FR-EXC-018 \u2014 Enforce Branch Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L388"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_019_enforce_permission_based_authorization", "label": "FR-EXC-019 \u2014 Enforce Permission-Based Authorization", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L404"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_020_pending_work_queues", "label": "FR-EXC-020 \u2014 Pending Work Queues", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L420"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_021_export_academic_outcome_data", "label": "FR-EXC-021 \u2014 Export Academic Outcome Data", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L436"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_022_audit_sensitive_actions", "label": "FR-EXC-022 \u2014 Audit Sensitive Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L452"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_023_soft_delete_and_concurrency_protection", "label": "FR-EXC-023 \u2014 Soft Delete and Concurrency Protection", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L468"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_024_bilingual_presentation", "label": "FR-EXC-024 \u2014 Bilingual Presentation", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L484"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_3_comprehensive_business_rules", "label": "3. Comprehensive Business Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L498"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_4_cross_module_dependencies_mapping", "label": "4. Cross-Module Dependencies Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L553"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison", "label": "5. DDD and ER Model Alignment Comparison", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L570"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_1_directly_aligned_requirements", "label": "5.1 Directly Aligned Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L572"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_2_partial_alignment_and_gaps", "label": "5.2 Partial Alignment and Gaps", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L585"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_3_rule_to_model_traceability_notes", "label": "5.3 Rule-to-Model Traceability Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L599"}, {"id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_6_implementation_readiness_notes_for_subsequent_frd_parts", "label": "6. Implementation Readiness Notes for Subsequent FRD Parts", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L610"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_md", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L1", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_1_introduction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L3", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L20", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_001_create_exam", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L22", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_002_manage_exam_lifecycle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L55", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_003_search_and_view_exams", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L86", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_004_load_eligible_exam_roster", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L106", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_005_record_individual_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L128", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_006_bulk_record_results", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L156", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_007_finalize_results", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L182", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_008_correct_finalized_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L198", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_009_monitor_missing_results", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L222", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_010_evaluate_completion_eligibility", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L238", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_011_maintain_one_course_completion_per_enrollment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L270", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_012_trainer_recommendation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L286", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_013_academic_coordinator_review", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L308", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_014_branch_manager_final_approval", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L324", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_015_re_evaluate_completion_after_evidence_change", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L340", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_016_expose_certificate_eligibility_outcome", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L356", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_017_synchronize_completion_outcome_with_enrollment_boundary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L372", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_018_enforce_branch_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L388", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_019_enforce_permission_based_authorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L404", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_020_pending_work_queues", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L420", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_021_export_academic_outcome_data", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L436", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_022_audit_sensitive_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L452", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_023_soft_delete_and_concurrency_protection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L468", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_024_bilingual_presentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L484", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_3_comprehensive_business_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L498", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_4_cross_module_dependencies_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L553", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L570", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_1_directly_aligned_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L572", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_2_partial_alignment_and_gaps", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L585", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_3_rule_to_model_traceability_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L599", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules", "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_6_implementation_readiness_notes_for_subsequent_frd_parts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md", "source_location": "L610", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "label": "Part 1 \u2013 Business Overview, Functional Requirements, Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "label": "1. Introduction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "label": "2. Detailed Functional Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_001_create_exam",
+      "label": "FR-EXC-001 \u2014 Create Exam",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_002_manage_exam_lifecycle",
+      "label": "FR-EXC-002 \u2014 Manage Exam Lifecycle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_003_search_and_view_exams",
+      "label": "FR-EXC-003 \u2014 Search and View Exams",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L86"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_004_load_eligible_exam_roster",
+      "label": "FR-EXC-004 \u2014 Load Eligible Exam Roster",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L106"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_005_record_individual_result",
+      "label": "FR-EXC-005 \u2014 Record Individual Result",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L128"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_006_bulk_record_results",
+      "label": "FR-EXC-006 \u2014 Bulk Record Results",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_007_finalize_results",
+      "label": "FR-EXC-007 \u2014 Finalize Results",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L182"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_008_correct_finalized_result",
+      "label": "FR-EXC-008 \u2014 Correct Finalized Result",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L198"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_009_monitor_missing_results",
+      "label": "FR-EXC-009 \u2014 Monitor Missing Results",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L222"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_010_evaluate_completion_eligibility",
+      "label": "FR-EXC-010 \u2014 Evaluate Completion Eligibility",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L238"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_011_maintain_one_course_completion_per_enrollment",
+      "label": "FR-EXC-011 \u2014 Maintain One Course Completion per Enrollment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L270"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_012_trainer_recommendation",
+      "label": "FR-EXC-012 \u2014 Trainer Recommendation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L286"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_013_academic_coordinator_review",
+      "label": "FR-EXC-013 \u2014 Academic Coordinator Review",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L308"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_014_branch_manager_final_approval",
+      "label": "FR-EXC-014 \u2014 Branch Manager Final Approval",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L324"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_015_re_evaluate_completion_after_evidence_change",
+      "label": "FR-EXC-015 \u2014 Re-evaluate Completion After Evidence Change",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L340"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_016_expose_certificate_eligibility_outcome",
+      "label": "FR-EXC-016 \u2014 Expose Certificate Eligibility Outcome",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L356"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_017_synchronize_completion_outcome_with_enrollment_boundary",
+      "label": "FR-EXC-017 \u2014 Synchronize Completion Outcome with Enrollment Boundary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L372"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_018_enforce_branch_isolation",
+      "label": "FR-EXC-018 \u2014 Enforce Branch Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L388"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_019_enforce_permission_based_authorization",
+      "label": "FR-EXC-019 \u2014 Enforce Permission-Based Authorization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L404"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_020_pending_work_queues",
+      "label": "FR-EXC-020 \u2014 Pending Work Queues",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L420"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_021_export_academic_outcome_data",
+      "label": "FR-EXC-021 \u2014 Export Academic Outcome Data",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L436"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_022_audit_sensitive_actions",
+      "label": "FR-EXC-022 \u2014 Audit Sensitive Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L452"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_023_soft_delete_and_concurrency_protection",
+      "label": "FR-EXC-023 \u2014 Soft Delete and Concurrency Protection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L468"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_024_bilingual_presentation",
+      "label": "FR-EXC-024 \u2014 Bilingual Presentation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L484"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_3_comprehensive_business_rules",
+      "label": "3. Comprehensive Business Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L498"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_4_cross_module_dependencies_mapping",
+      "label": "4. Cross-Module Dependencies Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L553"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison",
+      "label": "5. DDD and ER Model Alignment Comparison",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L570"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_1_directly_aligned_requirements",
+      "label": "5.1 Directly Aligned Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L572"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_2_partial_alignment_and_gaps",
+      "label": "5.2 Partial Alignment and Gaps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L585"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_3_rule_to_model_traceability_notes",
+      "label": "5.3 Rule-to-Model Traceability Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L599"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_6_implementation_readiness_notes_for_subsequent_frd_parts",
+      "label": "6. Implementation Readiness Notes for Subsequent FRD Parts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L610"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_md",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_1_introduction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_001_create_exam",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_002_manage_exam_lifecycle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_003_search_and_view_exams",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_004_load_eligible_exam_roster",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_005_record_individual_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_006_bulk_record_results",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_007_finalize_results",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L182",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_008_correct_finalized_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_009_monitor_missing_results",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L222",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_010_evaluate_completion_eligibility",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_011_maintain_one_course_completion_per_enrollment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L270",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_012_trainer_recommendation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L286",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_013_academic_coordinator_review",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_014_branch_manager_final_approval",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L324",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_015_re_evaluate_completion_after_evidence_change",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L340",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_016_expose_certificate_eligibility_outcome",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L356",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_017_synchronize_completion_outcome_with_enrollment_boundary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_018_enforce_branch_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L388",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_019_enforce_permission_based_authorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L404",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_020_pending_work_queues",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L420",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_021_export_academic_outcome_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L436",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_022_audit_sensitive_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_023_soft_delete_and_concurrency_protection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L468",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_2_detailed_functional_requirements",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_fr_exc_024_bilingual_presentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L484",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_3_comprehensive_business_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L498",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_4_cross_module_dependencies_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L553",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L570",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_1_directly_aligned_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L572",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_2_partial_alignment_and_gaps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L585",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_ddd_and_er_model_alignment_comparison",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_5_3_rule_to_model_traceability_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L599",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_part_1_business_overview_functional_requirements_business_rules",
+      "target": "module_10_exam_result_completion_management_part_1_business_overview_functional_requirements_business_rules_6_implementation_readiness_notes_for_subsequent_frd_parts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md",
+      "source_location": "L610",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

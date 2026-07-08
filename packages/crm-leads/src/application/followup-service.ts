@@ -8,14 +8,14 @@ export class FollowUpApplicationService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly followUpRepository: IFollowUpRepository,
-    private readonly leadRepository: ILeadRepository
+    private readonly leadRepository: ILeadRepository,
   ) {}
 
   async scheduleFollowUp(
     leadId: string,
     input: ScheduleFollowUpInput,
     actorId: string,
-    tx?: Prisma.TransactionClient
+    tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient | PrismaClient) => {
       // 1. Verify Lead exists
@@ -31,7 +31,11 @@ export class FollowUpApplicationService {
       }
 
       // 3. Stage transition blocking & checks
-      if (lead.stage === 'Converted' || lead.stage === 'Won' || lead.stage === 'Lost') {
+      if (
+        lead.stage === 'Converted' ||
+        lead.stage === 'Won' ||
+        lead.stage === 'Lost'
+      ) {
         throw new Error('ERR_CRM_INVALID_STAGE_TRANSITION');
       }
 
@@ -48,13 +52,18 @@ export class FollowUpApplicationService {
           leadId,
           counselorId: lead.counselorId || actorId, // defaults to actor if lead unassigned
         },
-        client
+        client,
       );
 
       // 5. Update Lead Stage if needed
       if (targetStage !== oldStage) {
-        await this.leadRepository.updateStage(leadId, targetStage, lead.version, client);
-        
+        await this.leadRepository.updateStage(
+          leadId,
+          targetStage,
+          lead.version,
+          client,
+        );
+
         // Insert LeadStageHistory
         await client.leadStageHistory.create({
           data: {
@@ -92,7 +101,7 @@ export class FollowUpApplicationService {
           nextFollowUpDate: new Date(input.followUpDate),
           version: targetStage !== oldStage ? lead.version + 1 : lead.version,
         },
-        client
+        client,
       );
 
       // 7. Outbox Event (FollowUpScheduled)
@@ -145,7 +154,7 @@ export class FollowUpApplicationService {
   async recordOutcome(
     followUpId: string,
     input: LogFollowUpOutcomeInput,
-    actorId: string
+    actorId: string,
   ) {
     return this.prisma.$transaction(async (tx) => {
       // 1. Fetch current follow-up
@@ -164,7 +173,12 @@ export class FollowUpApplicationService {
       }
 
       // 2. Record outcome
-      await this.followUpRepository.recordOutcome(followUpId, input.outcome, input.outcomeNotes, tx);
+      await this.followUpRepository.recordOutcome(
+        followUpId,
+        input.outcome,
+        input.outcomeNotes,
+        tx,
+      );
 
       // 3. Outbox Event (Outcome Recorded / Completed)
       await tx.outboxEvent.create({
@@ -187,7 +201,12 @@ export class FollowUpApplicationService {
       let nextFollowUp = null;
 
       // 4. Optionally schedule next follow-up
-      if (input.scheduleNext && input.nextFollowUpDate && input.nextFollowUpType && input.nextFollowUpAgenda) {
+      if (
+        input.scheduleNext &&
+        input.nextFollowUpDate &&
+        input.nextFollowUpType &&
+        input.nextFollowUpAgenda
+      ) {
         // Enforce BR-LEAD-009 check
         const nextTime = new Date(input.nextFollowUpDate).getTime();
         if (nextTime <= Date.now() + 300000) {
@@ -202,7 +221,7 @@ export class FollowUpApplicationService {
             leadId: followUp.leadId,
             counselorId: followUp.counselorId,
           },
-          tx
+          tx,
         );
 
         await tx.outboxEvent.create({
@@ -225,9 +244,12 @@ export class FollowUpApplicationService {
       }
 
       // 5. Recalculate nextFollowUpDate
-      const allFollowUps = await this.followUpRepository.findAllForLead(followUp.leadId, tx);
+      const allFollowUps = await this.followUpRepository.findAllForLead(
+        followUp.leadId,
+        tx,
+      );
       const scheduledFollowUps = allFollowUps.filter(
-        (f: any) => f.status === 'Scheduled' && f.id !== followUpId
+        (f: any) => f.status === 'Scheduled' && f.id !== followUpId,
       );
 
       if (nextFollowUp) {
@@ -236,7 +258,9 @@ export class FollowUpApplicationService {
 
       let recalculatedDate: Date | null = null;
       if (scheduledFollowUps.length > 0) {
-        const dates = scheduledFollowUps.map((f: any) => new Date(f.followUpDate).getTime());
+        const dates = scheduledFollowUps.map((f: any) =>
+          new Date(f.followUpDate).getTime(),
+        );
         const minDate = Math.min(...dates);
         recalculatedDate = new Date(minDate);
       }
@@ -248,7 +272,7 @@ export class FollowUpApplicationService {
           nextFollowUpDate: recalculatedDate,
           version: input.version,
         },
-        tx
+        tx,
       );
 
       // 7. Audit Log
@@ -289,4 +313,3 @@ export class FollowUpApplicationService {
     return this.followUpRepository.findById(id, client);
   }
 }
-

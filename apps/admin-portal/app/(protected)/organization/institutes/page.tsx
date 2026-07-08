@@ -6,7 +6,14 @@ export const metadata = { title: 'Institutes - Organization | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
 export default async function InstitutesPage(props: {
-  searchParams: Promise<{ page?: string; limit?: string; q?: string; status?: string; sortBy?: string; sortOrder?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    limit?: string;
+    q?: string;
+    status?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }>;
 }) {
   const searchParams = await props.searchParams;
   const data = await loadOrganizationData();

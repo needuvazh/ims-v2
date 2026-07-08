@@ -15,7 +15,10 @@ vi.mock('../../../../lib/runtime', () => ({
 
 vi.mock('../../../../lib/observability', () => ({
   applyObservabilityResponseHeaders: vi.fn(),
-  withRouteObservability: async (_headers: Headers, handler: () => Promise<Response>) => handler(),
+  withRouteObservability: async (
+    _headers: Headers,
+    handler: () => Promise<Response>,
+  ) => handler(),
   createStructuredLogger: () => ({ info: vi.fn(), error: vi.fn() }),
   getCurrentRequestContext: () => ({}),
 }));
@@ -35,14 +38,16 @@ describe('Finance Invoices API route', () => {
           permissions: ['finance.invoice.create'],
           activeBranchId: '11111111-1111-1111-1111-111111111111',
         },
-      })
+      }),
     );
 
-    resolveAllowedBranchesMock.mockResolvedValue(['11111111-1111-1111-1111-111111111111']);
+    resolveAllowedBranchesMock.mockResolvedValue([
+      '11111111-1111-1111-1111-111111111111',
+    ]);
     createInvoiceMock.mockResolvedValue({
       id: 'inv-123',
       invoiceNumber: 'INV-2026-000001',
-      totalAmount: 105
+      totalAmount: 105,
     });
 
     const { POST } = await import('./route');
@@ -63,11 +68,11 @@ describe('Finance Invoices API route', () => {
               quantity: 1,
               unitPrice: 100,
               discountAmount: 0,
-              taxRate: 0.05
-            }
-          ]
+              taxRate: 0.05,
+            },
+          ],
         }),
-      })
+      }),
     );
 
     const body = await response.json();
@@ -79,8 +84,8 @@ describe('Finance Invoices API route', () => {
       expect.objectContaining({
         invoiceType: 'StudentInvoice',
         branchId: '11111111-1111-1111-1111-111111111111',
-        currency: 'OMR'
-      })
+        currency: 'OMR',
+      }),
     );
   });
 });

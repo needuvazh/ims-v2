@@ -24,7 +24,10 @@ describe('FollowUpSchedulerService', () => {
       findById: vi.fn(),
     };
 
-    service = new FollowUpSchedulerService(mockPrisma as unknown as PrismaClient, mockFollowUpRepo);
+    service = new FollowUpSchedulerService(
+      mockPrisma as unknown as PrismaClient,
+      mockFollowUpRepo,
+    );
   });
 
   it('should process no records if none are overdue', async () => {
@@ -36,11 +39,24 @@ describe('FollowUpSchedulerService', () => {
 
   it('should process overdue records and update status and create notes', async () => {
     mockFollowUpRepo.findAllScheduledOverdue.mockResolvedValue([
-      { id: 'f1', leadId: 'l1', followUpType: 'Call', lead: { branchId: 'b1' } },
-      { id: 'f2', leadId: 'l2', followUpType: 'Email', lead: { branchId: 'b1' } },
+      {
+        id: 'f1',
+        leadId: 'l1',
+        followUpType: 'Call',
+        lead: { branchId: 'b1' },
+      },
+      {
+        id: 'f2',
+        leadId: 'l2',
+        followUpType: 'Email',
+        lead: { branchId: 'b1' },
+      },
     ]);
 
-    mockFollowUpRepo.findById.mockResolvedValue({ status: 'Scheduled', lead: { branchId: 'b1' } });
+    mockFollowUpRepo.findById.mockResolvedValue({
+      status: 'Scheduled',
+      lead: { branchId: 'b1' },
+    });
 
     const result = await service.processOverdueFollowUps();
     expect(result.processedCount).toBe(2);
@@ -49,11 +65,19 @@ describe('FollowUpSchedulerService', () => {
 
   it('should skip records if their status changed concurrently', async () => {
     mockFollowUpRepo.findAllScheduledOverdue.mockResolvedValue([
-      { id: 'f1', leadId: 'l1', followUpType: 'Call', lead: { branchId: 'b1' } },
+      {
+        id: 'f1',
+        leadId: 'l1',
+        followUpType: 'Call',
+        lead: { branchId: 'b1' },
+      },
     ]);
 
     // Mock it as already completed in the transaction
-    mockFollowUpRepo.findById.mockResolvedValue({ status: 'Completed', lead: { branchId: 'b1' } });
+    mockFollowUpRepo.findById.mockResolvedValue({
+      status: 'Completed',
+      lead: { branchId: 'b1' },
+    });
 
     const result = await service.processOverdueFollowUps();
     // It skips the update part, so transaction finishes but no processed count is incremented?

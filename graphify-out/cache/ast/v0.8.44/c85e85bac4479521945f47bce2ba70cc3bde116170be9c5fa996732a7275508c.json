@@ -1,0 +1,591 @@
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_module_13_document_management_md",
+      "label": "Module 13 - Document Management.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "label": "Module 13 - Document Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_1_document_control",
+      "label": "1. Document Control",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_2_purpose_and_objective",
+      "label": "2. Purpose and Objective",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_objectives",
+      "label": "Objectives",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_3_business_goals",
+      "label": "3. Business Goals",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L50"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_4_scope",
+      "label": "4. Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L67"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_4_1_included",
+      "label": "4.1 Included",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L69"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_4_2_excluded",
+      "label": "4.2 Excluded",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L93"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_5_stakeholders_and_actors",
+      "label": "5. Stakeholders and Actors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_5_1_human_actors",
+      "label": "5.1 Human Actors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L118"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_5_2_system_actors",
+      "label": "5.2 System Actors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L134"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_6_functional_overview",
+      "label": "6. Functional Overview",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L152"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_7_business_capabilities_and_user_types",
+      "label": "7. Business Capabilities and User Types",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L205"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_7_1_internal_user_capabilities",
+      "label": "7.1 Internal User Capabilities",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L207"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_7_2_external_user_capabilities",
+      "label": "7.2 External User Capabilities",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L222"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_8_functional_requirements_checklist",
+      "label": "8. Functional Requirements Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L230"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_9_permission_model_overview",
+      "label": "9. Permission Model Overview",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L272"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_9_1_proposed_fine_grained_permission_codes",
+      "label": "9.1 Proposed Fine-Grained Permission Codes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L276"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_9_2_permission_evaluation_principles",
+      "label": "9.2 Permission Evaluation Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L293"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_10_security_and_audit_requirements_summary",
+      "label": "10. Security and Audit Requirements Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L305"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_11_non_functional_requirements_summary",
+      "label": "11. Non-Functional Requirements Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L327"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_12_ddd_ownership_notes",
+      "label": "12. DDD Ownership Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L345"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_12_1_document_management_owns",
+      "label": "12.1 Document Management Owns",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L347"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_12_2_document_management_does_not_own",
+      "label": "12.2 Document Management Does Not Own",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L359"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_12_3_storage_ownership",
+      "label": "12.3 Storage Ownership",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L375"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_13_known_cross_context_dependencies",
+      "label": "13. Known Cross-Context Dependencies",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L381"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "label": "14. Known Gaps and Architecture Decisions Required",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L398"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_001_branch_scope_is_not_explicit_in_er_document",
+      "label": "GAP-DOC-001 - Branch Scope Is Not Explicit in ER Document",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L400"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_002_blob_metadata_is_not_fully_modeled",
+      "label": "GAP-DOC-002 - Blob Metadata Is Not Fully Modeled",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L403"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_003_document_type_representation_differs_between_ddd_and_er",
+      "label": "GAP-DOC-003 - Document Type Representation Differs Between DDD and ER",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L406"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_004_verification_state_duplication",
+      "label": "GAP-DOC-004 - Verification State Duplication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L409"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_005_expiry_alert_scheduling",
+      "label": "GAP-DOC-005 - Expiry Alert Scheduling",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L412"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_006_employee_owner_type_is_future_phase",
+      "label": "GAP-DOC-006 - Employee Owner Type Is Future Phase",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L415"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_007_prisma_schema_validation",
+      "label": "GAP-DOC-007 - Prisma Schema Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L418"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_gap_doc_008_missing_date_and_version_fields_in_prisma_critical_implementation_gap",
+      "label": "GAP-DOC-008 - Missing Date and Version fields in Prisma (CRITICAL IMPLEMENTATION GAP)",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L421"
+    },
+    {
+      "id": "module_13_document_management_module_13_document_management_15_source_alignment_summary",
+      "label": "15. Source Alignment Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L427"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_module_13_document_management_md",
+      "target": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_1_document_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_2_purpose_and_objective",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_2_purpose_and_objective",
+      "target": "module_13_document_management_module_13_document_management_objectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_3_business_goals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_4_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_4_scope",
+      "target": "module_13_document_management_module_13_document_management_4_1_included",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_4_scope",
+      "target": "module_13_document_management_module_13_document_management_4_2_excluded",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_5_stakeholders_and_actors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_5_stakeholders_and_actors",
+      "target": "module_13_document_management_module_13_document_management_5_1_human_actors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_5_stakeholders_and_actors",
+      "target": "module_13_document_management_module_13_document_management_5_2_system_actors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_6_functional_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_7_business_capabilities_and_user_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L205",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_7_business_capabilities_and_user_types",
+      "target": "module_13_document_management_module_13_document_management_7_1_internal_user_capabilities",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L207",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_7_business_capabilities_and_user_types",
+      "target": "module_13_document_management_module_13_document_management_7_2_external_user_capabilities",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L222",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_8_functional_requirements_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L230",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_9_permission_model_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_9_permission_model_overview",
+      "target": "module_13_document_management_module_13_document_management_9_1_proposed_fine_grained_permission_codes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_9_permission_model_overview",
+      "target": "module_13_document_management_module_13_document_management_9_2_permission_evaluation_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_10_security_and_audit_requirements_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L305",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_11_non_functional_requirements_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L327",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_12_ddd_ownership_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L345",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_12_ddd_ownership_notes",
+      "target": "module_13_document_management_module_13_document_management_12_1_document_management_owns",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_12_ddd_ownership_notes",
+      "target": "module_13_document_management_module_13_document_management_12_2_document_management_does_not_own",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L359",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_12_ddd_ownership_notes",
+      "target": "module_13_document_management_module_13_document_management_12_3_storage_ownership",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L375",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_13_known_cross_context_dependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L381",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L398",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_001_branch_scope_is_not_explicit_in_er_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_002_blob_metadata_is_not_fully_modeled",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L403",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_003_document_type_representation_differs_between_ddd_and_er",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L406",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_004_verification_state_duplication",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L409",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_005_expiry_alert_scheduling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L412",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_006_employee_owner_type_is_future_phase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L415",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_007_prisma_schema_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L418",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_14_known_gaps_and_architecture_decisions_required",
+      "target": "module_13_document_management_module_13_document_management_gap_doc_008_missing_date_and_version_fields_in_prisma_critical_implementation_gap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_module_13_document_management_module_13_document_management",
+      "target": "module_13_document_management_module_13_document_management_15_source_alignment_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Module 13 - Document Management.md",
+      "source_location": "L427",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

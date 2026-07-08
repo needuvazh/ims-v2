@@ -25,6 +25,7 @@ Admission intake needs its own validation surface so users can review and submit
 ## Impact
 
 Affected areas include:
+
 - Prisma database schema (`Admission` model).
 - `AdmissionService` application service.
 - `AdmissionRepository` database adapters.

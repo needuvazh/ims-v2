@@ -50,16 +50,25 @@ function DialogContent({
   );
 }
 
-function DialogHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DialogHeader({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className={cn('mb-4 flex flex-col gap-1.5', className)} {...props} />
   );
 }
 
-function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DialogFooter({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)}
+      className={cn(
+        'mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',
+        className,
+      )}
       {...props}
     />
   );

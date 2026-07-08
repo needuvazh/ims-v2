@@ -7,7 +7,10 @@ import { cn } from '../utils/cn';
  * Does NOT tightly couple to React Hook Form.
  */
 
-export function FormField({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function FormField({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
   return <div className={cn('flex flex-col gap-1.5', className)} {...props} />;
 }
 
@@ -17,11 +20,17 @@ export function FormLabel({
   className,
   children,
   ...props
-}: HTMLAttributes<HTMLLabelElement> & { required?: boolean; htmlFor?: string }) {
+}: HTMLAttributes<HTMLLabelElement> & {
+  required?: boolean;
+  htmlFor?: string;
+}) {
   return (
     <label
       htmlFor={htmlFor}
-      className={cn('text-sm font-medium text-[color:var(--ims-ink)]', className)}
+      className={cn(
+        'text-sm font-medium text-[color:var(--ims-ink)]',
+        className,
+      )}
       {...props}
     >
       {children}
@@ -34,13 +43,22 @@ export function FormLabel({
   );
 }
 
-export function FormControl({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function FormControl({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
   return <div className={cn('relative', className)} {...props} />;
 }
 
-export function FormDescription({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) {
+export function FormDescription({
+  className,
+  ...props
+}: HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={cn('text-xs text-[color:var(--ims-muted)]', className)} {...props} />
+    <p
+      className={cn('text-xs text-[color:var(--ims-muted)]', className)}
+      {...props}
+    />
   );
 }
 

@@ -20,12 +20,17 @@ describe('organization form error mapping', () => {
     );
 
     expect(failure.error).toBe('Failed to create institute.');
-    expect(failure.fieldErrors?.instituteCode).toBe('Institute Code is required.');
+    expect(failure.fieldErrors?.instituteCode).toBe(
+      'Institute Code is required.',
+    );
   });
 
   it('maps domain duplicate errors to the specific field', () => {
     const failure = buildOrganizationActionFailure(
-      new DomainError('branch_code_already_exists', 'Branch with code BR-01 already exists.'),
+      new DomainError(
+        'branch_code_already_exists',
+        'Branch with code BR-01 already exists.',
+      ),
       'Failed to create branch.',
       { branchCode: 'BR-01' },
       {
@@ -34,11 +39,15 @@ describe('organization form error mapping', () => {
     );
 
     expect(failure.error).toBe('Branch with code BR-01 already exists.');
-    expect(failure.fieldErrors?.branchCode).toBe('Branch with code BR-01 already exists.');
+    expect(failure.fieldErrors?.branchCode).toBe(
+      'Branch with code BR-01 already exists.',
+    );
   });
 
   it('maps prisma duplicate errors to the configured field message', () => {
-    const error = Object.create(Prisma.PrismaClientKnownRequestError.prototype) as any;
+    const error = Object.create(
+      Prisma.PrismaClientKnownRequestError.prototype,
+    ) as any;
     error.code = 'P2002';
     error.meta = { target: ['instituteCode'] };
 
@@ -49,12 +58,15 @@ describe('organization form error mapping', () => {
       {
         prisma: { instituteCode: 'instituteCode' },
         prismaMessages: {
-          instituteCode: 'Institute Code already exists. Please use a different Institute Code.',
+          instituteCode:
+            'Institute Code already exists. Please use a different Institute Code.',
         },
       },
     );
 
-    expect(failure.error).toBe('This value already exists. Please use a different value.');
+    expect(failure.error).toBe(
+      'This value already exists. Please use a different value.',
+    );
     expect(failure.fieldErrors?.instituteCode).toBe(
       'Institute Code already exists. Please use a different Institute Code.',
     );

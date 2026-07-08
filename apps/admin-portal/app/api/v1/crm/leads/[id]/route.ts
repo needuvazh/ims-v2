@@ -7,14 +7,25 @@ import {
   createStructuredLogger,
   getCurrentRequestContext,
 } from '../../../../../lib/observability';
-import { CreateLeadSchema, maskEmail, maskPhone, maskNationalId } from '@ims/crm-leads';
+import {
+  CreateLeadSchema,
+  maskEmail,
+  maskPhone,
+  maskNationalId,
+} from '@ims/crm-leads';
 import type { Uuid } from '@ims/shared-kernel';
 
 const patchSchema = CreateLeadSchema.partial().extend({
   version: z.number().int().optional(),
 });
 
-function problemJson(status: number, title: string, detail: string, errorCode: string, invalidFields?: Array<{ field: string; message: string }>) {
+function problemJson(
+  status: number,
+  title: string,
+  detail: string,
+  errorCode: string,
+  invalidFields?: Array<{ field: string; message: string }>,
+) {
   return NextResponse.json(
     {
       success: false,
@@ -23,7 +34,7 @@ function problemJson(status: number, title: string, detail: string, errorCode: s
       statusCode: status,
       invalidFields,
     },
-    { status }
+    { status },
   );
 }
 
@@ -47,18 +58,26 @@ function crmErrorResponse(error: Error) {
   } else if (msg.includes('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION')) {
     status = 403;
     code = 'ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION';
-    messageEn = 'You are not authorized to access leads assigned to other counselors.';
+    messageEn =
+      'You are not authorized to access leads assigned to other counselors.';
     messageAr = 'غير مصرح لك بالوصول إلى المهتمين المسندين لموظفين آخرين.';
   } else if (msg.includes('ERR_CRM_CONCURRENCY_VIOLATION')) {
     status = 409;
     code = 'ERR_CRM_CONCURRENCY_VIOLATION';
-    messageEn = 'The record has been updated by another counselor. Please refresh.';
+    messageEn =
+      'The record has been updated by another counselor. Please refresh.';
     messageAr = 'تم تحديث السجل بواسطة مستخدم آخر. يرجى التحديث.';
   } else if (msg.includes('ERR_CRM_COUNSELOR_INACTIVE')) {
     status = 422;
     code = 'ERR_CRM_COUNSELOR_INACTIVE';
-    messageEn = 'Assigned counselor is inactive or unauthorized for this branch.';
+    messageEn =
+      'Assigned counselor is inactive or unauthorized for this branch.';
     messageAr = 'الموظف المسؤول غير نشط أو غير مصرح له بالعمل في هذا الفرع.';
+  } else if (msg.includes('ERR_CRM_LEAD_ALREADY_CONVERTED')) {
+    status = 400;
+    code = 'ERR_CRM_LEAD_ALREADY_CONVERTED';
+    messageEn = 'Converted leads cannot be edited.';
+    messageAr = 'لا يمكن تعديل المهتمين المحولين.';
   }
 
   return NextResponse.json(
@@ -69,195 +88,257 @@ function crmErrorResponse(error: Error) {
       messageArabic: messageAr,
       statusCode: status,
     },
-    { status }
+    { status },
   );
 }
 
-export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: leadId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'lead.read', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'lead.read', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { branchScopeResolver, leadService } = await import('../../../../../lib/runtime');
-      
-      const lead = await leadService.getLeadById(leadId);
-      if (!lead) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-      }
+        try {
+          const { branchScopeResolver, leadService } =
+            await import('../../../../../lib/runtime');
 
-      // Branch Scoping check
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(lead.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          const lead = await leadService.getLeadById(leadId);
+          if (!lead) {
+            throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+          }
 
-      // Counselor Scoping check: if no global read, check that lead is assigned to active user
-      const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-      if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
-      }
+          // Branch Scoping check
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(lead.branchId as Uuid)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      // Mask PII by default in detailed response DTO
-      const maskedLead = {
-        ...lead,
-        phone: maskPhone(lead.phone),
-        email: maskEmail(lead.email),
-        person: lead.person ? {
-          ...lead.person,
-          mobile: maskPhone(lead.person.mobile),
-          email: maskEmail(lead.person.email),
-          nationalId: maskNationalId(lead.person.nationalId),
-        } : null,
-      };
+          // Counselor Scoping check: if no global read, check that lead is assigned to active user
+          const hasGlobalRead =
+            session.permissions.includes('crm.leads.read.all');
+          if (!hasGlobalRead && lead.counselorId !== session.userId) {
+            throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
+          }
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          data: maskedLead,
-        },
-        { status: 200 }
-      );
+          // Mask PII by default in detailed response DTO
+          const maskedLead = {
+            ...lead,
+            phone: maskPhone(lead.phone),
+            email: maskEmail(lead.email),
+            person: lead.person
+              ? {
+                  ...lead.person,
+                  mobile: maskPhone(lead.person.mobile),
+                  email: maskEmail(lead.person.email),
+                  nationalId: maskNationalId(lead.person.nationalId),
+                }
+              : null,
+          };
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/leads/[id]',
-        method: request.method,
-        status: 'success',
-      });
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: maskedLead,
+            },
+            { status: 200 },
+          );
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.leads.get.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/leads/[id]' });
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/leads/[id]',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.leads.get.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/leads/[id]' },
+  );
 }
 
-export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: leadId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'lead.update', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'lead.update', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    let payload: unknown;
-    try {
-      payload = await request.json();
-    } catch {
-      return problemJson(400, 'Invalid request body', 'Request body must be valid JSON.', 'CRM-VAL-LEADS-INVALID_JSON');
-    }
+        let payload: unknown;
+        try {
+          payload = await request.json();
+        } catch {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Request body must be valid JSON.',
+            'CRM-VAL-LEADS-INVALID_JSON',
+          );
+        }
 
-    const parsed = patchSchema.safeParse(payload);
-    if (!parsed.success) {
-      return problemJson(
-        400,
-        'Invalid request body',
-        'Update details are invalid.',
-        'CRM-VAL-LEADS-INVALID_BODY',
-        parsed.error.issues.map((issue) => ({
-          field: issue.path.join('.') || 'body',
-          message: issue.message,
-        }))
-      );
-    }
+        const parsed = patchSchema.safeParse(payload);
+        if (!parsed.success) {
+          return problemJson(
+            400,
+            'Invalid request body',
+            'Update details are invalid.',
+            'CRM-VAL-LEADS-INVALID_BODY',
+            parsed.error.issues.map((issue) => ({
+              field: issue.path.join('.') || 'body',
+              message: issue.message,
+            })),
+          );
+        }
 
-    try {
-      const { branchScopeResolver, leadService } = await import('../../../../../lib/runtime');
-      
-      const lead = await leadService.getLeadById(leadId);
-      if (!lead) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-      }
+        try {
+          const { branchScopeResolver, leadService } =
+            await import('../../../../../lib/runtime');
 
-      // Branch Scoping check
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(lead.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          const lead = await leadService.getLeadById(leadId);
+          if (!lead) {
+            throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+          }
 
-      // Counselor update restriction: counselors can only update their own assigned leads
-      const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-      if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
-      }
+          if (lead.stage === 'Converted') {
+            throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
+          }
 
-      // Update lead
-      await leadService.updateLead(leadId, parsed.data, undefined, session.userId);
+          // Branch Scoping check
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(lead.branchId as Uuid)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          message: 'Lead updated successfully',
-        },
-        { status: 200 }
-      );
+          // Counselor update restriction: counselors can only update their own assigned leads
+          const hasGlobalRead =
+            session.permissions.includes('crm.leads.read.all');
+          if (!hasGlobalRead && lead.counselorId !== session.userId) {
+            throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
+          }
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/leads/[id]',
-        method: request.method,
-        status: 'success',
-      });
+          // Update lead
+          await leadService.updateLead(
+            leadId,
+            parsed.data,
+            undefined,
+            session.userId,
+          );
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.leads.update.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/leads/[id]' });
+          const response = NextResponse.json(
+            {
+              success: true,
+              message: 'Lead updated successfully',
+            },
+            { status: 200 },
+          );
+
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/leads/[id]',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.leads.update.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/leads/[id]' },
+  );
 }
 
-export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  request: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const { id: leadId } = await props.params;
-  return withRouteObservability(request.headers, async () => withPermission(request, 'lead.delete', async ({ session }) => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withRouteObservability(
+    request.headers,
+    async () =>
+      withPermission(request, 'lead.delete', async ({ session }) => {
+        const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      const { branchScopeResolver, leadService } = await import('../../../../../lib/runtime');
-      
-      const lead = await leadService.getLeadById(leadId);
-      if (!lead) {
-        throw new Error('ERR_CRM_LEAD_NOT_FOUND');
-      }
+        try {
+          const { branchScopeResolver, leadService } =
+            await import('../../../../../lib/runtime');
 
-      // Branch check
-      const allowedBranches = await branchScopeResolver.resolveAllowedBranches(
-        session.userId,
-        session.activeBranchId ?? null
-      );
-      if (!allowedBranches.includes(lead.branchId as Uuid)) {
-        throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
-      }
+          const lead = await leadService.getLeadById(leadId);
+          if (!lead) {
+            throw new Error('ERR_CRM_LEAD_NOT_FOUND');
+          }
 
-      // Counselor scoping check
-      const hasGlobalRead = session.permissions.includes('crm.leads.read.all');
-      if (!hasGlobalRead && lead.counselorId !== session.userId) {
-        throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
-      }
+          if (lead.stage === 'Converted') {
+            throw new Error('ERR_CRM_LEAD_ALREADY_CONVERTED');
+          }
 
-      await leadService.deleteLead(leadId, session.userId);
+          // Branch check
+          const allowedBranches =
+            await branchScopeResolver.resolveAllowedBranches(
+              session.userId,
+              session.activeBranchId ?? null,
+            );
+          if (!allowedBranches.includes(lead.branchId as Uuid)) {
+            throw new Error('ERR_CRM_BRANCH_SCOPE_VIOLATION');
+          }
 
-      const response = NextResponse.json(
-        {
-          success: true,
-          message: 'Lead soft-deleted successfully',
-        },
-        { status: 200 }
-      );
+          // Counselor scoping check
+          const hasGlobalRead =
+            session.permissions.includes('crm.leads.read.all');
+          if (!hasGlobalRead && lead.counselorId !== session.userId) {
+            throw new Error('ERR_CRM_ASSIGNED_LEAD_SCOPE_VIOLATION');
+          }
 
-      applyObservabilityResponseHeaders(response.headers, request.headers, {
-        route: '/api/v1/crm/leads/[id]',
-        method: request.method,
-        status: 'success',
-      });
+          await leadService.deleteLead(leadId, session.userId);
 
-      return response;
-    } catch (error) {
-      logger.error('api.crm.leads.delete.failed', { status: 'failed', error: error as Error });
-      return crmErrorResponse(error as Error);
-    }
-  }), { route: '/api/v1/crm/leads/[id]' });
+          const response = NextResponse.json(
+            {
+              success: true,
+              message: 'Lead soft-deleted successfully',
+            },
+            { status: 200 },
+          );
+
+          applyObservabilityResponseHeaders(response.headers, request.headers, {
+            route: '/api/v1/crm/leads/[id]',
+            method: request.method,
+            status: 'success',
+          });
+
+          return response;
+        } catch (error) {
+          logger.error('api.crm.leads.delete.failed', {
+            status: 'failed',
+            error: error as Error,
+          });
+          return crmErrorResponse(error as Error);
+        }
+      }),
+    { route: '/api/v1/crm/leads/[id]' },
+  );
 }

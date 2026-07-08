@@ -1,6 +1,6 @@
 ## Why
 
-The current Identity & Access Management (IAM) module fails to properly enforce branch-scoped restrictions. A branch-restricted manager (e.g., a Branch Manager of Branch A) is currently able to fetch all users, roles, and branches from the system in-memory. They can also view, edit, suspend, lock/unlock, or terminate sessions for any user in the directory (including those in other branches) simply by navigating to their URL/UUID or calling the corresponding service actions. 
+The current Identity & Access Management (IAM) module fails to properly enforce branch-scoped restrictions. A branch-restricted manager (e.g., a Branch Manager of Branch A) is currently able to fetch all users, roles, and branches from the system in-memory. They can also view, edit, suspend, lock/unlock, or terminate sessions for any user in the directory (including those in other branches) simply by navigating to their URL/UUID or calling the corresponding service actions.
 
 This violates the core security invariant that branch-level operators should only be able to view, manage, and audit data for users and operations within their active branch scope.
 
@@ -26,6 +26,7 @@ Additionally, the system must not hardcode user roles (e.g., `Admin`, `Owner`, `
 ## Capabilities
 
 ### Modified Capabilities
+
 - `identity-access`: Enforce strict branch scoping boundaries on user directory read/write actions, session tracking, role assignment, and reporting.
 
 ## Impact

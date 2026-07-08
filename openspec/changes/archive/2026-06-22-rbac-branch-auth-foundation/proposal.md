@@ -1,6 +1,6 @@
 ## Why
 
-IMS currently has database tables and domain objects for User, Role, Permission, and UserDataScope, but lacks the core execution runtime for dynamic Role-Based Access Control (RBAC) and branch-scoped data scoping. 
+IMS currently has database tables and domain objects for User, Role, Permission, and UserDataScope, but lacks the core execution runtime for dynamic Role-Based Access Control (RBAC) and branch-scoped data scoping.
 
 By implementing server-side permission assertions, loading data scope limits into user sessions, and dynamically resolving active branch parameters inside portals, we establish a robust security foundation that ensures branch isolation (e.g. branch managers accessing assigned branches only) and counselor isolation (accessing assigned leads only).
 
@@ -18,9 +18,11 @@ By implementing server-side permission assertions, loading data scope limits int
 ## Capabilities
 
 ### New Capabilities
+
 - `rbac-branch-auth-foundation`: core utilities for data scoping resolution, branch-based authorization limits, and Next.js server action validation wrappers.
 
 ### Modified Capabilities
+
 - `identity-access`: authentication session token payload now packs user data scopes dynamically.
 
 ## Impact

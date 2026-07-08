@@ -48,7 +48,7 @@ describe('walk-in payment route', () => {
           userId: 'user-1',
           activeBranchId: 'branch-1',
         },
-      })
+      }),
     );
   });
 
@@ -59,7 +59,8 @@ describe('walk-in payment route', () => {
       enrollment: { enrollmentStatus: 'Confirmed' },
       confirmation: {
         confirmationNumber: 'WIC-2026-10001',
-        documentUrl: 'https://storage.asti.edu.om/confirmations/WIC-2026-10001.pdf',
+        documentUrl:
+          'https://storage.asti.edu.om/confirmations/WIC-2026-10001.pdf',
       },
     });
 
@@ -70,13 +71,19 @@ describe('walk-in payment route', () => {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ paymentCollected: 120, remarks: 'Cash' }),
       }),
-      { params: Promise.resolve({ id: 'enr-1' }) }
+      { params: Promise.resolve({ id: 'enr-1' }) },
     );
 
     const body = await response.json();
     expect(response.status).toBe(200);
     expect(body.success).toBe(true);
-    expect(recordWalkInPaymentMock).toHaveBeenCalledWith('enr-1', 120, 'user-1', 'Cash', 'Cash');
+    expect(recordWalkInPaymentMock).toHaveBeenCalledWith(
+      'enr-1',
+      120,
+      'user-1',
+      'Cash',
+      'Cash',
+    );
   });
 
   it('rejects payment recording outside branch scope', async () => {
@@ -90,7 +97,7 @@ describe('walk-in payment route', () => {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ paymentCollected: 120 }),
       }),
-      { params: Promise.resolve({ id: 'enr-1' }) }
+      { params: Promise.resolve({ id: 'enr-1' }) },
     );
 
     const body = await response.json();

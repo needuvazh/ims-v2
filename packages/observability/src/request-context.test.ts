@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { applyRequestContextHeaders, createRequestContext, createRequestId, extractTraceId, requestHeaderNames } from './request-context';
+import {
+  applyRequestContextHeaders,
+  createRequestContext,
+  createRequestId,
+  extractTraceId,
+  requestHeaderNames,
+} from './request-context';
 import { createStructuredLogger } from './logger';
 
 describe('observability request context', () => {
@@ -45,15 +51,17 @@ describe('observability request context', () => {
   });
 
   it('extracts trace ids from traceparent values', () => {
-    expect(extractTraceId({
-      get(name) {
-        if (name === requestHeaderNames.traceParent) {
-          return '00-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-bbbbbbbbbbbbbbbb-01';
-        }
+    expect(
+      extractTraceId({
+        get(name) {
+          if (name === requestHeaderNames.traceParent) {
+            return '00-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-bbbbbbbbbbbbbbbb-01';
+          }
 
-        return null;
-      },
-    })).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+          return null;
+        },
+      }),
+    ).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   });
 
   it('emits structured logs without leaking unknown fields', () => {

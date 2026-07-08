@@ -18,24 +18,24 @@ This document defines the Domain-Driven Design structure for the ASTI IMS platfo
 
 It identifies:
 
-* Business domains
-* Bounded contexts
-* Context relationships
-* Aggregate ownership
-* Domain events
-* Data ownership
-* Phase alignment
-* Integration boundaries
-* Key domain rules
+- Business domains
+- Bounded contexts
+- Context relationships
+- Aggregate ownership
+- Domain events
+- Data ownership
+- Phase alignment
+- Integration boundaries
+- Key domain rules
 
 This document is intended to guide:
 
-* Database design
-* API design
-* UI module planning
-* Next.js monorepo modular architecture
-* Development sequencing
-* Future architecture refinement
+- Database design
+- API design
+- UI module planning
+- Next.js monorepo modular architecture
+- Development sequencing
+- Future architecture refinement
 
 ---
 
@@ -278,15 +278,15 @@ Tracks critical actions from all contexts
 
 ASTI deals with many types of people and organizations:
 
-* Students
-* Walk-in learners
-* Corporate participants
-* Trainers
-* Employees
-* Corporate contacts
-* Counselors
-* Admin users
-* Corporate customers
+- Students
+- Walk-in learners
+- Corporate participants
+- Trainers
+- Employees
+- Corporate contacts
+- Counselors
+- Admin users
+- Corporate customers
 
 To avoid duplicated identity data, the system should use a shared Person / Party concept.
 
@@ -314,8 +314,8 @@ Organization
 
 Important rule:
 
-* Corporate participant becomes a student automatically when enrolled into a course or batch.
-* Corporate participant may still retain corporate linkage for billing and reporting.
+- Corporate participant becomes a student automatically when enrolled into a course or batch.
+- Corporate participant may still retain corporate linkage for billing and reporting.
 
 ---
 
@@ -325,10 +325,10 @@ Enrollment is the central business transaction in the IMS.
 
 A learner may enter through:
 
-* Regular admission
-* Website registration
-* Walk-in fast track
-* Corporate nomination
+- Regular admission
+- Website registration
+- Walk-in fast track
+- Corporate nomination
 
 But all training journeys must become an enrollment.
 
@@ -363,13 +363,13 @@ CertificateIssued
 
 ### Key Invariants
 
-* Enrollment must be linked to a course.
-* Enrollment must be linked to a batch.
-* Enrollment must have valid pricing.
-* Enrollment must respect pricing and discount hierarchy.
-* Corporate enrollment must validate corporate credit rules.
-* Certificate requires completion validation.
-* Certificate requires payment validation where configured.
+- Enrollment must be linked to a course.
+- Enrollment must be linked to a batch.
+- Enrollment must have valid pricing.
+- Enrollment must respect pricing and discount hierarchy.
+- Corporate enrollment must validate corporate credit rules.
+- Certificate requires completion validation.
+- Certificate requires payment validation where configured.
 
 ---
 
@@ -385,37 +385,37 @@ Controls authentication, authorization, roles, permissions, and secure access.
 
 ### Key Responsibilities
 
-* User login
-* Password management
-* Dynamic role creation
-* Permission assignment
-* Menu access
-* Action access
-* Dashboard access
-* Branch-level access control
+- User login
+- Password management
+- Dynamic role creation
+- Permission assignment
+- Menu access
+- Action access
+- Dashboard access
+- Branch-level access control
 
 ### Core Entities
 
-* User
-* Role
-* Permission
-* Menu
-* UserRole
-* RolePermission
-* AccessPolicy
-* BranchAccess
+- User
+- Role
+- Permission
+- Menu
+- UserRole
+- RolePermission
+- AccessPolicy
+- BranchAccess
 
 ### Important Rules
 
-* Roles must not be hardcoded.
-* Permissions must control access.
-* Dashboard access must be permission-based, not role-name based.
-* Example permission: `dashboard.ceo`.
-* Users may be assigned to one or more branches.
-* Users can switch between assigned branches.
-* If user has access to multiple branches, consolidated reporting may be allowed.
-* Parent branch user can view child branch data.
-* Child branch user cannot view parent branch data.
+- Roles must not be hardcoded.
+- Permissions must control access.
+- Dashboard access must be permission-based, not role-name based.
+- Example permission: `dashboard.ceo`.
+- Users may be assigned to one or more branches.
+- Users can switch between assigned branches.
+- If user has access to multiple branches, consolidated reporting may be allowed.
+- Parent branch user can view child branch data.
+- Child branch user cannot view parent branch data.
 
 ---
 
@@ -427,21 +427,21 @@ Defines ASTI’s operational structure.
 
 ### Key Responsibilities
 
-* Institute profile
-* Branch management
-* Department management
-* Classroom management
+- Institute profile
+- Branch management
+- Department management
+- Classroom management
 
 ### Excluded
 
-* Lab management is not required in the current scope.
+- Lab management is not required in the current scope.
 
 ### Core Entities
 
-* Institute
-* Branch
-* Department
-* Classroom
+- Institute
+- Branch
+- Department
+- Classroom
 
 ### Business Hierarchy
 
@@ -462,35 +462,35 @@ Provides configurable reference data used across the IMS.
 
 ### Key Responsibilities
 
-* Lead source configuration
-* Course category configuration
-* Document type configuration
-* Payment method configuration
-* Discount type configuration
-* Student ID format configuration
-* Holiday calendar configuration
-* Nationality / country / language references
-* Localized labels and bilingual metadata
-* Branch hierarchy configuration
-* Course pricing rule configuration
-* Discount hierarchy configuration
+- Lead source configuration
+- Course category configuration
+- Document type configuration
+- Payment method configuration
+- Discount type configuration
+- Student ID format configuration
+- Holiday calendar configuration
+- Nationality / country / language references
+- Localized labels and bilingual metadata
+- Branch hierarchy configuration
+- Course pricing rule configuration
+- Discount hierarchy configuration
 
 ### Core Entities
 
-* ConfigurationItem
-* LookupType
-* LookupValue
-* NumberingSeries
-* LocalizedText
-* BranchHierarchy
-* PricingRule
-* DiscountRule
+- ConfigurationItem
+- LookupType
+- LookupValue
+- NumberingSeries
+- LocalizedText
+- BranchHierarchy
+- PricingRule
+- DiscountRule
 
 ### Important Rules
 
-* Business-critical configurable values should not be hardcoded.
-* English and Arabic display values should be supported where required.
-* Configuration changes should be auditable.
+- Business-critical configurable values should not be hardcoded.
+- English and Arabic display values should be supported where required.
+- Configuration changes should be auditable.
 
 ---
 
@@ -502,35 +502,35 @@ Manages ASTI’s public-facing website, digital presence, lead generation, and c
 
 ### Key Responsibilities
 
-* Static website pages
-* Dynamic course catalog display
-* Online registration
-* Corporate inquiry forms
-* Training calendar display
-* SEO metadata
-* Bilingual website content
-* Campaign tracking
-* Website lead attribution
+- Static website pages
+- Dynamic course catalog display
+- Online registration
+- Corporate inquiry forms
+- Training calendar display
+- SEO metadata
+- Bilingual website content
+- Campaign tracking
+- Website lead attribution
 
 ### Core Entities
 
-* PublicCoursePage
-* WebsiteInquiry
-* OnlineRegistration
-* CorporateInquiry
-* WebsiteContent
-* SEOPageMetadata
-* CampaignTrackingCode
+- PublicCoursePage
+- WebsiteInquiry
+- OnlineRegistration
+- CorporateInquiry
+- WebsiteContent
+- SEOPageMetadata
+- CampaignTrackingCode
 
 ### Important Rules
 
-* Website is static content with dynamic course data.
-* No CMS editing is required in the current version.
-* Website only displays approved and published courses.
-* Course data comes from Course Catalog.
-* Website inquiries flow into CRM.
-* Online registrations flow into Admission & Enrollment.
-* Corporate inquiries flow into CRM or Corporate Sales depending on inquiry type.
+- Website is static content with dynamic course data.
+- No CMS editing is required in the current version.
+- Website only displays approved and published courses.
+- Course data comes from Course Catalog.
+- Website inquiries flow into CRM.
+- Online registrations flow into Admission & Enrollment.
+- Corporate inquiries flow into CRM or Corporate Sales depending on inquiry type.
 
 ---
 
@@ -542,27 +542,27 @@ Manages leads from multiple channels and converts them into admissions or enroll
 
 ### Key Responsibilities
 
-* Capture enquiries
-* Track lead source
-* Assign counselor
-* Manage follow-ups
-* Track lead status
-* Generate fee summary
-* Convert lead to admission/enrollment
-* Track lead scoring
+- Capture enquiries
+- Track lead source
+- Assign counselor
+- Manage follow-ups
+- Track lead status
+- Generate fee summary
+- Convert lead to admission/enrollment
+- Track lead scoring
 
 ### Core Entities
 
-* Lead
-* Enquiry
-* LeadSource
-* LeadStage
-* FollowUp
-* CounselorAssignment
-* LeadScore
-* Campaign
-* LeadNote
-* LeadStageHistory
+- Lead
+- Enquiry
+- LeadSource
+- LeadStage
+- FollowUp
+- CounselorAssignment
+- LeadScore
+- Campaign
+- LeadNote
+- LeadStageHistory
 
 ### Lead Lifecycle
 
@@ -579,12 +579,12 @@ Lost
 
 ### Important Rules
 
-* Every enquiry must have a source.
-* Lead interaction history must be preserved, logging stage changes directly to a dedicated history table.
-* Lead notes are logged chronologically and are immutable once created.
-* Converted leads should initiate admission or enrollment.
-* Lost leads must capture lost reason.
-* Follow-up reminders should be generated for counselors.
+- Every enquiry must have a source.
+- Lead interaction history must be preserved, logging stage changes directly to a dedicated history table.
+- Lead notes are logged chronologically and are immutable once created.
+- Converted leads should initiate admission or enrollment.
+- Lost leads must capture lost reason.
+- Follow-up reminders should be generated for counselors.
 
 ---
 
@@ -596,33 +596,33 @@ Manages registration, admissions, learner profiles, and enrollment lifecycle.
 
 ### Key Responsibilities
 
-* Register learner
-* Create admission record
-* Create or link student profile
-* Create enrollment
-* Assign course
-* Assign batch
-* Track enrollment status
-* Generate student ID
-* Generate ID card
+- Register learner
+- Create admission record
+- Create or link student profile
+- Create enrollment
+- Assign course
+- Assign batch
+- Track enrollment status
+- Generate student ID
+- Generate ID card
 
 ### Core Entities
 
-* Admission
-* Student
-* Enrollment
-* StudentIdentity
-* StudentIDCard
-* EnrollmentStatus
+- Admission
+- Student
+- Enrollment
+- StudentIdentity
+- StudentIDCard
+- EnrollmentStatus
 
 ### Important Rules
 
-* Admission means the person is registered with ASTI.
-* Enrollment means the person joined a course and batch.
-* Enrollment must always link to course and batch.
-* One student may have multiple enrollments.
-* Corporate participant becomes student once enrolled.
-* Enrollment is the central aggregate for the learning lifecycle.
+- Admission means the person is registered with ASTI.
+- Enrollment means the person joined a course and batch.
+- Enrollment must always link to course and batch.
+- One student may have multiple enrollments.
+- Corporate participant becomes student once enrolled.
+- Enrollment is the central aggregate for the learning lifecycle.
 
 ---
 
@@ -634,28 +634,28 @@ Supports same-day enrollment, payment, batch assignment, training confirmation, 
 
 ### Key Responsibilities
 
-* Walk-in enquiry
-* Instant registration
-* Same-day payment
-* Batch assignment
-* Completion validation
-* Certificate eligibility
-* Training confirmation issuance
+- Walk-in enquiry
+- Instant registration
+- Same-day payment
+- Batch assignment
+- Completion validation
+- Certificate eligibility
+- Training confirmation issuance
 
 ### Core Entities
 
-* WalkInEnrollment
-* WalkInPayment
-* WalkInCompletion
-* WalkInConfirmation
+- WalkInEnrollment
+- WalkInPayment
+- WalkInCompletion
+- WalkInConfirmation
 
 ### Important Rules
 
-* Walk-in is not a separate student type.
-* Walk-in is an enrollment strategy.
-* Walk-in enrollment must still link to course and batch.
-* Walk-in completion must follow course completion rules.
-* Certificate can be issued only after completion and payment validation.
+- Walk-in is not a separate student type.
+- Walk-in is an enrollment strategy.
+- Walk-in enrollment must still link to course and batch.
+- Walk-in completion must follow course completion rules.
+- Certificate can be issued only after completion and payment validation.
 
 ---
 
@@ -667,32 +667,32 @@ Manages corporate customers, contracts, corporate participants, nominations, bul
 
 ### Key Responsibilities
 
-* Corporate account management
-* Corporate contact management
-* Corporate contract management
-* Department / coordinator setup
-* Participant nominations
-* Bulk enrollment
-* Corporate portal
-* Corporate training reports
+- Corporate account management
+- Corporate contact management
+- Corporate contract management
+- Department / coordinator setup
+- Participant nominations
+- Bulk enrollment
+- Corporate portal
+- Corporate training reports
 
 ### Core Entities
 
-* CorporateAccount
-* CorporateContact
-* CorporateContract
-* CorporateDepartment
-* CorporateCoordinator
-* CorporateParticipant
-* CorporateTrainingProgram
-* CorporateEnrollment
+- CorporateAccount
+- CorporateContact
+- CorporateContract
+- CorporateDepartment
+- CorporateCoordinator
+- CorporateParticipant
+- CorporateTrainingProgram
+- CorporateEnrollment
 
 ### Important Rules
 
-* Corporate participant becomes student when enrolled into course and batch.
-* Corporate linkage must remain available for billing and reporting.
-* Corporate portal should support nominations, invoices, certificates, and training status.
-* Corporate contract determines billing terms.
+- Corporate participant becomes student when enrolled into course and batch.
+- Corporate linkage must remain available for billing and reporting.
+- Corporate portal should support nominations, invoices, certificates, and training status.
+- Corporate contract determines billing terms.
 
 ---
 
@@ -704,31 +704,31 @@ Manages B2B sales lifecycle from enquiry to quotation, sales order, and closure.
 
 ### Key Responsibilities
 
-* Corporate sales enquiry
-* Quotation creation
-* Quotation approval
-* Sales order creation
-* Pipeline tracking
-* Closure management
-* Credit terms tracking
-* Commercial terms tracking
+- Corporate sales enquiry
+- Quotation creation
+- Quotation approval
+- Sales order creation
+- Pipeline tracking
+- Closure management
+- Credit terms tracking
+- Commercial terms tracking
 
 ### Core Entities
 
-* CorporateSalesLead
-* Quotation
-* QuotationLineItem
-* SalesOrder
-* SalesPipeline
-* CommercialTerms
-* CreditLimit
+- CorporateSalesLead
+- Quotation
+- QuotationLineItem
+- SalesOrder
+- SalesPipeline
+- CommercialTerms
+- CreditLimit
 
 ### Important Rules
 
-* Corporate quotation should link to corporate account or prospect.
-* Approved quotation may create corporate contract or sales order.
-* Quotation-to-invoice relationship must be traceable.
-* Credit limit and outstanding balance must be considered before bulk enrollment where configured.
+- Corporate quotation should link to corporate account or prospect.
+- Approved quotation may create corporate contract or sales order.
+- Quotation-to-invoice relationship must be traceable.
+- Credit limit and outstanding balance must be considered before bulk enrollment where configured.
 
 ---
 
@@ -740,27 +740,27 @@ Manages courses, course categories, course options, fee structures, pricing hier
 
 ### Key Responsibilities
 
-* Course creation
-* Course classification
-* Course category management
-* Course type management
-* Fee structure definition
-* Pricing hierarchy
-* Discount hierarchy
-* Completion rule definition
-* Course approval
-* Course publishing
+- Course creation
+- Course classification
+- Course category management
+- Course type management
+- Fee structure definition
+- Pricing hierarchy
+- Discount hierarchy
+- Completion rule definition
+- Course approval
+- Course publishing
 
 ### Core Entities
 
-* Course
-* CourseCategory
-* CourseType
-* CoursePricing
-* CourseDiscount
-* CourseCompletionRule
-* CourseApproval
-* CourseCatalogOption
+- Course
+- CourseCategory
+- CourseType
+- CoursePricing
+- CourseDiscount
+- CourseCompletionRule
+- CourseApproval
+- CourseCatalogOption
 
 ### Course Lifecycle
 
@@ -784,14 +784,14 @@ Global Course Pricing & Discount
 
 ### Important Rules
 
-* Course completion rules belong to Course Catalog.
-* Course may have global, branch-level, and batch-level pricing.
-* Course may have global, branch-level, and batch-level discounts.
-* Batch override has highest priority.
-* Branch override has second priority.
-* Global course pricing is fallback.
-* Discount must follow hierarchy strictly.
-* Published courses may appear on website and enrollment screens.
+- Course completion rules belong to Course Catalog.
+- Course may have global, branch-level, and batch-level pricing.
+- Course may have global, branch-level, and batch-level discounts.
+- Batch override has highest priority.
+- Branch override has second priority.
+- Global course pricing is fallback.
+- Discount must follow hierarchy strictly.
+- Published courses may appear on website and enrollment screens.
 
 ---
 
@@ -803,30 +803,30 @@ Manages actual course delivery through batches, sessions, trainers, capacity, an
 
 ### Key Responsibilities
 
-* Batch creation
-* Trainer assignment
-* Capacity control
-* Waiting list
-* Session planning
-* Training delivery status
+- Batch creation
+- Trainer assignment
+- Capacity control
+- Waiting list
+- Session planning
+- Training delivery status
 
 ### Core Entities
 
-* Batch
-* Session
-* BatchTrainer
-* BatchCapacity
-* WaitingList
-* TrainingDeliveryStatus
+- Batch
+- Session
+- BatchTrainer
+- BatchCapacity
+- WaitingList
+- TrainingDeliveryStatus
 
 ### Important Rules
 
-* Batch belongs to a course.
-* Batch inherits course completion rules.
-* Batch may override course pricing and discount.
-* Batch capacity must be validated.
-* Multiple trainers may be assigned to one batch.
-* Waiting list must be maintained when capacity is reached.
+- Batch belongs to a course.
+- Batch inherits course completion rules.
+- Batch may override course pricing and discount.
+- Batch capacity must be validated.
+- Multiple trainers may be assigned to one batch.
+- Waiting list must be maintained when capacity is reached.
 
 ---
 
@@ -838,23 +838,23 @@ Manages timetable, institute training calendar, branch-year overrides, classroom
 
 ### Key Responsibilities
 
-* Timetable creation
-* Session scheduling
-* Classroom booking
-* Institute holiday calendar management
-* Branch-year calendar override management
-* Venue blocking
-* Trainer availability checking
+- Timetable creation
+- Session scheduling
+- Classroom booking
+- Institute holiday calendar management
+- Branch-year calendar override management
+- Venue blocking
+- Trainer availability checking
 
 ### Core Entities
 
-* Timetable
-* ScheduleSession
-* ClassroomBooking
-* BusinessCalendar
-* BranchCalendarOverride
-* Holiday
-* VenueBlock
+- Timetable
+- ScheduleSession
+- ClassroomBooking
+- BusinessCalendar
+- BranchCalendarOverride
+- Holiday
+- VenueBlock
 
 ### Important Rules
 
@@ -884,26 +884,26 @@ Tracks student attendance and training participation.
 
 ### Key Responsibilities
 
-* Manual attendance
-* Session attendance
-* Attendance correction
-* Attendance percentage
-* Low attendance alerts
-* Attendance reports
+- Manual attendance
+- Session attendance
+- Attendance correction
+- Attendance percentage
+- Low attendance alerts
+- Attendance reports
 
 ### Core Entities
 
-* AttendanceSession
-* AttendanceRecord
-* AttendanceStatus
-* AttendanceCorrection
-* AttendanceAlert
+- AttendanceSession
+- AttendanceRecord
+- AttendanceStatus
+- AttendanceCorrection
+- AttendanceAlert
 
 ### Important Rules
 
-* Instructor marks attendance in Phase 1.
-* Attendance may contribute to completion and certificate eligibility.
-* Low attendance alerts should be generated where configured.
+- Instructor marks attendance in Phase 1.
+- Attendance may contribute to completion and certificate eligibility.
+- Low attendance alerts should be generated where configured.
 
 ---
 
@@ -915,43 +915,43 @@ Manages invoices, payments, installments, discounts, refunds, receipts, corporat
 
 ### Key Responsibilities
 
-* Fee structure application
-* Invoice generation
-* Installment planning
-* Payment recording
-* Receipt generation
-* Discount application
-* Refund workflow
-* Corporate credit validation
-* Receivables tracking
-* Aging analysis
-* Revenue analytics
+- Fee structure application
+- Invoice generation
+- Installment planning
+- Payment recording
+- Receipt generation
+- Discount application
+- Refund workflow
+- Corporate credit validation
+- Receivables tracking
+- Aging analysis
+- Revenue analytics
 
 ### Core Entities
 
-* FeePlan
-* Invoice
-* InvoiceLineItem
-* InstallmentPlan
-* Payment
-* Receipt
-* Discount
-* Refund
-* CreditNote
-* Receivable
-* AgingBucket
-* CorporateCreditRule
+- FeePlan
+- Invoice
+- InvoiceLineItem
+- InstallmentPlan
+- Payment
+- Receipt
+- Discount
+- Refund
+- CreditNote
+- Receivable
+- AgingBucket
+- CorporateCreditRule
 
 ### Important Rules
 
-* Finance should be invoice-centric.
-* Payment must be linked to invoice, installment, or advance receipt.
-* Corporate billing must support consolidated invoicing.
-* Receivables aging should support 30/60/90/120+ buckets.
-* Refunds require approval.
-* Manual payments are supported in Phase 1.
-* Payment gateway integration is deferred.
-* Corporate credit rules must be validated during corporate enrollment.
+- Finance should be invoice-centric.
+- Payment must be linked to invoice, installment, or advance receipt.
+- Corporate billing must support consolidated invoicing.
+- Receivables aging should support 30/60/90/120+ buckets.
+- Refunds require approval.
+- Manual payments are supported in Phase 1.
+- Payment gateway integration is deferred.
+- Corporate credit rules must be validated during corporate enrollment.
 
 ### Corporate Credit Rule
 
@@ -973,26 +973,26 @@ Manages trainer profiles, qualifications, availability, and delivery compensatio
 
 ### Key Responsibilities
 
-* Trainer profile management
-* Qualification tracking
-* Availability management
-* Trainer compensation rate management
+- Trainer profile management
+- Qualification tracking
+- Availability management
+- Trainer compensation rate management
 
 ### Core Entities
 
-* TrainerProfile
-* TrainerQualification
-* TrainerAvailability
-* TrainerCourseAuthorization
-* TrainerCompensationRate
+- TrainerProfile
+- TrainerQualification
+- TrainerAvailability
+- TrainerCourseAuthorization
+- TrainerCompensationRate
 
 ### Important Rules
 
-* Trainer is not the same as employee in every case.
-* Trainers may be full-time, part-time, or freelance.
-* Trainer assignment must respect availability.
-* Full payroll is handled in the future Payroll Management context.
-* HRMS and Trainer Management should avoid duplicate person data by using Person / Party concept.
+- Trainer is not the same as employee in every case.
+- Trainers may be full-time, part-time, or freelance.
+- Trainer assignment must respect availability.
+- Full payroll is handled in the future Payroll Management context.
+- HRMS and Trainer Management should avoid duplicate person data by using Person / Party concept.
 
 ---
 
@@ -1004,28 +1004,28 @@ Manages assessments, results, course completion validation, and completion appro
 
 ### Key Responsibilities
 
-* Exam scheduling
-* Result recording
-* Pass/fail tracking
-* Completion validation
-* Completion approval
-* Re-issue eligibility support
+- Exam scheduling
+- Result recording
+- Pass/fail tracking
+- Completion validation
+- Completion approval
+- Re-issue eligibility support
 
 ### Core Entities
 
-* Exam
-* Assessment
-* Result
-* Grade
-* CompletionRuleEvaluation
-* CourseCompletion
-* CompletionApproval
+- Exam
+- Assessment
+- Result
+- Grade
+- CompletionRuleEvaluation
+- CourseCompletion
+- CompletionApproval
 
 ### Important Rules
 
-* Course Catalog defines completion rules.
-* Completion context evaluates completion rules.
-* Certificate context issues certificates after eligibility approval.
+- Course Catalog defines completion rules.
+- Completion context evaluates completion rules.
+- Certificate context issues certificates after eligibility approval.
 
 ### Completion Approval Workflow
 
@@ -1049,29 +1049,29 @@ Manages certificate generation, issue, re-issue, revocation, and verification.
 
 ### Key Responsibilities
 
-* Certificate generation
-* QR code generation
-* Public verification
-* Re-issue workflow
-* Certificate revocation
+- Certificate generation
+- QR code generation
+- Public verification
+- Re-issue workflow
+- Certificate revocation
 
 ### Core Entities
 
-* Certificate
-* CertificateIssueLog
-* CertificateQRCode
-* CertificateVerification
-* CertificateReissueRequest
+- Certificate
+- CertificateIssueLog
+- CertificateQRCode
+- CertificateVerification
+- CertificateReissueRequest
 
 ### Important Rules
 
-* Single hardcoded certificate template is used for now.
-* Future versions may support configurable certificate templates.
-* Certificate context should not compute completion eligibility.
-* Certificate issuance must be triggered by completion eligibility.
-* QR verification must be unique.
-* Certificate re-issue requires management approval.
-* Certificates should support English and Arabic where required.
+- Single hardcoded certificate template is used for now.
+- Future versions may support configurable certificate templates.
+- Certificate context should not compute completion eligibility.
+- Certificate issuance must be triggered by completion eligibility.
+- QR verification must be unique.
+- Certificate re-issue requires management approval.
+- Certificates should support English and Arabic where required.
 
 ---
 
@@ -1083,31 +1083,31 @@ Manages email, SMS, WhatsApp, notifications, templates, reminders, and communica
 
 ### Key Responsibilities
 
-* Notification templates
-* Placeholder engine
-* Email sending
-* SMS sending
-* WhatsApp sending
-* Follow-up reminders
-* Fee reminders
-* Attendance alerts
-* Certificate notifications
-* Communication history
+- Notification templates
+- Placeholder engine
+- Email sending
+- SMS sending
+- WhatsApp sending
+- Follow-up reminders
+- Fee reminders
+- Attendance alerts
+- Certificate notifications
+- Communication history
 
 ### Core Entities
 
-* CommunicationTemplate
-* TemplatePlaceholder
-* NotificationRequest
-* NotificationLog
-* CommunicationChannel
-* MessageDeliveryStatus
+- CommunicationTemplate
+- TemplatePlaceholder
+- NotificationRequest
+- NotificationLog
+- CommunicationChannel
+- MessageDeliveryStatus
 
 ### Important Rules
 
-* Templates should support English and Arabic where required.
-* Communication history must be preserved.
-* Notification should be event-driven where possible.
+- Templates should support English and Arabic where required.
+- Communication history must be preserved.
+- Notification should be event-driven where possible.
 
 ---
 
@@ -1119,21 +1119,21 @@ Manages student, trainer, employee, and corporate documents.
 
 ### Key Responsibilities
 
-* Document upload
-* Document type configuration
-* Document verification
-* Approval / rejection
-* Expiry date tracking
-* Compliance alerts
+- Document upload
+- Document type configuration
+- Document verification
+- Approval / rejection
+- Expiry date tracking
+- Compliance alerts
 
 ### Core Entities
 
-* Document
-* DocumentType
-* DocumentOwner
-* DocumentVerification
-* DocumentStatus
-* DocumentExpiry
+- Document
+- DocumentType
+- DocumentOwner
+- DocumentVerification
+- DocumentStatus
+- DocumentExpiry
 
 ### Document Workflow
 
@@ -1147,9 +1147,9 @@ Expired
 
 ### Important Rules
 
-* Documents may belong to students, trainers, employees, or corporate accounts.
-* Expiry tracking is required for documents such as Civil ID, Passport, Visa, contracts, and licenses.
-* Expiry alert scheduling details belong in Architecture / NFR design.
+- Documents may belong to students, trainers, employees, or corporate accounts.
+- Expiry tracking is required for documents such as Civil ID, Passport, Visa, contracts, and licenses.
+- Expiry alert scheduling details belong in Architecture / NFR design.
 
 ---
 
@@ -1161,12 +1161,12 @@ Provides operational, financial, sales, and executive visibility.
 
 ### Key Responsibilities
 
-* Dashboard widgets
-* KPI snapshots
-* Report generation
-* Permission-based dashboard access
-* Export reports
-* Executive MIS
+- Dashboard widgets
+- KPI snapshots
+- Report generation
+- Permission-based dashboard access
+- Export reports
+- Executive MIS
 
 ### Core Dashboards
 
@@ -1213,10 +1213,10 @@ Payroll Summary
 
 ### Important Rules
 
-* Reporting consumes data from other contexts.
-* Reporting should not own core business transactions.
-* Executive dashboards must be permission-based.
-* Dashboard access should use permissions such as `dashboard.ceo`, not hardcoded roles.
+- Reporting consumes data from other contexts.
+- Reporting should not own core business transactions.
+- Executive dashboards must be permission-based.
+- Dashboard access should use permissions such as `dashboard.ceo`, not hardcoded roles.
 
 ---
 
@@ -1228,22 +1228,22 @@ Tracks critical actions, approvals, changes, and compliance events.
 
 ### Key Responsibilities
 
-* User action logging
-* Sensitive data change tracking
-* Approval history
-* Finance audit
-* Attendance audit
-* Permission change audit
-* Document compliance tracking
+- User action logging
+- Sensitive data change tracking
+- Approval history
+- Finance audit
+- Attendance audit
+- Permission change audit
+- Document compliance tracking
 
 ### Core Entities
 
-* AuditLog
-* ApprovalRequest
-* ApprovalStatus
-* ApprovalHistory
-* UserActionLog
-* ComplianceEvent
+- AuditLog
+- ApprovalRequest
+- ApprovalStatus
+- ApprovalHistory
+- UserActionLog
+- ComplianceEvent
 
 ### Approval Workflows
 
@@ -1287,13 +1287,13 @@ Manages employee lifecycle and HR records.
 
 ### Future Responsibilities
 
-* Employee master
-* Employee onboarding
-* HR document tracking
-* Leave management
-* Staff attendance
-* Expiry alerts
-* Performance management
+- Employee master
+- Employee onboarding
+- HR document tracking
+- Leave management
+- Staff attendance
+- Expiry alerts
+- Performance management
 
 ### Important Rule
 
@@ -1309,11 +1309,11 @@ Provides employee-facing self-service features.
 
 ### Future Responsibilities
 
-* Leave request submission
-* Payslip download
-* Salary certificate request
-* Employee profile view
-* HR request submission
+- Leave request submission
+- Payslip download
+- Salary certificate request
+- Employee profile view
+- HR request submission
 
 ---
 
@@ -1325,14 +1325,14 @@ Manages payroll calculation, salary processing, payslips, EOSB, bank transfer fi
 
 ### Future Responsibilities
 
-* Payroll rule configuration
-* Salary calculation
-* Deductions
-* Allowances
-* Payslip generation
-* EOSB calculation
-* Bank file generation
-* Payroll approval
+- Payroll rule configuration
+- Salary calculation
+- Deductions
+- Allowances
+- Payslip generation
+- EOSB calculation
+- Bank file generation
+- Payroll approval
 
 ---
 
@@ -1344,21 +1344,21 @@ Synchronizes financial transactions between IMS and Tally.
 
 ### Future Responsibilities
 
-* Export invoices
-* Export receipts
-* Export payments
-* Export credit notes
-* Track sync status
-* Reconcile failed syncs
+- Export invoices
+- Export receipts
+- Export payments
+- Export credit notes
+- Track sync status
+- Reconcile failed syncs
 
 ### Important Rules
 
-* Finance owns source financial data.
-* Tally Integration only synchronizes.
-* Sync must be real-time but asynchronous.
-* Tally sync must not affect API response time.
-* Daily reconciliation should handle failures.
-* Retry, queue, and outbox patterns belong in Architecture / Integration design.
+- Finance owns source financial data.
+- Tally Integration only synchronizes.
+- Sync must be real-time but asynchronous.
+- Tally sync must not affect API response time.
+- Daily reconciliation should handle failures.
+- Retry, queue, and outbox patterns belong in Architecture / Integration design.
 
 ---
 
@@ -1370,18 +1370,18 @@ Integrates biometric devices for staff and/or student attendance.
 
 ### Future Responsibilities
 
-* Receive biometric logs
-* Map biometric user to system user/person
-* Prevent duplicate sync
-* Track sync status
-* Report sync failures
+- Receive biometric logs
+- Map biometric user to system user/person
+- Prevent duplicate sync
+- Track sync status
+- Report sync failures
 
 ### Important Rules
 
-* Biometric integration is an integration context, not the source of attendance truth.
-* Attendance context owns attendance records.
-* Biometric sync should be idempotent.
-* Offline buffering and local gateway design belong in Architecture / Integration document.
+- Biometric integration is an integration context, not the source of attendance truth.
+- Attendance context owns attendance records.
+- Biometric sync should be idempotent.
+- Offline buffering and local gateway design belong in Architecture / Integration document.
 
 ---
 
@@ -1393,14 +1393,14 @@ Uses operational data to generate predictions and recommendations.
 
 ### Future AI Capabilities
 
-* Suggest next counselor follow-up
-* Recommend courses to students
-* Predict batch demand
-* Predict faculty utilization
-* Predict fee collection
-* Predict student dropout risk
-* Suggest new batches
-* Suggest marketing campaigns
+- Suggest next counselor follow-up
+- Recommend courses to students
+- Predict batch demand
+- Predict faculty utilization
+- Predict fee collection
+- Predict student dropout risk
+- Suggest new batches
+- Suggest marketing campaigns
 
 ### AI-Ready Data to Capture from Day 1
 
@@ -1447,12 +1447,12 @@ LeadStageHistory
 
 ### Key Invariants
 
-* Lead must have a source.
-* Lead must have a current status.
-* Converted lead must link to admission or enrollment.
-* Lost lead must capture lost reason.
-* Lead stage transitions must be recorded chronologically inside LeadStageHistory.
-* Lead notes must be immutable once created.
+- Lead must have a source.
+- Lead must have a current status.
+- Converted lead must link to admission or enrollment.
+- Lost lead must capture lost reason.
+- Lead stage transitions must be recorded chronologically inside LeadStageHistory.
+- Lead notes must be immutable once created.
 
 ---
 
@@ -1479,13 +1479,13 @@ CorporateCreditValidation
 
 ### Key Invariants
 
-* Enrollment must link to course.
-* Enrollment must link to batch.
-* Enrollment must have valid learner or participant.
-* Enrollment must respect pricing hierarchy.
-* Enrollment must validate corporate credit rules when corporate linked.
-* Enrollment cannot be completed before required completion rules are satisfied.
-* Certificate cannot be issued before eligibility approval and payment validation.
+- Enrollment must link to course.
+- Enrollment must link to batch.
+- Enrollment must have valid learner or participant.
+- Enrollment must respect pricing hierarchy.
+- Enrollment must validate corporate credit rules when corporate linked.
+- Enrollment cannot be completed before required completion rules are satisfied.
+- Certificate cannot be issued before eligibility approval and payment validation.
 
 ---
 
@@ -1510,10 +1510,10 @@ CreditLimit
 
 ### Key Invariants
 
-* Corporate participant must belong to corporate account.
-* Corporate enrollment must follow contract terms.
-* Corporate billing must follow agreed billing cycle.
-* Credit limit validation applies where configured.
+- Corporate participant must belong to corporate account.
+- Corporate enrollment must follow contract terms.
+- Corporate billing must follow agreed billing cycle.
+- Credit limit validation applies where configured.
 
 ---
 
@@ -1538,11 +1538,11 @@ CourseApproval
 
 ### Key Invariants
 
-* Course must belong to department or category.
-* Published course must have valid pricing.
-* Published course must have completion rule.
-* Completion rules are defined at course level.
-* Pricing and discounts follow global → branch → batch override hierarchy.
+- Course must belong to department or category.
+- Published course must have valid pricing.
+- Published course must have completion rule.
+- Completion rules are defined at course level.
+- Pricing and discounts follow global → branch → batch override hierarchy.
 
 ---
 
@@ -1567,11 +1567,11 @@ BatchDiscountOverride
 
 ### Key Invariants
 
-* Batch must link to course.
-* Batch may override course pricing and discount.
-* Batch capacity must not exceed configured limit unless override is allowed.
-* Trainer conflicts must be prevented.
-* Classroom conflicts must be prevented.
+- Batch must link to course.
+- Batch may override course pricing and discount.
+- Batch capacity must not exceed configured limit unless override is allowed.
+- Trainer conflicts must be prevented.
+- Classroom conflicts must be prevented.
 
 ---
 
@@ -1596,11 +1596,11 @@ CorporateCreditRule
 
 ### Key Invariants
 
-* Invoice must have valid customer or student reference.
-* Payment must be allocated to invoice or advance.
-* Receivables aging must be calculated from invoice due date.
-* Refund must refer to valid payment or invoice.
-* Corporate credit rules must be checked where configured.
+- Invoice must have valid customer or student reference.
+- Payment must be allocated to invoice or advance.
+- Receivables aging must be calculated from invoice due date.
+- Refund must refer to valid payment or invoice.
+- Corporate credit rules must be checked where configured.
 
 ---
 
@@ -1623,11 +1623,11 @@ CertificateReissueRequest
 
 ### Key Invariants
 
-* Certificate must link to enrollment.
-* Certificate must have unique verification code.
-* Certificate cannot be issued without completion eligibility.
-* Certificate cannot be issued without payment validation where required.
-* Certificate uses a single hardcoded template in current version.
+- Certificate must link to enrollment.
+- Certificate must have unique verification code.
+- Certificate cannot be issued without completion eligibility.
+- Certificate cannot be issued without payment validation where required.
+- Certificate uses a single hardcoded template in current version.
 
 ---
 
@@ -2209,19 +2209,19 @@ This DDD v3.0 should be used as the current baseline for ASTI IMS.
 
 It consolidates:
 
-* Proposal-aligned scope
-* Single admin portal strategy
-* Static website with dynamic course data
-* Admission vs enrollment separation
-* Enrollment as central aggregate
-* Course + batch mandatory enrollment
-* Corporate participant to student conversion
-* Pricing and discount hierarchy
-* Invoice-centric finance
-* Corporate credit enforcement
-* Certificate issuance rules
-* Permission-based dashboards
-* Branch-level access rules
-* Future phase separation for HRMS, ESS, Payroll, Tally, Biometric, and AI
+- Proposal-aligned scope
+- Single admin portal strategy
+- Static website with dynamic course data
+- Admission vs enrollment separation
+- Enrollment as central aggregate
+- Course + batch mandatory enrollment
+- Corporate participant to student conversion
+- Pricing and discount hierarchy
+- Invoice-centric finance
+- Corporate credit enforcement
+- Certificate issuance rules
+- Permission-based dashboards
+- Branch-level access rules
+- Future phase separation for HRMS, ESS, Payroll, Tally, Biometric, and AI
 
 The next recommended step is to create the **Entity Relationship Model / Domain Data Model v3** aligned with these bounded contexts and aggregate ownership rules.

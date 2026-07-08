@@ -10,18 +10,18 @@ The module is implemented inside the ASTI IMS modular monolith. Security control
 
 ## 2. Security Objectives
 
-| ID | Objective | Requirement |
-|---|---|---|
-| SEC-FBR-001 | Confidentiality | Prevent unauthorized disclosure of student financial data, corporate billing data, payment references, refund information, credit exposure, exports, and audit history. |
-| SEC-FBR-002 | Integrity | Prevent unauthorized modification, duplicate posting, partial posting, silent deletion, and arithmetic corruption of financial records. |
-| SEC-FBR-003 | Availability | Keep invoice, collection, payment-validation, receivable, and credit-validation functions available within defined service targets. |
-| SEC-FBR-004 | Accountability | Every sensitive financial action must be attributable to an authenticated human actor or approved internal service identity. |
-| SEC-FBR-005 | Non-repudiation | Posted payments, issued receipts, refund decisions, refund execution, invoice issue/cancel actions, and credit-rule changes must leave immutable audit evidence. |
-| SEC-FBR-006 | Least privilege | Users and internal callers receive only the minimum action, menu, report, export, and branch scope needed for assigned duties. |
-| SEC-FBR-007 | Separation of duties | Refund request, approval, and execution must enforce maker-checker-executor controls where roles are separated. |
-| SEC-FBR-008 | Data minimization | Store only payment metadata required for reconciliation and audit; never store raw card PAN, CVV/CVC, PIN, track data, or authentication secrets. |
-| SEC-FBR-009 | Branch isolation | Prevent cross-branch data access through entity reads, mutations, search filters, aggregate counts, dashboards, reports, exports, and error-message leakage. |
-| SEC-FBR-010 | Recoverability | Support tested backup, point-in-time recovery, reconciliation, and controlled repair without deleting source financial history. |
+| ID          | Objective            | Requirement                                                                                                                                                             |
+| ----------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SEC-FBR-001 | Confidentiality      | Prevent unauthorized disclosure of student financial data, corporate billing data, payment references, refund information, credit exposure, exports, and audit history. |
+| SEC-FBR-002 | Integrity            | Prevent unauthorized modification, duplicate posting, partial posting, silent deletion, and arithmetic corruption of financial records.                                 |
+| SEC-FBR-003 | Availability         | Keep invoice, collection, payment-validation, receivable, and credit-validation functions available within defined service targets.                                     |
+| SEC-FBR-004 | Accountability       | Every sensitive financial action must be attributable to an authenticated human actor or approved internal service identity.                                            |
+| SEC-FBR-005 | Non-repudiation      | Posted payments, issued receipts, refund decisions, refund execution, invoice issue/cancel actions, and credit-rule changes must leave immutable audit evidence.        |
+| SEC-FBR-006 | Least privilege      | Users and internal callers receive only the minimum action, menu, report, export, and branch scope needed for assigned duties.                                          |
+| SEC-FBR-007 | Separation of duties | Refund request, approval, and execution must enforce maker-checker-executor controls where roles are separated.                                                         |
+| SEC-FBR-008 | Data minimization    | Store only payment metadata required for reconciliation and audit; never store raw card PAN, CVV/CVC, PIN, track data, or authentication secrets.                       |
+| SEC-FBR-009 | Branch isolation     | Prevent cross-branch data access through entity reads, mutations, search filters, aggregate counts, dashboards, reports, exports, and error-message leakage.            |
+| SEC-FBR-010 | Recoverability       | Support tested backup, point-in-time recovery, reconciliation, and controlled repair without deleting source financial history.                                         |
 
 ## 3. Security Trust Boundaries
 
@@ -98,7 +98,11 @@ Trusted internal calls from Completion, Certificate, Corporate Training, and Rep
 
 ```ts
 type InternalCallContext = {
-  callerModule: "completion" | "certificate" | "corporate-training" | "reporting";
+  callerModule:
+    | 'completion'
+    | 'certificate'
+    | 'corporate-training'
+    | 'reporting';
   operation: string;
   correlationId: string;
   causationId?: string;
@@ -145,21 +149,21 @@ A client-provided `branchId` or `branchIds` parameter is intersected with the ef
 
 ### 5.3 Scope Rules by Finance Entity
 
-| Entity / Data Set | Scope Predicate |
-|---|---|
-| Invoice | `invoice.branchId IN effectiveBranchSet` |
-| InvoiceLineItem | parent invoice branch in scope; consolidated corporate invoice line drill-down also requires line source branch in authorized scope where detail is branch-sensitive |
-| InstallmentPlan | parent invoice branch in scope |
-| Installment | parent plan → invoice branch in scope |
-| Payment | `payment.branchId IN effectiveBranchSet` and parent invoice in scope |
-| PaymentAllocation | payment and target invoice/plan branch checks must pass |
-| Receipt | parent payment branch in scope |
-| Refund | refund branch and referenced invoice/payment branch in scope |
-| Receivable | receivable branch and parent invoice branch in scope |
-| CorporateCreditRule | visibility limited to branches/accounts covered by actor permission and account-management scope |
-| Dashboard aggregates | source rows filtered before aggregation |
-| Exports | identical scope predicate to on-screen report plus explicit `finance.export` |
-| Audit | event target branch in scope plus `finance.audit.read` |
+| Entity / Data Set    | Scope Predicate                                                                                                                                                      |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Invoice              | `invoice.branchId IN effectiveBranchSet`                                                                                                                             |
+| InvoiceLineItem      | parent invoice branch in scope; consolidated corporate invoice line drill-down also requires line source branch in authorized scope where detail is branch-sensitive |
+| InstallmentPlan      | parent invoice branch in scope                                                                                                                                       |
+| Installment          | parent plan → invoice branch in scope                                                                                                                                |
+| Payment              | `payment.branchId IN effectiveBranchSet` and parent invoice in scope                                                                                                 |
+| PaymentAllocation    | payment and target invoice/plan branch checks must pass                                                                                                              |
+| Receipt              | parent payment branch in scope                                                                                                                                       |
+| Refund               | refund branch and referenced invoice/payment branch in scope                                                                                                         |
+| Receivable           | receivable branch and parent invoice branch in scope                                                                                                                 |
+| CorporateCreditRule  | visibility limited to branches/accounts covered by actor permission and account-management scope                                                                     |
+| Dashboard aggregates | source rows filtered before aggregation                                                                                                                              |
+| Exports              | identical scope predicate to on-screen report plus explicit `finance.export`                                                                                         |
+| Audit                | event target branch in scope plus `finance.audit.read`                                                                                                               |
 
 ### 5.4 Anti-Leakage Requirements
 
@@ -180,17 +184,17 @@ Permissions defined in Part 6 are enforced at three layers:
 
 Sensitive permission examples:
 
-| Operation | Required Permission | Additional Rule |
-|---|---|---|
-| Issue invoice | `finance.invoice.issue` | Invoice must be in authorized branch and Draft state. |
-| Record payment | `finance.payment.record` | Invoice in scope; method-specific validation; idempotency required. |
-| Request refund | `finance.refund.request` | Actor may not approve own request. |
-| Approve refund | `finance.refund.approve` | Maker-checker rule and approval state enforced. |
-| Execute refund | `finance.refund.execute` | Approved state and executor authorization required. |
-| Manage credit rule | `finance.credit.manage` | Effective-date overlap and account scope checks. |
-| Consolidated reporting | `finance.report.consolidated` | IAM `canViewConsolidated=true` also mandatory. |
-| Export | `finance.export` | Underlying report/read permission also required. |
-| Audit search | `finance.audit.read` | Scope-limited audit results only. |
+| Operation              | Required Permission           | Additional Rule                                                     |
+| ---------------------- | ----------------------------- | ------------------------------------------------------------------- |
+| Issue invoice          | `finance.invoice.issue`       | Invoice must be in authorized branch and Draft state.               |
+| Record payment         | `finance.payment.record`      | Invoice in scope; method-specific validation; idempotency required. |
+| Request refund         | `finance.refund.request`      | Actor may not approve own request.                                  |
+| Approve refund         | `finance.refund.approve`      | Maker-checker rule and approval state enforced.                     |
+| Execute refund         | `finance.refund.execute`      | Approved state and executor authorization required.                 |
+| Manage credit rule     | `finance.credit.manage`       | Effective-date overlap and account scope checks.                    |
+| Consolidated reporting | `finance.report.consolidated` | IAM `canViewConsolidated=true` also mandatory.                      |
+| Export                 | `finance.export`              | Underlying report/read permission also required.                    |
+| Audit search           | `finance.audit.read`          | Scope-limited audit results only.                                   |
 
 ## 7. Financial Transaction Integrity Controls
 
@@ -306,16 +310,16 @@ Finance stores references to Party-owned or Enrollment-owned entities rather tha
 
 ### 10.2 Display Masking
 
-| Data | Default UI / Report Behavior |
-|---|---|
-| Student name | Visible where business operation requires it. |
-| Student number | Visible to authorized operational users. |
-| Email | Mask in list views unless contact action requires full value. |
-| Phone | Mask in list views unless contact action requires full value. |
-| Civil ID / Passport | Not included in Finance screens or exports by default. |
-| Bank reference | Show full only to authorized Finance users; mask in broadly visible summaries. |
-| Cheque number | Restricted to Finance operational detail. |
-| Corporate credit exposure | Restricted to credit/report permissions and account scope. |
+| Data                      | Default UI / Report Behavior                                                   |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| Student name              | Visible where business operation requires it.                                  |
+| Student number            | Visible to authorized operational users.                                       |
+| Email                     | Mask in list views unless contact action requires full value.                  |
+| Phone                     | Mask in list views unless contact action requires full value.                  |
+| Civil ID / Passport       | Not included in Finance screens or exports by default.                         |
+| Bank reference            | Show full only to authorized Finance users; mask in broadly visible summaries. |
+| Cheque number             | Restricted to Finance operational detail.                                      |
+| Corporate credit exposure | Restricted to credit/report permissions and account scope.                     |
 
 ### 10.3 Logging Redaction
 
@@ -333,20 +337,20 @@ Structured logs must redact:
 
 ### 11.1 Mandatory Audited Actions
 
-| Action | Audit Requirement |
-|---|---|
-| Invoice created/updated/issued/cancelled | Actor, branch, invoice ID, prior/new state, reason where applicable. |
-| Installment plan created | Plan ID, invoice ID, schedule summary, actor. |
-| Payment recorded | Payment ID, invoice ID, amount, method, actor, branch; no prohibited card data. |
-| Payment allocation changed by controlled repair | Before/after allocation values, incident/change reference, privileged actor. |
-| Receipt generated/re-rendered | Receipt ID, payment ID, locale, actor/caller. |
-| Refund requested | Refund ID, amount, reason, requester. |
-| Refund approved/rejected | Decision, approver, remarks, timestamp. |
-| Refund executed | Executor, execution reference, amount, resulting reconciliation status. |
-| Credit rule created/superseded | Before/after rule, effective period, actor. |
-| Corporate credit validation | Account, proposed value, exposure summary, decision, caller module. |
-| Finance export requested/downloaded | Report code, filters hash, branch scope, row count, actor. |
-| Permission/branch denial | Principal, attempted capability, target type, correlation ID; avoid disclosing foreign entity facts. |
+| Action                                          | Audit Requirement                                                                                    |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Invoice created/updated/issued/cancelled        | Actor, branch, invoice ID, prior/new state, reason where applicable.                                 |
+| Installment plan created                        | Plan ID, invoice ID, schedule summary, actor.                                                        |
+| Payment recorded                                | Payment ID, invoice ID, amount, method, actor, branch; no prohibited card data.                      |
+| Payment allocation changed by controlled repair | Before/after allocation values, incident/change reference, privileged actor.                         |
+| Receipt generated/re-rendered                   | Receipt ID, payment ID, locale, actor/caller.                                                        |
+| Refund requested                                | Refund ID, amount, reason, requester.                                                                |
+| Refund approved/rejected                        | Decision, approver, remarks, timestamp.                                                              |
+| Refund executed                                 | Executor, execution reference, amount, resulting reconciliation status.                              |
+| Credit rule created/superseded                  | Before/after rule, effective period, actor.                                                          |
+| Corporate credit validation                     | Account, proposed value, exposure summary, decision, caller module.                                  |
+| Finance export requested/downloaded             | Report code, filters hash, branch scope, row count, actor.                                           |
+| Permission/branch denial                        | Principal, attempted capability, target type, correlation ID; avoid disclosing foreign entity facts. |
 
 ### 11.2 Audit Record Requirements
 
@@ -391,14 +395,14 @@ Audit data is owned by Audit & Compliance; Finance emits or invokes the required
 
 ## 13. Abuse Prevention and Rate Controls
 
-| Endpoint Category | Control Target |
-|---|---|
-| Read/search APIs | 120 requests/minute/user as an initial platform limit, with pagination caps. |
-| Payment posting | 30 requests/minute/user plus idempotency; alert on abnormal duplicate/conflict rates. |
-| Refund mutations | 20 requests/minute/user; all attempts audited. |
+| Endpoint Category               | Control Target                                                                          |
+| ------------------------------- | --------------------------------------------------------------------------------------- |
+| Read/search APIs                | 120 requests/minute/user as an initial platform limit, with pagination caps.            |
+| Payment posting                 | 30 requests/minute/user plus idempotency; alert on abnormal duplicate/conflict rates.   |
+| Refund mutations                | 20 requests/minute/user; all attempts audited.                                          |
 | Credit validation internal call | 300 requests/minute/module instance with circuit protection against pathological loops. |
-| Export creation | Maximum 5 concurrent export jobs/user and 20/hour/user. |
-| Document downloads | 120 requests/minute/user; signed URL expiry enforced. |
+| Export creation                 | Maximum 5 concurrent export jobs/user and 20/hour/user.                                 |
+| Document downloads              | 120 requests/minute/user; signed URL expiry enforced.                                   |
 
 Limits are initial production guardrails and may be tuned from observed load. A rate limit must not bypass domain idempotency or transaction controls.
 
@@ -418,65 +422,65 @@ Limits are initial production guardrails and may be tuned from observed load. A 
 
 Measurements exclude client network latency and are measured server-side at the application boundary under normal production load.
 
-| NFR ID | Capability | Target |
-|---|---|---|
-| NFR-FBR-PERF-001 | Invoice detail read | p95 ≤ 2.0 s; p99 ≤ 4.0 s. |
-| NFR-FBR-PERF-002 | Payment detail read | p95 ≤ 2.0 s; p99 ≤ 4.0 s. |
-| NFR-FBR-PERF-003 | Standard paginated list/search | p95 ≤ 3.0 s for indexed supported filters, page size ≤100. |
-| NFR-FBR-PERF-004 | Payment posting transaction | p95 ≤ 3.0 s; p99 ≤ 6.0 s, excluding third-party gateway processing which is out of current scope. |
-| NFR-FBR-PERF-005 | Invoice issue transaction | p95 ≤ 3.0 s for ≤100 line items; hard line-count limit governed by validation rules. |
-| NFR-FBR-PERF-006 | Corporate credit validation | p95 ≤ 750 ms; p99 ≤ 1.5 s against authoritative indexed transactional data. |
-| NFR-FBR-PERF-007 | Enrollment payment validation | p95 ≤ 500 ms; p99 ≤ 1.0 s. |
-| NFR-FBR-PERF-008 | Dashboard initial data | p95 ≤ 3.0 s from current read models. |
-| NFR-FBR-PERF-009 | Standard branch report query | p95 ≤ 5.0 s for up to 12 months and supported indexed filters. |
-| NFR-FBR-PERF-010 | PDF invoice/receipt rendering | p95 ≤ 8.0 s for interactive documents. |
+| NFR ID           | Capability                         | Target                                                                                                                                       |
+| ---------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-FBR-PERF-001 | Invoice detail read                | p95 ≤ 2.0 s; p99 ≤ 4.0 s.                                                                                                                    |
+| NFR-FBR-PERF-002 | Payment detail read                | p95 ≤ 2.0 s; p99 ≤ 4.0 s.                                                                                                                    |
+| NFR-FBR-PERF-003 | Standard paginated list/search     | p95 ≤ 3.0 s for indexed supported filters, page size ≤100.                                                                                   |
+| NFR-FBR-PERF-004 | Payment posting transaction        | p95 ≤ 3.0 s; p99 ≤ 6.0 s, excluding third-party gateway processing which is out of current scope.                                            |
+| NFR-FBR-PERF-005 | Invoice issue transaction          | p95 ≤ 3.0 s for ≤100 line items; hard line-count limit governed by validation rules.                                                         |
+| NFR-FBR-PERF-006 | Corporate credit validation        | p95 ≤ 750 ms; p99 ≤ 1.5 s against authoritative indexed transactional data.                                                                  |
+| NFR-FBR-PERF-007 | Enrollment payment validation      | p95 ≤ 500 ms; p99 ≤ 1.0 s.                                                                                                                   |
+| NFR-FBR-PERF-008 | Dashboard initial data             | p95 ≤ 3.0 s from current read models.                                                                                                        |
+| NFR-FBR-PERF-009 | Standard branch report query       | p95 ≤ 5.0 s for up to 12 months and supported indexed filters.                                                                               |
+| NFR-FBR-PERF-010 | PDF invoice/receipt rendering      | p95 ≤ 8.0 s for interactive documents.                                                                                                       |
 | NFR-FBR-PERF-011 | CSV/XLSX export request acceptance | ≤ 2.0 s to validate and register export; generation may run as an internal background job owned by the modular monolith jobs infrastructure. |
 
 ### 15.2 Capacity and Concurrency Targets
 
 Initial production sizing targets:
 
-| NFR ID | Target |
-|---|---|
-| NFR-FBR-CAP-001 | Support 300 concurrent authenticated Admin Portal users across the IMS with at least 100 concurrent Finance-active users. |
-| NFR-FBR-CAP-002 | Support 50 concurrent payment-posting requests without duplicate postings or lost updates. |
-| NFR-FBR-CAP-003 | Support 20 concurrent invoice-issue transactions for distinct invoices. |
-| NFR-FBR-CAP-004 | Support 10 concurrent report/export generation jobs without degrading payment p95 above 4 seconds. |
+| NFR ID          | Target                                                                                                                                                                                           |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| NFR-FBR-CAP-001 | Support 300 concurrent authenticated Admin Portal users across the IMS with at least 100 concurrent Finance-active users.                                                                        |
+| NFR-FBR-CAP-002 | Support 50 concurrent payment-posting requests without duplicate postings or lost updates.                                                                                                       |
+| NFR-FBR-CAP-003 | Support 20 concurrent invoice-issue transactions for distinct invoices.                                                                                                                          |
+| NFR-FBR-CAP-004 | Support 10 concurrent report/export generation jobs without degrading payment p95 above 4 seconds.                                                                                               |
 | NFR-FBR-CAP-005 | Support at least 10 million invoice-line records and 10 million payment-allocation records with index-backed operational queries and archival/partition review before exceeding tested capacity. |
-| NFR-FBR-CAP-006 | All list endpoints cap interactive page size at 100 rows. |
+| NFR-FBR-CAP-006 | All list endpoints cap interactive page size at 100 rows.                                                                                                                                        |
 
 These are acceptance targets, not a mandate for microservices. Scaling remains within the modular-monolith deployment model through stateless application replicas, connection-pool tuning, database indexing, and reporting projections.
 
 ### 15.3 Availability Targets
 
-| NFR ID | Target |
-|---|---|
-| NFR-FBR-AVL-001 | Monthly availability target: ≥99.9%, excluding approved maintenance windows. |
-| NFR-FBR-AVL-002 | Payment posting, refund execution, and credit validation fail closed if authoritative transactional storage is unavailable. |
+| NFR ID          | Target                                                                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| NFR-FBR-AVL-001 | Monthly availability target: ≥99.9%, excluding approved maintenance windows.                                                                           |
+| NFR-FBR-AVL-002 | Payment posting, refund execution, and credit validation fail closed if authoritative transactional storage is unavailable.                            |
 | NFR-FBR-AVL-003 | Read-only reports may serve the last successfully refreshed projection when marked with `dataAsOf` and when transactional actions do not depend on it. |
-| NFR-FBR-AVL-004 | A single report/export failure must not prevent payment or invoice operations. |
-| NFR-FBR-AVL-005 | Application health endpoints must distinguish liveness from readiness. |
+| NFR-FBR-AVL-004 | A single report/export failure must not prevent payment or invoice operations.                                                                         |
+| NFR-FBR-AVL-005 | Application health endpoints must distinguish liveness from readiness.                                                                                 |
 
 ### 15.4 Reliability and Consistency Targets
 
-| NFR ID | Target |
-|---|---|
-| NFR-FBR-REL-001 | No duplicate payment from identical idempotency key and payload. |
-| NFR-FBR-REL-002 | Financial command transactions are atomic; no partial payment/allocation/receipt state is permitted. |
-| NFR-FBR-REL-003 | Invoice, payment, refund, receivable, and credit calculations must be deterministic and decimal-safe. |
+| NFR ID          | Target                                                                                                                                      |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-FBR-REL-001 | No duplicate payment from identical idempotency key and payload.                                                                            |
+| NFR-FBR-REL-002 | Financial command transactions are atomic; no partial payment/allocation/receipt state is permitted.                                        |
+| NFR-FBR-REL-003 | Invoice, payment, refund, receivable, and credit calculations must be deterministic and decimal-safe.                                       |
 | NFR-FBR-REL-004 | Reconciliation exceptions must be detectable by scheduled controls within 15 minutes for operational data and by daily full reconciliation. |
-| NFR-FBR-REL-005 | Read-model refresh failures must not alter transactional source data. |
-| NFR-FBR-REL-006 | Domain event handlers executed in-process must be idempotent where retryable. |
+| NFR-FBR-REL-005 | Read-model refresh failures must not alter transactional source data.                                                                       |
+| NFR-FBR-REL-006 | Domain event handlers executed in-process must be idempotent where retryable.                                                               |
 
 ### 15.5 Backup and Recovery Targets
 
-| NFR ID | Target |
-|---|---|
-| NFR-FBR-DR-001 | Transactional database Recovery Point Objective (RPO): ≤15 minutes. |
-| NFR-FBR-DR-002 | Transactional database Recovery Time Objective (RTO): ≤4 hours for a regional/database restoration scenario. |
+| NFR ID         | Target                                                                                                                                                           |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-FBR-DR-001 | Transactional database Recovery Point Objective (RPO): ≤15 minutes.                                                                                              |
+| NFR-FBR-DR-002 | Transactional database Recovery Time Objective (RTO): ≤4 hours for a regional/database restoration scenario.                                                     |
 | NFR-FBR-DR-003 | Reporting read models may be rebuilt from transactional data; RTO ≤8 hours for full read-model rebuild unless a tested production benchmark sets a lower target. |
-| NFR-FBR-DR-004 | Backup restoration test at least quarterly. |
-| NFR-FBR-DR-005 | No recovery process may resolve inconsistency by deleting posted financial transactions. |
+| NFR-FBR-DR-004 | Backup restoration test at least quarterly.                                                                                                                      |
+| NFR-FBR-DR-005 | No recovery process may resolve inconsistency by deleting posted financial transactions.                                                                         |
 
 ### 15.6 Scalability Targets
 
@@ -490,12 +494,12 @@ These are acceptance targets, not a mandate for microservices. Scaling remains w
 
 ### 15.7 Usability Targets
 
-| NFR ID | Target |
-|---|---|
-| NFR-FBR-USA-001 | Common payment recording workflow completable by trained Accountant in ≤90 seconds excluding cash counting or external banking steps. |
-| NFR-FBR-USA-002 | Invoice search returns actionable first results within the search performance target and preserves filters in URL state. |
-| NFR-FBR-USA-003 | Validation errors identify exact field and correction guidance without losing valid form input. |
-| NFR-FBR-USA-004 | Destructive or irreversible actions require explicit confirmation and show business identifier, amount, and state. |
+| NFR ID          | Target                                                                                                                                                |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NFR-FBR-USA-001 | Common payment recording workflow completable by trained Accountant in ≤90 seconds excluding cash counting or external banking steps.                 |
+| NFR-FBR-USA-002 | Invoice search returns actionable first results within the search performance target and preserves filters in URL state.                              |
+| NFR-FBR-USA-003 | Validation errors identify exact field and correction guidance without losing valid form input.                                                       |
+| NFR-FBR-USA-004 | Destructive or irreversible actions require explicit confirmation and show business identifier, amount, and state.                                    |
 | NFR-FBR-USA-005 | English and Arabic labels must not be mixed within the same selected locale except immutable business identifiers and accepted finance abbreviations. |
 
 ### 15.8 Accessibility Targets

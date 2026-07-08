@@ -33,11 +33,13 @@ export class PrismaEnrollmentReader implements EnrollmentReader {
     };
   }
 
-  async getEnrollmentsForBatch(batchId: string): Promise<Array<{
-    id: string;
-    studentProfileId: string;
-    enrollmentStatus: string;
-  }>> {
+  async getEnrollmentsForBatch(batchId: string): Promise<
+    Array<{
+      id: string;
+      studentProfileId: string;
+      enrollmentStatus: string;
+    }>
+  > {
     const enrollments = await this.prisma.enrollment.findMany({
       where: {
         batchId,

@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { PasswordPolicy, DEFAULT_PASSWORD_POLICY_CONFIG } from './password-policy';
+import {
+  PasswordPolicy,
+  DEFAULT_PASSWORD_POLICY_CONFIG,
+} from './password-policy';
 import { createIamError } from '../errors/iam-errors';
 import { assertRoleArchivable } from './role';
 import { assertUserStatusTransition, canTransitionUserStatus } from './user';
@@ -9,8 +12,12 @@ describe('IAM domain safeguards', () => {
     const policy = new PasswordPolicy(DEFAULT_PASSWORD_POLICY_CONFIG);
     const reusedHash = await policy.hash('P@ssword123456');
 
-    await expect(policy.isReused('P@ssword123456', [reusedHash])).resolves.toBe(true);
-    await expect(policy.isReused('DifferentP@ss123', [reusedHash])).resolves.toBe(false);
+    await expect(policy.isReused('P@ssword123456', [reusedHash])).resolves.toBe(
+      true,
+    );
+    await expect(
+      policy.isReused('DifferentP@ss123', [reusedHash]),
+    ).resolves.toBe(false);
   });
 
   it('throws a structured error for system-role archive attempts', () => {
@@ -36,13 +43,17 @@ describe('IAM domain safeguards', () => {
 
     expect(error.errorCode).toBe('IAM-AUTH-008');
     expect(error.messageEn).toBe('Maximum concurrent sessions reached.');
-    expect(error.messageAr).toBe('تم الوصول إلى الحد الأقصى للجلسات المتزامنة.');
+    expect(error.messageAr).toBe(
+      'تم الوصول إلى الحد الأقصى للجلسات المتزامنة.',
+    );
   });
 
   it('describes allowed user status transitions', () => {
     expect(canTransitionUserStatus('PendingActivation', 'Active')).toBe(true);
     expect(canTransitionUserStatus('Active', 'Archived')).toBe(true);
     expect(canTransitionUserStatus('Archived', 'Active')).toBe(false);
-    expect(() => assertUserStatusTransition('Archived', 'Active')).toThrow('Invalid user status transition from Archived to Active.');
+    expect(() => assertUserStatusTransition('Archived', 'Active')).toThrow(
+      'Invalid user status transition from Archived to Active.',
+    );
   });
 });

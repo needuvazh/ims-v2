@@ -3,7 +3,15 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, CalendarDays, Clock3, Eye, LayoutDashboard, MapPinned, Sparkles } from 'lucide-react';
+import {
+  ArrowRight,
+  CalendarDays,
+  Clock3,
+  Eye,
+  LayoutDashboard,
+  MapPinned,
+  Sparkles,
+} from 'lucide-react';
 import {
   Badge,
   Button,
@@ -76,7 +84,8 @@ function conflictLabel(conflictType: string | null) {
 
 function rowTone(session: ConflictSessionRow) {
   if (session.scheduleStatus === 'Conflict') return 'bg-rose-50/70';
-  if (session.isConflictIgnored || session.overrideReason) return 'bg-amber-50/70';
+  if (session.isConflictIgnored || session.overrideReason)
+    return 'bg-amber-50/70';
   return 'border-[color:var(--ims-border)] bg-white';
 }
 
@@ -88,16 +97,27 @@ export function ConflictDashboardClient({
   classrooms: ClassroomOption[];
 }) {
   const router = useRouter();
-  const [selectedSession, setSelectedSession] = useState<ConflictSessionRow | null>(null);
+  const [selectedSession, setSelectedSession] =
+    useState<ConflictSessionRow | null>(null);
   const [wizardOpen, setWizardOpen] = useState(false);
 
   const counts = useMemo(() => {
-    const conflict = sessions.filter((session) => session.scheduleStatus === 'Conflict').length;
-    const warning = sessions.filter((session) => session.isConflictIgnored || session.overrideReason).length;
-    const holiday = sessions.filter((session) => session.conflictType === 'HOLIDAY').length;
-    const venue = sessions.filter((session) => session.conflictType === 'VENUE').length;
+    const conflict = sessions.filter(
+      (session) => session.scheduleStatus === 'Conflict',
+    ).length;
+    const warning = sessions.filter(
+      (session) => session.isConflictIgnored || session.overrideReason,
+    ).length;
+    const holiday = sessions.filter(
+      (session) => session.conflictType === 'HOLIDAY',
+    ).length;
+    const venue = sessions.filter(
+      (session) => session.conflictType === 'VENUE',
+    ).length;
     const overlap = sessions.filter(
-      (session) => session.conflictType === 'TRAINER_OVERLAP' || session.conflictType === 'CLASSROOM_OVERLAP',
+      (session) =>
+        session.conflictType === 'TRAINER_OVERLAP' ||
+        session.conflictType === 'CLASSROOM_OVERLAP',
     ).length;
 
     return { conflict, warning, holiday, venue, overlap };
@@ -113,31 +133,41 @@ export function ConflictDashboardClient({
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <Card className="border-[color:var(--ims-border)] shadow-none">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest">Conflicts</CardDescription>
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Conflicts
+            </CardDescription>
             <CardTitle className="text-2xl">{counts.conflict}</CardTitle>
           </CardHeader>
         </Card>
         <Card className="border-[color:var(--ims-border)] shadow-none">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest">Warnings</CardDescription>
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Warnings
+            </CardDescription>
             <CardTitle className="text-2xl">{counts.warning}</CardTitle>
           </CardHeader>
         </Card>
         <Card className="border-[color:var(--ims-border)] shadow-none">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest">Holiday</CardDescription>
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Holiday
+            </CardDescription>
             <CardTitle className="text-2xl">{counts.holiday}</CardTitle>
           </CardHeader>
         </Card>
         <Card className="border-[color:var(--ims-border)] shadow-none">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest">Venue</CardDescription>
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Venue
+            </CardDescription>
             <CardTitle className="text-2xl">{counts.venue}</CardTitle>
           </CardHeader>
         </Card>
         <Card className="border-[color:var(--ims-border)] shadow-none">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest">Overlap</CardDescription>
+            <CardDescription className="text-xs uppercase tracking-widest">
+              Overlap
+            </CardDescription>
             <CardTitle className="text-2xl">{counts.overlap}</CardTitle>
           </CardHeader>
         </Card>
@@ -150,7 +180,8 @@ export function ConflictDashboardClient({
             Conflict dashboard
           </CardTitle>
           <CardDescription>
-            Review invalid or at-risk sessions, then reschedule, change venue, or cancel them from the side panel.
+            Review invalid or at-risk sessions, then reschedule, change venue,
+            or cancel them from the side panel.
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
@@ -179,8 +210,13 @@ export function ConflictDashboardClient({
                   {sessions.map((session) => (
                     <TableRow key={session.id} className={rowTone(session)}>
                       <TableCell>
-                        <div className="font-medium text-[color:var(--ims-ink)]">{session.titleEnglish}</div>
-                        <div className="text-xs font-arabic text-[color:var(--ims-muted)]" dir="rtl">
+                        <div className="font-medium text-[color:var(--ims-ink)]">
+                          {session.titleEnglish}
+                        </div>
+                        <div
+                          className="text-xs font-arabic text-[color:var(--ims-muted)]"
+                          dir="rtl"
+                        >
                           {session.titleArabic}
                         </div>
                         <div className="mt-1 text-xs text-[color:var(--ims-muted)]">
@@ -198,24 +234,39 @@ export function ConflictDashboardClient({
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="font-medium text-[color:var(--ims-ink)]">{session.branchName}</div>
+                        <div className="font-medium text-[color:var(--ims-ink)]">
+                          {session.branchName}
+                        </div>
                         <div className="text-xs text-[color:var(--ims-muted)]">
                           {session.classroomName ?? 'Branch-wide block'}
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-2">
-                          <Badge variant={session.scheduleStatus === 'Conflict' ? 'error' : 'success'}>
+                          <Badge
+                            variant={
+                              session.scheduleStatus === 'Conflict'
+                                ? 'error'
+                                : 'success'
+                            }
+                          >
                             {session.scheduleStatus}
                           </Badge>
-                          {session.isConflictIgnored && <Badge variant="success">Override</Badge>}
+                          {session.isConflictIgnored && (
+                            <Badge variant="success">Override</Badge>
+                          )}
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="space-y-1">
-                          <Badge variant="outline">{conflictLabel(session.conflictType)}</Badge>
+                          <Badge variant="outline">
+                            {conflictLabel(session.conflictType)}
+                          </Badge>
                           {session.overrideReason && (
-                            <p className="max-w-[18rem] truncate text-xs text-[color:var(--ims-muted)]" title={session.overrideReason}>
+                            <p
+                              className="max-w-[18rem] truncate text-xs text-[color:var(--ims-muted)]"
+                              title={session.overrideReason}
+                            >
                               {session.overrideReason}
                             </p>
                           )}
@@ -232,8 +283,16 @@ export function ConflictDashboardClient({
                             Resolve
                             <ArrowRight className="h-4 w-4" />
                           </Button>
-                          <Link href={`/batches/${session.batchId}`} className="inline-flex">
-                            <Button type="button" variant="ghost" size="icon" className="h-9 w-9">
+                          <Link
+                            href={`/batches/${session.batchId}`}
+                            className="inline-flex"
+                          >
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="h-9 w-9"
+                            >
                               <Eye className="h-4 w-4" />
                             </Button>
                           </Link>
@@ -254,7 +313,8 @@ export function ConflictDashboardClient({
           Resolution workflow
         </div>
         <p className="mt-2 max-w-3xl leading-relaxed">
-          Use the side panel to reschedule the session, move it to another classroom, or cancel it while keeping the audit trail intact.
+          Use the side panel to reschedule the session, move it to another
+          classroom, or cancel it while keeping the audit trail intact.
         </p>
       </div>
 

@@ -26,16 +26,16 @@ This module ensures that only authorized users can access the system and that ev
 
 The IAM module aims to:
 
-* Provide secure authentication for all portals.
-* Enforce Role-Based Access Control (RBAC).
-* Support multi-branch organizational security.
-* Enable delegated administration.
-* Maintain complete audit trails.
-* Protect sensitive student, financial, HR, and corporate data.
-* Support future Single Sign-On (SSO) integration.
-* Comply with Omani data protection requirements.
-* Minimize unauthorized access.
-* Enable enterprise-grade security governance.
+- Provide secure authentication for all portals.
+- Enforce Role-Based Access Control (RBAC).
+- Support multi-branch organizational security.
+- Enable delegated administration.
+- Maintain complete audit trails.
+- Protect sensitive student, financial, HR, and corporate data.
+- Support future Single Sign-On (SSO) integration.
+- Comply with Omani data protection requirements.
+- Minimize unauthorized access.
+- Enable enterprise-grade security governance.
 
 ---
 
@@ -43,36 +43,36 @@ The IAM module aims to:
 
 ## Included
 
-* User Management
-* Authentication
-* Authorization
-* RBAC
-* Permission Management
-* User Groups
-* Branch Access
-* Password Policies
-* Multi-factor Authentication (Future)
-* Session Management
-* Device Management
-* Login History
-* Account Locking
-* Security Policies
-* Audit Logging
-* Token Management
-* API Authentication
-* Refresh Tokens
-* Password Reset
-* Email Verification
-* Invitation Management
+- User Management
+- Authentication
+- Authorization
+- RBAC
+- Permission Management
+- User Groups
+- Branch Access
+- Password Policies
+- Multi-factor Authentication (Future)
+- Session Management
+- Device Management
+- Login History
+- Account Locking
+- Security Policies
+- Audit Logging
+- Token Management
+- API Authentication
+- Refresh Tokens
+- Password Reset
+- Email Verification
+- Invitation Management
 
 ## Excluded
 
-* HR employee information
-* Student profile management
-* Trainer profile management
-* Attendance
-* Finance
-* CRM
+- HR employee information
+- Student profile management
+- Trainer profile management
+- Attendance
+- Finance
+- CRM
 
 Those modules consume IAM services but do not own identity data.
 
@@ -101,27 +101,27 @@ Those modules consume IAM services but do not own identity data.
 
 ### Human Actors
 
-* Super Administrator
-* System Administrator
-* Branch Administrator
-* HR Manager
-* Trainer
-* Student
-* Receptionist
-* Finance Officer
-* Corporate Coordinator
-* Executive
+- Super Administrator
+- System Administrator
+- Branch Administrator
+- HR Manager
+- Trainer
+- Student
+- Receptionist
+- Finance Officer
+- Corporate Coordinator
+- Executive
 
 ### System Actors
 
-* Authentication Service
-* Authorization Service
-* Email Service
-* SMS Service
-* Notification Service
-* Audit Service
-* JWT Provider
-* OAuth Provider (Future)
+- Authentication Service
+- Authorization Service
+- Email Service
+- SMS Service
+- Notification Service
+- Audit Service
+- JWT Provider
+- OAuth Provider (Future)
 
 ---
 
@@ -171,23 +171,23 @@ Identity Management
 
 ## Internal Users
 
-* Super Admin
-* Branch Admin
-* HR
-* Finance
-* Reception
-* Marketing
-* Trainer
-* Coordinator
-* Sales
-* Accountant
+- Super Admin
+- Branch Admin
+- HR
+- Finance
+- Reception
+- Marketing
+- Trainer
+- Coordinator
+- Sales
+- Accountant
 
 ## External Users
 
-* Student
-* Parent (Future)
-* Corporate Client
-* Auditor (Read Only)
+- Student
+- Parent (Future)
+- Corporate Client
+- Auditor (Read Only)
 
 ---
 
@@ -203,13 +203,13 @@ Authorized administrators shall be able to create a new user account.
 
 **Business Rules**
 
-* Username must be unique.
-* Email must be unique.
-* Mobile number must be unique.
-* User must belong to at least one branch.
-* User must have at least one role.
-* Account is inactive until activation.
-* Activation email is sent automatically.
+- Username must be unique.
+- Email must be unique.
+- Mobile number must be unique.
+- User must belong to at least one branch.
+- User must have at least one role.
+- Account is inactive until activation.
+- Activation email is sent automatically.
 
 **Priority**
 
@@ -217,10 +217,10 @@ Critical
 
 **Acceptance Criteria**
 
-* User created successfully.
-* Audit log generated.
-* Activation email sent.
-* Temporary password generated.
+- User created successfully.
+- Audit log generated.
+- Activation email sent.
+- Temporary password generated.
 
 ---
 
@@ -254,18 +254,18 @@ Users leaving the organization shall be archived while preserving audit history.
 
 The system shall authenticate users using:
 
-* Username
-* Email
-* Employee ID (configurable)
+- Username
+- Email
+- Employee ID (configurable)
 
 Authentication requires:
 
-* Password verification
-* Active account
-* Active role
-* Active branch
-* Not locked
-* Not expired
+- Password verification
+- Active account
+- Active role
+- Active branch
+- Not locked
+- Not expired
 
 ---
 
@@ -279,9 +279,9 @@ The system shall invalidate the current session and refresh token.
 
 Support:
 
-* Email reset
-* Admin reset
-* First login password change
+- Email reset
+- Admin reset
+- First login password change
 
 ---
 
@@ -319,8 +319,8 @@ Coordinator
 
 Permissions may be assigned:
 
-* Directly
-* Via roles
+- Directly
+- Via roles
 
 Example:
 
@@ -429,7 +429,7 @@ Authentication uses JWT access tokens with refresh tokens for web and mobile cli
 4. Branch scope validation
 5. Business rule validation
 
-This aligns with the architecture recommendation to enforce RBAC and branch-level data isolation across all modules. 
+This aligns with the architecture recommendation to enforce RBAC and branch-level data isolation across all modules.
 
 ---
 
@@ -437,52 +437,52 @@ This aligns with the architecture recommendation to enforce RBAC and branch-leve
 
 The system shall audit:
 
-* User creation
-* User updates
-* User deletion/archive
-* Login success
-* Login failure
-* Password reset
-* Password change
-* Role changes
-* Permission changes
-* Branch assignments
-* Session termination
-* Account lock/unlock
+- User creation
+- User updates
+- User deletion/archive
+- Login success
+- Login failure
+- Password reset
+- Password change
+- Role changes
+- Permission changes
+- Branch assignments
+- Session termination
+- Account lock/unlock
 
 Each audit record must capture:
 
-* Timestamp
-* User
-* IP address
-* Device
-* Action
-* Entity
-* Previous value
-* New value
+- Timestamp
+- User
+- IP address
+- Device
+- Action
+- Entity
+- Previous value
+- New value
 
 ---
 
 # 14. Non-Functional Requirements
 
-* Authentication response time: < 2 seconds (95th percentile)
-* JWT validation: < 100 ms
-* Passwords hashed using Argon2id (preferred) or bcrypt with strong work factors
-* TLS 1.2+ for all communications
-* High availability for authentication services
-* Immutable audit logs
-* Horizontal scalability for authentication APIs
+- Authentication response time: < 2 seconds (95th percentile)
+- JWT validation: < 100 ms
+- Passwords hashed using Argon2id (preferred) or bcrypt with strong work factors
+- TLS 1.2+ for all communications
+- High availability for authentication services
+- Immutable audit logs
+- Horizontal scalability for authentication APIs
 
 ---
 
 # 15. Future Enhancements
 
-* Multi-Factor Authentication (MFA)
-* Single Sign-On (SAML/OIDC)
-* Google/Microsoft Entra ID integration
-* Passwordless authentication
-* Adaptive risk-based authentication
-* Hardware security keys (FIDO2/WebAuthn)
-* Self-service access requests and approvals
+- Multi-Factor Authentication (MFA)
+- Single Sign-On (SAML/OIDC)
+- Google/Microsoft Entra ID integration
+- Passwordless authentication
+- Adaptive risk-based authentication
+- Hardware security keys (FIDO2/WebAuthn)
+- Self-service access requests and approvals
 
 ---

@@ -1,1 +1,127 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "label": "tasks.md", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L1"}, {"id": "certificate_management_tasks_1_database_schema_persistence", "label": "1. Database Schema & Persistence", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L1"}, {"id": "certificate_management_tasks_2_scaffolding_domain_package", "label": "2. Scaffolding Domain Package", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L11"}, {"id": "certificate_management_tasks_3_application_services_business_logic", "label": "3. Application Services & Business Logic", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L18"}, {"id": "certificate_management_tasks_4_api_route_handlers_server_actions", "label": "4. API Route Handlers & Server Actions", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L26"}, {"id": "certificate_management_tasks_5_admin_ui_screens", "label": "5. Admin UI Screens", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L32"}, {"id": "certificate_management_tasks_6_automated_testing", "label": "6. Automated Testing", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L40"}, {"id": "certificate_management_tasks_7_observability_documentation_and_rollout", "label": "7. Observability, Documentation, and Rollout", "file_type": "document", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L47"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "target": "certificate_management_tasks_1_database_schema_persistence", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L1", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "target": "certificate_management_tasks_2_scaffolding_domain_package", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L11", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "target": "certificate_management_tasks_3_application_services_business_logic", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L18", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "target": "certificate_management_tasks_4_api_route_handlers_server_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L26", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "target": "certificate_management_tasks_5_admin_ui_screens", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L32", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "target": "certificate_management_tasks_6_automated_testing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L40", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md", "target": "certificate_management_tasks_7_observability_documentation_and_rollout", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/certificate-management/tasks.md", "source_location": "L47", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "label": "tasks.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "certificate_management_tasks_1_database_schema_persistence",
+      "label": "1. Database Schema & Persistence",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "certificate_management_tasks_2_scaffolding_domain_package",
+      "label": "2. Scaffolding Domain Package",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "certificate_management_tasks_3_application_services_business_logic",
+      "label": "3. Application Services & Business Logic",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "certificate_management_tasks_4_api_route_handlers_server_actions",
+      "label": "4. API Route Handlers & Server Actions",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "certificate_management_tasks_5_admin_ui_screens",
+      "label": "5. Admin UI Screens",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "certificate_management_tasks_6_automated_testing",
+      "label": "6. Automated Testing",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "certificate_management_tasks_7_observability_documentation_and_rollout",
+      "label": "7. Observability, Documentation, and Rollout",
+      "file_type": "document",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L47"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "target": "certificate_management_tasks_1_database_schema_persistence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "target": "certificate_management_tasks_2_scaffolding_domain_package",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "target": "certificate_management_tasks_3_application_services_business_logic",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "target": "certificate_management_tasks_4_api_route_handlers_server_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "target": "certificate_management_tasks_5_admin_ui_screens",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "target": "certificate_management_tasks_6_automated_testing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_certificate_management_tasks_md",
+      "target": "certificate_management_tasks_7_observability_documentation_and_rollout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/certificate-management/tasks.md",
+      "source_location": "L47",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

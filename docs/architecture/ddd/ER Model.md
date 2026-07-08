@@ -17,12 +17,12 @@ This document defines the initial Entity Relationship Model and Domain Data Mode
 
 It supports:
 
-* Database schema design
-* Prisma schema design
-* API boundary design
-* Master data import planning
-* Migration planning
-* Report and dashboard planning
+- Database schema design
+- Prisma schema design
+- API boundary design
+- Master data import planning
+- Migration planning
+- Report and dashboard planning
 
 ---
 
@@ -36,10 +36,10 @@ Every learning journey must become an enrollment.
 
 Sources may include:
 
-* CRM lead
-* Walk-in registration
-* Website registration
-* Corporate nomination
+- CRM lead
+- Walk-in registration
+- Website registration
+- Corporate nomination
 
 But the final training record must be:
 
@@ -60,12 +60,12 @@ Batch
 
 This supports:
 
-* Attendance
-* Scheduling
-* Trainer assignment
-* Finance
-* Completion
-* Certificate generation
+- Attendance
+- Scheduling
+- Trainer assignment
+- Finance
+- Completion
+- Certificate generation
 
 ---
 
@@ -81,18 +81,18 @@ Party
 
 A person may later become:
 
-* Student
-* Trainer
-* Employee
-* User
-* Corporate contact
-* Corporate participant
+- Student
+- Trainer
+- Employee
+- User
+- Corporate contact
+- Corporate participant
 
 An organization may represent:
 
-* ASTI
-* Branch
-* Corporate client
+- ASTI
+- Branch
+- Corporate client
 
 ---
 
@@ -128,12 +128,12 @@ Example:
 
 Use this for:
 
-* Course names
-* Course descriptions
-* Website content
-* Categories
-* Certificate text
-* Notification templates
+- Course names
+- Course descriptions
+- Website content
+- Categories
+- Certificate text
+- Notification templates
 
 ---
 
@@ -319,9 +319,9 @@ isDefault
 
 Rules:
 
-* User can switch between assigned branches.
-* Parent branch user can view child branch data if allowed.
-* Child branch user cannot view parent branch data unless explicitly assigned.
+- User can switch between assigned branches.
+- Parent branch user can view child branch data if allowed.
+- Child branch user cannot view parent branch data unless explicitly assigned.
 
 ---
 
@@ -2467,10 +2467,10 @@ This ER Model v3 should be used as the baseline for:
 
 The most important design decisions are:
 
-* Enrollment is central.
-* Course and batch are mandatory for enrollment.
-* Finance is invoice-centric.
-* Corporate participant becomes student when enrolled.
-* Pricing and discount hierarchy must be enforced.
-* Branch-level access must be enforced from the start.
-* Master data workbook should directly map to configuration and seed data tables.
+- Enrollment is central.
+- Course and batch are mandatory for enrollment.
+- Finance is invoice-centric.
+- Corporate participant becomes student when enrolled.
+- Pricing and discount hierarchy must be enforced.
+- Branch-level access must be enforced from the start.
+- Master data workbook should directly map to configuration and seed data tables.

@@ -6,7 +6,7 @@
 **Architecture style:** Next.js TypeScript monorepo, modular monolith first  
 **Primary bounded context:** Certificate Management  
 **Central upstream aggregate:** Enrollment  
-**Current portal strategy:** Admin Portal first; public verification required; Student and Trainer portal access applies when those portals are introduced  
+**Current portal strategy:** Admin Portal first; public verification required; Student and Trainer portal access applies when those portals are introduced
 
 ---
 
@@ -137,32 +137,32 @@ A client-supplied `branchId` may narrow a query but can never grant access.
 
 # 3. Ownership Classification Summary
 
-| Entity / Concept | Classification | Owning Context | Certificate Module Access | Decision |
-|---|---|---|---|---|
-| `Certificate` | Owned | Certificate Management | Full lifecycle control subject to permissions and invariants | Must exist |
-| `CertificateVerification` | Owned | Certificate Management | Append verification event; read under permission/retention rules | Must exist |
-| `CertificateReissueRequest` | Owned | Certificate Management | Submit, decide, complete replacement lineage | Must exist |
-| `Enrollment` | Referenced | Admission & Enrollment | Read authoritative learner/course/batch/branch and certificate relation | Must not be duplicated |
-| `StudentProfile` | Referenced | Admission & Enrollment | Read learner identity reference | Must not be duplicated |
-| `Person` / `Party` | Referenced | Shared Party/Person model | Read learner names and identity projection | Must not be duplicated |
-| `Course` | Referenced | Course Catalog | Read course identity and localized display facts | Must not be duplicated |
-| `Batch` | Referenced | Training Delivery | Read batch identity and delivery facts | Must not be duplicated |
-| `CourseCompletion` | Referenced | Exam, Result & Completion | Read approved completion fact through application boundary | Must not be duplicated |
-| `CompletionApproval` | Referenced | Exam, Result & Completion | Read approval completion state where needed | Must not be duplicated |
-| `Invoice`, `Payment`, `Receivable` | Referenced through service decision | Finance & Receivables | Consume payment-validation result; no direct mutation | Must not be duplicated |
-| `NumberingSeries` | Referenced | Configuration / Master Data | Atomic certificate-number allocation through owning service/repository | Must not be duplicated |
-| `User` | Referenced | Identity & Access | Resolve authenticated actor and issuer/approver/requester FK | Must not be duplicated |
-| `UserBranchAccess` | Referenced | Identity & Access | Authoritative branch-scope resolution | Must not be duplicated |
-| `AuditLog` | Cross-cutting | Audit & Compliance | Create via audit application service; read projection where authorized | Must not be copied locally |
-| `ApprovalRequest` / `ApprovalHistory` | Cross-cutting | Audit & Compliance | Approval trace where generic approval workflow is used | Must not be copied locally |
-| `NotificationRequest` / `NotificationLog` | Cross-cutting | Communication & Notification | Request notification after issue/reissue; no local delivery table | Must not be copied locally |
-| `DashboardDefinition`, `DashboardWidget`, `MetricSnapshot` | Cross-cutting read/reporting | Reporting & Dashboards | Publish/serve facts; Reporting owns projections | Must not be copied locally |
-| `CertificateEligibility` | Prohibited duplicate concept | Exam, Result & Completion owns evaluation | Consume eligibility decision only | Should not exist in Certificate context |
-| `CertificatePaymentValidation` | Prohibited duplicate concept | Finance owns payment truth | Consume validation result only | Should not exist as Certificate source-of-truth table |
-| `CertificateTemplate` | Not current-scope persistence model | Future Certificate capability | Current version uses one hardcoded approved template | Should not exist in current scope |
-| `CertificateQRCode` | DDD concept, ER represented as field | Certificate Management | `Certificate.qrCodeUrl` is current ER representation | Do not add separate table without approved ER change |
-| `CertificateIssueLog` | DDD concept, missing ER entity | Certificate/Audit boundary requires clarification | Current baseline uses Certificate state plus AuditLog | Gap; do not invent table silently |
-| `CertificateRevocation` | DDD responsibility, no ER entity | Certificate Management | Current baseline uses `certificateStatus` plus AuditLog reason/history | Gap; do not invent table silently |
+| Entity / Concept                                           | Classification                       | Owning Context                                    | Certificate Module Access                                               | Decision                                              |
+| ---------------------------------------------------------- | ------------------------------------ | ------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------- |
+| `Certificate`                                              | Owned                                | Certificate Management                            | Full lifecycle control subject to permissions and invariants            | Must exist                                            |
+| `CertificateVerification`                                  | Owned                                | Certificate Management                            | Append verification event; read under permission/retention rules        | Must exist                                            |
+| `CertificateReissueRequest`                                | Owned                                | Certificate Management                            | Submit, decide, complete replacement lineage                            | Must exist                                            |
+| `Enrollment`                                               | Referenced                           | Admission & Enrollment                            | Read authoritative learner/course/batch/branch and certificate relation | Must not be duplicated                                |
+| `StudentProfile`                                           | Referenced                           | Admission & Enrollment                            | Read learner identity reference                                         | Must not be duplicated                                |
+| `Person` / `Party`                                         | Referenced                           | Shared Party/Person model                         | Read learner names and identity projection                              | Must not be duplicated                                |
+| `Course`                                                   | Referenced                           | Course Catalog                                    | Read course identity and localized display facts                        | Must not be duplicated                                |
+| `Batch`                                                    | Referenced                           | Training Delivery                                 | Read batch identity and delivery facts                                  | Must not be duplicated                                |
+| `CourseCompletion`                                         | Referenced                           | Exam, Result & Completion                         | Read approved completion fact through application boundary              | Must not be duplicated                                |
+| `CompletionApproval`                                       | Referenced                           | Exam, Result & Completion                         | Read approval completion state where needed                             | Must not be duplicated                                |
+| `Invoice`, `Payment`, `Receivable`                         | Referenced through service decision  | Finance & Receivables                             | Consume payment-validation result; no direct mutation                   | Must not be duplicated                                |
+| `NumberingSeries`                                          | Referenced                           | Configuration / Master Data                       | Atomic certificate-number allocation through owning service/repository  | Must not be duplicated                                |
+| `User`                                                     | Referenced                           | Identity & Access                                 | Resolve authenticated actor and issuer/approver/requester FK            | Must not be duplicated                                |
+| `UserBranchAccess`                                         | Referenced                           | Identity & Access                                 | Authoritative branch-scope resolution                                   | Must not be duplicated                                |
+| `AuditLog`                                                 | Cross-cutting                        | Audit & Compliance                                | Create via audit application service; read projection where authorized  | Must not be copied locally                            |
+| `ApprovalRequest` / `ApprovalHistory`                      | Cross-cutting                        | Audit & Compliance                                | Approval trace where generic approval workflow is used                  | Must not be copied locally                            |
+| `NotificationRequest` / `NotificationLog`                  | Cross-cutting                        | Communication & Notification                      | Request notification after issue/reissue; no local delivery table       | Must not be copied locally                            |
+| `DashboardDefinition`, `DashboardWidget`, `MetricSnapshot` | Cross-cutting read/reporting         | Reporting & Dashboards                            | Publish/serve facts; Reporting owns projections                         | Must not be copied locally                            |
+| `CertificateEligibility`                                   | Prohibited duplicate concept         | Exam, Result & Completion owns evaluation         | Consume eligibility decision only                                       | Should not exist in Certificate context               |
+| `CertificatePaymentValidation`                             | Prohibited duplicate concept         | Finance owns payment truth                        | Consume validation result only                                          | Should not exist as Certificate source-of-truth table |
+| `CertificateTemplate`                                      | Not current-scope persistence model  | Future Certificate capability                     | Current version uses one hardcoded approved template                    | Should not exist in current scope                     |
+| `CertificateQRCode`                                        | DDD concept, ER represented as field | Certificate Management                            | `Certificate.qrCodeUrl` is current ER representation                    | Do not add separate table without approved ER change  |
+| `CertificateIssueLog`                                      | DDD concept, missing ER entity       | Certificate/Audit boundary requires clarification | Current baseline uses Certificate state plus AuditLog                   | Gap; do not invent table silently                     |
+| `CertificateRevocation`                                    | DDD responsibility, no ER entity     | Certificate Management                            | Current baseline uses `certificateStatus` plus AuditLog reason/history  | Gap; do not invent table silently                     |
 
 ---
 
@@ -178,30 +178,30 @@ A client-supplied `branchId` may narrow a query but can never grant access.
 **Suggested physical naming:** follow repository convention, for example `certificates`  
 **Aggregate root:** Yes  
 **Branch scope:** derived through `Enrollment.branchId`  
-**Effective dating:** not applicable; lifecycle state and issued date are used instead  
+**Effective dating:** not applicable; lifecycle state and issued date are used instead
 
-| Field | Data Type | Nullability | Key / FK | Constraints and Semantics |
-|---|---|---:|---|---|
-| `id` | UUID/CUID string | NOT NULL | PK | Immutable technical identifier. Generated server-side. |
-| `certificateNumber` | varchar/string | NOT NULL | Alternate key | Human-facing credential number. Must be globally unique or unique according to the approved NumberingSeries policy; this FRD requires uniqueness within the system baseline. Never generated in browser. |
-| `enrollmentId` | UUID/CUID string | NOT NULL | FK → `Enrollment.id` | Exactly one Enrollment per Certificate. Authoritative root for branch derivation and learning journey trace. |
-| `studentProfileId` | UUID/CUID string | NOT NULL | FK → `StudentProfile.id` | Must equal the StudentProfile resolved from the authoritative Enrollment at generation time. |
-| `courseId` | UUID/CUID string | NOT NULL | FK → `Course.id` | Must equal Enrollment.courseId at generation time. |
-| `batchId` | UUID/CUID string | NOT NULL | FK → `Batch.id` | Must equal Enrollment.batchId at generation time. |
-| `issuedDate` | date or timestamptz per repository convention | NULL until issued | — | Set when lifecycle moves `Generated → Issued`; immutable after successful issue except approved correction workflow, which is not currently defined. |
-| `issuedBy` | UUID/CUID string | NULL until issued | FK → `User.id` | Actor responsible for successful issue transition. Must be server-derived from authenticated principal. |
-| `certificateStatus` | enum/string | NOT NULL | Indexed | Semantic minimum required by Part 2: `Generated`, `Issued`, `Revoked`. Exact Prisma enum naming must be validated. |
-| `certificateUrl` | text/string | NOT NULL after successful generation | — | Storage reference or access-controlled artifact locator. Must not contain raw secret credentials. |
-| `verificationCode` | varchar/string | NOT NULL | Alternate key | Opaque, high-entropy, globally unique public verification token. Not sequential. |
-| `qrCodeUrl` | text/string | NOT NULL after generation | — | QR artifact/reference or public verification URL reference. Must resolve to the verification flow without exposing private internal IDs. |
-| `language` | enum/string | NOT NULL | Indexed if operationally filtered | Required certificate artifact language. Minimum current values: English and Arabic. Exact enum naming follows implementation schema. |
-| `createdAt` | timestamptz | NOT NULL | — | Server-generated creation timestamp. Oman-localized display may use GST; persistence should follow repository UTC/timezone convention. |
-| `createdBy` | UUID/CUID string | NOT NULL | FK → `User.id` where shared convention permits | Authenticated actor/system identity that generated the record. |
-| `updatedAt` | timestamptz | NOT NULL | — | Updated on lifecycle mutation. |
-| `updatedBy` | UUID/CUID string | NOT NULL | FK → `User.id` where shared convention permits | Last successful mutating actor. |
-| `deletedAt` | timestamptz | NULL | Indexed only if repo convention uses it | Soft-delete marker. Normal certificate cancellation/revocation must not use this field. |
-| `isActive` | boolean | NOT NULL | Optional indexed filter | Shared operational convention. Default true. Must not contradict lifecycle semantics; `Revoked` remains historical even if active for queryability. |
-| `version` | integer/bigint | NOT NULL | Concurrency token | Default 1. Increment on every successful mutation. Positive value only. |
+| Field               | Data Type                                     |                          Nullability | Key / FK                                       | Constraints and Semantics                                                                                                                                                                                |
+| ------------------- | --------------------------------------------- | -----------------------------------: | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                | UUID/CUID string                              |                             NOT NULL | PK                                             | Immutable technical identifier. Generated server-side.                                                                                                                                                   |
+| `certificateNumber` | varchar/string                                |                             NOT NULL | Alternate key                                  | Human-facing credential number. Must be globally unique or unique according to the approved NumberingSeries policy; this FRD requires uniqueness within the system baseline. Never generated in browser. |
+| `enrollmentId`      | UUID/CUID string                              |                             NOT NULL | FK → `Enrollment.id`                           | Exactly one Enrollment per Certificate. Authoritative root for branch derivation and learning journey trace.                                                                                             |
+| `studentProfileId`  | UUID/CUID string                              |                             NOT NULL | FK → `StudentProfile.id`                       | Must equal the StudentProfile resolved from the authoritative Enrollment at generation time.                                                                                                             |
+| `courseId`          | UUID/CUID string                              |                             NOT NULL | FK → `Course.id`                               | Must equal Enrollment.courseId at generation time.                                                                                                                                                       |
+| `batchId`           | UUID/CUID string                              |                             NOT NULL | FK → `Batch.id`                                | Must equal Enrollment.batchId at generation time.                                                                                                                                                        |
+| `issuedDate`        | date or timestamptz per repository convention |                    NULL until issued | —                                              | Set when lifecycle moves `Generated → Issued`; immutable after successful issue except approved correction workflow, which is not currently defined.                                                     |
+| `issuedBy`          | UUID/CUID string                              |                    NULL until issued | FK → `User.id`                                 | Actor responsible for successful issue transition. Must be server-derived from authenticated principal.                                                                                                  |
+| `certificateStatus` | enum/string                                   |                             NOT NULL | Indexed                                        | Semantic minimum required by Part 2: `Generated`, `Issued`, `Revoked`. Exact Prisma enum naming must be validated.                                                                                       |
+| `certificateUrl`    | text/string                                   | NOT NULL after successful generation | —                                              | Storage reference or access-controlled artifact locator. Must not contain raw secret credentials.                                                                                                        |
+| `verificationCode`  | varchar/string                                |                             NOT NULL | Alternate key                                  | Opaque, high-entropy, globally unique public verification token. Not sequential.                                                                                                                         |
+| `qrCodeUrl`         | text/string                                   |            NOT NULL after generation | —                                              | QR artifact/reference or public verification URL reference. Must resolve to the verification flow without exposing private internal IDs.                                                                 |
+| `language`          | enum/string                                   |                             NOT NULL | Indexed if operationally filtered              | Required certificate artifact language. Minimum current values: English and Arabic. Exact enum naming follows implementation schema.                                                                     |
+| `createdAt`         | timestamptz                                   |                             NOT NULL | —                                              | Server-generated creation timestamp. Oman-localized display may use GST; persistence should follow repository UTC/timezone convention.                                                                   |
+| `createdBy`         | UUID/CUID string                              |                             NOT NULL | FK → `User.id` where shared convention permits | Authenticated actor/system identity that generated the record.                                                                                                                                           |
+| `updatedAt`         | timestamptz                                   |                             NOT NULL | —                                              | Updated on lifecycle mutation.                                                                                                                                                                           |
+| `updatedBy`         | UUID/CUID string                              |                             NOT NULL | FK → `User.id` where shared convention permits | Last successful mutating actor.                                                                                                                                                                          |
+| `deletedAt`         | timestamptz                                   |                                 NULL | Indexed only if repo convention uses it        | Soft-delete marker. Normal certificate cancellation/revocation must not use this field.                                                                                                                  |
+| `isActive`          | boolean                                       |                             NOT NULL | Optional indexed filter                        | Shared operational convention. Default true. Must not contradict lifecycle semantics; `Revoked` remains historical even if active for queryability.                                                      |
+| `version`           | integer/bigint                                |                             NOT NULL | Concurrency token                              | Default 1. Increment on every successful mutation. Positive value only.                                                                                                                                  |
 
 ### 4.2.1 ER Baseline Versus Shared Operational Columns
 
@@ -241,28 +241,28 @@ Therefore, the base columns above are required as repository-convention expectat
 
 ### Required Constraints
 
-| Constraint | Columns | Type | Reason |
-|---|---|---|---|
-| `PK_Certificate` | `id` | Primary key | Stable aggregate identity |
-| `UQ_Certificate_certificateNumber` | `certificateNumber` | Unique | Prevent duplicate credential numbers |
-| `UQ_Certificate_verificationCode` | `verificationCode` | Unique | Guarantee unambiguous public verification |
-| `FK_Certificate_Enrollment` | `enrollmentId` | FK | Enforce central Enrollment linkage |
-| `FK_Certificate_StudentProfile` | `studentProfileId` | FK | Preserve learner traceability |
-| `FK_Certificate_Course` | `courseId` | FK | Preserve course traceability |
-| `FK_Certificate_Batch` | `batchId` | FK | Preserve delivery/batch traceability |
-| `FK_Certificate_IssuedBy` | `issuedBy` | FK | Preserve issuer identity |
+| Constraint                         | Columns             | Type        | Reason                                    |
+| ---------------------------------- | ------------------- | ----------- | ----------------------------------------- |
+| `PK_Certificate`                   | `id`                | Primary key | Stable aggregate identity                 |
+| `UQ_Certificate_certificateNumber` | `certificateNumber` | Unique      | Prevent duplicate credential numbers      |
+| `UQ_Certificate_verificationCode`  | `verificationCode`  | Unique      | Guarantee unambiguous public verification |
+| `FK_Certificate_Enrollment`        | `enrollmentId`      | FK          | Enforce central Enrollment linkage        |
+| `FK_Certificate_StudentProfile`    | `studentProfileId`  | FK          | Preserve learner traceability             |
+| `FK_Certificate_Course`            | `courseId`          | FK          | Preserve course traceability              |
+| `FK_Certificate_Batch`             | `batchId`           | FK          | Preserve delivery/batch traceability      |
+| `FK_Certificate_IssuedBy`          | `issuedBy`          | FK          | Preserve issuer identity                  |
 
 ### Required / Recommended Indexes
 
-| Index | Columns | Purpose |
-|---|---|---|
-| `IX_Certificate_enrollmentId` | `enrollmentId` | Duplicate guard and Enrollment detail lookup |
-| `IX_Certificate_studentProfileId_issuedDate` | `studentProfileId`, `issuedDate DESC` | Student certificate list |
-| `IX_Certificate_courseId_status` | `courseId`, `certificateStatus` | Course-level registry/report filtering |
-| `IX_Certificate_batchId_status` | `batchId`, `certificateStatus` | Batch-level certificate operations |
-| `IX_Certificate_status_issuedDate` | `certificateStatus`, `issuedDate DESC` | Registry and operational work queues |
-| `IX_Certificate_language` | `language` | Optional reporting/filtering where query volume justifies it |
-| `IX_Certificate_deletedAt` | `deletedAt` | Only where soft-delete convention uses explicit filtering |
+| Index                                        | Columns                                | Purpose                                                      |
+| -------------------------------------------- | -------------------------------------- | ------------------------------------------------------------ |
+| `IX_Certificate_enrollmentId`                | `enrollmentId`                         | Duplicate guard and Enrollment detail lookup                 |
+| `IX_Certificate_studentProfileId_issuedDate` | `studentProfileId`, `issuedDate DESC`  | Student certificate list                                     |
+| `IX_Certificate_courseId_status`             | `courseId`, `certificateStatus`        | Course-level registry/report filtering                       |
+| `IX_Certificate_batchId_status`              | `batchId`, `certificateStatus`         | Batch-level certificate operations                           |
+| `IX_Certificate_status_issuedDate`           | `certificateStatus`, `issuedDate DESC` | Registry and operational work queues                         |
+| `IX_Certificate_language`                    | `language`                             | Optional reporting/filtering where query volume justifies it |
+| `IX_Certificate_deletedAt`                   | `deletedAt`                            | Only where soft-delete convention uses explicit filtering    |
 
 ### Duplicate Active Certificate Constraint
 
@@ -294,16 +294,16 @@ Cross-table equality with Enrollment may be enforced in the application service 
 
 ## 4.5 Mutation Policy
 
-| Operation | Allowed? | Rule |
-|---|---:|---|
-| Create | Yes | Only through GenerateCertificate application command after all authoritative guards pass |
-| Read | Yes | Branch-scoped for internal users; self-scoped for Student Portal; minimal projection for public verification |
-| Update artifact metadata | Controlled | Only through generation/recovery application service; audit where sensitive |
-| Generated → Issued | Yes | Permission, source revalidation, version check |
-| Issued → Revoked | Yes | Permission, reason, branch scope, audit, version check |
-| Revoked → Issued | No | No reinstatement workflow in source model |
-| Delete | No | Hard delete prohibited |
-| Soft delete | Exceptional | Only repository-approved administrative policy, never normal revocation |
+| Operation                |    Allowed? | Rule                                                                                                         |
+| ------------------------ | ----------: | ------------------------------------------------------------------------------------------------------------ |
+| Create                   |         Yes | Only through GenerateCertificate application command after all authoritative guards pass                     |
+| Read                     |         Yes | Branch-scoped for internal users; self-scoped for Student Portal; minimal projection for public verification |
+| Update artifact metadata |  Controlled | Only through generation/recovery application service; audit where sensitive                                  |
+| Generated → Issued       |         Yes | Permission, source revalidation, version check                                                               |
+| Issued → Revoked         |         Yes | Permission, reason, branch scope, audit, version check                                                       |
+| Revoked → Issued         |          No | No reinstatement workflow in source model                                                                    |
+| Delete                   |          No | Hard delete prohibited                                                                                       |
+| Soft delete              | Exceptional | Only repository-approved administrative policy, never normal revocation                                      |
 
 ---
 
@@ -320,34 +320,34 @@ The record must remain privacy-minimal. It must not become a copy of Person, Stu
 **Aggregate relationship:** dependent record under Certificate lifecycle/history  
 **Branch scope:** derived through Certificate → Enrollment → Branch  
 **Write pattern:** append-only  
-**Effective dating:** not applicable  
+**Effective dating:** not applicable
 
-| Field | Data Type | Nullability | Key / FK | Constraints and Semantics |
-|---|---|---:|---|---|
-| `id` | UUID/CUID string | NOT NULL | PK | Server-generated verification event ID |
-| `certificateId` | UUID/CUID string | NOT NULL | FK → `Certificate.id` | Certificate that matched the verification request |
-| `verificationCode` | varchar/string | NOT NULL | Indexed | Code used for verification. The value must follow security/retention policy; if storage exposure is a concern, implementation may persist a protected representation only after approved schema/security design. |
-| `verifiedAt` | timestamptz | NOT NULL | Indexed | Server timestamp of verification attempt/result |
-| `verifiedByIp` | varchar/string | NULL | — | Client IP as resolved through trusted proxy configuration; privacy retention policy applies |
-| `verificationStatus` | enum/string | NOT NULL | Indexed | Outcome vocabulary mapped to Part 2 public verification semantics, such as Valid, Revoked/NotValid, Replaced/Superseded if supported, and other approved result statuses |
-| `createdAt` | timestamptz | NOT NULL | — | Shared convention; generally equal or near `verifiedAt` |
-| `createdBy` | UUID/CUID string | NULL | FK → `User.id` if authenticated verification exists | Public verification has no authenticated User, so nullable/system identity may be required by repository convention |
-| `updatedAt` | timestamptz | NOT NULL | — | Should not change after insert except controlled privacy remediation |
-| `updatedBy` | UUID/CUID string | NULL | FK → `User.id` where applicable | Normally null/system for append-only records |
-| `deletedAt` | timestamptz | NULL | — | Retention/privacy administration only; not business CRUD |
-| `isActive` | boolean | NOT NULL | — | Default true if shared convention requires it |
-| `version` | integer/bigint | NOT NULL | — | Default 1; append-only record ordinarily remains 1 |
+| Field                | Data Type        | Nullability | Key / FK                                            | Constraints and Semantics                                                                                                                                                                                        |
+| -------------------- | ---------------- | ----------: | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                 | UUID/CUID string |    NOT NULL | PK                                                  | Server-generated verification event ID                                                                                                                                                                           |
+| `certificateId`      | UUID/CUID string |    NOT NULL | FK → `Certificate.id`                               | Certificate that matched the verification request                                                                                                                                                                |
+| `verificationCode`   | varchar/string   |    NOT NULL | Indexed                                             | Code used for verification. The value must follow security/retention policy; if storage exposure is a concern, implementation may persist a protected representation only after approved schema/security design. |
+| `verifiedAt`         | timestamptz      |    NOT NULL | Indexed                                             | Server timestamp of verification attempt/result                                                                                                                                                                  |
+| `verifiedByIp`       | varchar/string   |        NULL | —                                                   | Client IP as resolved through trusted proxy configuration; privacy retention policy applies                                                                                                                      |
+| `verificationStatus` | enum/string      |    NOT NULL | Indexed                                             | Outcome vocabulary mapped to Part 2 public verification semantics, such as Valid, Revoked/NotValid, Replaced/Superseded if supported, and other approved result statuses                                         |
+| `createdAt`          | timestamptz      |    NOT NULL | —                                                   | Shared convention; generally equal or near `verifiedAt`                                                                                                                                                          |
+| `createdBy`          | UUID/CUID string |        NULL | FK → `User.id` if authenticated verification exists | Public verification has no authenticated User, so nullable/system identity may be required by repository convention                                                                                              |
+| `updatedAt`          | timestamptz      |    NOT NULL | —                                                   | Should not change after insert except controlled privacy remediation                                                                                                                                             |
+| `updatedBy`          | UUID/CUID string |        NULL | FK → `User.id` where applicable                     | Normally null/system for append-only records                                                                                                                                                                     |
+| `deletedAt`          | timestamptz      |        NULL | —                                                   | Retention/privacy administration only; not business CRUD                                                                                                                                                         |
+| `isActive`           | boolean          |    NOT NULL | —                                                   | Default true if shared convention requires it                                                                                                                                                                    |
+| `version`            | integer/bigint   |    NOT NULL | —                                                   | Default 1; append-only record ordinarily remains 1                                                                                                                                                               |
 
 ## 5.3 Keys and Indexes
 
-| Constraint / Index | Columns | Type | Purpose |
-|---|---|---|---|
-| `PK_CertificateVerification` | `id` | PK | Event identity |
-| `FK_CertificateVerification_Certificate` | `certificateId` | FK | Parent credential reference |
-| `IX_CertificateVerification_certificateId_verifiedAt` | `certificateId`, `verifiedAt DESC` | Index | Certificate detail verification timeline |
-| `IX_CertificateVerification_verifiedAt` | `verifiedAt DESC` | Index | Operational verification activity queries |
-| `IX_CertificateVerification_verificationStatus_verifiedAt` | `verificationStatus`, `verifiedAt DESC` | Index | Status monitoring and abuse/anomaly reporting |
-| `IX_CertificateVerification_verificationCode_verifiedAt` | `verificationCode`, `verifiedAt DESC` | Index | Code-oriented history where security policy permits raw indexing |
+| Constraint / Index                                         | Columns                                 | Type  | Purpose                                                          |
+| ---------------------------------------------------------- | --------------------------------------- | ----- | ---------------------------------------------------------------- |
+| `PK_CertificateVerification`                               | `id`                                    | PK    | Event identity                                                   |
+| `FK_CertificateVerification_Certificate`                   | `certificateId`                         | FK    | Parent credential reference                                      |
+| `IX_CertificateVerification_certificateId_verifiedAt`      | `certificateId`, `verifiedAt DESC`      | Index | Certificate detail verification timeline                         |
+| `IX_CertificateVerification_verifiedAt`                    | `verifiedAt DESC`                       | Index | Operational verification activity queries                        |
+| `IX_CertificateVerification_verificationStatus_verifiedAt` | `verificationStatus`, `verifiedAt DESC` | Index | Status monitoring and abuse/anomaly reporting                    |
+| `IX_CertificateVerification_verificationCode_verifiedAt`   | `verificationCode`, `verifiedAt DESC`   | Index | Code-oriented history where security policy permits raw indexing |
 
 Do not create a uniqueness constraint on `verificationCode` in this table because multiple verification events may use the same valid Certificate verification code. Uniqueness belongs to `Certificate.verificationCode`.
 
@@ -383,49 +383,49 @@ This FRD does not invent a schema extension. Until an approved ER/Prisma decisio
 
 **Aggregate relationship:** Certificate lifecycle child/workflow record  
 **Branch scope:** derived through original Certificate → Enrollment → Branch  
-**Effective dating:** not applicable; request and approval timestamps represent lifecycle timing  
+**Effective dating:** not applicable; request and approval timestamps represent lifecycle timing
 
-| Field | Data Type | Nullability | Key / FK | Constraints and Semantics |
-|---|---|---:|---|---|
-| `id` | UUID/CUID string | NOT NULL | PK | Server-generated request identity |
-| `certificateId` | UUID/CUID string | NOT NULL | FK → `Certificate.id` | Original Certificate for which replacement is requested |
-| `requestedBy` | UUID/CUID string | NOT NULL | FK → `User.id` or approved actor identity strategy | Requesting actor. Student Portal identity mapping must resolve to an authoritative authenticated identity; exact FK strategy must match IAM schema. |
-| `reason` | text | NOT NULL | — | Trimmed, non-empty reason required for submission |
-| `status` | enum/string | NOT NULL | Indexed | Semantic states required by Part 2: PendingReview, Approved, Rejected, Completed/ReplacementGenerated |
-| `approvedBy` | UUID/CUID string | NULL | FK → `User.id` | Required when approval succeeds; for rejection, decision actor must still be recoverable through ApprovalHistory/Audit even if field name is approval-specific |
-| `approvedAt` | timestamptz | NULL | — | Set on successful approval. Must not be set for PendingReview |
-| `newCertificateId` | UUID/CUID string | NULL | FK → `Certificate.id` | Replacement Certificate. Must be null until replacement successfully commits; exactly one replacement per request |
-| `createdAt` | timestamptz | NOT NULL | — | Submission timestamp |
-| `createdBy` | UUID/CUID string | NOT NULL | FK → `User.id` where convention applies | Authenticated/system creator |
-| `updatedAt` | timestamptz | NOT NULL | — | Last lifecycle mutation timestamp |
-| `updatedBy` | UUID/CUID string | NOT NULL | FK → `User.id` where convention applies | Last mutating actor |
-| `deletedAt` | timestamptz | NULL | — | Administrative soft-delete only if approved; not normal workflow |
-| `isActive` | boolean | NOT NULL | — | Default true under common convention |
-| `version` | integer/bigint | NOT NULL | Concurrency token | Default 1; increment on decision and completion transitions |
+| Field              | Data Type        | Nullability | Key / FK                                           | Constraints and Semantics                                                                                                                                      |
+| ------------------ | ---------------- | ----------: | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`               | UUID/CUID string |    NOT NULL | PK                                                 | Server-generated request identity                                                                                                                              |
+| `certificateId`    | UUID/CUID string |    NOT NULL | FK → `Certificate.id`                              | Original Certificate for which replacement is requested                                                                                                        |
+| `requestedBy`      | UUID/CUID string |    NOT NULL | FK → `User.id` or approved actor identity strategy | Requesting actor. Student Portal identity mapping must resolve to an authoritative authenticated identity; exact FK strategy must match IAM schema.            |
+| `reason`           | text             |    NOT NULL | —                                                  | Trimmed, non-empty reason required for submission                                                                                                              |
+| `status`           | enum/string      |    NOT NULL | Indexed                                            | Semantic states required by Part 2: PendingReview, Approved, Rejected, Completed/ReplacementGenerated                                                          |
+| `approvedBy`       | UUID/CUID string |        NULL | FK → `User.id`                                     | Required when approval succeeds; for rejection, decision actor must still be recoverable through ApprovalHistory/Audit even if field name is approval-specific |
+| `approvedAt`       | timestamptz      |        NULL | —                                                  | Set on successful approval. Must not be set for PendingReview                                                                                                  |
+| `newCertificateId` | UUID/CUID string |        NULL | FK → `Certificate.id`                              | Replacement Certificate. Must be null until replacement successfully commits; exactly one replacement per request                                              |
+| `createdAt`        | timestamptz      |    NOT NULL | —                                                  | Submission timestamp                                                                                                                                           |
+| `createdBy`        | UUID/CUID string |    NOT NULL | FK → `User.id` where convention applies            | Authenticated/system creator                                                                                                                                   |
+| `updatedAt`        | timestamptz      |    NOT NULL | —                                                  | Last lifecycle mutation timestamp                                                                                                                              |
+| `updatedBy`        | UUID/CUID string |    NOT NULL | FK → `User.id` where convention applies            | Last mutating actor                                                                                                                                            |
+| `deletedAt`        | timestamptz      |        NULL | —                                                  | Administrative soft-delete only if approved; not normal workflow                                                                                               |
+| `isActive`         | boolean          |    NOT NULL | —                                                  | Default true under common convention                                                                                                                           |
+| `version`          | integer/bigint   |    NOT NULL | Concurrency token                                  | Default 1; increment on decision and completion transitions                                                                                                    |
 
 ## 6.3 Keys and Indexes
 
-| Constraint / Index | Columns | Type | Purpose |
-|---|---|---|---|
-| `PK_CertificateReissueRequest` | `id` | PK | Workflow identity |
-| `FK_Reissue_OriginalCertificate` | `certificateId` | FK | Original credential reference |
-| `FK_Reissue_NewCertificate` | `newCertificateId` | FK | Replacement lineage reference |
-| `FK_Reissue_RequestedBy` | `requestedBy` | FK | Request actor trace |
-| `FK_Reissue_ApprovedBy` | `approvedBy` | FK | Approval actor trace |
-| `UQ_Reissue_newCertificateId` | `newCertificateId` where non-null | Unique | A replacement Certificate cannot complete two different requests |
-| `IX_Reissue_status_createdAt` | `status`, `createdAt DESC` | Index | Pending queue and operational list |
-| `IX_Reissue_certificateId_createdAt` | `certificateId`, `createdAt DESC` | Index | Original Certificate history |
-| `IX_Reissue_requestedBy_createdAt` | `requestedBy`, `createdAt DESC` | Index | Requester self-service history, subject to identity mapping |
-| `IX_Reissue_approvedBy_approvedAt` | `approvedBy`, `approvedAt DESC` | Index | Decision audit/operational lookup |
+| Constraint / Index                   | Columns                           | Type   | Purpose                                                          |
+| ------------------------------------ | --------------------------------- | ------ | ---------------------------------------------------------------- |
+| `PK_CertificateReissueRequest`       | `id`                              | PK     | Workflow identity                                                |
+| `FK_Reissue_OriginalCertificate`     | `certificateId`                   | FK     | Original credential reference                                    |
+| `FK_Reissue_NewCertificate`          | `newCertificateId`                | FK     | Replacement lineage reference                                    |
+| `FK_Reissue_RequestedBy`             | `requestedBy`                     | FK     | Request actor trace                                              |
+| `FK_Reissue_ApprovedBy`              | `approvedBy`                      | FK     | Approval actor trace                                             |
+| `UQ_Reissue_newCertificateId`        | `newCertificateId` where non-null | Unique | A replacement Certificate cannot complete two different requests |
+| `IX_Reissue_status_createdAt`        | `status`, `createdAt DESC`        | Index  | Pending queue and operational list                               |
+| `IX_Reissue_certificateId_createdAt` | `certificateId`, `createdAt DESC` | Index  | Original Certificate history                                     |
+| `IX_Reissue_requestedBy_createdAt`   | `requestedBy`, `createdAt DESC`   | Index  | Requester self-service history, subject to identity mapping      |
+| `IX_Reissue_approvedBy_approvedAt`   | `approvedBy`, `approvedAt DESC`   | Index  | Decision audit/operational lookup                                |
 
 ## 6.4 State Constraints
 
-| Status | `approvedBy` | `approvedAt` | `newCertificateId` | Required Meaning |
-|---|---|---|---|---|
-| PendingReview | NULL | NULL | NULL | Awaiting decision |
-| Approved | NOT NULL | NOT NULL | NULL | Replacement generation authorized |
-| Rejected | Schema-dependent | NULL or decision timestamp not represented | NULL | Request declined; full decision actor/history must be preserved in Audit/ApprovalHistory |
-| Completed | NOT NULL | NOT NULL | NOT NULL | Approved request has exactly one linked replacement |
+| Status        | `approvedBy`     | `approvedAt`                               | `newCertificateId` | Required Meaning                                                                         |
+| ------------- | ---------------- | ------------------------------------------ | ------------------ | ---------------------------------------------------------------------------------------- |
+| PendingReview | NULL             | NULL                                       | NULL               | Awaiting decision                                                                        |
+| Approved      | NOT NULL         | NOT NULL                                   | NULL               | Replacement generation authorized                                                        |
+| Rejected      | Schema-dependent | NULL or decision timestamp not represented | NULL               | Request declined; full decision actor/history must be preserved in Audit/ApprovalHistory |
+| Completed     | NOT NULL         | NOT NULL                                   | NOT NULL           | Approved request has exactly one linked replacement                                      |
 
 The ER field names are insufficient for a rich rejection decision record because they only provide `approvedBy` and `approvedAt`. Rejection actor, rejection timestamp, and decision remarks should remain recoverable through Audit & Compliance records unless the ER model is explicitly extended.
 
@@ -575,18 +575,18 @@ CertificateReissueRequest N ── 0..1 User (approvedBy)
 
 Operational business roots must use `RESTRICT`/`NO ACTION`, not cascading physical delete. The project requires soft deletion and historical preservation.
 
-| Parent | Child FK | Cardinality | On Delete | On Update | Rationale |
-|---|---|---|---|---|---|
-| `Enrollment` | `Certificate.enrollmentId` | 1:N historical / ER says 1:0..1 current | RESTRICT | CASCADE only if mutable technical IDs are supported; normally NO ACTION | Cannot erase credential because learning record is removed |
-| `StudentProfile` | `Certificate.studentProfileId` | 1:N | RESTRICT | NO ACTION | Preserve credential identity trace |
-| `Course` | `Certificate.courseId` | 1:N | RESTRICT | NO ACTION | Course soft-delete must not erase certificates |
-| `Batch` | `Certificate.batchId` | 1:N | RESTRICT | NO ACTION | Batch history required |
-| `User` | `Certificate.issuedBy` | 1:N | RESTRICT or SET NULL only if policy explicitly permits | NO ACTION | Issuer identity should be preserved; User should be deactivated, not deleted |
-| `Certificate` | `CertificateVerification.certificateId` | 1:N | RESTRICT | NO ACTION | Verification history must survive |
-| `Certificate` | `CertificateReissueRequest.certificateId` | 1:N | RESTRICT | NO ACTION | Reissue history must survive |
-| `Certificate` | `CertificateReissueRequest.newCertificateId` | 1:0..N as target, intended unique target | RESTRICT | NO ACTION | Replacement lineage must survive |
-| `User` | `CertificateReissueRequest.requestedBy` | 1:N | RESTRICT | NO ACTION | Preserve requester trace |
-| `User` | `CertificateReissueRequest.approvedBy` | 1:N | RESTRICT | NO ACTION | Preserve approval trace |
+| Parent           | Child FK                                     | Cardinality                              | On Delete                                              | On Update                                                               | Rationale                                                                    |
+| ---------------- | -------------------------------------------- | ---------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `Enrollment`     | `Certificate.enrollmentId`                   | 1:N historical / ER says 1:0..1 current  | RESTRICT                                               | CASCADE only if mutable technical IDs are supported; normally NO ACTION | Cannot erase credential because learning record is removed                   |
+| `StudentProfile` | `Certificate.studentProfileId`               | 1:N                                      | RESTRICT                                               | NO ACTION                                                               | Preserve credential identity trace                                           |
+| `Course`         | `Certificate.courseId`                       | 1:N                                      | RESTRICT                                               | NO ACTION                                                               | Course soft-delete must not erase certificates                               |
+| `Batch`          | `Certificate.batchId`                        | 1:N                                      | RESTRICT                                               | NO ACTION                                                               | Batch history required                                                       |
+| `User`           | `Certificate.issuedBy`                       | 1:N                                      | RESTRICT or SET NULL only if policy explicitly permits | NO ACTION                                                               | Issuer identity should be preserved; User should be deactivated, not deleted |
+| `Certificate`    | `CertificateVerification.certificateId`      | 1:N                                      | RESTRICT                                               | NO ACTION                                                               | Verification history must survive                                            |
+| `Certificate`    | `CertificateReissueRequest.certificateId`    | 1:N                                      | RESTRICT                                               | NO ACTION                                                               | Reissue history must survive                                                 |
+| `Certificate`    | `CertificateReissueRequest.newCertificateId` | 1:0..N as target, intended unique target | RESTRICT                                               | NO ACTION                                                               | Replacement lineage must survive                                             |
+| `User`           | `CertificateReissueRequest.requestedBy`      | 1:N                                      | RESTRICT                                               | NO ACTION                                                               | Preserve requester trace                                                     |
+| `User`           | `CertificateReissueRequest.approvedBy`       | 1:N                                      | RESTRICT                                               | NO ACTION                                                               | Preserve approval trace                                                      |
 
 ### No Cascade Delete Rule
 
@@ -684,16 +684,16 @@ Trainer Portal certificate visibility is read-only and must derive from Training
 
 The matrix below uses:
 
-| Symbol | Meaning |
-|---|---|
-| C | Create a new owned record through application service |
-| R | Read/query authorized record or projection |
-| U | Controlled lifecycle mutation through application command |
-| D | Physical delete |
-| — | Not allowed / not applicable |
-| S | Submit/request action, implemented as controlled create |
-| A | Approve/reject decision, implemented as controlled update |
-| X | System-owned append or integration action |
+| Symbol | Meaning                                                   |
+| ------ | --------------------------------------------------------- |
+| C      | Create a new owned record through application service     |
+| R      | Read/query authorized record or projection                |
+| U      | Controlled lifecycle mutation through application command |
+| D      | Physical delete                                           |
+| —      | Not allowed / not applicable                              |
+| S      | Submit/request action, implemented as controlled create   |
+| A      | Approve/reject decision, implemented as controlled update |
+| X      | System-owned append or integration action                 |
 
 **Important:** `D` is prohibited for all normal actors. Administrative soft-delete, where repository policy permits it, is not normal CRUD and requires a separately permissioned audited service.
 
@@ -703,79 +703,79 @@ The matrix below uses:
 
 ## 11.1 Certificate Administrator
 
-| Entity | C | R | U | D | Branch Scope / Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | Yes | Yes | Yes | No | Generate, issue, and permitted lifecycle actions only within effective branches; revoke requires separate permission |
-| CertificateVerification | No | Yes | No | No | Read matched verification activity only for Certificate records in effective branches and with verification-activity permission |
-| CertificateReissueRequest | Optional submit | Yes | Limited | No | May submit request; queue processing only with approval permission; replacement generation requires separate permission |
-| Enrollment | No | Read | No | No | Read readiness/source projection only; server branch-scoped |
-| CourseCompletion | No | Read | No | No | Read authoritative eligibility result; no recomputation/mutation |
-| Finance entities | No | Decision result only | No | No | Consume payment validation outcome only |
-| NumberingSeries | No | No direct UI read required | No | No | Allocation through Configuration-owned service |
-| AuditLog | No direct C | Read if permitted | No | No | Certificate commands emit audit request; Audit owns write |
-| NotificationRequest | No direct CRUD | Status read if permitted | No | No | Certificate issue may request notification through Communication service |
+| Entity                    |               C |                          R |       U |   D | Branch Scope / Notes                                                                                                            |
+| ------------------------- | --------------: | -------------------------: | ------: | --: | ------------------------------------------------------------------------------------------------------------------------------- |
+| Certificate               |             Yes |                        Yes |     Yes |  No | Generate, issue, and permitted lifecycle actions only within effective branches; revoke requires separate permission            |
+| CertificateVerification   |              No |                        Yes |      No |  No | Read matched verification activity only for Certificate records in effective branches and with verification-activity permission |
+| CertificateReissueRequest | Optional submit |                        Yes | Limited |  No | May submit request; queue processing only with approval permission; replacement generation requires separate permission         |
+| Enrollment                |              No |                       Read |      No |  No | Read readiness/source projection only; server branch-scoped                                                                     |
+| CourseCompletion          |              No |                       Read |      No |  No | Read authoritative eligibility result; no recomputation/mutation                                                                |
+| Finance entities          |              No |       Decision result only |      No |  No | Consume payment validation outcome only                                                                                         |
+| NumberingSeries           |              No | No direct UI read required |      No |  No | Allocation through Configuration-owned service                                                                                  |
+| AuditLog                  |     No direct C |          Read if permitted |      No |  No | Certificate commands emit audit request; Audit owns write                                                                       |
+| NotificationRequest       |  No direct CRUD |   Status read if permitted |      No |  No | Certificate issue may request notification through Communication service                                                        |
 
 ## 11.2 Branch Manager / Management Approver
 
-| Entity | C | R | U | D | Branch Scope / Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No by role assumption; permission can grant | Yes | Revoke if permitted | No | Effective branch set; dynamic permission, not role name, is authoritative |
-| CertificateVerification | No | Optional | No | No | Requires explicit permission; branch-scoped |
-| CertificateReissueRequest | No | Yes | Approve/Reject | No | Pending requests only; effective branch scope; optimistic concurrency |
-| AuditLog | No direct C | Yes if permitted | No | No | Read approval/lifecycle trail |
+| Entity                    |                                           C |                R |                   U |   D | Branch Scope / Notes                                                      |
+| ------------------------- | ------------------------------------------: | ---------------: | ------------------: | --: | ------------------------------------------------------------------------- |
+| Certificate               | No by role assumption; permission can grant |              Yes | Revoke if permitted |  No | Effective branch set; dynamic permission, not role name, is authoritative |
+| CertificateVerification   |                                          No |         Optional |                  No |  No | Requires explicit permission; branch-scoped                               |
+| CertificateReissueRequest |                                          No |              Yes |      Approve/Reject |  No | Pending requests only; effective branch scope; optimistic concurrency     |
+| AuditLog                  |                                 No direct C | Yes if permitted |                  No |  No | Read approval/lifecycle trail                                             |
 
 ## 11.3 Academic Coordinator
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | Optional only if permission granted | Yes | No by default | No | Readiness and status visibility; Certificate permissions remain dynamic |
-| CertificateVerification | No | No by default | No | No | Only explicit permission allows access |
-| CertificateReissueRequest | No | Read if operationally required | No | No | Cannot decide without approval permission |
-| CourseCompletion | No | Read | No in Certificate module | No | Completion actions occur in Completion context, not Certificate service |
+| Entity                    |                                   C |                              R |                        U |   D | Notes                                                                   |
+| ------------------------- | ----------------------------------: | -----------------------------: | -----------------------: | --: | ----------------------------------------------------------------------- |
+| Certificate               | Optional only if permission granted |                            Yes |            No by default |  No | Readiness and status visibility; Certificate permissions remain dynamic |
+| CertificateVerification   |                                  No |                  No by default |                       No |  No | Only explicit permission allows access                                  |
+| CertificateReissueRequest |                                  No | Read if operationally required |                       No |  No | Cannot decide without approval permission                               |
+| CourseCompletion          |                                  No |                           Read | No in Certificate module |  No | Completion actions occur in Completion context, not Certificate service |
 
 ## 11.4 Finance User
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Read status only if explicitly permitted | No | No | Finance does not issue/revoke credentials |
-| CertificateVerification | No | No | No | No | No default business need |
-| CertificateReissueRequest | No | No by default | No | No | No default business need |
-| Finance records | Owned in Finance context | Owned in Finance context | Owned in Finance context | Per Finance policy | Certificate module consumes Finance decision only |
+| Entity                    |                        C |                                        R |                        U |                  D | Notes                                             |
+| ------------------------- | -----------------------: | ---------------------------------------: | -----------------------: | -----------------: | ------------------------------------------------- |
+| Certificate               |                       No | Read status only if explicitly permitted |                       No |                 No | Finance does not issue/revoke credentials         |
+| CertificateVerification   |                       No |                                       No |                       No |                 No | No default business need                          |
+| CertificateReissueRequest |                       No |                            No by default |                       No |                 No | No default business need                          |
+| Finance records           | Owned in Finance context |                 Owned in Finance context | Owned in Finance context | Per Finance policy | Certificate module consumes Finance decision only |
 
 ## 11.5 Auditor / Compliance Reviewer
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Yes | No | No | Read-only, branch/consolidated scope from IAM |
-| CertificateVerification | No | Yes if privacy permission granted | No | No | Privacy-sensitive IP access must be separately controlled |
-| CertificateReissueRequest | No | Yes | No | No | Full lineage review |
-| AuditLog / ApprovalHistory | No through Certificate module | Yes | No | No | Audit context owns records |
+| Entity                     |                             C |                                 R |   U |   D | Notes                                                     |
+| -------------------------- | ----------------------------: | --------------------------------: | --: | --: | --------------------------------------------------------- |
+| Certificate                |                            No |                               Yes |  No |  No | Read-only, branch/consolidated scope from IAM             |
+| CertificateVerification    |                            No | Yes if privacy permission granted |  No |  No | Privacy-sensitive IP access must be separately controlled |
+| CertificateReissueRequest  |                            No |                               Yes |  No |  No | Full lineage review                                       |
+| AuditLog / ApprovalHistory | No through Certificate module |                               Yes |  No |  No | Audit context owns records                                |
 
 ## 11.6 Student
 
-| Entity | C | R | U | D | Self-Scope / Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Yes | No | No | Own StudentProfile certificates only; issued/downloadable state policy applies |
-| CertificateVerification | No | No | No | No | Student does not browse verification activity by default |
-| CertificateReissueRequest | Submit | Yes | No | No | Own Certificate only; cannot approve or complete |
-| Enrollment | No | Limited own projection | No | No | Owned by Enrollment context |
+| Entity                    |      C |                      R |   U |   D | Self-Scope / Notes                                                             |
+| ------------------------- | -----: | ---------------------: | --: | --: | ------------------------------------------------------------------------------ |
+| Certificate               |     No |                    Yes |  No |  No | Own StudentProfile certificates only; issued/downloadable state policy applies |
+| CertificateVerification   |     No |                     No |  No |  No | Student does not browse verification activity by default                       |
+| CertificateReissueRequest | Submit |                    Yes |  No |  No | Own Certificate only; cannot approve or complete                               |
+| Enrollment                |     No | Limited own projection |  No |  No | Owned by Enrollment context                                                    |
 
 ## 11.7 Trainer
 
-| Entity | C | R | U | D | Scope / Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Limited status projection | No | No | Only learners/batches authorized through Training Delivery scope |
-| CertificateVerification | No | No | No | No | Not required |
-| CertificateReissueRequest | No | No by default | No | No | No default responsibility |
-| CourseCompletion | No in Certificate context | Read/act through Completion service as permitted | No Certificate write | No | Recommendation belongs to Completion context |
+| Entity                    |                         C |                                                R |                    U |   D | Scope / Notes                                                    |
+| ------------------------- | ------------------------: | -----------------------------------------------: | -------------------: | --: | ---------------------------------------------------------------- |
+| Certificate               |                        No |                        Limited status projection |                   No |  No | Only learners/batches authorized through Training Delivery scope |
+| CertificateVerification   |                        No |                                               No |                   No |  No | Not required                                                     |
+| CertificateReissueRequest |                        No |                                    No by default |                   No |  No | No default responsibility                                        |
+| CourseCompletion          | No in Certificate context | Read/act through Completion service as permitted | No Certificate write |  No | Recommendation belongs to Completion context                     |
 
 ## 11.8 External Public Verifier
 
-| Entity | C | R | U | D | Scope / Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Minimal verification projection | No | No | Lookup only by opaque verification code/QR; no registry listing |
-| CertificateVerification | Indirect append by system | No | No | No | Request may cause system logging, but public actor has no database CRUD access |
-| CertificateReissueRequest | No | No | No | No | Not exposed publicly |
+| Entity                    |                         C |                               R |   U |   D | Scope / Notes                                                                  |
+| ------------------------- | ------------------------: | ------------------------------: | --: | --: | ------------------------------------------------------------------------------ |
+| Certificate               |                        No | Minimal verification projection |  No |  No | Lookup only by opaque verification code/QR; no registry listing                |
+| CertificateVerification   | Indirect append by system |                              No |  No |  No | Request may cause system logging, but public actor has no database CRUD access |
+| CertificateReissueRequest |                        No |                              No |  No |  No | Not exposed publicly                                                           |
 
 ---
 
@@ -783,62 +783,62 @@ The matrix below uses:
 
 ## 12.1 Certificate Application Service
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | Yes | Yes | Yes | No | Aggregate command handler; all invariants enforced |
-| CertificateVerification | Yes | Yes | No normal update | No | Append verification activity |
-| CertificateReissueRequest | Yes | Yes | Yes | No | Submit, decide, complete replacement lineage |
-| Enrollment | No | Yes | No | No | Authoritative reference/read |
-| CourseCompletion | No | Yes | No | No | Consume eligibility decision |
-| Finance data | No | Through service contract | No | No | No direct financial ownership |
-| NumberingSeries | No | Through allocation service | Through Configuration service only | No | Certificate module does not update series directly outside owning contract |
-| UserBranchAccess | No | Yes through IAM policy | No | No | Resolve effective scope |
+| Entity                    |   C |                          R |                                  U |   D | Notes                                                                      |
+| ------------------------- | --: | -------------------------: | ---------------------------------: | --: | -------------------------------------------------------------------------- |
+| Certificate               | Yes |                        Yes |                                Yes |  No | Aggregate command handler; all invariants enforced                         |
+| CertificateVerification   | Yes |                        Yes |                   No normal update |  No | Append verification activity                                               |
+| CertificateReissueRequest | Yes |                        Yes |                                Yes |  No | Submit, decide, complete replacement lineage                               |
+| Enrollment                |  No |                        Yes |                                 No |  No | Authoritative reference/read                                               |
+| CourseCompletion          |  No |                        Yes |                                 No |  No | Consume eligibility decision                                               |
+| Finance data              |  No |   Through service contract |                                 No |  No | No direct financial ownership                                              |
+| NumberingSeries           |  No | Through allocation service | Through Configuration service only |  No | Certificate module does not update series directly outside owning contract |
+| UserBranchAccess          |  No |     Yes through IAM policy |                                 No |  No | Resolve effective scope                                                    |
 
 ## 12.2 Public Verification Service
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Yes by verificationCode | No | No | Minimal projection only |
-| CertificateVerification | Yes | Optional internal read | No | No | Append matched verification result |
-| Enrollment/StudentProfile | No | Minimal approved projection only | No | No | Public response must minimize PII |
+| Entity                    |   C |                                R |   U |   D | Notes                              |
+| ------------------------- | --: | -------------------------------: | --: | --: | ---------------------------------- |
+| Certificate               |  No |          Yes by verificationCode |  No |  No | Minimal projection only            |
+| CertificateVerification   | Yes |           Optional internal read |  No |  No | Append matched verification result |
+| Enrollment/StudentProfile |  No | Minimal approved projection only |  No |  No | Public response must minimize PII  |
 
 ## 12.3 Completion Integration Handler
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No automatic issuance by default | Read readiness/projection | No unless explicit approved orchestration | No | Completion event may make enrollment ready; issuance remains Certificate command policy |
-| CourseCompletion | No | Read/consume event | No | No | Completion context owns source event |
+| Entity           |                                C |                         R |                                         U |   D | Notes                                                                                   |
+| ---------------- | -------------------------------: | ------------------------: | ----------------------------------------: | --: | --------------------------------------------------------------------------------------- |
+| Certificate      | No automatic issuance by default | Read readiness/projection | No unless explicit approved orchestration |  No | Completion event may make enrollment ready; issuance remains Certificate command policy |
+| CourseCompletion |                               No |        Read/consume event |                                        No |  No | Completion context owns source event                                                    |
 
 ## 12.4 Finance Validation Service
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate-owned tables | No | No direct need | No | No | Returns authoritative payment gate decision |
-| Finance entities | Finance-owned | Finance-owned | Finance-owned | Finance policy | Certificate does not bypass service contract |
+| Entity                   |             C |              R |             U |              D | Notes                                        |
+| ------------------------ | ------------: | -------------: | ------------: | -------------: | -------------------------------------------- |
+| Certificate-owned tables |            No | No direct need |            No |             No | Returns authoritative payment gate decision  |
+| Finance entities         | Finance-owned |  Finance-owned | Finance-owned | Finance policy | Certificate does not bypass service contract |
 
 ## 12.5 Communication Integration Handler
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Read notification payload projection | No | No | Cannot change Certificate status |
-| NotificationRequest | Yes in Communication context | Yes | Yes delivery lifecycle in Communication | Per Communication policy | Certificate only requests notification |
+| Entity              |                            C |                                    R |                                       U |                        D | Notes                                  |
+| ------------------- | ---------------------------: | -----------------------------------: | --------------------------------------: | -----------------------: | -------------------------------------- |
+| Certificate         |                           No | Read notification payload projection |                                      No |                       No | Cannot change Certificate status       |
+| NotificationRequest | Yes in Communication context |                                  Yes | Yes delivery lifecycle in Communication | Per Communication policy | Certificate only requests notification |
 
 ## 12.6 Reporting Projection Builder
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate | No | Yes read-only facts | No | No | Reporting consumes facts |
-| CertificateVerification | No | Yes aggregated facts subject to privacy policy | No | No | Reporting must not mutate source |
-| CertificateReissueRequest | No | Yes read-only facts | No | No | Build operational/reporting projection |
-| MetricSnapshot/read model | Reporting-owned | Reporting-owned | Reporting-owned | Reporting policy | Not Certificate-owned |
+| Entity                    |               C |                                              R |               U |                D | Notes                                  |
+| ------------------------- | --------------: | ---------------------------------------------: | --------------: | ---------------: | -------------------------------------- |
+| Certificate               |              No |                            Yes read-only facts |              No |               No | Reporting consumes facts               |
+| CertificateVerification   |              No | Yes aggregated facts subject to privacy policy |              No |               No | Reporting must not mutate source       |
+| CertificateReissueRequest |              No |                            Yes read-only facts |              No |               No | Build operational/reporting projection |
+| MetricSnapshot/read model | Reporting-owned |                                Reporting-owned | Reporting-owned | Reporting policy | Not Certificate-owned                  |
 
 ## 12.7 Audit Service
 
-| Entity | C | R | U | D | Notes |
-|---|---:|---:|---:|---:|---|
-| Certificate-owned records | No | Read IDs/state snapshots as event payload context | No | No | Does not mutate Certificate state |
-| AuditLog | Yes in Audit context | Yes | Append-only/correction policy | No normal delete | Certificate commands request audit recording |
-| ApprovalHistory | Yes in Audit context | Yes | Controlled workflow | No normal delete | Reissue approval trail |
+| Entity                    |                    C |                                                 R |                             U |                D | Notes                                        |
+| ------------------------- | -------------------: | ------------------------------------------------: | ----------------------------: | ---------------: | -------------------------------------------- |
+| Certificate-owned records |                   No | Read IDs/state snapshots as event payload context |                            No |               No | Does not mutate Certificate state            |
+| AuditLog                  | Yes in Audit context |                                               Yes | Append-only/correction policy | No normal delete | Certificate commands request audit recording |
+| ApprovalHistory           | Yes in Audit context |                                               Yes |           Controlled workflow | No normal delete | Reissue approval trail                       |
 
 ---
 
@@ -846,19 +846,19 @@ The matrix below uses:
 
 Recommended permission codes are functional contracts; exact seeded permissions must be validated with IAM configuration.
 
-| Permission | Entity | Allowed Data Action | Server Guard |
-|---|---|---|---|
-| `certificate.read` | Certificate | R | Effective branch scope |
-| `certificate.generate` | Certificate | C | Branch + eligibility + payment gate + duplicate guard |
-| `certificate.issue` | Certificate | U Generated→Issued | Branch + command-time revalidation + version |
-| `certificate.download` | Certificate artifact | R | Branch or Student self-scope |
-| `certificate.revoke` | Certificate | U Issued→Revoked | Branch + reason + version + audit |
-| `certificate.verification.activity.read` | CertificateVerification | R | Branch + privacy control |
-| `certificate.reissue.request` | CertificateReissueRequest | C/S | Branch or Student self-scope + original Certificate eligibility |
-| `certificate.reissue.read` | CertificateReissueRequest | R | Branch or Student self-scope |
-| `certificate.reissue.approve` | CertificateReissueRequest | U/A | Effective branch + PendingReview + version + audit |
-| `certificate.reissue.generate` | Certificate + ReissueRequest | C/U | Approved request + no replacement + branch + version |
-| `certificate.audit.read` | Audit projection | R | Branch + Audit permission |
+| Permission                               | Entity                       | Allowed Data Action | Server Guard                                                    |
+| ---------------------------------------- | ---------------------------- | ------------------- | --------------------------------------------------------------- |
+| `certificate.read`                       | Certificate                  | R                   | Effective branch scope                                          |
+| `certificate.generate`                   | Certificate                  | C                   | Branch + eligibility + payment gate + duplicate guard           |
+| `certificate.issue`                      | Certificate                  | U Generated→Issued  | Branch + command-time revalidation + version                    |
+| `certificate.download`                   | Certificate artifact         | R                   | Branch or Student self-scope                                    |
+| `certificate.revoke`                     | Certificate                  | U Issued→Revoked    | Branch + reason + version + audit                               |
+| `certificate.verification.activity.read` | CertificateVerification      | R                   | Branch + privacy control                                        |
+| `certificate.reissue.request`            | CertificateReissueRequest    | C/S                 | Branch or Student self-scope + original Certificate eligibility |
+| `certificate.reissue.read`               | CertificateReissueRequest    | R                   | Branch or Student self-scope                                    |
+| `certificate.reissue.approve`            | CertificateReissueRequest    | U/A                 | Effective branch + PendingReview + version + audit              |
+| `certificate.reissue.generate`           | Certificate + ReissueRequest | C/U                 | Approved request + no replacement + branch + version            |
+| `certificate.audit.read`                 | Audit projection             | R                   | Branch + Audit permission                                       |
 
 No permission grants physical delete.
 
@@ -1027,11 +1027,11 @@ Never accept arbitrary `studentProfileId` from the browser as authorization.
 
 The ER requirement asks for effective dating where relevant. The Certificate-owned entities do **not** require `effectiveStartDate` / `effectiveEndDate` in the current baseline.
 
-| Entity | Effective Dating Required? | Reason |
-|---|---:|---|
-| Certificate | No | Lifecycle is represented by generation, issue date, status, and audit history |
-| CertificateVerification | No | Event record uses `verifiedAt` |
-| CertificateReissueRequest | No | Workflow timestamps and status represent lifecycle |
+| Entity                    | Effective Dating Required? | Reason                                                                        |
+| ------------------------- | -------------------------: | ----------------------------------------------------------------------------- |
+| Certificate               |                         No | Lifecycle is represented by generation, issue date, status, and audit history |
+| CertificateVerification   |                         No | Event record uses `verifiedAt`                                                |
+| CertificateReissueRequest |                         No | Workflow timestamps and status represent lifecycle                            |
 
 Referenced `NumberingSeries` uses active configuration semantics; Course and organizational data may use effective dates in their owning contexts. Certificate Management must respect authoritative valid references at command time but must not copy their effective-dating columns.
 
@@ -1092,26 +1092,26 @@ Approval decision history is additionally preserved by Audit/ApprovalHistory.
 
 # 18. Data Integrity Rules
 
-| ID | Rule | Enforcement Layer |
-|---|---|---|
-| DI-CERT-001 | Certificate must reference an existing Enrollment | FK + application guard |
+| ID          | Rule                                                              | Enforcement Layer                                                                                      |
+| ----------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| DI-CERT-001 | Certificate must reference an existing Enrollment                 | FK + application guard                                                                                 |
 | DI-CERT-002 | Certificate learner/course/batch references must match Enrollment | Application command validation; optional DB trigger only if repository architecture explicitly permits |
-| DI-CERT-003 | Certificate number unique | Unique constraint |
-| DI-CERT-004 | Verification code unique | Unique constraint |
-| DI-CERT-005 | Browser cannot choose certificate number or verification code | API contract + server generation |
-| DI-CERT-006 | Issued status requires issue metadata | Application/domain invariant; DB CHECK if enum/schema permits |
-| DI-CERT-007 | Revocation preserves issue metadata | Domain invariant |
-| DI-CERT-008 | Verification records are append-only | Repository/API policy |
-| DI-CERT-009 | Reissue reason non-empty | Application validation + optional DB CHECK |
-| DI-CERT-010 | Replacement requires Approved request | Domain command guard |
-| DI-CERT-011 | One reissue request cannot produce multiple replacements | Transaction lock/version + unique non-null newCertificateId + state guard |
-| DI-CERT-012 | Original and replacement IDs cannot be equal | Application guard + optional CHECK |
-| DI-CERT-013 | No physical delete | Repository policy + restricted permissions + FK RESTRICT |
-| DI-CERT-014 | Internal reads/mutations are branch-scoped | Server authorization + query predicate |
-| DI-CERT-015 | Student reads/reissue submission are self-scoped | IAM/Person mapping + query predicate |
-| DI-CERT-016 | Public verification returns minimal projection | Dedicated public query DTO |
-| DI-CERT-017 | Lifecycle mutations use optimistic concurrency | `version` conditional update |
-| DI-CERT-018 | Number allocation is atomic | Configuration-owned allocation transaction |
+| DI-CERT-003 | Certificate number unique                                         | Unique constraint                                                                                      |
+| DI-CERT-004 | Verification code unique                                          | Unique constraint                                                                                      |
+| DI-CERT-005 | Browser cannot choose certificate number or verification code     | API contract + server generation                                                                       |
+| DI-CERT-006 | Issued status requires issue metadata                             | Application/domain invariant; DB CHECK if enum/schema permits                                          |
+| DI-CERT-007 | Revocation preserves issue metadata                               | Domain invariant                                                                                       |
+| DI-CERT-008 | Verification records are append-only                              | Repository/API policy                                                                                  |
+| DI-CERT-009 | Reissue reason non-empty                                          | Application validation + optional DB CHECK                                                             |
+| DI-CERT-010 | Replacement requires Approved request                             | Domain command guard                                                                                   |
+| DI-CERT-011 | One reissue request cannot produce multiple replacements          | Transaction lock/version + unique non-null newCertificateId + state guard                              |
+| DI-CERT-012 | Original and replacement IDs cannot be equal                      | Application guard + optional CHECK                                                                     |
+| DI-CERT-013 | No physical delete                                                | Repository policy + restricted permissions + FK RESTRICT                                               |
+| DI-CERT-014 | Internal reads/mutations are branch-scoped                        | Server authorization + query predicate                                                                 |
+| DI-CERT-015 | Student reads/reissue submission are self-scoped                  | IAM/Person mapping + query predicate                                                                   |
+| DI-CERT-016 | Public verification returns minimal projection                    | Dedicated public query DTO                                                                             |
+| DI-CERT-017 | Lifecycle mutations use optimistic concurrency                    | `version` conditional update                                                                           |
+| DI-CERT-018 | Number allocation is atomic                                       | Configuration-owned allocation transaction                                                             |
 
 ---
 
@@ -1119,16 +1119,16 @@ Approval decision history is additionally preserved by Audit/ApprovalHistory.
 
 ## 19.1 Cleanly Aligned Models
 
-| Model | DDD Alignment | ER Alignment | Result |
-|---|---|---|---|
-| Certificate | Certificate aggregate root | Explicit ER entity | Aligned |
-| CertificateVerification | Certificate verification responsibility | Explicit ER entity | Aligned |
-| CertificateReissueRequest | Reissue workflow responsibility | Explicit ER entity | Aligned |
-| Enrollment reference | Certificate must link to Enrollment | Explicit FK | Aligned |
-| StudentProfile reference | Learner traceability | Explicit FK | Aligned |
-| Course reference | Credential course trace | Explicit FK | Aligned |
-| Batch reference | Credential delivery trace | Explicit FK | Aligned |
-| User issuer reference | Issue actor trace | `issuedBy` in ER | Aligned |
+| Model                     | DDD Alignment                           | ER Alignment       | Result  |
+| ------------------------- | --------------------------------------- | ------------------ | ------- |
+| Certificate               | Certificate aggregate root              | Explicit ER entity | Aligned |
+| CertificateVerification   | Certificate verification responsibility | Explicit ER entity | Aligned |
+| CertificateReissueRequest | Reissue workflow responsibility         | Explicit ER entity | Aligned |
+| Enrollment reference      | Certificate must link to Enrollment     | Explicit FK        | Aligned |
+| StudentProfile reference  | Learner traceability                    | Explicit FK        | Aligned |
+| Course reference          | Credential course trace                 | Explicit FK        | Aligned |
+| Batch reference           | Credential delivery trace               | Explicit FK        | Aligned |
+| User issuer reference     | Issue actor trace                       | `issuedBy` in ER   | Aligned |
 
 ## 19.2 Partial Alignments / Gaps
 
@@ -1204,23 +1204,23 @@ The supplied source set used for the FRD does not include a verified `packages/d
 
 The following Certificate-local tables would violate DDD ownership or current scope unless an approved architecture/domain change is made:
 
-| Prohibited Local Model | Why It Must Not Exist in Certificate Context | Correct Owner / Approach |
-|---|---|---|
-| `CertificateEligibility` | Would duplicate completion evaluation | Consume Exam & Completion decision |
-| `CertificateAttendanceSummary` as source of truth | Attendance/completion facts owned elsewhere | Read approved Completion projection |
-| `CertificateExamResult` | Would duplicate Result | Exam & Completion owns Result |
-| `CertificatePaymentStatus` as source of truth | Would duplicate Finance truth | Consume Finance validation decision |
-| `CertificateInvoice` | Finance owns Invoice | Reference Finance service/result only |
-| `CertificateStudent` | Duplicates Party/StudentProfile | Reference StudentProfile/Person |
-| `CertificateCourse` | Duplicates Course | Reference Course |
-| `CertificateBatch` | Duplicates Batch | Reference Batch |
-| `CertificateBranchAccess` | Duplicates IAM branch access | Use UserBranchAccess policy |
-| `CertificateRole` / `CertificatePermission` | Duplicates dynamic RBAC | IAM owns Role/Permission |
-| `CertificateNotificationLog` | Duplicates Communication history | Communication owns NotificationRequest/Log |
-| `CertificateReportSnapshot` | Reporting owns projections/snapshots | Publish facts to Reporting |
-| `CertificateTemplate` | Current version uses one hardcoded template | Future approved extension only |
-| `CertificateQRCode` table | ER currently uses `qrCodeUrl` field | Use current ER representation |
-| `CertificateApprovalHistory` | Audit & Compliance owns approval history | Use ApprovalHistory/AuditLog |
+| Prohibited Local Model                            | Why It Must Not Exist in Certificate Context | Correct Owner / Approach                   |
+| ------------------------------------------------- | -------------------------------------------- | ------------------------------------------ |
+| `CertificateEligibility`                          | Would duplicate completion evaluation        | Consume Exam & Completion decision         |
+| `CertificateAttendanceSummary` as source of truth | Attendance/completion facts owned elsewhere  | Read approved Completion projection        |
+| `CertificateExamResult`                           | Would duplicate Result                       | Exam & Completion owns Result              |
+| `CertificatePaymentStatus` as source of truth     | Would duplicate Finance truth                | Consume Finance validation decision        |
+| `CertificateInvoice`                              | Finance owns Invoice                         | Reference Finance service/result only      |
+| `CertificateStudent`                              | Duplicates Party/StudentProfile              | Reference StudentProfile/Person            |
+| `CertificateCourse`                               | Duplicates Course                            | Reference Course                           |
+| `CertificateBatch`                                | Duplicates Batch                             | Reference Batch                            |
+| `CertificateBranchAccess`                         | Duplicates IAM branch access                 | Use UserBranchAccess policy                |
+| `CertificateRole` / `CertificatePermission`       | Duplicates dynamic RBAC                      | IAM owns Role/Permission                   |
+| `CertificateNotificationLog`                      | Duplicates Communication history             | Communication owns NotificationRequest/Log |
+| `CertificateReportSnapshot`                       | Reporting owns projections/snapshots         | Publish facts to Reporting                 |
+| `CertificateTemplate`                             | Current version uses one hardcoded template  | Future approved extension only             |
+| `CertificateQRCode` table                         | ER currently uses `qrCodeUrl` field          | Use current ER representation              |
+| `CertificateApprovalHistory`                      | Audit & Compliance owns approval history     | Use ApprovalHistory/AuditLog               |
 
 ---
 
@@ -1255,25 +1255,25 @@ The Certificate package must not import another bounded context's private reposi
 
 # 22. CRUD and Ownership Consistency Checklist
 
-| Check | Required Result |
-|---|---|
+| Check                                              | Required Result                                                                     |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | Certificate-owned entity count matches ER baseline | Three owned models: Certificate, CertificateVerification, CertificateReissueRequest |
-| Enrollment remains central | Every Certificate references Enrollment |
-| Course and Batch preserved | Certificate references Course and Batch and validates against Enrollment |
-| Completion evaluation ownership | Read only; no Certificate eligibility calculation table |
-| Finance ownership | Decision consumption only; no finance mutation |
-| Person/Party duplication avoided | StudentProfile/Person referenced, never cloned |
-| Branch isolation | Derived server-side through Enrollment.branchId and IAM effective scope |
-| Hard delete | Prohibited |
-| Sensitive state changes | Audited through Audit & Compliance |
-| Reissue lineage | Original request links to newCertificateId |
-| Public verification | Opaque code, minimal disclosure, verification history where model permits |
-| Numbering | Configuration-owned atomic allocation |
-| Reporting | Read-only consumption/projection ownership remains Reporting |
-| Communication | Notification request through Communication context |
-| Effective dates | Not needed on Certificate-owned tables in current model |
-| Optimistic locking | Version token on mutable operational records |
-| Prisma validation | Mandatory before implementation acceptance |
+| Enrollment remains central                         | Every Certificate references Enrollment                                             |
+| Course and Batch preserved                         | Certificate references Course and Batch and validates against Enrollment            |
+| Completion evaluation ownership                    | Read only; no Certificate eligibility calculation table                             |
+| Finance ownership                                  | Decision consumption only; no finance mutation                                      |
+| Person/Party duplication avoided                   | StudentProfile/Person referenced, never cloned                                      |
+| Branch isolation                                   | Derived server-side through Enrollment.branchId and IAM effective scope             |
+| Hard delete                                        | Prohibited                                                                          |
+| Sensitive state changes                            | Audited through Audit & Compliance                                                  |
+| Reissue lineage                                    | Original request links to newCertificateId                                          |
+| Public verification                                | Opaque code, minimal disclosure, verification history where model permits           |
+| Numbering                                          | Configuration-owned atomic allocation                                               |
+| Reporting                                          | Read-only consumption/projection ownership remains Reporting                        |
+| Communication                                      | Notification request through Communication context                                  |
+| Effective dates                                    | Not needed on Certificate-owned tables in current model                             |
+| Optimistic locking                                 | Version token on mutable operational records                                        |
+| Prisma validation                                  | Mandatory before implementation acceptance                                          |
 
 ---
 

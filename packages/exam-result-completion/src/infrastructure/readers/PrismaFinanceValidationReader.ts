@@ -22,8 +22,14 @@ export class PrismaFinanceValidationReader implements FinanceValidationReader {
       return null;
     }
 
-    const totalDue = invoices.reduce((sum, inv) => sum + inv.totalAmount.toNumber(), 0);
-    const totalPaid = invoices.reduce((sum, inv) => sum + inv.paidAmount.toNumber(), 0);
+    const totalDue = invoices.reduce(
+      (sum, inv) => sum + inv.totalAmount.toNumber(),
+      0,
+    );
+    const totalPaid = invoices.reduce(
+      (sum, inv) => sum + inv.paidAmount.toNumber(),
+      0,
+    );
     const outstanding = totalDue - totalPaid;
 
     let outcome: 'Cleared' | 'Outstanding' | 'Overdue';
@@ -31,7 +37,10 @@ export class PrismaFinanceValidationReader implements FinanceValidationReader {
       outcome = 'Cleared';
     } else {
       const hasOverdue = invoices.some((inv) => {
-        return inv.dueDate < new Date() && (inv.status === 'Issued' || inv.status === 'PartiallyPaid');
+        return (
+          inv.dueDate < new Date() &&
+          (inv.status === 'Issued' || inv.status === 'PartiallyPaid')
+        );
       });
       outcome = hasOverdue ? 'Overdue' : 'Outstanding';
     }
@@ -46,7 +55,8 @@ export class PrismaFinanceValidationReader implements FinanceValidationReader {
       take: 1,
     });
 
-    const lastPaymentDate = payments.length > 0 ? payments[0].paymentDate : null;
+    const lastPaymentDate =
+      payments.length > 0 ? payments[0].paymentDate : null;
 
     return {
       totalDue,

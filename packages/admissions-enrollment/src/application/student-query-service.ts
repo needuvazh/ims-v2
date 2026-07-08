@@ -28,7 +28,9 @@ export const maskPhone = (phone: string | null | undefined): string | null => {
   return `${first}***${last}`;
 };
 
-export const maskNationalId = (nationalId: string | null | undefined): string | null => {
+export const maskNationalId = (
+  nationalId: string | null | undefined,
+): string | null => {
   if (!nationalId) return null;
   if (nationalId.length < 4) return '****';
   return `${nationalId.substring(0, 2)}******${nationalId.substring(nationalId.length - 2)}`;
@@ -47,7 +49,11 @@ export interface StudentBranchInfo {
 export class StudentQueryService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async globalPersonLookup(query: string, activeBranchId?: string | null, options: GlobalPersonLookupOptions = {}) {
+  async globalPersonLookup(
+    query: string,
+    activeBranchId?: string | null,
+    options: GlobalPersonLookupOptions = {},
+  ) {
     if (!query || !query.trim()) {
       throw new Error('ERR_VAL_FAILED: Query cannot be empty');
     }
@@ -59,11 +65,7 @@ export class StudentQueryService {
     const person = await this.prisma.person.findFirst({
       where: {
         isDeleted: false,
-        OR: [
-          { email: trimmed },
-          { mobile: trimmed },
-          { nationalId: trimmed },
-        ],
+        OR: [{ email: trimmed }, { mobile: trimmed }, { nationalId: trimmed }],
       },
       include: {
         studentProfiles: {
@@ -179,7 +181,9 @@ export class StudentQueryService {
         hasActiveAdmission: !!activeAdmission,
         activeAdmissionId: activeAdmission?.id || null,
         hasEnrollment: enrollmentCount > 0,
-        conflictCode: activeAdmission ? 'ERR_ADM_ACTIVE_ADMISSION_EXISTS' : null,
+        conflictCode: activeAdmission
+          ? 'ERR_ADM_ACTIVE_ADMISSION_EXISTS'
+          : null,
       };
     }
 
@@ -190,7 +194,9 @@ export class StudentQueryService {
       lastNameMasked: person.lastName ? `${person.lastName[0]}****` : null,
       maskedMobile: revealSensitive ? person.mobile : maskPhone(person.mobile),
       maskedEmail: revealSensitive ? person.email : maskEmail(person.email),
-      maskedNationalId: revealSensitive ? person.nationalId : maskNationalId(person.nationalId),
+      maskedNationalId: revealSensitive
+        ? person.nationalId
+        : maskNationalId(person.nationalId),
       studentProfileId: studentProfile?.id || null,
       studentNumber: studentProfile?.studentNumber || null,
       branchInfo: Array.from(branchInfoMap.values()),
@@ -216,7 +222,7 @@ export class StudentQueryService {
       studentStatus?: string;
       sortBy?: 'studentNumber' | 'fullName' | 'status' | 'joinedAt' | 'branch';
       sortOrder?: 'asc' | 'desc';
-    }
+    },
   ) {
     const page = options?.page ?? 1;
     const limit = options?.limit ?? 25;
@@ -224,9 +230,10 @@ export class StudentQueryService {
 
     const trimmed = (searchQuery || '').trim();
 
-    const targetBranchIds = options?.branchId && allowedBranchIds.includes(options.branchId)
-      ? [options.branchId]
-      : allowedBranchIds;
+    const targetBranchIds =
+      options?.branchId && allowedBranchIds.includes(options.branchId)
+        ? [options.branchId]
+        : allowedBranchIds;
 
     const whereClause: any = {
       isDeleted: false,
@@ -283,8 +290,12 @@ export class StudentQueryService {
         {
           OR: [
             { studentNumber: { contains: trimmed, mode: 'insensitive' } },
-            { person: { firstName: { contains: trimmed, mode: 'insensitive' } } },
-            { person: { lastName: { contains: trimmed, mode: 'insensitive' } } },
+            {
+              person: { firstName: { contains: trimmed, mode: 'insensitive' } },
+            },
+            {
+              person: { lastName: { contains: trimmed, mode: 'insensitive' } },
+            },
             { person: { mobile: { contains: trimmed } } },
             { person: { email: { contains: trimmed, mode: 'insensitive' } } },
           ],
@@ -297,7 +308,10 @@ export class StudentQueryService {
 
     let orderBy: any;
     if (sortBy === 'fullName') {
-      orderBy = [{ person: { firstName: sortOrder } }, { person: { lastName: sortOrder } }];
+      orderBy = [
+        { person: { firstName: sortOrder } },
+        { person: { lastName: sortOrder } },
+      ];
     } else if (sortBy === 'branch') {
       orderBy = [{ branch: { branchName: sortOrder } }, { joinedAt: 'desc' }];
     } else {
@@ -317,7 +331,12 @@ export class StudentQueryService {
         },
         admissions: {
           where: { isDeleted: false },
-          select: { id: true, admissionNumber: true, admissionStatus: true, branchId: true }
+          select: {
+            id: true,
+            admissionNumber: true,
+            admissionStatus: true,
+            branchId: true,
+          },
         },
         enrollments: {
           where: { isDeleted: false },
@@ -327,9 +346,9 @@ export class StudentQueryService {
             courseId: true,
             batchId: true,
             branchId: true,
-            course: { select: { nameEnglish: true, nameArabic: true } }
-          }
-        }
+            course: { select: { nameEnglish: true, nameArabic: true } },
+          },
+        },
       },
       orderBy,
       skip,
@@ -363,8 +382,6 @@ export class StudentQueryService {
       total,
     };
   }
-
-
 
   async verifyBranchScope(studentProfileId: string, branchId: string) {
     const studentProfile = await this.prisma.studentProfile.findUnique({

@@ -5,16 +5,19 @@ import { assertPermission } from '../../../../../lib/auth-guard';
 
 export const metadata = { title: 'Edit User - IAM | IMS Admin' };
 
-export default async function IamEditUserPage(props: { params: Promise<{ id: string }> }) {
+export default async function IamEditUserPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   await assertPermission('iam.user.update');
   const params = await props.params;
-  
-  const { roleService, organizationService } = await import('../../../../../lib/runtime');
-  
+
+  const { roleService, organizationService } =
+    await import('../../../../../lib/runtime');
+
   const [userProfile, rolesResult, branchResult] = await Promise.all([
     loadUserProfile(params.id),
     roleService.listRoles(),
-    organizationService.listBranches({ pageSize: 1000 })
+    organizationService.listBranches({ pageSize: 1000 }),
   ]);
 
   return (
@@ -29,17 +32,23 @@ export default async function IamEditUserPage(props: { params: Promise<{ id: str
               { label: 'Dashboard', href: '/dashboard' },
               { label: 'IAM Console', href: '/iam' },
               { label: 'Users', href: '/iam/users' },
-              { label: `${userProfile.firstName} ${userProfile.lastName}`, href: `/iam/users/${params.id}` },
+              {
+                label: `${userProfile.firstName} ${userProfile.lastName}`,
+                href: `/iam/users/${params.id}`,
+              },
               { label: 'Edit' },
             ]}
           />
         }
       />
-      <IamUserForm 
-        mode="edit" 
+      <IamUserForm
+        mode="edit"
         initialData={userProfile}
-        roles={rolesResult.filter((r: any) => r.status === 'Active' || userProfile.roleIds.includes(r.id))}  
-        branches={branchResult.items} 
+        roles={rolesResult.filter(
+          (r: any) =>
+            r.status === 'Active' || userProfile.roleIds.includes(r.id),
+        )}
+        branches={branchResult.items}
       />
     </div>
   );

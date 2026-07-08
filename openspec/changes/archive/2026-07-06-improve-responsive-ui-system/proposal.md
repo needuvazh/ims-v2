@@ -15,9 +15,11 @@ The problem is systemic rather than page-specific: shared UI primitives, app she
 ## Capabilities
 
 ### New Capabilities
+
 - `responsive-ui-system`: Shared responsive layout, spacing, typography, and component behavior rules for the IMS admin portal and public site.
 
 ### Modified Capabilities
+
 - `iam-admin-portal-ui`: The admin shell, headers, tables, and dashboard screens must follow the new responsive rules.
 - `admission-enrollment-ui-gaps`: Existing admission and enrollment screens must adopt the shared responsive patterns once migrated.
 - `shared-ui`: Shared components become responsive-by-default primitives rather than desktop-first building blocks.

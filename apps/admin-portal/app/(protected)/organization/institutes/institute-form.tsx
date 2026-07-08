@@ -1,6 +1,12 @@
 'use client';
 
-import { useActionState, useEffect, useState, type ChangeEvent, type InvalidEvent } from 'react';
+import {
+  useActionState,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type InvalidEvent,
+} from 'react';
 import { useRouter } from 'next/navigation';
 import { Building2, Globe, Shield, Calendar, Landmark } from 'lucide-react';
 import {
@@ -15,8 +21,15 @@ import {
   Alert,
 } from '@ims/shared-ui';
 import type { Institute } from '@ims/organization';
-import { createInstituteAction, updateInstituteAction, type ActionResult } from '@/app/(protected)/organization/actions';
-import { clearErrorField, getFieldValidationMessage } from '@/app/(protected)/organization/validation';
+import {
+  createInstituteAction,
+  updateInstituteAction,
+  type ActionResult,
+} from '@/app/(protected)/organization/actions';
+import {
+  clearErrorField,
+  getFieldValidationMessage,
+} from '@/app/(protected)/organization/validation';
 
 export interface InstituteFormProps {
   mode: 'create' | 'edit' | 'view';
@@ -106,8 +119,12 @@ function buildInstituteValues(initialData?: Institute): InstituteFormValues {
     legalNameArabic: (initialData as any)?.legalNameArabic ?? '',
     tradeName: (initialData as any)?.tradeName ?? '',
     shortName: (initialData as any)?.shortName ?? '',
-    effectiveStartDate: formatDateForInput((initialData as any)?.effectiveStartDate),
-    effectiveEndDate: formatDateForInput((initialData as any)?.effectiveEndDate),
+    effectiveStartDate: formatDateForInput(
+      (initialData as any)?.effectiveStartDate,
+    ),
+    effectiveEndDate: formatDateForInput(
+      (initialData as any)?.effectiveEndDate,
+    ),
     currency: (initialData as any)?.currency ?? 'OMR',
     timezone: (initialData as any)?.timezone ?? 'Asia/Muscat',
     language: (initialData as any)?.language ?? 'ar',
@@ -116,7 +133,9 @@ function buildInstituteValues(initialData?: Institute): InstituteFormValues {
 
 export function InstituteForm({ mode, initialData }: InstituteFormProps) {
   const router = useRouter();
-  const [values, setValues] = useState<InstituteFormValues>(() => buildInstituteValues(initialData));
+  const [values, setValues] = useState<InstituteFormValues>(() =>
+    buildInstituteValues(initialData),
+  );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [state, formAction, isPending] = useActionState(
@@ -163,27 +182,31 @@ export function InstituteForm({ mode, initialData }: InstituteFormProps) {
     clearErrorField(setFieldErrors, field);
   };
 
-  const handleTextChange = (field: keyof InstituteFormValues) => (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => {
-    updateField(field)(e.target.value);
-  };
+  const handleTextChange =
+    (field: keyof InstituteFormValues) =>
+    (e: ChangeEvent<HTMLInputElement>) => {
+      updateField(field)(e.target.value);
+    };
 
-  const handleSelectChange = (field: keyof InstituteFormValues) => (
-    e: ChangeEvent<HTMLSelectElement>,
-  ) => {
-    updateField(field)(e.target.value);
-  };
+  const handleSelectChange =
+    (field: keyof InstituteFormValues) =>
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      updateField(field)(e.target.value);
+    };
 
-  const handleInvalid = (field: keyof InstituteFormValues, label: string) => (
-    e: InvalidEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const target = e.currentTarget;
-    setFieldErrors((prev) => ({
-      ...prev,
-      [field]: getFieldValidationMessage(target, label, 'type' in target ? target.type : undefined),
-    }));
-  };
+  const handleInvalid =
+    (field: keyof InstituteFormValues, label: string) =>
+    (e: InvalidEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const target = e.currentTarget;
+      setFieldErrors((prev) => ({
+        ...prev,
+        [field]: getFieldValidationMessage(
+          target,
+          label,
+          'type' in target ? target.type : undefined,
+        ),
+      }));
+    };
 
   const isView = mode === 'view';
   const isEdit = mode === 'edit';
@@ -201,8 +224,12 @@ export function InstituteForm({ mode, initialData }: InstituteFormProps) {
                 <Building2 className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white tracking-wide">Basic Profile</h3>
-                <p className="text-xs text-slate-200 opacity-90">Core identity parameters of the training institute</p>
+                <h3 className="text-xl font-bold text-white tracking-wide">
+                  Basic Profile
+                </h3>
+                <p className="text-xs text-slate-200 opacity-90">
+                  Core identity parameters of the training institute
+                </p>
               </div>
             </div>
           </div>
@@ -218,12 +245,17 @@ export function InstituteForm({ mode, initialData }: InstituteFormProps) {
               disabled={isView || isEdit}
               required
               onChange={handleTextChange('instituteCode')}
-              onInvalidCapture={handleInvalid('instituteCode', 'Institute Code')}
+              onInvalidCapture={handleInvalid(
+                'instituteCode',
+                'Institute Code',
+              )}
               errorText={fieldErrors.instituteCode}
             />
           ) : (
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">Institute Code</label>
+              <label className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
+                Institute Code
+              </label>
               <div className="text-sm font-mono font-medium p-2 bg-[color:var(--ims-surface-hover)] border border-[color:var(--ims-border)] rounded-md">
                 {values.instituteCode}
               </div>
@@ -271,8 +303,12 @@ export function InstituteForm({ mode, initialData }: InstituteFormProps) {
                 <Landmark className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white tracking-wide">Legal & Localized Identity</h3>
-                <p className="text-xs text-slate-200 opacity-90">Official names and government registry settings</p>
+                <h3 className="text-xl font-bold text-white tracking-wide">
+                  Legal & Localized Identity
+                </h3>
+                <p className="text-xs text-slate-200 opacity-90">
+                  Official names and government registry settings
+                </p>
               </div>
             </div>
           </div>
@@ -326,8 +362,12 @@ export function InstituteForm({ mode, initialData }: InstituteFormProps) {
                 <Globe className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white tracking-wide">Regional & Local Defaults</h3>
-                <p className="text-xs text-slate-200 opacity-90">Default system settings for currency, timezone, and language</p>
+                <h3 className="text-xl font-bold text-white tracking-wide">
+                  Regional & Local Defaults
+                </h3>
+                <p className="text-xs text-slate-200 opacity-90">
+                  Default system settings for currency, timezone, and language
+                </p>
               </div>
             </div>
           </div>
@@ -382,8 +422,12 @@ export function InstituteForm({ mode, initialData }: InstituteFormProps) {
                 <Calendar className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white tracking-wide">Contacts & Operational Period</h3>
-                <p className="text-xs text-slate-200 opacity-90">Addresses, primary phone/email, and lifecycle dates</p>
+                <h3 className="text-xl font-bold text-white tracking-wide">
+                  Contacts & Operational Period
+                </h3>
+                <p className="text-xs text-slate-200 opacity-90">
+                  Addresses, primary phone/email, and lifecycle dates
+                </p>
               </div>
             </div>
           </div>
@@ -480,7 +524,9 @@ export function InstituteForm({ mode, initialData }: InstituteFormProps) {
         {isView ? (
           <Button
             type="button"
-            onClick={() => router.push(`/organization/institutes/${initialData?.id}/edit`)}
+            onClick={() =>
+              router.push(`/organization/institutes/${initialData?.id}/edit`)
+            }
           >
             Edit Institute
           </Button>

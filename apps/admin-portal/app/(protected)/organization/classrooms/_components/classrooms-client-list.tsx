@@ -54,9 +54,15 @@ const STATUS_OPTIONS = [
   { value: 'Archived', label: 'Archived' },
 ];
 
-const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+const collator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
 
-function compareText(a: string | null | undefined, b: string | null | undefined) {
+function compareText(
+  a: string | null | undefined,
+  b: string | null | undefined,
+) {
   return collator.compare(a ?? '', b ?? '');
 }
 
@@ -88,30 +94,45 @@ export function ClassroomsClientList({
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(initialSearch);
 
-  const currentSortBy = searchParams.get('sortBy') ?? initialSortBy ?? 'classroomName';
-  const currentSortOrder = (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
+  const currentSortBy =
+    searchParams.get('sortBy') ?? initialSortBy ?? 'classroomName';
+  const currentSortOrder =
+    (searchParams.get('sortOrder') as SortOrder | null) ?? initialSortOrder;
   const currentStatus = searchParams.get('status') ?? initialStatus ?? '';
   const currentBranchId = searchParams.get('branchId') ?? initialBranchId ?? '';
-  const currentPage = Math.max(parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1, 1);
-  const currentLimit = Math.max(parseInt(searchParams.get('limit') ?? String(initialLimit), 10) || initialLimit || 10, 1);
+  const currentPage = Math.max(
+    parseInt(searchParams.get('page') ?? String(initialPage), 10) || 1,
+    1,
+  );
+  const currentLimit = Math.max(
+    parseInt(searchParams.get('limit') ?? String(initialLimit), 10) ||
+      initialLimit ||
+      10,
+    1,
+  );
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === '') {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    router.push(`${pathname}?${params.toString()}`);
-  }, [pathname, router, searchParams]);
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
 
   useEffect(() => {
     const nextSearch = searchParams.get('q') || '';
-    setSearchValue((current) => (current === nextSearch ? current : nextSearch));
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -128,7 +149,8 @@ export function ClassroomsClientList({
   }, [searchParams, searchValue, updateParams]);
 
   const handleSort = (field: string) => {
-    const nextOrder: SortOrder = currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
+    const nextOrder: SortOrder =
+      currentSortBy === field && currentSortOrder === 'asc' ? 'desc' : 'asc';
     updateParams({ sortBy: field, sortOrder: nextOrder, page: '1' });
   };
 
@@ -144,7 +166,9 @@ export function ClassroomsClientList({
 
         if (!q) return true;
 
-        return [room.classroomName, room.location, room.branchName].some((value) => value?.toLowerCase().includes(q));
+        return [room.classroomName, room.location, room.branchName].some(
+          (value) => value?.toLowerCase().includes(q),
+        );
       })
       .sort((left, right) => {
         const direction = currentSortOrder === 'asc' ? 1 : -1;
@@ -160,7 +184,9 @@ export function ClassroomsClientList({
             return compareText(left.status, right.status) * direction;
           case 'classroomName':
           default:
-            return compareText(left.classroomName, right.classroomName) * direction;
+            return (
+              compareText(left.classroomName, right.classroomName) * direction
+            );
         }
       });
   }, [currentSortBy, currentSortOrder, classrooms, searchParams]);
@@ -168,43 +194,64 @@ export function ClassroomsClientList({
   const total = filteredClassrooms.length;
   const totalPages = Math.max(Math.ceil(total / currentLimit), 1);
   const safePage = Math.min(currentPage, totalPages);
-  const paginatedClassrooms = filteredClassrooms.slice((safePage - 1) * currentLimit, safePage * currentLimit);
+  const paginatedClassrooms = filteredClassrooms.slice(
+    (safePage - 1) * currentLimit,
+    safePage * currentLimit,
+  );
 
   const columns = [
     {
       header: 'Classroom',
       sortable: true,
-      sortDirection: currentSortBy === 'classroomName' ? currentSortOrder : null,
+      sortDirection:
+        currentSortBy === 'classroomName' ? currentSortOrder : null,
       onSort: () => handleSort('classroomName'),
-      render: (room: ClassroomItem) => <span className="font-semibold text-slate-800">{room.classroomName}</span>,
+      render: (room: ClassroomItem) => (
+        <span className="font-semibold text-slate-800">
+          {room.classroomName}
+        </span>
+      ),
     },
     {
       header: 'Branch',
       sortable: true,
       sortDirection: currentSortBy === 'branchName' ? currentSortOrder : null,
       onSort: () => handleSort('branchName'),
-      render: (room: ClassroomItem) => <span className="text-sm text-slate-700">{room.branchName}</span>,
+      render: (room: ClassroomItem) => (
+        <span className="text-sm text-slate-700">{room.branchName}</span>
+      ),
     },
     {
       header: 'Capacity',
       sortable: true,
       sortDirection: currentSortBy === 'capacity' ? currentSortOrder : null,
       onSort: () => handleSort('capacity'),
-      render: (room: ClassroomItem) => <span className="font-mono text-sm text-slate-600">{room.capacity} seats</span>,
+      render: (room: ClassroomItem) => (
+        <span className="font-mono text-sm text-slate-600">
+          {room.capacity} seats
+        </span>
+      ),
     },
     {
       header: 'Location',
       sortable: true,
       sortDirection: currentSortBy === 'location' ? currentSortOrder : null,
       onSort: () => handleSort('location'),
-      render: (room: ClassroomItem) => <span className="text-sm text-slate-700">{room.location || '—'}</span>,
+      render: (room: ClassroomItem) => (
+        <span className="text-sm text-slate-700">{room.location || '—'}</span>
+      ),
     },
     {
       header: 'Validity',
       render: (room: ClassroomItem) => (
         <div className="space-y-0.5 text-xs text-slate-600">
           <div>Start: {formatDate(room.effectiveStartDate)}</div>
-          <div className="text-[10px] text-slate-400">End: {room.effectiveEndDate ? formatDate(room.effectiveEndDate) : 'Indefinite'}</div>
+          <div className="text-[10px] text-slate-400">
+            End:{' '}
+            {room.effectiveEndDate
+              ? formatDate(room.effectiveEndDate)
+              : 'Indefinite'}
+          </div>
         </div>
       ),
     },
@@ -213,7 +260,9 @@ export function ClassroomsClientList({
       sortable: true,
       sortDirection: currentSortBy === 'status' ? currentSortOrder : null,
       onSort: () => handleSort('status'),
-      render: (room: ClassroomItem) => <Badge variant={getStatusVariant(room.status)}>{room.status}</Badge>,
+      render: (room: ClassroomItem) => (
+        <Badge variant={getStatusVariant(room.status)}>{room.status}</Badge>
+      ),
       headerClassName: 'w-[110px]',
     },
     {
@@ -223,7 +272,11 @@ export function ClassroomsClientList({
         <div className="flex items-center justify-end gap-2">
           <SimpleTooltip content="View Details" side="top">
             <Link href={`/organization/classrooms/${room.id}`}>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+              >
                 <Eye className="h-4 w-4" />
               </Button>
             </Link>
@@ -231,7 +284,11 @@ export function ClassroomsClientList({
 
           <SimpleTooltip content="Edit Classroom" side="top">
             <Link href={`/organization/classrooms/${room.id}/edit`}>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[color:var(--ims-muted)] hover:text-[color:var(--ims-ink)]"
+              >
                 <Edit2 className="h-4 w-4" />
               </Button>
             </Link>
@@ -247,8 +304,12 @@ export function ClassroomsClientList({
       <CardHeader className="border-b border-slate-100 bg-slate-50/50 p-card-p">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">{room.branchName}</p>
-            <p className="text-sm font-bold text-[var(--ims-ink)]">{room.classroomName}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--ims-muted)]">
+              {room.branchName}
+            </p>
+            <p className="text-sm font-bold text-[var(--ims-ink)]">
+              {room.classroomName}
+            </p>
           </div>
           <Badge variant={getStatusVariant(room.status)}>{room.status}</Badge>
         </div>
@@ -269,7 +330,11 @@ export function ClassroomsClientList({
           </div>
           <div>
             <p className="font-semibold text-[var(--ims-muted)]">End</p>
-            <p className="truncate">{room.effectiveEndDate ? formatDate(room.effectiveEndDate) : 'Indefinite'}</p>
+            <p className="truncate">
+              {room.effectiveEndDate
+                ? formatDate(room.effectiveEndDate)
+                : 'Indefinite'}
+            </p>
           </div>
         </div>
       </CardContent>
@@ -280,7 +345,10 @@ export function ClassroomsClientList({
               <Eye className="mr-1.5 h-3.5 w-3.5" /> View
             </Button>
           </Link>
-          <Link href={`/organization/classrooms/${room.id}/edit`} className="flex-1">
+          <Link
+            href={`/organization/classrooms/${room.id}/edit`}
+            className="flex-1"
+          >
             <Button variant="outline" size="sm" className="w-full text-[11px]">
               <Edit2 className="mr-1.5 h-3.5 w-3.5" /> Edit
             </Button>
@@ -304,7 +372,10 @@ export function ClassroomsClientList({
         </div>
 
         {hasBranches && (
-          <Link href="/organization/classrooms/create" className="w-full sm:w-auto">
+          <Link
+            href="/organization/classrooms/create"
+            className="w-full sm:w-auto"
+          >
             <Button className="h-10 w-full gap-1.5 bg-indigo-600 hover:bg-indigo-700 sm:w-auto sm:px-4">
               <Plus className="h-4 w-4" />
               Add Classroom
@@ -348,8 +419,13 @@ export function ClassroomsClientList({
           </FormLabel>
           <Select
             value={currentBranchId}
-            onChange={(event) => updateParams({ branchId: event.target.value, page: '1' })}
-            options={[{ value: '', label: 'All Branches' }, ...branches.map((b) => ({ value: b.id, label: b.name }))]}
+            onChange={(event) =>
+              updateParams({ branchId: event.target.value, page: '1' })
+            }
+            options={[
+              { value: '', label: 'All Branches' },
+              ...branches.map((b) => ({ value: b.id, label: b.name })),
+            ]}
             className="h-12"
             placeholder="All Branches"
           />
@@ -361,7 +437,9 @@ export function ClassroomsClientList({
           </FormLabel>
           <Select
             value={currentStatus}
-            onChange={(event) => updateParams({ status: event.target.value, page: '1' })}
+            onChange={(event) =>
+              updateParams({ status: event.target.value, page: '1' })
+            }
             options={[{ value: '', label: 'All Statuses' }, ...STATUS_OPTIONS]}
             className="h-12"
             placeholder="All Statuses"
@@ -373,7 +451,11 @@ export function ClassroomsClientList({
         <EmptyState
           icon={<GraduationCap className="h-6 w-6" />}
           title="No classrooms found"
-          description={!hasBranches ? "You must create a branch before adding classrooms." : "No classrooms match the current search or filter criteria."}
+          description={
+            !hasBranches
+              ? 'You must create a branch before adding classrooms.'
+              : 'No classrooms match the current search or filter criteria.'
+          }
         />
       ) : (
         <>

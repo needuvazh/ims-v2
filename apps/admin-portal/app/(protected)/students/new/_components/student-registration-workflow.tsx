@@ -21,13 +21,15 @@ type Props = {
 };
 
 export function StudentRegistrationWorkflow({ branches }: Props) {
-  const [selectedBranchId, setSelectedBranchId] = useState(branches[0]?.id ?? '');
+  const [selectedBranchId, setSelectedBranchId] = useState(
+    branches[0]?.id ?? '',
+  );
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [match, setMatch] = useState<LookupMatch | null>(null);
 
   const selectedBranchName = useMemo(
     () => branches.find((branch) => branch.id === selectedBranchId)?.name ?? '',
-    [branches, selectedBranchId]
+    [branches, selectedBranchId],
   );
 
   const resetLookup = () => {
@@ -57,7 +59,9 @@ export function StudentRegistrationWorkflow({ branches }: Props) {
             ))}
           </select>
           {selectedBranchName ? (
-            <p className="text-xs text-[color:var(--ims-muted)]">Registering into {selectedBranchName}.</p>
+            <p className="text-xs text-[color:var(--ims-muted)]">
+              Registering into {selectedBranchName}.
+            </p>
           ) : null}
         </div>
 

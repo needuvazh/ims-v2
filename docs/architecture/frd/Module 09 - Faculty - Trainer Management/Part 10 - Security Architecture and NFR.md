@@ -27,33 +27,33 @@ Module 09 is a branch-scoped, permission-based bounded context. It must not expo
 
 ## 3. Threat Controls
 
-| Threat | Control | Module 09 Enforcement |
-|---|---|---|
-| IDOR / direct object access | Server-side branch scope + entity reload by id and scope | All routes and services |
-| Cross-branch exposure | Intersect requested branch with effective branch scope | List, detail, report, export, mutation |
-| Compensation leakage | Separate `trainer.compensation.read` and `trainer.compensation.manage` checks | Detail, report, export, notification payloads |
-| Mass assignment | Strict Zod schemas and field ownership validation | Create/update endpoints |
-| Stale writes | Optimistic concurrency version checks | Mutable records |
-| Soft-delete bypass | Repository default filters exclude deleted rows | All normal queries |
-| Audit bypass | Sensitive writes emit audit entries in the same transaction | Status, qualification, availability, authorization, compensation |
-| CSV injection | Sanitize export values and prefix dangerous formulas | CSV exports |
-| Sensitive logging | Do not log protected fields or raw payloads | Route handlers, services, workers |
-| Notification misuse | Communication context owns delivery and retry | All events and templates |
+| Threat                      | Control                                                                       | Module 09 Enforcement                                            |
+| --------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| IDOR / direct object access | Server-side branch scope + entity reload by id and scope                      | All routes and services                                          |
+| Cross-branch exposure       | Intersect requested branch with effective branch scope                        | List, detail, report, export, mutation                           |
+| Compensation leakage        | Separate `trainer.compensation.read` and `trainer.compensation.manage` checks | Detail, report, export, notification payloads                    |
+| Mass assignment             | Strict Zod schemas and field ownership validation                             | Create/update endpoints                                          |
+| Stale writes                | Optimistic concurrency version checks                                         | Mutable records                                                  |
+| Soft-delete bypass          | Repository default filters exclude deleted rows                               | All normal queries                                               |
+| Audit bypass                | Sensitive writes emit audit entries in the same transaction                   | Status, qualification, availability, authorization, compensation |
+| CSV injection               | Sanitize export values and prefix dangerous formulas                          | CSV exports                                                      |
+| Sensitive logging           | Do not log protected fields or raw payloads                                   | Route handlers, services, workers                                |
+| Notification misuse         | Communication context owns delivery and retry                                 | All events and templates                                         |
 
 ---
 
 ## 4. Non-Functional Requirements
 
-| NFR | Target |
-|---|---|
-| Trainer list queries | p95 within 500 ms under normal operating load, excluding network latency |
-| Trainer eligibility validation | p95 within 300 ms for a single trainer/course/branch/time request |
-| Standard create/update operations | p95 within 700 ms, excluding external document-storage latency |
-| Report freshness | Report and dashboard data should reflect source changes within the freshness window defined in the reporting part |
-| Branch isolation | No cross-branch read or write is allowed without explicit permission and branch visibility |
-| Compensation confidentiality | No compensation amount or rate detail is returned without explicit permission |
-| Auditability | Sensitive changes produce immutable audit records |
-| Localization | User-visible trainer data supports English and Arabic labels where available |
+| NFR                               | Target                                                                                                            |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Trainer list queries              | p95 within 500 ms under normal operating load, excluding network latency                                          |
+| Trainer eligibility validation    | p95 within 300 ms for a single trainer/course/branch/time request                                                 |
+| Standard create/update operations | p95 within 700 ms, excluding external document-storage latency                                                    |
+| Report freshness                  | Report and dashboard data should reflect source changes within the freshness window defined in the reporting part |
+| Branch isolation                  | No cross-branch read or write is allowed without explicit permission and branch visibility                        |
+| Compensation confidentiality      | No compensation amount or rate detail is returned without explicit permission                                     |
+| Auditability                      | Sensitive changes produce immutable audit records                                                                 |
+| Localization                      | User-visible trainer data supports English and Arabic labels where available                                      |
 
 ---
 
@@ -64,4 +64,3 @@ Module 09 is a branch-scoped, permission-based bounded context. It must not expo
 - All exports must apply the same branch and field filters as the interactive views.
 - Compensation notifications are suppressed when recipient authorization is insufficient.
 - No module-specific hard delete path is permitted for trainer-owned records.
-

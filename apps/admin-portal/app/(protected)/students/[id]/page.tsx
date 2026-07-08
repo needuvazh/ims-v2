@@ -1,12 +1,22 @@
 import { assertPermission } from '@/lib/auth-guard';
 import { Card, PageHeader, Button } from '@ims/shared-ui';
-import { ChevronLeft, User, Mail, Phone, Calendar, CreditCard, PencilLine } from 'lucide-react';
+import {
+  ChevronLeft,
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  CreditCard,
+  PencilLine,
+} from 'lucide-react';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { IdCardPanel } from '../_components/id-card-panel';
 import { StudentHistoryTabs } from './_components/student-history-tabs';
 
-export const metadata = { title: 'Student Profile Dashboard - Admin Portal | ASTI IMS' };
+export const metadata = {
+  title: 'Student Profile Dashboard - Admin Portal | ASTI IMS',
+};
 
 function maskPhone(phone: string | null | undefined): string | null {
   if (!phone) return null;
@@ -33,7 +43,7 @@ export default async function StudentProfileDashboardPage(props: {
   const { prisma, branchScopeResolver } = await import('@/lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
     session.userId as any,
-    session.activeBranchId as any
+    session.activeBranchId as any,
   );
 
   // Fetch the student profile with relations
@@ -63,8 +73,13 @@ export default async function StudentProfileDashboardPage(props: {
   }
 
   // Enforce branch scope visibility: Student must have at least one admission or enrollment in operator's branch scopes
-  const hasBranchAccess = profile.admissions.some((adm) => allowedBranchIds.includes(adm.branchId as any)) ||
-    profile.enrollments.some((enr) => allowedBranchIds.includes(enr.branchId as any));
+  const hasBranchAccess =
+    profile.admissions.some((adm) =>
+      allowedBranchIds.includes(adm.branchId as any),
+    ) ||
+    profile.enrollments.some((enr) =>
+      allowedBranchIds.includes(enr.branchId as any),
+    );
 
   if (!hasBranchAccess && allowedBranchIds.length > 0) {
     // If not matching branch scope, return forbidden (redirect or show custom warning)
@@ -72,28 +87,57 @@ export default async function StudentProfileDashboardPage(props: {
   }
 
   // Check reveal PII permissions
-  const canRevealPII = session.permissions.includes('student.reveal_pii') || session.permissions.includes('student.identity.unmasked.read');
-  const canReadDocuments = session.permissions.includes('student.related.document.read');
+  const canRevealPII =
+    session.permissions.includes('student.reveal_pii') ||
+    session.permissions.includes('student.identity.unmasked.read');
+  const canReadDocuments = session.permissions.includes(
+    'student.related.document.read',
+  );
   const canReadAudits = session.permissions.includes('student.audit.read');
-  const canReadAdmissions = session.permissions.includes('student.related.admission.read');
-  const canReadEnrollments = session.permissions.includes('student.related.enrollment.read');
-  const canManageIdCard = session.permissions.includes('student.id_card.issue') || session.permissions.includes('student.idcard.manage');
-  const canUpdate = session.permissions.includes('student.update') || session.permissions.includes('student.write');
+  const canReadAdmissions = session.permissions.includes(
+    'student.related.admission.read',
+  );
+  const canReadEnrollments = session.permissions.includes(
+    'student.related.enrollment.read',
+  );
+  const canManageIdCard =
+    session.permissions.includes('student.id_card.issue') ||
+    session.permissions.includes('student.idcard.manage');
+  const canUpdate =
+    session.permissions.includes('student.update') ||
+    session.permissions.includes('student.write');
 
-  const displayMobile = canRevealPII ? profile.person.mobile : maskPhone(profile.person.mobile);
-  const displayEmail = canRevealPII ? profile.person.email : maskEmail(profile.person.email);
-  const displayNationalId = canRevealPII ? profile.person.nationalId : '********* (Masked)';
+  const displayMobile = canRevealPII
+    ? profile.person.mobile
+    : maskPhone(profile.person.mobile);
+  const displayEmail = canRevealPII
+    ? profile.person.email
+    : maskEmail(profile.person.email);
+  const displayNationalId = canRevealPII
+    ? profile.person.nationalId
+    : '********* (Masked)';
 
-  // Query documents owned by the person or student profile
   const documents = canReadDocuments
     ? await prisma.documentOwner.findMany({
         where: {
           ownerId: { in: [profile.id, profile.personId] },
+          document: {
+            isDeleted: false,
+          },
         },
         include: {
           document: {
             include: {
-              verifications: true,
+              verifications: {
+                orderBy: { createdAt: 'desc' },
+                include: {
+                  verifier: {
+                    select: {
+                      username: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -122,8 +166,14 @@ export default async function StudentProfileDashboardPage(props: {
           OR: [
             { entityId: profile.id, entityType: 'StudentProfile' },
             { entityId: profile.personId, entityType: 'Person' },
-            ...(profile.admissions.map((a) => ({ entityId: a.id, entityType: 'Admission' }))),
-            ...(profile.enrollments.map((e) => ({ entityId: e.id, entityType: 'Enrollment' }))),
+            ...profile.admissions.map((a) => ({
+              entityId: a.id,
+              entityType: 'Admission',
+            })),
+            ...profile.enrollments.map((e) => ({
+              entityId: e.id,
+              entityType: 'Enrollment',
+            })),
           ],
         },
         orderBy: { createdAt: 'desc' },
@@ -165,28 +215,38 @@ export default async function StudentProfileDashboardPage(props: {
             </div>
             <div>
               <h3 className="font-bold text-slate-800">Learner Profile</h3>
-              <p className="text-xs text-slate-400">Canonical Identity Details</p>
+              <p className="text-xs text-slate-400">
+                Canonical Identity Details
+              </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">National/Civil ID</span>
-              <p className="font-semibold text-slate-700">{displayNationalId}</p>
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                National/Civil ID
+              </span>
+              <p className="font-semibold text-slate-700">
+                {displayNationalId}
+              </p>
             </div>
 
             <div className="space-y-1">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                 <Phone className="h-3.5 w-3.5" /> Mobile Phone
               </span>
-              <p className="font-semibold text-slate-700">{displayMobile || 'N/A'}</p>
+              <p className="font-semibold text-slate-700">
+                {displayMobile || 'N/A'}
+              </p>
             </div>
 
             <div className="space-y-1">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                 <Mail className="h-3.5 w-3.5" /> Email address
               </span>
-              <p className="font-semibold text-slate-700 break-all">{displayEmail || 'N/A'}</p>
+              <p className="font-semibold text-slate-700 break-all">
+                {displayEmail || 'N/A'}
+              </p>
             </div>
 
             <div className="space-y-1">
@@ -194,14 +254,19 @@ export default async function StudentProfileDashboardPage(props: {
                 <Calendar className="h-3.5 w-3.5" /> Registry Joined At
               </span>
               <p className="font-semibold text-slate-700">
-                {new Date(profile.joinedAt).toLocaleDateString(undefined, { dateStyle: 'medium' })}
+                {new Date(profile.joinedAt).toLocaleDateString(undefined, {
+                  dateStyle: 'medium',
+                })}
               </p>
             </div>
           </div>
 
           {!canRevealPII && (
             <div className="p-3 bg-amber-50 rounded-lg border border-amber-100 text-amber-800 text-xs">
-              Contact information is masked. You need <strong>student.identity.unmasked.read</strong> or <strong>student.reveal_pii</strong> permission to reveal complete records.
+              Contact information is masked. You need{' '}
+              <strong>student.identity.unmasked.read</strong> or{' '}
+              <strong>student.reveal_pii</strong> permission to reveal complete
+              records.
             </div>
           )}
         </Card>
@@ -210,7 +275,8 @@ export default async function StudentProfileDashboardPage(props: {
         {canManageIdCard && (
           <Card id="id-card-management" className="p-6">
             <h3 className="font-bold text-slate-800 flex items-center gap-2 mb-4">
-              <CreditCard className="h-5 w-5 text-purple-500" /> ID Card Management
+              <CreditCard className="h-5 w-5 text-purple-500" /> ID Card
+              Management
             </h3>
             <IdCardPanel
               studentProfileId={profile.id}
@@ -230,19 +296,27 @@ export default async function StudentProfileDashboardPage(props: {
           showEnrollments={canReadEnrollments}
           showDocuments={canReadDocuments}
           showAudits={canReadAudits}
-          admissions={canReadAdmissions ? profile.admissions.map((adm) => ({
-            id: adm.id,
-            admissionNumber: adm.admissionNumber,
-            branchName: adm.branch.branchName,
-            admissionStatus: adm.admissionStatus,
-          })) : []}
-          enrollments={canReadEnrollments ? profile.enrollments.map((enr) => ({
-            id: enr.id,
-            courseName: enr.course.nameEnglish,
-            batchCode: enr.batch.batchCode,
-            branchName: enr.branch.branchName,
-            enrollmentStatus: enr.enrollmentStatus,
-          })) : []}
+          admissions={
+            canReadAdmissions
+              ? profile.admissions.map((adm) => ({
+                  id: adm.id,
+                  admissionNumber: adm.admissionNumber,
+                  branchName: adm.branch.branchName,
+                  admissionStatus: adm.admissionStatus,
+                }))
+              : []
+          }
+          enrollments={
+            canReadEnrollments
+              ? profile.enrollments.map((enr) => ({
+                  id: enr.id,
+                  courseName: enr.course.nameEnglish,
+                  batchCode: enr.batch.batchCode,
+                  branchName: enr.branch.branchName,
+                  enrollmentStatus: enr.enrollmentStatus,
+                }))
+              : []
+          }
           documents={documents.map(({ document: doc }) => {
             const latestVerification = doc.verifications?.[0];
 
@@ -250,8 +324,18 @@ export default async function StudentProfileDashboardPage(props: {
               id: doc.id,
               fileName: doc.fileName,
               documentType: doc.documentType,
-              status: latestVerification ? (latestVerification.outcome as string) : 'Unverified',
-              reviewedOn: latestVerification ? latestVerification.createdAt.toISOString() : null,
+              status: latestVerification
+                ? (latestVerification.outcome as string)
+                : 'Unverified',
+              reviewedOn:
+                latestVerification && latestVerification.verifiedAt
+                  ? latestVerification.verifiedAt.toISOString()
+                  : null,
+              verifiedBy:
+                latestVerification && latestVerification.verifier
+                  ? latestVerification.verifier.username
+                  : null,
+              remarks: latestVerification ? latestVerification.remarks : null,
             };
           })}
           audits={audits.map((a) => ({

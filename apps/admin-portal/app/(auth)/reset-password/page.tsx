@@ -8,7 +8,10 @@ export default async function ResetPasswordPage({
   searchParams: SearchParams;
 }) {
   const resolvedSearchParams = await searchParams;
-  const token = typeof resolvedSearchParams.token === 'string' ? resolvedSearchParams.token : '';
+  const token =
+    typeof resolvedSearchParams.token === 'string'
+      ? resolvedSearchParams.token
+      : '';
 
   return <ResetPasswordForm token={token} />;
 }

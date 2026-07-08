@@ -667,12 +667,12 @@ Own-assignment only
 
 # 9. KPI Freshness Classes
 
-| Freshness Class | Target | Suitable KPIs |
-|---|---|---|
-| F1 Near-real-time | < 1 minute where architecture permits | Pending queue counts, result progress |
-| F2 Operational | < 15 minutes | Completion evaluation status, approval aging |
-| F3 Analytical | Daily or scheduled refresh | Trend KPIs, branch comparisons |
-| F4 Snapshot | Period close / monthly | Executive trend snapshots |
+| Freshness Class   | Target                                | Suitable KPIs                                |
+| ----------------- | ------------------------------------- | -------------------------------------------- |
+| F1 Near-real-time | < 1 minute where architecture permits | Pending queue counts, result progress        |
+| F2 Operational    | < 15 minutes                          | Completion evaluation status, approval aging |
+| F3 Analytical     | Daily or scheduled refresh            | Trend KPIs, branch comparisons               |
+| F4 Snapshot       | Period close / monthly                | Executive trend snapshots                    |
 
 Exact implementation must match architecture capabilities.
 
@@ -1033,20 +1033,20 @@ dashboard.exam-completion.result-progress
 
 # 12. Dashboard Permission Scope Matrix
 
-| Widget | Permission | Branch Scope | Consolidated View | Own Assignment |
-|---|---|---:|---:|---:|
-| Exams Awaiting Activation | `dashboard.exam-completion.exams-pending` | Yes | Yes | No |
-| Missing Results | `dashboard.exam-completion.missing-results` | Yes | Yes | Yes |
-| Results Finalization | `dashboard.exam-completion.results-finalization` | Yes | Yes | Optional |
-| Evaluation Pending | `dashboard.exam-completion.evaluation-pending` | Yes | Yes | No |
-| Trainer Pending | `dashboard.exam-completion.trainer-pending` | Yes | Yes | Yes |
-| Coordinator Pending | `dashboard.exam-completion.coordinator-pending` | Yes | Yes | No |
-| Final Approval Pending | `dashboard.exam-completion.final-approval-pending` | Yes | Yes | No |
-| Reevaluation Exceptions | `dashboard.exam-completion.reevaluation-exceptions` | Yes | Yes | No |
-| Pass Rate Trend | `dashboard.exam-completion.pass-rate` | Yes | Yes | Optional |
-| Completion Rate Trend | `dashboard.exam-completion.completion-rate` | Yes | Yes | No |
-| Approval Aging | `dashboard.exam-completion.approval-aging` | Yes | Yes | No |
-| Result Progress | `dashboard.exam-completion.result-progress` | Yes | Yes | Yes |
+| Widget                    | Permission                                          | Branch Scope | Consolidated View | Own Assignment |
+| ------------------------- | --------------------------------------------------- | -----------: | ----------------: | -------------: |
+| Exams Awaiting Activation | `dashboard.exam-completion.exams-pending`           |          Yes |               Yes |             No |
+| Missing Results           | `dashboard.exam-completion.missing-results`         |          Yes |               Yes |            Yes |
+| Results Finalization      | `dashboard.exam-completion.results-finalization`    |          Yes |               Yes |       Optional |
+| Evaluation Pending        | `dashboard.exam-completion.evaluation-pending`      |          Yes |               Yes |             No |
+| Trainer Pending           | `dashboard.exam-completion.trainer-pending`         |          Yes |               Yes |            Yes |
+| Coordinator Pending       | `dashboard.exam-completion.coordinator-pending`     |          Yes |               Yes |             No |
+| Final Approval Pending    | `dashboard.exam-completion.final-approval-pending`  |          Yes |               Yes |             No |
+| Reevaluation Exceptions   | `dashboard.exam-completion.reevaluation-exceptions` |          Yes |               Yes |             No |
+| Pass Rate Trend           | `dashboard.exam-completion.pass-rate`               |          Yes |               Yes |       Optional |
+| Completion Rate Trend     | `dashboard.exam-completion.completion-rate`         |          Yes |               Yes |             No |
+| Approval Aging            | `dashboard.exam-completion.approval-aging`          |          Yes |               Yes |             No |
+| Result Progress           | `dashboard.exam-completion.result-progress`         |          Yes |               Yes |            Yes |
 
 ---
 
@@ -2342,15 +2342,15 @@ must not include hidden mutation behavior.
 
 # 22. Read Model Ownership Matrix
 
-| Read Model | Owner | Source Contexts | Authoritative? |
-|---|---|---|---:|
-| Exam Operational Summary | Module 10 query layer | Module 10, Course, Batch, Enrollment, Branch | No |
-| Result Roster View | Module 10 query layer | Module 10, Enrollment, Person | No |
-| Completion Evaluation Summary | Module 10 query layer | Module 10 + delegated evidence summaries | No |
-| Completion Approval Queue | Module 10 query layer | Module 10, Enrollment, Trainer, IAM display refs | No |
-| Reevaluation Exception View | Module 10 query layer | Module 10 + Certificate read status where allowed | No |
-| KPI Daily Snapshot | Reporting & Dashboards | Multiple contexts | No |
-| Dashboard Widget Projection | Reporting & Dashboards or module query layer | Multiple contexts | No |
+| Read Model                    | Owner                                        | Source Contexts                                   | Authoritative? |
+| ----------------------------- | -------------------------------------------- | ------------------------------------------------- | -------------: |
+| Exam Operational Summary      | Module 10 query layer                        | Module 10, Course, Batch, Enrollment, Branch      |             No |
+| Result Roster View            | Module 10 query layer                        | Module 10, Enrollment, Person                     |             No |
+| Completion Evaluation Summary | Module 10 query layer                        | Module 10 + delegated evidence summaries          |             No |
+| Completion Approval Queue     | Module 10 query layer                        | Module 10, Enrollment, Trainer, IAM display refs  |             No |
+| Reevaluation Exception View   | Module 10 query layer                        | Module 10 + Certificate read status where allowed |             No |
+| KPI Daily Snapshot            | Reporting & Dashboards                       | Multiple contexts                                 |             No |
+| Dashboard Widget Projection   | Reporting & Dashboards or module query layer | Multiple contexts                                 |             No |
 
 ---
 
@@ -2370,7 +2370,7 @@ type GetExamCompletionDashboardQuery = {
 type ExamCompletionDashboardDTO = {
   scope: {
     branchIds: string[];
-    mode: "SINGLE_BRANCH" | "MULTI_BRANCH" | "CONSOLIDATED";
+    mode: 'SINGLE_BRANCH' | 'MULTI_BRANCH' | 'CONSOLIDATED';
   };
   refreshedAt: string;
   metrics: {
@@ -2531,23 +2531,23 @@ Certificate issuance metrics must come from Certificate Management, not inferred
 
 # 28. KPI Permission Matrix
 
-| KPI | Academic Admin | Coordinator | Trainer | Branch Manager | Auditor | Executive Viewer |
-|---|---:|---:|---:|---:|---:|---:|
-| Exams Scheduled | B/M | B | O optional | B | B | C |
-| Exams Awaiting Activation | B/M | B | O optional | B | B optional | C |
-| Exam Cancellation Rate | B/M | B | — | B | B | C |
-| Result Recording Rate | B/M | B | O | B | B | C |
-| Missing Result Count | B/M | B | O | B | B | C |
-| Result Finalization Rate | B/M | B | O optional | B | B | C |
-| Exam Pass Rate | B/M | B | O optional | B | B | C |
-| Result Correction Rate | B/M | B optional | — | B optional | B | C optional |
-| Completion Evaluation Rate | B/M | B | — | B | B | C |
-| Completion Approval Rate | B/M | B | O optional | B | B | C |
-| Approval Cycle Time | B/M | B | O stage only | B | B | C |
-| Reevaluation Exception Rate | B/M | B optional | — | B | B | C |
-| Approval Queue Aging | B/M | B | O | B | B | C |
-| Branch Pass Rate | B/M | B | — | B | B | C |
-| Course Completion Rate | B/M | B | O optional | B | B | C |
+| KPI                         | Academic Admin | Coordinator |      Trainer | Branch Manager |    Auditor | Executive Viewer |
+| --------------------------- | -------------: | ----------: | -----------: | -------------: | ---------: | ---------------: |
+| Exams Scheduled             |            B/M |           B |   O optional |              B |          B |                C |
+| Exams Awaiting Activation   |            B/M |           B |   O optional |              B | B optional |                C |
+| Exam Cancellation Rate      |            B/M |           B |            — |              B |          B |                C |
+| Result Recording Rate       |            B/M |           B |            O |              B |          B |                C |
+| Missing Result Count        |            B/M |           B |            O |              B |          B |                C |
+| Result Finalization Rate    |            B/M |           B |   O optional |              B |          B |                C |
+| Exam Pass Rate              |            B/M |           B |   O optional |              B |          B |                C |
+| Result Correction Rate      |            B/M |  B optional |            — |     B optional |          B |       C optional |
+| Completion Evaluation Rate  |            B/M |           B |            — |              B |          B |                C |
+| Completion Approval Rate    |            B/M |           B |   O optional |              B |          B |                C |
+| Approval Cycle Time         |            B/M |           B | O stage only |              B |          B |                C |
+| Reevaluation Exception Rate |            B/M |  B optional |            — |              B |          B |                C |
+| Approval Queue Aging        |            B/M |           B |            O |              B |          B |                C |
+| Branch Pass Rate            |            B/M |           B |            — |              B |          B |                C |
+| Course Completion Rate      |            B/M |           B |   O optional |              B |          B |                C |
 
 ---
 
@@ -2674,19 +2674,19 @@ CourseCompletion → Enrollment.branchId
 
 # 33. DDD Fit Check
 
-| Reporting Need | Correct Owner | Module 10 Reporting Behavior |
-|---|---|---|
-| Exam status metrics | Module 10 | Read Exam |
-| Pass/fail analytics | Module 10 | Read Result |
-| Completion outcome metrics | Module 10 | Read CourseCompletion |
-| Approval aging | Module 10 | Read CompletionApproval |
-| Attendance rate source | Attendance | Consume summary only |
-| Payment validation source | Finance | Consume summary only |
-| Course classification | Course Catalog | Join/read approved projection |
-| Batch delivery facts | Training Delivery | Join/read approved projection |
-| Student identity | Enrollment/Party | Read minimized display data |
-| Certificate issued count | Certificate Management | Consume Certificate metric, never infer |
-| Executive KPI snapshots | Reporting & Dashboards | Store/report snapshots as derived data |
+| Reporting Need             | Correct Owner          | Module 10 Reporting Behavior            |
+| -------------------------- | ---------------------- | --------------------------------------- |
+| Exam status metrics        | Module 10              | Read Exam                               |
+| Pass/fail analytics        | Module 10              | Read Result                             |
+| Completion outcome metrics | Module 10              | Read CourseCompletion                   |
+| Approval aging             | Module 10              | Read CompletionApproval                 |
+| Attendance rate source     | Attendance             | Consume summary only                    |
+| Payment validation source  | Finance                | Consume summary only                    |
+| Course classification      | Course Catalog         | Join/read approved projection           |
+| Batch delivery facts       | Training Delivery      | Join/read approved projection           |
+| Student identity           | Enrollment/Party       | Read minimized display data             |
+| Certificate issued count   | Certificate Management | Consume Certificate metric, never infer |
+| Executive KPI snapshots    | Reporting & Dashboards | Store/report snapshots as derived data  |
 
 ---
 

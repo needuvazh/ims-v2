@@ -18,10 +18,25 @@ export default async function CreateClassroomPage() {
         breadcrumbs={
           <Breadcrumbs
             items={[
-              { label: 'Dashboard', href: '/dashboard', icon: <Home className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Organization', href: '/organization', icon: <Building2 className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Classrooms', href: '/organization/classrooms', icon: <GraduationCap className="h-3.5 w-3.5 text-slate-400" /> },
-              { label: 'Add Classroom', icon: <Plus className="h-3.5 w-3.5 text-slate-500" /> },
+              {
+                label: 'Dashboard',
+                href: '/dashboard',
+                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Organization',
+                href: '/organization',
+                icon: <Building2 className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Classrooms',
+                href: '/organization/classrooms',
+                icon: <GraduationCap className="h-3.5 w-3.5 text-slate-400" />,
+              },
+              {
+                label: 'Add Classroom',
+                icon: <Plus className="h-3.5 w-3.5 text-slate-500" />,
+              },
             ]}
           />
         }

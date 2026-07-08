@@ -34,9 +34,15 @@ export const metadata: Metadata = {
   description: 'Institute Management System admin portal foundation.',
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} ${arabicFont.variable}`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} ${arabicFont.variable}`}
+    >
       <body className="bg-[color:var(--ims-background)] text-[color:var(--ims-ink)] antialiased selection:bg-[color:var(--ims-brass)] selection:text-white">
         {children}
       </body>

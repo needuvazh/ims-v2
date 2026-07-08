@@ -2,22 +2,31 @@
 
 import { CheckCircle2, ClipboardList } from 'lucide-react';
 
-import { PublicShell, SectionCardGrid, SectionHeading, SimpleCTA, SplitHero } from '../../_components/public-site';
+import {
+  PublicShell,
+  SectionCardGrid,
+  SectionHeading,
+  SimpleCTA,
+  SplitHero,
+} from '../../_components/public-site';
 
 const ieltsSteps = [
   {
     title: 'Register your interest',
-    description: 'Use the contact form or phone line to request an IELTS booking slot.',
+    description:
+      'Use the contact form or phone line to request an IELTS booking slot.',
     icon: ClipboardList,
   },
   {
     title: 'Confirm the schedule',
-    description: 'The team will confirm available dates, seat count, and registration details.',
+    description:
+      'The team will confirm available dates, seat count, and registration details.',
     icon: CheckCircle2,
   },
   {
     title: 'Attend the session',
-    description: 'A clean booking page can direct candidates to the relevant testing pathway.',
+    description:
+      'A clean booking page can direct candidates to the relevant testing pathway.',
     icon: CheckCircle2,
   },
 ];
@@ -51,7 +60,12 @@ export default function IeltsRegisterPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <SimpleCTA title="Need the fastest response?" description="Use the main contact page and tell the team you are requesting IELTS support." href="/contact-us" label="Open contact page" />
+        <SimpleCTA
+          title="Need the fastest response?"
+          description="Use the main contact page and tell the team you are requesting IELTS support."
+          href="/contact-us"
+          label="Open contact page"
+        />
       </section>
     </PublicShell>
   );

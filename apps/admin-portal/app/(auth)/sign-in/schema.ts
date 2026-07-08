@@ -14,10 +14,14 @@ export type SignInFormValues = z.infer<typeof signInSchema>;
 
 export type SignInFieldErrors = Partial<Record<keyof SignInFormValues, string>>;
 
-export function parseSignInFieldErrors(input: FormData | Record<string, FormDataEntryValue | null>) {
-  const result = signInSchema.safeParse(Object.fromEntries(
-    input instanceof FormData ? input.entries() : Object.entries(input),
-  ));
+export function parseSignInFieldErrors(
+  input: FormData | Record<string, FormDataEntryValue | null>,
+) {
+  const result = signInSchema.safeParse(
+    Object.fromEntries(
+      input instanceof FormData ? input.entries() : Object.entries(input),
+    ),
+  );
 
   if (result.success) {
     return {};

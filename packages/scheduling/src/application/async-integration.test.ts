@@ -17,7 +17,7 @@ describe('SchedulingService.processExternalCalendarChange (Async Integration)', 
         findMany: vi.fn(),
         findUnique: vi.fn(),
         update: vi.fn(),
-      }
+      },
     };
     service = new SchedulingService(mockPrisma as any, mockRepo as any);
   });
@@ -29,18 +29,32 @@ describe('SchedulingService.processExternalCalendarChange (Async Integration)', 
 
     // 1. Find sessions for that date
     mockPrisma.session.findMany.mockResolvedValue([
-      { id: 's1', sessionDate: date, startTime: '09:00', endTime: '11:00', batchId: 'b1', batch: { branchId } }
+      {
+        id: 's1',
+        sessionDate: date,
+        startTime: '09:00',
+        endTime: '11:00',
+        batchId: 'b1',
+        batch: { branchId },
+      },
     ]);
 
     // 2. Mock flagSessionConflicts internal calls
     mockPrisma.session.findUnique.mockResolvedValue({
-      id: 's1', sessionDate: date, startTime: '09:00', endTime: '11:00', batchId: 'b1', batch: { branchId }
+      id: 's1',
+      sessionDate: date,
+      startTime: '09:00',
+      endTime: '11:00',
+      batchId: 'b1',
+      batch: { branchId },
     });
 
     // 3. Mock validation to FAIL (e.g. Holiday detected)
     mockRepo.resolveCalendar.mockResolvedValue({
-      holidays: [{ id: 'h1', status: 'Active', affectsScheduling: true, name: 'Eid' }],
-      resolvedOperatingDays: []
+      holidays: [
+        { id: 'h1', status: 'Active', affectsScheduling: true, name: 'Eid' },
+      ],
+      resolvedOperatingDays: [],
     });
 
     await service.processExternalCalendarChange(branchId, date, instituteId);
@@ -49,8 +63,8 @@ describe('SchedulingService.processExternalCalendarChange (Async Integration)', 
       where: { id: 's1' },
       data: expect.objectContaining({
         scheduleStatus: 'Conflict',
-        conflictType: 'HOLIDAY'
-      })
+        conflictType: 'HOLIDAY',
+      }),
     });
   });
 });

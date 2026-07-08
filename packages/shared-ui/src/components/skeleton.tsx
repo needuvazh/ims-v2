@@ -30,7 +30,13 @@ export function CardSkeleton({ className }: { className?: string }) {
   );
 }
 
-export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; columns?: number }) {
+export function TableSkeleton({
+  rows = 5,
+  columns = 4,
+}: {
+  rows?: number;
+  columns?: number;
+}) {
   return (
     <div className="overflow-hidden rounded-2xl border border-[color:var(--ims-border)]">
       <div className="bg-[color:var(--ims-accent-soft)] p-3">

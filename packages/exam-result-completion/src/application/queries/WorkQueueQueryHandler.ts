@@ -3,8 +3,16 @@ import { ExamRepository } from '../../domain/interfaces/ExamRepository';
 import { CourseCompletionRepository } from '../../domain/interfaces/CourseCompletionRepository';
 import { CompletionApprovalRepository } from '../../domain/interfaces/CompletionApprovalRepository';
 import { RESULT_STATUSES, ResultStatus } from '../../domain/aggregates/Result';
-import { COMPLETION_STATUSES, CompletionStatus } from '../../domain/aggregates/CourseCompletion';
-import { APPROVAL_STATUSES, APPROVAL_LEVELS, ApprovalLevel, ApprovalStatus } from '../../domain/aggregates/CompletionApproval';
+import {
+  COMPLETION_STATUSES,
+  CompletionStatus,
+} from '../../domain/aggregates/CourseCompletion';
+import {
+  APPROVAL_STATUSES,
+  APPROVAL_LEVELS,
+  ApprovalLevel,
+  ApprovalStatus,
+} from '../../domain/aggregates/CompletionApproval';
 
 export interface WorkQueueInput {
   userId: string;
@@ -12,7 +20,13 @@ export interface WorkQueueInput {
 }
 
 export interface WorkQueueItem {
-  type: 'missing_result' | 'evaluation' | 'trainer_recommendation' | 'coordinator_review' | 'final_approval' | 'reevaluation';
+  type:
+    | 'missing_result'
+    | 'evaluation'
+    | 'trainer_recommendation'
+    | 'coordinator_review'
+    | 'final_approval'
+    | 'reevaluation';
   id: string;
   enrollmentId: string;
   examId?: string;
@@ -41,8 +55,10 @@ export class WorkQueueQueryHandler {
     const closedExams = await this.examRepository.findByBatchId('', 'Closed');
     const missingResults: WorkQueueItem[] = [];
 
-    const pendingCompletions = await this.completionRepository.findByStatus(COMPLETION_STATUSES.PENDING);
-    const evaluationQueue: WorkQueueItem[] = pendingCompletions.map(c => ({
+    const pendingCompletions = await this.completionRepository.findByStatus(
+      COMPLETION_STATUSES.PENDING,
+    );
+    const evaluationQueue: WorkQueueItem[] = pendingCompletions.map((c) => ({
       type: 'evaluation' as const,
       id: c.id,
       enrollmentId: c.enrollmentId,
@@ -52,8 +68,10 @@ export class WorkQueueQueryHandler {
       createdAt: c.createdAt,
     }));
 
-    const trainerRecommendations = await this.completionRepository.findByStatus(COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION);
-    const trainerQueue: WorkQueueItem[] = trainerRecommendations.map(c => ({
+    const trainerRecommendations = await this.completionRepository.findByStatus(
+      COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION,
+    );
+    const trainerQueue: WorkQueueItem[] = trainerRecommendations.map((c) => ({
       type: 'trainer_recommendation' as const,
       id: c.id,
       enrollmentId: c.enrollmentId,
@@ -63,8 +81,10 @@ export class WorkQueueQueryHandler {
       createdAt: c.createdAt,
     }));
 
-    const coordinatorReviews = await this.completionRepository.findByStatus(COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW);
-    const coordinatorQueue: WorkQueueItem[] = coordinatorReviews.map(c => ({
+    const coordinatorReviews = await this.completionRepository.findByStatus(
+      COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW,
+    );
+    const coordinatorQueue: WorkQueueItem[] = coordinatorReviews.map((c) => ({
       type: 'coordinator_review' as const,
       id: c.id,
       enrollmentId: c.enrollmentId,
@@ -74,8 +94,10 @@ export class WorkQueueQueryHandler {
       createdAt: c.createdAt,
     }));
 
-    const finalApprovals = await this.completionRepository.findByStatus(COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL);
-    const finalApprovalQueue: WorkQueueItem[] = finalApprovals.map(c => ({
+    const finalApprovals = await this.completionRepository.findByStatus(
+      COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL,
+    );
+    const finalApprovalQueue: WorkQueueItem[] = finalApprovals.map((c) => ({
       type: 'final_approval' as const,
       id: c.id,
       enrollmentId: c.enrollmentId,
@@ -85,8 +107,10 @@ export class WorkQueueQueryHandler {
       createdAt: c.createdAt,
     }));
 
-    const reevaluations = await this.completionRepository.findByStatus(COMPLETION_STATUSES.REEVALUATION_REQUIRED);
-    const reevaluationQueue: WorkQueueItem[] = reevaluations.map(c => ({
+    const reevaluations = await this.completionRepository.findByStatus(
+      COMPLETION_STATUSES.REEVALUATION_REQUIRED,
+    );
+    const reevaluationQueue: WorkQueueItem[] = reevaluations.map((c) => ({
       type: 'reevaluation' as const,
       id: c.id,
       enrollmentId: c.enrollmentId,

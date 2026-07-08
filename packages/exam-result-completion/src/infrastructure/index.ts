@@ -8,4 +8,3 @@ export * from './readers/PrismaFinanceValidationReader';
 export * from './readers/PrismaTrainerAssignmentReader';
 export * from './readers/PrismaEnrollmentReader';
 export * from './readers/PrismaExamEvidenceReader';
-

@@ -1,6 +1,12 @@
 import { ExamInvalidStateError, ExamMarksValidationError } from '../errors';
 
-export type ExamStatus = 'Draft' | 'Scheduled' | 'OpenForResultEntry' | 'Closed' | 'Cancelled' | 'Archived';
+export type ExamStatus =
+  | 'Draft'
+  | 'Scheduled'
+  | 'OpenForResultEntry'
+  | 'Closed'
+  | 'Cancelled'
+  | 'Archived';
 
 export const EXAM_STATUSES = {
   DRAFT: 'Draft',
@@ -78,7 +84,9 @@ export class ExamAggregate {
 
   schedule(): Exam {
     if (this.state.status !== EXAM_STATUSES.DRAFT) {
-      throw new ExamInvalidStateError(`Cannot schedule exam in status: ${this.state.status}`);
+      throw new ExamInvalidStateError(
+        `Cannot schedule exam in status: ${this.state.status}`,
+      );
     }
 
     const updated: Exam = {
@@ -93,7 +101,9 @@ export class ExamAggregate {
 
   reschedule(newDate: Date): Exam {
     if (this.state.status !== EXAM_STATUSES.SCHEDULED) {
-      throw new ExamInvalidStateError(`Cannot reschedule exam in status: ${this.state.status}`);
+      throw new ExamInvalidStateError(
+        `Cannot reschedule exam in status: ${this.state.status}`,
+      );
     }
 
     const updated: Exam = {
@@ -108,7 +118,9 @@ export class ExamAggregate {
 
   openForResultEntry(): Exam {
     if (this.state.status !== EXAM_STATUSES.SCHEDULED) {
-      throw new ExamInvalidStateError(`Cannot open exam for result entry in status: ${this.state.status}`);
+      throw new ExamInvalidStateError(
+        `Cannot open exam for result entry in status: ${this.state.status}`,
+      );
     }
 
     const updated: Exam = {
@@ -123,7 +135,9 @@ export class ExamAggregate {
 
   close(): Exam {
     if (this.state.status !== EXAM_STATUSES.OPEN_FOR_RESULT_ENTRY) {
-      throw new ExamInvalidStateError(`Cannot close exam in status: ${this.state.status}`);
+      throw new ExamInvalidStateError(
+        `Cannot close exam in status: ${this.state.status}`,
+      );
     }
 
     const updated: Exam = {
@@ -137,8 +151,13 @@ export class ExamAggregate {
   }
 
   cancel(reason?: string): Exam {
-    if (this.state.status === EXAM_STATUSES.CLOSED || this.state.status === EXAM_STATUSES.ARCHIVED) {
-      throw new ExamInvalidStateError(`Cannot cancel exam in status: ${this.state.status}`);
+    if (
+      this.state.status === EXAM_STATUSES.CLOSED ||
+      this.state.status === EXAM_STATUSES.ARCHIVED
+    ) {
+      throw new ExamInvalidStateError(
+        `Cannot cancel exam in status: ${this.state.status}`,
+      );
     }
 
     const updated: Exam = {
@@ -152,8 +171,13 @@ export class ExamAggregate {
   }
 
   archive(): Exam {
-    if (this.state.status !== EXAM_STATUSES.CLOSED && this.state.status !== EXAM_STATUSES.CANCELLED) {
-      throw new ExamInvalidStateError(`Cannot archive exam in status: ${this.state.status}`);
+    if (
+      this.state.status !== EXAM_STATUSES.CLOSED &&
+      this.state.status !== EXAM_STATUSES.CANCELLED
+    ) {
+      throw new ExamInvalidStateError(
+        `Cannot archive exam in status: ${this.state.status}`,
+      );
     }
 
     const updated: Exam = {
@@ -166,9 +190,18 @@ export class ExamAggregate {
     return updated;
   }
 
-  updateDetails(updates: Partial<Pick<Exam, 'examName' | 'examDate' | 'maxMarks' | 'passMarks'>>): Exam {
-    if (this.state.status !== EXAM_STATUSES.DRAFT && this.state.status !== EXAM_STATUSES.SCHEDULED) {
-      throw new ExamInvalidStateError(`Cannot update exam details in status: ${this.state.status}`);
+  updateDetails(
+    updates: Partial<
+      Pick<Exam, 'examName' | 'examDate' | 'maxMarks' | 'passMarks'>
+    >,
+  ): Exam {
+    if (
+      this.state.status !== EXAM_STATUSES.DRAFT &&
+      this.state.status !== EXAM_STATUSES.SCHEDULED
+    ) {
+      throw new ExamInvalidStateError(
+        `Cannot update exam details in status: ${this.state.status}`,
+      );
     }
 
     let newMaxMarks = this.state.maxMarks;

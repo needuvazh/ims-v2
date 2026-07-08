@@ -22,10 +22,14 @@ export interface CreateDiscountInput {
 export class CourseDiscountService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly discountRepository: ICourseDiscountRepository
+    private readonly discountRepository: ICourseDiscountRepository,
   ) {}
 
-  async createDiscount(input: CreateDiscountInput, actorId?: string, tx?: Prisma.TransactionClient) {
+  async createDiscount(
+    input: CreateDiscountInput,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       // Validate Course exists
       const courseExists = await activeClient.course.findFirst({
@@ -37,7 +41,9 @@ export class CourseDiscountService {
 
       // Normalize date boundaries
       const startDate = parseDateOnly(input.effectiveStartDate);
-      const endDate = input.effectiveEndDate ? parseDateOnly(input.effectiveEndDate) : null;
+      const endDate = input.effectiveEndDate
+        ? parseDateOnly(input.effectiveEndDate)
+        : null;
 
       if (endDate && endDate <= startDate) {
         throw new Error('ERR_CRS_INVALID_DATE_RANGE');
@@ -53,7 +59,7 @@ export class CourseDiscountService {
           startDate,
           endDate,
         },
-        activeClient
+        activeClient,
       );
 
       for (const record of overlaps) {
@@ -68,7 +74,7 @@ export class CourseDiscountService {
             status: 'Superseded',
             effectiveEndDate: previousEnd,
           },
-          activeClient
+          activeClient,
         );
 
         // Audit Log
@@ -81,7 +87,10 @@ export class CourseDiscountService {
             entityType: 'CourseDiscount',
             entityId: record.id,
             action: 'Supersede',
-            oldValue: { status: record.status, effectiveEndDate: record.effectiveEndDate },
+            oldValue: {
+              status: record.status,
+              effectiveEndDate: record.effectiveEndDate,
+            },
             newValue: { status: 'Superseded', effectiveEndDate: previousEnd },
           },
         });
@@ -94,7 +103,7 @@ export class CourseDiscountService {
           effectiveEndDate: endDate,
           status: 'Active',
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log
@@ -139,7 +148,11 @@ export class CourseDiscountService {
     return tx ? execute(tx) : this.prisma.$transaction(execute);
   }
 
-  async disableDiscount(id: string, actorId?: string, tx?: Prisma.TransactionClient) {
+  async disableDiscount(
+    id: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ) {
     const execute = async (activeClient: Prisma.TransactionClient) => {
       const record = await this.discountRepository.findById(id, activeClient);
       if (!record) {
@@ -155,7 +168,7 @@ export class CourseDiscountService {
         {
           status: 'Inactive',
         },
-        activeClient
+        activeClient,
       );
 
       // Audit Log

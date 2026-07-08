@@ -1,1 +1,31 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_module_05_student_management_readme_md", "label": "README.md", "file_type": "document", "source_file": "openspec/changes/module-05-student-management/README.md", "source_location": "L1"}, {"id": "module_05_student_management_readme_module_05_student_management", "label": "module-05-student-management", "file_type": "document", "source_file": "openspec/changes/module-05-student-management/README.md", "source_location": "L1"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_module_05_student_management_readme_md", "target": "module_05_student_management_readme_module_05_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/module-05-student-management/README.md", "source_location": "L1", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_module_05_student_management_readme_md",
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/module-05-student-management/README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_readme_module_05_student_management",
+      "label": "module-05-student-management",
+      "file_type": "document",
+      "source_file": "openspec/changes/module-05-student-management/README.md",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_module_05_student_management_readme_md",
+      "target": "module_05_student_management_readme_module_05_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/module-05-student-management/README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

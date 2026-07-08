@@ -9,7 +9,11 @@ export async function register() {
   await registerObservability();
 }
 
-export const onRequestError: Instrumentation.onRequestError = async (error, request, context) => {
+export const onRequestError: Instrumentation.onRequestError = async (
+  error,
+  request,
+  context,
+) => {
   const { reportRequestError } = await import('./app/lib/observability');
   await reportRequestError(error as Error, request, context);
 };

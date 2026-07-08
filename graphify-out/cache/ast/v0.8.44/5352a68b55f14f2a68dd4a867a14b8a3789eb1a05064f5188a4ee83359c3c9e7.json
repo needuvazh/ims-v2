@@ -1,1 +1,1167 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_md", "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_module_5_student_management", "label": "Module 5 \u2013 Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L2"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L4"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "label": "2. User Stories", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L17"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_1_user_story_us_sm_001_create_student_from_approved_admission", "label": "2.1 User Story US-SM-001 \u2014 Create Student from Approved Admission", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L27"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_2_user_story_us_sm_002_direct_student_registration", "label": "2.2 User Story US-SM-002 \u2014 Direct Student Registration", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L67"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_3_user_story_us_sm_003_convert_corporate_participant_into_student", "label": "2.3 User Story US-SM-003 \u2014 Convert Corporate Participant into Student", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L104"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_4_user_story_us_sm_004_search_and_reuse_existing_student", "label": "2.4 User Story US-SM-004 \u2014 Search and Reuse Existing Student", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L136"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_5_user_story_us_sm_005_update_student_profile_safely", "label": "2.5 User Story US-SM-005 \u2014 Update Student Profile Safely", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L165"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_6_user_story_us_sm_006_change_student_status", "label": "2.6 User Story US-SM-006 \u2014 Change Student Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L197"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_7_user_story_us_sm_007_resolve_duplicate_cases", "label": "2.7 User Story US-SM-007 \u2014 Resolve Duplicate Cases", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L228"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_8_user_story_us_sm_008_merge_duplicate_students", "label": "2.8 User Story US-SM-008 \u2014 Merge Duplicate Students", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L258"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_9_user_story_us_sm_009_manage_student_id_card", "label": "2.9 User Story US-SM-009 \u2014 Manage Student ID Card", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L290"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_10_user_story_us_sm_010_archive_and_restore_student", "label": "2.10 User Story US-SM-010 \u2014 Archive and Restore Student", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L321"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_11_user_story_us_sm_011_export_student_report_safely", "label": "2.11 User Story US-SM-011 \u2014 Export Student Report Safely", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L354"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_12_user_story_us_sm_012_view_own_student_profile", "label": "2.12 User Story US-SM-012 \u2014 View Own Student Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L384"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "label": "3. Use Cases", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L413"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_1_use_case_uc_sm_001_create_student_from_approved_admission", "label": "3.1 Use Case UC-SM-001 \u2014 Create Student from Approved Admission", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L417"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_2_use_case_uc_sm_002_create_student_by_direct_registration", "label": "3.2 Use Case UC-SM-002 \u2014 Create Student by Direct Registration", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L465"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_3_use_case_uc_sm_003_convert_corporate_participant_into_student", "label": "3.3 Use Case UC-SM-003 \u2014 Convert Corporate Participant into Student", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L509"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_4_use_case_uc_sm_004_update_student_profile", "label": "3.4 Use Case UC-SM-004 \u2014 Update Student Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L549"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_5_use_case_uc_sm_005_change_student_status", "label": "3.5 Use Case UC-SM-005 \u2014 Change Student Status", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L588"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_6_use_case_uc_sm_006_resolve_duplicate_case", "label": "3.6 Use Case UC-SM-006 \u2014 Resolve Duplicate Case", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L626"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_7_use_case_uc_sm_007_merge_duplicate_students", "label": "3.7 Use Case UC-SM-007 \u2014 Merge Duplicate Students", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L661"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_8_use_case_uc_sm_008_archive_or_restore_student", "label": "3.8 Use Case UC-SM-008 \u2014 Archive or Restore Student", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L709"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "label": "4. Business Workflows", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L750"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation", "label": "4.1 Workflow WF-SM-001 \u2014 Approved Admission to Student Creation", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L754"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow", "label": "Structured Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L756"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram", "label": "Mermaid Sequence Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L769"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow", "label": "4.2 Workflow WF-SM-002 \u2014 Direct Registration Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L799"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_801", "label": "Structured Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L801"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_816", "label": "Mermaid Sequence Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L816"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow", "label": "4.3 Workflow WF-SM-003 \u2014 Duplicate Resolution Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L850"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_852", "label": "Structured Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L852"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow", "label": "ASCII Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L865"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow", "label": "4.4 Workflow WF-SM-004 \u2014 Student Merge Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L890"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_892", "label": "Structured Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L892"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_906", "label": "Mermaid Sequence Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L906"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow", "label": "4.5 Workflow WF-SM-005 \u2014 Archive and Restore Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L929"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_931", "label": "Structured Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L931"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow_946", "label": "ASCII Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L946"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow", "label": "4.6 Workflow WF-SM-006 \u2014 ID Card Issue / Reissue Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L970"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_972", "label": "Structured Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L972"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_986", "label": "Structured Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L986"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_999", "label": "Mermaid Sequence Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L999"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines", "label": "5. State Machines", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1023"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_entities_with_state_transitions_in_this_module", "label": "Entities with State Transitions in this Module", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1027"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle", "label": "5.1 State Machine SM-STATE-001 \u2014 StudentProfile Lifecycle", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1038"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states", "label": "States", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1040"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1046"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix", "label": "Transition Rules Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1060"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants", "label": "State Invariants", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1076"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle", "label": "5.2 State Machine SM-STATE-002 \u2014 StudentDuplicateCase Lifecycle", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1084"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1086", "label": "States", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1086"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1093", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1093"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1106", "label": "Transition Rules Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1106"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1121", "label": "State Invariants", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1121"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle", "label": "5.3 State Machine SM-STATE-003 \u2014 Student Export Lifecycle", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1132"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1134", "label": "States", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1134"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1139", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1139"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1147", "label": "Transition Rules Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1147"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1156", "label": "State Invariants", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1156"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state", "label": "5.4 State Machine SM-STATE-004 \u2014 Student ID Card Operational State", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1164"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_current_operational_states", "label": "Current Operational States", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1168"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_events", "label": "Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1172"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1178", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1178"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1186", "label": "Transition Rules Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1186"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1195", "label": "State Invariants", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1195"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary", "label": "6. Cross-Workflow Relationship Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1203"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_creation_sources", "label": "Student Creation Sources", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1205"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_master_downstream_consumers", "label": "Student Master Downstream Consumers", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1211"}, {"id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_7_final_notes", "label": "7. Final Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1223"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_md", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_module_5_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L2", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L4", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L17", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_1_user_story_us_sm_001_create_student_from_approved_admission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L27", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_2_user_story_us_sm_002_direct_student_registration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L67", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_3_user_story_us_sm_003_convert_corporate_participant_into_student", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L104", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_4_user_story_us_sm_004_search_and_reuse_existing_student", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L136", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_5_user_story_us_sm_005_update_student_profile_safely", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L165", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_6_user_story_us_sm_006_change_student_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L197", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_7_user_story_us_sm_007_resolve_duplicate_cases", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L228", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_8_user_story_us_sm_008_merge_duplicate_students", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L258", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_9_user_story_us_sm_009_manage_student_id_card", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L290", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_10_user_story_us_sm_010_archive_and_restore_student", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L321", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_11_user_story_us_sm_011_export_student_report_safely", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L354", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_12_user_story_us_sm_012_view_own_student_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L384", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L413", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_1_use_case_uc_sm_001_create_student_from_approved_admission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L417", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_2_use_case_uc_sm_002_create_student_by_direct_registration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L465", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_3_use_case_uc_sm_003_convert_corporate_participant_into_student", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L509", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_4_use_case_uc_sm_004_update_student_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L549", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_5_use_case_uc_sm_005_change_student_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L588", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_6_use_case_uc_sm_006_resolve_duplicate_case", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L626", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_7_use_case_uc_sm_007_merge_duplicate_students", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L661", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_8_use_case_uc_sm_008_archive_or_restore_student", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L709", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L750", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L754", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L756", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L769", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L799", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_801", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L801", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_816", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L816", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L850", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_852", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L852", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L865", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L890", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_892", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L892", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_906", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L906", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L929", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_931", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L931", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow_946", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L946", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L970", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_972", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L972", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_986", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L986", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_999", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L999", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1023", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_entities_with_state_transitions_in_this_module", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1027", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1038", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1040", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1046", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1060", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1076", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1084", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1086", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1086", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1093", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1093", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1106", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1106", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1121", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1121", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1132", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1134", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1134", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1139", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1139", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1147", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1147", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1156", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1156", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1164", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_current_operational_states", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1168", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1172", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1178", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1178", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1186", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1186", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1195", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1195", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1203", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_creation_sources", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1205", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_master_downstream_consumers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1211", "weight": 1.0}, {"source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_7_final_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1223", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_md",
+      "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_module_5_student_management",
+      "label": "Module 5 \u2013 Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L2"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L4"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "label": "2. User Stories",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_1_user_story_us_sm_001_create_student_from_approved_admission",
+      "label": "2.1 User Story US-SM-001 \u2014 Create Student from Approved Admission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_2_user_story_us_sm_002_direct_student_registration",
+      "label": "2.2 User Story US-SM-002 \u2014 Direct Student Registration",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L67"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_3_user_story_us_sm_003_convert_corporate_participant_into_student",
+      "label": "2.3 User Story US-SM-003 \u2014 Convert Corporate Participant into Student",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L104"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_4_user_story_us_sm_004_search_and_reuse_existing_student",
+      "label": "2.4 User Story US-SM-004 \u2014 Search and Reuse Existing Student",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L136"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_5_user_story_us_sm_005_update_student_profile_safely",
+      "label": "2.5 User Story US-SM-005 \u2014 Update Student Profile Safely",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L165"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_6_user_story_us_sm_006_change_student_status",
+      "label": "2.6 User Story US-SM-006 \u2014 Change Student Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L197"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_7_user_story_us_sm_007_resolve_duplicate_cases",
+      "label": "2.7 User Story US-SM-007 \u2014 Resolve Duplicate Cases",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L228"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_8_user_story_us_sm_008_merge_duplicate_students",
+      "label": "2.8 User Story US-SM-008 \u2014 Merge Duplicate Students",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L258"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_9_user_story_us_sm_009_manage_student_id_card",
+      "label": "2.9 User Story US-SM-009 \u2014 Manage Student ID Card",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L290"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_10_user_story_us_sm_010_archive_and_restore_student",
+      "label": "2.10 User Story US-SM-010 \u2014 Archive and Restore Student",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L321"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_11_user_story_us_sm_011_export_student_report_safely",
+      "label": "2.11 User Story US-SM-011 \u2014 Export Student Report Safely",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L354"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_12_user_story_us_sm_012_view_own_student_profile",
+      "label": "2.12 User Story US-SM-012 \u2014 View Own Student Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L384"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "label": "3. Use Cases",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L413"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_1_use_case_uc_sm_001_create_student_from_approved_admission",
+      "label": "3.1 Use Case UC-SM-001 \u2014 Create Student from Approved Admission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L417"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_2_use_case_uc_sm_002_create_student_by_direct_registration",
+      "label": "3.2 Use Case UC-SM-002 \u2014 Create Student by Direct Registration",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L465"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_3_use_case_uc_sm_003_convert_corporate_participant_into_student",
+      "label": "3.3 Use Case UC-SM-003 \u2014 Convert Corporate Participant into Student",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L509"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_4_use_case_uc_sm_004_update_student_profile",
+      "label": "3.4 Use Case UC-SM-004 \u2014 Update Student Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L549"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_5_use_case_uc_sm_005_change_student_status",
+      "label": "3.5 Use Case UC-SM-005 \u2014 Change Student Status",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L588"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_6_use_case_uc_sm_006_resolve_duplicate_case",
+      "label": "3.6 Use Case UC-SM-006 \u2014 Resolve Duplicate Case",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L626"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_7_use_case_uc_sm_007_merge_duplicate_students",
+      "label": "3.7 Use Case UC-SM-007 \u2014 Merge Duplicate Students",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L661"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_8_use_case_uc_sm_008_archive_or_restore_student",
+      "label": "3.8 Use Case UC-SM-008 \u2014 Archive or Restore Student",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L709"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "label": "4. Business Workflows",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L750"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation",
+      "label": "4.1 Workflow WF-SM-001 \u2014 Approved Admission to Student Creation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L754"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow",
+      "label": "Structured Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L756"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram",
+      "label": "Mermaid Sequence Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L769"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow",
+      "label": "4.2 Workflow WF-SM-002 \u2014 Direct Registration Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L799"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_801",
+      "label": "Structured Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L801"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_816",
+      "label": "Mermaid Sequence Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L816"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow",
+      "label": "4.3 Workflow WF-SM-003 \u2014 Duplicate Resolution Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L850"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_852",
+      "label": "Structured Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L852"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow",
+      "label": "ASCII Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L865"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow",
+      "label": "4.4 Workflow WF-SM-004 \u2014 Student Merge Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L890"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_892",
+      "label": "Structured Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L892"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_906",
+      "label": "Mermaid Sequence Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L906"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow",
+      "label": "4.5 Workflow WF-SM-005 \u2014 Archive and Restore Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L929"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_931",
+      "label": "Structured Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L931"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow_946",
+      "label": "ASCII Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L946"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow",
+      "label": "4.6 Workflow WF-SM-006 \u2014 ID Card Issue / Reissue Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L970"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_972",
+      "label": "Structured Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L972"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_986",
+      "label": "Structured Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L986"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_999",
+      "label": "Mermaid Sequence Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L999"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines",
+      "label": "5. State Machines",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1023"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_entities_with_state_transitions_in_this_module",
+      "label": "Entities with State Transitions in this Module",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1027"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle",
+      "label": "5.1 State Machine SM-STATE-001 \u2014 StudentProfile Lifecycle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1038"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states",
+      "label": "States",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1040"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1046"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix",
+      "label": "Transition Rules Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1060"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants",
+      "label": "State Invariants",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1076"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle",
+      "label": "5.2 State Machine SM-STATE-002 \u2014 StudentDuplicateCase Lifecycle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1084"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1086",
+      "label": "States",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1086"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1093",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1093"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1106",
+      "label": "Transition Rules Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1106"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1121",
+      "label": "State Invariants",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1121"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle",
+      "label": "5.3 State Machine SM-STATE-003 \u2014 Student Export Lifecycle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1132"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1134",
+      "label": "States",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1134"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1139",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1139"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1147",
+      "label": "Transition Rules Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1147"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1156",
+      "label": "State Invariants",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1156"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state",
+      "label": "5.4 State Machine SM-STATE-004 \u2014 Student ID Card Operational State",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1164"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_current_operational_states",
+      "label": "Current Operational States",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1168"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_events",
+      "label": "Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1172"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1178",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1178"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1186",
+      "label": "Transition Rules Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1186"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1195",
+      "label": "State Invariants",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1195"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary",
+      "label": "6. Cross-Workflow Relationship Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1203"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_creation_sources",
+      "label": "Student Creation Sources",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1205"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_master_downstream_consumers",
+      "label": "Student Master Downstream Consumers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1211"
+    },
+    {
+      "id": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_7_final_notes",
+      "label": "7. Final Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1223"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_md",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_module_5_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_1_user_story_us_sm_001_create_student_from_approved_admission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_2_user_story_us_sm_002_direct_student_registration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_3_user_story_us_sm_003_convert_corporate_participant_into_student",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_4_user_story_us_sm_004_search_and_reuse_existing_student",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L136",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_5_user_story_us_sm_005_update_student_profile_safely",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_6_user_story_us_sm_006_change_student_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L197",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_7_user_story_us_sm_007_resolve_duplicate_cases",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L228",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_8_user_story_us_sm_008_merge_duplicate_students",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L258",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_9_user_story_us_sm_009_manage_student_id_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L290",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_10_user_story_us_sm_010_archive_and_restore_student",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L321",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_11_user_story_us_sm_011_export_student_report_safely",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L354",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_2_12_user_story_us_sm_012_view_own_student_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L413",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_1_use_case_uc_sm_001_create_student_from_approved_admission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L417",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_2_use_case_uc_sm_002_create_student_by_direct_registration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L465",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_3_use_case_uc_sm_003_convert_corporate_participant_into_student",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L509",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_4_use_case_uc_sm_004_update_student_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L549",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_5_use_case_uc_sm_005_change_student_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L588",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_6_use_case_uc_sm_006_resolve_duplicate_case",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L626",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_7_use_case_uc_sm_007_merge_duplicate_students",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L661",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_3_8_use_case_uc_sm_008_archive_or_restore_student",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L709",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L750",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L754",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L756",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_sm_001_approved_admission_to_student_creation",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L769",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L799",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_801",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L801",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_sm_002_direct_registration_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_816",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L816",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L850",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_852",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L852",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_sm_003_duplicate_resolution_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L865",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L890",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_892",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L892",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_sm_004_student_merge_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_906",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L906",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L929",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_931",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L931",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_sm_005_archive_and_restore_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_ascii_workflow_946",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L946",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L970",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_972",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L972",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_structured_workflow_986",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L986",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_sm_006_id_card_issue_reissue_workflow",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_sequence_diagram_999",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L999",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1023",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_entities_with_state_transitions_in_this_module",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1027",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1038",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1040",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1046",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1060",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_state_machine_sm_state_001_studentprofile_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1076",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1084",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1086",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1086",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1093",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1093",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1106",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1106",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_state_machine_sm_state_002_studentduplicatecase_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1121",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1121",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1132",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_states_1134",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1134",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1139",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1139",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1147",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1147",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_state_machine_sm_state_003_student_export_lifecycle",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1156",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1156",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1164",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_current_operational_states",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1168",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1172",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1178",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1178",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_1186",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1186",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_state_machine_sm_state_004_student_id_card_operational_state",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_state_invariants_1195",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1195",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1203",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_creation_sources",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1205",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_6_cross_workflow_relationship_summary",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_student_master_downstream_consumers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1211",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_05_student_management_part_2_user_stories_use_cases_workflows_state_machines_7_final_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05: Student Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1223",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

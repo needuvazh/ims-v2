@@ -24,12 +24,12 @@
 
 The IAM module follows these principles:
 
-* **Single Source of Truth**: Identity data is owned exclusively by IAM.
-* **Normalized Design**: Avoid redundant identity and permission data.
-* **Soft Delete**: Operational records are archived, not physically deleted.
-* **Optimistic Locking**: Prevent concurrent update conflicts.
-* **Auditability**: Every change is traceable.
-* **Future Multi-Tenant Ready**: Although Phase 1 is single-client, the schema should accommodate future tenant isolation without redesign.
+- **Single Source of Truth**: Identity data is owned exclusively by IAM.
+- **Normalized Design**: Avoid redundant identity and permission data.
+- **Soft Delete**: Operational records are archived, not physically deleted.
+- **Optimistic Locking**: Prevent concurrent update conflicts.
+- **Auditability**: Every change is traceable.
+- **Future Multi-Tenant Ready**: Although Phase 1 is single-client, the schema should accommodate future tenant isolation without redesign.
 
 ---
 
@@ -147,10 +147,10 @@ IDX_User_DefaultBranch
 
 ### Business Constraints
 
-* Email must be unique.
-* Username must be unique.
-* One person can have only one active user account.
-* Archived users cannot authenticate.
+- Email must be unique.
+- Username must be unique.
+- One person can have only one active user account.
+- Archived users cannot authenticate.
 
 ---
 
@@ -192,9 +192,9 @@ IDX_Role_Status
 
 ### Constraints
 
-* Role code must be unique.
-* System roles cannot be deleted.
-* Archived roles cannot be assigned.
+- Role code must be unique.
+- System roles cannot be deleted.
+- Archived roles cannot be assigned.
 
 ---
 
@@ -563,8 +563,8 @@ Minimum:
 | Entity           | Create     | Read | Update | Archive       | Delete |
 | ---------------- | ---------- | ---- | ------ | ------------- | ------ |
 | User             | ✔          | ✔    | ✔      | ✔             | ✖      |
-| Role             | ✔          | ✔    | ✔      | ✔             | ✖*     |
-| Permission       | ✔          | ✔    | ✔      | ✔             | ✖*     |
+| Role             | ✔          | ✔    | ✔      | ✔             | ✖\*    |
+| Permission       | ✔          | ✔    | ✔      | ✔             | ✖\*    |
 | UserRole         | ✔          | ✔    | ✔      | ✔             | ✖      |
 | RolePermission   | ✔          | ✔    | ✔      | ✔             | ✖      |
 | UserBranchAccess | ✔          | ✔    | ✔      | ✔             | ✖      |
@@ -574,7 +574,7 @@ Minimum:
 | SecurityPolicy   | ✔          | ✔    | ✔      | ✖             | ✖      |
 | AuditLog         | ✔ (System) | ✔    | ✖      | ✖             | ✖      |
 
-* Only non-system records may be archived. Physical deletion is prohibited.
+- Only non-system records may be archived. Physical deletion is prohibited.
 
 ---
 
@@ -608,10 +608,10 @@ No operational table is physically deleted except transient security tokens.
 
 Benefits:
 
-* Audit compliance
-* Historical reporting
-* Recovery support
-* Referential integrity
+- Audit compliance
+- Historical reporting
+- Recovery support
+- Referential integrity
 
 ---
 
@@ -642,23 +642,23 @@ If no rows are updated, a concurrency conflict is returned.
 
 ## Primary Indexes
 
-* Primary Key (UUID)
+- Primary Key (UUID)
 
 ## Unique Indexes
 
-* Email
-* Username
-* Role Code
-* Permission Code
+- Email
+- Username
+- Role Code
+- Permission Code
 
 ## Lookup Indexes
 
-* User Status
-* Branch
-* Role
-* Permission Module
-* Session Status
-* Login Time
+- User Status
+- Branch
+- Role
+- Permission Module
+- Session Status
+- Login Time
 
 ## Composite Indexes
 
@@ -712,12 +712,12 @@ If no rows are updated, a concurrency conflict is returned.
 
 # 11. Concurrency Rules
 
-* Email uniqueness enforced at the database level.
-* Username uniqueness enforced at the database level.
-* Role assignment uses optimistic locking.
-* Branch assignment updates are version checked.
-* Password changes invalidate existing refresh tokens.
-* Concurrent password reset requests invalidate previous reset tokens.
+- Email uniqueness enforced at the database level.
+- Username uniqueness enforced at the database level.
+- Role assignment uses optimistic locking.
+- Branch assignment updates are version checked.
+- Password changes invalidate existing refresh tokens.
+- Concurrent password reset requests invalidate previous reset tokens.
 
 ---
 
@@ -725,13 +725,13 @@ If no rows are updated, a concurrency conflict is returned.
 
 The data model is designed to accommodate future enhancements without schema redesign:
 
-* Multi-Factor Authentication (MFA) tables
-* OAuth/OpenID Connect identity providers
-* SAML federation
-* API client credentials
-* Device trust management
-* Security risk scoring
-* Tenant-specific security policies (for SaaS)
+- Multi-Factor Authentication (MFA) tables
+- OAuth/OpenID Connect identity providers
+- SAML federation
+- API client credentials
+- Device trust management
+- Security risk scoring
+- Tenant-specific security policies (for SaaS)
 
 ---
 
@@ -739,15 +739,15 @@ The data model is designed to accommodate future enhancements without schema red
 
 At this stage, the IAM specification now contains:
 
-* Complete logical database model
-* Entity specifications
-* Field definitions
-* Primary and foreign key relationships
-* CRUD ownership matrix
-* Referential integrity rules
-* Soft delete strategy
-* Optimistic locking strategy
-* Indexing recommendations
-* Data retention policies
-* Data ownership matrix
-* Future extensibility guidance
+- Complete logical database model
+- Entity specifications
+- Field definitions
+- Primary and foreign key relationships
+- CRUD ownership matrix
+- Referential integrity rules
+- Soft delete strategy
+- Optimistic locking strategy
+- Indexing recommendations
+- Data retention policies
+- Data ownership matrix
+- Future extensibility guidance

@@ -19,7 +19,10 @@ import {
   PrismaUserActivationTokenRepository,
 } from '@ims/database';
 import { createUuid } from '@ims/shared-kernel';
-import { PrismaTrainerManagementRepository, TrainerManagementService } from '@ims/trainer-management';
+import {
+  PrismaTrainerManagementRepository,
+  TrainerManagementService,
+} from '@ims/trainer-management';
 import { PrismaSchedulingRepository, SchedulingService } from '@ims/scheduling';
 import {
   AttendanceQueryService,
@@ -64,14 +67,22 @@ const notificationRepository = new PrismaNotificationRepository(prisma);
 const outboxEventRepository = new PrismaOutboxEventRepository(prisma);
 export const exportJobRepository = new PrismaExportJobRepository(prisma);
 const loginHistoryRepository = new PrismaLoginHistoryRepository(prisma);
-const userActivationTokenRepository = new PrismaUserActivationTokenRepository(prisma);
+const userActivationTokenRepository = new PrismaUserActivationTokenRepository(
+  prisma,
+);
 const schedulingRepository = new PrismaSchedulingRepository(prisma);
-const attendanceSessionRepository = new PrismaAttendanceSessionRepository(prisma);
+const attendanceSessionRepository = new PrismaAttendanceSessionRepository(
+  prisma,
+);
 const attendanceRecordRepository = new PrismaAttendanceRecordRepository(prisma);
-const attendanceCorrectionRepository = new PrismaAttendanceCorrectionRepository(prisma);
+const attendanceCorrectionRepository = new PrismaAttendanceCorrectionRepository(
+  prisma,
+);
 const attendanceAlertRepository = new PrismaAttendanceAlertRepository(prisma);
 const attendanceQueryRepository = new PrismaAttendanceQueryRepository(prisma);
-const trainerManagementRepository = new PrismaTrainerManagementRepository(prisma);
+const trainerManagementRepository = new PrismaTrainerManagementRepository(
+  prisma,
+);
 
 // ─── Notification Port ────────────────────────────────────────────────────
 const notificationPort = new DummyNotificationProvider();
@@ -86,7 +97,7 @@ export const userService = new UserService(
   auditRepository,
   notificationRepository,
   outboxEventRepository,
-  sessionRepository
+  sessionRepository,
 );
 
 export const authService = new AuthService(
@@ -100,7 +111,7 @@ export const authService = new AuthService(
   userBranchAccessRepository,
   outboxEventRepository,
   notificationPort,
-  permissionCache
+  permissionCache,
 );
 
 export const roleService = new RoleService(
@@ -109,33 +120,36 @@ export const roleService = new RoleService(
   auditRepository,
   userRepository,
   notificationRepository,
-  permissionCache
+  permissionCache,
 );
 
 export const permissionService = new PermissionService(
   permissionRepository,
-  auditRepository
+  auditRepository,
 );
 
 export const branchAccessService = new BranchAccessService(
   userBranchAccessRepository,
   userRepository,
   sessionRepository,
-  auditRepository
+  auditRepository,
 );
 
 export const sessionService = new SessionService(
   sessionRepository,
   auditRepository,
-  userBranchAccessRepository
+  userBranchAccessRepository,
 );
 
 export const securityPolicyService = new SecurityPolicyService(
   securityPolicyRepository,
-  auditRepository
+  auditRepository,
 );
 
-export const schedulingCalendarService = new SchedulingService(prisma, schedulingRepository);
+export const schedulingCalendarService = new SchedulingService(
+  prisma,
+  schedulingRepository,
+);
 export const attendanceService = new AttendanceService(
   prisma,
   attendanceSessionRepository,
@@ -148,32 +162,32 @@ export const attendanceQueryService = new AttendanceQueryService(
   prisma,
   attendanceQueryRepository,
 );
-export const trainerManagementService = new TrainerManagementService(trainerManagementRepository);
-
-export const auditQueryService = new AuditQueryService(
-  auditRepository
+export const trainerManagementService = new TrainerManagementService(
+  trainerManagementRepository,
 );
+
+export const auditQueryService = new AuditQueryService(auditRepository);
 
 export const loginHistoryQueryService = new LoginHistoryQueryService(
   loginHistoryRepository,
-  userBranchAccessRepository
+  userBranchAccessRepository,
 );
 
 export const effectivePermissionsService = new EffectivePermissionsService(
   userRepository,
   roleRepository,
-  permissionCache
+  permissionCache,
 );
 
 export const branchScopeResolver = new BranchScopeResolver(
-  userBranchAccessRepository
+  userBranchAccessRepository,
 );
 
 export const authorizationGuard = new AuthorizationGuard(
   userRepository,
   sessionRepository,
   effectivePermissionsService,
-  branchScopeResolver
+  branchScopeResolver,
 );
 
 // We can instantiate organizationService using the same auditRepository pattern
@@ -197,8 +211,12 @@ export const organizationService = new OrganizationService(
     },
     hasBranchAccess: async (userId: string, branchId: string) => {
       try {
-        const accessList = await userBranchAccessRepository.findByUser(createUuid(userId));
-        return accessList.some((a) => a.branchId === branchId && a.status === 'Active');
+        const accessList = await userBranchAccessRepository.findByUser(
+          createUuid(userId),
+        );
+        return accessList.some(
+          (a) => a.branchId === branchId && a.status === 'Active',
+        );
       } catch {
         return false;
       }
@@ -213,17 +231,19 @@ export const organizationService = new OrganizationService(
   {
     hasActiveDependencies: async (branchId: string) => {
       try {
-        const [leadsCount, admissionsCount, inquiriesCount] = await Promise.all([
-          prisma.lead.count({ where: { branchId, isDeleted: false } }),
-          prisma.admission.count({ where: { branchId, isDeleted: false } }),
-          prisma.inquiry.count({ where: { branchId, isDeleted: false } }),
-        ]);
-        return (leadsCount + admissionsCount + inquiriesCount) > 0;
+        const [leadsCount, admissionsCount, inquiriesCount] = await Promise.all(
+          [
+            prisma.lead.count({ where: { branchId, isDeleted: false } }),
+            prisma.admission.count({ where: { branchId, isDeleted: false } }),
+            prisma.inquiry.count({ where: { branchId, isDeleted: false } }),
+          ],
+        );
+        return leadsCount + admissionsCount + inquiriesCount > 0;
       } catch {
         return false;
       }
     },
-  }
+  },
 );
 
 // ─── CRM Repositories & Services ──────────────────────────────────────────
@@ -244,24 +264,24 @@ const crmFollowUpRepository = new FollowUpRepository(prisma);
 export const inquiryService = new InquiryApplicationService(
   prisma,
   crmInquiryRepository,
-  crmLeadRepository
+  crmLeadRepository,
 );
 
 export const leadService = new LeadService(
   prisma,
   crmLeadRepository,
-  crmFollowUpRepository
+  crmFollowUpRepository,
 );
 
 export const followUpService = new FollowUpApplicationService(
   prisma,
   crmFollowUpRepository,
-  crmLeadRepository
+  crmLeadRepository,
 );
 
 export const followUpSchedulerService = new FollowUpSchedulerService(
   prisma,
-  crmFollowUpRepository
+  crmFollowUpRepository,
 );
 
 // ─── Admissions Repositories & Services ──────────────────────────────────
@@ -278,7 +298,10 @@ import {
 } from '@ims/admissions-enrollment';
 
 const admissionRepository = new AdmissionRepository(prisma);
-export const admissionService = new AdmissionService(admissionRepository, prisma);
+export const admissionService = new AdmissionService(
+  admissionRepository,
+  prisma,
+);
 export const admissionQueryService = new AdmissionQueryService(prisma);
 export const enrollmentService = new EnrollmentService(prisma);
 export const studentQueryService = new StudentQueryService(prisma);
@@ -289,7 +312,7 @@ export const studentStatusService = new StudentStatusService(prisma);
 export const leadConversionOrchestrator = new LeadConversionOrchestrator(
   prisma,
   leadService,
-  admissionService
+  admissionService,
 );
 
 // ─── Course Catalog Repositories & Services ────────────────────────────────
@@ -311,13 +334,25 @@ const courseRepository = new CourseRepository(prisma);
 const categoryRepository = new CourseCategoryRepository(prisma);
 const coursePricingRepository = new CoursePricingRepository(prisma);
 const courseDiscountRepository = new CourseDiscountRepository(prisma);
-const courseCompletionRuleRepository = new CourseCompletionRuleRepository(prisma);
+const courseCompletionRuleRepository = new CourseCompletionRuleRepository(
+  prisma,
+);
 
 export const courseService = new CourseService(prisma, courseRepository);
 export const categoryService = new CategoryService(prisma, categoryRepository);
-export const coursePricingService = new CoursePricingService(prisma, coursePricingRepository, courseDiscountRepository);
-export const courseDiscountService = new CourseDiscountService(prisma, courseDiscountRepository);
-export const courseCompletionRuleService = new CourseCompletionRuleService(prisma, courseCompletionRuleRepository);
+export const coursePricingService = new CoursePricingService(
+  prisma,
+  coursePricingRepository,
+  courseDiscountRepository,
+);
+export const courseDiscountService = new CourseDiscountService(
+  prisma,
+  courseDiscountRepository,
+);
+export const courseCompletionRuleService = new CourseCompletionRuleService(
+  prisma,
+  courseCompletionRuleRepository,
+);
 export const publicCourseQueryService = new PublicCourseQueryService(prisma);
 
 // ─── Reporting & CRM Dashboards ───────────────────────────────────────────
@@ -330,20 +365,24 @@ const prismaAuditRepository = new PrismaAuditRepository(prisma);
 
 export const crmDashboardQueryService = new CrmDashboardQueryService(
   leadAnalyticsReadService,
-  prismaAuditRepository
+  prismaAuditRepository,
 );
 
 // ─── Training Delivery Repositories & Services ────────────────────────────
-import { BatchRepository, BatchService, ISchedulingService } from '@ims/training-delivery';
+import {
+  BatchRepository,
+  BatchService,
+  ISchedulingService,
+} from '@ims/training-delivery';
 
 class PrismaSchedulingService implements ISchedulingService {
-  constructor(private readonly prisma: any) { }
+  constructor(private readonly prisma: any) {}
 
   async getSessionsForTrainer(
     trainerId: string,
     startDate: Date,
     endDate: Date,
-    tx?: any
+    tx?: any,
   ): Promise<any[]> {
     const client = tx || this.prisma;
     const assignments = await client.batchTrainer.findMany({
@@ -392,24 +431,31 @@ class PrismaSchedulingService implements ISchedulingService {
     }));
   }
 
-  async validateSession(input: {
-    branchId: string;
-    instituteId: string;
-    scheduledDate: Date;
-    startTime: string;
-    endTime: string;
-    trainerId?: string | null;
-    classroomId?: string | null;
-    batchId?: string | null;
-    sessionId?: string | null;
-  }, tx?: any) {
+  async validateSession(
+    input: {
+      branchId: string;
+      instituteId: string;
+      scheduledDate: Date;
+      startTime: string;
+      endTime: string;
+      trainerId?: string | null;
+      classroomId?: string | null;
+      batchId?: string | null;
+      sessionId?: string | null;
+    },
+    tx?: any,
+  ) {
     return schedulingCalendarService.validateSession(input, tx);
   }
 }
 
 const batchRepository = new BatchRepository(prisma);
 const schedulingService = new PrismaSchedulingService(prisma);
-export const batchService = new BatchService(prisma, batchRepository, schedulingService);
+export const batchService = new BatchService(
+  prisma,
+  batchRepository,
+  schedulingService,
+);
 
 // ─── Finance Repositories & Services ──────────────────────────────────────
 import { FinanceService } from '@ims/finance-receivables';

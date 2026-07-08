@@ -1,11 +1,13 @@
 # document-management Specification
 
 ## Purpose
+
 TBD - created by archiving change document-management. Update Purpose after archive.
 
 ## Requirements
 
 ### Requirement: Documents Context Database Schema
+
 The database schema SHALL define explicit, type-safe models for the Documents context to ensure data integrity and avoid free-form string associations.
 
 ```prisma
@@ -98,41 +100,50 @@ enum VerificationOutcome {
 ```
 
 #### Scenario: Schema validation
+
 - **WHEN** the prisma schema is compiled
 - **THEN** the models SHALL contain Document, DocumentOwner, and DocumentVerification with proper fields and constraints.
 
 ---
 
 ### Requirement: Document Capture and Branch Scoping
+
 The system SHALL verify the user's branch permissions against the document's stored `branchId` before allowing upload, retrieval, or metadata access.
 
 #### Scenario: Persist branch context on upload
+
 - **WHEN** an authorized user uploads a document against a target workflow (Lead, Admission, Enrollment)
 - **THEN** the system SHALL resolve the active branch ID from that workflow, save it directly on the `Document`'s `branchId` column, and reject the upload with `403 Forbidden` if the user is not authorized for that branch.
 
 #### Scenario: Enforce branch-scoped document read access
+
 - **WHEN** a user requests document details, metadata, or download links
 - **THEN** the system SHALL check the user's branch access against the document's stored `branchId`, failing with `403 Forbidden` if unauthorized.
 
 ---
 
 ### Requirement: Admission Document Capture
+
 The system SHALL allow the admin portal to attach and manage admission-supporting documents for a person, student profile, admission, or enrollment record without owning the underlying document entity.
 
 #### Scenario: Upload document for admission review
+
 - **WHEN** an authorized admissions user uploads a civil ID, passport scan, or other required document against an admission workflow record
 - **THEN** the system SHALL create the document through the Documents context, link it to the Module 04 record by reference, and expose the document status to the admin portal.
 
 #### Scenario: Reject document capture outside branch scope
+
 - **WHEN** a user attempts to attach a document to an admission or enrollment record for a branch they are not authorized to access
 - **THEN** the system SHALL reject the action with a `403 Forbidden` response and SHALL NOT create or link the document reference.
 
 ---
 
 ### Requirement: Lead Conversion Contract & Handoff Integration
+
 The CRM Lead conversion endpoint input schema and database transaction SHALL support structured document capture.
 
 #### Scenario: Convert Lead with structured document metadata
+
 - **WHEN** a lead conversion request passes a payload conforming to:
   ```json
   {
@@ -152,17 +163,21 @@ The CRM Lead conversion endpoint input schema and database transaction SHALL sup
 ---
 
 ### Requirement: Idempotent Admission Handoff Creation
+
 The Admission service SHALL be idempotent when creating student profiles and admissions during handoff, reusing existing records instead of throwing duplicate profile errors.
 
 #### Scenario: Reuse existing StudentProfile and Person during handoff
+
 - **WHEN** the conversion handoff transaction is run for a contact identity that already has a `Person` and a `StudentProfile` in the database
 - **THEN** the system SHALL reuse the existing `Person` and `StudentProfile` records, and link them to the new `Admission` record, completing the transaction successfully.
 
 ---
 
 ### Requirement: Verification Gate and Requirements Resolver
+
 The system SHALL verify that all required document types for an admission or enrollment workflow are both `Active` (physical status) and `Verified` (verification outcome) before allowing downstream approvals.
 
 #### Scenario: Resolve requirements with Course-Catalog overrides
+
 - **WHEN** evaluating the verification gate for an enrollment, the `RequirementsResolver` SHALL retrieve required document types (defaulting to branch-wide settings unless course-catalog rules override them).
 - **THEN** the system SHALL block the approval or confirmation if any required type does not have at least one document in `Active` status and `Verified` verification outcome.

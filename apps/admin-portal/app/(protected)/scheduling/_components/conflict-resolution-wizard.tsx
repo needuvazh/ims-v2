@@ -2,7 +2,14 @@
 
 import { useEffect, useMemo, useState, useTransition } from 'react';
 import { toast } from 'sonner';
-import { AlertTriangle, CalendarDays, Clock3, MapPin, Save, Sparkles } from 'lucide-react';
+import {
+  AlertTriangle,
+  CalendarDays,
+  Clock3,
+  MapPin,
+  Save,
+  Sparkles,
+} from 'lucide-react';
 import {
   Badge,
   Button,
@@ -98,7 +105,9 @@ export function ConflictResolutionWizard({
 
   const classroomOptions = useMemo(() => {
     if (!session) return classrooms;
-    return classrooms.filter((classroom) => classroom.branchId === session.branchId);
+    return classrooms.filter(
+      (classroom) => classroom.branchId === session.branchId,
+    );
   }, [classrooms, session]);
 
   useEffect(() => {
@@ -129,7 +138,11 @@ export function ConflictResolutionWizard({
                 }
               : {};
 
-        const result = await resolveConflictAction(session.id, actionType, payload);
+        const result = await resolveConflictAction(
+          session.id,
+          actionType,
+          payload,
+        );
         if (!result.success) {
           toast.error(result.error || 'Unable to resolve the conflict.');
           return;
@@ -138,12 +151,16 @@ export function ConflictResolutionWizard({
         toast.success(
           actionType === 'CANCEL'
             ? 'Session cancelled.'
-            : 'Conflict resolved and session returned to Published.'
+            : 'Conflict resolved and session returned to Published.',
         );
         onResolved?.();
         onOpenChange(false);
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : 'Unable to resolve the conflict.');
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : 'Unable to resolve the conflict.',
+        );
       }
     });
   };
@@ -162,7 +179,8 @@ export function ConflictResolutionWizard({
                 Conflict resolution wizard
               </DialogTitle>
               <DialogDescription>
-                Adjust the session in place, move it to another room, or cancel the slot.
+                Adjust the session in place, move it to another room, or cancel
+                the slot.
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -171,18 +189,38 @@ export function ConflictResolutionWizard({
             <div className="space-y-6 overflow-y-auto px-6 py-5">
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--ims-muted)]">Batch</p>
-                  <p className="mt-1 font-semibold text-[color:var(--ims-ink)]">{session.batchCode}</p>
-                  <p className="text-sm text-[color:var(--ims-muted)]">{session.batchNameEnglish}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--ims-muted)]">
+                    Batch
+                  </p>
+                  <p className="mt-1 font-semibold text-[color:var(--ims-ink)]">
+                    {session.batchCode}
+                  </p>
+                  <p className="text-sm text-[color:var(--ims-muted)]">
+                    {session.batchNameEnglish}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--ims-muted)]">Status</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--ims-muted)]">
+                    Status
+                  </p>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <Badge variant={session.scheduleStatus === 'Conflict' ? 'error' : 'success'}>
+                    <Badge
+                      variant={
+                        session.scheduleStatus === 'Conflict'
+                          ? 'error'
+                          : 'success'
+                      }
+                    >
                       {session.scheduleStatus}
                     </Badge>
-                    {session.conflictType && <Badge variant="outline">{conflictLabel(session.conflictType)}</Badge>}
-                    {session.isConflictIgnored && <Badge variant="success">Override active</Badge>}
+                    {session.conflictType && (
+                      <Badge variant="outline">
+                        {conflictLabel(session.conflictType)}
+                      </Badge>
+                    )}
+                    {session.isConflictIgnored && (
+                      <Badge variant="success">Override active</Badge>
+                    )}
                   </div>
                 </div>
               </div>
@@ -190,8 +228,13 @@ export function ConflictResolutionWizard({
               <div className="grid gap-3 rounded-2xl border border-[color:var(--ims-border)] p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h4 className="font-semibold text-[color:var(--ims-ink)]">{session.titleEnglish}</h4>
-                    <p className="text-sm font-arabic text-[color:var(--ims-muted)]" dir="rtl">
+                    <h4 className="font-semibold text-[color:var(--ims-ink)]">
+                      {session.titleEnglish}
+                    </h4>
+                    <p
+                      className="text-sm font-arabic text-[color:var(--ims-muted)]"
+                      dir="rtl"
+                    >
                       {session.titleArabic}
                     </p>
                   </div>
@@ -211,7 +254,9 @@ export function ConflictResolutionWizard({
                   </div>
                   <div className="flex items-center gap-2 text-sm text-[color:var(--ims-muted)]">
                     <MapPin className="h-4 w-4" />
-                    <span>{session.classroomName ?? 'No classroom assigned'}</span>
+                    <span>
+                      {session.classroomName ?? 'No classroom assigned'}
+                    </span>
                   </div>
                 </div>
 
@@ -232,7 +277,9 @@ export function ConflictResolutionWizard({
                   <FormControl>
                     <Select
                       value={actionType}
-                      onChange={(event) => setActionType(event.target.value as ResolutionAction)}
+                      onChange={(event) =>
+                        setActionType(event.target.value as ResolutionAction)
+                      }
                       options={[
                         { value: 'RESCHEDULE', label: 'Reschedule session' },
                         { value: 'CHANGE_VENUE', label: 'Change classroom' },
@@ -244,9 +291,27 @@ export function ConflictResolutionWizard({
 
                 {needsTimeWindow && (
                   <div className="grid gap-4 sm:grid-cols-3">
-                    <Input label="New date" type="date" value={scheduledDate} onChange={(event) => setScheduledDate(event.target.value)} required />
-                    <Input label="Start time" type="time" value={startTime} onChange={(event) => setStartTime(event.target.value)} required />
-                    <Input label="End time" type="time" value={endTime} onChange={(event) => setEndTime(event.target.value)} required />
+                    <Input
+                      label="New date"
+                      type="date"
+                      value={scheduledDate}
+                      onChange={(event) => setScheduledDate(event.target.value)}
+                      required
+                    />
+                    <Input
+                      label="Start time"
+                      type="time"
+                      value={startTime}
+                      onChange={(event) => setStartTime(event.target.value)}
+                      required
+                    />
+                    <Input
+                      label="End time"
+                      type="time"
+                      value={endTime}
+                      onChange={(event) => setEndTime(event.target.value)}
+                      required
+                    />
                   </div>
                 )}
 
@@ -282,22 +347,39 @@ export function ConflictResolutionWizard({
             <aside className="border-t border-[color:var(--ims-border)] bg-[color:var(--ims-surface-hover)] px-6 py-5 lg:border-l lg:border-t-0">
               <div className="space-y-4">
                 <div className="rounded-2xl border border-[color:var(--ims-border)] bg-white p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--ims-muted)]">Resolution notes</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--ims-muted)]">
+                    Resolution notes
+                  </p>
                   <ul className="mt-3 space-y-2 text-sm text-[color:var(--ims-muted)]">
-                    <li>Reschedule moves the session back to Published after validation passes.</li>
-                    <li>Change venue only swaps the classroom and rechecks conflicts.</li>
-                    <li>Cancel preserves audit history and removes the session from active delivery.</li>
+                    <li>
+                      Reschedule moves the session back to Published after
+                      validation passes.
+                    </li>
+                    <li>
+                      Change venue only swaps the classroom and rechecks
+                      conflicts.
+                    </li>
+                    <li>
+                      Cancel preserves audit history and removes the session
+                      from active delivery.
+                    </li>
                   </ul>
                 </div>
 
                 <div className="rounded-2xl border border-dashed border-[color:var(--ims-border)] bg-white p-4 text-sm text-[color:var(--ims-muted)]">
-                  <p className="font-semibold text-[color:var(--ims-ink)]">Branch context</p>
+                  <p className="font-semibold text-[color:var(--ims-ink)]">
+                    Branch context
+                  </p>
                   <p className="mt-1">{session.branchName}</p>
                 </div>
               </div>
 
               <DialogFooter className="mt-6 border-t border-[color:var(--ims-border)] pt-4">
-                <Button type="button" variant="secondary" onClick={() => onOpenChange(false)}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => onOpenChange(false)}
+                >
                   Close
                 </Button>
                 <Button type="button" onClick={submit} loading={isPending}>

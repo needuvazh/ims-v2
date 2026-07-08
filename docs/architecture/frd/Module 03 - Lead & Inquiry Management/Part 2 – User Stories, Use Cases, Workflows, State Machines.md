@@ -1,5 +1,7 @@
 # ASTI IMS: Functional Requirement Document
+
 ## Module 03: Lead & Inquiry Management
+
 ### Part 2 – User Stories, Use Cases, Workflows, State Machines
 
 ---
@@ -7,9 +9,10 @@
 ## 1. User Stories
 
 ### US-LEAD-001: Manual Inquiry Ingestion (Must Have)
+
 **As a** Receptionist or Counselor  
 **I want to** manually enter walk-in or phone-in inquiry details  
-**So that** I can capture the contact details and interest before qualification  
+**So that** I can capture the contact details and interest before qualification
 
 ```gherkin
 Feature: Manual Inquiry Ingestion
@@ -28,9 +31,10 @@ Feature: Manual Inquiry Ingestion
 ---
 
 ### US-LEAD-002: Web Inquiry Auto-Ingestion (Must Have)
+
 **As a** Marketing Team Member  
 **I want** inquiries submitted via the ASTI public website to automatically create inquiry records  
-**So that** counselors can view and respond to them without delay  
+**So that** counselors can view and respond to them without delay
 
 ```gherkin
 Feature: Web Inquiry Ingestion
@@ -56,9 +60,10 @@ Feature: Web Inquiry Ingestion
 ---
 
 ### US-LEAD-003: Duplicate Ingestion Verification Warning (Must Have)
+
 **As a** Counselor  
 **I want to** see a warning if I enter an inquiry with a phone number or email that already exists in the system  
-**So that** I do not create duplicate leads for the same prospect  
+**So that** I do not create duplicate leads for the same prospect
 
 ```gherkin
 Feature: Duplicate Inquiry Check
@@ -74,9 +79,10 @@ Feature: Duplicate Inquiry Check
 ---
 
 ### US-LEAD-004: Inquiry Qualification (Must Have)
+
 **As a** Counselor  
 **I want to** qualify a raw inquiry and promote it to a lead  
-**So that** I can start tracking negotiation stages and schedule follow-ups  
+**So that** I can start tracking negotiation stages and schedule follow-ups
 
 ```gherkin
 Feature: Inquiry Qualification
@@ -94,9 +100,10 @@ Feature: Inquiry Qualification
 ---
 
 ### US-LEAD-005: Counselor Workload Assignment (Must Have)
+
 **As a** Branch Admin  
 **I want to** manually assign or reassign leads to counselors in my branch  
-**So that** I can balance the branch workload and match prospects to the right counselor  
+**So that** I can balance the branch workload and match prospects to the right counselor
 
 ```gherkin
 Feature: Counselor Assignment
@@ -113,9 +120,10 @@ Feature: Counselor Assignment
 ---
 
 ### US-LEAD-006: Follow-up Scheduling & Completion Logging (Must Have)
+
 **As a** Counselor  
 **I want to** schedule a future follow-up date and record outcome notes for past follow-ups  
-**So that** I can track prospect communication history and never miss a scheduled call  
+**So that** I can track prospect communication history and never miss a scheduled call
 
 ```gherkin
 Feature: Follow-up Scheduling & Logs
@@ -132,9 +140,10 @@ Feature: Follow-up Scheduling & Logs
 ---
 
 ### US-LEAD-007: Terminal Won Transition & Handoff (Must Have)
+
 **As a** Counselor or Academic Coordinator  
 **I want to** mark a lead as Won when they commit to enrollment  
-**So that** the system automatically generates a Student Profile and Admission record in the database  
+**So that** the system automatically generates a Student Profile and Admission record in the database
 
 ```gherkin
 Feature: Lead Won Conversion
@@ -154,9 +163,10 @@ Feature: Lead Won Conversion
 ---
 
 ### US-LEAD-008: Terminal Lost Transition & Reason Capture (Must Have)
+
 **As a** Counselor  
 **I want to** record a categorized reason and detailed notes when marking a lead as Lost  
-**So that** the marketing team can analyze loss trends and drop sources  
+**So that** the marketing team can analyze loss trends and drop sources
 
 ```gherkin
 Feature: Lead Lost Logging
@@ -175,9 +185,10 @@ Feature: Lead Lost Logging
 ## 2. Primary Use Cases
 
 ### UC-LEAD-001: Capture and Qualify Inquiry
-* **Primary Actor**: Receptionist or Public Website Integration API
-* **Preconditions**: Actor is authenticated and possesses write permissions for inquiries.
-* **Main Success Scenario**:
+
+- **Primary Actor**: Receptionist or Public Website Integration API
+- **Preconditions**: Actor is authenticated and possesses write permissions for inquiries.
+- **Main Success Scenario**:
   1. Actor submits the inquiry form with first name, last name, phone number, branch selection, and lead source.
   2. The system checks for active branch status (`BranchStatus == Active`).
   3. The system executes duplicate checks against the database; no matching phone or email is found.
@@ -186,70 +197,72 @@ Feature: Lead Lost Logging
   6. The Counselor reviews the inquiry list, selects the captured inquiry, clicks "Qualify", validates the interest, and links the targeted course.
   7. The system creates a `Person` profile and a `Lead` record, setting the stage to `New`.
   8. The system transitions the inquiry status to `Qualified`.
-* **Alternative Flows**:
-  * **Alternative Flow A (Duplicate Detected)**:
-    * At step 3, the system finds matching contact details.
-    * The system flags a warning to the manual user: "Duplicate candidate found: [Student/Lead ID]".
-    * The user selects "Force Create" to proceed, or "Cancel" to abort. If "Force Create" is chosen, the system creates the inquiry and links the `duplicateRefId`.
-  * **Alternative Flow B (Branch Inactive)**:
-    * At step 2, the branch status is `Closed` or `Suspended`.
-    * The system halts execution and throws `ERR_CRM_BRANCH_INACTIVE` error code.
-* **Postconditions**:
-  * Inquiry status is `Qualified` (read-only).
-  * A new `Lead` record is initialized.
+- **Alternative Flows**:
+  - **Alternative Flow A (Duplicate Detected)**:
+    - At step 3, the system finds matching contact details.
+    - The system flags a warning to the manual user: "Duplicate candidate found: [Student/Lead ID]".
+    - The user selects "Force Create" to proceed, or "Cancel" to abort. If "Force Create" is chosen, the system creates the inquiry and links the `duplicateRefId`.
+  - **Alternative Flow B (Branch Inactive)**:
+    - At step 2, the branch status is `Closed` or `Suspended`.
+    - The system halts execution and throws `ERR_CRM_BRANCH_INACTIVE` error code.
+- **Postconditions**:
+  - Inquiry status is `Qualified` (read-only).
+  - A new `Lead` record is initialized.
 
 ---
 
 ### UC-LEAD-002: Schedule and Execute Counselor Follow-up
-* **Primary Actor**: Counselor
-* **Preconditions**: Counselor has branch access rights. Lead is in an active pipeline stage (New, Contacted, FollowUp, Qualified, Negotiation).
-* **Main Success Scenario**:
+
+- **Primary Actor**: Counselor
+- **Preconditions**: Counselor has branch access rights. Lead is in an active pipeline stage (New, Contacted, FollowUp, Qualified, Negotiation).
+- **Main Success Scenario**:
   1. Counselor selects the assigned Lead, clicks "Schedule Follow-up".
   2. Counselor inputs the future Date-Time, Follow-up Type (Call, WhatsApp, Email, Visit), and optional agenda.
   3. The system saves the task as `Scheduled` and updates the lead's `nextFollowUpDate` field.
   4. At the scheduled time, the Counselor contacts the prospect, opens the follow-up panel, and selects "Log Outcome".
   5. Counselor inputs outcome code (e.g. `Answered`), logs details of the conversation, and toggles "Schedule Next" to false.
   6. The system changes the follow-up task status to `Completed` and clears the lead's `nextFollowUpDate` field.
-* **Alternative Flows**:
-  * **Alternative Flow A (Follow-up scheduled in the past)**:
-    * At step 2, Counselor sets a timestamp earlier than current system clock + 5 minutes.
-    * The system displays verification error `ERR_CRM_PAST_FOLLOWUP_DATE` and blocks saving.
-  * **Alternative Flow B (Next follow-up required)**:
-    * At step 5, Counselor toggles "Schedule Next" to true and enters a future date.
-    * The system updates current follow-up to `Completed` and automatically inserts a new `Scheduled` follow-up record.
-* **Postconditions**:
-  * Historical follow-up is archived.
-  * Timeline shows follow-up activity.
+- **Alternative Flows**:
+  - **Alternative Flow A (Follow-up scheduled in the past)**:
+    - At step 2, Counselor sets a timestamp earlier than current system clock + 5 minutes.
+    - The system displays verification error `ERR_CRM_PAST_FOLLOWUP_DATE` and blocks saving.
+  - **Alternative Flow B (Next follow-up required)**:
+    - At step 5, Counselor toggles "Schedule Next" to true and enters a future date.
+    - The system updates current follow-up to `Completed` and automatically inserts a new `Scheduled` follow-up record.
+- **Postconditions**:
+  - Historical follow-up is archived.
+  - Timeline shows follow-up activity.
 
 ---
 
 ### UC-LEAD-003: Concluding Lead Won & Admission Handoff
-* **Primary Actor**: Counselor or Academic Coordinator
-* **Preconditions**: Lead is in active stage. User has `lead.won` and `lead.qualify` permissions.
-* **Inputs**:
-  * `leadId` (UUID)
-* **Main Success Scenario**:
+
+- **Primary Actor**: Counselor or Academic Coordinator
+- **Preconditions**: Lead is in active stage. User has `lead.won` and `lead.qualify` permissions.
+- **Inputs**:
+  - `leadId` (UUID)
+- **Main Success Scenario**:
   1. User changes the lead stage to `Won`.
   2. The system checks terminal won validation invariants (BR-LEAD-007):
-     * Phone, email, interested course are set.
-     * Document attachments (civil ID or passport scan) are linked.
+     - Phone, email, interested course are set.
+     - Document attachments (civil ID or passport scan) are linked.
   3. The system changes lead stage to `Won`.
   4. The system opens a database transaction:
-     * Generates a new Student profile from the `Person` record and assigns a unique Student Number via the `NumberingSeries`.
-     * Generates an `Admission` record linked to the student and the target course.
-     * Sets Lead stage to `Converted`.
+     - Generates a new Student profile from the `Person` record and assigns a unique Student Number via the `NumberingSeries`.
+     - Generates an `Admission` record linked to the student and the target course.
+     - Sets Lead stage to `Converted`.
   5. The system commits the transaction.
   6. The system emits a `LeadConvertedToAdmission` domain event to trigger automated setup of default installment fee plans.
-* **Alternative Flows**:
-  * **Alternative Flow A (Missing Mandatory Fields/Documents)**:
-    * At step 2, the email field is null or no files are attached.
-    * The system aborts the transition, displays error code `ERR_CRM_WON_PRECONDITIONS_MISSED`, and lists missing fields.
-  * **Alternative Flow B (Transaction Failure)**:
-    * At step 4, database write fails (e.g. unique constraint collision on Student Number).
-    * The system rolls back the transaction, reverts Lead stage to `Qualified`, logs the error, and alerts the administrator.
-* **Postconditions**:
-  * Lead record is in terminal read-only stage `Converted`.
-  * Student and Admission profiles are created.
+- **Alternative Flows**:
+  - **Alternative Flow A (Missing Mandatory Fields/Documents)**:
+    - At step 2, the email field is null or no files are attached.
+    - The system aborts the transition, displays error code `ERR_CRM_WON_PRECONDITIONS_MISSED`, and lists missing fields.
+  - **Alternative Flow B (Transaction Failure)**:
+    - At step 4, database write fails (e.g. unique constraint collision on Student Number).
+    - The system rolls back the transaction, reverts Lead stage to `Qualified`, logs the error, and alerts the administrator.
+- **Postconditions**:
+  - Lead record is in terminal read-only stage `Converted`.
+  - Student and Admission profiles are created.
 
 ---
 
@@ -308,7 +321,7 @@ sequenceDiagram
     DB-->>CRM: Attachment verified (civil_id.pdf present)
     CRM->>DB: UPDATE Lead stage to "Won"
     DB-->>CRM: Confirm update
-    
+
     Note over CRM, ADM: Begin Downstream Handoff (Transaction)
     CRM->>ADM: Invoke createAdmissionFromLead(leadId)
     activate ADM
@@ -320,7 +333,7 @@ sequenceDiagram
     DB-->>ADM: Confirm inserts
     ADM-->>CRM: Handoff Successful (Admission ID generated)
     deactivate ADM
-    
+
     CRM->>DB: UPDATE Lead stage to "Converted" (Terminal)
     DB-->>CRM: Confirm update
     CRM->>DB: INSERT OutboxEvent (LeadConvertedToAdmission)
@@ -340,46 +353,45 @@ stateDiagram-v2
     [*] --> New : Inquiry Qualified / Created
     New --> Contacted : Contact Attempted
     New --> Lost : Mark Lost (Reason Required)
-    
+
     Contacted --> FollowUp : Schedule Follow-up
     Contacted --> Lost : Mark Lost
-    
+
     FollowUp --> FollowUp : Update Outcomes / Reschedule
     FollowUp --> Qualified : Prospect Meets Qualification Criteria
     FollowUp --> Lost : Mark Lost
-    
+
     Qualified --> Negotiation : Fee Proposal Issued
     Qualified --> Won : Commitment Received (Docs verified)
     Qualified --> Lost : Mark Lost
-    
+
     Negotiation --> Won : Commitment Received (Docs verified)
     Negotiation --> Lost : Mark Lost
-    
+
     Won --> Converted : Automated Downstream Handoff
-    
+
     Converted --> [*] : Terminal State
     Lost --> [*] : Terminal State
 ```
 
 ### 4.2 Lead Stage Transition Matrix & Permissions
 
-| From Stage | To Stage | Allowed? | Triggering Action / Event | Permission Required |
-| :--- | :--- | :---: | :--- | :--- |
-| **New** | Contacted | Yes | Log call attempt. | `lead.update` |
-| **New** | Lost | Yes | Prospect rejects interest immediately. | `lead.lost` |
-| **Contacted** | FollowUp | Yes | Save future follow-up task. | `lead.update` |
-| **Contacted** | Lost | Yes | Lead marked lost. | `lead.lost` |
-| **FollowUp** | FollowUp | Yes | Log completed outcome and schedule next. | `lead.update` |
-| **FollowUp** | Qualified | Yes | Link to interested course and mark qualified. | `lead.update` |
-| **FollowUp** | Lost | Yes | Lead marked lost. | `lead.lost` |
-| **Qualified** | Negotiation | Yes | Generate fee proposal summary. | `lead.update` |
-| **Qualified** | Won | Yes | Change stage to Won (Validates documents). | `lead.won` |
-| **Qualified** | Lost | Yes | Lead marked lost. | `lead.lost` |
-| **Negotiation** | Won | Yes | Change stage to Won (Validates documents). | `lead.won` |
-| **Negotiation** | Lost | Yes | Lead marked lost. | `lead.lost` |
-| **Won** | Converted | Yes | Automated step: Admission creation success. | *System Only* |
-| **Converted** | *Any Stage* | No | Blocked. Converted leads are read-only. | *None (Prohibited)* |
-| **Lost** | New | Yes | Re-engage lost lead (Academic Coord override). | `lead.config` |
+| From Stage      | To Stage    | Allowed? | Triggering Action / Event                      | Permission Required |
+| :-------------- | :---------- | :------: | :--------------------------------------------- | :------------------ |
+| **New**         | Contacted   |   Yes    | Log call attempt.                              | `lead.update`       |
+| **New**         | Lost        |   Yes    | Prospect rejects interest immediately.         | `lead.lost`         |
+| **Contacted**   | FollowUp    |   Yes    | Save future follow-up task.                    | `lead.update`       |
+| **Contacted**   | Lost        |   Yes    | Lead marked lost.                              | `lead.lost`         |
+| **FollowUp**    | FollowUp    |   Yes    | Log completed outcome and schedule next.       | `lead.update`       |
+| **FollowUp**    | Qualified   |   Yes    | Link to interested course and mark qualified.  | `lead.update`       |
+| **FollowUp**    | Lost        |   Yes    | Lead marked lost.                              | `lead.lost`         |
+| **Qualified**   | Negotiation |   Yes    | Generate fee proposal summary.                 | `lead.update`       |
+| **Qualified**   | Won         |   Yes    | Change stage to Won (Validates documents).     | `lead.won`          |
+| **Qualified**   | Lost        |   Yes    | Lead marked lost.                              | `lead.lost`         |
+| **Negotiation** | Won         |   Yes    | Change stage to Won (Validates documents).     | `lead.won`          |
+| **Negotiation** | Lost        |   Yes    | Lead marked lost.                              | `lead.lost`         |
+| **Won**         | Converted   |   Yes    | Automated step: Admission creation success.    | _System Only_       |
+| **Converted**   | _Any Stage_ |    No    | Blocked. Converted leads are read-only.        | _None (Prohibited)_ |
+| **Lost**        | New         |   Yes    | Re-engage lost lead (Academic Coord override). | `lead.config`       |
 
 Every stage transition executed via the table above MUST write a record to the dedicated `LeadStageHistory` table, registering the old stage, new stage, performer UUID, timestamp, and optional lost reason values.
-

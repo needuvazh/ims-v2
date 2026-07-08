@@ -1,7 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { CreditCard, Printer, RefreshCw, Loader2, CheckCircle } from 'lucide-react';
+import {
+  CreditCard,
+  Printer,
+  RefreshCw,
+  Loader2,
+  CheckCircle,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -66,8 +72,13 @@ export function IdCardPanel({
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.messageEnglish || 'Failed to issue ID card.');
-      toast.success(isReissue ? 'ID card reissued successfully.' : 'ID card issued successfully.');
+      if (!res.ok)
+        throw new Error(data.messageEnglish || 'Failed to issue ID card.');
+      toast.success(
+        isReissue
+          ? 'ID card reissued successfully.'
+          : 'ID card issued successfully.',
+      );
       setShowForm(false);
       setReason('');
       setCardNumber('');
@@ -96,13 +107,21 @@ export function IdCardPanel({
           <div>
             {idCardIssued ? (
               <>
-                <p className="text-sm font-semibold text-slate-800">Card Issued</p>
-                <p className="text-xs font-mono text-slate-500">{idCardNumber}</p>
+                <p className="text-sm font-semibold text-slate-800">
+                  Card Issued
+                </p>
+                <p className="text-xs font-mono text-slate-500">
+                  {idCardNumber}
+                </p>
               </>
             ) : (
               <>
-                <p className="text-sm font-semibold text-slate-500">No Card Issued</p>
-                <p className="text-xs text-slate-400">Issue the first ID card below</p>
+                <p className="text-sm font-semibold text-slate-500">
+                  No Card Issued
+                </p>
+                <p className="text-xs text-slate-400">
+                  Issue the first ID card below
+                </p>
               </>
             )}
           </div>
@@ -156,7 +175,11 @@ export function IdCardPanel({
               type="text"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              placeholder={isReissue ? 'e.g. Lost original card' : 'First issuance on enrolment'}
+              placeholder={
+                isReissue
+                  ? 'e.g. Lost original card'
+                  : 'First issuance on enrolment'
+              }
               className="w-full h-9 rounded-lg border border-slate-200 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[color:var(--ims-brass)]"
             />
           </div>
@@ -176,7 +199,11 @@ export function IdCardPanel({
               disabled={loading}
               className="flex-1 h-8 rounded-lg bg-[color:var(--ims-brass)] text-white text-xs font-medium hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-1.5"
             >
-              {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : <CheckCircle className="h-3 w-3" />}
+              {loading ? (
+                <Loader2 className="h-3 w-3 animate-spin" />
+              ) : (
+                <CheckCircle className="h-3 w-3" />
+              )}
               {loading ? 'Saving…' : 'Save'}
             </button>
           </div>
@@ -186,7 +213,9 @@ export function IdCardPanel({
       {/* Print History */}
       {idCardHistory.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Issue History</p>
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            Issue History
+          </p>
           <div className="space-y-1.5">
             {idCardHistory.map((entry) => (
               <div
@@ -196,13 +225,17 @@ export function IdCardPanel({
                 <div>
                   <span
                     className={`font-semibold ${
-                      entry.eventType === 'Reissue' ? 'text-amber-600' : 'text-green-600'
+                      entry.eventType === 'Reissue'
+                        ? 'text-amber-600'
+                        : 'text-green-600'
                     }`}
                   >
                     {entry.eventType}
                   </span>
                   {entry.newIdCardNumber && (
-                    <span className="ml-2 font-mono text-slate-600">{entry.newIdCardNumber}</span>
+                    <span className="ml-2 font-mono text-slate-600">
+                      {entry.newIdCardNumber}
+                    </span>
                   )}
                   <p className="text-slate-400 mt-0.5">{entry.reason}</p>
                 </div>

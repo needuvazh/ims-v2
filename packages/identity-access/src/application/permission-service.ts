@@ -8,7 +8,10 @@ import {
   type UpdatePermissionCommand,
 } from '../domain/permission';
 import { createIamError } from '../errors/iam-errors';
-import type { IPermissionRepository, IAuditLogRepository } from '../domain/repositories';
+import type {
+  IPermissionRepository,
+  IAuditLogRepository,
+} from '../domain/repositories';
 
 export interface PermissionCommandContext {
   actorId: Uuid;
@@ -19,11 +22,17 @@ export interface PermissionCommandContext {
 export class PermissionService {
   constructor(
     private readonly permissionRepository: IPermissionRepository,
-    private readonly auditLogRepository: IAuditLogRepository
+    private readonly auditLogRepository: IAuditLogRepository,
   ) {}
 
-  private checkPermission(context: PermissionCommandContext, permission: string): void {
-    if (!context.actorPermissions || !context.actorPermissions.includes(permission)) {
+  private checkPermission(
+    context: PermissionCommandContext,
+    permission: string,
+  ): void {
+    if (
+      !context.actorPermissions ||
+      !context.actorPermissions.includes(permission)
+    ) {
       throw createIamError('IAM-AUTHZ-001');
     }
   }
@@ -31,7 +40,7 @@ export class PermissionService {
   async searchPermissions(
     type?: string,
     status?: string,
-    context?: any
+    context?: any,
   ): Promise<Permission[]> {
     if (context) {
       this.checkPermission(context, 'iam.permission.read');
@@ -39,19 +48,27 @@ export class PermissionService {
     return this.permissionRepository.search(type, status);
   }
 
-  async getPermissionById(id: Uuid, context: PermissionCommandContext): Promise<Permission> {
+  async getPermissionById(
+    id: Uuid,
+    context: PermissionCommandContext,
+  ): Promise<Permission> {
     this.checkPermission(context, 'iam.permission.read');
     const permission = await this.permissionRepository.findById(id);
     if (!permission) throw createIamError('IAM-SYS-001');
     return permission;
   }
 
-  async createPermission(command: CreatePermissionCommand, context: PermissionCommandContext): Promise<Permission> {
+  async createPermission(
+    command: CreatePermissionCommand,
+    context: PermissionCommandContext,
+  ): Promise<Permission> {
     this.checkPermission(context, 'iam.permission.create');
     const validated = createPermissionCommandSchema.parse(command);
     const now = new Date();
 
-    const existing = await this.permissionRepository.findByCode(validated.permissionCode);
+    const existing = await this.permissionRepository.findByCode(
+      validated.permissionCode,
+    );
     if (existing) {
       throw createIamError('IAM-VAL-003'); // already exists (reuse error code)
     }
@@ -97,7 +114,7 @@ export class PermissionService {
   async updatePermission(
     id: Uuid,
     command: UpdatePermissionCommand,
-    context: PermissionCommandContext
+    context: PermissionCommandContext,
   ): Promise<Permission> {
     this.checkPermission(context, 'iam.permission.update');
     const validated = updatePermissionCommandSchema.parse(command);
@@ -108,8 +125,10 @@ export class PermissionService {
 
     const old = { ...existing };
 
-    if (validated.permissionName !== undefined) existing.permissionName = validated.permissionName;
-    if (validated.description !== undefined) existing.description = validated.description;
+    if (validated.permissionName !== undefined)
+      existing.permissionName = validated.permissionName;
+    if (validated.description !== undefined)
+      existing.description = validated.description;
 
     existing.updatedAt = now;
     existing.updatedBy = context.actorId;
@@ -136,7 +155,10 @@ export class PermissionService {
     return updated;
   }
 
-  async archivePermission(id: Uuid, context: PermissionCommandContext): Promise<void> {
+  async archivePermission(
+    id: Uuid,
+    context: PermissionCommandContext,
+  ): Promise<void> {
     this.checkPermission(context, 'iam.permission.archive');
     const existing = await this.permissionRepository.findById(id);
     if (!existing) throw createIamError('IAM-SYS-001');

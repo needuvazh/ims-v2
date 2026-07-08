@@ -1,8 +1,15 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createStructuredLogger, getCurrentRequestContext, withServerActionObservability } from '@/lib/observability';
-import { buildIdentityActionFailure, extractFormValues } from '../../identity/form-errors';
+import {
+  createStructuredLogger,
+  getCurrentRequestContext,
+  withServerActionObservability,
+} from '@/lib/observability';
+import {
+  buildIdentityActionFailure,
+  extractFormValues,
+} from '../../identity/form-errors';
 import { getSession, assertPermission } from '@/lib/auth-guard';
 import { createUuid, type Uuid } from '@ims/shared-kernel';
 
@@ -10,7 +17,10 @@ async function getActorId(): Promise<Uuid> {
   const session = await getSession();
   return createUuid(session.userId);
 }
-import { createRoleCommandSchema, updateRoleCommandSchema } from '@ims/identity-access';
+import {
+  createRoleCommandSchema,
+  updateRoleCommandSchema,
+} from '@ims/identity-access';
 import { createRoleFormSchema, updateRoleFormSchema } from './schema';
 
 export type ActionResult = {
@@ -20,11 +30,15 @@ export type ActionResult = {
   values?: Record<string, string>;
 };
 
-export async function checkRoleCodeExistsAction(roleCode: string): Promise<boolean> {
+export async function checkRoleCodeExistsAction(
+  roleCode: string,
+): Promise<boolean> {
   try {
     const { roleService } = await import('@/lib/runtime');
     const rolesData = await roleService.listRoles();
-    const existing = rolesData.find((r: any) => r.roleCode.toUpperCase() === roleCode.trim().toUpperCase());
+    const existing = rolesData.find(
+      (r: any) => r.roleCode.toUpperCase() === roleCode.trim().toUpperCase(),
+    );
     return !!existing;
   } catch (err) {
     console.error('checkRoleCodeExistsAction failed:', err);
@@ -32,11 +46,15 @@ export async function checkRoleCodeExistsAction(roleCode: string): Promise<boole
   }
 }
 
-export async function checkRoleNameExistsAction(roleName: string): Promise<boolean> {
+export async function checkRoleNameExistsAction(
+  roleName: string,
+): Promise<boolean> {
   try {
     const { roleService } = await import('@/lib/runtime');
     const rolesData = await roleService.listRoles();
-    const existing = rolesData.find((r: any) => r.roleName.toLowerCase() === roleName.trim().toLowerCase());
+    const existing = rolesData.find(
+      (r: any) => r.roleName.toLowerCase() === roleName.trim().toLowerCase(),
+    );
     return !!existing;
   } catch (err) {
     console.error('checkRoleNameExistsAction failed:', err);
@@ -44,205 +62,300 @@ export async function checkRoleNameExistsAction(roleName: string): Promise<boole
   }
 }
 
-export async function createRoleAction(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
-  return withServerActionObservability(async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
-    const values = extractFormValues(formData);
+export async function createRoleAction(
+  _prev: ActionResult,
+  formData: FormData,
+): Promise<ActionResult> {
+  return withServerActionObservability(
+    async () => {
+      const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+      const values = extractFormValues(formData);
 
-    try {
-      await assertPermission('iam.role.create');
-      const actorId = await getActorId();
-      const { roleService } = await import('@/lib/runtime');
+      try {
+        await assertPermission('iam.role.create');
+        const actorId = await getActorId();
+        const { roleService } = await import('@/lib/runtime');
 
-      const validatedFields = createRoleFormSchema.parse({
-        roleCode: values.roleCode,
-        roleName: values.roleName,
-        description: values.description || null,
-        status: values.status,
-        effectiveStartDate: values.effectiveStartDate || null,
-        effectiveEndDate: values.effectiveEndDate || null,
-      });
+        const validatedFields = createRoleFormSchema.parse({
+          roleCode: values.roleCode,
+          roleName: values.roleName,
+          description: values.description || null,
+          status: values.status,
+          effectiveStartDate: values.effectiveStartDate || null,
+          effectiveEndDate: values.effectiveEndDate || null,
+        });
 
-      const parsed = createRoleCommandSchema.parse({
-        roleCode: validatedFields.roleCode,
-        roleName: validatedFields.roleName,
-        description: validatedFields.description,
-        status: validatedFields.status,
-        effectiveStartDate: validatedFields.effectiveStartDate ? new Date(validatedFields.effectiveStartDate as string) : new Date(),
-        effectiveEndDate: validatedFields.effectiveEndDate ? new Date(validatedFields.effectiveEndDate as string) : null,
-      });
+        const parsed = createRoleCommandSchema.parse({
+          roleCode: validatedFields.roleCode,
+          roleName: validatedFields.roleName,
+          description: validatedFields.description,
+          status: validatedFields.status,
+          effectiveStartDate: validatedFields.effectiveStartDate
+            ? new Date(validatedFields.effectiveStartDate as string)
+            : new Date(),
+          effectiveEndDate: validatedFields.effectiveEndDate
+            ? new Date(validatedFields.effectiveEndDate as string)
+            : null,
+        });
 
-      await roleService.createRole(parsed, { actorId });
-      
-      logger.info('iam.role.create.succeeded', { status: 'success', roleId: parsed.roleCode });
-      revalidatePath('/iam');
-      revalidatePath('/iam/roles');
-      return { success: true };
-    } catch (err) {
-      logger.warn('iam.role.create.failed', {
-        status: 'failed',
-        message: err instanceof Error ? err.message : 'unknown',
-        error: err instanceof Error ? err : undefined,
-      });
+        await roleService.createRole(parsed, { actorId });
 
-      return {
-        success: false,
-        ...buildIdentityActionFailure(err, 'Failed to create role.', values, {
-          domain: {
-            'IAM-VAL-003': 'roleCode',
-          },
-          prisma: {
-            roleCode: 'roleCode',
-            roleName: 'roleName',
-          },
-          prismaMessages: {
-            roleCode: 'Role Code already exists. Please use a different Role Code.',
-            roleName: 'Role Name already exists. Please use a different Role Name.',
-          },
-        }),
-      };
-    }
-  }, { action: 'iam.createRole', route: '/iam/roles/create' });
+        logger.info('iam.role.create.succeeded', {
+          status: 'success',
+          roleId: parsed.roleCode,
+        });
+        revalidatePath('/iam');
+        revalidatePath('/iam/roles');
+        return { success: true };
+      } catch (err) {
+        logger.warn('iam.role.create.failed', {
+          status: 'failed',
+          message: err instanceof Error ? err.message : 'unknown',
+          error: err instanceof Error ? err : undefined,
+        });
+
+        return {
+          success: false,
+          ...buildIdentityActionFailure(err, 'Failed to create role.', values, {
+            domain: {
+              'IAM-VAL-003': 'roleCode',
+            },
+            prisma: {
+              roleCode: 'roleCode',
+              roleName: 'roleName',
+            },
+            prismaMessages: {
+              roleCode:
+                'Role Code already exists. Please use a different Role Code.',
+              roleName:
+                'Role Name already exists. Please use a different Role Name.',
+            },
+          }),
+        };
+      }
+    },
+    { action: 'iam.createRole', route: '/iam/roles/create' },
+  );
 }
 
-export async function updateRoleAction(roleId: string, _prev: ActionResult, formData: FormData): Promise<ActionResult> {
-  return withServerActionObservability(async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
-    const values = extractFormValues(formData);
+export async function updateRoleAction(
+  roleId: string,
+  _prev: ActionResult,
+  formData: FormData,
+): Promise<ActionResult> {
+  return withServerActionObservability(
+    async () => {
+      const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+      const values = extractFormValues(formData);
 
-    try {
-      await assertPermission('iam.role.update');
-      const actorId = await getActorId();
-      const { roleService } = await import('@/lib/runtime');
+      try {
+        await assertPermission('iam.role.update');
+        const actorId = await getActorId();
+        const { roleService } = await import('@/lib/runtime');
 
-      const validatedFields = updateRoleFormSchema.parse({
-        roleName: values.roleName,
-        description: values.description || null,
-        status: values.status,
-        effectiveStartDate: values.effectiveStartDate || null,
-        effectiveEndDate: values.effectiveEndDate || null,
-      });
+        const validatedFields = updateRoleFormSchema.parse({
+          roleName: values.roleName,
+          description: values.description || null,
+          status: values.status,
+          effectiveStartDate: values.effectiveStartDate || null,
+          effectiveEndDate: values.effectiveEndDate || null,
+        });
 
-      const parsed = updateRoleCommandSchema.parse({
-        roleName: validatedFields.roleName,
-        description: validatedFields.description,
-        status: validatedFields.status,
-        effectiveStartDate: validatedFields.effectiveStartDate ? new Date(validatedFields.effectiveStartDate as string) : undefined,
-        effectiveEndDate: validatedFields.effectiveEndDate ? new Date(validatedFields.effectiveEndDate as string) : null,
-      });
+        const parsed = updateRoleCommandSchema.parse({
+          roleName: validatedFields.roleName,
+          description: validatedFields.description,
+          status: validatedFields.status,
+          effectiveStartDate: validatedFields.effectiveStartDate
+            ? new Date(validatedFields.effectiveStartDate as string)
+            : undefined,
+          effectiveEndDate: validatedFields.effectiveEndDate
+            ? new Date(validatedFields.effectiveEndDate as string)
+            : null,
+        });
 
-      await roleService.updateRole(roleId, parsed, { actorId });
-      
-      logger.info('iam.role.update.succeeded', { status: 'success', entityId: roleId });
-      revalidatePath('/iam');
-      revalidatePath('/iam/roles');
-      revalidatePath(`/iam/roles/${roleId}`);
-      return { success: true };
-    } catch (err) {
-      logger.warn('iam.role.update.failed', {
-        status: 'failed',
-        message: err instanceof Error ? err.message : 'unknown',
-        error: err instanceof Error ? err : undefined,
-      });
+        await roleService.updateRole(roleId, parsed, { actorId });
 
-      return {
-        success: false,
-        ...buildIdentityActionFailure(err, 'Failed to update role.', values, {
-          domain: {
-            'IAM-VAL-003': 'roleCode',
-          },
-          prisma: {
-            roleCode: 'roleCode',
-            roleName: 'roleName',
-          },
-          prismaMessages: {
-            roleCode: 'Role Code already exists. Please use a different Role Code.',
-            roleName: 'Role Name already exists. Please use a different Role Name.',
-          },
-        }),
-      };
-    }
-  }, { action: 'iam.updateRole', route: '/iam/roles/[id]/edit' });
+        logger.info('iam.role.update.succeeded', {
+          status: 'success',
+          entityId: roleId,
+        });
+        revalidatePath('/iam');
+        revalidatePath('/iam/roles');
+        revalidatePath(`/iam/roles/${roleId}`);
+        return { success: true };
+      } catch (err) {
+        logger.warn('iam.role.update.failed', {
+          status: 'failed',
+          message: err instanceof Error ? err.message : 'unknown',
+          error: err instanceof Error ? err : undefined,
+        });
+
+        return {
+          success: false,
+          ...buildIdentityActionFailure(err, 'Failed to update role.', values, {
+            domain: {
+              'IAM-VAL-003': 'roleCode',
+            },
+            prisma: {
+              roleCode: 'roleCode',
+              roleName: 'roleName',
+            },
+            prismaMessages: {
+              roleCode:
+                'Role Code already exists. Please use a different Role Code.',
+              roleName:
+                'Role Name already exists. Please use a different Role Name.',
+            },
+          }),
+        };
+      }
+    },
+    { action: 'iam.updateRole', route: '/iam/roles/[id]/edit' },
+  );
 }
 
 export async function archiveRoleAction(roleId: string): Promise<ActionResult> {
-  return withServerActionObservability(async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+  return withServerActionObservability(
+    async () => {
+      const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      await assertPermission('iam.role.archive');
-      const actorId = await getActorId();
-      const { roleService } = await import('@/lib/runtime');
+      try {
+        await assertPermission('iam.role.archive');
+        const actorId = await getActorId();
+        const { roleService } = await import('@/lib/runtime');
 
-      await roleService.archiveRole(roleId, { actorId });
-      
-      logger.info('iam.role.archive.succeeded', { status: 'success', entityId: roleId });
-      revalidatePath('/iam');
-      revalidatePath('/iam/roles');
-      revalidatePath(`/iam/roles/${roleId}`);
-      return { success: true };
-    } catch (err) {
-      logger.error('iam.role.archive.failed', { status: 'failed', message: 'Failed to archive role.', error: err as Error });
-      return { success: false, error: err instanceof Error ? err.message : 'Failed to archive role.' };
-    }
-  }, { action: 'iam.archiveRole', route: '/iam/roles/[id]' });
-}
+        await roleService.archiveRole(roleId, { actorId });
 
-export async function toggleRolePermissionAction(roleId: string, permissionId: string, assign: boolean): Promise<ActionResult> {
-  return withServerActionObservability(async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
-
-    try {
-      await assertPermission('iam.role.permission.assign');
-      const actorId = await getActorId();
-      const { roleService } = await import('@/lib/runtime');
-
-      if (assign) {
-        await roleService.assignPermission(roleId, permissionId, { actorId });
-      } else {
-        await roleService.removePermission(roleId, permissionId, { actorId });
+        logger.info('iam.role.archive.succeeded', {
+          status: 'success',
+          entityId: roleId,
+        });
+        revalidatePath('/iam');
+        revalidatePath('/iam/roles');
+        revalidatePath(`/iam/roles/${roleId}`);
+        return { success: true };
+      } catch (err) {
+        logger.error('iam.role.archive.failed', {
+          status: 'failed',
+          message: 'Failed to archive role.',
+          error: err as Error,
+        });
+        return {
+          success: false,
+          error: err instanceof Error ? err.message : 'Failed to archive role.',
+        };
       }
-      
-      logger.info('iam.role.permission.toggled', { status: 'success', roleId, permissionId });
-      revalidatePath('/iam/roles');
-      revalidatePath(`/iam/roles/${roleId}`);
-      revalidatePath(`/iam/roles/${roleId}/permissions`);
-      return { success: true };
-    } catch (err) {
-      logger.error('iam.role.permission.toggled.failed', { status: 'failed', message: 'Failed to update role permission.', error: err as Error });
-      return { success: false, error: err instanceof Error ? err.message : 'Failed to update role permission.' };
-    }
-  }, { action: 'iam.toggleRolePermission', route: '/iam/roles/[id]/permissions' });
+    },
+    { action: 'iam.archiveRole', route: '/iam/roles/[id]' },
+  );
 }
 
-export async function toggleRolePermissionsBulkAction(roleId: string, permissionIds: string[], assign: boolean): Promise<ActionResult> {
-  return withServerActionObservability(async () => {
-    const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+export async function toggleRolePermissionAction(
+  roleId: string,
+  permissionId: string,
+  assign: boolean,
+): Promise<ActionResult> {
+  return withServerActionObservability(
+    async () => {
+      const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
-    try {
-      await assertPermission('iam.role.permission.assign');
-      const actorId = await getActorId();
-      const { roleService } = await import('@/lib/runtime');
+      try {
+        await assertPermission('iam.role.permission.assign');
+        const actorId = await getActorId();
+        const { roleService } = await import('@/lib/runtime');
 
-      if (assign) {
-        for (const permissionId of permissionIds) {
+        if (assign) {
           await roleService.assignPermission(roleId, permissionId, { actorId });
-        }
-      } else {
-        for (const permissionId of permissionIds) {
+        } else {
           await roleService.removePermission(roleId, permissionId, { actorId });
         }
+
+        logger.info('iam.role.permission.toggled', {
+          status: 'success',
+          roleId,
+          permissionId,
+        });
+        revalidatePath('/iam/roles');
+        revalidatePath(`/iam/roles/${roleId}`);
+        revalidatePath(`/iam/roles/${roleId}/permissions`);
+        return { success: true };
+      } catch (err) {
+        logger.error('iam.role.permission.toggled.failed', {
+          status: 'failed',
+          message: 'Failed to update role permission.',
+          error: err as Error,
+        });
+        return {
+          success: false,
+          error:
+            err instanceof Error
+              ? err.message
+              : 'Failed to update role permission.',
+        };
       }
-      
-      logger.info('iam.role.permissions.bulk.toggled', { status: assign ? 'assigned' : 'removed', roleId, count: permissionIds.length });
-      revalidatePath('/iam/roles');
-      revalidatePath(`/iam/roles/${roleId}`);
-      revalidatePath(`/iam/roles/${roleId}/permissions`);
-      return { success: true };
-    } catch (err) {
-      logger.error('iam.role.permissions.bulk.toggled.failed', { status: 'failed', message: 'Failed to update role permissions bulk.', error: err as Error });
-      return { success: false, error: err instanceof Error ? err.message : 'Failed to update role permissions bulk.' };
-    }
-  }, { action: 'iam.toggleRolePermissionsBulk', route: '/iam/roles/[id]/permissions' });
+    },
+    {
+      action: 'iam.toggleRolePermission',
+      route: '/iam/roles/[id]/permissions',
+    },
+  );
 }
 
+export async function toggleRolePermissionsBulkAction(
+  roleId: string,
+  permissionIds: string[],
+  assign: boolean,
+): Promise<ActionResult> {
+  return withServerActionObservability(
+    async () => {
+      const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
+
+      try {
+        await assertPermission('iam.role.permission.assign');
+        const actorId = await getActorId();
+        const { roleService } = await import('@/lib/runtime');
+
+        if (assign) {
+          for (const permissionId of permissionIds) {
+            await roleService.assignPermission(roleId, permissionId, {
+              actorId,
+            });
+          }
+        } else {
+          for (const permissionId of permissionIds) {
+            await roleService.removePermission(roleId, permissionId, {
+              actorId,
+            });
+          }
+        }
+
+        logger.info('iam.role.permissions.bulk.toggled', {
+          status: assign ? 'assigned' : 'removed',
+          roleId,
+          count: permissionIds.length,
+        });
+        revalidatePath('/iam/roles');
+        revalidatePath(`/iam/roles/${roleId}`);
+        revalidatePath(`/iam/roles/${roleId}/permissions`);
+        return { success: true };
+      } catch (err) {
+        logger.error('iam.role.permissions.bulk.toggled.failed', {
+          status: 'failed',
+          message: 'Failed to update role permissions bulk.',
+          error: err as Error,
+        });
+        return {
+          success: false,
+          error:
+            err instanceof Error
+              ? err.message
+              : 'Failed to update role permissions bulk.',
+        };
+      }
+    },
+    {
+      action: 'iam.toggleRolePermissionsBulk',
+      route: '/iam/roles/[id]/permissions',
+    },
+  );
+}
