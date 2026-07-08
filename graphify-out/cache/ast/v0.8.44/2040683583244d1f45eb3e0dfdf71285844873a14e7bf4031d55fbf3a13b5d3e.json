@@ -1,1 +1,127 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_holiday_management_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L1"}, {"id": "holiday_management_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L1"}, {"id": "holiday_management_spec_requirement_holiday_definition", "label": "Requirement: Holiday Definition", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L3"}, {"id": "holiday_management_spec_scenario_creating_a_recurring_public_holiday", "label": "Scenario: Creating a recurring public holiday", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L7"}, {"id": "holiday_management_spec_requirement_holiday_conflict_interception", "label": "Requirement: Holiday Conflict Interception", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L12"}, {"id": "holiday_management_spec_scenario_blocking_session_on_eid", "label": "Scenario: Blocking session on Eid", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L16"}, {"id": "holiday_management_spec_requirement_holiday_impact_on_existing_schedules", "label": "Requirement: Holiday Impact on Existing Schedules", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L21"}, {"id": "holiday_management_spec_scenario_declaring_a_late_holiday", "label": "Scenario: Declaring a late holiday", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L25"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_holiday_management_spec_md", "target": "holiday_management_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "holiday_management_spec_added_requirements", "target": "holiday_management_spec_requirement_holiday_definition", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "holiday_management_spec_requirement_holiday_definition", "target": "holiday_management_spec_scenario_creating_a_recurring_public_holiday", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "holiday_management_spec_added_requirements", "target": "holiday_management_spec_requirement_holiday_conflict_interception", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L12", "weight": 1.0}, {"source": "holiday_management_spec_requirement_holiday_conflict_interception", "target": "holiday_management_spec_scenario_blocking_session_on_eid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L16", "weight": 1.0}, {"source": "holiday_management_spec_added_requirements", "target": "holiday_management_spec_requirement_holiday_impact_on_existing_schedules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L21", "weight": 1.0}, {"source": "holiday_management_spec_requirement_holiday_impact_on_existing_schedules", "target": "holiday_management_spec_scenario_declaring_a_late_holiday", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md", "source_location": "L25", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_holiday_management_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "holiday_management_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "holiday_management_spec_requirement_holiday_definition",
+      "label": "Requirement: Holiday Definition",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "holiday_management_spec_scenario_creating_a_recurring_public_holiday",
+      "label": "Scenario: Creating a recurring public holiday",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "holiday_management_spec_requirement_holiday_conflict_interception",
+      "label": "Requirement: Holiday Conflict Interception",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "holiday_management_spec_scenario_blocking_session_on_eid",
+      "label": "Scenario: Blocking session on Eid",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "holiday_management_spec_requirement_holiday_impact_on_existing_schedules",
+      "label": "Requirement: Holiday Impact on Existing Schedules",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "holiday_management_spec_scenario_declaring_a_late_holiday",
+      "label": "Scenario: Declaring a late holiday",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L25"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_04_implement_module_07_scheduling_specs_holiday_management_spec_md",
+      "target": "holiday_management_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "holiday_management_spec_added_requirements",
+      "target": "holiday_management_spec_requirement_holiday_definition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "holiday_management_spec_requirement_holiday_definition",
+      "target": "holiday_management_spec_scenario_creating_a_recurring_public_holiday",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "holiday_management_spec_added_requirements",
+      "target": "holiday_management_spec_requirement_holiday_conflict_interception",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "holiday_management_spec_requirement_holiday_conflict_interception",
+      "target": "holiday_management_spec_scenario_blocking_session_on_eid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "holiday_management_spec_added_requirements",
+      "target": "holiday_management_spec_requirement_holiday_impact_on_existing_schedules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "holiday_management_spec_requirement_holiday_impact_on_existing_schedules",
+      "target": "holiday_management_spec_scenario_declaring_a_late_holiday",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-04-implement-module-07-scheduling/specs/holiday-management/spec.md",
+      "source_location": "L25",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

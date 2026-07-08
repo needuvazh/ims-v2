@@ -109,6 +109,9 @@ importers:
       '@ims/identity-access':
         specifier: workspace:*
         version: link:../../packages/identity-access
+      '@ims/leave-management':
+        specifier: workspace:*
+        version: link:../../packages/leave-management
       '@ims/observability':
         specifier: workspace:*
         version: link:../../packages/observability
@@ -417,6 +420,27 @@ importers:
       '@types/ua-parser-js':
         specifier: ^0.7.39
         version: 0.7.39
+
+  packages/leave-management:
+    dependencies:
+      '@ims/audit':
+        specifier: workspace:*
+        version: link:../audit
+      '@ims/identity-access':
+        specifier: workspace:*
+        version: link:../identity-access
+      '@ims/shared-auth':
+        specifier: workspace:*
+        version: link:../shared-auth
+      '@ims/shared-kernel':
+        specifier: workspace:*
+        version: link:../shared-kernel
+      '@prisma/client':
+        specifier: ^6.19.3
+        version: 6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3)
+      zod:
+        specifier: ^3.23.0
+        version: 3.25.76
 
   packages/observability:
     dependencies:

@@ -1,1 +1,591 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_references_links_to_official_docs_md", "label": "links-to-official-docs.md", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L1"}, {"id": "references_links_to_official_docs_links_to_official_documentation", "label": "Links to Official Documentation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L1"}, {"id": "references_links_to_official_docs_react_hook_form", "label": "React Hook Form", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L7"}, {"id": "references_links_to_official_docs_core_documentation", "label": "Core Documentation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L9"}, {"id": "references_links_to_official_docs_hooks", "label": "Hooks", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L16"}, {"id": "references_links_to_official_docs_advanced_usage", "label": "Advanced Usage", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L26"}, {"id": "references_links_to_official_docs_examples", "label": "Examples", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L34"}, {"id": "references_links_to_official_docs_zod", "label": "Zod", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L41"}, {"id": "references_links_to_official_docs_core_documentation_43", "label": "Core Documentation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L43"}, {"id": "references_links_to_official_docs_schema_types", "label": "Schema Types", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L51"}, {"id": "references_links_to_official_docs_validation", "label": "Validation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L61"}, {"id": "references_links_to_official_docs_error_handling", "label": "Error Handling", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L68"}, {"id": "references_links_to_official_docs_typescript", "label": "TypeScript", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L74"}, {"id": "references_links_to_official_docs_hookform_resolvers", "label": "@hookform/resolvers", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L81"}, {"id": "references_links_to_official_docs_documentation", "label": "Documentation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L83"}, {"id": "references_links_to_official_docs_installation", "label": "Installation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L89"}, {"id": "references_links_to_official_docs_shadcn_ui", "label": "shadcn/ui", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L97"}, {"id": "references_links_to_official_docs_form_components", "label": "Form Components", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L99"}, {"id": "references_links_to_official_docs_installation_110", "label": "Installation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L110"}, {"id": "references_links_to_official_docs_typescript_118", "label": "TypeScript", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L118"}, {"id": "references_links_to_official_docs_documentation_120", "label": "Documentation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L120"}, {"id": "references_links_to_official_docs_accessibility_wcag", "label": "Accessibility (WCAG)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L128"}, {"id": "references_links_to_official_docs_guidelines", "label": "Guidelines", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L130"}, {"id": "references_links_to_official_docs_community_resources", "label": "Community Resources", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L138"}, {"id": "references_links_to_official_docs_react_hook_form_140", "label": "React Hook Form", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L140"}, {"id": "references_links_to_official_docs_zod_146", "label": "Zod", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L146"}, {"id": "references_links_to_official_docs_video_tutorials", "label": "Video Tutorials", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L154"}, {"id": "references_links_to_official_docs_react_hook_form_156", "label": "React Hook Form", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L156"}, {"id": "references_links_to_official_docs_zod_162", "label": "Zod", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L162"}, {"id": "references_links_to_official_docs_blog_posts_articles", "label": "Blog Posts & Articles", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L169"}, {"id": "references_links_to_official_docs_react_hook_form_171", "label": "React Hook Form", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L171"}, {"id": "references_links_to_official_docs_zod_176", "label": "Zod", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L176"}, {"id": "references_links_to_official_docs_package_managers", "label": "Package Managers", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L183"}, {"id": "references_links_to_official_docs_npm", "label": "npm", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L185"}, {"id": "references_links_to_official_docs_pnpm", "label": "pnpm", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L191"}, {"id": "references_links_to_official_docs_yarn", "label": "yarn", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L197"}, {"id": "references_links_to_official_docs_version_information", "label": "Version Information", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L205"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_references_links_to_official_docs_md", "target": "references_links_to_official_docs_links_to_official_documentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L1", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_react_hook_form", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L7", "weight": 1.0}, {"source": "references_links_to_official_docs_react_hook_form", "target": "references_links_to_official_docs_core_documentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L9", "weight": 1.0}, {"source": "references_links_to_official_docs_react_hook_form", "target": "references_links_to_official_docs_hooks", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L16", "weight": 1.0}, {"source": "references_links_to_official_docs_react_hook_form", "target": "references_links_to_official_docs_advanced_usage", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L26", "weight": 1.0}, {"source": "references_links_to_official_docs_react_hook_form", "target": "references_links_to_official_docs_examples", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L34", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_zod", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L41", "weight": 1.0}, {"source": "references_links_to_official_docs_zod", "target": "references_links_to_official_docs_core_documentation_43", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L43", "weight": 1.0}, {"source": "references_links_to_official_docs_zod", "target": "references_links_to_official_docs_schema_types", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L51", "weight": 1.0}, {"source": "references_links_to_official_docs_zod", "target": "references_links_to_official_docs_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L61", "weight": 1.0}, {"source": "references_links_to_official_docs_zod", "target": "references_links_to_official_docs_error_handling", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L68", "weight": 1.0}, {"source": "references_links_to_official_docs_zod", "target": "references_links_to_official_docs_typescript", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L74", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_hookform_resolvers", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L81", "weight": 1.0}, {"source": "references_links_to_official_docs_hookform_resolvers", "target": "references_links_to_official_docs_documentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L83", "weight": 1.0}, {"source": "references_links_to_official_docs_hookform_resolvers", "target": "references_links_to_official_docs_installation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L89", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_shadcn_ui", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L97", "weight": 1.0}, {"source": "references_links_to_official_docs_shadcn_ui", "target": "references_links_to_official_docs_form_components", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L99", "weight": 1.0}, {"source": "references_links_to_official_docs_shadcn_ui", "target": "references_links_to_official_docs_installation_110", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L110", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_typescript_118", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L118", "weight": 1.0}, {"source": "references_links_to_official_docs_typescript_118", "target": "references_links_to_official_docs_documentation_120", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L120", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_accessibility_wcag", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L128", "weight": 1.0}, {"source": "references_links_to_official_docs_accessibility_wcag", "target": "references_links_to_official_docs_guidelines", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L130", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_community_resources", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L138", "weight": 1.0}, {"source": "references_links_to_official_docs_community_resources", "target": "references_links_to_official_docs_react_hook_form_140", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L140", "weight": 1.0}, {"source": "references_links_to_official_docs_community_resources", "target": "references_links_to_official_docs_zod_146", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L146", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_video_tutorials", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L154", "weight": 1.0}, {"source": "references_links_to_official_docs_video_tutorials", "target": "references_links_to_official_docs_react_hook_form_156", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L156", "weight": 1.0}, {"source": "references_links_to_official_docs_video_tutorials", "target": "references_links_to_official_docs_zod_162", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L162", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_blog_posts_articles", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L169", "weight": 1.0}, {"source": "references_links_to_official_docs_blog_posts_articles", "target": "references_links_to_official_docs_react_hook_form_171", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L171", "weight": 1.0}, {"source": "references_links_to_official_docs_blog_posts_articles", "target": "references_links_to_official_docs_zod_176", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L176", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_package_managers", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L183", "weight": 1.0}, {"source": "references_links_to_official_docs_package_managers", "target": "references_links_to_official_docs_npm", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L185", "weight": 1.0}, {"source": "references_links_to_official_docs_package_managers", "target": "references_links_to_official_docs_pnpm", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L191", "weight": 1.0}, {"source": "references_links_to_official_docs_package_managers", "target": "references_links_to_official_docs_yarn", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L197", "weight": 1.0}, {"source": "references_links_to_official_docs_links_to_official_documentation", "target": "references_links_to_official_docs_version_information", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md", "source_location": "L205", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_references_links_to_official_docs_md",
+      "label": "links-to-official-docs.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "references_links_to_official_docs_links_to_official_documentation",
+      "label": "Links to Official Documentation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "references_links_to_official_docs_react_hook_form",
+      "label": "React Hook Form",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "references_links_to_official_docs_core_documentation",
+      "label": "Core Documentation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "references_links_to_official_docs_hooks",
+      "label": "Hooks",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "references_links_to_official_docs_advanced_usage",
+      "label": "Advanced Usage",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "references_links_to_official_docs_examples",
+      "label": "Examples",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "references_links_to_official_docs_zod",
+      "label": "Zod",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "references_links_to_official_docs_core_documentation_43",
+      "label": "Core Documentation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "references_links_to_official_docs_schema_types",
+      "label": "Schema Types",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "references_links_to_official_docs_validation",
+      "label": "Validation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "references_links_to_official_docs_error_handling",
+      "label": "Error Handling",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "references_links_to_official_docs_typescript",
+      "label": "TypeScript",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "references_links_to_official_docs_hookform_resolvers",
+      "label": "@hookform/resolvers",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L81"
+    },
+    {
+      "id": "references_links_to_official_docs_documentation",
+      "label": "Documentation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L83"
+    },
+    {
+      "id": "references_links_to_official_docs_installation",
+      "label": "Installation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L89"
+    },
+    {
+      "id": "references_links_to_official_docs_shadcn_ui",
+      "label": "shadcn/ui",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L97"
+    },
+    {
+      "id": "references_links_to_official_docs_form_components",
+      "label": "Form Components",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L99"
+    },
+    {
+      "id": "references_links_to_official_docs_installation_110",
+      "label": "Installation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L110"
+    },
+    {
+      "id": "references_links_to_official_docs_typescript_118",
+      "label": "TypeScript",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L118"
+    },
+    {
+      "id": "references_links_to_official_docs_documentation_120",
+      "label": "Documentation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L120"
+    },
+    {
+      "id": "references_links_to_official_docs_accessibility_wcag",
+      "label": "Accessibility (WCAG)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L128"
+    },
+    {
+      "id": "references_links_to_official_docs_guidelines",
+      "label": "Guidelines",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L130"
+    },
+    {
+      "id": "references_links_to_official_docs_community_resources",
+      "label": "Community Resources",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L138"
+    },
+    {
+      "id": "references_links_to_official_docs_react_hook_form_140",
+      "label": "React Hook Form",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L140"
+    },
+    {
+      "id": "references_links_to_official_docs_zod_146",
+      "label": "Zod",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L146"
+    },
+    {
+      "id": "references_links_to_official_docs_video_tutorials",
+      "label": "Video Tutorials",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L154"
+    },
+    {
+      "id": "references_links_to_official_docs_react_hook_form_156",
+      "label": "React Hook Form",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "references_links_to_official_docs_zod_162",
+      "label": "Zod",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L162"
+    },
+    {
+      "id": "references_links_to_official_docs_blog_posts_articles",
+      "label": "Blog Posts & Articles",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L169"
+    },
+    {
+      "id": "references_links_to_official_docs_react_hook_form_171",
+      "label": "React Hook Form",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L171"
+    },
+    {
+      "id": "references_links_to_official_docs_zod_176",
+      "label": "Zod",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L176"
+    },
+    {
+      "id": "references_links_to_official_docs_package_managers",
+      "label": "Package Managers",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L183"
+    },
+    {
+      "id": "references_links_to_official_docs_npm",
+      "label": "npm",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L185"
+    },
+    {
+      "id": "references_links_to_official_docs_pnpm",
+      "label": "pnpm",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L191"
+    },
+    {
+      "id": "references_links_to_official_docs_yarn",
+      "label": "yarn",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L197"
+    },
+    {
+      "id": "references_links_to_official_docs_version_information",
+      "label": "Version Information",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L205"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_references_links_to_official_docs_md",
+      "target": "references_links_to_official_docs_links_to_official_documentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_react_hook_form",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_react_hook_form",
+      "target": "references_links_to_official_docs_core_documentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_react_hook_form",
+      "target": "references_links_to_official_docs_hooks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_react_hook_form",
+      "target": "references_links_to_official_docs_advanced_usage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_react_hook_form",
+      "target": "references_links_to_official_docs_examples",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_zod",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_zod",
+      "target": "references_links_to_official_docs_core_documentation_43",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_zod",
+      "target": "references_links_to_official_docs_schema_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_zod",
+      "target": "references_links_to_official_docs_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_zod",
+      "target": "references_links_to_official_docs_error_handling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_zod",
+      "target": "references_links_to_official_docs_typescript",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_hookform_resolvers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_hookform_resolvers",
+      "target": "references_links_to_official_docs_documentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_hookform_resolvers",
+      "target": "references_links_to_official_docs_installation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_shadcn_ui",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L97",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_shadcn_ui",
+      "target": "references_links_to_official_docs_form_components",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_shadcn_ui",
+      "target": "references_links_to_official_docs_installation_110",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_typescript_118",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_typescript_118",
+      "target": "references_links_to_official_docs_documentation_120",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_accessibility_wcag",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_accessibility_wcag",
+      "target": "references_links_to_official_docs_guidelines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_community_resources",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_community_resources",
+      "target": "references_links_to_official_docs_react_hook_form_140",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_community_resources",
+      "target": "references_links_to_official_docs_zod_146",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_video_tutorials",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_video_tutorials",
+      "target": "references_links_to_official_docs_react_hook_form_156",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_video_tutorials",
+      "target": "references_links_to_official_docs_zod_162",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_blog_posts_articles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L169",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_blog_posts_articles",
+      "target": "references_links_to_official_docs_react_hook_form_171",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_blog_posts_articles",
+      "target": "references_links_to_official_docs_zod_176",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_package_managers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_package_managers",
+      "target": "references_links_to_official_docs_npm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_package_managers",
+      "target": "references_links_to_official_docs_pnpm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_package_managers",
+      "target": "references_links_to_official_docs_yarn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L197",
+      "weight": 1.0
+    },
+    {
+      "source": "references_links_to_official_docs_links_to_official_documentation",
+      "target": "references_links_to_official_docs_version_information",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/references/links-to-official-docs.md",
+      "source_location": "L205",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

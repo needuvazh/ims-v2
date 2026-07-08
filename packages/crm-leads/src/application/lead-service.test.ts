@@ -24,13 +24,11 @@ test('DateOfBirthSchema pre-processor should coerce dates correctly', () => {
 test('LeadService.createLead should reuse an existing Person record matching the mobile number', async () => {
   const mockPrisma = {
     user: {
-      findFirst: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'counselor-1',
-          status: 'Active',
-          isDeleted: false,
-        }),
+      findFirst: vi.fn().mockResolvedValue({
+        id: 'counselor-1',
+        status: 'Active',
+        isDeleted: false,
+      }),
     },
     person: {
       findFirst: vi
@@ -89,13 +87,11 @@ test('LeadService.createLead should reuse an existing Person record matching the
 test('LeadService.createLead should throw duplicate error if active duplicate exists and bypass is false', async () => {
   const mockPrisma = {
     user: {
-      findFirst: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'counselor-1',
-          status: 'Active',
-          isDeleted: false,
-        }),
+      findFirst: vi.fn().mockResolvedValue({
+        id: 'counselor-1',
+        status: 'Active',
+        isDeleted: false,
+      }),
     },
     lead: {
       findFirst: vi
@@ -132,13 +128,11 @@ test('LeadService.createLead should throw duplicate error if active duplicate ex
 test('LeadService.createLead should throw duplicate error if active duplicate exists with same nationalId', async () => {
   const mockPrisma = {
     user: {
-      findFirst: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'counselor-1',
-          status: 'Active',
-          isDeleted: false,
-        }),
+      findFirst: vi.fn().mockResolvedValue({
+        id: 'counselor-1',
+        status: 'Active',
+        isDeleted: false,
+      }),
     },
     lead: {
       findFirst: vi
@@ -185,13 +179,11 @@ test('LeadService.createLead should throw duplicate error if active duplicate ex
 test('LeadService.createLead should bypass duplicate check if bypassDuplicateBlock is true', async () => {
   const mockPrisma = {
     user: {
-      findFirst: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'counselor-1',
-          status: 'Active',
-          isDeleted: false,
-        }),
+      findFirst: vi.fn().mockResolvedValue({
+        id: 'counselor-1',
+        status: 'Active',
+        isDeleted: false,
+      }),
     },
     lead: {
       findFirst: vi

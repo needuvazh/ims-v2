@@ -1,1 +1,1023 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_md", "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_module_08_attendance_management", "label": "Module 08 \u2013 Attendance Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L3"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose_of_this_document", "label": "1. Purpose of This Document", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L20"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "label": "2. User Stories", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L40"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_001_view_sessions_requiring_attendance", "label": "US-M08-ATT-001 \u2013 View Sessions Requiring Attendance", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L42"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_002_initialize_attendance_session", "label": "US-M08-ATT-002 \u2013 Initialize Attendance Session", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L86"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_003_generate_attendance_roster_from_enrollment", "label": "US-M08-ATT-003 \u2013 Generate Attendance Roster from Enrollment", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L128"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_004_mark_individual_attendance", "label": "US-M08-ATT-004 \u2013 Mark Individual Attendance", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L169"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_005_bulk_mark_attendance", "label": "US-M08-ATT-005 \u2013 Bulk Mark Attendance", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L215"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_006_save_attendance_draft", "label": "US-M08-ATT-006 \u2013 Save Attendance Draft", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L254"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_007_submit_final_attendance", "label": "US-M08-ATT-007 \u2013 Submit Final Attendance", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L294"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_008_request_attendance_correction", "label": "US-M08-ATT-008 \u2013 Request Attendance Correction", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L336"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_009_approve_or_reject_attendance_correction", "label": "US-M08-ATT-009 \u2013 Approve or Reject Attendance Correction", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L376"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_010_view_attendance_percentage_and_low_attendance_alerts", "label": "US-M08-ATT-010 \u2013 View Attendance Percentage and Low Attendance Alerts", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L418"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_011_export_attendance_register", "label": "US-M08-ATT-011 \u2013 Export Attendance Register", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L455"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_012_audit_attendance_actions", "label": "US-M08-ATT-012 \u2013 Audit Attendance Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L494"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "label": "3. Use Cases", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L531"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_001_initialize_attendance_session", "label": "UC-M08-ATT-001 \u2013 Initialize Attendance Session", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L533"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_002_generate_attendance_roster", "label": "UC-M08-ATT-002 \u2013 Generate Attendance Roster", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L565"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_003_mark_individual_attendance_record", "label": "UC-M08-ATT-003 \u2013 Mark Individual Attendance Record", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L597"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_004_bulk_mark_attendance_records", "label": "UC-M08-ATT-004 \u2013 Bulk Mark Attendance Records", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L630"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_005_save_draft_attendance", "label": "UC-M08-ATT-005 \u2013 Save Draft Attendance", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L660"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_006_submit_final_attendance", "label": "UC-M08-ATT-006 \u2013 Submit Final Attendance", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L691"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_007_request_attendance_correction", "label": "UC-M08-ATT-007 \u2013 Request Attendance Correction", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L727"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_008_approve_attendance_correction", "label": "UC-M08-ATT-008 \u2013 Approve Attendance Correction", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L761"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_009_reject_attendance_correction", "label": "UC-M08-ATT-009 \u2013 Reject Attendance Correction", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L796"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_010_calculate_attendance_percentage", "label": "UC-M08-ATT-010 \u2013 Calculate Attendance Percentage", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L827"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_011_export_attendance_register", "label": "UC-M08-ATT-011 \u2013 Export Attendance Register", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L858"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_012_view_attendance_audit_trail", "label": "UC-M08-ATT-012 \u2013 View Attendance Audit Trail", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L887"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "label": "4. Business Workflows", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L913"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_m08_att_001_standard_manual_attendance_submission", "label": "4.1 Workflow WF-M08-ATT-001 \u2013 Standard Manual Attendance Submission", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L915"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_m08_att_002_draft_save_and_resume", "label": "4.2 Workflow WF-M08-ATT-002 \u2013 Draft Save and Resume", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L979"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_m08_att_003_attendance_correction_approval", "label": "4.3 Workflow WF-M08-ATT-003 \u2013 Attendance Correction Approval", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1014"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_m08_att_004_attendance_percentage_calculation", "label": "4.4 Workflow WF-M08-ATT-004 \u2013 Attendance Percentage Calculation", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1055"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_m08_att_005_low_attendance_monitoring", "label": "4.5 Workflow WF-M08-ATT-005 \u2013 Low Attendance Monitoring", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1110"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_m08_att_006_attendance_export", "label": "4.6 Workflow WF-M08-ATT-006 \u2013 Attendance Export", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1140"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines", "label": "5. State Machines", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1190"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine", "label": "5.1 AttendanceSession State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1202"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions", "label": "Status Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1204"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1216"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancesession", "label": "Transition Rules Matrix \u2013 AttendanceSession", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1236"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine", "label": "5.2 AttendanceRecord State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1255"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1257", "label": "Status Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1257"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1270", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1270"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancerecord", "label": "Transition Rules Matrix \u2013 AttendanceRecord", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1304"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine", "label": "5.3 AttendanceCorrection State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1320"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1322", "label": "Status Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1322"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1332", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1332"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancecorrection", "label": "Transition Rules Matrix \u2013 AttendanceCorrection", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1347"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine", "label": "5.4 AttendanceAlert State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1359"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1361", "label": "Status Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1361"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1371", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1371"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancealert", "label": "Transition Rules Matrix \u2013 AttendanceAlert", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1388"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine", "label": "5.5 AttendanceExportRequest State Machine", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1402"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1406", "label": "Status Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1406"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1417", "label": "Mermaid State Diagram", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1417"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendanceexportrequest", "label": "Transition Rules Matrix \u2013 AttendanceExportRequest", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1432"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_6_permission_summary_for_workflows_and_state_transitions", "label": "6. Permission Summary for Workflows and State Transitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1445"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_7_cross_workflow_validation_rules", "label": "7. Cross-Workflow Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1474"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_8_ui_workflow_screens_implied_by_this_part", "label": "8. UI Workflow Screens Implied by This Part", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1493"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_9_traceability_matrix", "label": "9. Traceability Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1509"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_10_acceptance_readiness_checklist", "label": "10. Acceptance Readiness Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1528"}, {"id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_11_implementation_notes_for_clean_architecture_alignment", "label": "11. Implementation Notes for Clean Architecture Alignment", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1550"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_md", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_module_08_attendance_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L3", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose_of_this_document", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L20", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L40", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_001_view_sessions_requiring_attendance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L42", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_002_initialize_attendance_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L86", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_003_generate_attendance_roster_from_enrollment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L128", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_004_mark_individual_attendance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L169", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_005_bulk_mark_attendance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L215", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_006_save_attendance_draft", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L254", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_007_submit_final_attendance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L294", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_008_request_attendance_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L336", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_009_approve_or_reject_attendance_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L376", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_010_view_attendance_percentage_and_low_attendance_alerts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L418", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_011_export_attendance_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L455", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_012_audit_attendance_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L494", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L531", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_001_initialize_attendance_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L533", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_002_generate_attendance_roster", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L565", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_003_mark_individual_attendance_record", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L597", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_004_bulk_mark_attendance_records", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L630", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_005_save_draft_attendance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L660", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_006_submit_final_attendance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L691", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_007_request_attendance_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L727", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_008_approve_attendance_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L761", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_009_reject_attendance_correction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L796", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_010_calculate_attendance_percentage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L827", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_011_export_attendance_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L858", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_012_view_attendance_audit_trail", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L887", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L913", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_m08_att_001_standard_manual_attendance_submission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L915", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_m08_att_002_draft_save_and_resume", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L979", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_m08_att_003_attendance_correction_approval", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1014", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_m08_att_004_attendance_percentage_calculation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1055", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_m08_att_005_low_attendance_monitoring", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1110", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_m08_att_006_attendance_export", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1140", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1190", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1202", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1204", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1216", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancesession", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1236", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1255", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1257", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1257", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1270", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1270", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancerecord", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1304", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1320", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1322", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1322", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1332", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1332", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancecorrection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1347", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1359", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1361", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1361", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1371", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1371", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancealert", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1388", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1402", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1406", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1406", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1417", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1417", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendanceexportrequest", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1432", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_6_permission_summary_for_workflows_and_state_transitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1445", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_7_cross_workflow_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1474", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_8_ui_workflow_screens_implied_by_this_part", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1493", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_9_traceability_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1509", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_10_acceptance_readiness_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1528", "weight": 1.0}, {"source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines", "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_11_implementation_notes_for_clean_architecture_alignment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md", "source_location": "L1550", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_md",
+      "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "label": "Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_module_08_attendance_management",
+      "label": "Module 08 \u2013 Attendance Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose_of_this_document",
+      "label": "1. Purpose of This Document",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "label": "2. User Stories",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_001_view_sessions_requiring_attendance",
+      "label": "US-M08-ATT-001 \u2013 View Sessions Requiring Attendance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_002_initialize_attendance_session",
+      "label": "US-M08-ATT-002 \u2013 Initialize Attendance Session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L86"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_003_generate_attendance_roster_from_enrollment",
+      "label": "US-M08-ATT-003 \u2013 Generate Attendance Roster from Enrollment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L128"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_004_mark_individual_attendance",
+      "label": "US-M08-ATT-004 \u2013 Mark Individual Attendance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L169"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_005_bulk_mark_attendance",
+      "label": "US-M08-ATT-005 \u2013 Bulk Mark Attendance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L215"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_006_save_attendance_draft",
+      "label": "US-M08-ATT-006 \u2013 Save Attendance Draft",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L254"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_007_submit_final_attendance",
+      "label": "US-M08-ATT-007 \u2013 Submit Final Attendance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L294"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_008_request_attendance_correction",
+      "label": "US-M08-ATT-008 \u2013 Request Attendance Correction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L336"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_009_approve_or_reject_attendance_correction",
+      "label": "US-M08-ATT-009 \u2013 Approve or Reject Attendance Correction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L376"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_010_view_attendance_percentage_and_low_attendance_alerts",
+      "label": "US-M08-ATT-010 \u2013 View Attendance Percentage and Low Attendance Alerts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L418"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_011_export_attendance_register",
+      "label": "US-M08-ATT-011 \u2013 Export Attendance Register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L455"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_012_audit_attendance_actions",
+      "label": "US-M08-ATT-012 \u2013 Audit Attendance Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L494"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "label": "3. Use Cases",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L531"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_001_initialize_attendance_session",
+      "label": "UC-M08-ATT-001 \u2013 Initialize Attendance Session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L533"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_002_generate_attendance_roster",
+      "label": "UC-M08-ATT-002 \u2013 Generate Attendance Roster",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L565"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_003_mark_individual_attendance_record",
+      "label": "UC-M08-ATT-003 \u2013 Mark Individual Attendance Record",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L597"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_004_bulk_mark_attendance_records",
+      "label": "UC-M08-ATT-004 \u2013 Bulk Mark Attendance Records",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L630"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_005_save_draft_attendance",
+      "label": "UC-M08-ATT-005 \u2013 Save Draft Attendance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L660"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_006_submit_final_attendance",
+      "label": "UC-M08-ATT-006 \u2013 Submit Final Attendance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L691"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_007_request_attendance_correction",
+      "label": "UC-M08-ATT-007 \u2013 Request Attendance Correction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L727"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_008_approve_attendance_correction",
+      "label": "UC-M08-ATT-008 \u2013 Approve Attendance Correction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L761"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_009_reject_attendance_correction",
+      "label": "UC-M08-ATT-009 \u2013 Reject Attendance Correction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L796"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_010_calculate_attendance_percentage",
+      "label": "UC-M08-ATT-010 \u2013 Calculate Attendance Percentage",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L827"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_011_export_attendance_register",
+      "label": "UC-M08-ATT-011 \u2013 Export Attendance Register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L858"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_012_view_attendance_audit_trail",
+      "label": "UC-M08-ATT-012 \u2013 View Attendance Audit Trail",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L887"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "label": "4. Business Workflows",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L913"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_m08_att_001_standard_manual_attendance_submission",
+      "label": "4.1 Workflow WF-M08-ATT-001 \u2013 Standard Manual Attendance Submission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L915"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_m08_att_002_draft_save_and_resume",
+      "label": "4.2 Workflow WF-M08-ATT-002 \u2013 Draft Save and Resume",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L979"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_m08_att_003_attendance_correction_approval",
+      "label": "4.3 Workflow WF-M08-ATT-003 \u2013 Attendance Correction Approval",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1014"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_m08_att_004_attendance_percentage_calculation",
+      "label": "4.4 Workflow WF-M08-ATT-004 \u2013 Attendance Percentage Calculation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1055"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_m08_att_005_low_attendance_monitoring",
+      "label": "4.5 Workflow WF-M08-ATT-005 \u2013 Low Attendance Monitoring",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1110"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_m08_att_006_attendance_export",
+      "label": "4.6 Workflow WF-M08-ATT-006 \u2013 Attendance Export",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1140"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines",
+      "label": "5. State Machines",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1190"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine",
+      "label": "5.1 AttendanceSession State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1202"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions",
+      "label": "Status Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1204"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1216"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancesession",
+      "label": "Transition Rules Matrix \u2013 AttendanceSession",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1236"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine",
+      "label": "5.2 AttendanceRecord State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1255"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1257",
+      "label": "Status Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1257"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1270",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1270"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancerecord",
+      "label": "Transition Rules Matrix \u2013 AttendanceRecord",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1304"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine",
+      "label": "5.3 AttendanceCorrection State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1320"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1322",
+      "label": "Status Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1322"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1332",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1332"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancecorrection",
+      "label": "Transition Rules Matrix \u2013 AttendanceCorrection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1347"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine",
+      "label": "5.4 AttendanceAlert State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1359"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1361",
+      "label": "Status Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1361"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1371",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1371"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancealert",
+      "label": "Transition Rules Matrix \u2013 AttendanceAlert",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1388"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine",
+      "label": "5.5 AttendanceExportRequest State Machine",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1402"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1406",
+      "label": "Status Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1406"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1417",
+      "label": "Mermaid State Diagram",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1417"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendanceexportrequest",
+      "label": "Transition Rules Matrix \u2013 AttendanceExportRequest",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1432"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_6_permission_summary_for_workflows_and_state_transitions",
+      "label": "6. Permission Summary for Workflows and State Transitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1445"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_7_cross_workflow_validation_rules",
+      "label": "7. Cross-Workflow Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1474"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_8_ui_workflow_screens_implied_by_this_part",
+      "label": "8. UI Workflow Screens Implied by This Part",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1493"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_9_traceability_matrix",
+      "label": "9. Traceability Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1509"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_10_acceptance_readiness_checklist",
+      "label": "10. Acceptance Readiness Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1528"
+    },
+    {
+      "id": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_11_implementation_notes_for_clean_architecture_alignment",
+      "label": "11. Implementation Notes for Clean Architecture Alignment",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1550"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_md",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_module_08_attendance_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_1_purpose_of_this_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_001_view_sessions_requiring_attendance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_002_initialize_attendance_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_003_generate_attendance_roster_from_enrollment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_004_mark_individual_attendance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L169",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_005_bulk_mark_attendance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L215",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_006_save_attendance_draft",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L254",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_007_submit_final_attendance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L294",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_008_request_attendance_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_009_approve_or_reject_attendance_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_010_view_attendance_percentage_and_low_attendance_alerts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L418",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_011_export_attendance_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L455",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_2_user_stories",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_us_m08_att_012_audit_attendance_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L494",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L531",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_001_initialize_attendance_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L533",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_002_generate_attendance_roster",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L565",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_003_mark_individual_attendance_record",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L597",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_004_bulk_mark_attendance_records",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L630",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_005_save_draft_attendance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L660",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_006_submit_final_attendance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L691",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_007_request_attendance_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L727",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_008_approve_attendance_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L761",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_009_reject_attendance_correction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L796",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_010_calculate_attendance_percentage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L827",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_011_export_attendance_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L858",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_3_use_cases",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_uc_m08_att_012_view_attendance_audit_trail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L887",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L913",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_1_workflow_wf_m08_att_001_standard_manual_attendance_submission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L915",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_2_workflow_wf_m08_att_002_draft_save_and_resume",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L979",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_3_workflow_wf_m08_att_003_attendance_correction_approval",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1014",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_4_workflow_wf_m08_att_004_attendance_percentage_calculation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1055",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_5_workflow_wf_m08_att_005_low_attendance_monitoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1110",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_business_workflows",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_4_6_workflow_wf_m08_att_006_attendance_export",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1140",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_state_machines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1190",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1202",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1204",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1216",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_1_attendancesession_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancesession",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1236",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1255",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1257",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1257",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1270",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1270",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_2_attendancerecord_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancerecord",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1304",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1320",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1322",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1322",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1332",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1332",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_3_attendancecorrection_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancecorrection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1347",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1359",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1361",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1361",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1371",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1371",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_4_attendancealert_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendancealert",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1388",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1402",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_status_definitions_1406",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1406",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_mermaid_state_diagram_1417",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1417",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_5_5_attendanceexportrequest_state_machine",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_transition_rules_matrix_attendanceexportrequest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1432",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_6_permission_summary_for_workflows_and_state_transitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1445",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_7_cross_workflow_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1474",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_8_ui_workflow_screens_implied_by_this_part",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1493",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_9_traceability_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1509",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_10_acceptance_readiness_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1528",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_part_2_user_stories_use_cases_workflows_state_machines",
+      "target": "module_08_attendance_management_part_2_user_stories_use_cases_workflows_state_machines_11_implementation_notes_for_clean_architecture_alignment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md",
+      "source_location": "L1550",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -298,7 +298,10 @@ export class LeadRepository implements ILeadRepository {
     }
 
     if (filters.nationalId) {
-      where.nationalId = { contains: filters.nationalId.trim(), mode: 'insensitive' };
+      where.nationalId = {
+        contains: filters.nationalId.trim(),
+        mode: 'insensitive',
+      };
     }
 
     if (filters.search) {

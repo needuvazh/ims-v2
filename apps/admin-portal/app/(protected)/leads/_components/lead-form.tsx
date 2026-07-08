@@ -419,8 +419,8 @@ export function LeadForm({
       {showDuplicateWarning && (
         <Alert variant="warning" title="Active Duplicate Lead Detected">
           <p className="mb-3 text-sm">
-            An active lead with this phone number, email address, or ID Number was already
-            created in this branch within the last 30 days.
+            An active lead with this phone number, email address, or ID Number
+            was already created in this branch within the last 30 days.
           </p>
           <div className="flex items-center gap-2 mt-2 border-t border-[color:var(--ims-warning-border)] pt-2">
             <input
@@ -643,7 +643,6 @@ export function LeadForm({
               <FormError>{errors.source?.message}</FormError>
             </FormField>
           </div>
-
         </div>
       </div>
 
@@ -682,7 +681,8 @@ export function LeadForm({
                   Existing student found
                 </p>
                 <h3 className="text-lg font-semibold text-[color:var(--ims-ink)]">
-                  {studentLookup.firstName || studentLookup.firstNameMasked} {studentLookup.lastName || studentLookup.lastNameMasked}
+                  {studentLookup.firstName || studentLookup.firstNameMasked}{' '}
+                  {studentLookup.lastName || studentLookup.lastNameMasked}
                 </h3>
                 <p className="text-sm text-[color:var(--ims-muted)]">
                   This contact already has a student profile. Review the record
@@ -732,7 +732,9 @@ export function LeadForm({
                 ID Number
               </p>
               <p className="mt-1 text-sm text-[color:var(--ims-ink)]">
-                {studentLookup.nationalId || studentLookup.maskedNationalId || 'N/A'}
+                {studentLookup.nationalId ||
+                  studentLookup.maskedNationalId ||
+                  'N/A'}
               </p>
             </div>
             <div className="rounded-xl border border-[color:var(--ims-border)] bg-white p-3">
@@ -799,17 +801,28 @@ export function LeadForm({
               <div className="flex justify-between items-start">
                 <div>
                   <h4 className="font-semibold text-slate-700">
-                    {pendingStudentLookup.firstName || pendingStudentLookup.firstNameMasked}{' '}
-                    {pendingStudentLookup.lastName || pendingStudentLookup.lastNameMasked}
+                    {pendingStudentLookup.firstName ||
+                      pendingStudentLookup.firstNameMasked}{' '}
+                    {pendingStudentLookup.lastName ||
+                      pendingStudentLookup.lastNameMasked}
                   </h4>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Email: {pendingStudentLookup.email || pendingStudentLookup.maskedEmail || 'N/A'}
+                    Email:{' '}
+                    {pendingStudentLookup.email ||
+                      pendingStudentLookup.maskedEmail ||
+                      'N/A'}
                   </p>
                   <p className="text-xs text-slate-500">
-                    Mobile: {pendingStudentLookup.mobile || pendingStudentLookup.maskedMobile || 'N/A'}
+                    Mobile:{' '}
+                    {pendingStudentLookup.mobile ||
+                      pendingStudentLookup.maskedMobile ||
+                      'N/A'}
                   </p>
                   <p className="text-xs text-slate-500">
-                    ID Number: {pendingStudentLookup.nationalId || pendingStudentLookup.maskedNationalId || 'N/A'}
+                    ID Number:{' '}
+                    {pendingStudentLookup.nationalId ||
+                      pendingStudentLookup.maskedNationalId ||
+                      'N/A'}
                   </p>
                 </div>
                 {pendingStudentLookup.studentNumber && (

@@ -249,7 +249,14 @@ export async function loadCalendarDetail(
       )
     : null;
 
-  return { calendar, branches, selectedBranchId, resolved };
+  const holidays = await schedulingCalendarService.listHolidays({
+    businessCalendarId: calendarId,
+  });
+  holidays.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+
+  return { calendar, branches, selectedBranchId, resolved, holidays };
 }
 
 export async function loadVenueBlocksPageData(searchParams: {
@@ -319,8 +326,24 @@ export async function loadVenueBlocksPageData(searchParams: {
       : {}),
   };
 
-  const [totalCount, venueBlocks] = await Promise.all([
+  const kpiWhere = {
+    isDeleted: false,
+    ...(globalScope || allowedBranchIds.length === 0
+      ? {}
+      : { branchId: { in: allowedBranchIds } }),
+  };
+
+  const [
+    totalCount,
+    activeCount,
+    cancelledCount,
+    branchWideCount,
+    venueBlocks,
+  ] = await Promise.all([
     prisma.venueBlock.count({ where }),
+    prisma.venueBlock.count({ where: { ...kpiWhere, status: 'Active' } }),
+    prisma.venueBlock.count({ where: { ...kpiWhere, status: 'Cancelled' } }),
+    prisma.venueBlock.count({ where: { ...kpiWhere, classroomId: null } }),
     prisma.venueBlock.findMany({
       where,
       include: {
@@ -347,6 +370,12 @@ export async function loadVenueBlocksPageData(searchParams: {
     limit,
     totalCount,
     totalPages: Math.max(1, Math.ceil(totalCount / limit)),
+    kpis: {
+      total: activeCount + cancelledCount, // total matching active + cancelled scoped to branch
+      active: activeCount,
+      cancelled: cancelledCount,
+      branchWide: branchWideCount,
+    },
   };
 }
 

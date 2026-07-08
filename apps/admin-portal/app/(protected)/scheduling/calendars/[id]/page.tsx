@@ -34,6 +34,8 @@ import {
   AdminDetailPageLayout,
 } from '@ims/shared-ui';
 import { BranchOverrideForm } from '../../_components/branch-override-form';
+import { HolidayManager } from '../../_components/holiday-manager';
+import { WorkingDaysCalendar } from '../../_components/working-days-calendar';
 import { loadCalendarDetail } from '../../data';
 
 export const metadata = { title: 'Calendar Details | IMS Admin' };
@@ -59,7 +61,7 @@ export default async function CalendarDetailPage(props: {
     props.params,
     props.searchParams,
   ]);
-  const { calendar, branches, selectedBranchId, resolved } =
+  const { calendar, branches, selectedBranchId, resolved, holidays } =
     await loadCalendarDetail(id, searchParams.branchId);
   const branchLabel =
     branches.find((branch) => branch.id === selectedBranchId)?.name ??
@@ -78,15 +80,9 @@ export default async function CalendarDetailPage(props: {
       <PageHeader
         eyebrow="Scheduling Baseline"
         title={calendar.name}
-        description="Institute baseline rules. Select a branch below to view the resolved operating pattern with any local overrides applied."
         breadcrumbs={
           <Breadcrumbs
             items={[
-              {
-                label: 'Dashboard',
-                href: '/dashboard',
-                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
-              },
               {
                 label: 'Scheduling',
                 href: '/scheduling',
@@ -115,47 +111,54 @@ export default async function CalendarDetailPage(props: {
         }
       />
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-        <Card className="shadow-none">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+        <Card className="border-[color:var(--ims-border)] bg-white hover:shadow-sm transition-shadow">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest font-bold">
+            <CardDescription className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
               Code
             </CardDescription>
-            <CardTitle className="text-lg font-mono tracking-tight">
+            <CardTitle className="text-base font-mono tracking-tight text-indigo-600">
               {calendar.code}
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="shadow-none">
+        <Card className="border-[color:var(--ims-border)] bg-white hover:shadow-sm transition-shadow">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest font-bold">
+            <CardDescription className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
               Lifecycle
             </CardDescription>
-            <CardTitle>
+            <CardTitle className="mt-1">
               <Badge
                 variant={calendar.status === 'Active' ? 'success' : 'muted'}
-                className="px-3 py-1 text-sm"
+                className="px-2.5 py-0.5 text-xs font-bold"
               >
                 {calendar.status}
               </Badge>
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="shadow-none">
+        <Card className="border-[color:var(--ims-border)] bg-white hover:shadow-sm transition-shadow">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest font-bold">
+            <CardDescription className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
               Academic Year
             </CardDescription>
-            <CardTitle className="text-lg">{calendar.year}</CardTitle>
+            <CardTitle className="text-base font-bold text-slate-800">
+              {calendar.year}
+            </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="shadow-none">
+        <Card className="border-[color:var(--ims-border)] bg-white hover:shadow-sm transition-shadow">
           <CardHeader className="pb-2">
-            <CardDescription className="text-xs uppercase tracking-widest font-bold">
+            <CardDescription className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
               Timezone
             </CardDescription>
-            <CardTitle className="text-lg text-[color:var(--ims-muted)] flex items-center gap-2">
-              Asia/Muscat <Info className="h-4 w-4" />
+            <CardTitle className="text-base font-bold text-slate-700 flex items-center gap-1.5">
+              Asia/Muscat
+              <SimpleTooltip content="Fixed timezone for ASTI operations">
+                <span className="p-0.5 rounded-full bg-slate-100 text-slate-400 hover:text-slate-600 cursor-help">
+                  <Info className="h-3.5 w-3.5" />
+                </span>
+              </SimpleTooltip>
             </CardTitle>
           </CardHeader>
         </Card>
@@ -216,28 +219,30 @@ export default async function CalendarDetailPage(props: {
                             {day.dayOfWeek}
                           </TableCell>
                           <TableCell className="text-sm font-medium">
-                            <span
-                              className={
-                                day.isOpen
-                                  ? 'text-[color:var(--ims-ink)]'
-                                  : 'text-[color:var(--ims-error)]'
-                              }
-                            >
-                              {formatDayHours(day)}
-                            </span>
+                            {day.isOpen ? (
+                              <span className="inline-flex items-center gap-1.5 text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100 text-xs font-semibold">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                {formatDayHours(day)}
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1.5 text-rose-700 bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-100 text-xs font-semibold">
+                                <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
+                                Closed
+                              </span>
+                            )}
                           </TableCell>
                           <TableCell className="text-right px-card-p">
                             {isOverridden ? (
                               <Badge
                                 variant="success"
-                                className="bg-green-50 text-green-700 border-green-200"
+                                className="bg-emerald-50 text-emerald-700 border-emerald-200 font-bold"
                               >
                                 Local Override
                               </Badge>
                             ) : (
                               <Badge
                                 variant="muted"
-                                className="opacity-70 tracking-tight text-[10px] uppercase"
+                                className="opacity-70 tracking-tight text-[10px] uppercase font-bold"
                               >
                                 Inherited
                               </Badge>
@@ -259,6 +264,21 @@ export default async function CalendarDetailPage(props: {
               )}
             </CardContent>
           </Card>
+
+          {resolved && (
+            <WorkingDaysCalendar
+              resolvedOperatingDays={resolved.resolvedOperatingDays}
+              holidays={holidays}
+              selectedBranchId={selectedBranchId}
+              branchLabel={branchLabel}
+            />
+          )}
+
+          <HolidayManager
+            calendarId={calendar.id}
+            holidays={holidays}
+            branches={branches}
+          />
 
           <Card className="border-[color:var(--ims-border)]">
             <CardHeader>
@@ -309,17 +329,22 @@ export default async function CalendarDetailPage(props: {
                     <Link
                       key={b.id}
                       href={`/scheduling/calendars/${calendar.id}?branchId=${b.id}`}
-                      className={`flex items-center justify-between p-3 rounded-xl border transition-all text-sm font-medium ${
+                      className={`flex items-center justify-between p-3 rounded-xl border transition-all text-xs font-semibold ${
                         selectedBranchId === b.id
-                          ? 'border-[color:var(--ims-brass)] bg-[color:var(--ims-accent-soft)] text-[color:var(--ims-ink)]'
-                          : 'border-[color:var(--ims-border)] hover:bg-[color:var(--ims-background)] text-[color:var(--ims-muted)]'
+                          ? 'border-indigo-200 bg-indigo-50/40 text-indigo-700 shadow-sm'
+                          : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50 text-slate-600'
                       }`}
                     >
-                      {b.name}
+                      <span className="flex items-center gap-2">
+                        <MapPin
+                          className={`h-4 w-4 ${selectedBranchId === b.id ? 'text-indigo-600' : 'text-slate-400'}`}
+                        />
+                        {b.name}
+                      </span>
                       {selectedBranchId === b.id && (
                         <Badge
                           variant="success"
-                          className="h-2 w-2 rounded-full p-0"
+                          className="h-2 w-2 rounded-full p-0 bg-indigo-600 border-none"
                         />
                       )}
                     </Link>

@@ -77,9 +77,15 @@ export function BranchOverrideForm({
     defaultBranchId ?? branches[0]?.id ?? '',
   );
   const [year, setYear] = useState(String(calendar.year));
-  const [effectiveStartDate, setEffectiveStartDate] = useState(
-    calendar.effectiveStartDate.toISOString().split('T')[0],
-  );
+  const [effectiveStartDate, setEffectiveStartDate] = useState(() => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${y}-${m}-${d}`;
+    const calStartStr = calendar.effectiveStartDate.toISOString().split('T')[0];
+    return calStartStr > todayStr ? calStartStr : todayStr;
+  });
   const [effectiveEndDate, setEffectiveEndDate] = useState(
     calendar.effectiveEndDate
       ? calendar.effectiveEndDate.toISOString().split('T')[0]
@@ -102,6 +108,24 @@ export function BranchOverrideForm({
       'Selected branch',
     [branchId, branches],
   );
+
+  const todayLocalString = useMemo(() => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }, []);
+
+  const endMinDate = useMemo(() => {
+    if (!effectiveStartDate) return undefined;
+    const startDateObj = new Date(effectiveStartDate);
+    startDateObj.setDate(startDateObj.getDate() + 1);
+    const y = startDateObj.getFullYear();
+    const m = String(startDateObj.getMonth() + 1).padStart(2, '0');
+    const d = String(startDateObj.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }, [effectiveStartDate]);
 
   const updateDay = (index: number, patch: Partial<OverrideDayState>) => {
     setDays((current) => {
@@ -224,12 +248,14 @@ export function BranchOverrideForm({
                   value={effectiveStartDate}
                   onChange={(e) => setEffectiveStartDate(e.target.value)}
                   required
+                  min={todayLocalString}
                 />
                 <Input
                   label="End"
                   type="date"
                   value={effectiveEndDate}
                   onChange={(e) => setEffectiveEndDate(e.target.value)}
+                  min={endMinDate}
                 />
               </div>
             </div>

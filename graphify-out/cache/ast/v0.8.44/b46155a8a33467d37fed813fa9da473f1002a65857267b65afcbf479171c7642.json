@@ -1,1 +1,399 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_md", "label": "Module 07_ Scheduling, Calendar & Holiday Management.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "label": "Module 07: Scheduling, Calendar & Holiday Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_document_control", "label": "Document Control", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L3"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_1_purpose_and_objective", "label": "1. Purpose and Objective", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L18"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_core_objectives", "label": "Core Objectives", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L26"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_2_business_goals", "label": "2. Business Goals", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L37"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope", "label": "3. Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L52"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_1_included_scope", "label": "3.1 Included Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L54"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_2_excluded_scope", "label": "3.2 Excluded Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L87"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors", "label": "4. Stakeholders and Actors", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L107"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_1_human_actors", "label": "4.1 Human Actors", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L109"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_2_system_actors", "label": "4.2 System Actors", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L125"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_5_functional_overview", "label": "5. Functional Overview", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L139"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_6_business_capabilities_and_user_types", "label": "6. Business Capabilities and User Types", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L214"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_7_functional_requirements_checklist", "label": "7. Functional Requirements Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L234"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_8_permission_model_overview", "label": "8. Permission Model Overview", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L279"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_branch_access_rules", "label": "Branch Access Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L311"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_9_security_and_audit_requirements_summary", "label": "9. Security and Audit Requirements Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L320"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_10_non_functional_requirements_summary", "label": "10. Non-Functional Requirements Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L337"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_11_module_data_ownership_summary", "label": "11. Module Data Ownership Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L357"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields", "label": "12. Baseline Data Fields", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L372"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_1_businesscalendar", "label": "12.1 BusinessCalendar", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L374"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_2_holiday", "label": "12.2 Holiday", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L399"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_3_schedulesession", "label": "12.3 ScheduleSession", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L422"}, {"id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_4_venueblock", "label": "12.4 VenueBlock", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L456"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_md", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L1", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_document_control", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L3", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_1_purpose_and_objective", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L18", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_1_purpose_and_objective", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_core_objectives", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L26", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_2_business_goals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L37", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L52", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_1_included_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L54", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_2_excluded_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L87", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L107", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_1_human_actors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L109", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_2_system_actors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L125", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_5_functional_overview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L139", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_6_business_capabilities_and_user_types", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L214", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_7_functional_requirements_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L234", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_8_permission_model_overview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L279", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_8_permission_model_overview", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_branch_access_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L311", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_9_security_and_audit_requirements_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L320", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_10_non_functional_requirements_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L337", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_11_module_data_ownership_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L357", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L372", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_1_businesscalendar", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L374", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_2_holiday", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L399", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_3_schedulesession", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L422", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields", "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_4_venueblock", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md", "source_location": "L456", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_md",
+      "label": "Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "label": "Module 07: Scheduling, Calendar & Holiday Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_document_control",
+      "label": "Document Control",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_1_purpose_and_objective",
+      "label": "1. Purpose and Objective",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_core_objectives",
+      "label": "Core Objectives",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_2_business_goals",
+      "label": "2. Business Goals",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L37"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope",
+      "label": "3. Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L52"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_1_included_scope",
+      "label": "3.1 Included Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L54"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_2_excluded_scope",
+      "label": "3.2 Excluded Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L87"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors",
+      "label": "4. Stakeholders and Actors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_1_human_actors",
+      "label": "4.1 Human Actors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L109"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_2_system_actors",
+      "label": "4.2 System Actors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L125"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_5_functional_overview",
+      "label": "5. Functional Overview",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L139"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_6_business_capabilities_and_user_types",
+      "label": "6. Business Capabilities and User Types",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L214"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_7_functional_requirements_checklist",
+      "label": "7. Functional Requirements Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L234"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_8_permission_model_overview",
+      "label": "8. Permission Model Overview",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L279"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_branch_access_rules",
+      "label": "Branch Access Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L311"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_9_security_and_audit_requirements_summary",
+      "label": "9. Security and Audit Requirements Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L320"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_10_non_functional_requirements_summary",
+      "label": "10. Non-Functional Requirements Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L337"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_11_module_data_ownership_summary",
+      "label": "11. Module Data Ownership Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L357"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields",
+      "label": "12. Baseline Data Fields",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L372"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_1_businesscalendar",
+      "label": "12.1 BusinessCalendar",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L374"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_2_holiday",
+      "label": "12.2 Holiday",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L399"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_3_schedulesession",
+      "label": "12.3 ScheduleSession",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L422"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_4_venueblock",
+      "label": "12.4 VenueBlock",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L456"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_md",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_document_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_1_purpose_and_objective",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_1_purpose_and_objective",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_core_objectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_2_business_goals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_1_included_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_scope",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_3_2_excluded_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_1_human_actors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_stakeholders_and_actors",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_4_2_system_actors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_5_functional_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_6_business_capabilities_and_user_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_7_functional_requirements_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_8_permission_model_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L279",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_8_permission_model_overview",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_branch_access_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_9_security_and_audit_requirements_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L320",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_10_non_functional_requirements_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_11_module_data_ownership_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L357",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_1_businesscalendar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L374",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_2_holiday",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_3_schedulesession",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L422",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_baseline_data_fields",
+      "target": "module_07_scheduling_calendar_holiday_management_module_07_scheduling_calendar_holiday_management_12_4_venueblock",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Module 07_ Scheduling, Calendar & Holiday Management.md",
+      "source_location": "L456",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

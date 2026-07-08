@@ -15,7 +15,7 @@ The system SHALL provide a dedicated top-level "Scheduling" menu under the "Oper
 - **WHEN** an administrator logs in with the appropriate scheduling permissions
 - **THEN** the system SHALL display a "Scheduling" navigation group containing:
   - Scheduling Dashboard (`/scheduling`)
-  - Calendar Ledger (`/scheduling/calendars`)
+  - Calendar (`/scheduling/calendars`)
   - Venue Management (`/scheduling/venues`)
   - Conflict Dashboard (`/scheduling/conflicts`)
 

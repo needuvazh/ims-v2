@@ -1,1 +1,175 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_student_directory_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L1"}, {"id": "student_directory_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L1"}, {"id": "student_directory_spec_requirement_branch_scoped_student_directory", "label": "Requirement: Branch-Scoped Student Directory", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L3"}, {"id": "student_directory_spec_scenario_list_student_profiles_for_the_active_branch", "label": "Scenario: List student profiles for the active branch", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L7"}, {"id": "student_directory_spec_scenario_filter_the_directory_by_search_and_status", "label": "Scenario: Filter the directory by search and status", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L12"}, {"id": "student_directory_spec_requirement_student_directory_actions", "label": "Requirement: Student Directory Actions", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L19"}, {"id": "student_directory_spec_scenario_open_student_profile_or_admission_from_the_directory", "label": "Scenario: Open student profile or admission from the directory", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L23"}, {"id": "student_directory_spec_scenario_hide_unauthorized_actions", "label": "Scenario: Hide unauthorized actions", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L28"}, {"id": "student_directory_spec_requirement_student_directory_empty_and_loading_states", "label": "Requirement: Student Directory Empty and Loading States", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L35"}, {"id": "student_directory_spec_scenario_show_loading_state", "label": "Scenario: Show loading state", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L39"}, {"id": "student_directory_spec_scenario_show_empty_state", "label": "Scenario: Show empty state", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L44"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_student_directory_spec_md", "target": "student_directory_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "student_directory_spec_added_requirements", "target": "student_directory_spec_requirement_branch_scoped_student_directory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "student_directory_spec_requirement_branch_scoped_student_directory", "target": "student_directory_spec_scenario_list_student_profiles_for_the_active_branch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "student_directory_spec_requirement_branch_scoped_student_directory", "target": "student_directory_spec_scenario_filter_the_directory_by_search_and_status", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L12", "weight": 1.0}, {"source": "student_directory_spec_added_requirements", "target": "student_directory_spec_requirement_student_directory_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L19", "weight": 1.0}, {"source": "student_directory_spec_requirement_student_directory_actions", "target": "student_directory_spec_scenario_open_student_profile_or_admission_from_the_directory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L23", "weight": 1.0}, {"source": "student_directory_spec_requirement_student_directory_actions", "target": "student_directory_spec_scenario_hide_unauthorized_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L28", "weight": 1.0}, {"source": "student_directory_spec_added_requirements", "target": "student_directory_spec_requirement_student_directory_empty_and_loading_states", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L35", "weight": 1.0}, {"source": "student_directory_spec_requirement_student_directory_empty_and_loading_states", "target": "student_directory_spec_scenario_show_loading_state", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L39", "weight": 1.0}, {"source": "student_directory_spec_requirement_student_directory_empty_and_loading_states", "target": "student_directory_spec_scenario_show_empty_state", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md", "source_location": "L44", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_student_directory_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_directory_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "student_directory_spec_requirement_branch_scoped_student_directory",
+      "label": "Requirement: Branch-Scoped Student Directory",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "student_directory_spec_scenario_list_student_profiles_for_the_active_branch",
+      "label": "Scenario: List student profiles for the active branch",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "student_directory_spec_scenario_filter_the_directory_by_search_and_status",
+      "label": "Scenario: Filter the directory by search and status",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "student_directory_spec_requirement_student_directory_actions",
+      "label": "Requirement: Student Directory Actions",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "student_directory_spec_scenario_open_student_profile_or_admission_from_the_directory",
+      "label": "Scenario: Open student profile or admission from the directory",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "student_directory_spec_scenario_hide_unauthorized_actions",
+      "label": "Scenario: Hide unauthorized actions",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "student_directory_spec_requirement_student_directory_empty_and_loading_states",
+      "label": "Requirement: Student Directory Empty and Loading States",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "student_directory_spec_scenario_show_loading_state",
+      "label": "Scenario: Show loading state",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "student_directory_spec_scenario_show_empty_state",
+      "label": "Scenario: Show empty state",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L44"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_03_module_04_admission_enrollment_specs_student_directory_spec_md",
+      "target": "student_directory_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_added_requirements",
+      "target": "student_directory_spec_requirement_branch_scoped_student_directory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_requirement_branch_scoped_student_directory",
+      "target": "student_directory_spec_scenario_list_student_profiles_for_the_active_branch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_requirement_branch_scoped_student_directory",
+      "target": "student_directory_spec_scenario_filter_the_directory_by_search_and_status",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_added_requirements",
+      "target": "student_directory_spec_requirement_student_directory_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_requirement_student_directory_actions",
+      "target": "student_directory_spec_scenario_open_student_profile_or_admission_from_the_directory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_requirement_student_directory_actions",
+      "target": "student_directory_spec_scenario_hide_unauthorized_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_added_requirements",
+      "target": "student_directory_spec_requirement_student_directory_empty_and_loading_states",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_requirement_student_directory_empty_and_loading_states",
+      "target": "student_directory_spec_scenario_show_loading_state",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "student_directory_spec_requirement_student_directory_empty_and_loading_states",
+      "target": "student_directory_spec_scenario_show_empty_state",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-03-module-04-admission-enrollment/specs/student-directory/spec.md",
+      "source_location": "L44",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

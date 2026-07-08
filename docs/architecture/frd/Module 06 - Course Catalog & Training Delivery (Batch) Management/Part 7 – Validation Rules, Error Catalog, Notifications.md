@@ -87,6 +87,7 @@ The following rules must be executed in the backend service layer before executi
 
 - **Validation Logic:** Scans the target trainer's weekly timetable sessions to block concurrent assignment. To preserve Bounded Context separation, the timetable sessions are queried through a public Scheduling application service interface rather than querying the database tables directly.
 - **Algorithm:**
+
   ```typescript
   async function validateTrainerAssignment(
     trainerId: string,

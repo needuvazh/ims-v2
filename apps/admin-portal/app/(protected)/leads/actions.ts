@@ -8,7 +8,11 @@ import {
   assertBranchScope,
   getSession,
 } from '../../lib/auth-guard';
-import { CreateLeadSchema, LeadSourceEnum, LeadStageEnum } from '@ims/crm-leads';
+import {
+  CreateLeadSchema,
+  LeadSourceEnum,
+  LeadStageEnum,
+} from '@ims/crm-leads';
 import { prisma } from '@ims/database';
 
 const FormDateOfBirthSchema = z.preprocess(
@@ -39,16 +43,19 @@ const createLeadSchema = CreateLeadSchema.extend({
   bypassDuplicateBlock: z.boolean().optional(),
 });
 
-const updateLeadSchema = createLeadSchema.extend({
-  id: z.string().uuid(),
-  version: z.preprocess(
-    (val) => (val ? Number(val) : undefined),
-    z.number().int({ message: 'Version is required for concurrency control' }),
-  ),
-  stage: LeadStageEnum,
-  lostReasonCode: z.string().optional().nullable().or(z.literal('')),
-  lostReasonNotes: z.string().optional().nullable().or(z.literal('')),
-})
+const updateLeadSchema = createLeadSchema
+  .extend({
+    id: z.string().uuid(),
+    version: z.preprocess(
+      (val) => (val ? Number(val) : undefined),
+      z
+        .number()
+        .int({ message: 'Version is required for concurrency control' }),
+    ),
+    stage: LeadStageEnum,
+    lostReasonCode: z.string().optional().nullable().or(z.literal('')),
+    lostReasonNotes: z.string().optional().nullable().or(z.literal('')),
+  })
   .refine(
     (data) => {
       if (data.stage === 'Lost') {

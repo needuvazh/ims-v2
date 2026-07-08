@@ -662,9 +662,9 @@ export function DocumentMasterClient({
       )}
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="!left-auto !right-0 !top-0 !translate-x-0 !translate-y-0 h-full max-h-screen w-full max-w-[32rem] rounded-none border-l border-[color:var(--ims-border)] p-0 bg-white shadow-2xl">
-          <form onSubmit={handleFormSubmit} className="flex h-full flex-col">
-            <DialogHeader className="border-b border-[color:var(--ims-border)] p-6">
+        <DialogContent className="!left-auto !right-0 !top-0 !translate-x-0 !translate-y-0 h-full max-h-screen w-full max-w-[32rem] rounded-none border-l border-[color:var(--ims-border)] p-0 bg-white shadow-2xl overflow-hidden">
+          <form onSubmit={handleFormSubmit} className="flex h-full flex-col overflow-hidden">
+            <DialogHeader className="border-b border-[color:var(--ims-border)] p-6 shrink-0">
               <DialogTitle>
                 {editingRule
                   ? 'Edit Dynamic Requirement Rule'
@@ -775,7 +775,7 @@ export function DocumentMasterClient({
               </div>
             </div>
 
-            <div className="border-t border-[color:var(--ims-border)] p-6 bg-slate-50 flex justify-end gap-3">
+            <div className="border-t border-[color:var(--ims-border)] p-6 bg-slate-50 flex justify-end gap-3 shrink-0">
               <Button
                 type="button"
                 variant="outline"

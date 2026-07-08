@@ -1,13 +1,4 @@
-import Link from 'next/link';
-import { AlertTriangle, Home, LayoutDashboard, MapPinned } from 'lucide-react';
-import {
-  AdminListPageLayout,
-  Breadcrumbs,
-  DataTableFilter,
-  Button,
-  PageHeader,
-  StatCard,
-} from '@ims/shared-ui';
+import { AdminListPageLayout } from '@ims/shared-ui';
 import { loadConflictDashboardData } from '../data';
 import { ConflictDashboardClient } from '../_components/conflict-dashboard-client';
 
@@ -56,107 +47,12 @@ export default async function ConflictDashboardPage(props: {
   });
 
   return (
-    <AdminListPageLayout>
-      <PageHeader
-        eyebrow="Scheduling"
-        title="Conflict dashboard"
-        description="Review sessions that need intervention or a branch manager override."
-        breadcrumbs={
-          <Breadcrumbs
-            items={[
-              {
-                label: 'Dashboard',
-                href: '/dashboard',
-                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
-              },
-              {
-                label: 'Scheduling',
-                href: '/scheduling',
-                icon: <MapPinned className="h-3.5 w-3.5 text-slate-400" />,
-              },
-              {
-                label: 'Conflicts',
-                icon: (
-                  <LayoutDashboard className="h-3.5 w-3.5 text-slate-500" />
-                ),
-              },
-            ]}
-          />
-        }
-        actions={
-          <Link href="/scheduling/venues">
-            <Button variant="secondary" size="sm">
-              Venue management
-            </Button>
-          </Link>
-        }
-      />
-
-      <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard
-          title="Conflict"
-          value={data.counts.conflict}
-          description="Published sessions waiting on intervention"
-          icon={<AlertTriangle className="h-5 w-5" />}
-          tone="rose"
-        />
-        <StatCard
-          title="Warnings"
-          value={data.counts.warning}
-          description="Published sessions with active overrides"
-          icon={<LayoutDashboard className="h-5 w-5" />}
-          tone="amber"
-        />
-        <StatCard
-          title="Holiday"
-          value={data.counts.holiday}
-          description="Holiday-driven schedule invalidations"
-          icon={<MapPinned className="h-5 w-5" />}
-          tone="sky"
-        />
-      </div>
-
-      <DataTableFilter
-        searchPlaceholder="Search conflicts by batch, session title or reason..."
-        filters={[
-          ...(data.branches.length > 0
-            ? [
-                {
-                  key: 'branchId',
-                  label: 'Branch',
-                  options: data.branches.map((branch) => ({
-                    value: branch.id,
-                    label: branch.branchName,
-                  })),
-                },
-              ]
-            : []),
-          {
-            key: 'severity',
-            label: 'Severity',
-            options: [
-              { value: 'Conflict', label: 'Conflict' },
-              { value: 'Warning', label: 'Warning' },
-              { value: 'Published', label: 'Published' },
-            ],
-          },
-          {
-            key: 'conflictType',
-            label: 'Type',
-            options: [
-              { value: 'HOLIDAY', label: 'Holiday' },
-              { value: 'VENUE', label: 'Venue' },
-              { value: 'TRAINER_OVERLAP', label: 'Trainer overlap' },
-              { value: 'CLASSROOM_OVERLAP', label: 'Classroom overlap' },
-              { value: 'OPERATING_HOURS', label: 'Operating hours' },
-            ],
-          },
-        ]}
-      />
-
+    <AdminListPageLayout className="pt-1 sm:pt-0">
       <ConflictDashboardClient
         sessions={sessions}
         classrooms={data.classrooms}
+        branches={data.branches}
+        counts={data.counts}
       />
     </AdminListPageLayout>
   );

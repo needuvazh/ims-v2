@@ -1,1 +1,335 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_prisma_client_api_references_client_methods_md", "label": "client-methods.md", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L1"}, {"id": "references_client_methods_client_methods", "label": "Client Methods", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L1"}, {"id": "references_client_methods_connect", "label": "$connect()", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L5"}, {"id": "references_client_methods_when_to_use", "label": "When to use", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L16"}, {"id": "references_client_methods_disconnect", "label": "$disconnect()", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L36"}, {"id": "references_client_methods_graceful_shutdown", "label": "Graceful shutdown", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L44"}, {"id": "references_client_methods_in_tests", "label": "In tests", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L58"}, {"id": "references_client_methods_on", "label": "$on()", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L66"}, {"id": "references_client_methods_query_events", "label": "Query events", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L70"}, {"id": "references_client_methods_log_events", "label": "Log events", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L85"}, {"id": "references_client_methods_extends", "label": "$extends()", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L102"}, {"id": "references_client_methods_add_custom_methods", "label": "Add custom methods", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L106"}, {"id": "references_client_methods_add_model_methods", "label": "Add model methods", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L118"}, {"id": "references_client_methods_query_extensions", "label": "Query extensions", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L134"}, {"id": "references_client_methods_result_extensions", "label": "Result extensions", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L150"}, {"id": "references_client_methods_chain_extensions", "label": "Chain extensions", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L170"}, {"id": "references_client_methods_transaction", "label": "$transaction()", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L179"}, {"id": "references_client_methods_queryraw_executeraw", "label": "$queryRaw() / $executeRaw()", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L183"}, {"id": "references_client_methods_type_utilities", "label": "Type utilities", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L187"}, {"id": "references_client_methods_prisma_namespace", "label": "Prisma namespace", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L189"}, {"id": "references_client_methods_type_safe_query_fragments_with_satisfies", "label": "Type-safe query fragments with satisfies", "file_type": "document", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L205"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_prisma_client_api_references_client_methods_md", "target": "references_client_methods_client_methods", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L1", "weight": 1.0}, {"source": "references_client_methods_client_methods", "target": "references_client_methods_connect", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L5", "weight": 1.0}, {"source": "references_client_methods_connect", "target": "references_client_methods_when_to_use", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L16", "weight": 1.0}, {"source": "references_client_methods_client_methods", "target": "references_client_methods_disconnect", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L36", "weight": 1.0}, {"source": "references_client_methods_disconnect", "target": "references_client_methods_graceful_shutdown", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L44", "weight": 1.0}, {"source": "references_client_methods_disconnect", "target": "references_client_methods_in_tests", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L58", "weight": 1.0}, {"source": "references_client_methods_client_methods", "target": "references_client_methods_on", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L66", "weight": 1.0}, {"source": "references_client_methods_on", "target": "references_client_methods_query_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L70", "weight": 1.0}, {"source": "references_client_methods_on", "target": "references_client_methods_log_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L85", "weight": 1.0}, {"source": "references_client_methods_client_methods", "target": "references_client_methods_extends", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L102", "weight": 1.0}, {"source": "references_client_methods_extends", "target": "references_client_methods_add_custom_methods", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L106", "weight": 1.0}, {"source": "references_client_methods_extends", "target": "references_client_methods_add_model_methods", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L118", "weight": 1.0}, {"source": "references_client_methods_extends", "target": "references_client_methods_query_extensions", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L134", "weight": 1.0}, {"source": "references_client_methods_extends", "target": "references_client_methods_result_extensions", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L150", "weight": 1.0}, {"source": "references_client_methods_extends", "target": "references_client_methods_chain_extensions", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L170", "weight": 1.0}, {"source": "references_client_methods_client_methods", "target": "references_client_methods_transaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L179", "weight": 1.0}, {"source": "references_client_methods_client_methods", "target": "references_client_methods_queryraw_executeraw", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L183", "weight": 1.0}, {"source": "references_client_methods_client_methods", "target": "references_client_methods_type_utilities", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L187", "weight": 1.0}, {"source": "references_client_methods_type_utilities", "target": "references_client_methods_prisma_namespace", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L189", "weight": 1.0}, {"source": "references_client_methods_type_utilities", "target": "references_client_methods_type_safe_query_fragments_with_satisfies", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/prisma-client-api/references/client-methods.md", "source_location": "L205", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_prisma_client_api_references_client_methods_md",
+      "label": "client-methods.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "references_client_methods_client_methods",
+      "label": "Client Methods",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "references_client_methods_connect",
+      "label": "$connect()",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "references_client_methods_when_to_use",
+      "label": "When to use",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "references_client_methods_disconnect",
+      "label": "$disconnect()",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "references_client_methods_graceful_shutdown",
+      "label": "Graceful shutdown",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "references_client_methods_in_tests",
+      "label": "In tests",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L58"
+    },
+    {
+      "id": "references_client_methods_on",
+      "label": "$on()",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L66"
+    },
+    {
+      "id": "references_client_methods_query_events",
+      "label": "Query events",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "references_client_methods_log_events",
+      "label": "Log events",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L85"
+    },
+    {
+      "id": "references_client_methods_extends",
+      "label": "$extends()",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L102"
+    },
+    {
+      "id": "references_client_methods_add_custom_methods",
+      "label": "Add custom methods",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L106"
+    },
+    {
+      "id": "references_client_methods_add_model_methods",
+      "label": "Add model methods",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L118"
+    },
+    {
+      "id": "references_client_methods_query_extensions",
+      "label": "Query extensions",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L134"
+    },
+    {
+      "id": "references_client_methods_result_extensions",
+      "label": "Result extensions",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L150"
+    },
+    {
+      "id": "references_client_methods_chain_extensions",
+      "label": "Chain extensions",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L170"
+    },
+    {
+      "id": "references_client_methods_transaction",
+      "label": "$transaction()",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L179"
+    },
+    {
+      "id": "references_client_methods_queryraw_executeraw",
+      "label": "$queryRaw() / $executeRaw()",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L183"
+    },
+    {
+      "id": "references_client_methods_type_utilities",
+      "label": "Type utilities",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "references_client_methods_prisma_namespace",
+      "label": "Prisma namespace",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L189"
+    },
+    {
+      "id": "references_client_methods_type_safe_query_fragments_with_satisfies",
+      "label": "Type-safe query fragments with satisfies",
+      "file_type": "document",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L205"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_prisma_client_api_references_client_methods_md",
+      "target": "references_client_methods_client_methods",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_client_methods",
+      "target": "references_client_methods_connect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_connect",
+      "target": "references_client_methods_when_to_use",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_client_methods",
+      "target": "references_client_methods_disconnect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_disconnect",
+      "target": "references_client_methods_graceful_shutdown",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_disconnect",
+      "target": "references_client_methods_in_tests",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_client_methods",
+      "target": "references_client_methods_on",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_on",
+      "target": "references_client_methods_query_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_on",
+      "target": "references_client_methods_log_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_client_methods",
+      "target": "references_client_methods_extends",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_extends",
+      "target": "references_client_methods_add_custom_methods",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_extends",
+      "target": "references_client_methods_add_model_methods",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_extends",
+      "target": "references_client_methods_query_extensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_extends",
+      "target": "references_client_methods_result_extensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L150",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_extends",
+      "target": "references_client_methods_chain_extensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_client_methods",
+      "target": "references_client_methods_transaction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L179",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_client_methods",
+      "target": "references_client_methods_queryraw_executeraw",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_client_methods",
+      "target": "references_client_methods_type_utilities",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_type_utilities",
+      "target": "references_client_methods_prisma_namespace",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "references_client_methods_type_utilities",
+      "target": "references_client_methods_type_safe_query_fragments_with_satisfies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/prisma-client-api/references/client-methods.md",
+      "source_location": "L205",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

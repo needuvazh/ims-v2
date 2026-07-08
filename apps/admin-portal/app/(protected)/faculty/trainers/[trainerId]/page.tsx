@@ -10,6 +10,7 @@ import { getFacultyTrainerContext } from '../../_lib';
 import {
   Home,
   Users,
+  Calendar,
   User,
   Mail,
   Phone,
@@ -17,10 +18,10 @@ import {
   BookOpen,
   Clock,
   Award,
-  DollarSign,
   Layers,
   FileText,
   ArrowLeft,
+  Shield,
 } from 'lucide-react';
 import { prisma } from '@ims/database';
 import {
@@ -77,11 +78,12 @@ export default async function TrainerDetailPage(props: {
     qualifications,
     availability,
     authorizations,
-    compensation,
     assignments,
     audit,
     branchResult,
     courses,
+    leaves,
+    user,
   ] = await Promise.all([
     trainerManagementService.listQualifications(
       trainerId,
@@ -94,11 +96,6 @@ export default async function TrainerDetailPage(props: {
       authContext,
     ),
     trainerManagementService.listAuthorizations(
-      trainerId,
-      { page: 1, pageSize: 20 },
-      authContext,
-    ),
-    trainerManagementService.listCompensationRates(
       trainerId,
       { page: 1, pageSize: 20 },
       authContext,
@@ -119,11 +116,21 @@ export default async function TrainerDetailPage(props: {
       select: { id: true, courseCode: true, nameEnglish: true, status: true },
       orderBy: [{ courseCode: 'asc' }],
     }),
+    prisma.leaveRequest.findMany({
+      where: { personId: trainer.personId, isDeleted: false },
+      orderBy: { startDate: 'desc' },
+      take: 10,
+    }),
+    prisma.user.findFirst({
+      where: { personId: trainer.personId, isDeleted: false },
+      select: { id: true },
+    }),
   ]);
   const allowedBranchIds = new Set(
     (authContext.allowedBranchIds ?? []).map(String),
   );
   const canEditTrainer = authContext.permissions.includes('trainer.update');
+  const canReadIamUser = authContext.permissions.includes('iam.user.read');
   const branchOptions = branchResult.items
     .filter(
       (branch) =>
@@ -176,6 +183,12 @@ export default async function TrainerDetailPage(props: {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to List
             </LinkButton>
+            {canReadIamUser && user ? (
+              <LinkButton href={`/iam/users/${user.id}`} variant="outline" size="sm">
+                <Shield className="mr-2 h-4 w-4" />
+                View IAM User
+              </LinkButton>
+            ) : null}
             {canEditTrainer ? (
               <TrainerProfileEditDrawerAction
                 trainer={{
@@ -540,62 +553,6 @@ export default async function TrainerDetailPage(props: {
           </div>
         </div>
 
-        {/* Compensation */}
-        <div className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 shadow-sm backdrop-blur-md">
-          <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
-            <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
-              <DollarSign className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-slate-800">
-                Compensation Rates
-              </h3>
-              <p className="text-xs text-slate-500">
-                Resolved compensation rates and payment basis
-              </p>
-            </div>
-          </div>
-          <div className="p-5">
-            {compensation.items.length > 0 ? (
-              <div className="space-y-2">
-                {compensation.items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3"
-                  >
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">
-                        {item.amount} {item.currency}
-                      </p>
-                      <p className="text-xs text-slate-500">
-                        {item.paymentBasis}
-                      </p>
-                    </div>
-                    {item.status && (
-                      <Badge
-                        variant={item.status === 'Active' ? 'success' : 'muted'}
-                        className="text-xs"
-                      >
-                        {item.status}
-                      </Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <DollarSign className="h-10 w-10 text-slate-300 mb-3" />
-                <p className="text-sm font-medium text-slate-500">
-                  No compensation configured
-                </p>
-                <p className="text-xs text-slate-400 mt-1">
-                  Set up payment rates for this trainer
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* Assignments */}
         <div className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 shadow-sm backdrop-blur-md lg:col-span-2">
           <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
@@ -676,6 +633,93 @@ export default async function TrainerDetailPage(props: {
                 </p>
                 <p className="text-xs text-slate-400 mt-1">
                   This trainer is not assigned to any batches or sessions
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Leaves & Time-Off */}
+        <div className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 shadow-sm backdrop-blur-md lg:col-span-2">
+          <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                <Calendar className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-800">Leaves & Time-Off</h3>
+                <p className="text-xs text-slate-500">
+                  Recent leave history and pending requests
+                </p>
+              </div>
+            </div>
+            {authContext.permissions.includes('leave.apply') && (
+              <LinkButton href="/faculty/leaves" variant="secondary" size="sm">
+                Manage Leaves
+              </LinkButton>
+            )}
+          </div>
+          <div className="p-5">
+            {leaves.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-slate-100 text-sm">
+                  <thead>
+                    <tr className="text-left text-xs font-medium text-slate-500 uppercase tracking-wide">
+                      <th className="pb-3 pr-4">Type</th>
+                      <th className="pb-3 pr-4">Dates</th>
+                      <th className="pb-3 pr-4">Duration</th>
+                      <th className="pb-3 pr-4">Reason</th>
+                      <th className="pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {leaves.map((item) => (
+                      <tr key={item.id} className="text-slate-700">
+                        <td className="py-3 pr-4">
+                          <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs font-medium">
+                            {item.leaveType}
+                          </span>
+                        </td>
+                        <td className="py-3 pr-4 font-medium text-slate-800">
+                          {item.startDate.toISOString().split('T')[0]} to {item.endDate.toISOString().split('T')[0]}
+                        </td>
+                        <td className="py-3 pr-4 text-slate-600">
+                          {item.isFullDay ? (
+                            'Full Day'
+                          ) : (
+                            `${item.startTime} - ${item.endTime}`
+                          )}
+                        </td>
+                        <td className="py-3 pr-4 text-slate-600 max-w-[200px] truncate" title={item.reason ?? ''}>
+                          {item.reason || '—'}
+                        </td>
+                        <td className="py-3">
+                          <Badge
+                            variant={
+                              item.status === 'Approved'
+                                ? 'success'
+                                : item.status === 'Pending'
+                                  ? 'warning'
+                                  : 'muted'
+                            }
+                            className="text-xs"
+                          >
+                            {item.status}
+                          </Badge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <Calendar className="h-10 w-10 text-slate-300 mb-3" />
+                <p className="text-sm font-medium text-slate-500">
+                  No leaves recorded
+                </p>
+                <p className="text-xs text-slate-400 mt-1">
+                  Time-off history will display here
                 </p>
               </div>
             )}

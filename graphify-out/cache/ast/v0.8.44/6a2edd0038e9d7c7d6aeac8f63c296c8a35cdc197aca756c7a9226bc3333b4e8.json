@@ -1,1 +1,911 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_skill_md", "label": "SKILL.md", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1"}, {"id": "react_hook_form_zod_skill_react_hook_form_zod_validation", "label": "React Hook Form + Zod Validation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L11"}, {"id": "react_hook_form_zod_skill_quick_start_10_minutes", "label": "Quick Start (10 Minutes)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L20"}, {"id": "react_hook_form_zod_skill_1_install_packages", "label": "1. Install Packages", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L22"}, {"id": "react_hook_form_zod_skill_2_create_your_first_form", "label": "2. Create Your First Form", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L34"}, {"id": "react_hook_form_zod_skill_3_add_server_side_validation", "label": "3. Add Server-Side Validation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L108"}, {"id": "react_hook_form_zod_skill_core_concepts", "label": "Core Concepts", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L147"}, {"id": "react_hook_form_zod_skill_useform_hook_anatomy", "label": "useForm Hook Anatomy", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L149"}, {"id": "react_hook_form_zod_skill_zod_schema_definition", "label": "Zod Schema Definition", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L187"}, {"id": "react_hook_form_zod_skill_zod_refinements_custom_validation", "label": "Zod Refinements (Custom Validation)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L268"}, {"id": "react_hook_form_zod_skill_zod_transforms_data_manipulation", "label": "Zod Transforms (Data Manipulation)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L312"}, {"id": "react_hook_form_zod_skill_zodresolver_integration", "label": "zodResolver Integration", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L344"}, {"id": "react_hook_form_zod_skill_form_registration_patterns", "label": "Form Registration Patterns", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L378"}, {"id": "react_hook_form_zod_skill_pattern_1_simple_input_registration", "label": "Pattern 1: Simple Input Registration", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L380"}, {"id": "react_hook_form_zod_skill_pattern_2_controller_for_custom_components", "label": "Pattern 2: Controller (for Custom Components)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L416"}, {"id": "react_hook_form_zod_skill_pattern_3_usecontroller_reusable_controlled_inputs", "label": "Pattern 3: useController (Reusable Controlled Inputs)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L475"}, {"id": "react_hook_form_zod_skill_error_handling", "label": "Error Handling", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L517"}, {"id": "react_hook_form_zod_skill_displaying_errors", "label": "Displaying Errors", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L519"}, {"id": "react_hook_form_zod_skill_error_object_structure", "label": "Error Object Structure", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L555"}, {"id": "react_hook_form_zod_skill_form_level_validation_errors", "label": "Form-Level Validation Errors", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L578"}, {"id": "react_hook_form_zod_skill_server_errors_integration", "label": "Server Errors Integration", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L603"}, {"id": "react_hook_form_zod_skill_advanced_patterns", "label": "Advanced Patterns", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L653"}, {"id": "react_hook_form_zod_skill_dynamic_form_fields_usefieldarray", "label": "Dynamic Form Fields (useFieldArray)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L655"}, {"id": "react_hook_form_zod_skill_async_validation_with_debouncing", "label": "Async Validation with Debouncing", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L735"}, {"id": "react_hook_form_zod_skill_multi_step_form_wizard", "label": "Multi-Step Form (Wizard)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L778"}, {"id": "react_hook_form_zod_skill_conditional_validation", "label": "Conditional Validation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L901"}, {"id": "react_hook_form_zod_skill_shadcn_ui_integration", "label": "shadcn/ui Integration", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L942"}, {"id": "react_hook_form_zod_skill_using_form_component_legacy", "label": "Using Form Component (Legacy)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L944"}, {"id": "react_hook_form_zod_skill_using_field_component_recommended", "label": "Using Field Component (Recommended)", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1018"}, {"id": "react_hook_form_zod_skill_performance_optimization", "label": "Performance Optimization", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1024"}, {"id": "react_hook_form_zod_skill_form_mode_strategies", "label": "Form Mode Strategies", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1026"}, {"id": "react_hook_form_zod_skill_controlled_vs_uncontrolled_inputs", "label": "Controlled vs Uncontrolled Inputs", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1054"}, {"id": "react_hook_form_zod_skill_isolation_with_controller", "label": "Isolation with Controller", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1070"}, {"id": "react_hook_form_zod_skill_shouldunregister_flag", "label": "shouldUnregister Flag", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1090"}, {"id": "react_hook_form_zod_skill_accessibility_best_practices", "label": "Accessibility Best Practices", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1112"}, {"id": "react_hook_form_zod_skill_aria_attributes", "label": "ARIA Attributes", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1114"}, {"id": "react_hook_form_zod_skill_error_announcements", "label": "Error Announcements", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1143"}, {"id": "react_hook_form_zod_skill_focus_management", "label": "Focus Management", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1178"}, {"id": "react_hook_form_zod_skill_critical_rules", "label": "Critical Rules", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1207"}, {"id": "react_hook_form_zod_skill_always_do", "label": "Always Do", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1209"}, {"id": "react_hook_form_zod_skill_never_do", "label": "Never Do", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1274"}, {"id": "react_hook_form_zod_skill_known_issues_prevention", "label": "Known Issues Prevention", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1365"}, {"id": "react_hook_form_zod_skill_issue_1_zod_v4_type_inference_errors", "label": "Issue #1: Zod v4 Type Inference Errors", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1369"}, {"id": "react_hook_form_zod_skill_issue_2_uncontrolled_to_controlled_warning", "label": "Issue #2: Uncontrolled to Controlled Warning", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1377"}, {"id": "react_hook_form_zod_skill_issue_3_nested_object_validation_errors", "label": "Issue #3: Nested Object Validation Errors", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1384"}, {"id": "react_hook_form_zod_skill_issue_4_array_field_re_renders", "label": "Issue #4: Array Field Re-renders", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1391"}, {"id": "react_hook_form_zod_skill_issue_5_async_validation_race_conditions", "label": "Issue #5: Async Validation Race Conditions", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1398"}, {"id": "react_hook_form_zod_skill_issue_6_server_error_mapping", "label": "Issue #6: Server Error Mapping", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1405"}, {"id": "react_hook_form_zod_skill_issue_7_default_values_not_applied", "label": "Issue #7: Default Values Not Applied", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1412"}, {"id": "react_hook_form_zod_skill_issue_8_controller_field_not_updating", "label": "Issue #8: Controller Field Not Updating", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1419"}, {"id": "react_hook_form_zod_skill_issue_9_usefieldarray_key_warnings", "label": "Issue #9: useFieldArray Key Warnings", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1426"}, {"id": "react_hook_form_zod_skill_issue_10_schema_refinement_error_paths", "label": "Issue #10: Schema Refinement Error Paths", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1433"}, {"id": "react_hook_form_zod_skill_issue_11_transform_vs_preprocess_confusion", "label": "Issue #11: Transform vs Preprocess Confusion", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1440"}, {"id": "react_hook_form_zod_skill_issue_12_multiple_resolver_conflicts", "label": "Issue #12: Multiple Resolver Conflicts", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1447"}, {"id": "react_hook_form_zod_skill_templates", "label": "Templates", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1456"}, {"id": "react_hook_form_zod_skill_references", "label": "References", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1472"}, {"id": "react_hook_form_zod_skill_official_documentation", "label": "Official Documentation", "file_type": "document", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1487"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_skill_md", "target": "react_hook_form_zod_skill_react_hook_form_zod_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L11", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_quick_start_10_minutes", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L20", "weight": 1.0}, {"source": "react_hook_form_zod_skill_quick_start_10_minutes", "target": "react_hook_form_zod_skill_1_install_packages", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L22", "weight": 1.0}, {"source": "react_hook_form_zod_skill_quick_start_10_minutes", "target": "react_hook_form_zod_skill_2_create_your_first_form", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L34", "weight": 1.0}, {"source": "react_hook_form_zod_skill_quick_start_10_minutes", "target": "react_hook_form_zod_skill_3_add_server_side_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L108", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_core_concepts", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L147", "weight": 1.0}, {"source": "react_hook_form_zod_skill_core_concepts", "target": "react_hook_form_zod_skill_useform_hook_anatomy", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L149", "weight": 1.0}, {"source": "react_hook_form_zod_skill_core_concepts", "target": "react_hook_form_zod_skill_zod_schema_definition", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L187", "weight": 1.0}, {"source": "react_hook_form_zod_skill_core_concepts", "target": "react_hook_form_zod_skill_zod_refinements_custom_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L268", "weight": 1.0}, {"source": "react_hook_form_zod_skill_core_concepts", "target": "react_hook_form_zod_skill_zod_transforms_data_manipulation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L312", "weight": 1.0}, {"source": "react_hook_form_zod_skill_core_concepts", "target": "react_hook_form_zod_skill_zodresolver_integration", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L344", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_form_registration_patterns", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L378", "weight": 1.0}, {"source": "react_hook_form_zod_skill_form_registration_patterns", "target": "react_hook_form_zod_skill_pattern_1_simple_input_registration", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L380", "weight": 1.0}, {"source": "react_hook_form_zod_skill_form_registration_patterns", "target": "react_hook_form_zod_skill_pattern_2_controller_for_custom_components", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L416", "weight": 1.0}, {"source": "react_hook_form_zod_skill_form_registration_patterns", "target": "react_hook_form_zod_skill_pattern_3_usecontroller_reusable_controlled_inputs", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L475", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_error_handling", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L517", "weight": 1.0}, {"source": "react_hook_form_zod_skill_error_handling", "target": "react_hook_form_zod_skill_displaying_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L519", "weight": 1.0}, {"source": "react_hook_form_zod_skill_error_handling", "target": "react_hook_form_zod_skill_error_object_structure", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L555", "weight": 1.0}, {"source": "react_hook_form_zod_skill_error_handling", "target": "react_hook_form_zod_skill_form_level_validation_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L578", "weight": 1.0}, {"source": "react_hook_form_zod_skill_error_handling", "target": "react_hook_form_zod_skill_server_errors_integration", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L603", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_advanced_patterns", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L653", "weight": 1.0}, {"source": "react_hook_form_zod_skill_advanced_patterns", "target": "react_hook_form_zod_skill_dynamic_form_fields_usefieldarray", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L655", "weight": 1.0}, {"source": "react_hook_form_zod_skill_advanced_patterns", "target": "react_hook_form_zod_skill_async_validation_with_debouncing", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L735", "weight": 1.0}, {"source": "react_hook_form_zod_skill_advanced_patterns", "target": "react_hook_form_zod_skill_multi_step_form_wizard", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L778", "weight": 1.0}, {"source": "react_hook_form_zod_skill_advanced_patterns", "target": "react_hook_form_zod_skill_conditional_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L901", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_shadcn_ui_integration", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L942", "weight": 1.0}, {"source": "react_hook_form_zod_skill_shadcn_ui_integration", "target": "react_hook_form_zod_skill_using_form_component_legacy", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L944", "weight": 1.0}, {"source": "react_hook_form_zod_skill_shadcn_ui_integration", "target": "react_hook_form_zod_skill_using_field_component_recommended", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1018", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_performance_optimization", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1024", "weight": 1.0}, {"source": "react_hook_form_zod_skill_performance_optimization", "target": "react_hook_form_zod_skill_form_mode_strategies", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1026", "weight": 1.0}, {"source": "react_hook_form_zod_skill_performance_optimization", "target": "react_hook_form_zod_skill_controlled_vs_uncontrolled_inputs", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1054", "weight": 1.0}, {"source": "react_hook_form_zod_skill_performance_optimization", "target": "react_hook_form_zod_skill_isolation_with_controller", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1070", "weight": 1.0}, {"source": "react_hook_form_zod_skill_performance_optimization", "target": "react_hook_form_zod_skill_shouldunregister_flag", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1090", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_accessibility_best_practices", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1112", "weight": 1.0}, {"source": "react_hook_form_zod_skill_accessibility_best_practices", "target": "react_hook_form_zod_skill_aria_attributes", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1114", "weight": 1.0}, {"source": "react_hook_form_zod_skill_accessibility_best_practices", "target": "react_hook_form_zod_skill_error_announcements", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1143", "weight": 1.0}, {"source": "react_hook_form_zod_skill_accessibility_best_practices", "target": "react_hook_form_zod_skill_focus_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1178", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_critical_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1207", "weight": 1.0}, {"source": "react_hook_form_zod_skill_critical_rules", "target": "react_hook_form_zod_skill_always_do", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1209", "weight": 1.0}, {"source": "react_hook_form_zod_skill_critical_rules", "target": "react_hook_form_zod_skill_never_do", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1274", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_known_issues_prevention", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1365", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_1_zod_v4_type_inference_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1369", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_2_uncontrolled_to_controlled_warning", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1377", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_3_nested_object_validation_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1384", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_4_array_field_re_renders", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1391", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_5_async_validation_race_conditions", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1398", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_6_server_error_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1405", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_7_default_values_not_applied", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1412", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_8_controller_field_not_updating", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1419", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_9_usefieldarray_key_warnings", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1426", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_10_schema_refinement_error_paths", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1433", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_11_transform_vs_preprocess_confusion", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1440", "weight": 1.0}, {"source": "react_hook_form_zod_skill_known_issues_prevention", "target": "react_hook_form_zod_skill_issue_12_multiple_resolver_conflicts", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1447", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_templates", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1456", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_references", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1472", "weight": 1.0}, {"source": "react_hook_form_zod_skill_react_hook_form_zod_validation", "target": "react_hook_form_zod_skill_official_documentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": ".agents/skills/react-hook-form-zod/SKILL.md", "source_location": "L1487", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_skill_md",
+      "label": "SKILL.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "label": "React Hook Form + Zod Validation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "react_hook_form_zod_skill_quick_start_10_minutes",
+      "label": "Quick Start (10 Minutes)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "react_hook_form_zod_skill_1_install_packages",
+      "label": "1. Install Packages",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "react_hook_form_zod_skill_2_create_your_first_form",
+      "label": "2. Create Your First Form",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "react_hook_form_zod_skill_3_add_server_side_validation",
+      "label": "3. Add Server-Side Validation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L108"
+    },
+    {
+      "id": "react_hook_form_zod_skill_core_concepts",
+      "label": "Core Concepts",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L147"
+    },
+    {
+      "id": "react_hook_form_zod_skill_useform_hook_anatomy",
+      "label": "useForm Hook Anatomy",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L149"
+    },
+    {
+      "id": "react_hook_form_zod_skill_zod_schema_definition",
+      "label": "Zod Schema Definition",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "react_hook_form_zod_skill_zod_refinements_custom_validation",
+      "label": "Zod Refinements (Custom Validation)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L268"
+    },
+    {
+      "id": "react_hook_form_zod_skill_zod_transforms_data_manipulation",
+      "label": "Zod Transforms (Data Manipulation)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L312"
+    },
+    {
+      "id": "react_hook_form_zod_skill_zodresolver_integration",
+      "label": "zodResolver Integration",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L344"
+    },
+    {
+      "id": "react_hook_form_zod_skill_form_registration_patterns",
+      "label": "Form Registration Patterns",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L378"
+    },
+    {
+      "id": "react_hook_form_zod_skill_pattern_1_simple_input_registration",
+      "label": "Pattern 1: Simple Input Registration",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L380"
+    },
+    {
+      "id": "react_hook_form_zod_skill_pattern_2_controller_for_custom_components",
+      "label": "Pattern 2: Controller (for Custom Components)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L416"
+    },
+    {
+      "id": "react_hook_form_zod_skill_pattern_3_usecontroller_reusable_controlled_inputs",
+      "label": "Pattern 3: useController (Reusable Controlled Inputs)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L475"
+    },
+    {
+      "id": "react_hook_form_zod_skill_error_handling",
+      "label": "Error Handling",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L517"
+    },
+    {
+      "id": "react_hook_form_zod_skill_displaying_errors",
+      "label": "Displaying Errors",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L519"
+    },
+    {
+      "id": "react_hook_form_zod_skill_error_object_structure",
+      "label": "Error Object Structure",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L555"
+    },
+    {
+      "id": "react_hook_form_zod_skill_form_level_validation_errors",
+      "label": "Form-Level Validation Errors",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L578"
+    },
+    {
+      "id": "react_hook_form_zod_skill_server_errors_integration",
+      "label": "Server Errors Integration",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L603"
+    },
+    {
+      "id": "react_hook_form_zod_skill_advanced_patterns",
+      "label": "Advanced Patterns",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L653"
+    },
+    {
+      "id": "react_hook_form_zod_skill_dynamic_form_fields_usefieldarray",
+      "label": "Dynamic Form Fields (useFieldArray)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L655"
+    },
+    {
+      "id": "react_hook_form_zod_skill_async_validation_with_debouncing",
+      "label": "Async Validation with Debouncing",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L735"
+    },
+    {
+      "id": "react_hook_form_zod_skill_multi_step_form_wizard",
+      "label": "Multi-Step Form (Wizard)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L778"
+    },
+    {
+      "id": "react_hook_form_zod_skill_conditional_validation",
+      "label": "Conditional Validation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L901"
+    },
+    {
+      "id": "react_hook_form_zod_skill_shadcn_ui_integration",
+      "label": "shadcn/ui Integration",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L942"
+    },
+    {
+      "id": "react_hook_form_zod_skill_using_form_component_legacy",
+      "label": "Using Form Component (Legacy)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L944"
+    },
+    {
+      "id": "react_hook_form_zod_skill_using_field_component_recommended",
+      "label": "Using Field Component (Recommended)",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1018"
+    },
+    {
+      "id": "react_hook_form_zod_skill_performance_optimization",
+      "label": "Performance Optimization",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1024"
+    },
+    {
+      "id": "react_hook_form_zod_skill_form_mode_strategies",
+      "label": "Form Mode Strategies",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1026"
+    },
+    {
+      "id": "react_hook_form_zod_skill_controlled_vs_uncontrolled_inputs",
+      "label": "Controlled vs Uncontrolled Inputs",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1054"
+    },
+    {
+      "id": "react_hook_form_zod_skill_isolation_with_controller",
+      "label": "Isolation with Controller",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1070"
+    },
+    {
+      "id": "react_hook_form_zod_skill_shouldunregister_flag",
+      "label": "shouldUnregister Flag",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1090"
+    },
+    {
+      "id": "react_hook_form_zod_skill_accessibility_best_practices",
+      "label": "Accessibility Best Practices",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1112"
+    },
+    {
+      "id": "react_hook_form_zod_skill_aria_attributes",
+      "label": "ARIA Attributes",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1114"
+    },
+    {
+      "id": "react_hook_form_zod_skill_error_announcements",
+      "label": "Error Announcements",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1143"
+    },
+    {
+      "id": "react_hook_form_zod_skill_focus_management",
+      "label": "Focus Management",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1178"
+    },
+    {
+      "id": "react_hook_form_zod_skill_critical_rules",
+      "label": "Critical Rules",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1207"
+    },
+    {
+      "id": "react_hook_form_zod_skill_always_do",
+      "label": "Always Do",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1209"
+    },
+    {
+      "id": "react_hook_form_zod_skill_never_do",
+      "label": "Never Do",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1274"
+    },
+    {
+      "id": "react_hook_form_zod_skill_known_issues_prevention",
+      "label": "Known Issues Prevention",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1365"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_1_zod_v4_type_inference_errors",
+      "label": "Issue #1: Zod v4 Type Inference Errors",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1369"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_2_uncontrolled_to_controlled_warning",
+      "label": "Issue #2: Uncontrolled to Controlled Warning",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1377"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_3_nested_object_validation_errors",
+      "label": "Issue #3: Nested Object Validation Errors",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1384"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_4_array_field_re_renders",
+      "label": "Issue #4: Array Field Re-renders",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1391"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_5_async_validation_race_conditions",
+      "label": "Issue #5: Async Validation Race Conditions",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1398"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_6_server_error_mapping",
+      "label": "Issue #6: Server Error Mapping",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1405"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_7_default_values_not_applied",
+      "label": "Issue #7: Default Values Not Applied",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1412"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_8_controller_field_not_updating",
+      "label": "Issue #8: Controller Field Not Updating",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1419"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_9_usefieldarray_key_warnings",
+      "label": "Issue #9: useFieldArray Key Warnings",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1426"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_10_schema_refinement_error_paths",
+      "label": "Issue #10: Schema Refinement Error Paths",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1433"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_11_transform_vs_preprocess_confusion",
+      "label": "Issue #11: Transform vs Preprocess Confusion",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1440"
+    },
+    {
+      "id": "react_hook_form_zod_skill_issue_12_multiple_resolver_conflicts",
+      "label": "Issue #12: Multiple Resolver Conflicts",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1447"
+    },
+    {
+      "id": "react_hook_form_zod_skill_templates",
+      "label": "Templates",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1456"
+    },
+    {
+      "id": "react_hook_form_zod_skill_references",
+      "label": "References",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1472"
+    },
+    {
+      "id": "react_hook_form_zod_skill_official_documentation",
+      "label": "Official Documentation",
+      "file_type": "document",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1487"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_agents_skills_react_hook_form_zod_skill_md",
+      "target": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_quick_start_10_minutes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_quick_start_10_minutes",
+      "target": "react_hook_form_zod_skill_1_install_packages",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_quick_start_10_minutes",
+      "target": "react_hook_form_zod_skill_2_create_your_first_form",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_quick_start_10_minutes",
+      "target": "react_hook_form_zod_skill_3_add_server_side_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_core_concepts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_core_concepts",
+      "target": "react_hook_form_zod_skill_useform_hook_anatomy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_core_concepts",
+      "target": "react_hook_form_zod_skill_zod_schema_definition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_core_concepts",
+      "target": "react_hook_form_zod_skill_zod_refinements_custom_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_core_concepts",
+      "target": "react_hook_form_zod_skill_zod_transforms_data_manipulation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L312",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_core_concepts",
+      "target": "react_hook_form_zod_skill_zodresolver_integration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_form_registration_patterns",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_form_registration_patterns",
+      "target": "react_hook_form_zod_skill_pattern_1_simple_input_registration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L380",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_form_registration_patterns",
+      "target": "react_hook_form_zod_skill_pattern_2_controller_for_custom_components",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L416",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_form_registration_patterns",
+      "target": "react_hook_form_zod_skill_pattern_3_usecontroller_reusable_controlled_inputs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L475",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_error_handling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L517",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_error_handling",
+      "target": "react_hook_form_zod_skill_displaying_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L519",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_error_handling",
+      "target": "react_hook_form_zod_skill_error_object_structure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L555",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_error_handling",
+      "target": "react_hook_form_zod_skill_form_level_validation_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L578",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_error_handling",
+      "target": "react_hook_form_zod_skill_server_errors_integration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L603",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_advanced_patterns",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L653",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_advanced_patterns",
+      "target": "react_hook_form_zod_skill_dynamic_form_fields_usefieldarray",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L655",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_advanced_patterns",
+      "target": "react_hook_form_zod_skill_async_validation_with_debouncing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L735",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_advanced_patterns",
+      "target": "react_hook_form_zod_skill_multi_step_form_wizard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L778",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_advanced_patterns",
+      "target": "react_hook_form_zod_skill_conditional_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L901",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_shadcn_ui_integration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L942",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_shadcn_ui_integration",
+      "target": "react_hook_form_zod_skill_using_form_component_legacy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L944",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_shadcn_ui_integration",
+      "target": "react_hook_form_zod_skill_using_field_component_recommended",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1018",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_performance_optimization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1024",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_performance_optimization",
+      "target": "react_hook_form_zod_skill_form_mode_strategies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1026",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_performance_optimization",
+      "target": "react_hook_form_zod_skill_controlled_vs_uncontrolled_inputs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1054",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_performance_optimization",
+      "target": "react_hook_form_zod_skill_isolation_with_controller",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1070",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_performance_optimization",
+      "target": "react_hook_form_zod_skill_shouldunregister_flag",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1090",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_accessibility_best_practices",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1112",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_accessibility_best_practices",
+      "target": "react_hook_form_zod_skill_aria_attributes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1114",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_accessibility_best_practices",
+      "target": "react_hook_form_zod_skill_error_announcements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1143",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_accessibility_best_practices",
+      "target": "react_hook_form_zod_skill_focus_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1178",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_critical_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1207",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_critical_rules",
+      "target": "react_hook_form_zod_skill_always_do",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1209",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_critical_rules",
+      "target": "react_hook_form_zod_skill_never_do",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1274",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_known_issues_prevention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1365",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_1_zod_v4_type_inference_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1369",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_2_uncontrolled_to_controlled_warning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1377",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_3_nested_object_validation_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1384",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_4_array_field_re_renders",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1391",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_5_async_validation_race_conditions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1398",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_6_server_error_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1405",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_7_default_values_not_applied",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1412",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_8_controller_field_not_updating",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1419",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_9_usefieldarray_key_warnings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1426",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_10_schema_refinement_error_paths",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1433",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_11_transform_vs_preprocess_confusion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1440",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_known_issues_prevention",
+      "target": "react_hook_form_zod_skill_issue_12_multiple_resolver_conflicts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1447",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_templates",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1456",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_references",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1472",
+      "weight": 1.0
+    },
+    {
+      "source": "react_hook_form_zod_skill_react_hook_form_zod_validation",
+      "target": "react_hook_form_zod_skill_official_documentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/react-hook-form-zod/SKILL.md",
+      "source_location": "L1487",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

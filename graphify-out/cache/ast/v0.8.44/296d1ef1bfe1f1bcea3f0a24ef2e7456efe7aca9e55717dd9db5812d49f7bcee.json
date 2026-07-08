@@ -1,1 +1,239 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_6_permission_matrix_md", "label": "Part 6 \u2013 Permission Matrix.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1"}, {"id": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "label": "Part 6 \u2013 Permission Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1"}, {"id": "module_05_student_management_part_6_permission_matrix_module_5_student_management", "label": "Module 5 \u2013 Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L3"}, {"id": "module_05_student_management_part_6_permission_matrix_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L5"}, {"id": "module_05_student_management_part_6_permission_matrix_2_business_roles_covered", "label": "2. Business Roles Covered", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L17"}, {"id": "module_05_student_management_part_6_permission_matrix_3_action_level_permission_catalog", "label": "3. Action-Level Permission Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L38"}, {"id": "module_05_student_management_part_6_permission_matrix_4_menu_level_permission_catalog", "label": "4. Menu-Level Permission Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L63"}, {"id": "module_05_student_management_part_6_permission_matrix_5_report_level_permission_catalog", "label": "5. Report-Level Permission Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L80"}, {"id": "module_05_student_management_part_6_permission_matrix_6_branch_scope_profiles", "label": "6. Branch Scope Profiles", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L94"}, {"id": "module_05_student_management_part_6_permission_matrix_7_action_level_permission_matrix", "label": "7. Action-Level Permission Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L107"}, {"id": "module_05_student_management_part_6_permission_matrix_8_menu_level_permission_matrix", "label": "8. Menu-Level Permission Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L134"}, {"id": "module_05_student_management_part_6_permission_matrix_9_report_level_permission_matrix", "label": "9. Report-Level Permission Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L155"}, {"id": "module_05_student_management_part_6_permission_matrix_10_derived_ui_behavior_rules", "label": "10. Derived UI Behavior Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L176"}, {"id": "module_05_student_management_part_6_permission_matrix_11_default_role_bundle_recommendations", "label": "11. Default Role Bundle Recommendations", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L198"}, {"id": "module_05_student_management_part_6_permission_matrix_12_permission_assignment_principles", "label": "12. Permission Assignment Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L218"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_6_permission_matrix_md", "target": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L1", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_module_5_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L3", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L5", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_2_business_roles_covered", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L17", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_3_action_level_permission_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L38", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_4_menu_level_permission_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L63", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_5_report_level_permission_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L80", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_6_branch_scope_profiles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L94", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_7_action_level_permission_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L107", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_8_menu_level_permission_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L134", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_9_report_level_permission_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L155", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_10_derived_ui_behavior_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L176", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_11_default_role_bundle_recommendations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L198", "weight": 1.0}, {"source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix", "target": "module_05_student_management_part_6_permission_matrix_12_permission_assignment_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md", "source_location": "L218", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_6_permission_matrix_md",
+      "label": "Part 6 \u2013 Permission Matrix.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "label": "Part 6 \u2013 Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_module_5_student_management",
+      "label": "Module 5 \u2013 Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_2_business_roles_covered",
+      "label": "2. Business Roles Covered",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_3_action_level_permission_catalog",
+      "label": "3. Action-Level Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L38"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_4_menu_level_permission_catalog",
+      "label": "4. Menu-Level Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_5_report_level_permission_catalog",
+      "label": "5. Report-Level Permission Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L80"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_6_branch_scope_profiles",
+      "label": "6. Branch Scope Profiles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L94"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_7_action_level_permission_matrix",
+      "label": "7. Action-Level Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_8_menu_level_permission_matrix",
+      "label": "8. Menu-Level Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L134"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_9_report_level_permission_matrix",
+      "label": "9. Report-Level Permission Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L155"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_10_derived_ui_behavior_rules",
+      "label": "10. Derived UI Behavior Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L176"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_11_default_role_bundle_recommendations",
+      "label": "11. Default Role Bundle Recommendations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L198"
+    },
+    {
+      "id": "module_05_student_management_part_6_permission_matrix_12_permission_assignment_principles",
+      "label": "12. Permission Assignment Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L218"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_6_permission_matrix_md",
+      "target": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_module_5_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_2_business_roles_covered",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_3_action_level_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_4_menu_level_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_5_report_level_permission_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_6_branch_scope_profiles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_7_action_level_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_8_menu_level_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_9_report_level_permission_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_10_derived_ui_behavior_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_11_default_role_bundle_recommendations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_6_permission_matrix_part_6_permission_matrix",
+      "target": "module_05_student_management_part_6_permission_matrix_12_permission_assignment_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 6 \u2013 Permission Matrix.md",
+      "source_location": "L218",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,1 +1,127 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_md", "label": "Part 11 - Deployment, Operations, Observability, Runbooks.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "label": "Part 11 - Deployment, Operations, Observability, Runbooks", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_module_09_faculty_trainer_management", "label": "Module 09 - Faculty / Trainer Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L3"}, {"id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L5"}, {"id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_2_deployment_model", "label": "2. Deployment Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L13"}, {"id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_3_observability", "label": "3. Observability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L31"}, {"id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_4_backup_and_recovery", "label": "4. Backup and Recovery", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L47"}, {"id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_5_runbooks", "label": "5. Runbooks", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L67"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_md", "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_module_09_faculty_trainer_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L3", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L5", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_2_deployment_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L13", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_3_observability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L31", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_4_backup_and_recovery", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L47", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_5_runbooks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L67", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_md",
+      "label": "Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "label": "Part 11 - Deployment, Operations, Observability, Runbooks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_module_09_faculty_trainer_management",
+      "label": "Module 09 - Faculty / Trainer Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_2_deployment_model",
+      "label": "2. Deployment Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_3_observability",
+      "label": "3. Observability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_4_backup_and_recovery",
+      "label": "4. Backup and Recovery",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_5_runbooks",
+      "label": "5. Runbooks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L67"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_md",
+      "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_module_09_faculty_trainer_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_2_deployment_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_3_observability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_4_backup_and_recovery",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_09_faculty_trainer_management_part_11_deployment_operations_observability_runbooks_5_runbooks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L67",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

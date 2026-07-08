@@ -1,1 +1,1023 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_md", "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_module_08_attendance_management", "label": "Module 08 \u2013 Attendance Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L3"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_reporting_and_analytics_objectives", "label": "1. Reporting and Analytics Objectives", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L13"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_1_business_outcomes_supported", "label": "1.1 Business Outcomes Supported", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L17"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog", "label": "2. KPI Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L31"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_1_kpi_naming_and_coding_standards", "label": "2.1 KPI Naming and Coding Standards", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L33"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_2_kpi_definitions", "label": "2.2 KPI Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L37"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_3_attendance_percentage_formula", "label": "2.3 Attendance Percentage Formula", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L62"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_4_batch_attendance_risk_score", "label": "2.4 Batch Attendance Risk Score", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L93"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture", "label": "3. Dashboard Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L115"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_1_dashboard_types", "label": "3.1 Dashboard Types", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L117"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_2_dashboard_branch_scope_rules", "label": "3.2 Dashboard Branch Scope Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L129"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "label": "4. Admin and Portal Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L142"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_1_attendance_operations_dashboard_widgets", "label": "4.1 Attendance Operations Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L144"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_attendance_dashboard_widgets", "label": "4.2 Trainer Attendance Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L157"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_3_academic_coordinator_dashboard_widgets", "label": "4.3 Academic Coordinator Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L167"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_4_branch_admin_attendance_dashboard_widgets", "label": "4.4 Branch Admin Attendance Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L177"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_5_executive_attendance_dashboard_widgets", "label": "4.5 Executive Attendance Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L187"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_6_student_attendance_dashboard_widgets", "label": "4.6 Student Attendance Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L196"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_7_corporate_attendance_dashboard_widgets", "label": "4.7 Corporate Attendance Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L206"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "label": "5. Operational Reports", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L216"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_1_report_standards", "label": "5.1 Report Standards", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L218"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_2_export_formats", "label": "5.2 Export Formats", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L233"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "label": "5.3 Report Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L241"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_001_session_attendance_register", "label": "RPT-M08-ATT-001 \u2013 Session Attendance Register", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L243"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_002_batch_attendance_summary", "label": "RPT-M08-ATT-002 \u2013 Batch Attendance Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L260"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_003_student_attendance_history", "label": "RPT-M08-ATT-003 \u2013 Student Attendance History", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L277"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_004_low_attendance_report", "label": "RPT-M08-ATT-004 \u2013 Low Attendance Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L294"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_005_pending_attendance_sessions_report", "label": "RPT-M08-ATT-005 \u2013 Pending Attendance Sessions Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L311"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_006_trainer_attendance_compliance_report", "label": "RPT-M08-ATT-006 \u2013 Trainer Attendance Compliance Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L328"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_007_attendance_correction_register", "label": "RPT-M08-ATT-007 \u2013 Attendance Correction Register", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L345"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_008_attendance_alerts_register", "label": "RPT-M08-ATT-008 \u2013 Attendance Alerts Register", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L362"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_009_completion_attendance_evidence_report", "label": "RPT-M08-ATT-009 \u2013 Completion Attendance Evidence Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L379"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_010_corporate_attendance_summary", "label": "RPT-M08-ATT-010 \u2013 Corporate Attendance Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L396"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_011_attendance_audit_trail_report", "label": "RPT-M08-ATT-011 \u2013 Attendance Audit Trail Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L413"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_012_monthly_attendance_compliance_summary", "label": "RPT-M08-ATT-012 \u2013 Monthly Attendance Compliance Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L430"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications", "label": "6. Report Filter Specifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L449"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_1_common_filters", "label": "6.1 Common Filters", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L451"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_2_date_range_bounds", "label": "6.2 Date Range Bounds", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L469"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views", "label": "7. Read Models and Reporting Database Views", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L483"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_1_read_model_principles", "label": "7.1 Read Model Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L485"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "label": "7.2 Recommended Views / Materialized Views", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L496"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_session_status_summary", "label": "v_attendance_session_status_summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L498"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_pending_sessions", "label": "v_attendance_pending_sessions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L524"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_summary", "label": "v_student_attendance_summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L548"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_history", "label": "v_student_attendance_history", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L582"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_low_student_risk", "label": "v_attendance_low_student_risk", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L613"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_correction_register", "label": "v_attendance_correction_register", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L633"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_completion_attendance_evidence", "label": "v_completion_attendance_evidence", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L658"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_corporate_attendance_summary", "label": "v_corporate_attendance_summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L675"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_3_materialization_strategy", "label": "7.3 Materialization Strategy", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L691"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_4_read_model_refresh_events", "label": "7.4 Read Model Refresh Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L705"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_query_performance_requirements", "label": "8. Dashboard Query Performance Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L723"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements", "label": "9. Report Security and Audit Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L740"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_1_permission_controls", "label": "9.1 Permission Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L742"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_2_data_masking_rules", "label": "9.2 Data Masking Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L761"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_3_export_audit_events", "label": "9.3 Export Audit Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L773"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_10_bilingual_dashboard_and_report_requirements", "label": "10. Bilingual Dashboard and Report Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L791"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_11_analytics_drill_down_rules", "label": "11. Analytics Drill-Down Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L806"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_12_data_quality_checks_for_reporting", "label": "12. Data Quality Checks for Reporting", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L820"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_13_report_api_response_expectations", "label": "13. Report API Response Expectations", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L835"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_14_implementation_notes_for_next_js_modular_monolith", "label": "14. Implementation Notes for Next.js Modular Monolith", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L870"}, {"id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_15_traceability_to_functional_requirements", "label": "15. Traceability to Functional Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L885"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_module_08_attendance_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L3", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_reporting_and_analytics_objectives", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L13", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_reporting_and_analytics_objectives", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_1_business_outcomes_supported", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L17", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L31", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_1_kpi_naming_and_coding_standards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L33", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_2_kpi_definitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L37", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_3_attendance_percentage_formula", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L62", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_4_batch_attendance_risk_score", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L93", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L115", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_1_dashboard_types", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L117", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_2_dashboard_branch_scope_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L129", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L142", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_1_attendance_operations_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L144", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_attendance_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L157", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_3_academic_coordinator_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L167", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_4_branch_admin_attendance_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L177", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_5_executive_attendance_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L187", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_6_student_attendance_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L196", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_7_corporate_attendance_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L206", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L216", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_1_report_standards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L218", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_2_export_formats", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L233", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L241", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_001_session_attendance_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L243", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_002_batch_attendance_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L260", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_003_student_attendance_history", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L277", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_004_low_attendance_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L294", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_005_pending_attendance_sessions_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L311", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_006_trainer_attendance_compliance_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L328", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_007_attendance_correction_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L345", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_008_attendance_alerts_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L362", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_009_completion_attendance_evidence_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L379", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_010_corporate_attendance_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L396", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_011_attendance_audit_trail_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L413", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_012_monthly_attendance_compliance_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L430", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L449", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_1_common_filters", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L451", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_2_date_range_bounds", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L469", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L483", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_1_read_model_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L485", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L496", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_session_status_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L498", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_pending_sessions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L524", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L548", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_history", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L582", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_low_student_risk", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L613", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_correction_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L633", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_completion_attendance_evidence", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L658", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_corporate_attendance_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L675", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_3_materialization_strategy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L691", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_4_read_model_refresh_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L705", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_query_performance_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L723", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L740", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_1_permission_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L742", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_2_data_masking_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L761", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_3_export_audit_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L773", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_10_bilingual_dashboard_and_report_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L791", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_11_analytics_drill_down_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L806", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_12_data_quality_checks_for_reporting", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L820", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_13_report_api_response_expectations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L835", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_14_implementation_notes_for_next_js_modular_monolith", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L870", "weight": 1.0}, {"source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md", "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_15_traceability_to_functional_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L885", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_md",
+      "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_module_08_attendance_management",
+      "label": "Module 08 \u2013 Attendance Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_reporting_and_analytics_objectives",
+      "label": "1. Reporting and Analytics Objectives",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_1_business_outcomes_supported",
+      "label": "1.1 Business Outcomes Supported",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog",
+      "label": "2. KPI Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_1_kpi_naming_and_coding_standards",
+      "label": "2.1 KPI Naming and Coding Standards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_2_kpi_definitions",
+      "label": "2.2 KPI Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L37"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_3_attendance_percentage_formula",
+      "label": "2.3 Attendance Percentage Formula",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_4_batch_attendance_risk_score",
+      "label": "2.4 Batch Attendance Risk Score",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L93"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture",
+      "label": "3. Dashboard Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L115"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_1_dashboard_types",
+      "label": "3.1 Dashboard Types",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L117"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_2_dashboard_branch_scope_rules",
+      "label": "3.2 Dashboard Branch Scope Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L129"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "label": "4. Admin and Portal Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L142"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_1_attendance_operations_dashboard_widgets",
+      "label": "4.1 Attendance Operations Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L144"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_attendance_dashboard_widgets",
+      "label": "4.2 Trainer Attendance Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L157"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_3_academic_coordinator_dashboard_widgets",
+      "label": "4.3 Academic Coordinator Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L167"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_4_branch_admin_attendance_dashboard_widgets",
+      "label": "4.4 Branch Admin Attendance Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L177"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_5_executive_attendance_dashboard_widgets",
+      "label": "4.5 Executive Attendance Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_6_student_attendance_dashboard_widgets",
+      "label": "4.6 Student Attendance Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L196"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_7_corporate_attendance_dashboard_widgets",
+      "label": "4.7 Corporate Attendance Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L206"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "label": "5. Operational Reports",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L216"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_1_report_standards",
+      "label": "5.1 Report Standards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L218"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_2_export_formats",
+      "label": "5.2 Export Formats",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L233"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "label": "5.3 Report Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L241"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_001_session_attendance_register",
+      "label": "RPT-M08-ATT-001 \u2013 Session Attendance Register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L243"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_002_batch_attendance_summary",
+      "label": "RPT-M08-ATT-002 \u2013 Batch Attendance Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L260"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_003_student_attendance_history",
+      "label": "RPT-M08-ATT-003 \u2013 Student Attendance History",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L277"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_004_low_attendance_report",
+      "label": "RPT-M08-ATT-004 \u2013 Low Attendance Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L294"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_005_pending_attendance_sessions_report",
+      "label": "RPT-M08-ATT-005 \u2013 Pending Attendance Sessions Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L311"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_006_trainer_attendance_compliance_report",
+      "label": "RPT-M08-ATT-006 \u2013 Trainer Attendance Compliance Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L328"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_007_attendance_correction_register",
+      "label": "RPT-M08-ATT-007 \u2013 Attendance Correction Register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L345"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_008_attendance_alerts_register",
+      "label": "RPT-M08-ATT-008 \u2013 Attendance Alerts Register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L362"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_009_completion_attendance_evidence_report",
+      "label": "RPT-M08-ATT-009 \u2013 Completion Attendance Evidence Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L379"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_010_corporate_attendance_summary",
+      "label": "RPT-M08-ATT-010 \u2013 Corporate Attendance Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L396"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_011_attendance_audit_trail_report",
+      "label": "RPT-M08-ATT-011 \u2013 Attendance Audit Trail Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L413"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_012_monthly_attendance_compliance_summary",
+      "label": "RPT-M08-ATT-012 \u2013 Monthly Attendance Compliance Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L430"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications",
+      "label": "6. Report Filter Specifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L449"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_1_common_filters",
+      "label": "6.1 Common Filters",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L451"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_2_date_range_bounds",
+      "label": "6.2 Date Range Bounds",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L469"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views",
+      "label": "7. Read Models and Reporting Database Views",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L483"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_1_read_model_principles",
+      "label": "7.1 Read Model Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L485"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "label": "7.2 Recommended Views / Materialized Views",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L496"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_session_status_summary",
+      "label": "v_attendance_session_status_summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L498"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_pending_sessions",
+      "label": "v_attendance_pending_sessions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L524"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_summary",
+      "label": "v_student_attendance_summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L548"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_history",
+      "label": "v_student_attendance_history",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L582"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_low_student_risk",
+      "label": "v_attendance_low_student_risk",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L613"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_correction_register",
+      "label": "v_attendance_correction_register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L633"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_completion_attendance_evidence",
+      "label": "v_completion_attendance_evidence",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L658"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_corporate_attendance_summary",
+      "label": "v_corporate_attendance_summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L675"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_3_materialization_strategy",
+      "label": "7.3 Materialization Strategy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L691"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_4_read_model_refresh_events",
+      "label": "7.4 Read Model Refresh Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L705"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_query_performance_requirements",
+      "label": "8. Dashboard Query Performance Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L723"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements",
+      "label": "9. Report Security and Audit Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L740"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_1_permission_controls",
+      "label": "9.1 Permission Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L742"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_2_data_masking_rules",
+      "label": "9.2 Data Masking Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L761"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_3_export_audit_events",
+      "label": "9.3 Export Audit Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L773"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_10_bilingual_dashboard_and_report_requirements",
+      "label": "10. Bilingual Dashboard and Report Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L791"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_11_analytics_drill_down_rules",
+      "label": "11. Analytics Drill-Down Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L806"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_12_data_quality_checks_for_reporting",
+      "label": "12. Data Quality Checks for Reporting",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L820"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_13_report_api_response_expectations",
+      "label": "13. Report API Response Expectations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L835"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_14_implementation_notes_for_next_js_modular_monolith",
+      "label": "14. Implementation Notes for Next.js Modular Monolith",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L870"
+    },
+    {
+      "id": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_15_traceability_to_functional_requirements",
+      "label": "15. Traceability to Functional Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L885"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_module_08_attendance_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_reporting_and_analytics_objectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_reporting_and_analytics_objectives",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_1_1_business_outcomes_supported",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_1_kpi_naming_and_coding_standards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_2_kpi_definitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_3_attendance_percentage_formula",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_kpi_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_2_4_batch_attendance_risk_score",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_1_dashboard_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_dashboard_architecture",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_3_2_dashboard_branch_scope_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_1_attendance_operations_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_2_trainer_attendance_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L157",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_3_academic_coordinator_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_4_branch_admin_attendance_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_5_executive_attendance_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_6_student_attendance_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_admin_and_portal_dashboard_widgets",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_4_7_corporate_attendance_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L216",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_1_report_standards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_2_export_formats",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L233",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L241",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_001_session_attendance_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L243",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_002_batch_attendance_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_003_student_attendance_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L277",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_004_low_attendance_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L294",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_005_pending_attendance_sessions_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_006_trainer_attendance_compliance_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L328",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_007_attendance_correction_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L345",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_008_attendance_alerts_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_009_completion_attendance_evidence_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_010_corporate_attendance_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L396",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_011_attendance_audit_trail_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L413",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_5_3_report_catalog",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_rpt_m08_att_012_monthly_attendance_compliance_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L430",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L449",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_1_common_filters",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L451",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_report_filter_specifications",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_6_2_date_range_bounds",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L469",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L483",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_1_read_model_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L485",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L496",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_session_status_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L498",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_pending_sessions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L524",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L548",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_student_attendance_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L582",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_low_student_risk",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L613",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_attendance_correction_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L633",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_completion_attendance_evidence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L658",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_2_recommended_views_materialized_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_v_corporate_attendance_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L675",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_3_materialization_strategy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L691",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_read_models_and_reporting_database_views",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_7_4_read_model_refresh_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L705",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_8_dashboard_query_performance_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L723",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L740",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_1_permission_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L742",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_2_data_masking_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L761",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_report_security_and_audit_requirements",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_9_3_export_audit_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L773",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_10_bilingual_dashboard_and_report_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L791",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_11_analytics_drill_down_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L806",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_12_data_quality_checks_for_reporting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L820",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_13_report_api_response_expectations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L835",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_14_implementation_notes_for_next_js_modular_monolith",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L870",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_08_attendance_management_part_8_reports_dashboards_kpis_analytics_15_traceability_to_functional_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L885",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

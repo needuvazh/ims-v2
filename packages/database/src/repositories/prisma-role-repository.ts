@@ -139,9 +139,7 @@ export class PrismaRoleRepository implements IRoleRepository {
     });
   }
 
-  async listRolesForUser(
-    userId: Uuid,
-  ): Promise<
+  async listRolesForUser(userId: Uuid): Promise<
     {
       role: Role;
       status: string;
@@ -163,9 +161,7 @@ export class PrismaRoleRepository implements IRoleRepository {
     }));
   }
 
-  async listUsersForRole(
-    roleId: Uuid,
-  ): Promise<
+  async listUsersForRole(roleId: Uuid): Promise<
     {
       userId: Uuid;
       username: string;

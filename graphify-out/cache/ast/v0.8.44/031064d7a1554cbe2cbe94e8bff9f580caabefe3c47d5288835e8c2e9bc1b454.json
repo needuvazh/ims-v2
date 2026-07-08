@@ -1,1 +1,495 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_5_api_contracts_md", "label": "Part 5 \u2013 API Contracts.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "label": "Part 5 \u2013 API Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_5_api_contracts_module_08_attendance_management", "label": "Module 08 \u2013 Attendance Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L3"}, {"id": "module_08_attendance_management_part_5_api_contracts_1_api_contract_principles", "label": "1. API Contract Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L18"}, {"id": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes", "label": "2. Shared Headers and Envelopes", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L33"}, {"id": "module_08_attendance_management_part_5_api_contracts_2_1_request_headers", "label": "2.1 Request Headers", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L35"}, {"id": "module_08_attendance_management_part_5_api_contracts_2_2_success_envelope", "label": "2.2 Success Envelope", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L46"}, {"id": "module_08_attendance_management_part_5_api_contracts_2_3_error_envelope", "label": "2.3 Error Envelope", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L60"}, {"id": "module_08_attendance_management_part_5_api_contracts_3_shared_zod_schemas", "label": "3. Shared Zod Schemas", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L82"}, {"id": "module_08_attendance_management_part_5_api_contracts_4_endpoint_inventory", "label": "4. Endpoint Inventory", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L145"}, {"id": "module_08_attendance_management_part_5_api_contracts_5_common_dtos", "label": "5. Common DTOs", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L192"}, {"id": "module_08_attendance_management_part_5_api_contracts_5_1_attendance_session_dto", "label": "5.1 Attendance Session DTO", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L194"}, {"id": "module_08_attendance_management_part_5_api_contracts_5_2_attendance_record_dto", "label": "5.2 Attendance Record DTO", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L226"}, {"id": "module_08_attendance_management_part_5_api_contracts_5_3_attendance_summary_dto", "label": "5.3 Attendance Summary DTO", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L247"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "label": "6. Detailed Endpoint Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L273"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_1_api_attendance_sessions_get_search_attendance_sessions", "label": "6.1 `/api/attendance/sessions` GET \u2013 Search Attendance Sessions", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L275"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_2_api_attendance_sessions_post_create_attendance_session", "label": "6.2 `/api/attendance/sessions` POST \u2013 Create Attendance Session", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L353"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_3_api_attendance_sessions_attendancesessionid_get_read_session_detail", "label": "6.3 `/api/attendance/sessions/{attendanceSessionId}` GET \u2013 Read Session Detail", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L383"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_4_api_attendance_sessions_attendancesessionid_patch_update_session_metadata", "label": "6.4 `/api/attendance/sessions/{attendanceSessionId}` PATCH \u2013 Update Session Metadata", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L392"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_5_api_attendance_sessions_attendancesessionid_roster_sync_post", "label": "6.5 `/api/attendance/sessions/{attendanceSessionId}/roster-sync` POST", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L409"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_6_api_attendance_sessions_attendancesessionid_records_bulk_mark_post", "label": "6.6 `/api/attendance/sessions/{attendanceSessionId}/records/bulk-mark` POST", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L427"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_7_api_attendance_sessions_attendancesessionid_submit_post", "label": "6.7 `/api/attendance/sessions/{attendanceSessionId}/submit` POST", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L470"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_8_session_approval_return_cancel_lock_unlock_endpoints", "label": "6.8 Session Approval, Return, Cancel, Lock, Unlock Endpoints", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L491"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_9_correction_endpoints", "label": "6.9 Correction Endpoints", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L501"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_10_summary_endpoints", "label": "6.10 Summary Endpoints", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L535"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_11_alert_and_alert_rule_endpoints", "label": "6.11 Alert and Alert Rule Endpoints", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L564"}, {"id": "module_08_attendance_management_part_5_api_contracts_6_12_report_endpoints", "label": "6.12 Report Endpoints", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L607"}, {"id": "module_08_attendance_management_part_5_api_contracts_7_error_response_catalog", "label": "7. Error Response Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L619"}, {"id": "module_08_attendance_management_part_5_api_contracts_8_server_action_contracts", "label": "8. Server Action Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L663"}, {"id": "module_08_attendance_management_part_5_api_contracts_9_cache_revalidation_rules", "label": "9. Cache Revalidation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L675"}, {"id": "module_08_attendance_management_part_5_api_contracts_10_api_acceptance_criteria", "label": "10. API Acceptance Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L688"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_5_api_contracts_md", "target": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L1", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_module_08_attendance_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L3", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_1_api_contract_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L18", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L33", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes", "target": "module_08_attendance_management_part_5_api_contracts_2_1_request_headers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L35", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes", "target": "module_08_attendance_management_part_5_api_contracts_2_2_success_envelope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L46", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes", "target": "module_08_attendance_management_part_5_api_contracts_2_3_error_envelope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L60", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_3_shared_zod_schemas", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L82", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_4_endpoint_inventory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L145", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_5_common_dtos", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L192", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_5_common_dtos", "target": "module_08_attendance_management_part_5_api_contracts_5_1_attendance_session_dto", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L194", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_5_common_dtos", "target": "module_08_attendance_management_part_5_api_contracts_5_2_attendance_record_dto", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L226", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_5_common_dtos", "target": "module_08_attendance_management_part_5_api_contracts_5_3_attendance_summary_dto", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L247", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L273", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_1_api_attendance_sessions_get_search_attendance_sessions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L275", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_2_api_attendance_sessions_post_create_attendance_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L353", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_3_api_attendance_sessions_attendancesessionid_get_read_session_detail", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L383", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_4_api_attendance_sessions_attendancesessionid_patch_update_session_metadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L392", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_5_api_attendance_sessions_attendancesessionid_roster_sync_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L409", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_6_api_attendance_sessions_attendancesessionid_records_bulk_mark_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L427", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_7_api_attendance_sessions_attendancesessionid_submit_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L470", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_8_session_approval_return_cancel_lock_unlock_endpoints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L491", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_9_correction_endpoints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L501", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_10_summary_endpoints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L535", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_11_alert_and_alert_rule_endpoints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L564", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts", "target": "module_08_attendance_management_part_5_api_contracts_6_12_report_endpoints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L607", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_7_error_response_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L619", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_8_server_action_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L663", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_9_cache_revalidation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L675", "weight": 1.0}, {"source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts", "target": "module_08_attendance_management_part_5_api_contracts_10_api_acceptance_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md", "source_location": "L688", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_5_api_contracts_md",
+      "label": "Part 5 \u2013 API Contracts.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "label": "Part 5 \u2013 API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_module_08_attendance_management",
+      "label": "Module 08 \u2013 Attendance Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_1_api_contract_principles",
+      "label": "1. API Contract Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes",
+      "label": "2. Shared Headers and Envelopes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_2_1_request_headers",
+      "label": "2.1 Request Headers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_2_2_success_envelope",
+      "label": "2.2 Success Envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_2_3_error_envelope",
+      "label": "2.3 Error Envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_3_shared_zod_schemas",
+      "label": "3. Shared Zod Schemas",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L82"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_4_endpoint_inventory",
+      "label": "4. Endpoint Inventory",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L145"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_5_common_dtos",
+      "label": "5. Common DTOs",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L192"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_5_1_attendance_session_dto",
+      "label": "5.1 Attendance Session DTO",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L194"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_5_2_attendance_record_dto",
+      "label": "5.2 Attendance Record DTO",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L226"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_5_3_attendance_summary_dto",
+      "label": "5.3 Attendance Summary DTO",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L247"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "label": "6. Detailed Endpoint Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L273"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_1_api_attendance_sessions_get_search_attendance_sessions",
+      "label": "6.1 `/api/attendance/sessions` GET \u2013 Search Attendance Sessions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L275"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_2_api_attendance_sessions_post_create_attendance_session",
+      "label": "6.2 `/api/attendance/sessions` POST \u2013 Create Attendance Session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L353"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_3_api_attendance_sessions_attendancesessionid_get_read_session_detail",
+      "label": "6.3 `/api/attendance/sessions/{attendanceSessionId}` GET \u2013 Read Session Detail",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L383"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_4_api_attendance_sessions_attendancesessionid_patch_update_session_metadata",
+      "label": "6.4 `/api/attendance/sessions/{attendanceSessionId}` PATCH \u2013 Update Session Metadata",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L392"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_5_api_attendance_sessions_attendancesessionid_roster_sync_post",
+      "label": "6.5 `/api/attendance/sessions/{attendanceSessionId}/roster-sync` POST",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L409"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_6_api_attendance_sessions_attendancesessionid_records_bulk_mark_post",
+      "label": "6.6 `/api/attendance/sessions/{attendanceSessionId}/records/bulk-mark` POST",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L427"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_7_api_attendance_sessions_attendancesessionid_submit_post",
+      "label": "6.7 `/api/attendance/sessions/{attendanceSessionId}/submit` POST",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L470"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_8_session_approval_return_cancel_lock_unlock_endpoints",
+      "label": "6.8 Session Approval, Return, Cancel, Lock, Unlock Endpoints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L491"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_9_correction_endpoints",
+      "label": "6.9 Correction Endpoints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L501"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_10_summary_endpoints",
+      "label": "6.10 Summary Endpoints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L535"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_11_alert_and_alert_rule_endpoints",
+      "label": "6.11 Alert and Alert Rule Endpoints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L564"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_6_12_report_endpoints",
+      "label": "6.12 Report Endpoints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L607"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_7_error_response_catalog",
+      "label": "7. Error Response Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L619"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_8_server_action_contracts",
+      "label": "8. Server Action Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L663"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_9_cache_revalidation_rules",
+      "label": "9. Cache Revalidation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L675"
+    },
+    {
+      "id": "module_08_attendance_management_part_5_api_contracts_10_api_acceptance_criteria",
+      "label": "10. API Acceptance Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L688"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_5_api_contracts_md",
+      "target": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_module_08_attendance_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_1_api_contract_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes",
+      "target": "module_08_attendance_management_part_5_api_contracts_2_1_request_headers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes",
+      "target": "module_08_attendance_management_part_5_api_contracts_2_2_success_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_2_shared_headers_and_envelopes",
+      "target": "module_08_attendance_management_part_5_api_contracts_2_3_error_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_3_shared_zod_schemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_4_endpoint_inventory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_5_common_dtos",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_5_common_dtos",
+      "target": "module_08_attendance_management_part_5_api_contracts_5_1_attendance_session_dto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L194",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_5_common_dtos",
+      "target": "module_08_attendance_management_part_5_api_contracts_5_2_attendance_record_dto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_5_common_dtos",
+      "target": "module_08_attendance_management_part_5_api_contracts_5_3_attendance_summary_dto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L247",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L273",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_1_api_attendance_sessions_get_search_attendance_sessions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L275",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_2_api_attendance_sessions_post_create_attendance_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_3_api_attendance_sessions_attendancesessionid_get_read_session_detail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L383",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_4_api_attendance_sessions_attendancesessionid_patch_update_session_metadata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L392",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_5_api_attendance_sessions_attendancesessionid_roster_sync_post",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L409",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_6_api_attendance_sessions_attendancesessionid_records_bulk_mark_post",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_7_api_attendance_sessions_attendancesessionid_submit_post",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L470",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_8_session_approval_return_cancel_lock_unlock_endpoints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L491",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_9_correction_endpoints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L501",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_10_summary_endpoints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L535",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_11_alert_and_alert_rule_endpoints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L564",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_6_detailed_endpoint_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_6_12_report_endpoints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L607",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_7_error_response_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L619",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_8_server_action_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L663",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_9_cache_revalidation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L675",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_08_attendance_management_part_5_api_contracts_10_api_acceptance_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L688",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

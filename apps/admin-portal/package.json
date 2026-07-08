@@ -33,6 +33,7 @@
     "@ims/shared-kernel": "workspace:*",
     "@ims/shared-ui": "workspace:*",
     "@ims/trainer-management": "workspace:*",
+    "@ims/leave-management": "workspace:*",
     "@ims/training-delivery": "workspace:*",
     "@radix-ui/react-popover": "^1.1.17",
     "@vercel/blob": "^2.5.0",

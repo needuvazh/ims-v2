@@ -131,21 +131,17 @@ test('EnrollmentService createEnrollment should auto-convert Corporate Participa
   const mockPrisma = {
     studentProfile: {
       findFirst: vi.fn().mockResolvedValue(null), // Missing profile
-      create: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'stu-profile-1',
-          studentNumber: 'STU-2026-00001',
-        }),
+      create: vi.fn().mockResolvedValue({
+        id: 'stu-profile-1',
+        studentNumber: 'STU-2026-00001',
+      }),
     },
     admission: {
       findFirst: vi.fn().mockResolvedValue(null), // Missing admission
-      create: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'corp-adm-1',
-          admissionNumber: 'ADM-2026-00001',
-        }),
+      create: vi.fn().mockResolvedValue({
+        id: 'corp-adm-1',
+        admissionNumber: 'ADM-2026-00001',
+      }),
     },
     enrollment: {
       create: vi
@@ -558,12 +554,10 @@ test('EnrollmentService approveEnrollment should allow approval for student hold
       }),
       findFirst: vi.fn().mockResolvedValue(null),
       count: vi.fn().mockResolvedValue(14), // 14 active seats taken
-      update: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'enr-promoted',
-          enrollmentStatus: 'Approved',
-        }),
+      update: vi.fn().mockResolvedValue({
+        id: 'enr-promoted',
+        enrollmentStatus: 'Approved',
+      }),
     },
     waitingList: {
       findFirst: vi
@@ -618,12 +612,10 @@ test('EnrollmentService approveEnrollment should support worker resolution when 
       }),
       findFirst: vi.fn().mockResolvedValue(null),
       count: vi.fn().mockResolvedValue(10),
-      update: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'enr-resolved-by-worker',
-          enrollmentStatus: 'Approved',
-        }),
+      update: vi.fn().mockResolvedValue({
+        id: 'enr-resolved-by-worker',
+        enrollmentStatus: 'Approved',
+      }),
     },
     waitingList: {
       findFirst: vi
@@ -689,20 +681,16 @@ test('EnrollmentService createWalkInEnrollment should successfully create person
     },
     studentProfile: {
       findFirst: vi.fn().mockResolvedValue(null), // New profile
-      create: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'stu-walk-1',
-          studentNumber: 'STU-2026-99999',
-        }),
+      create: vi.fn().mockResolvedValue({
+        id: 'stu-walk-1',
+        studentNumber: 'STU-2026-99999',
+      }),
     },
     admission: {
-      create: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'adm-walk-1',
-          admissionNumber: 'ADM-2026-99999',
-        }),
+      create: vi.fn().mockResolvedValue({
+        id: 'adm-walk-1',
+        admissionNumber: 'ADM-2026-99999',
+      }),
       count: vi.fn().mockResolvedValue(0),
     },
     enrollment: {
@@ -826,12 +814,10 @@ test('EnrollmentService createWalkInEnrollment should reject duplicate active ad
       findFirst: vi.fn().mockResolvedValue({ id: 'person-existing-1' }),
     },
     studentProfile: {
-      findFirst: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'stu-existing-1',
-          studentNumber: 'STU-existing',
-        }),
+      findFirst: vi.fn().mockResolvedValue({
+        id: 'stu-existing-1',
+        studentNumber: 'STU-existing',
+      }),
     },
     admission: {
       count: vi.fn().mockResolvedValue(1),
@@ -938,20 +924,16 @@ test('EnrollmentService createWalkInEnrollment should route to waitlist when bat
       findFirst: vi.fn().mockResolvedValue({ id: 'person-existing-1' }),
     },
     studentProfile: {
-      findFirst: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'stu-existing-1',
-          studentNumber: 'STU-existing',
-        }),
+      findFirst: vi.fn().mockResolvedValue({
+        id: 'stu-existing-1',
+        studentNumber: 'STU-existing',
+      }),
     },
     admission: {
-      create: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'adm-walk-1',
-          admissionNumber: 'ADM-2026-99999',
-        }),
+      create: vi.fn().mockResolvedValue({
+        id: 'adm-walk-1',
+        admissionNumber: 'ADM-2026-99999',
+      }),
       count: vi.fn().mockResolvedValue(0),
     },
     enrollment: {

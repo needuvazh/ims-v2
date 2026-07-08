@@ -1,5 +1,12 @@
 import Link from 'next/link';
-import { BarChart3, BadgeCheck, CalendarClock, Users } from 'lucide-react';
+import {
+  BarChart3,
+  BadgeCheck,
+  CalendarClock,
+  Users,
+  UserPlus,
+  ArrowRight,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -41,12 +48,45 @@ export default async function FacultyDashboardPage() {
     person?: { firstName: string; lastName: string } | null;
   }>;
 
+  const shortcuts = [
+    {
+      title: 'Trainer Registry',
+      desc: 'Browse, search, and manage trainer profiles',
+      href: '/faculty/trainers',
+      icon: Users,
+      iconColor:
+        'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400',
+    },
+    {
+      title: 'Add New Trainer',
+      desc: 'Register a new trainer profile and specialization',
+      href: '/faculty/trainers/new',
+      icon: UserPlus,
+      iconColor:
+        'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400',
+    },
+    {
+      title: 'Eligible Trainer Finder',
+      desc: 'Check course authorizations and schedule availability',
+      href: '/faculty/eligible-trainers',
+      icon: BadgeCheck,
+      iconColor:
+        'bg-amber-50 text-amber-600 dark:bg-amber-950/30 dark:text-amber-400',
+    },
+    {
+      title: 'Faculty Reports',
+      desc: 'View branch-scoped trainer utilization and rosters',
+      href: '/faculty/reports',
+      icon: BarChart3,
+      iconColor:
+        'bg-violet-50 text-violet-600 dark:bg-violet-950/30 dark:text-violet-400',
+    },
+  ];
+
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Module 09"
         title="Faculty & Trainer Management"
-        description="Manage trainer profiles, compliance evidence, availability, authorizations, and branch-scoped reporting."
         actions={
           <LinkButton href="/faculty/trainers/new">Add trainer</LinkButton>
         }
@@ -127,7 +167,7 @@ export default async function FacultyDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover:shadow-lg transition-shadow">
           <CardHeader>
             <CardTitle>Operational Shortcuts</CardTitle>
             <CardDescription>
@@ -135,27 +175,33 @@ export default async function FacultyDashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <LinkButton
-              href="/faculty/trainers"
-              variant="secondary"
-              className="w-full"
-            >
-              Trainer registry
-            </LinkButton>
-            <LinkButton
-              href="/faculty/eligible-trainers"
-              variant="secondary"
-              className="w-full"
-            >
-              Eligible trainers
-            </LinkButton>
-            <LinkButton
-              href="/faculty/reports"
-              variant="secondary"
-              className="w-full"
-            >
-              Faculty reports
-            </LinkButton>
+            {shortcuts.map((shortcut) => {
+              const Icon = shortcut.icon;
+              return (
+                <Link
+                  key={shortcut.title}
+                  href={shortcut.href}
+                  className="group/item flex items-center justify-between rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-4 transition-all duration-300 hover:border-[color:var(--ims-brass)] hover:shadow-md hover:-translate-y-0.5"
+                >
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-300 group-hover/item:scale-105 ${shortcut.iconColor}`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="space-y-0.5 text-left">
+                      <p className="font-semibold text-[color:var(--ims-ink)] text-sm group-hover/item:text-[color:var(--ims-brass)] transition-colors">
+                        {shortcut.title}
+                      </p>
+                      <p className="text-xs text-[color:var(--ims-muted)] line-clamp-1">
+                        {shortcut.desc}
+                      </p>
+                    </div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-[color:var(--ims-muted)] transition-transform duration-300 group-hover/item:translate-x-1 group-hover/item:text-[color:var(--ims-brass)]" />
+                </Link>
+              );
+            })}
           </CardContent>
         </Card>
       </div>

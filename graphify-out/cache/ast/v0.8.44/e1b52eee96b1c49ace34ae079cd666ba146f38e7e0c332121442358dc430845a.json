@@ -1,1 +1,543 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_md", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_module_08_attendance_management", "label": "Module 08 \u2013 Attendance Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_1_validation_architecture", "label": "1. Validation Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L16"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_2_shared_field_validations", "label": "2. Shared Field Validations", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L29"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "label": "3. Business Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L68"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_1_attendance_session_creation", "label": "3.1 Attendance Session Creation", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L70"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_2_attendance_marking", "label": "3.2 Attendance Marking", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L85"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_3_submission_approval_locking", "label": "3.3 Submission, Approval, Locking", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L100"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_4_correction_workflow", "label": "3.4 Correction Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L113"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_5_summary_calculation", "label": "3.5 Summary Calculation", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L127"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_6_alert_rules_and_detection", "label": "3.6 Alert Rules and Detection", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L140"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_7_audit_and_soft_delete", "label": "3.7 Audit and Soft Delete", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L154"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules", "label": "4. Calculation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L166"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_1_attendance_percentage", "label": "4.1 Attendance Percentage", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L168"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_2_eligibility_output_to_completion_context", "label": "4.2 Eligibility Output to Completion Context", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L188"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_3_low_attendance_detection", "label": "4.3 Low Attendance Detection", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L198"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_5_structured_error_catalog", "label": "5. Structured Error Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L218"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_6_notification_events", "label": "6. Notification Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L271"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "label": "7. Notification Templates and Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L291"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_1_att_session_created", "label": "7.1 `ATT_SESSION_CREATED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L293"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_2_att_session_submitted", "label": "7.2 `ATT_SESSION_SUBMITTED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L319"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_3_att_session_returned", "label": "7.3 `ATT_SESSION_RETURNED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L339"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_4_att_correction_requested", "label": "7.4 `ATT_CORRECTION_REQUESTED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L351"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_5_att_correction_approved", "label": "7.5 `ATT_CORRECTION_APPROVED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L363"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_6_att_correction_rejected", "label": "7.6 `ATT_CORRECTION_REJECTED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L375"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_7_att_low_attendance_detected", "label": "7.7 `ATT_LOW_ATTENDANCE_DETECTED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L387"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_8_att_low_attendance_resolved", "label": "7.8 `ATT_LOW_ATTENDANCE_RESOLVED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L423"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_9_att_session_locked", "label": "7.9 `ATT_SESSION_LOCKED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L431"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_10_att_session_unlocked", "label": "7.10 `ATT_SESSION_UNLOCKED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L439"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_8_notification_recipient_resolution", "label": "8. Notification Recipient Resolution", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L449"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_9_notification_suppression_and_idempotency", "label": "9. Notification Suppression and Idempotency", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L465"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_10_cross_module_validation_dependencies", "label": "10. Cross-Module Validation Dependencies", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L482"}, {"id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_11_acceptance_criteria", "label": "11. Acceptance Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L501"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_module_08_attendance_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_1_validation_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L16", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_2_shared_field_validations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L29", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L68", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_1_attendance_session_creation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L70", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_2_attendance_marking", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L85", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_3_submission_approval_locking", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L100", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_4_correction_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L113", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_5_summary_calculation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L127", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_6_alert_rules_and_detection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L140", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_7_audit_and_soft_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L154", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L166", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_1_attendance_percentage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L168", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_2_eligibility_output_to_completion_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L188", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_3_low_attendance_detection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L198", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_5_structured_error_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L218", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_6_notification_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L271", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L291", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_1_att_session_created", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L293", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_2_att_session_submitted", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L319", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_3_att_session_returned", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L339", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_4_att_correction_requested", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L351", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_5_att_correction_approved", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L363", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_6_att_correction_rejected", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L375", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_7_att_low_attendance_detected", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L387", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_8_att_low_attendance_resolved", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L423", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_9_att_session_locked", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L431", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_10_att_session_unlocked", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L439", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_8_notification_recipient_resolution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L449", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_9_notification_suppression_and_idempotency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L465", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_10_cross_module_validation_dependencies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L482", "weight": 1.0}, {"source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_11_acceptance_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L501", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_md",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_module_08_attendance_management",
+      "label": "Module 08 \u2013 Attendance Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_1_validation_architecture",
+      "label": "1. Validation Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_2_shared_field_validations",
+      "label": "2. Shared Field Validations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "label": "3. Business Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_1_attendance_session_creation",
+      "label": "3.1 Attendance Session Creation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_2_attendance_marking",
+      "label": "3.2 Attendance Marking",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L85"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_3_submission_approval_locking",
+      "label": "3.3 Submission, Approval, Locking",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L100"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_4_correction_workflow",
+      "label": "3.4 Correction Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L113"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_5_summary_calculation",
+      "label": "3.5 Summary Calculation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L127"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_6_alert_rules_and_detection",
+      "label": "3.6 Alert Rules and Detection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L140"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_7_audit_and_soft_delete",
+      "label": "3.7 Audit and Soft Delete",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L154"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules",
+      "label": "4. Calculation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L166"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_1_attendance_percentage",
+      "label": "4.1 Attendance Percentage",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L168"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_2_eligibility_output_to_completion_context",
+      "label": "4.2 Eligibility Output to Completion Context",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L188"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_3_low_attendance_detection",
+      "label": "4.3 Low Attendance Detection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L198"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_5_structured_error_catalog",
+      "label": "5. Structured Error Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L218"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_6_notification_events",
+      "label": "6. Notification Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L271"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "label": "7. Notification Templates and Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L291"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_1_att_session_created",
+      "label": "7.1 `ATT_SESSION_CREATED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L293"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_2_att_session_submitted",
+      "label": "7.2 `ATT_SESSION_SUBMITTED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L319"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_3_att_session_returned",
+      "label": "7.3 `ATT_SESSION_RETURNED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L339"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_4_att_correction_requested",
+      "label": "7.4 `ATT_CORRECTION_REQUESTED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L351"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_5_att_correction_approved",
+      "label": "7.5 `ATT_CORRECTION_APPROVED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L363"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_6_att_correction_rejected",
+      "label": "7.6 `ATT_CORRECTION_REJECTED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L375"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_7_att_low_attendance_detected",
+      "label": "7.7 `ATT_LOW_ATTENDANCE_DETECTED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L387"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_8_att_low_attendance_resolved",
+      "label": "7.8 `ATT_LOW_ATTENDANCE_RESOLVED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L423"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_9_att_session_locked",
+      "label": "7.9 `ATT_SESSION_LOCKED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L431"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_10_att_session_unlocked",
+      "label": "7.10 `ATT_SESSION_UNLOCKED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L439"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_8_notification_recipient_resolution",
+      "label": "8. Notification Recipient Resolution",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L449"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_9_notification_suppression_and_idempotency",
+      "label": "9. Notification Suppression and Idempotency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L465"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_10_cross_module_validation_dependencies",
+      "label": "10. Cross-Module Validation Dependencies",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L482"
+    },
+    {
+      "id": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_11_acceptance_criteria",
+      "label": "11. Acceptance Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L501"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_module_08_attendance_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_1_validation_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_2_shared_field_validations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_1_attendance_session_creation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_2_attendance_marking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_3_submission_approval_locking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_4_correction_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_5_summary_calculation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_6_alert_rules_and_detection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_business_validation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_3_7_audit_and_soft_delete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_1_attendance_percentage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_2_eligibility_output_to_completion_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_calculation_rules",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_4_3_low_attendance_detection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_5_structured_error_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_6_notification_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L271",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L291",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_1_att_session_created",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_2_att_session_submitted",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_3_att_session_returned",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L339",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_4_att_correction_requested",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L351",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_5_att_correction_approved",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L363",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_6_att_correction_rejected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L375",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_7_att_low_attendance_detected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L387",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_8_att_low_attendance_resolved",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L423",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_9_att_session_locked",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L431",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_notification_templates_and_variables",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_7_10_att_session_unlocked",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L439",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_8_notification_recipient_resolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L449",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_9_notification_suppression_and_idempotency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L465",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_10_cross_module_validation_dependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L482",
+      "weight": 1.0
+    },
+    {
+      "source": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_08_attendance_management_part_7_validation_rules_error_catalog_notifications_11_acceptance_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 08 - Attendance Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L501",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

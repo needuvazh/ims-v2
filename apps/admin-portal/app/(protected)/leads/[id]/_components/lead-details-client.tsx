@@ -555,19 +555,33 @@ export function LeadDetailsClient({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 text-xs">
             <div>
-              <span className="text-[color:var(--ims-muted)] block mb-0.5">Full Name</span>
-              <span className="font-semibold text-[color:var(--ims-ink)] text-sm">{lead.firstName} {lead.lastName}</span>
+              <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                Full Name
+              </span>
+              <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
+                {lead.firstName} {lead.lastName}
+              </span>
             </div>
             <div>
-              <span className="text-[color:var(--ims-muted)] block mb-0.5">Phone Number</span>
-              <span className="font-semibold text-[color:var(--ims-ink)] text-sm">{lead.phone}</span>
+              <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                Phone Number
+              </span>
+              <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
+                {lead.phone}
+              </span>
             </div>
             <div>
-              <span className="text-[color:var(--ims-muted)] block mb-0.5">Email Address</span>
-              <span className="font-semibold text-[color:var(--ims-ink)] text-sm">{lead.email || 'N/A'}</span>
+              <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                Email Address
+              </span>
+              <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
+                {lead.email || 'N/A'}
+              </span>
             </div>
             <div>
-              <span className="text-[color:var(--ims-muted)] block mb-0.5">Interested Course</span>
+              <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                Interested Course
+              </span>
               <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
                 {lead.interestedCourse?.nameEnglish || lead.interestedCourseId}
               </span>
@@ -576,39 +590,59 @@ export function LeadDetailsClient({
             {isProfileExpanded && (
               <>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block mb-0.5">Date of Birth</span>
+                  <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                    Date of Birth
+                  </span>
                   <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
-                    {lead.person?.dateOfBirth ? new Date(lead.person.dateOfBirth).toLocaleDateString() : 'N/A'}
+                    {lead.person?.dateOfBirth
+                      ? new Date(lead.person.dateOfBirth).toLocaleDateString()
+                      : 'N/A'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block mb-0.5">Nationality</span>
+                  <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                    Nationality
+                  </span>
                   <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
                     {lead.nationality || lead.person?.nationality || 'N/A'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block mb-0.5">ID Number</span>
+                  <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                    ID Number
+                  </span>
                   <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
                     {lead.nationalId || lead.person?.nationalId || 'N/A'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block mb-0.5">Branch</span>
-                  <span className="font-semibold text-[color:var(--ims-ink)] text-sm">{lead.branch?.name || 'N/A'}</span>
+                  <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                    Branch
+                  </span>
+                  <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
+                    {lead.branch?.name || 'N/A'}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block mb-0.5">Lead Source</span>
-                  <span className="font-semibold text-[color:var(--ims-ink)] text-sm">{lead.source}</span>
+                  <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                    Lead Source
+                  </span>
+                  <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
+                    {lead.source}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-[color:var(--ims-muted)] block mb-0.5">Assigned Counselor</span>
+                  <span className="text-[color:var(--ims-muted)] block mb-0.5">
+                    Assigned Counselor
+                  </span>
                   <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
                     {lead.counselor?.name || 'Unassigned'}
                   </span>
                 </div>
                 <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 border-t border-slate-100 pt-4 mt-2">
-                  <span className="text-[color:var(--ims-muted)] block mb-1">Background Notes</span>
+                  <span className="text-[color:var(--ims-muted)] block mb-1">
+                    Background Notes
+                  </span>
                   <p className="text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 whitespace-pre-wrap text-xs">
                     {lead.notes || 'No background notes provided.'}
                   </p>
@@ -802,7 +836,10 @@ export function LeadDetailsClient({
                               value: 'CompetitorChosen',
                               label: 'Chose competitor',
                             },
-                            { value: 'TimingNotGood', label: 'Timing not good' },
+                            {
+                              value: 'TimingNotGood',
+                              label: 'Timing not good',
+                            },
                             {
                               value: 'NoResponse',
                               label: 'Lost contact / no response',
@@ -880,7 +917,8 @@ export function LeadDetailsClient({
                           Lost Explanatory Notes:
                         </span>
                         <p className="mt-1 text-slate-600 bg-white p-2 rounded border border-slate-100 whitespace-pre-wrap">
-                          {lead.lostReasonNotes || 'No explanatory notes provided.'}
+                          {lead.lostReasonNotes ||
+                            'No explanatory notes provided.'}
                         </p>
                       </div>
                     </div>
@@ -962,7 +1000,9 @@ export function LeadDetailsClient({
                                   </span>{' '}
                                   to{' '}
                                   <Badge
-                                    variant={getStageBadgeVariant(event.newStage)}
+                                    variant={getStageBadgeVariant(
+                                      event.newStage,
+                                    )}
                                   >
                                     {event.newStage}
                                   </Badge>
@@ -1041,7 +1081,9 @@ export function LeadDetailsClient({
                       <Table>
                         <TableHeader className="bg-slate-50/50">
                           <TableRow>
-                            <TableHead className="w-1/2">Note Details</TableHead>
+                            <TableHead className="w-1/2">
+                              Note Details
+                            </TableHead>
                             <TableHead>Added By</TableHead>
                             <TableHead>Added Date</TableHead>
                           </TableRow>
@@ -1068,8 +1110,8 @@ export function LeadDetailsClient({
                       <div className="flex justify-between items-center mt-4">
                         <span className="text-xs text-[color:var(--ims-muted)]">
                           Showing {(notesPage - 1) * notesLimit + 1} to{' '}
-                          {Math.min(notesPage * notesLimit, localNotes.length)} of{' '}
-                          {localNotes.length} notes
+                          {Math.min(notesPage * notesLimit, localNotes.length)}{' '}
+                          of {localNotes.length} notes
                         </span>
                         <div className="flex gap-2">
                           <Button

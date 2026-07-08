@@ -1,1 +1,335 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_responsive_ui_system_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L1"}, {"id": "responsive_ui_system_spec_responsive_ui_system_specification", "label": "responsive-ui-system Specification", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L1"}, {"id": "responsive_ui_system_spec_purpose", "label": "Purpose", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L3"}, {"id": "responsive_ui_system_spec_requirements", "label": "Requirements", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L7"}, {"id": "responsive_ui_system_spec_requirement_standard_viewport_tiers_and_density_modes", "label": "Requirement: Standard viewport tiers and density modes", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L9"}, {"id": "responsive_ui_system_spec_scenario_responsive_rules_are_predictable", "label": "Scenario: Responsive rules are predictable", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L14"}, {"id": "responsive_ui_system_spec_requirement_shared_spacing_and_typography_tokens", "label": "Requirement: Shared spacing and typography tokens", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L19"}, {"id": "responsive_ui_system_spec_scenario_page_title_uses_semantic_sizing", "label": "Scenario: Page title uses semantic sizing", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L24"}, {"id": "responsive_ui_system_spec_requirement_page_template_wrappers", "label": "Requirement: Page Template Wrappers", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L29"}, {"id": "responsive_ui_system_spec_scenario_admin_list_follows_template", "label": "Scenario: Admin List follows template", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L34"}, {"id": "responsive_ui_system_spec_requirement_form_detail_stacking", "label": "Requirement: Form & Detail Stacking", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L39"}, {"id": "responsive_ui_system_spec_scenario_form_stacks_on_mobile", "label": "Scenario: Form stacks on mobile", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L44"}, {"id": "responsive_ui_system_spec_requirement_admin_shell_responsiveness", "label": "Requirement: Admin shell responsiveness", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L49"}, {"id": "responsive_ui_system_spec_scenario_mobile_shell_remains_usable", "label": "Scenario: Mobile shell remains usable", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L55"}, {"id": "responsive_ui_system_spec_requirement_shared_component_responsiveness", "label": "Requirement: Shared component responsiveness", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L61"}, {"id": "responsive_ui_system_spec_scenario_header_actions_stack_on_small_screens", "label": "Scenario: Header actions stack on small screens", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L66"}, {"id": "responsive_ui_system_spec_scenario_tables_remain_usable_on_mobile", "label": "Scenario: Tables remain usable on mobile", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L71"}, {"id": "responsive_ui_system_spec_requirement_public_marketing_pages_use_hero_density_safely", "label": "Requirement: Public marketing pages use hero density safely", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L77"}, {"id": "responsive_ui_system_spec_scenario_hero_scales_down_on_mobile", "label": "Scenario: Hero scales down on mobile", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L82"}, {"id": "responsive_ui_system_spec_requirement_responsive_qa_coverage", "label": "Requirement: Responsive QA coverage", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L88"}, {"id": "responsive_ui_system_spec_scenario_no_horizontal_overflow_on_key_screens", "label": "Scenario: No horizontal overflow on key screens", "file_type": "document", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L92"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_responsive_ui_system_spec_md", "target": "responsive_ui_system_spec_responsive_ui_system_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "responsive_ui_system_spec_responsive_ui_system_specification", "target": "responsive_ui_system_spec_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "responsive_ui_system_spec_responsive_ui_system_specification", "target": "responsive_ui_system_spec_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_standard_viewport_tiers_and_density_modes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L9", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_standard_viewport_tiers_and_density_modes", "target": "responsive_ui_system_spec_scenario_responsive_rules_are_predictable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L14", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_shared_spacing_and_typography_tokens", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L19", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_shared_spacing_and_typography_tokens", "target": "responsive_ui_system_spec_scenario_page_title_uses_semantic_sizing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L24", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_page_template_wrappers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L29", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_page_template_wrappers", "target": "responsive_ui_system_spec_scenario_admin_list_follows_template", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L34", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_form_detail_stacking", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L39", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_form_detail_stacking", "target": "responsive_ui_system_spec_scenario_form_stacks_on_mobile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L44", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_admin_shell_responsiveness", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L49", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_admin_shell_responsiveness", "target": "responsive_ui_system_spec_scenario_mobile_shell_remains_usable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L55", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_shared_component_responsiveness", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L61", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_shared_component_responsiveness", "target": "responsive_ui_system_spec_scenario_header_actions_stack_on_small_screens", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L66", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_shared_component_responsiveness", "target": "responsive_ui_system_spec_scenario_tables_remain_usable_on_mobile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L71", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_public_marketing_pages_use_hero_density_safely", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L77", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_public_marketing_pages_use_hero_density_safely", "target": "responsive_ui_system_spec_scenario_hero_scales_down_on_mobile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L82", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirements", "target": "responsive_ui_system_spec_requirement_responsive_qa_coverage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L88", "weight": 1.0}, {"source": "responsive_ui_system_spec_requirement_responsive_qa_coverage", "target": "responsive_ui_system_spec_scenario_no_horizontal_overflow_on_key_screens", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/responsive-ui-system/spec.md", "source_location": "L92", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_responsive_ui_system_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "responsive_ui_system_spec_responsive_ui_system_specification",
+      "label": "responsive-ui-system Specification",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "responsive_ui_system_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_standard_viewport_tiers_and_density_modes",
+      "label": "Requirement: Standard viewport tiers and density modes",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_responsive_rules_are_predictable",
+      "label": "Scenario: Responsive rules are predictable",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_shared_spacing_and_typography_tokens",
+      "label": "Requirement: Shared spacing and typography tokens",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_page_title_uses_semantic_sizing",
+      "label": "Scenario: Page title uses semantic sizing",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_page_template_wrappers",
+      "label": "Requirement: Page Template Wrappers",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_admin_list_follows_template",
+      "label": "Scenario: Admin List follows template",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_form_detail_stacking",
+      "label": "Requirement: Form & Detail Stacking",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_form_stacks_on_mobile",
+      "label": "Scenario: Form stacks on mobile",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_admin_shell_responsiveness",
+      "label": "Requirement: Admin shell responsiveness",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L49"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_mobile_shell_remains_usable",
+      "label": "Scenario: Mobile shell remains usable",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_shared_component_responsiveness",
+      "label": "Requirement: Shared component responsiveness",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_header_actions_stack_on_small_screens",
+      "label": "Scenario: Header actions stack on small screens",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L66"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_tables_remain_usable_on_mobile",
+      "label": "Scenario: Tables remain usable on mobile",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_public_marketing_pages_use_hero_density_safely",
+      "label": "Requirement: Public marketing pages use hero density safely",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_hero_scales_down_on_mobile",
+      "label": "Scenario: Hero scales down on mobile",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L82"
+    },
+    {
+      "id": "responsive_ui_system_spec_requirement_responsive_qa_coverage",
+      "label": "Requirement: Responsive QA coverage",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L88"
+    },
+    {
+      "id": "responsive_ui_system_spec_scenario_no_horizontal_overflow_on_key_screens",
+      "label": "Scenario: No horizontal overflow on key screens",
+      "file_type": "document",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L92"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_responsive_ui_system_spec_md",
+      "target": "responsive_ui_system_spec_responsive_ui_system_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_responsive_ui_system_specification",
+      "target": "responsive_ui_system_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_responsive_ui_system_specification",
+      "target": "responsive_ui_system_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_standard_viewport_tiers_and_density_modes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_standard_viewport_tiers_and_density_modes",
+      "target": "responsive_ui_system_spec_scenario_responsive_rules_are_predictable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_shared_spacing_and_typography_tokens",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_shared_spacing_and_typography_tokens",
+      "target": "responsive_ui_system_spec_scenario_page_title_uses_semantic_sizing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_page_template_wrappers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_page_template_wrappers",
+      "target": "responsive_ui_system_spec_scenario_admin_list_follows_template",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_form_detail_stacking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_form_detail_stacking",
+      "target": "responsive_ui_system_spec_scenario_form_stacks_on_mobile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_admin_shell_responsiveness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_admin_shell_responsiveness",
+      "target": "responsive_ui_system_spec_scenario_mobile_shell_remains_usable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_shared_component_responsiveness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_shared_component_responsiveness",
+      "target": "responsive_ui_system_spec_scenario_header_actions_stack_on_small_screens",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_shared_component_responsiveness",
+      "target": "responsive_ui_system_spec_scenario_tables_remain_usable_on_mobile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_public_marketing_pages_use_hero_density_safely",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_public_marketing_pages_use_hero_density_safely",
+      "target": "responsive_ui_system_spec_scenario_hero_scales_down_on_mobile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirements",
+      "target": "responsive_ui_system_spec_requirement_responsive_qa_coverage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "responsive_ui_system_spec_requirement_responsive_qa_coverage",
+      "target": "responsive_ui_system_spec_scenario_no_horizontal_overflow_on_key_screens",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/responsive-ui-system/spec.md",
+      "source_location": "L92",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

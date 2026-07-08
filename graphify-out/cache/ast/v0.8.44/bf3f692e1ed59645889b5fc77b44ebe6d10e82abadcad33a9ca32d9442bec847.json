@@ -1,1 +1,159 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_timetable_scheduling_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L1"}, {"id": "timetable_scheduling_spec_timetable_scheduling_specification", "label": "timetable-scheduling Specification", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L1"}, {"id": "timetable_scheduling_spec_purpose", "label": "Purpose", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L3"}, {"id": "timetable_scheduling_spec_requirements", "label": "Requirements", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L7"}, {"id": "timetable_scheduling_spec_requirement_centralized_timetable_scheduling", "label": "Requirement: Centralized Timetable Scheduling", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L9"}, {"id": "timetable_scheduling_spec_scenario_bulk_recurring_session_generation", "label": "Scenario: Bulk recurring session generation", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L13"}, {"id": "timetable_scheduling_spec_requirement_real_time_conflict_interception", "label": "Requirement: Real-time Conflict Interception", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L18"}, {"id": "timetable_scheduling_spec_scenario_intercepting_trainer_double_booking", "label": "Scenario: Intercepting trainer double-booking", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L22"}, {"id": "timetable_scheduling_spec_requirement_cross_branch_access_control", "label": "Requirement: Cross-Branch Access Control", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L27"}, {"id": "timetable_scheduling_spec_scenario_unauthorized_cross_branch_view", "label": "Scenario: Unauthorized cross-branch view", "file_type": "document", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L31"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_timetable_scheduling_spec_md", "target": "timetable_scheduling_spec_timetable_scheduling_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "timetable_scheduling_spec_timetable_scheduling_specification", "target": "timetable_scheduling_spec_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "timetable_scheduling_spec_timetable_scheduling_specification", "target": "timetable_scheduling_spec_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "timetable_scheduling_spec_requirements", "target": "timetable_scheduling_spec_requirement_centralized_timetable_scheduling", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L9", "weight": 1.0}, {"source": "timetable_scheduling_spec_requirement_centralized_timetable_scheduling", "target": "timetable_scheduling_spec_scenario_bulk_recurring_session_generation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L13", "weight": 1.0}, {"source": "timetable_scheduling_spec_requirements", "target": "timetable_scheduling_spec_requirement_real_time_conflict_interception", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L18", "weight": 1.0}, {"source": "timetable_scheduling_spec_requirement_real_time_conflict_interception", "target": "timetable_scheduling_spec_scenario_intercepting_trainer_double_booking", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L22", "weight": 1.0}, {"source": "timetable_scheduling_spec_requirements", "target": "timetable_scheduling_spec_requirement_cross_branch_access_control", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L27", "weight": 1.0}, {"source": "timetable_scheduling_spec_requirement_cross_branch_access_control", "target": "timetable_scheduling_spec_scenario_unauthorized_cross_branch_view", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/timetable-scheduling/spec.md", "source_location": "L31", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_timetable_scheduling_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "timetable_scheduling_spec_timetable_scheduling_specification",
+      "label": "timetable-scheduling Specification",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "timetable_scheduling_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "timetable_scheduling_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "timetable_scheduling_spec_requirement_centralized_timetable_scheduling",
+      "label": "Requirement: Centralized Timetable Scheduling",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "timetable_scheduling_spec_scenario_bulk_recurring_session_generation",
+      "label": "Scenario: Bulk recurring session generation",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "timetable_scheduling_spec_requirement_real_time_conflict_interception",
+      "label": "Requirement: Real-time Conflict Interception",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "timetable_scheduling_spec_scenario_intercepting_trainer_double_booking",
+      "label": "Scenario: Intercepting trainer double-booking",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "timetable_scheduling_spec_requirement_cross_branch_access_control",
+      "label": "Requirement: Cross-Branch Access Control",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "timetable_scheduling_spec_scenario_unauthorized_cross_branch_view",
+      "label": "Scenario: Unauthorized cross-branch view",
+      "file_type": "document",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L31"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_timetable_scheduling_spec_md",
+      "target": "timetable_scheduling_spec_timetable_scheduling_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_timetable_scheduling_specification",
+      "target": "timetable_scheduling_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_timetable_scheduling_specification",
+      "target": "timetable_scheduling_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_requirements",
+      "target": "timetable_scheduling_spec_requirement_centralized_timetable_scheduling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_requirement_centralized_timetable_scheduling",
+      "target": "timetable_scheduling_spec_scenario_bulk_recurring_session_generation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_requirements",
+      "target": "timetable_scheduling_spec_requirement_real_time_conflict_interception",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_requirement_real_time_conflict_interception",
+      "target": "timetable_scheduling_spec_scenario_intercepting_trainer_double_booking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_requirements",
+      "target": "timetable_scheduling_spec_requirement_cross_branch_access_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "timetable_scheduling_spec_requirement_cross_branch_access_control",
+      "target": "timetable_scheduling_spec_scenario_unauthorized_cross_branch_view",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/timetable-scheduling/spec.md",
+      "source_location": "L31",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

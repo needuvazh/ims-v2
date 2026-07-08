@@ -53,6 +53,7 @@ enum ConflictType {
   TRAINER_OVERLAP
   CLASSROOM_OVERLAP
   OPERATING_HOURS
+  TRAINER_UNAVAILABLE
 }
 
 enum HolidayStatus {
@@ -169,6 +170,7 @@ model Person {
   admissions     Admission[]
   studentProfiles StudentProfile[]
   trainerProfiles TrainerProfile[]
+  leaveRequests   LeaveRequest[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -574,6 +576,7 @@ model Branch {
   receivables         Receivable[]
   corporateCreditRules CorporateCreditRule[]
   invoiceLineItems    InvoiceLineItem[]
+  leaveRequests       LeaveRequest[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -3029,3 +3032,39 @@ model DocumentRequirement {
   @@unique([targetEntity, documentType, branchId, courseId])
   @@map("document_requirements")
 }
+
+model LeaveRequest {
+  id              String    @id @default(uuid()) @db.Uuid
+  personId        String    @db.Uuid
+  person          Person    @relation(fields: [personId], references: [id])
+  branchId        String    @db.Uuid
+  branch          Branch    @relation(fields: [branchId], references: [id])
+  
+  startDate       DateTime  @db.Date
+  endDate         DateTime  @db.Date
+  startTime       String?   @db.VarChar(8)
+  endTime         String?   @db.VarChar(8)
+  isFullDay       Boolean   @default(true)
+  
+  leaveType       String    @db.VarChar(50)
+  reason          String?   @db.Text
+  status          String    @default("Pending") @db.VarChar(50)
+  
+  approvedBy      String?   @db.Uuid
+  approvedAt      DateTime? @db.Timestamptz(6)
+  rejectionReason String?   @db.Text
+
+  createdAt       DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy       String?   @db.Uuid
+  updatedAt       DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy       String?   @db.Uuid
+  deletedAt       DateTime? @db.Timestamptz(6)
+  deletedBy       String?   @db.Uuid
+  isDeleted       Boolean   @default(false)
+
+  @@index([personId])
+  @@index([branchId])
+  @@index([startDate, endDate])
+  @@map("leave_requests")
+}
+

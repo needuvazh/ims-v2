@@ -8,6 +8,7 @@ export * from './components/link-button';
 export * from './components/input';
 export * from './components/textarea';
 export * from './components/select';
+export * from './components/multi-select';
 export * from './components/checkbox';
 export * from './components/radio-group';
 export * from './components/form-field';

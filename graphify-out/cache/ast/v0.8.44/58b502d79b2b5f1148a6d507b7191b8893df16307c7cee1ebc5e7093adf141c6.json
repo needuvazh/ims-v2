@@ -1,1 +1,1311 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_11_deployment_operations_observability_runbooks_md", "label": "Part 11 - Deployment, Operations, Observability, Runbooks.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "label": "Part 11 - Deployment, Operations, Observability, Runbooks", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_module_5_student_management", "label": "Module 5 \u2013 Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L3"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L5"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_deployment_model", "label": "2. Deployment Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L30"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_1_runtime_components", "label": "2.1 Runtime Components", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L32"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_2_deployment_constraints", "label": "2.2 Deployment Constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L47"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_observability_architecture", "label": "3. Observability Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L61"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard", "label": "3.1 Structured Logging Standard", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L63"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_log_fields", "label": "Required Log Fields", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L67"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_optional_log_fields", "label": "Optional Log Fields", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L89"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_log_redaction_rules", "label": "Log Redaction Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L101"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_success_log", "label": "Example Success Log", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L115"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_failure_log", "label": "Example Failure Log", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L138"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries", "label": "3.2 Tracing Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L164"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_trace_boundaries", "label": "Required Trace Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L168"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_span_names", "label": "Recommended Span Names", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L178"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trace_attributes", "label": "Trace Attributes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L199"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation", "label": "3.3 Metrics Instrumentation", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L214"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_core_counters", "label": "Core Counters", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L216"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_histograms", "label": "Histograms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L241"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_gauges", "label": "Gauges", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L253"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_label_dimensions", "label": "Label Dimensions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L263"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_health_checks", "label": "4. Health Checks", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L280"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels", "label": "4.1 Health Check Levels", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L282"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_liveness_check", "label": "Liveness Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L284"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_readiness_check", "label": "Readiness Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L299"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_deep_health_check_ops_only", "label": "Deep Health Check (Ops-only)", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L312"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_2_health_status_rules", "label": "4.2 Health Status Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L329"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_backup_and_recovery_instructions", "label": "5. Backup and Recovery Instructions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L342"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_1_owned_tables_in_recovery_scope", "label": "5.1 Owned Tables in Recovery Scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L344"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy", "label": "5.2 Backup Strategy", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L354"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_database_backups", "label": "Database Backups", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L356"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_backup_cadence", "label": "Recommended Backup Cadence", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L362"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recovery_targets", "label": "Recovery Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L368"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_3_recovery_principles", "label": "5.3 Recovery Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L373"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_4_table_recovery_workflow", "label": "5.4 Table Recovery Workflow", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L384"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_scenario_recover_accidentally_lost_rows_after_database_incident", "label": "Scenario: Recover accidentally lost rows after database incident", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L386"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_5_export_file_recovery", "label": "5.5 Export File Recovery", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L399"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_operational_procedures", "label": "6. Operational Procedures", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L410"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_1_daily_checks", "label": "6.1 Daily Checks", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L412"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_2_weekly_checks", "label": "6.2 Weekly Checks", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L421"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_3_release_time_checks", "label": "6.3 Release-Time Checks", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L429"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_troubleshooting_runbooks", "label": "7. Troubleshooting Runbooks", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L439"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match", "label": "7.1 Runbook: Student Create Fails with Duplicate Blocking Match", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L441"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L443"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L449"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when", "label": "Escalate When", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L473"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure", "label": "7.2 Runbook: Student Merge Transaction Failure", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L481"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_483", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L483"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_489", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L489"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_516", "label": "Escalate When", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L516"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure", "label": "7.3 Runbook: Export Generation Failure", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L524"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_526", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L526"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_532", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L532"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_558", "label": "Escalate When", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L558"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness", "label": "7.4 Runbook: Read Model / Reporting View Staleness", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L566"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_568", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L568"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_574", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L574"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_588", "label": "Escalate When", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L588"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected", "label": "7.5 Runbook: Branch Scope Leakage Suspected", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L596"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_598", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L598"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_604", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L604"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_627", "label": "Escalate When", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L627"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict", "label": "7.6 Runbook: ID Card Number Conflict", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L635"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_637", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L637"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_641", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L641"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update", "label": "7.7 Runbook: Concurrency Failure on Update", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L659"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_661", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L661"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_666", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L666"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review", "label": "7.8 Runbook: Sensitive Export Audit Review", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L680"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trigger", "label": "Trigger", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L682"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_686", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L686"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision", "label": "7.9 Runbook: Bulk Import / Bulk Sync Identity Collision", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L705"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_709", "label": "Symptoms", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L709"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_715", "label": "Steps", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L715"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_745", "label": "Escalate When", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L745"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes", "label": "8. Diagnostic Queries and Safe Ops Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L753"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_safe_ops_principles", "label": "Safe Ops Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L755"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_diagnostic_questions", "label": "Recommended Diagnostic Questions", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L763"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_9_operations_alert_matrix", "label": "9. Operations Alert Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L775"}, {"id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_10_final_operational_notes", "label": "10. Final Operational Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L789"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_11_deployment_operations_observability_runbooks_md", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L1", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_module_5_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L3", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L5", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_deployment_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L30", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_1_runtime_components", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L32", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_2_deployment_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L47", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_observability_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L61", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L63", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_log_fields", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L67", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_optional_log_fields", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L89", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_log_redaction_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L101", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_success_log", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L115", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_failure_log", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L138", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L164", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_trace_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L168", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_span_names", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L178", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trace_attributes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L199", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L214", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_core_counters", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L216", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_histograms", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L241", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_gauges", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L253", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_label_dimensions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L263", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_health_checks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L280", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L282", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_liveness_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L284", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_readiness_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L299", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_deep_health_check_ops_only", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L312", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_2_health_status_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L329", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_backup_and_recovery_instructions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L342", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_1_owned_tables_in_recovery_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L344", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L354", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_database_backups", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L356", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_backup_cadence", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L362", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recovery_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L368", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_3_recovery_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L373", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_4_table_recovery_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L384", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_4_table_recovery_workflow", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_scenario_recover_accidentally_lost_rows_after_database_incident", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L386", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_5_export_file_recovery", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L399", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_operational_procedures", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L410", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_1_daily_checks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L412", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_2_weekly_checks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L421", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_3_release_time_checks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L429", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_troubleshooting_runbooks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L439", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L441", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L443", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L449", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L473", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L481", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_483", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L483", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_489", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L489", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_516", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L516", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L524", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_526", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L526", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_532", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L532", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_558", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L558", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L566", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_568", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L568", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_574", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L574", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_588", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L588", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L596", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_598", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L598", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_604", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L604", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_627", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L627", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L635", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_637", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L637", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_641", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L641", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L659", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_661", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L661", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_666", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L666", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L680", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trigger", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L682", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_686", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L686", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L705", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_709", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L709", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_715", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L715", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_745", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L745", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L753", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_safe_ops_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L755", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_diagnostic_questions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L763", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_9_operations_alert_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L775", "weight": 1.0}, {"source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks", "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_10_final_operational_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md", "source_location": "L789", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_11_deployment_operations_observability_runbooks_md",
+      "label": "Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "label": "Part 11 - Deployment, Operations, Observability, Runbooks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_module_5_student_management",
+      "label": "Module 5 \u2013 Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_deployment_model",
+      "label": "2. Deployment Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_1_runtime_components",
+      "label": "2.1 Runtime Components",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_2_deployment_constraints",
+      "label": "2.2 Deployment Constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_observability_architecture",
+      "label": "3. Observability Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard",
+      "label": "3.1 Structured Logging Standard",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_log_fields",
+      "label": "Required Log Fields",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L67"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_optional_log_fields",
+      "label": "Optional Log Fields",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L89"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_log_redaction_rules",
+      "label": "Log Redaction Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L101"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_success_log",
+      "label": "Example Success Log",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L115"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_failure_log",
+      "label": "Example Failure Log",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L138"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries",
+      "label": "3.2 Tracing Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L164"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_trace_boundaries",
+      "label": "Required Trace Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L168"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_span_names",
+      "label": "Recommended Span Names",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L178"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trace_attributes",
+      "label": "Trace Attributes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L199"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation",
+      "label": "3.3 Metrics Instrumentation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L214"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_core_counters",
+      "label": "Core Counters",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L216"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_histograms",
+      "label": "Histograms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L241"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_gauges",
+      "label": "Gauges",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L253"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_label_dimensions",
+      "label": "Label Dimensions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L263"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_health_checks",
+      "label": "4. Health Checks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L280"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels",
+      "label": "4.1 Health Check Levels",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L282"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_liveness_check",
+      "label": "Liveness Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L284"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_readiness_check",
+      "label": "Readiness Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L299"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_deep_health_check_ops_only",
+      "label": "Deep Health Check (Ops-only)",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L312"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_2_health_status_rules",
+      "label": "4.2 Health Status Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L329"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_backup_and_recovery_instructions",
+      "label": "5. Backup and Recovery Instructions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L342"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_1_owned_tables_in_recovery_scope",
+      "label": "5.1 Owned Tables in Recovery Scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L344"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy",
+      "label": "5.2 Backup Strategy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L354"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_database_backups",
+      "label": "Database Backups",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L356"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_backup_cadence",
+      "label": "Recommended Backup Cadence",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L362"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recovery_targets",
+      "label": "Recovery Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L368"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_3_recovery_principles",
+      "label": "5.3 Recovery Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L373"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_4_table_recovery_workflow",
+      "label": "5.4 Table Recovery Workflow",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L384"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_scenario_recover_accidentally_lost_rows_after_database_incident",
+      "label": "Scenario: Recover accidentally lost rows after database incident",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L386"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_5_export_file_recovery",
+      "label": "5.5 Export File Recovery",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L399"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_operational_procedures",
+      "label": "6. Operational Procedures",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L410"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_1_daily_checks",
+      "label": "6.1 Daily Checks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L412"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_2_weekly_checks",
+      "label": "6.2 Weekly Checks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L421"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_3_release_time_checks",
+      "label": "6.3 Release-Time Checks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L429"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_troubleshooting_runbooks",
+      "label": "7. Troubleshooting Runbooks",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L439"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match",
+      "label": "7.1 Runbook: Student Create Fails with Duplicate Blocking Match",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L441"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L443"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L449"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when",
+      "label": "Escalate When",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L473"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure",
+      "label": "7.2 Runbook: Student Merge Transaction Failure",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L481"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_483",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L483"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_489",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L489"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_516",
+      "label": "Escalate When",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L516"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure",
+      "label": "7.3 Runbook: Export Generation Failure",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L524"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_526",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L526"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_532",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L532"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_558",
+      "label": "Escalate When",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L558"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness",
+      "label": "7.4 Runbook: Read Model / Reporting View Staleness",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L566"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_568",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L568"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_574",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L574"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_588",
+      "label": "Escalate When",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L588"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected",
+      "label": "7.5 Runbook: Branch Scope Leakage Suspected",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L596"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_598",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L598"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_604",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L604"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_627",
+      "label": "Escalate When",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L627"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict",
+      "label": "7.6 Runbook: ID Card Number Conflict",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L635"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_637",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L637"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_641",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L641"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update",
+      "label": "7.7 Runbook: Concurrency Failure on Update",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L659"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_661",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L661"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_666",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L666"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review",
+      "label": "7.8 Runbook: Sensitive Export Audit Review",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L680"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trigger",
+      "label": "Trigger",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L682"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_686",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L686"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision",
+      "label": "7.9 Runbook: Bulk Import / Bulk Sync Identity Collision",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L705"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_709",
+      "label": "Symptoms",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L709"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_715",
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L715"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_745",
+      "label": "Escalate When",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L745"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes",
+      "label": "8. Diagnostic Queries and Safe Ops Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L753"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_safe_ops_principles",
+      "label": "Safe Ops Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L755"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_diagnostic_questions",
+      "label": "Recommended Diagnostic Questions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L763"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_9_operations_alert_matrix",
+      "label": "9. Operations Alert Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L775"
+    },
+    {
+      "id": "module_05_student_management_part_11_deployment_operations_observability_runbooks_10_final_operational_notes",
+      "label": "10. Final Operational Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L789"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_11_deployment_operations_observability_runbooks_md",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_module_5_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_deployment_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_1_runtime_components",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_2_2_deployment_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_observability_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_log_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_optional_log_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_log_redaction_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_success_log",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_1_structured_logging_standard",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_example_failure_log",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_required_trace_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_span_names",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_2_tracing_boundaries",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trace_attributes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_core_counters",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L216",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_histograms",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L241",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_gauges",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L253",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_3_3_metrics_instrumentation",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_label_dimensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L263",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_health_checks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L280",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L282",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_liveness_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_readiness_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_1_health_check_levels",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_deep_health_check_ops_only",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L312",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_4_2_health_status_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L329",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_backup_and_recovery_instructions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L342",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_1_owned_tables_in_recovery_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L354",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_database_backups",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L356",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_backup_cadence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_2_backup_strategy",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recovery_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L368",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_3_recovery_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L373",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_4_table_recovery_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_4_table_recovery_workflow",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_scenario_recover_accidentally_lost_rows_after_database_incident",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L386",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_5_5_export_file_recovery",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_operational_procedures",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L410",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_1_daily_checks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L412",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_2_weekly_checks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_6_3_release_time_checks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L429",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_troubleshooting_runbooks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L439",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L441",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L443",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L449",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_1_runbook_student_create_fails_with_duplicate_blocking_match",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L473",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L481",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_483",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L483",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_489",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L489",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_2_runbook_student_merge_transaction_failure",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_516",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L516",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L524",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_526",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L526",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_532",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L532",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_3_runbook_export_generation_failure",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_558",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L558",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L566",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_568",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L568",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_574",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L574",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_4_runbook_read_model_reporting_view_staleness",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_588",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L588",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L596",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_598",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L598",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_604",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L604",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_5_runbook_branch_scope_leakage_suspected",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_627",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L627",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L635",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_637",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L637",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_6_runbook_id_card_number_conflict",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_641",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L641",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L659",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_661",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L661",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_7_runbook_concurrency_failure_on_update",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_666",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L666",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L680",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_trigger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L682",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_8_runbook_sensitive_export_audit_review",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_686",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L686",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L705",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_symptoms_709",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L709",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_steps_715",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L715",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_7_9_runbook_bulk_import_bulk_sync_identity_collision",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_escalate_when_745",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L745",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L753",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_safe_ops_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L755",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_8_diagnostic_queries_and_safe_ops_notes",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_recommended_diagnostic_questions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L763",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_9_operations_alert_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L775",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_11_deployment_operations_observability_runbooks_part_11_deployment_operations_observability_runbooks",
+      "target": "module_05_student_management_part_11_deployment_operations_observability_runbooks_10_final_operational_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 11 - Deployment, Operations, Observability, Runbooks.md",
+      "source_location": "L789",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

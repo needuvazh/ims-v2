@@ -23,6 +23,7 @@ import {
   PrismaTrainerManagementRepository,
   TrainerManagementService,
 } from '@ims/trainer-management';
+import { LeaveManagementService } from '@ims/leave-management';
 import { PrismaSchedulingRepository, SchedulingService } from '@ims/scheduling';
 import {
   AttendanceQueryService,
@@ -460,5 +461,7 @@ export const batchService = new BatchService(
 // ─── Finance Repositories & Services ──────────────────────────────────────
 import { FinanceService } from '@ims/finance-receivables';
 export const financeService = new FinanceService(prisma);
+
+export const leaveManagementService = new LeaveManagementService(prisma);
 
 export { prisma };

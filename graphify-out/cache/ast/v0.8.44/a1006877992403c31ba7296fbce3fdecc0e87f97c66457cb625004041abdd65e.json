@@ -1,1 +1,63 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_enrollment_lifecycle_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md", "source_location": "L1"}, {"id": "enrollment_lifecycle_spec_modified_requirements", "label": "MODIFIED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md", "source_location": "L1"}, {"id": "enrollment_lifecycle_spec_requirement_enrollment_completion_status_sync_fr_enr_008", "label": "Requirement: Enrollment Completion Status Sync (FR-ENR-008)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md", "source_location": "L3"}, {"id": "enrollment_lifecycle_spec_scenario_event_driven_enrollment_completion_sync", "label": "Scenario: Event-driven enrollment completion sync", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md", "source_location": "L7"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_enrollment_lifecycle_spec_md", "target": "enrollment_lifecycle_spec_modified_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_modified_requirements", "target": "enrollment_lifecycle_spec_requirement_enrollment_completion_status_sync_fr_enr_008", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_completion_status_sync_fr_enr_008", "target": "enrollment_lifecycle_spec_scenario_event_driven_enrollment_completion_sync", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md", "source_location": "L7", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_enrollment_lifecycle_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_modified_requirements",
+      "label": "MODIFIED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_requirement_enrollment_completion_status_sync_fr_enr_008",
+      "label": "Requirement: Enrollment Completion Status Sync (FR-ENR-008)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_event_driven_enrollment_completion_sync",
+      "label": "Scenario: Event-driven enrollment completion sync",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L7"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_enrollment_lifecycle_spec_md",
+      "target": "enrollment_lifecycle_spec_modified_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_modified_requirements",
+      "target": "enrollment_lifecycle_spec_requirement_enrollment_completion_status_sync_fr_enr_008",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_completion_status_sync_fr_enr_008",
+      "target": "enrollment_lifecycle_spec_scenario_event_driven_enrollment_completion_sync",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

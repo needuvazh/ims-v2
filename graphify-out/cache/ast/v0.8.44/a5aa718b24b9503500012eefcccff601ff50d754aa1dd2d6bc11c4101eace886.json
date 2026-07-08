@@ -1,1 +1,767 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_5_api_contracts_md", "label": "Part 5 \u2013 API Contracts.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "label": "Part 5 \u2013 API Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_module_09_faculty_trainer_management", "label": "Module 09 \u2013 Faculty / Trainer Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L3"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L5"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "label": "2. Common API Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L11"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_2_1_base_path", "label": "2.1 Base Path", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L13"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_2_2_authentication", "label": "2.2 Authentication", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L17"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_2_3_branch_scope_resolution", "label": "2.3 Branch Scope Resolution", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L21"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_2_4_standard_success_envelope", "label": "2.4 Standard Success Envelope", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L36"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_2_5_standard_error_envelope", "label": "2.5 Standard Error Envelope", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L64"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_2_6_common_pagination_and_sorting_schema", "label": "2.6 Common Pagination and Sorting Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L82"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_3_endpoint_inventory", "label": "3. Endpoint Inventory", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L93"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_4_detailed_endpoint_contracts", "label": "4. Detailed Endpoint Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L127"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_001_search_and_list_trainers", "label": "API-FTM-001 \u2013 Search and List Trainers", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L129"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_002_create_trainer_profile", "label": "API-FTM-002 \u2013 Create Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L198"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_003_read_complete_trainer_profile", "label": "API-FTM-003 \u2013 Read Complete Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L253"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_004_update_trainer_profile", "label": "API-FTM-004 \u2013 Update Trainer Profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L301"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_005_execute_trainer_status_transition", "label": "API-FTM-005 \u2013 Execute Trainer Status Transition", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L330"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts", "label": "API-FTM-006 to API-FTM-009 \u2013 Qualification Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L366"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_list_qualifications", "label": "List Qualifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L368"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_create_qualification", "label": "Create Qualification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L384"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_update_qualification", "label": "Update Qualification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L399"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_qualification", "label": "Soft Delete Qualification", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L403"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts", "label": "API-FTM-010 to API-FTM-013 \u2013 Availability Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L439"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_list_availability", "label": "List Availability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L441"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_create_availability", "label": "Create Availability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L464"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_update_deactivate_availability", "label": "Update/Deactivate Availability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L490"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_availability", "label": "Soft Delete Availability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L494"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts", "label": "API-FTM-014 to API-FTM-016 \u2013 Course Authorization Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L523"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_list_authorizations", "label": "List Authorizations", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L525"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_create_authorization", "label": "Create Authorization", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L537"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_transition_authorization", "label": "Transition Authorization", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L551"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_017_find_eligible_trainers", "label": "API-FTM-017 \u2013 Find Eligible Trainers", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L588"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_018_validate_assignment_eligibility", "label": "API-FTM-018 \u2013 Validate Assignment Eligibility", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L652"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_019_validate_availability", "label": "API-FTM-019 \u2013 Validate Availability", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L698"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts", "label": "API-FTM-020 to API-FTM-023 \u2013 Compensation Rate Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L732"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_list_rates", "label": "List Rates", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L734"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_create_rate", "label": "Create Rate", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L750"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_update_rate", "label": "Update Rate", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L770"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_resolve_rate", "label": "Resolve Rate", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L774"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_024_read_assignment_references", "label": "API-FTM-024 \u2013 Read Assignment References", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L813"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports", "label": "API-FTM-025 and API-FTM-026 \u2013 Reports and Exports", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L856"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_report_query_schema", "label": "Report Query Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L869"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_export_request_schema", "label": "Export Request Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L882"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_027_audit_history", "label": "API-FTM-027 \u2013 Audit History", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L912"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_5_internal_server_actions_in_process_contracts", "label": "5. Internal Server Actions / In-Process Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L971"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_6_http_status_strategy", "label": "6. HTTP Status Strategy", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L1018"}, {"id": "module_09_faculty_trainer_management_part_5_api_contracts_7_api_security_requirements", "label": "7. API Security Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L1034"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_5_api_contracts_md", "target": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L1", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_module_09_faculty_trainer_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L3", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L5", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L11", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_1_base_path", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L13", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_2_authentication", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L17", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_3_branch_scope_resolution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L21", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_4_standard_success_envelope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L36", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_5_standard_error_envelope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L64", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions", "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_6_common_pagination_and_sorting_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L82", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_3_endpoint_inventory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L93", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_4_detailed_endpoint_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L127", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_001_search_and_list_trainers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L129", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_002_create_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L198", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_003_read_complete_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L253", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_004_update_trainer_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L301", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_005_execute_trainer_status_transition", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L330", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L366", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_qualifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L368", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_qualification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L384", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_update_qualification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L399", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_qualification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L403", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L439", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_availability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L441", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_availability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L464", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_update_deactivate_availability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L490", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_availability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L494", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L523", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_authorizations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L525", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_authorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L537", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_transition_authorization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L551", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_017_find_eligible_trainers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L588", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_018_validate_assignment_eligibility", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L652", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_019_validate_availability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L698", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L732", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_rates", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L734", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_rate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L750", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_update_rate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L770", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_resolve_rate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L774", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_024_read_assignment_references", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L813", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L856", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports", "target": "module_09_faculty_trainer_management_part_5_api_contracts_report_query_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L869", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports", "target": "module_09_faculty_trainer_management_part_5_api_contracts_export_request_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L882", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_027_audit_history", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L912", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_5_internal_server_actions_in_process_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L971", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_6_http_status_strategy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L1018", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts", "target": "module_09_faculty_trainer_management_part_5_api_contracts_7_api_security_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md", "source_location": "L1034", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_5_api_contracts_md",
+      "label": "Part 5 \u2013 API Contracts.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "label": "Part 5 \u2013 API Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_module_09_faculty_trainer_management",
+      "label": "Module 09 \u2013 Faculty / Trainer Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "label": "2. Common API Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_2_1_base_path",
+      "label": "2.1 Base Path",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_2_2_authentication",
+      "label": "2.2 Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_2_3_branch_scope_resolution",
+      "label": "2.3 Branch Scope Resolution",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_2_4_standard_success_envelope",
+      "label": "2.4 Standard Success Envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_2_5_standard_error_envelope",
+      "label": "2.5 Standard Error Envelope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L64"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_2_6_common_pagination_and_sorting_schema",
+      "label": "2.6 Common Pagination and Sorting Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L82"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_3_endpoint_inventory",
+      "label": "3. Endpoint Inventory",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L93"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_4_detailed_endpoint_contracts",
+      "label": "4. Detailed Endpoint Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L127"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_001_search_and_list_trainers",
+      "label": "API-FTM-001 \u2013 Search and List Trainers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L129"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_002_create_trainer_profile",
+      "label": "API-FTM-002 \u2013 Create Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L198"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_003_read_complete_trainer_profile",
+      "label": "API-FTM-003 \u2013 Read Complete Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L253"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_004_update_trainer_profile",
+      "label": "API-FTM-004 \u2013 Update Trainer Profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L301"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_005_execute_trainer_status_transition",
+      "label": "API-FTM-005 \u2013 Execute Trainer Status Transition",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L330"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts",
+      "label": "API-FTM-006 to API-FTM-009 \u2013 Qualification Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L366"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_list_qualifications",
+      "label": "List Qualifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L368"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_create_qualification",
+      "label": "Create Qualification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L384"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_update_qualification",
+      "label": "Update Qualification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L399"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_qualification",
+      "label": "Soft Delete Qualification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L403"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts",
+      "label": "API-FTM-010 to API-FTM-013 \u2013 Availability Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L439"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_list_availability",
+      "label": "List Availability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L441"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_create_availability",
+      "label": "Create Availability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L464"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_update_deactivate_availability",
+      "label": "Update/Deactivate Availability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L490"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_availability",
+      "label": "Soft Delete Availability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L494"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts",
+      "label": "API-FTM-014 to API-FTM-016 \u2013 Course Authorization Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L523"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_list_authorizations",
+      "label": "List Authorizations",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L525"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_create_authorization",
+      "label": "Create Authorization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L537"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_transition_authorization",
+      "label": "Transition Authorization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L551"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_017_find_eligible_trainers",
+      "label": "API-FTM-017 \u2013 Find Eligible Trainers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L588"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_018_validate_assignment_eligibility",
+      "label": "API-FTM-018 \u2013 Validate Assignment Eligibility",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L652"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_019_validate_availability",
+      "label": "API-FTM-019 \u2013 Validate Availability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L698"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts",
+      "label": "API-FTM-020 to API-FTM-023 \u2013 Compensation Rate Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L732"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_list_rates",
+      "label": "List Rates",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L734"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_create_rate",
+      "label": "Create Rate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L750"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_update_rate",
+      "label": "Update Rate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L770"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_resolve_rate",
+      "label": "Resolve Rate",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L774"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_024_read_assignment_references",
+      "label": "API-FTM-024 \u2013 Read Assignment References",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L813"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports",
+      "label": "API-FTM-025 and API-FTM-026 \u2013 Reports and Exports",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L856"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_report_query_schema",
+      "label": "Report Query Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L869"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_export_request_schema",
+      "label": "Export Request Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L882"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_027_audit_history",
+      "label": "API-FTM-027 \u2013 Audit History",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L912"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_5_internal_server_actions_in_process_contracts",
+      "label": "5. Internal Server Actions / In-Process Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L971"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_6_http_status_strategy",
+      "label": "6. HTTP Status Strategy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1018"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_5_api_contracts_7_api_security_requirements",
+      "label": "7. API Security Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1034"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_5_api_contracts_md",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_module_09_faculty_trainer_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_1_base_path",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_2_authentication",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_3_branch_scope_resolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_4_standard_success_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_5_standard_error_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_2_common_api_conventions",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_2_6_common_pagination_and_sorting_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_3_endpoint_inventory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_4_detailed_endpoint_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_001_search_and_list_trainers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_002_create_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_003_read_complete_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L253",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_004_update_trainer_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_005_execute_trainer_status_transition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L330",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L366",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_qualifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L368",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_qualification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_update_qualification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_006_to_api_ftm_009_qualification_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_qualification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L403",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L439",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_availability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L441",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_availability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L464",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_update_deactivate_availability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L490",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_010_to_api_ftm_013_availability_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_soft_delete_availability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L494",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L523",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_authorizations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L525",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_authorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L537",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_014_to_api_ftm_016_course_authorization_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_transition_authorization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L551",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_017_find_eligible_trainers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L588",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_018_validate_assignment_eligibility",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L652",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_019_validate_availability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L698",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L732",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_list_rates",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L734",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_create_rate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L750",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_update_rate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L770",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_020_to_api_ftm_023_compensation_rate_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_resolve_rate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L774",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_024_read_assignment_references",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L813",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L856",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_report_query_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L869",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_025_and_api_ftm_026_reports_and_exports",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_export_request_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L882",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_api_ftm_027_audit_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L912",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_5_internal_server_actions_in_process_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L971",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_6_http_status_strategy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1018",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_5_api_contracts_part_5_api_contracts",
+      "target": "module_09_faculty_trainer_management_part_5_api_contracts_7_api_security_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 5 \u2013 API Contracts.md",
+      "source_location": "L1034",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

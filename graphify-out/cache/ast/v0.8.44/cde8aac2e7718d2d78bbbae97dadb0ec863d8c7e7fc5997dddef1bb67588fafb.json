@@ -1,1 +1,1455 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_module_10_exam_result_completion_management", "label": "Module 10 \u2013 Exam, Result & Completion Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L5"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture", "label": "2. Validation Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L55"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_1_validation_layers", "label": "2.1 Validation Layers", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L57"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions", "label": "3. Custom Validation Schema Conventions", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L110"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_1_common_scalar_schemas", "label": "3.1 Common Scalar Schemas", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L116"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_2_pagination_schema", "label": "3.2 Pagination Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L142"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_3_branch_filter_schema", "label": "3.3 Branch Filter Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L151"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas", "label": "4. Exam Validation Schemas", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L170"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_1_create_exam_schema", "label": "4.1 Create Exam Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L172"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_2_update_exam_schema", "label": "4.2 Update Exam Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L206"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_3_schedule_exam_schema", "label": "4.3 Schedule Exam Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L245"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_4_cancel_exam_schema", "label": "4.4 Cancel Exam Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L255"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_5_exam_state_action_schema", "label": "4.5 Exam State Action Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L264"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "label": "5. Result Validation Schemas", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L281"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_1_record_result_schema", "label": "5.1 Record Result Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L283"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_2_bulk_result_row_schema", "label": "5.2 Bulk Result Row Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L307"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_3_bulk_result_validation_schema", "label": "5.3 Bulk Result Validation Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L318"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_4_bulk_submit_schema", "label": "5.4 Bulk Submit Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L344"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_5_finalize_result_schema", "label": "5.5 Finalize Result Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L362"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_6_finalize_result_set_schema", "label": "5.6 Finalize Result Set Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L370"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_7_correct_result_schema", "label": "5.7 Correct Result Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L386"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "label": "6. Completion Validation Schemas", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L411"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_1_evaluate_completion_schema", "label": "6.1 Evaluate Completion Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L413"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_2_reevaluation_schema", "label": "6.2 Reevaluation Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L434"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_3_trainer_recommendation_approve_schema", "label": "6.3 Trainer Recommendation Approve Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L471"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_4_trainer_recommendation_reject_schema", "label": "6.4 Trainer Recommendation Reject Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L480"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_5_coordinator_review_approve_schema", "label": "6.5 Coordinator Review Approve Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L489"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_6_coordinator_review_reject_schema", "label": "6.6 Coordinator Review Reject Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L498"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_7_final_approval_schema", "label": "6.7 Final Approval Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L507"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_8_final_rejection_schema", "label": "6.8 Final Rejection Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L516"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_7_export_validation_schema", "label": "7. Export Validation Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L527"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog", "label": "8. Validation Rule Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L571"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_1_exam_validation_rules", "label": "8.1 Exam Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L573"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_2_result_validation_rules", "label": "8.2 Result Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L593"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_3_completion_validation_rules", "label": "8.3 Completion Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L616"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_4_approval_validation_rules", "label": "8.4 Approval Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L638"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_structured_error_code_catalog", "label": "9. Structured Error Code Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L655"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_1_error_naming_convention", "label": "9.1 Error Naming Convention", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L657"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_10_exam_error_catalog", "label": "10. Exam Error Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L689"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_11_result_error_catalog", "label": "11. Result Error Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L713"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_12_completion_error_catalog", "label": "12. Completion Error Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L737"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_13_approval_error_catalog", "label": "13. Approval Error Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L760"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_14_shared_error_catalog", "label": "14. Shared Error Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L776"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_notification_architecture", "label": "15. Notification Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L798"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_1_ownership", "label": "15.1 Ownership", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L800"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog", "label": "16. Notification Event Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L843"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_1_exam_notification_events", "label": "16.1 Exam Notification Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L845"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_2_result_notification_events", "label": "16.2 Result Notification Events", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L855"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_3_completion_workflow_notifications", "label": "16.3 Completion Workflow Notifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L864"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "label": "17. Notification Payload Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L881"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_1_exam_scheduled_event", "label": "17.1 Exam Scheduled Event", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L883"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_2_exam_rescheduled_event", "label": "17.2 Exam Rescheduled Event", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L899"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_3_result_corrected_event", "label": "17.3 Result Corrected Event", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L916"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_4_completion_evaluation_completed_event", "label": "17.4 Completion Evaluation Completed Event", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L936"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_5_final_completion_approved_event", "label": "17.5 Final Completion Approved Event", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L956"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_6_completion_reevaluation_required_event", "label": "17.6 Completion Reevaluation Required Event", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L975"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules", "label": "18. Notification Recipient Resolution Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L997"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_1_assigned_trainer", "label": "18.1 Assigned Trainer", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L999"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_2_academic_coordinator", "label": "18.2 Academic Coordinator", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1014"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_3_branch_manager", "label": "18.3 Branch Manager", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1026"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_4_student", "label": "18.4 Student", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1038"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_5_auditor", "label": "18.5 Auditor", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1050"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_19_notification_template_requirements", "label": "19. Notification Template Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1065"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_20_notification_deduplication_rules", "label": "20. Notification Deduplication Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1103"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_21_notification_suppression_rules", "label": "21. Notification Suppression Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1124"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules", "label": "22. Notification Escalation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1150"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_1_missing_results_escalation", "label": "22.1 Missing Results Escalation", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1152"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_2_approval_aging_escalation", "label": "22.2 Approval Aging Escalation", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1172"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_23_validation_ownership_comparison_matrix", "label": "23. Validation Ownership Comparison Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1187"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer", "label": "24. Validation Responsibility by Layer", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1259"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_1_client", "label": "24.1 Client", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1261"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_2_api_application_layer", "label": "24.2 API/Application Layer", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1289"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_3_domain_layer", "label": "24.3 Domain Layer", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1303"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_4_database", "label": "24.4 Database", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1317"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_25_notification_ownership_comparison", "label": "25. Notification Ownership Comparison", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1336"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_26_domain_event_to_notification_mapping", "label": "26. Domain Event to Notification Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1354"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog", "label": "27. Notification Template Variable Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1379"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_1_common_variables", "label": "27.1 Common Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1381"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_2_prohibited_default_variables", "label": "27.2 Prohibited Default Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1401"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_28_error_localization_requirements", "label": "28. Error Localization Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1417"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_29_error_logging_requirements", "label": "29. Error Logging Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1449"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling", "label": "30. High-Risk Error Handling", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1482"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_1_result_correction_failure_after_audit_write", "label": "30.1 Result Correction Failure After Audit Write", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1484"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_2_completion_evaluation_dependency_failure", "label": "30.2 Completion Evaluation Dependency Failure", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1502"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_3_notification_failure", "label": "30.3 Notification Failure", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1513"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_31_validation_to_error_mapping", "label": "31. Validation-to-Error Mapping", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1530"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_32_implementation_validation_checklist", "label": "32. Implementation Validation Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1564"}, {"id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_33_final_validation_boundary", "label": "33. Final Validation Boundary", "file_type": "document", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1593"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_module_10_exam_result_completion_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L5", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L55", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_1_validation_layers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L57", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L110", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_1_common_scalar_schemas", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L116", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_2_pagination_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L142", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_3_branch_filter_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L151", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L170", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_1_create_exam_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L172", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_2_update_exam_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L206", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_3_schedule_exam_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L245", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_4_cancel_exam_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L255", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_5_exam_state_action_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L264", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L281", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_1_record_result_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L283", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_2_bulk_result_row_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L307", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_3_bulk_result_validation_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L318", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_4_bulk_submit_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L344", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_5_finalize_result_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L362", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_6_finalize_result_set_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L370", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_7_correct_result_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L386", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L411", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_1_evaluate_completion_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L413", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_2_reevaluation_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L434", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_3_trainer_recommendation_approve_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L471", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_4_trainer_recommendation_reject_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L480", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_5_coordinator_review_approve_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L489", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_6_coordinator_review_reject_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L498", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_7_final_approval_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L507", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_8_final_rejection_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L516", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_7_export_validation_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L527", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L571", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_1_exam_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L573", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_2_result_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L593", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_3_completion_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L616", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_4_approval_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L638", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_structured_error_code_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L655", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_structured_error_code_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_1_error_naming_convention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L657", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_10_exam_error_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L689", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_11_result_error_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L713", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_12_completion_error_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L737", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_13_approval_error_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L760", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_14_shared_error_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L776", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_notification_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L798", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_notification_architecture", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_1_ownership", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L800", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L843", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_1_exam_notification_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L845", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_2_result_notification_events", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L855", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_3_completion_workflow_notifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L864", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L881", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_1_exam_scheduled_event", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L883", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_2_exam_rescheduled_event", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L899", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_3_result_corrected_event", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L916", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_4_completion_evaluation_completed_event", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L936", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_5_final_completion_approved_event", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L956", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_6_completion_reevaluation_required_event", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L975", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L997", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_1_assigned_trainer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L999", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_2_academic_coordinator", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1014", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_3_branch_manager", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1026", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_4_student", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1038", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_5_auditor", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1050", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_19_notification_template_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1065", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_20_notification_deduplication_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1103", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_21_notification_suppression_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1124", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1150", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_1_missing_results_escalation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1152", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_2_approval_aging_escalation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1172", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_23_validation_ownership_comparison_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1187", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1259", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_1_client", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1261", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_2_api_application_layer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1289", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_3_domain_layer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1303", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_4_database", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1317", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_25_notification_ownership_comparison", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1336", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_26_domain_event_to_notification_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1354", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1379", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_1_common_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1381", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_2_prohibited_default_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1401", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_28_error_localization_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1417", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_29_error_logging_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1449", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1482", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_1_result_correction_failure_after_audit_write", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1484", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_2_completion_evaluation_dependency_failure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1502", "weight": 1.0}, {"source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_3_notification_failure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1513", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_31_validation_to_error_mapping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1530", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_32_implementation_validation_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1564", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_33_final_validation_boundary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1593", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_module_10_exam_result_completion_management",
+      "label": "Module 10 \u2013 Exam, Result & Completion Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture",
+      "label": "2. Validation Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_1_validation_layers",
+      "label": "2.1 Validation Layers",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L57"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions",
+      "label": "3. Custom Validation Schema Conventions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L110"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_1_common_scalar_schemas",
+      "label": "3.1 Common Scalar Schemas",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_2_pagination_schema",
+      "label": "3.2 Pagination Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L142"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_3_branch_filter_schema",
+      "label": "3.3 Branch Filter Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L151"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas",
+      "label": "4. Exam Validation Schemas",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L170"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_1_create_exam_schema",
+      "label": "4.1 Create Exam Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L172"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_2_update_exam_schema",
+      "label": "4.2 Update Exam Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L206"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_3_schedule_exam_schema",
+      "label": "4.3 Schedule Exam Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L245"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_4_cancel_exam_schema",
+      "label": "4.4 Cancel Exam Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L255"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_5_exam_state_action_schema",
+      "label": "4.5 Exam State Action Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L264"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "label": "5. Result Validation Schemas",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L281"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_1_record_result_schema",
+      "label": "5.1 Record Result Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L283"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_2_bulk_result_row_schema",
+      "label": "5.2 Bulk Result Row Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L307"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_3_bulk_result_validation_schema",
+      "label": "5.3 Bulk Result Validation Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L318"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_4_bulk_submit_schema",
+      "label": "5.4 Bulk Submit Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L344"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_5_finalize_result_schema",
+      "label": "5.5 Finalize Result Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L362"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_6_finalize_result_set_schema",
+      "label": "5.6 Finalize Result Set Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L370"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_7_correct_result_schema",
+      "label": "5.7 Correct Result Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L386"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "label": "6. Completion Validation Schemas",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L411"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_1_evaluate_completion_schema",
+      "label": "6.1 Evaluate Completion Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L413"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_2_reevaluation_schema",
+      "label": "6.2 Reevaluation Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L434"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_3_trainer_recommendation_approve_schema",
+      "label": "6.3 Trainer Recommendation Approve Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L471"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_4_trainer_recommendation_reject_schema",
+      "label": "6.4 Trainer Recommendation Reject Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L480"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_5_coordinator_review_approve_schema",
+      "label": "6.5 Coordinator Review Approve Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L489"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_6_coordinator_review_reject_schema",
+      "label": "6.6 Coordinator Review Reject Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L498"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_7_final_approval_schema",
+      "label": "6.7 Final Approval Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L507"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_8_final_rejection_schema",
+      "label": "6.8 Final Rejection Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L516"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_7_export_validation_schema",
+      "label": "7. Export Validation Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L527"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog",
+      "label": "8. Validation Rule Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L571"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_1_exam_validation_rules",
+      "label": "8.1 Exam Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L573"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_2_result_validation_rules",
+      "label": "8.2 Result Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L593"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_3_completion_validation_rules",
+      "label": "8.3 Completion Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L616"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_4_approval_validation_rules",
+      "label": "8.4 Approval Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L638"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_structured_error_code_catalog",
+      "label": "9. Structured Error Code Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L655"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_1_error_naming_convention",
+      "label": "9.1 Error Naming Convention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L657"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_10_exam_error_catalog",
+      "label": "10. Exam Error Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L689"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_11_result_error_catalog",
+      "label": "11. Result Error Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L713"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_12_completion_error_catalog",
+      "label": "12. Completion Error Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L737"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_13_approval_error_catalog",
+      "label": "13. Approval Error Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L760"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_14_shared_error_catalog",
+      "label": "14. Shared Error Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L776"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_notification_architecture",
+      "label": "15. Notification Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L798"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_1_ownership",
+      "label": "15.1 Ownership",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L800"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog",
+      "label": "16. Notification Event Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L843"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_1_exam_notification_events",
+      "label": "16.1 Exam Notification Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L845"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_2_result_notification_events",
+      "label": "16.2 Result Notification Events",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L855"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_3_completion_workflow_notifications",
+      "label": "16.3 Completion Workflow Notifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L864"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "label": "17. Notification Payload Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L881"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_1_exam_scheduled_event",
+      "label": "17.1 Exam Scheduled Event",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L883"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_2_exam_rescheduled_event",
+      "label": "17.2 Exam Rescheduled Event",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L899"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_3_result_corrected_event",
+      "label": "17.3 Result Corrected Event",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L916"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_4_completion_evaluation_completed_event",
+      "label": "17.4 Completion Evaluation Completed Event",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L936"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_5_final_completion_approved_event",
+      "label": "17.5 Final Completion Approved Event",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L956"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_6_completion_reevaluation_required_event",
+      "label": "17.6 Completion Reevaluation Required Event",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L975"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules",
+      "label": "18. Notification Recipient Resolution Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L997"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_1_assigned_trainer",
+      "label": "18.1 Assigned Trainer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L999"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_2_academic_coordinator",
+      "label": "18.2 Academic Coordinator",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1014"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_3_branch_manager",
+      "label": "18.3 Branch Manager",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1026"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_4_student",
+      "label": "18.4 Student",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1038"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_5_auditor",
+      "label": "18.5 Auditor",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1050"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_19_notification_template_requirements",
+      "label": "19. Notification Template Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1065"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_20_notification_deduplication_rules",
+      "label": "20. Notification Deduplication Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1103"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_21_notification_suppression_rules",
+      "label": "21. Notification Suppression Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1124"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules",
+      "label": "22. Notification Escalation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1150"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_1_missing_results_escalation",
+      "label": "22.1 Missing Results Escalation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1152"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_2_approval_aging_escalation",
+      "label": "22.2 Approval Aging Escalation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1172"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_23_validation_ownership_comparison_matrix",
+      "label": "23. Validation Ownership Comparison Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1187"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer",
+      "label": "24. Validation Responsibility by Layer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1259"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_1_client",
+      "label": "24.1 Client",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1261"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_2_api_application_layer",
+      "label": "24.2 API/Application Layer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1289"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_3_domain_layer",
+      "label": "24.3 Domain Layer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1303"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_4_database",
+      "label": "24.4 Database",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1317"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_25_notification_ownership_comparison",
+      "label": "25. Notification Ownership Comparison",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1336"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_26_domain_event_to_notification_mapping",
+      "label": "26. Domain Event to Notification Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1354"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog",
+      "label": "27. Notification Template Variable Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1379"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_1_common_variables",
+      "label": "27.1 Common Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1381"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_2_prohibited_default_variables",
+      "label": "27.2 Prohibited Default Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1401"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_28_error_localization_requirements",
+      "label": "28. Error Localization Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1417"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_29_error_logging_requirements",
+      "label": "29. Error Logging Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1449"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling",
+      "label": "30. High-Risk Error Handling",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1482"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_1_result_correction_failure_after_audit_write",
+      "label": "30.1 Result Correction Failure After Audit Write",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1484"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_2_completion_evaluation_dependency_failure",
+      "label": "30.2 Completion Evaluation Dependency Failure",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1502"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_3_notification_failure",
+      "label": "30.3 Notification Failure",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1513"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_31_validation_to_error_mapping",
+      "label": "31. Validation-to-Error Mapping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1530"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_32_implementation_validation_checklist",
+      "label": "32. Implementation Validation Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1564"
+    },
+    {
+      "id": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_33_final_validation_boundary",
+      "label": "33. Final Validation Boundary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1593"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_module_10_exam_result_completion_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_2_1_validation_layers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_1_common_scalar_schemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_2_pagination_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_custom_validation_schema_conventions",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_3_3_branch_filter_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L151",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_1_create_exam_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_2_update_exam_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_3_schedule_exam_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L245",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_4_cancel_exam_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_exam_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_4_5_exam_state_action_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L264",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_1_record_result_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L283",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_2_bulk_result_row_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L307",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_3_bulk_result_validation_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L318",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_4_bulk_submit_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_5_finalize_result_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_6_finalize_result_set_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L370",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_result_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_5_7_correct_result_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L386",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L411",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_1_evaluate_completion_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L413",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_2_reevaluation_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L434",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_3_trainer_recommendation_approve_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L471",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_4_trainer_recommendation_reject_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L480",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_5_coordinator_review_approve_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L489",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_6_coordinator_review_reject_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L498",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_7_final_approval_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L507",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_completion_validation_schemas",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_6_8_final_rejection_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L516",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_7_export_validation_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L527",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L571",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_1_exam_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L573",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_2_result_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L593",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_3_completion_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L616",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_validation_rule_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_8_4_approval_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L638",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_structured_error_code_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L655",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_structured_error_code_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_9_1_error_naming_convention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L657",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_10_exam_error_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L689",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_11_result_error_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L713",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_12_completion_error_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L737",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_13_approval_error_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L760",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_14_shared_error_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L776",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_notification_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L798",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_notification_architecture",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_15_1_ownership",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L800",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L843",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_1_exam_notification_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L845",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_2_result_notification_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L855",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_notification_event_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_16_3_completion_workflow_notifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L864",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L881",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_1_exam_scheduled_event",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L883",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_2_exam_rescheduled_event",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L899",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_3_result_corrected_event",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L916",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_4_completion_evaluation_completed_event",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L936",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_5_final_completion_approved_event",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L956",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_notification_payload_contracts",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_17_6_completion_reevaluation_required_event",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L975",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L997",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_1_assigned_trainer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L999",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_2_academic_coordinator",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1014",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_3_branch_manager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1026",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_4_student",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1038",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_notification_recipient_resolution_rules",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_18_5_auditor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1050",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_19_notification_template_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1065",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_20_notification_deduplication_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1103",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_21_notification_suppression_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1124",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1150",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_1_missing_results_escalation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1152",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_notification_escalation_rules",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_22_2_approval_aging_escalation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1172",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_23_validation_ownership_comparison_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1187",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1259",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_1_client",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1261",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_2_api_application_layer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1289",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_3_domain_layer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1303",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_validation_responsibility_by_layer",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_24_4_database",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1317",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_25_notification_ownership_comparison",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1336",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_26_domain_event_to_notification_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1354",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1379",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_1_common_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1381",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_notification_template_variable_catalog",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_27_2_prohibited_default_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1401",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_28_error_localization_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1417",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_29_error_logging_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1449",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1482",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_1_result_correction_failure_after_audit_write",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1484",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_2_completion_evaluation_dependency_failure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1502",
+      "weight": 1.0
+    },
+    {
+      "source": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_high_risk_error_handling",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_30_3_notification_failure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1513",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_31_validation_to_error_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1530",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_32_implementation_validation_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1564",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_10_exam_result_completion_management_part_7_validation_rules_error_catalog_notifications_33_final_validation_boundary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 10 - Exam, Result & Completion Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1593",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

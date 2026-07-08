@@ -410,7 +410,7 @@ export function TrainersClientList({
               options={trainerTypeOptions}
             />
 
-            <div className="min-w-0">
+            {/* <div className="min-w-0">
               <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
                 Specialization
               </FormLabel>
@@ -426,7 +426,7 @@ export function TrainersClientList({
                 }
                 placeholder="Narrow by specialization"
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3">

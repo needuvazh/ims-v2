@@ -1,1 +1,191 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_conflict_dashboard_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L1"}, {"id": "conflict_dashboard_spec_conflict_dashboard_specification", "label": "conflict-dashboard Specification", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L1"}, {"id": "conflict_dashboard_spec_purpose", "label": "Purpose", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L3"}, {"id": "conflict_dashboard_spec_requirements", "label": "Requirements", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L7"}, {"id": "conflict_dashboard_spec_requirement_conflict_dashboard_overview", "label": "Requirement: Conflict Dashboard Overview", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L9"}, {"id": "conflict_dashboard_spec_scenario_viewing_unresolved_conflicts", "label": "Scenario: Viewing unresolved conflicts", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L13"}, {"id": "conflict_dashboard_spec_requirement_potential_conflict_detection", "label": "Requirement: Potential Conflict Detection", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L18"}, {"id": "conflict_dashboard_spec_scenario_expiring_trainer_eligibility", "label": "Scenario: Expiring trainer eligibility", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L22"}, {"id": "conflict_dashboard_spec_requirement_conflict_override_ignoring_conflicts", "label": "Requirement: Conflict Override (Ignoring Conflicts)", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L27"}, {"id": "conflict_dashboard_spec_scenario_overriding_a_holiday_for_fast_track_batch", "label": "Scenario: Overriding a holiday for fast-track batch", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L31"}, {"id": "conflict_dashboard_spec_requirement_conflict_resolution_workflow", "label": "Requirement: Conflict Resolution Workflow", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L36"}, {"id": "conflict_dashboard_spec_scenario_resolving_a_venue_block_via_reschedule", "label": "Scenario: Resolving a venue block via reschedule", "file_type": "document", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L40"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_conflict_dashboard_spec_md", "target": "conflict_dashboard_spec_conflict_dashboard_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "conflict_dashboard_spec_conflict_dashboard_specification", "target": "conflict_dashboard_spec_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "conflict_dashboard_spec_conflict_dashboard_specification", "target": "conflict_dashboard_spec_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirements", "target": "conflict_dashboard_spec_requirement_conflict_dashboard_overview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L9", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirement_conflict_dashboard_overview", "target": "conflict_dashboard_spec_scenario_viewing_unresolved_conflicts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L13", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirements", "target": "conflict_dashboard_spec_requirement_potential_conflict_detection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L18", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirement_potential_conflict_detection", "target": "conflict_dashboard_spec_scenario_expiring_trainer_eligibility", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L22", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirements", "target": "conflict_dashboard_spec_requirement_conflict_override_ignoring_conflicts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L27", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirement_conflict_override_ignoring_conflicts", "target": "conflict_dashboard_spec_scenario_overriding_a_holiday_for_fast_track_batch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L31", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirements", "target": "conflict_dashboard_spec_requirement_conflict_resolution_workflow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L36", "weight": 1.0}, {"source": "conflict_dashboard_spec_requirement_conflict_resolution_workflow", "target": "conflict_dashboard_spec_scenario_resolving_a_venue_block_via_reschedule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/conflict-dashboard/spec.md", "source_location": "L40", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_conflict_dashboard_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "conflict_dashboard_spec_conflict_dashboard_specification",
+      "label": "conflict-dashboard Specification",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "conflict_dashboard_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "conflict_dashboard_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "conflict_dashboard_spec_requirement_conflict_dashboard_overview",
+      "label": "Requirement: Conflict Dashboard Overview",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "conflict_dashboard_spec_scenario_viewing_unresolved_conflicts",
+      "label": "Scenario: Viewing unresolved conflicts",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "conflict_dashboard_spec_requirement_potential_conflict_detection",
+      "label": "Requirement: Potential Conflict Detection",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "conflict_dashboard_spec_scenario_expiring_trainer_eligibility",
+      "label": "Scenario: Expiring trainer eligibility",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "conflict_dashboard_spec_requirement_conflict_override_ignoring_conflicts",
+      "label": "Requirement: Conflict Override (Ignoring Conflicts)",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "conflict_dashboard_spec_scenario_overriding_a_holiday_for_fast_track_batch",
+      "label": "Scenario: Overriding a holiday for fast-track batch",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "conflict_dashboard_spec_requirement_conflict_resolution_workflow",
+      "label": "Requirement: Conflict Resolution Workflow",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "conflict_dashboard_spec_scenario_resolving_a_venue_block_via_reschedule",
+      "label": "Scenario: Resolving a venue block via reschedule",
+      "file_type": "document",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L40"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_conflict_dashboard_spec_md",
+      "target": "conflict_dashboard_spec_conflict_dashboard_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_conflict_dashboard_specification",
+      "target": "conflict_dashboard_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_conflict_dashboard_specification",
+      "target": "conflict_dashboard_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirements",
+      "target": "conflict_dashboard_spec_requirement_conflict_dashboard_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirement_conflict_dashboard_overview",
+      "target": "conflict_dashboard_spec_scenario_viewing_unresolved_conflicts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirements",
+      "target": "conflict_dashboard_spec_requirement_potential_conflict_detection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirement_potential_conflict_detection",
+      "target": "conflict_dashboard_spec_scenario_expiring_trainer_eligibility",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirements",
+      "target": "conflict_dashboard_spec_requirement_conflict_override_ignoring_conflicts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirement_conflict_override_ignoring_conflicts",
+      "target": "conflict_dashboard_spec_scenario_overriding_a_holiday_for_fast_track_batch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirements",
+      "target": "conflict_dashboard_spec_requirement_conflict_resolution_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "conflict_dashboard_spec_requirement_conflict_resolution_workflow",
+      "target": "conflict_dashboard_spec_scenario_resolving_a_venue_block_via_reschedule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/conflict-dashboard/spec.md",
+      "source_location": "L40",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

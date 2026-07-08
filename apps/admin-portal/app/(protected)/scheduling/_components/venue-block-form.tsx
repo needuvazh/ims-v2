@@ -399,22 +399,6 @@ export function VenueBlockForm({
             </CardContent>
           </Card>
 
-          <Card className="border-[color:var(--ims-border)] bg-[color:var(--ims-ink)] text-white shadow-xl">
-            <CardHeader className="border-b border-white/10">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <MapPinned className="h-4 w-4 text-[color:var(--ims-brass)]" />
-                Scheduling note
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 p-card-p text-xs text-white/80">
-              <p>Venue blocks are checked during batch session scheduling.</p>
-              <p>
-                Any session that falls inside this date range and matches the
-                room or branch scope will be rejected.
-              </p>
-            </CardContent>
-          </Card>
-
           <Button type="submit" loading={isPending} className="w-full">
             <Save className="h-4 w-4" />
             {mode === 'create' ? 'Create block' : 'Save changes'}

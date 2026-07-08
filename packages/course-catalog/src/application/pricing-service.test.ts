@@ -191,13 +191,11 @@ describe('CoursePricingService rules & logic', () => {
     it('should resolve P1 (Batch) over P2 (Branch) over P3 (Global Default) pricing and discounts', async () => {
       // Setup batch record resolver
       mockPrisma.batch = {
-        findUnique: vi
-          .fn()
-          .mockResolvedValue({
-            id: 'batch-1',
-            branchId: 'branch-1',
-            batchType: 'Regular',
-          }),
+        findUnique: vi.fn().mockResolvedValue({
+          id: 'batch-1',
+          branchId: 'branch-1',
+          batchType: 'Regular',
+        }),
       };
 
       // Mock database pricing lists (P1 Batch, P2 Branch, P3 Global all active at once)

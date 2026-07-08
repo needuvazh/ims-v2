@@ -293,6 +293,7 @@ export const conflictTypeEnum = z.enum([
   'TRAINER_OVERLAP',
   'CLASSROOM_OVERLAP',
   'OPERATING_HOURS',
+  'TRAINER_UNAVAILABLE',
 ]);
 export type ConflictType = z.infer<typeof conflictTypeEnum>;
 

@@ -43,15 +43,13 @@ test('CrmDashboardQueryService builds widgets and logs access', async () => {
       .fn()
       .mockResolvedValue({ rate: 20, total: 5, converted: 1 }),
     getLeadsBySource: vi.fn().mockResolvedValue([{ source: 'Web', count: 5 }]),
-    getCounselorPerformance: vi
-      .fn()
-      .mockResolvedValue([
-        {
-          counselorId: '33333333-3333-3333-3333-333333333333',
-          counselorName: 'counselor-1',
-          convertedCount: 1,
-        },
-      ]),
+    getCounselorPerformance: vi.fn().mockResolvedValue([
+      {
+        counselorId: '33333333-3333-3333-3333-333333333333',
+        counselorName: 'counselor-1',
+        convertedCount: 1,
+      },
+    ]),
     getTotalLeadsVsTargets: vi
       .fn()
       .mockResolvedValue({ actual: 5, target: 10 }),

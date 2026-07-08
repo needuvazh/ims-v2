@@ -40,23 +40,7 @@ export default async function SchedulingHomePage() {
     <AdminListPageLayout>
       <PageHeader
         title="Scheduling & Calendar"
-        eyebrow="Dashboard"
-        description="The institute calendar defines the authoritative baseline. Exceptions are handled via sparse branch-year overrides."
-        breadcrumbs={
-          <Breadcrumbs
-            items={[
-              {
-                label: 'Dashboard',
-                href: '/dashboard',
-                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
-              },
-              {
-                label: 'Scheduling',
-                icon: <CalendarDays className="h-3.5 w-3.5 text-slate-500" />,
-              },
-            ]}
-          />
-        }
+        eyebrow="Scheduling"
         actions={
           permissions.hasCalRead && (
             <Link href="/scheduling/calendars/new">
@@ -237,67 +221,77 @@ export default async function SchedulingHomePage() {
 
         {/* Right Column: Quick Navigation & Conflicts list */}
         <div className="space-y-6">
-          {/* Quick Actions */}
-          <Card className="border-[color:var(--ims-border)] bg-[color:var(--ims-surface)]">
-            <CardHeader>
-              <CardTitle>Quick Access</CardTitle>
-              <CardDescription>Direct navigation and tools</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-2.5">
+          {/* Quick Access Grid */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+              Quick Access
+            </h3>
+            <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
               {permissions.hasCalRead && (
                 <>
-                  <LinkButton
-                    href="/scheduling/calendars"
-                    variant="outline"
-                    className="w-full justify-between gap-3"
-                  >
-                    <span className="flex items-center gap-2">
-                      <CalendarClock className="h-4 w-4 text-sky-600" />
-                      Calendar Ledger
-                    </span>
-                    <ArrowRight className="h-3 w-3 opacity-60" />
-                  </LinkButton>
-                  <LinkButton
-                    href="/scheduling/calendars/new"
-                    variant="outline"
-                    className="w-full justify-between gap-3"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Plus className="h-4 w-4 text-emerald-600" />
-                      Create New Calendar
-                    </span>
-                    <ArrowRight className="h-3 w-3 opacity-60" />
-                  </LinkButton>
+                  <Link href="/scheduling/calendars" className="group">
+                    <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-sky-200">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-sky-600 group-hover:bg-sky-100 transition-colors">
+                        <CalendarClock className="h-4.5 w-4.5" />
+                      </div>
+                      <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-sky-700 transition-colors">
+                        Calendar
+                      </h4>
+                      <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
+                        Maintain baseline rules & overrides.
+                      </p>
+                    </div>
+                  </Link>
+
+                  <Link href="/scheduling/calendars/new" className="group">
+                    <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-emerald-200">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition-colors">
+                        <Plus className="h-4.5 w-4.5" />
+                      </div>
+                      <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-emerald-700 transition-colors">
+                        New Calendar
+                      </h4>
+                      <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
+                        Create new academic baseline cycle.
+                      </p>
+                    </div>
+                  </Link>
                 </>
               )}
+
               {permissions.hasVenueRead && (
-                <LinkButton
-                  href="/scheduling/venues"
-                  variant="outline"
-                  className="w-full justify-between gap-3"
-                >
-                  <span className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-amber-600" />
-                    Venue Management
-                  </span>
-                  <ArrowRight className="h-3 w-3 opacity-60" />
-                </LinkButton>
+                <Link href="/scheduling/venues" className="group">
+                  <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-amber-200">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-600 group-hover:bg-amber-100 transition-colors">
+                      <MapPin className="h-4.5 w-4.5" />
+                    </div>
+                    <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-amber-700 transition-colors">
+                      Venue Blocks
+                    </h4>
+                    <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
+                      Temporarily disable classrooms/branches.
+                    </p>
+                  </div>
+                </Link>
               )}
+
               {permissions.hasConflictRead && (
-                <LinkButton
-                  href="/scheduling/conflicts"
-                  variant="outline"
-                  className="w-full justify-between gap-3"
-                >
-                  <span className="flex items-center gap-2">
-                    <ShieldAlert className="h-4 w-4 text-rose-600" />
-                    Conflict Dashboard
-                  </span>
-                  <ArrowRight className="h-3 w-3 opacity-60" />
-                </LinkButton>
+                <Link href="/scheduling/conflicts" className="group">
+                  <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-rose-200">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-600 group-hover:bg-rose-100 transition-colors">
+                      <ShieldAlert className="h-4.5 w-4.5" />
+                    </div>
+                    <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-rose-700 transition-colors">
+                      Conflicts
+                    </h4>
+                    <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
+                      Review and resolve schedule warnings.
+                    </p>
+                  </div>
+                </Link>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Scheduling Conflicts section */}
           {permissions.hasConflictRead && (
@@ -369,25 +363,6 @@ export default async function SchedulingHomePage() {
           )}
         </div>
       </div>
-
-      <Card className="overflow-hidden border-[color:var(--ims-border)] bg-[color:var(--ims-surface-hover)] shadow-none border-dashed mt-6">
-        <CardContent className="p-card-p flex flex-col md:flex-row items-start md:items-center gap-6">
-          <div className="h-14 w-14 rounded-full bg-[color:var(--ims-surface)] border border-[color:var(--ims-border)] flex items-center justify-center text-[color:var(--ims-brass)] shrink-0">
-            <Sparkles className="h-7 w-7" />
-          </div>
-          <div className="space-y-1">
-            <h3 className="font-bold text-section-title text-[color:var(--ims-ink)]">
-              Resolution Design
-            </h3>
-            <p className="text-[color:var(--ims-muted)] max-w-2xl leading-relaxed text-sm">
-              Scheduling checks always resolve rules in a deterministic
-              hierarchy: Branch Override &gt; Institute Baseline &gt; System
-              Defaults. This ensures local operational flexibility without
-              duplicating entire calendars.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
     </AdminListPageLayout>
   );
 }

@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1783476042.5461304,
-    "ast_hash": "8e95fc69c0d9905229cc9a5c3e34c19c",
+    "mtime": 1783511130.8105018,
+    "ast_hash": "2a40c0092f23b2f80c7ae64f1707d69e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/loading.tsx": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1783476044.9331043,
-    "ast_hash": "cb4b7e970ba0e75d0585d9c962d52f65",
+    "mtime": 1783511130.8143542,
+    "ast_hash": "8d5e1c7082d3cd7aae1c6a610fa0af50",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783476045.0489962,
-    "ast_hash": "05d3e9aa3482a0d7dc4fa1a33c40d881",
+    "mtime": 1783511130.8146083,
+    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/package.json": {
-    "mtime": 1783442075.443984,
-    "ast_hash": "f94376ddeaeb56012e596db15f5582e6",
+    "mtime": 1783511130.814781,
+    "ast_hash": "edf2870af3b79a2d9000c1cba61f0016",
     "semantic_hash": ""
   },
   "apps/admin-portal/postcss.config.mjs": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1783476071.2511227,
-    "ast_hash": "9f335d91bef8bbd584306ef45995b4a4",
+    "mtime": 1783511130.981617,
+    "ast_hash": "283509bd0f1877703bcffdf80e0568be",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-role-repository.ts": {
-    "mtime": 1783476071.4342406,
-    "ast_hash": "c24f6ca8cc0c6140aecbb2cc48befe9e",
+    "mtime": 1783511130.9818323,
+    "ast_hash": "35b4da47c4cd2ea949487e363c0bd210",
     "semantic_hash": ""
   },
   "packages/database/src/repositories/prisma-session-repository.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1783476072.4567657,
-    "ast_hash": "4f91ea7a396881a8dd4df73b4c94d509",
+    "mtime": 1783511130.9823148,
+    "ast_hash": "4af9515080d10981027a8df1042f31d3",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/role.ts": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "packages/shared-ui/src/index.tsx": {
-    "mtime": 1783109355.8984077,
-    "ast_hash": "98d8ef22743b0d0b1a69738234adbe82",
+    "mtime": 1783524516.9318802,
+    "ast_hash": "40117415174245982ce6c0a21e6bd29c",
     "semantic_hash": ""
   },
   "packages/shared-ui/src/utils/classnames.ts": {
@@ -1405,8 +1405,8 @@
     "semantic_hash": ""
   },
   ".agents/skills/playwright-cli/references/spec-driven-testing.md": {
-    "mtime": 1783476034.339138,
-    "ast_hash": "94aa25a01a65583eb64e8009e5b624b7",
+    "mtime": 1783511130.808476,
+    "ast_hash": "94abb033831db1378a23e7f6fa97c423",
     "semantic_hash": ""
   },
   ".agents/skills/playwright-cli/references/storage-state.md": {
@@ -2555,8 +2555,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/actions.ts": {
-    "mtime": 1783476595.2140877,
-    "ast_hash": "904227289d63db2851042e198e6eee3d",
+    "mtime": 1783511130.8112788,
+    "ast_hash": "0be08fc37adff5246428e7722919ec35",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/page.tsx": {
@@ -2710,8 +2710,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-service.ts": {
-    "mtime": 1783478357.877567,
-    "ast_hash": "004117ed0c309bf6476be533337a8c1d",
+    "mtime": 1783511130.9806964,
+    "ast_hash": "8bdf406a555e30c1f17ef59a1741b7a3",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/domain/lead.ts": {
@@ -2725,8 +2725,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/infrastructure/lead-repository.ts": {
-    "mtime": 1783478353.2893534,
-    "ast_hash": "f33f49f6fb85d45d74780464e991ac42",
+    "mtime": 1783511130.9809787,
+    "ast_hash": "7fe9c23f18ccbc9a01a54a201ec4f60f",
     "semantic_hash": ""
   },
   "packages/crm-leads/tsconfig.json": {
@@ -3480,8 +3480,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/repositories.ts": {
-    "mtime": 1783476072.4915268,
-    "ast_hash": "1b02b166f4d117dcfa636af9266b5897",
+    "mtime": 1783511130.9825292,
+    "ast_hash": "98da41a0d1428ba8ae29c8988cd0fcc5",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/security-policy.ts": {
@@ -4240,8 +4240,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-service.test.ts": {
-    "mtime": 1783476533.8982198,
-    "ast_hash": "2537f8c2d5b98149cdd30f864bd845e0",
+    "mtime": 1783511130.980448,
+    "ast_hash": "f3325482629f76684949fd5b141061d0",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/domain/repositories.ts": {
@@ -4330,8 +4330,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/_components/lead-form.tsx": {
-    "mtime": 1783478173.884047,
-    "ast_hash": "9b47b7562a96b9c63ff9ee0d8c026503",
+    "mtime": 1783511130.8110507,
+    "ast_hash": "32112ca33d04c805086689cec735d810",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/_components/leads-client-list.tsx": {
@@ -4350,8 +4350,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/_components/lead-details-client.tsx": {
-    "mtime": 1783476960.4113693,
-    "ast_hash": "6ef79da896a9e02a8450b8f8407b185b",
+    "mtime": 1783511130.8108096,
+    "ast_hash": "4eedc06b84f217f88dd09c13dcb5901c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/page.tsx": {
@@ -4480,8 +4480,8 @@
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.test.ts": {
-    "mtime": 1783476072.7402785,
-    "ast_hash": "526fa700e44e08332e9d2ca7a3586d49",
+    "mtime": 1783511130.982742,
+    "ast_hash": "6d23a6ff5b479acb01e904715bbda837",
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.ts": {
@@ -5015,8 +5015,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-02-batch-waitlist-spec/design.md": {
-    "mtime": 1783476068.7925618,
-    "ast_hash": "623a50d94ef6f2c95eb2319881ea4e16",
+    "mtime": 1783511130.9792717,
+    "ast_hash": "5f45c99c28167449a41bd7c86a762bcd",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-02-batch-waitlist-spec/proposal.md": {
@@ -5090,8 +5090,8 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/pricing-service.test.ts": {
-    "mtime": 1783476070.5961218,
-    "ast_hash": "51c20a3064c99f782195581b9881105c",
+    "mtime": 1783511130.9802148,
+    "ast_hash": "218ccaa17df119f81186d5a9f7ce183f",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/application/pricing-service.ts": {
@@ -5180,8 +5180,8 @@
     "semantic_hash": ""
   },
   "packages/documents/src/application/documents-service.test.ts": {
-    "mtime": 1783476071.5172079,
-    "ast_hash": "2ef147215857b7925d04c1693058be46",
+    "mtime": 1783511130.9820926,
+    "ast_hash": "a1ba73765f1c941ed3e8bdbabcd77b2e",
     "semantic_hash": ""
   },
   "packages/documents/src/application/documents-service.ts": {
@@ -5235,8 +5235,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/document-management/spec.md": {
-    "mtime": 1783476069.9180205,
-    "ast_hash": "433f277774b0d5f2c87e30c5f6844158",
+    "mtime": 1783525526.6334093,
+    "ast_hash": "cfe816a622dfe8e47972acb9010a4b55",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/approve/route.ts": {
@@ -5410,8 +5410,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-lifecycle.test.ts": {
-    "mtime": 1783476070.2239466,
-    "ast_hash": "60d2de378dbec2c58084505e850d35b8",
+    "mtime": 1783511130.979733,
+    "ast_hash": "ca9b6f6f9f9860b616edcf594c361672",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/person/lookup/route.ts": {
@@ -5560,8 +5560,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/infrastructure/admission-repository.test.ts": {
-    "mtime": 1783477528.3959992,
-    "ast_hash": "067025a67b5efcd28024d7cbdedc08f3",
+    "mtime": 1783511130.9799447,
+    "ast_hash": "5a412e128c42624b8ceff7bb401da351",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-02-walkin-enrollment/.openspec.yaml": {
@@ -5650,18 +5650,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/_components/enrollment-details-client.tsx": {
-    "mtime": 1783476041.0138505,
-    "ast_hash": "77e9a84d0fe340fec83e1ac75339cba1",
+    "mtime": 1783511345.1712093,
+    "ast_hash": "3bd2089452be8fbdca7a418b76d8cb69",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/page.tsx": {
-    "mtime": 1783476041.0219266,
-    "ast_hash": "b1a89a5c6b43abe11d244ab2f48f469a",
+    "mtime": 1783511127.4753067,
+    "ast_hash": "7cc71483603777a449853a94f23637f3",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/_components/enrollments-client-list.tsx": {
-    "mtime": 1783476040.9785547,
-    "ast_hash": "fb5834ad3bf28b8e12f8848f69edae87",
+    "mtime": 1783511127.4755375,
+    "ast_hash": "9d75eccee40d2e189cc62837c682d747",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/_components/pricing-panel.tsx": {
@@ -6250,8 +6250,8 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
-    "mtime": 1783476047.533352,
-    "ast_hash": "3cf7ea7d86677d434684eae0c83ece04",
+    "mtime": 1783511130.8150244,
+    "ast_hash": "c00526ca524653c646fb92002d0c3576",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
@@ -6355,18 +6355,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/branch-override-form.tsx": {
-    "mtime": 1783476043.2455275,
-    "ast_hash": "11940019306833ccdf9cd8ae3413b7c2",
+    "mtime": 1783511130.8115127,
+    "ast_hash": "50acb4196ece9be5a9e73494c39af53f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/calendar-editor-form.tsx": {
-    "mtime": 1783476043.2600136,
-    "ast_hash": "254653b4889720e6e109a9cff788522b",
+    "mtime": 1783511130.8117182,
+    "ast_hash": "4885d8c81a06960323e5d362e77ea6bf",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/conflict-dashboard-client.tsx": {
-    "mtime": 1783476043.2726784,
-    "ast_hash": "cd225821a4c653b9e042eddd55d8631f",
+    "mtime": 1783511130.8119345,
+    "ast_hash": "d532ce9504c1c5dbd833289ddcbc52d2",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/conflict-resolution-wizard.tsx": {
@@ -6375,8 +6375,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/venue-block-form.tsx": {
-    "mtime": 1783476043.2989464,
-    "ast_hash": "25e9d17b19beabed38c77c07a14503dd",
+    "mtime": 1783511130.812243,
+    "ast_hash": "bb2e3885012536b145958b5ad4f1765b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/actions.ts": {
@@ -6390,8 +6390,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/calendars/[id]/page.tsx": {
-    "mtime": 1783476043.350825,
-    "ast_hash": "48b859a8328ee7a3685e364377faedc7",
+    "mtime": 1783511130.8124857,
+    "ast_hash": "aac7817131daf585e38b8fb5311dbfd4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/calendars/new/page.tsx": {
@@ -6400,23 +6400,23 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/calendars/page.tsx": {
-    "mtime": 1783476043.3614378,
-    "ast_hash": "c03d8e1aaff212b206cdbca4bec626d2",
+    "mtime": 1783511130.8126814,
+    "ast_hash": "163b39389e429f99a3ca6ad9efc55a7c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/conflicts/page.tsx": {
-    "mtime": 1783476043.369096,
-    "ast_hash": "6e04bc0219d127c23c021ce7e8cc7da5",
+    "mtime": 1783511130.8128781,
+    "ast_hash": "5a49fcdabca77eddb141837442454fd1",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/data.ts": {
-    "mtime": 1783476043.3846812,
-    "ast_hash": "26516883c98a2e1b9b325a9884ea6774",
+    "mtime": 1783511130.8130865,
+    "ast_hash": "67f5866b4c665d4dd9f09546ccb0f04a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/page.tsx": {
-    "mtime": 1783476043.3997364,
-    "ast_hash": "7c5407dfef6b8a7057982fe55365fc40",
+    "mtime": 1783511130.8133092,
+    "ast_hash": "19975828aefd428dcef445b1b42b008a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/venues/[id]/edit/page.tsx": {
@@ -6425,13 +6425,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/venues/new/page.tsx": {
-    "mtime": 1783476043.4155731,
-    "ast_hash": "c600315ad742fc9ba855db07d3592db9",
+    "mtime": 1783511130.813533,
+    "ast_hash": "fb1e81aed21555a512be0eb878ec26d5",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/venues/page.tsx": {
-    "mtime": 1783476043.4238248,
-    "ast_hash": "5ccc6d98de6d8ffbd0a7f15904ce5a0f",
+    "mtime": 1783511130.8137264,
+    "ast_hash": "f3acb98bd0b34c256b84fd9344888883",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/attendance/[...segments]/route.ts": {
@@ -6450,8 +6450,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/scheduling/calendars/[id]/branch-overrides/route.ts": {
-    "mtime": 1783476044.5577173,
-    "ast_hash": "d4649a1d65126f0755b18c62027b7e91",
+    "mtime": 1783511130.8139572,
+    "ast_hash": "b909cbcf7992ca8901ee43258a7f8c11",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/scheduling/calendars/[id]/holidays/route.ts": {
@@ -6475,8 +6475,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/scheduling/calendars/[id]/route.ts": {
-    "mtime": 1783476044.5803072,
-    "ast_hash": "3fbfc6cc8bbf055fc4f118d738b36b91",
+    "mtime": 1783511130.814151,
+    "ast_hash": "4f332b99071c5d7ca5b60e0ca7a35c53",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/scheduling/calendars/[id]/status/route.ts": {
@@ -6595,8 +6595,8 @@
     "semantic_hash": ""
   },
   "packages/scheduling/src/application/scheduling-service.ts": {
-    "mtime": 1783476072.8216429,
-    "ast_hash": "fe83c92f701a36eebce2c4c7a6521a4a",
+    "mtime": 1783511130.9829514,
+    "ast_hash": "ee0f26171f1135fe037855577313d2a1",
     "semantic_hash": ""
   },
   "packages/scheduling/src/domain/errors.ts": {
@@ -6610,8 +6610,8 @@
     "semantic_hash": ""
   },
   "packages/scheduling/src/domain/scheduling.ts": {
-    "mtime": 1783476072.8454385,
-    "ast_hash": "92e021cc765139246e59682cf5ecd64a",
+    "mtime": 1783511130.9831793,
+    "ast_hash": "c720ec183de1ccd2ea483b067cc3132e",
     "semantic_hash": ""
   },
   "packages/scheduling/src/index.ts": {
@@ -7230,8 +7230,8 @@
     "semantic_hash": ""
   },
   "packages/trainer-management/src/infrastructure/prisma-trainer-management-repository.ts": {
-    "mtime": 1783476073.415269,
-    "ast_hash": "d2055c125139ff9b78425f8ebaf3de99",
+    "mtime": 1783525028.8421125,
+    "ast_hash": "f8f38970c918c87947e1833153f45d9f",
     "semantic_hash": ""
   },
   "packages/trainer-management/tsconfig.json": {
@@ -7245,8 +7245,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/dashboard/page.tsx": {
-    "mtime": 1783476041.308169,
-    "ast_hash": "055917278aaae8714363d58660cc7e13",
+    "mtime": 1783511130.8088086,
+    "ast_hash": "d892f1c7f9b33c4e3ccb7f8235f47fe8",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/eligible-trainers/page.tsx": {
@@ -7260,28 +7260,28 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/reports/page.tsx": {
-    "mtime": 1783476041.3422515,
-    "ast_hash": "09233a723f6923953a10d562d6277f5e",
+    "mtime": 1783525193.9958715,
+    "ast_hash": "d3150c53521c929d7f5a29ae0dffd297",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/[trainerId]/page.tsx": {
-    "mtime": 1783476041.4699433,
-    "ast_hash": "5ea5d58757c7e4e383df5cad343743d9",
+    "mtime": 1783524833.6784155,
+    "ast_hash": "8d7a85caa0960499d31fbed4a0564a36",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/new/page.tsx": {
-    "mtime": 1783476041.4812279,
-    "ast_hash": "5e83b45594968fe554a920e73a071a96",
+    "mtime": 1783511130.8100765,
+    "ast_hash": "d0bff07cdc18df98edc9fcf815011b36",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/page.tsx": {
-    "mtime": 1783476041.4903243,
-    "ast_hash": "600e3478d222a57eb800025627676362",
+    "mtime": 1783511130.8102617,
+    "ast_hash": "b373ab3a5e3e19d2a0c87d205a195c55",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/faculty/[...segments]/route.ts": {
-    "mtime": 1783476044.3991175,
-    "ast_hash": "9dbd930668dd7556e895fbb3363e5bd4",
+    "mtime": 1783524423.357896,
+    "ast_hash": "53381b4b3fd0098d55b0709768b03827",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/_components/trainer-onboarding-form.tsx": {
@@ -7290,8 +7290,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/_components/trainers-client-list.tsx": {
-    "mtime": 1783476041.396803,
-    "ast_hash": "2efc9b7a62110b1a354b913e3fdb52c1",
+    "mtime": 1783511130.8098702,
+    "ast_hash": "07b442bb650749bd1147c8791fc183f2",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/identity/users/_components/users-client-list.tsx": {
@@ -7320,8 +7320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/[trainerId]/_components/trainer-child-record-drawers.tsx": {
-    "mtime": 1783476041.4410555,
-    "ast_hash": "0c852d621e279bb4198b5a39b17e27fa",
+    "mtime": 1783524652.2391634,
+    "ast_hash": "7e9872611c3e00908e0a8610e2b16667",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/identity/roles/_components/roles-client-list.tsx": {
@@ -8784,31 +8784,6 @@
     "ast_hash": "a755900736e0250b8be1b03ac18ad722",
     "semantic_hash": ""
   },
-  "openspec/changes/implement-document-management/.openspec.yaml": {
-    "mtime": 1783430628.3332312,
-    "ast_hash": "03897143b56ed2249b1ec0993bfa708d",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-document-management/design.md": {
-    "mtime": 1783476069.742422,
-    "ast_hash": "513e77ac2d40e9c26e90e522ffdb6f75",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-document-management/proposal.md": {
-    "mtime": 1783476069.7492175,
-    "ast_hash": "1ddfaf69b800a3f32f178b6c0fab83b7",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-document-management/specs/document-management.md": {
-    "mtime": 1783476069.7555242,
-    "ast_hash": "cad98dc5884e9343a726ecd33b84cd10",
-    "semantic_hash": ""
-  },
-  "openspec/changes/implement-document-management/tasks.md": {
-    "mtime": 1783476069.76088,
-    "ast_hash": "b63f17a4fa78f072995f71493a8d9086",
-    "semantic_hash": ""
-  },
   "apps/admin-portal/public/certificates/CERT-388-810960.pdf": {
     "mtime": 1783428810.961961,
     "ast_hash": "d211e20fe8e09ea41bf8a8da4df2e61f",
@@ -8845,8 +8820,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/documents/_components/document-master-client.tsx": {
-    "mtime": 1783476043.1083274,
-    "ast_hash": "ffad7dd5dfa18279739ef302c21cd704",
+    "mtime": 1783524666.5019016,
+    "ast_hash": "d44281885f4160bf5d0913838f9021fc",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/organization/documents/page.tsx": {
@@ -8860,8 +8835,163 @@
     "semantic_hash": ""
   },
   "openspec/specs/scheduling-dashboard/spec.md": {
-    "mtime": 1783476070.0850642,
-    "ast_hash": "f6f80e0518f5ad8ce758e6fbc519b0eb",
+    "mtime": 1783511130.9794922,
+    "ast_hash": "fa92caff58d8a6108b580f84edefc7bd",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/scheduling/_components/holiday-manager.tsx": {
+    "mtime": 1783484851.4750178,
+    "ast_hash": "e220128d6a6b4b05aead6543e4c21f99",
+    "semantic_hash": ""
+  },
+  "packages/database/scripts/add-permissions-db.ts": {
+    "mtime": 1783480529.7798352,
+    "ast_hash": "8bbbc003eec10094752859ff1876358a",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/scheduling/_components/working-days-calendar.tsx": {
+    "mtime": 1783484851.504208,
+    "ast_hash": "8213b7d9a6e503ff0bcb9614264e94f6",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/scheduling/calendars/_components/calendars-client-list.tsx": {
+    "mtime": 1783482456.2037678,
+    "ast_hash": "0075a6bfbaa555f9e999c444871fbd46",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/scheduling/venues/_components/venues-client-list.tsx": {
+    "mtime": 1783484851.6230733,
+    "ast_hash": "1973131b89cde23a06fd616aa9b87105",
+    "semantic_hash": ""
+  },
+  "tests/trainer-eligibility.spec.ts": {
+    "mtime": 1783525043.6484268,
+    "ast_hash": "3536e61ad5fd6e316ab176b70de90ed2",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/faculty/leaves/_components/leaves-client-list.tsx": {
+    "mtime": 1783524661.3404186,
+    "ast_hash": "651ab6f243df450299f145fa583a1afd",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/faculty/leaves/page.tsx": {
+    "mtime": 1783511220.2502236,
+    "ast_hash": "0fd643f6f072ea395e7dd4021f972d6b",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/leaves/[id]/approve/route.ts": {
+    "mtime": 1783486204.248946,
+    "ast_hash": "bad19c6285df8a2173d13d8ac8eafc88",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/leaves/[id]/reject/route.ts": {
+    "mtime": 1783486209.248805,
+    "ast_hash": "3bd3ac6ac9c2229ad6f951591c15d84c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/leaves/[id]/route.ts": {
+    "mtime": 1783486218.6238778,
+    "ast_hash": "999ed1c08b46fb7b7be64b3f5b8d1e13",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/leaves/route.ts": {
+    "mtime": 1783486198.8307915,
+    "ast_hash": "d37a2205d6b5703ac5d184d2346cb82a",
+    "semantic_hash": ""
+  },
+  "packages/leave-management/package.json": {
+    "mtime": 1783485675.6473668,
+    "ast_hash": "2129ce8ef452b568b1d32c5b402bb1f8",
+    "semantic_hash": ""
+  },
+  "packages/leave-management/src/application/leave-service.ts": {
+    "mtime": 1783486121.2589808,
+    "ast_hash": "e6af231c633a0db048ea11f47273c197",
+    "semantic_hash": ""
+  },
+  "packages/leave-management/src/domain/leave.ts": {
+    "mtime": 1783486128.685606,
+    "ast_hash": "1e55d37d65dbe1f1b8d5bb5c45506c3f",
+    "semantic_hash": ""
+  },
+  "packages/leave-management/src/index.ts": {
+    "mtime": 1783485747.9955208,
+    "ast_hash": "4fd0d0ec1f18a326c74c699c5133ca3b",
+    "semantic_hash": ""
+  },
+  "packages/leave-management/src/infrastructure/prisma-leave-repository.ts": {
+    "mtime": 1783485762.4491417,
+    "ast_hash": "28901540171b2bb31959faea24a21c51",
+    "semantic_hash": ""
+  },
+  "packages/leave-management/tsconfig.json": {
+    "mtime": 1783485677.8975935,
+    "ast_hash": "686f0ef472539ae144ab90a697352a44",
+    "semantic_hash": ""
+  },
+  "tests/leave-management.spec.ts": {
+    "mtime": 1783525045.526673,
+    "ast_hash": "2e309be520d17091f87b6c1bc0b1e3a2",
+    "semantic_hash": ""
+  },
+  "openspec/specs/leave-management/spec.md": {
+    "mtime": 1783485379.5180862,
+    "ast_hash": "c7cebac6251a0fb89c333de96aad1127",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/enrollments/create/_components/create-enrollment-client.tsx": {
+    "mtime": 1783511127.4760082,
+    "ast_hash": "416e66e5b152484b8215c50782fcb21f",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/enrollments/create/actions.ts": {
+    "mtime": 1783511127.4762404,
+    "ast_hash": "8e0887d110b7ef617c45b0b280d610dd",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/enrollments/create/page.tsx": {
+    "mtime": 1783511127.4763923,
+    "ast_hash": "41eee98144d452f29d68662e049f4d16",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/public/certificates/CERT-F80-871974.pdf": {
+    "mtime": 1783523871.975911,
+    "ast_hash": "627c465583dbcc6fbf7ee8dfb61c9aa1",
+    "semantic_hash": ""
+  },
+  "packages/shared-ui/src/components/multi-select.tsx": {
+    "mtime": 1783524513.8727229,
+    "ast_hash": "9a82313296ec57d4558bbf50e90b5dba",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/faculty/reports/_components/reports-client.tsx": {
+    "mtime": 1783525307.9370508,
+    "ast_hash": "242e2f2696d67ddb06420c386ff12a5a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-08-implement-document-management/.openspec.yaml": {
+    "mtime": 1783430628.3332312,
+    "ast_hash": "03897143b56ed2249b1ec0993bfa708d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-08-implement-document-management/design.md": {
+    "mtime": 1783476069.742422,
+    "ast_hash": "513e77ac2d40e9c26e90e522ffdb6f75",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-08-implement-document-management/proposal.md": {
+    "mtime": 1783476069.7492175,
+    "ast_hash": "1ddfaf69b800a3f32f178b6c0fab83b7",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-08-implement-document-management/specs/document-management.md": {
+    "mtime": 1783476069.7555242,
+    "ast_hash": "cad98dc5884e9343a726ecd33b84cd10",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-08-implement-document-management/tasks.md": {
+    "mtime": 1783476069.76088,
+    "ast_hash": "b63f17a4fa78f072995f71493a8d9086",
     "semantic_hash": ""
   }
 }

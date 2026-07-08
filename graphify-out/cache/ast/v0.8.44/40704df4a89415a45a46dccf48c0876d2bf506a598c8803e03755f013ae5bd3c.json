@@ -1,1 +1,815 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_module_09_faculty_trainer_management", "label": "Module 09 \u2013 Faculty / Trainer Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L5"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture", "label": "2. Validation Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L9"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_3_reusable_zod_schemas", "label": "3. Reusable Zod Schemas", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L23"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_trainer_profile_validation_rules", "label": "4. Trainer Profile Validation Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L73"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_1_trainer_profile_schema", "label": "4.1 Trainer Profile Schema", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L88"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_5_trainer_status_transition_validation", "label": "5. Trainer Status Transition Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L116"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_6_qualification_validation", "label": "6. Qualification Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L142"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation", "label": "7. Availability Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L173"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_1_input_rules", "label": "7.1 Input Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L175"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_2_overlap_algorithm", "label": "7.2 Overlap Algorithm", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L188"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_course_authorization_validation", "label": "8. Course Authorization Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L217"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_1_effective_authorization_evaluation", "label": "8.1 Effective Authorization Evaluation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L229"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_compensation_rate_validation", "label": "9. Compensation Rate Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L238"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_1_rate_ambiguity_algorithm", "label": "9.1 Rate Ambiguity Algorithm", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L254"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_10_eligibility_validation", "label": "10. Eligibility Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L274"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_11_soft_delete_and_referential_protection_validation", "label": "11. Soft Delete and Referential Protection Validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L289"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "label": "12. Structured Error Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L301"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_1_authentication_and_authorization_errors", "label": "12.1 Authentication and Authorization Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L303"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_2_trainer_profile_errors", "label": "12.2 Trainer Profile Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L313"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_3_qualification_and_document_errors", "label": "12.3 Qualification and Document Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L330"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_4_availability_errors", "label": "12.4 Availability Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L340"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_5_course_authorization_errors", "label": "12.5 Course Authorization Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L370"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_6_eligibility_errors_and_results", "label": "12.6 Eligibility Errors and Results", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L381"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_7_compensation_errors", "label": "12.7 Compensation Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L392"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_8_reporting_and_export_errors", "label": "12.8 Reporting and Export Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L405"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_9_dependency_and_system_errors", "label": "12.9 Dependency and System Errors", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L415"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "label": "13. Notification Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L425"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_1_ownership_rule", "label": "13.1 Ownership Rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L427"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_2_notification_event_matrix", "label": "13.2 Notification Event Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L433"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "label": "13.3 Exact Template Variables", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L448"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_created", "label": "Template `FTM_TRAINER_CREATED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L450"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_status_changed", "label": "Template `FTM_TRAINER_STATUS_CHANGED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L468"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_added", "label": "Template `FTM_QUALIFICATION_ADDED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L485"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_availability_updated", "label": "Template `FTM_AVAILABILITY_UPDATED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L500"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorized", "label": "Template `FTM_COURSE_AUTHORIZED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L520"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_suspended", "label": "Template `FTM_COURSE_AUTHORIZATION_SUSPENDED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L536"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_expired", "label": "Template `FTM_COURSE_AUTHORIZATION_EXPIRED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L553"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_compensation_rate_configured", "label": "Template `FTM_COMPENSATION_RATE_CONFIGURED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L568"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_assignment_eligibility_failed", "label": "Template `FTM_ASSIGNMENT_ELIGIBILITY_FAILED`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L589"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_evidence_expiring", "label": "Template `FTM_QUALIFICATION_EVIDENCE_EXPIRING`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L608"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_4_channel_eligibility_rules", "label": "13.4 Channel Eligibility Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L625"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_5_bilingual_template_resolution", "label": "13.5 Bilingual Template Resolution", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L634"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_6_notification_suppression_rules", "label": "13.6 Notification Suppression Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L644"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts", "label": "13.7 Domain Event Payload Contracts", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L654"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainerstatuschanged", "label": "`TrainerStatusChanged`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L656"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainercourseauthorized", "label": "`TrainerCourseAuthorized`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L674"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_traineravailabilityupdated", "label": "`TrainerAvailabilityUpdated`", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L691"}, {"id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_14_notification_audit_requirements", "label": "14. Notification Audit Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L711"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L1", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_module_09_faculty_trainer_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L3", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L5", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L9", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_3_reusable_zod_schemas", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L23", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_trainer_profile_validation_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L73", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_trainer_profile_validation_rules", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_1_trainer_profile_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L88", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_5_trainer_status_transition_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L116", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_6_qualification_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L142", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L173", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_1_input_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L175", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_2_overlap_algorithm", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L188", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_course_authorization_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L217", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_course_authorization_validation", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_1_effective_authorization_evaluation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L229", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_compensation_rate_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L238", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_compensation_rate_validation", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_1_rate_ambiguity_algorithm", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L254", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_10_eligibility_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L274", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_11_soft_delete_and_referential_protection_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L289", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L301", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_1_authentication_and_authorization_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L303", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_2_trainer_profile_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L313", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_3_qualification_and_document_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L330", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_4_availability_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L340", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_5_course_authorization_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L370", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_6_eligibility_errors_and_results", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L381", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_7_compensation_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L392", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_8_reporting_and_export_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L405", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_9_dependency_and_system_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L415", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L425", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_1_ownership_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L427", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_2_notification_event_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L433", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L448", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_created", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L450", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_status_changed", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L468", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_added", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L485", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_availability_updated", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L500", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorized", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L520", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_suspended", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L536", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_expired", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L553", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_compensation_rate_configured", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L568", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_assignment_eligibility_failed", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L589", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_evidence_expiring", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L608", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_4_channel_eligibility_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L625", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_5_bilingual_template_resolution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L634", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_6_notification_suppression_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L644", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L654", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainerstatuschanged", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L656", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainercourseauthorized", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L674", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_traineravailabilityupdated", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L691", "weight": 1.0}, {"source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture", "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_14_notification_audit_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md", "source_location": "L711", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "label": "Part 7 \u2013 Validation Rules, Error Catalog, Notifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_module_09_faculty_trainer_management",
+      "label": "Module 09 \u2013 Faculty / Trainer Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture",
+      "label": "2. Validation Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_3_reusable_zod_schemas",
+      "label": "3. Reusable Zod Schemas",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_trainer_profile_validation_rules",
+      "label": "4. Trainer Profile Validation Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L73"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_1_trainer_profile_schema",
+      "label": "4.1 Trainer Profile Schema",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L88"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_5_trainer_status_transition_validation",
+      "label": "5. Trainer Status Transition Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_6_qualification_validation",
+      "label": "6. Qualification Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L142"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation",
+      "label": "7. Availability Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L173"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_1_input_rules",
+      "label": "7.1 Input Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L175"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_2_overlap_algorithm",
+      "label": "7.2 Overlap Algorithm",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L188"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_course_authorization_validation",
+      "label": "8. Course Authorization Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L217"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_1_effective_authorization_evaluation",
+      "label": "8.1 Effective Authorization Evaluation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L229"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_compensation_rate_validation",
+      "label": "9. Compensation Rate Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L238"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_1_rate_ambiguity_algorithm",
+      "label": "9.1 Rate Ambiguity Algorithm",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L254"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_10_eligibility_validation",
+      "label": "10. Eligibility Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L274"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_11_soft_delete_and_referential_protection_validation",
+      "label": "11. Soft Delete and Referential Protection Validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L289"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "label": "12. Structured Error Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L301"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_1_authentication_and_authorization_errors",
+      "label": "12.1 Authentication and Authorization Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L303"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_2_trainer_profile_errors",
+      "label": "12.2 Trainer Profile Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L313"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_3_qualification_and_document_errors",
+      "label": "12.3 Qualification and Document Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L330"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_4_availability_errors",
+      "label": "12.4 Availability Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L340"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_5_course_authorization_errors",
+      "label": "12.5 Course Authorization Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L370"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_6_eligibility_errors_and_results",
+      "label": "12.6 Eligibility Errors and Results",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L381"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_7_compensation_errors",
+      "label": "12.7 Compensation Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L392"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_8_reporting_and_export_errors",
+      "label": "12.8 Reporting and Export Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L405"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_9_dependency_and_system_errors",
+      "label": "12.9 Dependency and System Errors",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L415"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "label": "13. Notification Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L425"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_1_ownership_rule",
+      "label": "13.1 Ownership Rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L427"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_2_notification_event_matrix",
+      "label": "13.2 Notification Event Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L433"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "label": "13.3 Exact Template Variables",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L448"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_created",
+      "label": "Template `FTM_TRAINER_CREATED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L450"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_status_changed",
+      "label": "Template `FTM_TRAINER_STATUS_CHANGED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L468"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_added",
+      "label": "Template `FTM_QUALIFICATION_ADDED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L485"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_availability_updated",
+      "label": "Template `FTM_AVAILABILITY_UPDATED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L500"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorized",
+      "label": "Template `FTM_COURSE_AUTHORIZED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L520"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_suspended",
+      "label": "Template `FTM_COURSE_AUTHORIZATION_SUSPENDED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L536"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_expired",
+      "label": "Template `FTM_COURSE_AUTHORIZATION_EXPIRED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L553"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_compensation_rate_configured",
+      "label": "Template `FTM_COMPENSATION_RATE_CONFIGURED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L568"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_assignment_eligibility_failed",
+      "label": "Template `FTM_ASSIGNMENT_ELIGIBILITY_FAILED`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L589"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_evidence_expiring",
+      "label": "Template `FTM_QUALIFICATION_EVIDENCE_EXPIRING`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L608"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_4_channel_eligibility_rules",
+      "label": "13.4 Channel Eligibility Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L625"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_5_bilingual_template_resolution",
+      "label": "13.5 Bilingual Template Resolution",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L634"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_6_notification_suppression_rules",
+      "label": "13.6 Notification Suppression Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L644"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts",
+      "label": "13.7 Domain Event Payload Contracts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L654"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainerstatuschanged",
+      "label": "`TrainerStatusChanged`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L656"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainercourseauthorized",
+      "label": "`TrainerCourseAuthorized`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L674"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_traineravailabilityupdated",
+      "label": "`TrainerAvailabilityUpdated`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L691"
+    },
+    {
+      "id": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_14_notification_audit_requirements",
+      "label": "14. Notification Audit Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L711"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_module_09_faculty_trainer_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_2_validation_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_3_reusable_zod_schemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_trainer_profile_validation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_trainer_profile_validation_rules",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_4_1_trainer_profile_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_5_trainer_status_transition_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_6_qualification_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L173",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_1_input_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_availability_validation",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_7_2_overlap_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_course_authorization_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_course_authorization_validation",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_8_1_effective_authorization_evaluation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_compensation_rate_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_compensation_rate_validation",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_9_1_rate_ambiguity_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L254",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_10_eligibility_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L274",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_part_7_validation_rules_error_catalog_notifications",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_11_soft_delete_and_referential_protection_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L289",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_1_authentication_and_authorization_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L303",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_2_trainer_profile_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L313",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_3_qualification_and_document_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L330",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_4_availability_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L340",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_5_course_authorization_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L370",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_6_eligibility_errors_and_results",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L381",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_7_compensation_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L392",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_8_reporting_and_export_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L405",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_structured_error_catalog",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_12_9_dependency_and_system_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L415",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_md",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L425",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_1_ownership_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_2_notification_event_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L433",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L448",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_created",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L450",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_trainer_status_changed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L468",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_added",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L485",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_availability_updated",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L500",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorized",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L520",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_suspended",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L536",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_course_authorization_expired",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L553",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_compensation_rate_configured",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L568",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_assignment_eligibility_failed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L589",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_3_exact_template_variables",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_template_ftm_qualification_evidence_expiring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L608",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_4_channel_eligibility_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L625",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_5_bilingual_template_resolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L634",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_6_notification_suppression_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L644",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L654",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainerstatuschanged",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L656",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_trainercourseauthorized",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L674",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_7_domain_event_payload_contracts",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_traineravailabilityupdated",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L691",
+      "weight": 1.0
+    },
+    {
+      "source": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_13_notification_architecture",
+      "target": "module_09_faculty_trainer_management_part_7_validation_rules_error_catalog_notifications_14_notification_audit_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 09 - Faculty - Trainer Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md",
+      "source_location": "L711",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,1 +1,223 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_06_course_catalog_training_delivery_batch_management", "label": "Module 06 \u2014 Course Catalog & Training Delivery (Batch) Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "label": "Part 9 \u2014 BDD Acceptance Criteria and Test Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing", "label": "Feature: Course Profile Administration & Publishing", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L12"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_successfully_create_and_publish_a_new_course_profile", "label": "Scenario: Successfully create and publish a new course profile", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L20"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_block_course_creation_on_invalid_input_validation_boundaries", "label": "Scenario Outline: Block course creation on invalid input validation boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L39"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion", "label": "Feature: Batch Capacity & Waiting List Promotion", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L55"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_check_capacity_limits_and_redirect_to_waitlist_when_batch_is_full", "label": "Scenario Outline: Check capacity limits and redirect to waitlist when batch is full", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L63"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_auto_promote_waitlisted_student_when_a_seat_is_vacated", "label": "Scenario: Auto-promote waitlisted student when a seat is vacated", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L82"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_trainer_assignment_scheduling_conflicts", "label": "Feature: Trainer Assignment & Scheduling Conflicts", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L100"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_trainer_mapping_on_session_day_and_hour_overlap", "label": "Scenario: Block trainer mapping on session day and hour overlap", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L108"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards", "label": "Feature: Server-Side Branch Scoping Isolation Guards", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L123"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_branch_manager_from_accessing_batches_of_another_branch", "label": "Scenario: Block branch manager from accessing batches of another branch", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L131"}, {"id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_consolidated_visibility_manager_to_query_cross_branch_data", "label": "Scenario: Allow consolidated visibility manager to query cross-branch data", "file_type": "document", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L144"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_06_course_catalog_training_delivery_batch_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_06_course_catalog_training_delivery_batch_management", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L12", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_successfully_create_and_publish_a_new_course_profile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L20", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_block_course_creation_on_invalid_input_validation_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L39", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L55", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_check_capacity_limits_and_redirect_to_waitlist_when_batch_is_full", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L63", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_auto_promote_waitlisted_student_when_a_seat_is_vacated", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L82", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_trainer_assignment_scheduling_conflicts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L100", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_trainer_assignment_scheduling_conflicts", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_trainer_mapping_on_session_day_and_hour_overlap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L108", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L123", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_branch_manager_from_accessing_batches_of_another_branch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L131", "weight": 1.0}, {"source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards", "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_consolidated_visibility_manager_to_query_cross_branch_data", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L144", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_06_course_catalog_training_delivery_batch_management",
+      "label": "Module 06 \u2014 Course Catalog & Training Delivery (Batch) Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "label": "Part 9 \u2014 BDD Acceptance Criteria and Test Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing",
+      "label": "Feature: Course Profile Administration & Publishing",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_successfully_create_and_publish_a_new_course_profile",
+      "label": "Scenario: Successfully create and publish a new course profile",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_block_course_creation_on_invalid_input_validation_boundaries",
+      "label": "Scenario Outline: Block course creation on invalid input validation boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion",
+      "label": "Feature: Batch Capacity & Waiting List Promotion",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_check_capacity_limits_and_redirect_to_waitlist_when_batch_is_full",
+      "label": "Scenario Outline: Check capacity limits and redirect to waitlist when batch is full",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_auto_promote_waitlisted_student_when_a_seat_is_vacated",
+      "label": "Scenario: Auto-promote waitlisted student when a seat is vacated",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L82"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_trainer_assignment_scheduling_conflicts",
+      "label": "Feature: Trainer Assignment & Scheduling Conflicts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L100"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_trainer_mapping_on_session_day_and_hour_overlap",
+      "label": "Scenario: Block trainer mapping on session day and hour overlap",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L108"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards",
+      "label": "Feature: Server-Side Branch Scoping Isolation Guards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L123"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_branch_manager_from_accessing_batches_of_another_branch",
+      "label": "Scenario: Block branch manager from accessing batches of another branch",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L131"
+    },
+    {
+      "id": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_consolidated_visibility_manager_to_query_cross_branch_data",
+      "label": "Scenario: Allow consolidated visibility manager to query cross-branch data",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L144"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_06_course_catalog_training_delivery_batch_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_06_course_catalog_training_delivery_batch_management",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_successfully_create_and_publish_a_new_course_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_course_profile_administration_publishing",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_block_course_creation_on_invalid_input_validation_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_check_capacity_limits_and_redirect_to_waitlist_when_batch_is_full",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_batch_capacity_waiting_list_promotion",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_auto_promote_waitlisted_student_when_a_seat_is_vacated",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_trainer_assignment_scheduling_conflicts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_trainer_assignment_scheduling_conflicts",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_trainer_mapping_on_session_day_and_hour_overlap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L123",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_block_branch_manager_from_accessing_batches_of_another_branch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_feature_server_side_branch_scoping_isolation_guards",
+      "target": "module_06_course_catalog_training_delivery_batch_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_consolidated_visibility_manager_to_query_cross_branch_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 06 - Course Catalog & Training Delivery (Batch) Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L144",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

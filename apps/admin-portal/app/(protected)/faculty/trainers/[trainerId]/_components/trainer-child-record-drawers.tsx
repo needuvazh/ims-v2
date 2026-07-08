@@ -14,8 +14,10 @@ import {
   Input,
   Select,
   Textarea,
+  MultiSelect,
+  cn,
 } from '@ims/shared-ui';
-import { BookOpen, Clock, Award, Pencil } from 'lucide-react';
+import { BookOpen, Clock, Award, Pencil, Search } from 'lucide-react';
 
 type BranchOption = {
   id: string;
@@ -93,7 +95,7 @@ function dateValue(input: string | Date | null | undefined) {
 }
 
 function drawerClassName() {
-  return '!left-auto !right-0 !top-0 !translate-x-0 !translate-y-0 h-full max-h-screen w-full max-w-[32rem] rounded-none border-l border-[color:var(--ims-border)] p-0';
+  return '!left-auto !right-0 !top-0 !translate-x-0 !translate-y-0 h-full max-h-screen w-full max-w-[32rem] rounded-none border-l border-[color:var(--ims-border)] p-0 overflow-hidden';
 }
 
 function DrawerShell({
@@ -115,12 +117,14 @@ function DrawerShell({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <div className="shrink-0">{trigger}</div>
       <DialogContent className={drawerClassName()}>
-        <div className="flex h-full flex-col">
-          <DialogHeader className="border-b border-slate-100 px-5 py-5">
+        <div className="flex h-full flex-col overflow-hidden">
+          <DialogHeader className="border-b border-slate-100 px-5 py-5 shrink-0">
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
-          {children}
+          <div className="flex-1 min-h-0 flex flex-col">
+            {children}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
@@ -217,7 +221,7 @@ export function TrainerQualificationDrawerAction({
         </Button>
       }
     >
-      <form onSubmit={submit} className="flex h-full flex-col" noValidate>
+      <form onSubmit={submit} className="flex-1 flex flex-col min-h-0" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <Input
@@ -390,7 +394,7 @@ export function TrainerProfileEditDrawerAction({
         </Button>
       }
     >
-      <form onSubmit={submit} className="flex h-full flex-col" noValidate>
+      <form onSubmit={submit} className="flex-1 flex flex-col min-h-0" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 text-sm">
@@ -588,7 +592,7 @@ export function TrainerQualificationEditDrawerAction({
         </Button>
       }
     >
-      <form onSubmit={submit} className="flex h-full flex-col" noValidate>
+      <form onSubmit={submit} className="flex-1 flex flex-col min-h-0" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <Input
@@ -679,7 +683,7 @@ export function TrainerAvailabilityDrawerAction({
     [branchOptions, defaultBranchId],
   );
   const [branchId, setBranchId] = useState(initialBranchId);
-  const [dayOfWeek, setDayOfWeek] = useState('Monday');
+  const [daysOfWeek, setDaysOfWeek] = useState<string[]>(['Monday']);
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('17:00');
   const [status, setStatus] = useState<'Active' | 'Inactive'>('Active');
@@ -697,7 +701,7 @@ export function TrainerAvailabilityDrawerAction({
 
     if (
       !branchId ||
-      !dayOfWeek ||
+      daysOfWeek.length === 0 ||
       !startTime ||
       !endTime ||
       !effectiveStartDate
@@ -715,7 +719,7 @@ export function TrainerAvailabilityDrawerAction({
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             branchId,
-            dayOfWeek,
+            daysOfWeek,
             startTime,
             endTime,
             status,
@@ -757,7 +761,7 @@ export function TrainerAvailabilityDrawerAction({
         </Button>
       }
     >
-      <form onSubmit={submit} className="flex h-full flex-col" noValidate>
+      <form onSubmit={submit} className="flex-1 flex flex-col min-h-0" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <Select
@@ -770,32 +774,62 @@ export function TrainerAvailabilityDrawerAction({
             helperText="Only branches within the current IAM scope are shown."
           />
           <div className="grid gap-4 sm:grid-cols-2">
-            <Select
-              label="Day of week"
-              required
-              options={[
-                { value: 'Monday', label: 'Monday' },
-                { value: 'Tuesday', label: 'Tuesday' },
-                { value: 'Wednesday', label: 'Wednesday' },
-                { value: 'Thursday', label: 'Thursday' },
-                { value: 'Friday', label: 'Friday' },
-                { value: 'Saturday', label: 'Saturday' },
-                { value: 'Sunday', label: 'Sunday' },
-              ]}
-              value={dayOfWeek}
-              onValueChange={setDayOfWeek}
-            />
-            <Select
-              label="Status"
-              options={[
-                { value: 'Active', label: 'Active' },
-                { value: 'Inactive', label: 'Inactive' },
-              ]}
-              value={status}
-              onValueChange={(value) =>
-                setStatus(value as 'Active' | 'Inactive')
-              }
-            />
+            <div className="col-span-2 space-y-2">
+              <label className="text-sm font-medium text-[color:var(--ims-ink)] flex items-center gap-1">
+                Days of week <span className="text-[color:var(--ims-error)]">*</span>
+              </label>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday',
+                  'Sunday',
+                ].map((day) => {
+                  const checked = daysOfWeek.includes(day);
+                  return (
+                    <label
+                      key={day}
+                      className={cn(
+                        'flex items-center gap-2 rounded-lg border p-2.5 text-sm font-medium transition-all cursor-pointer select-none',
+                        checked
+                          ? 'border-[color:var(--ims-brass)] bg-[color:var(--ims-brass)]/10 text-[color:var(--ims-brass)]'
+                          : 'border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] hover:bg-slate-50 text-[color:var(--ims-ink)]',
+                      )}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setDaysOfWeek([...daysOfWeek, day]);
+                          } else {
+                            setDaysOfWeek(daysOfWeek.filter((d) => d !== day));
+                          }
+                        }}
+                        className="h-4 w-4 rounded border-[color:var(--ims-border)] text-[color:var(--ims-brass)] focus:ring-[color:var(--ims-brass)]"
+                      />
+                      {day}
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="col-span-2">
+              <Select
+                label="Status"
+                options={[
+                  { value: 'Active', label: 'Active' },
+                  { value: 'Inactive', label: 'Inactive' },
+                ]}
+                value={status}
+                onValueChange={(value) =>
+                  setStatus(value as 'Active' | 'Inactive')
+                }
+              />
+            </div>
             <Input
               label="Start time"
               type="time"
@@ -946,7 +980,7 @@ export function TrainerAvailabilityEditDrawerAction({
         </Button>
       }
     >
-      <form onSubmit={submit} className="flex h-full flex-col" noValidate>
+      <form onSubmit={submit} className="flex-1 flex flex-col min-h-0" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <Select
@@ -1042,11 +1076,7 @@ export function TrainerAuthorizationDrawerAction({
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const initialCourseId = useMemo(
-    () => courseOptions[0]?.id ?? '',
-    [courseOptions],
-  );
-  const [courseId, setCourseId] = useState(initialCourseId);
+  const [courseIds, setCourseIds] = useState<string[]>([]);
   const [status, setStatus] = useState<
     'Active' | 'Inactive' | 'Suspended' | 'Expired'
   >('Active');
@@ -1054,17 +1084,12 @@ export function TrainerAuthorizationDrawerAction({
   const [effectiveEndDate, setEffectiveEndDate] = useState('');
   const [reason, setReason] = useState('');
 
-  const courseOptionsList = courseOptions.map((course) => ({
-    value: course.id,
-    label: `${course.courseCode} · ${course.nameEnglish}${course.status ? ` (${course.status})` : ''}`,
-  }));
-
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
 
-    if (!courseId || !effectiveStartDate) {
-      setError('Choose a course and effective start date.');
+    if (courseIds.length === 0 || !effectiveStartDate) {
+      setError('Choose at least one course and an effective start date.');
       return;
     }
 
@@ -1076,7 +1101,7 @@ export function TrainerAuthorizationDrawerAction({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            courseId,
+            courseIds,
             status,
             effectiveStartDate,
             effectiveEndDate: effectiveEndDate || null,
@@ -1090,7 +1115,7 @@ export function TrainerAuthorizationDrawerAction({
       }
       setOpen(false);
       router.refresh();
-      setCourseId(initialCourseId);
+      setCourseIds([]);
       setStatus('Active');
       setEffectiveStartDate(todayValue());
       setEffectiveEndDate('');
@@ -1122,16 +1147,19 @@ export function TrainerAuthorizationDrawerAction({
         </Button>
       }
     >
-      <form onSubmit={submit} className="flex h-full flex-col" noValidate>
+      <form onSubmit={submit} className="flex-1 flex flex-col min-h-0" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
-          <Select
-            label="Course"
+          <MultiSelect
+            label="Courses"
             required
-            options={courseOptionsList}
-            value={courseId}
-            placeholder="Select course"
-            onValueChange={setCourseId}
+            options={courseOptions.map((c) => ({
+              value: c.id,
+              label: `${c.courseCode} · ${c.nameEnglish}${c.status ? ` (${c.status})` : ''}`,
+            }))}
+            value={courseIds}
+            placeholder="Select courses"
+            onValueChange={setCourseIds}
           />
           <div className="grid gap-4 sm:grid-cols-2">
             <Select
@@ -1274,7 +1302,7 @@ export function TrainerAuthorizationEditDrawerAction({
         </Button>
       }
     >
-      <form onSubmit={submit} className="flex h-full flex-col" noValidate>
+      <form onSubmit={submit} className="flex-1 flex flex-col min-h-0" noValidate>
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {error ? <Alert variant="error" description={error} /> : null}
           <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-background)] p-4 text-sm text-[color:var(--ims-ink)]">

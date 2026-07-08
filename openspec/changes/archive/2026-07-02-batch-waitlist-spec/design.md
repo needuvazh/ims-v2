@@ -28,6 +28,7 @@ We will add `WaitingList` to `packages/database/prisma/schema.prisma` with the f
 - `WaitingList`: fields `id`, `courseId` (FK), `batchId` (FK), `studentId` (logical reference, NULL if leadId is set), `leadId` (logical reference, NULL if studentId is set), `queuePosition` (Int), `status` (Waiting/Promoted/Removed/Held/Suspended), `statusReason` (String, NULL allowed, records reason for manual skip or downstream enrollment failure), `promotionCorrelationId` (String, NULL allowed, tracks outbox event/cancellation correlations to prevent duplicate accounting drift), and standard audit fields.
 - Indexes: `@@index([courseId])`, `@@index([batchId])`, `@@index([studentId])`, `@@index([leadId])`
 - Constraints: To prevent duplicate active waitlist entries while preserving historical queue records, standard unique constraints will not be used in the DB. Instead, a custom migration will implement PostgreSQL **filtered unique indexes** where `status = 'Waiting'` and `isDeleted = false`:
+
   ```sql
   CREATE UNIQUE INDEX waiting_lists_student_batch_waiting_idx
     ON waiting_lists (student_id, batch_id)

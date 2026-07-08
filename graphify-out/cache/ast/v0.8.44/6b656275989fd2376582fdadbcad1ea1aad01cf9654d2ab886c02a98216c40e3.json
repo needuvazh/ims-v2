@@ -1,1 +1,63 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_batch_delivery_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md", "source_location": "L1"}, {"id": "batch_delivery_spec_modified_requirements", "label": "MODIFIED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md", "source_location": "L1"}, {"id": "batch_delivery_spec_requirement_batch_completion_triggers_async_evaluation_fr_crs_007", "label": "Requirement: Batch Completion Triggers Async Evaluation (FR-CRS-007)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md", "source_location": "L3"}, {"id": "batch_delivery_spec_scenario_batch_completion_triggers_completion_evaluation", "label": "Scenario: Batch completion triggers completion evaluation", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md", "source_location": "L7"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_batch_delivery_spec_md", "target": "batch_delivery_spec_modified_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "batch_delivery_spec_modified_requirements", "target": "batch_delivery_spec_requirement_batch_completion_triggers_async_evaluation_fr_crs_007", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "batch_delivery_spec_requirement_batch_completion_triggers_async_evaluation_fr_crs_007", "target": "batch_delivery_spec_scenario_batch_completion_triggers_completion_evaluation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md", "source_location": "L7", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_batch_delivery_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "batch_delivery_spec_modified_requirements",
+      "label": "MODIFIED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "batch_delivery_spec_requirement_batch_completion_triggers_async_evaluation_fr_crs_007",
+      "label": "Requirement: Batch Completion Triggers Async Evaluation (FR-CRS-007)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "batch_delivery_spec_scenario_batch_completion_triggers_completion_evaluation",
+      "label": "Scenario: Batch completion triggers completion evaluation",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md",
+      "source_location": "L7"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_batch_delivery_spec_md",
+      "target": "batch_delivery_spec_modified_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "batch_delivery_spec_modified_requirements",
+      "target": "batch_delivery_spec_requirement_batch_completion_triggers_async_evaluation_fr_crs_007",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "batch_delivery_spec_requirement_batch_completion_triggers_async_evaluation_fr_crs_007",
+      "target": "batch_delivery_spec_scenario_batch_completion_triggers_completion_evaluation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/batch-delivery/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

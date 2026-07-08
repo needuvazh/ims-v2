@@ -233,6 +233,60 @@ export class SchedulingService {
         : parsed.effectiveEndDate;
     ensureChronologicalRange(nextStart, nextEnd);
 
+    if (parsed.operatingDays && parsed.operatingDays.length > 0) {
+      await this.prisma.$transaction(async (tx) => {
+        for (const day of parsed.operatingDays!) {
+          let dayRow = await tx.calendarOperatingDay.findFirst({
+            where: {
+              businessCalendarId: id,
+              dayOfWeek: day.dayOfWeek,
+              isDeleted: false,
+            },
+          });
+
+          if (!dayRow) {
+            dayRow = await tx.calendarOperatingDay.create({
+              data: {
+                id: createUuid(randomUUID()),
+                businessCalendarId: id,
+                dayOfWeek: day.dayOfWeek,
+                isOpen: day.isOpen,
+                createdBy: context.actorId ?? null,
+                isDeleted: false,
+              },
+            });
+          } else {
+            await tx.calendarOperatingDay.update({
+              where: { id: dayRow.id },
+              data: {
+                isOpen: day.isOpen,
+                updatedBy: context.actorId ?? null,
+              },
+            });
+          }
+
+          // Delete existing working hours for this operating day
+          await tx.calendarWorkingHour.deleteMany({
+            where: { operatingDayId: dayRow.id },
+          });
+
+          // Insert new working hours if open
+          if (day.isOpen && day.workingHours && day.workingHours.length > 0) {
+            await tx.calendarWorkingHour.createMany({
+              data: day.workingHours.map((wh) => ({
+                id: createUuid(randomUUID()),
+                operatingDayId: dayRow!.id,
+                startTime: wh.startTime,
+                endTime: wh.endTime,
+                createdBy: context.actorId ?? null,
+                isDeleted: false,
+              })),
+            });
+          }
+        }
+      });
+    }
+
     const updated = await this.repository.updateBusinessCalendar(
       id,
       {
@@ -530,6 +584,15 @@ export class SchedulingService {
     return created;
   }
 
+  async listHolidays(filters: {
+    businessCalendarId?: string;
+    branchId?: string | null;
+    branchCalendarOverrideId?: string | null;
+    date?: Date;
+  }) {
+    return this.repository.listHolidays(filters);
+  }
+
   async resolveCalendar(
     branchId: string,
     date: Date,
@@ -821,8 +884,44 @@ export class SchedulingService {
       }
     }
 
-    // 3. Trainer Overlap Check
+    // 3. Trainer Overlap & Leave Check
     if (input.trainerId) {
+      // Fetch trainer profile to resolve personId
+      const trainerProfile = await this.prisma.trainerProfile.findUnique({
+        where: { id: input.trainerId },
+        select: { personId: true },
+      });
+
+      if (trainerProfile) {
+        // Query approved leaves on the scheduled date
+        const trainerLeaves = await this.prisma.leaveRequest.findMany({
+          where: {
+            personId: trainerProfile.personId,
+            status: 'Approved',
+            isDeleted: false,
+            startDate: { lte: input.scheduledDate },
+            endDate: { gte: input.scheduledDate },
+          },
+        });
+
+        const overlapsLeave = trainerLeaves.some((leave) => {
+          if (leave.isFullDay) {
+            return true;
+          }
+          const leaveStart = leave.startTime ?? '00:00';
+          const leaveEnd = leave.endTime ?? '23:59';
+          return input.startTime < leaveEnd && input.endTime > leaveStart;
+        });
+
+        if (overlapsLeave) {
+          conflicts.push({
+            type: 'TRAINER_UNAVAILABLE',
+            message: `Trainer is on approved leave on this date/time`,
+            severity: 'CRITICAL',
+          });
+        }
+      }
+
       const overlappingSessions = await this.prisma.session.findMany({
         where: {
           trainerId: input.trainerId,

@@ -133,9 +133,8 @@ export default async function TrainersPage(props: {
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
-        eyebrow="Module 09"
+        eyebrow="Faculty & Trainer"
         title="Trainer Registry"
-        description="Search, sort, and maintain trainer profiles with branch-scoped access controls."
         actions={
           <LinkButton href="/faculty/trainers/new">New trainer</LinkButton>
         }

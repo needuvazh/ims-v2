@@ -1,1 +1,191 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_design_md", "label": "design.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L1"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design", "label": "Course Configurations & Overrides Design", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L1"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_database_schema_modifications", "label": "Database Schema Modifications", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L5"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification", "label": "REST API Specification", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L24"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_1_fee_pricing_overrides_api_v1_courses_id_pricing", "label": "1. Fee Pricing Overrides (`/api/v1/courses/[id]/pricing`)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L26"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_2_discount_segment_overrides_api_v1_courses_id_discounts", "label": "2. Discount segment Overrides (`/api/v1/courses/[id]/discounts`)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L31"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_completion_rules_api_v1_courses_id_completion_rules", "label": "3. Graduation Completion Rules (`/api/v1/courses/[id]/completion-rules`)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L36"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine", "label": "UI Components & State Machine", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L41"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_1_multi_select_target_branches_selectors", "label": "1. Multi-Select Target Branches Selectors", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L43"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_2_configs_panel_datatables", "label": "2. Configs Panel Datatables", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L47"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_checks_input_selector_card", "label": "3. Graduation Checks Input Selector Card", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L55"}, {"id": "2026_07_06_course_catalog_configurations_overrides_design_4_next_js_image_and_icons_serialization_normalizer", "label": "4. Next.js Image and Icons Serialization Normalizer", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L63"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_design_md", "target": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L1", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design", "target": "2026_07_06_course_catalog_configurations_overrides_design_database_schema_modifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L5", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design", "target": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L24", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification", "target": "2026_07_06_course_catalog_configurations_overrides_design_1_fee_pricing_overrides_api_v1_courses_id_pricing", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L26", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification", "target": "2026_07_06_course_catalog_configurations_overrides_design_2_discount_segment_overrides_api_v1_courses_id_discounts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L31", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification", "target": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_completion_rules_api_v1_courses_id_completion_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L36", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design", "target": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L41", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine", "target": "2026_07_06_course_catalog_configurations_overrides_design_1_multi_select_target_branches_selectors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L43", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine", "target": "2026_07_06_course_catalog_configurations_overrides_design_2_configs_panel_datatables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L47", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine", "target": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_checks_input_selector_card", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L55", "weight": 1.0}, {"source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine", "target": "2026_07_06_course_catalog_configurations_overrides_design_4_next_js_image_and_icons_serialization_normalizer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md", "source_location": "L63", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_design_md",
+      "label": "design.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design",
+      "label": "Course Configurations & Overrides Design",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_database_schema_modifications",
+      "label": "Database Schema Modifications",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification",
+      "label": "REST API Specification",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_1_fee_pricing_overrides_api_v1_courses_id_pricing",
+      "label": "1. Fee Pricing Overrides (`/api/v1/courses/[id]/pricing`)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_2_discount_segment_overrides_api_v1_courses_id_discounts",
+      "label": "2. Discount segment Overrides (`/api/v1/courses/[id]/discounts`)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_completion_rules_api_v1_courses_id_completion_rules",
+      "label": "3. Graduation Completion Rules (`/api/v1/courses/[id]/completion-rules`)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine",
+      "label": "UI Components & State Machine",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_1_multi_select_target_branches_selectors",
+      "label": "1. Multi-Select Target Branches Selectors",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_2_configs_panel_datatables",
+      "label": "2. Configs Panel Datatables",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_checks_input_selector_card",
+      "label": "3. Graduation Checks Input Selector Card",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "2026_07_06_course_catalog_configurations_overrides_design_4_next_js_image_and_icons_serialization_normalizer",
+      "label": "4. Next.js Image and Icons Serialization Normalizer",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L63"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_course_catalog_configurations_overrides_design_md",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_database_schema_modifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_1_fee_pricing_overrides_api_v1_courses_id_pricing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_2_discount_segment_overrides_api_v1_courses_id_discounts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_rest_api_specification",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_completion_rules_api_v1_courses_id_completion_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_course_configurations_overrides_design",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_1_multi_select_target_branches_selectors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_2_configs_panel_datatables",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_3_graduation_checks_input_selector_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "2026_07_06_course_catalog_configurations_overrides_design_ui_components_state_machine",
+      "target": "2026_07_06_course_catalog_configurations_overrides_design_4_next_js_image_and_icons_serialization_normalizer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-course-catalog-configurations-overrides/design.md",
+      "source_location": "L63",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

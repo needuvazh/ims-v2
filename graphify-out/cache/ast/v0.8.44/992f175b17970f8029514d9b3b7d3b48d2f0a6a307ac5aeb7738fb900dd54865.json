@@ -1,1 +1,863 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_md", "label": "Part 10 - Security Architecture and NFR.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "label": "Part 10 - Security Architecture and NFR", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_module_12_fee_billing_receivables_management", "label": "Module 12 \u2013 Fee, Billing & Receivables Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L5"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_2_security_objectives", "label": "2. Security Objectives", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L11"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries", "label": "3. Security Trust Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L26"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_1_trust_rules", "label": "3.1 Trust Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L74"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "label": "4. Authentication Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L83"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_1_human_authentication", "label": "4.1 Human Authentication", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L85"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_2_internal_caller_authentication", "label": "4.2 Internal Caller Authentication", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L95"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation", "label": "5. Authorization and Branch Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L116"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_1_authorization_decision_model", "label": "5.1 Authorization Decision Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L118"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_2_effective_branch_set", "label": "5.2 Effective Branch Set", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L132"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_3_scope_rules_by_finance_entity", "label": "5.3 Scope Rules by Finance Entity", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L150"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_4_anti_leakage_requirements", "label": "5.4 Anti-Leakage Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L168"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_6_fine_grained_permission_enforcement", "label": "6. Fine-Grained Permission Enforcement", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L177"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls", "label": "7. Financial Transaction Integrity Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L199"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_1_atomicity", "label": "7.1 Atomicity", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L201"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_2_idempotency", "label": "7.2 Idempotency", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L214"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_3_optimistic_concurrency", "label": "7.3 Optimistic Concurrency", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L227"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_4_arithmetic_integrity", "label": "7.4 Arithmetic Integrity", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L243"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security", "label": "8. Payment Data Security", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L254"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_1_prohibited_data", "label": "8.1 Prohibited Data", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L256"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_2_allowed_payment_metadata", "label": "8.2 Allowed Payment Metadata", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L268"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_3_encryption", "label": "8.3 Encryption", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L284"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_9_receipt_invoice_and_export_document_security", "label": "9. Receipt, Invoice, and Export Document Security", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L292"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls", "label": "10. PII and Privacy Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L305"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_1_data_minimization", "label": "10.1 Data Minimization", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L307"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_2_display_masking", "label": "10.2 Display Masking", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L311"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_3_logging_redaction", "label": "10.3 Logging Redaction", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L324"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture", "label": "11. Audit Architecture", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L336"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_1_mandatory_audited_actions", "label": "11.1 Mandatory Audited Actions", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L338"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_2_audit_record_requirements", "label": "11.2 Audit Record Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L355"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_3_audit_immutability", "label": "11.3 Audit Immutability", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L377"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_12_secure_error_handling", "label": "12. Secure Error Handling", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L384"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_13_abuse_prevention_and_rate_controls", "label": "13. Abuse Prevention and Rate Controls", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L396"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_14_dependency_security_and_supply_chain", "label": "14. Dependency Security and Supply Chain", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L409"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "label": "15. Non-Functional Requirements Overview", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L419"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_1_performance_targets", "label": "15.1 Performance Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L421"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_2_capacity_and_concurrency_targets", "label": "15.2 Capacity and Concurrency Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L439"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_3_availability_targets", "label": "15.3 Availability Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L454"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_4_reliability_and_consistency_targets", "label": "15.4 Reliability and Consistency Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L464"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_5_backup_and_recovery_targets", "label": "15.5 Backup and Recovery Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L475"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_6_scalability_targets", "label": "15.6 Scalability Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L485"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_7_usability_targets", "label": "15.7 Usability Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L495"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_8_accessibility_targets", "label": "15.8 Accessibility Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L505"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_9_localization_and_timezone_targets", "label": "15.9 Localization and Timezone Targets", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L515"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance", "label": "16. Compliance and Financial Governance", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L525"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_1_oman_localization", "label": "16.1 Oman Localization", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L527"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_2_retention_classes", "label": "16.2 Retention Classes", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L540"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_17_database_security_requirements", "label": "17. Database Security Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L550"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_18_secure_development_requirements", "label": "18. Secure Development Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L562"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_19_security_verification_checklist", "label": "19. Security Verification Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L575"}, {"id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_20_nfr_acceptance_criteria", "label": "20. NFR Acceptance Criteria", "file_type": "document", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L595"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_md", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L1", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_module_12_fee_billing_receivables_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L3", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L5", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_2_security_objectives", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L11", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L26", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_1_trust_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L74", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L83", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_1_human_authentication", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L85", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_2_internal_caller_authentication", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L95", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L116", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_1_authorization_decision_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L118", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_2_effective_branch_set", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L132", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_3_scope_rules_by_finance_entity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L150", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_4_anti_leakage_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L168", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_6_fine_grained_permission_enforcement", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L177", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L199", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_1_atomicity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L201", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_2_idempotency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L214", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_3_optimistic_concurrency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L227", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_4_arithmetic_integrity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L243", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L254", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_1_prohibited_data", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L256", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_2_allowed_payment_metadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L268", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_3_encryption", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L284", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_9_receipt_invoice_and_export_document_security", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L292", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L305", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_1_data_minimization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L307", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_2_display_masking", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L311", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_3_logging_redaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L324", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L336", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_1_mandatory_audited_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L338", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_2_audit_record_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L355", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_3_audit_immutability", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L377", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_12_secure_error_handling", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L384", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_13_abuse_prevention_and_rate_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L396", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_14_dependency_security_and_supply_chain", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L409", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L419", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_1_performance_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L421", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_2_capacity_and_concurrency_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L439", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_3_availability_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L454", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_4_reliability_and_consistency_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L464", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_5_backup_and_recovery_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L475", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_6_scalability_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L485", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_7_usability_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L495", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_8_accessibility_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L505", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_9_localization_and_timezone_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L515", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L525", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_1_oman_localization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L527", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_2_retention_classes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L540", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_17_database_security_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L550", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_18_secure_development_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L562", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_19_security_verification_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L575", "weight": 1.0}, {"source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr", "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_20_nfr_acceptance_criteria", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md", "source_location": "L595", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_md",
+      "label": "Part 10 - Security Architecture and NFR.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "label": "Part 10 - Security Architecture and NFR",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_module_12_fee_billing_receivables_management",
+      "label": "Module 12 \u2013 Fee, Billing & Receivables Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_2_security_objectives",
+      "label": "2. Security Objectives",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries",
+      "label": "3. Security Trust Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_1_trust_rules",
+      "label": "3.1 Trust Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "label": "4. Authentication Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L83"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_1_human_authentication",
+      "label": "4.1 Human Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L85"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_2_internal_caller_authentication",
+      "label": "4.2 Internal Caller Authentication",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L95"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation",
+      "label": "5. Authorization and Branch Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_1_authorization_decision_model",
+      "label": "5.1 Authorization Decision Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L118"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_2_effective_branch_set",
+      "label": "5.2 Effective Branch Set",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L132"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_3_scope_rules_by_finance_entity",
+      "label": "5.3 Scope Rules by Finance Entity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L150"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_4_anti_leakage_requirements",
+      "label": "5.4 Anti-Leakage Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L168"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_6_fine_grained_permission_enforcement",
+      "label": "6. Fine-Grained Permission Enforcement",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L177"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls",
+      "label": "7. Financial Transaction Integrity Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L199"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_1_atomicity",
+      "label": "7.1 Atomicity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L201"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_2_idempotency",
+      "label": "7.2 Idempotency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L214"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_3_optimistic_concurrency",
+      "label": "7.3 Optimistic Concurrency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L227"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_4_arithmetic_integrity",
+      "label": "7.4 Arithmetic Integrity",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L243"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security",
+      "label": "8. Payment Data Security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L254"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_1_prohibited_data",
+      "label": "8.1 Prohibited Data",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L256"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_2_allowed_payment_metadata",
+      "label": "8.2 Allowed Payment Metadata",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L268"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_3_encryption",
+      "label": "8.3 Encryption",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L284"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_9_receipt_invoice_and_export_document_security",
+      "label": "9. Receipt, Invoice, and Export Document Security",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L292"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls",
+      "label": "10. PII and Privacy Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L305"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_1_data_minimization",
+      "label": "10.1 Data Minimization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L307"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_2_display_masking",
+      "label": "10.2 Display Masking",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L311"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_3_logging_redaction",
+      "label": "10.3 Logging Redaction",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L324"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture",
+      "label": "11. Audit Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L336"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_1_mandatory_audited_actions",
+      "label": "11.1 Mandatory Audited Actions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L338"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_2_audit_record_requirements",
+      "label": "11.2 Audit Record Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L355"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_3_audit_immutability",
+      "label": "11.3 Audit Immutability",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L377"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_12_secure_error_handling",
+      "label": "12. Secure Error Handling",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L384"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_13_abuse_prevention_and_rate_controls",
+      "label": "13. Abuse Prevention and Rate Controls",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L396"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_14_dependency_security_and_supply_chain",
+      "label": "14. Dependency Security and Supply Chain",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L409"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "label": "15. Non-Functional Requirements Overview",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L419"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_1_performance_targets",
+      "label": "15.1 Performance Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L421"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_2_capacity_and_concurrency_targets",
+      "label": "15.2 Capacity and Concurrency Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L439"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_3_availability_targets",
+      "label": "15.3 Availability Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L454"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_4_reliability_and_consistency_targets",
+      "label": "15.4 Reliability and Consistency Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L464"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_5_backup_and_recovery_targets",
+      "label": "15.5 Backup and Recovery Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L475"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_6_scalability_targets",
+      "label": "15.6 Scalability Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L485"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_7_usability_targets",
+      "label": "15.7 Usability Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L495"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_8_accessibility_targets",
+      "label": "15.8 Accessibility Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L505"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_9_localization_and_timezone_targets",
+      "label": "15.9 Localization and Timezone Targets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L515"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance",
+      "label": "16. Compliance and Financial Governance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L525"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_1_oman_localization",
+      "label": "16.1 Oman Localization",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L527"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_2_retention_classes",
+      "label": "16.2 Retention Classes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L540"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_17_database_security_requirements",
+      "label": "17. Database Security Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L550"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_18_secure_development_requirements",
+      "label": "18. Secure Development Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L562"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_19_security_verification_checklist",
+      "label": "19. Security Verification Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L575"
+    },
+    {
+      "id": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_20_nfr_acceptance_criteria",
+      "label": "20. NFR Acceptance Criteria",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L595"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_md",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_module_12_fee_billing_receivables_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_2_security_objectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_security_trust_boundaries",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_3_1_trust_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_1_human_authentication",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_authentication_architecture",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_4_2_internal_caller_authentication",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_1_authorization_decision_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_2_effective_branch_set",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_3_scope_rules_by_finance_entity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L150",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_authorization_and_branch_isolation",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_5_4_anti_leakage_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_6_fine_grained_permission_enforcement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_1_atomicity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_2_idempotency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_3_optimistic_concurrency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L227",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_financial_transaction_integrity_controls",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_7_4_arithmetic_integrity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L243",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L254",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_1_prohibited_data",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L256",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_2_allowed_payment_metadata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_payment_data_security",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_8_3_encryption",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_9_receipt_invoice_and_export_document_security",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L292",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L305",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_1_data_minimization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L307",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_2_display_masking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_pii_and_privacy_controls",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_10_3_logging_redaction",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L324",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_1_mandatory_audited_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L338",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_2_audit_record_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L355",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_audit_architecture",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_11_3_audit_immutability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L377",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_12_secure_error_handling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_13_abuse_prevention_and_rate_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L396",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_14_dependency_security_and_supply_chain",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L409",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L419",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_1_performance_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_2_capacity_and_concurrency_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L439",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_3_availability_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L454",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_4_reliability_and_consistency_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L464",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_5_backup_and_recovery_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L475",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_6_scalability_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L485",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_7_usability_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L495",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_8_accessibility_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L505",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_non_functional_requirements_overview",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_15_9_localization_and_timezone_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L515",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L525",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_1_oman_localization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L527",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_compliance_and_financial_governance",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_16_2_retention_classes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L540",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_17_database_security_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L550",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_18_secure_development_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L562",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_19_security_verification_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L575",
+      "weight": 1.0
+    },
+    {
+      "source": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_part_10_security_architecture_and_nfr",
+      "target": "module_12_fee_billing_receivables_management_part_10_security_architecture_and_nfr_20_nfr_acceptance_criteria",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 12 - Fee, Billing & Receivables Management/Part 10 - Security Architecture and NFR.md",
+      "source_location": "L595",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -54,9 +54,7 @@ export interface IRoleRepository {
     actorId: Uuid,
     reason: string | null,
   ): Promise<void>;
-  listRolesForUser(
-    userId: Uuid,
-  ): Promise<
+  listRolesForUser(userId: Uuid): Promise<
     {
       role: Role;
       status: string;
@@ -65,9 +63,7 @@ export interface IRoleRepository {
       reason: string | null;
     }[]
   >;
-  listUsersForRole(
-    roleId: Uuid,
-  ): Promise<
+  listUsersForRole(roleId: Uuid): Promise<
     {
       userId: Uuid;
       username: string;

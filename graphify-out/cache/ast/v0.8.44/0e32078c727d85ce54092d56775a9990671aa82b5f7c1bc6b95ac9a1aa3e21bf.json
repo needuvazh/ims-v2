@@ -1,1 +1,1135 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_07_scheduling_calendar_holiday_management", "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_document_control", "label": "1. Document Control", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L5"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_baseline", "label": "2. Test Data Baseline", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L19"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management", "label": "3. Feature: Business Calendar Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L47"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_draft_institute_business_calendar", "label": "Scenario: Create a draft institute business calendar", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L55"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_business_calendar_dates", "label": "Scenario Outline: Reject invalid business calendar dates", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L71"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_activate_a_calendar_when_no_overlapping_active_calendar_exists", "label": "Scenario: Activate a calendar when no overlapping active calendar exists", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L88"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_calendar_activation_when_an_overlapping_active_calendar_exists", "label": "Scenario: Reject calendar activation when an overlapping active calendar exists", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L104"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management", "label": "4. Feature: Holiday and Closure Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L119"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_active_holiday_for_a_branch", "label": "Scenario: Create active holiday for a branch", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L127"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_duplicate_active_holiday_on_same_date_and_branch", "label": "Scenario: Prevent duplicate active holiday on same date and branch", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L143"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_session_scheduling_on_active_holiday_without_override", "label": "Scenario: Reject session scheduling on active holiday without override", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L155"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_holiday_override_with_permission_and_reason", "label": "Scenario: Allow holiday override with permission and reason", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L170"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management", "label": "5. Feature: Venue Block Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L188"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_classroom_venue_block", "label": "Scenario: Create classroom venue block", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L195"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_validate_venue_block_time_bounds", "label": "Scenario Outline: Validate venue block time bounds", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L212"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_session_in_blocked_classroom", "label": "Scenario: Prevent session in blocked classroom", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L228"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "label": "6. Feature: Single Session Scheduling", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L243"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_valid_draft_session", "label": "Scenario: Create a valid draft session", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L250"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_publish_a_valid_session", "label": "Scenario: Publish a valid session", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L271"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_session_payload", "label": "Scenario Outline: Reject invalid session payload", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L293"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_trainer_double_booking", "label": "Scenario: Prevent trainer double booking", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L311"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_classroom_double_booking", "label": "Scenario: Prevent classroom double booking", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L324"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_batch_overlap", "label": "Scenario: Prevent batch overlap", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L337"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_batch_date_range_without_override", "label": "Scenario: Reject scheduling outside batch date range without override", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L350"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_working_hours_without_override", "label": "Scenario: Reject scheduling outside working hours without override", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L363"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_cancel_a_published_session_with_reason", "label": "Scenario: Cancel a published session with reason", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L376"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_cancellation_without_reason", "label": "Scenario: Reject cancellation without reason", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L391"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reschedule_a_published_session", "label": "Scenario: Reschedule a published session", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L403"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation", "label": "7. Feature: Recurring Schedule Generation", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L420"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_weekly_recurring_draft_sessions", "label": "Scenario: Generate weekly recurring draft sessions", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L427"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_recurring_sessions_with_holiday_conflict_as_conflict_draft", "label": "Scenario: Generate recurring sessions with holiday conflict as conflict draft", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L444"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_recurrence_generation_beyond_allowed_range", "label": "Scenario: Reject recurrence generation beyond allowed range", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L459"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api", "label": "8. Feature: Conflict Check API", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L472"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_no_conflicts", "label": "Scenario: Dry-run conflict check returns no conflicts", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L479"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_multiple_conflicts", "label": "Scenario: Dry-run conflict check returns multiple conflicts", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L492"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views", "label": "9. Feature: Timetable Views", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L509"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_admin_views_daily_timetable_for_assigned_branch", "label": "Scenario: Admin views daily timetable for assigned branch", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L516"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_trainer_views_own_schedule", "label": "Scenario: Trainer views own schedule", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L529"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_views_own_enrolled_batch_timetable", "label": "Scenario: Student views own enrolled batch timetable", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L542"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_cannot_read_another_batch_timetable", "label": "Scenario: Student cannot read another batch timetable", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L555"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics", "label": "10. Feature: Reports and Analytics", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L568"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_branch_user_views_classroom_utilization_for_own_branch", "label": "Scenario: Branch user views classroom utilization for own branch", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L575"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_report_requires_consolidated_permission", "label": "Scenario: Consolidated report requires consolidated permission", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L588"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_super_admin_exports_consolidated_report", "label": "Scenario: Super admin exports consolidated report", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L600"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_report_date_range_validation", "label": "Scenario Outline: Report date range validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L614"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards", "label": "11. Feature: Authorization Guards", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L632"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_unauthenticated_access", "label": "Scenario Outline: Deny unauthenticated access", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L639"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_missing_permission", "label": "Scenario Outline: Deny missing permission", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L656"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_permission_must_not_be_inferred_from_role_name", "label": "Scenario: Permission must not be inferred from role name", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L676"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation", "label": "12. Feature: Branch Data Isolation", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L690"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_create_session_in_unassigned_branch", "label": "Scenario: User cannot create session in unassigned branch", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L697"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_access_cross_branch_classroom_by_changing_payload", "label": "Scenario: User cannot access cross-branch classroom by changing payload", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L710"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_assign_cross_branch_trainer_unless_explicitly_allowed", "label": "Scenario: User cannot assign cross-branch trainer unless explicitly allowed", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L723"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_user_can_read_multiple_branches_but_cannot_mutate_all_without_action_permission", "label": "Scenario: Consolidated user can read multiple branches but cannot mutate all without action permission", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L736"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_parent_branch_access_can_include_child_branch_only_when_configured", "label": "Scenario: Parent branch access can include child branch only when configured", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L747"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete", "label": "13. Feature: Optimistic Locking and Soft Delete", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L760"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_update_with_stale_version", "label": "Scenario: Reject update with stale version", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L767"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_soft_delete_draft_session", "label": "Scenario: Soft delete draft session", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L780"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_delete_of_published_session", "label": "Scenario: Reject delete of published session", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L795"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications", "label": "14. Feature: Audit and Notifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L810"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_sensitive_mutations_create_audit_records", "label": "Scenario Outline: Sensitive mutations create audit records", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L817"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_cancellation", "label": "Scenario: Notification requested for session cancellation", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L837"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_reschedule", "label": "Scenario: Notification requested for session reschedule", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L850"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior", "label": "15. Feature: Bilingual and RTL Behavior", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L864"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_arabic_timetable_renders_rtl_labels", "label": "Scenario: Arabic timetable renders RTL labels", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L871"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_english_report_export_renders_ltr_labels", "label": "Scenario: English report export renders LTR labels", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L885"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_boundary_condition_matrix", "label": "16. Boundary Condition Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L899"}, {"id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_regression_test_checklist", "label": "17. Regression Test Checklist", "file_type": "document", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L926"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L1", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_07_scheduling_calendar_holiday_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L3", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_document_control", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L5", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_baseline", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L19", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L47", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_draft_institute_business_calendar", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L55", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_business_calendar_dates", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L71", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_activate_a_calendar_when_no_overlapping_active_calendar_exists", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L88", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_calendar_activation_when_an_overlapping_active_calendar_exists", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L104", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L119", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_active_holiday_for_a_branch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L127", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_duplicate_active_holiday_on_same_date_and_branch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L143", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_session_scheduling_on_active_holiday_without_override", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L155", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_holiday_override_with_permission_and_reason", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L170", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L188", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_classroom_venue_block", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L195", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_validate_venue_block_time_bounds", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L212", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_session_in_blocked_classroom", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L228", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L243", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_valid_draft_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L250", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_publish_a_valid_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L271", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_session_payload", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L293", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_trainer_double_booking", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L311", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_classroom_double_booking", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L324", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_batch_overlap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L337", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_batch_date_range_without_override", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L350", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_working_hours_without_override", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L363", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_cancel_a_published_session_with_reason", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L376", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_cancellation_without_reason", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L391", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reschedule_a_published_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L403", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L420", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_weekly_recurring_draft_sessions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L427", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_recurring_sessions_with_holiday_conflict_as_conflict_draft", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L444", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_recurrence_generation_beyond_allowed_range", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L459", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L472", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_no_conflicts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L479", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_multiple_conflicts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L492", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L509", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_admin_views_daily_timetable_for_assigned_branch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L516", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_trainer_views_own_schedule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L529", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_views_own_enrolled_batch_timetable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L542", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_cannot_read_another_batch_timetable", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L555", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L568", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_branch_user_views_classroom_utilization_for_own_branch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L575", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_report_requires_consolidated_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L588", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_super_admin_exports_consolidated_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L600", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_report_date_range_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L614", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L632", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_unauthenticated_access", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L639", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_missing_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L656", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_permission_must_not_be_inferred_from_role_name", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L676", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L690", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_create_session_in_unassigned_branch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L697", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_access_cross_branch_classroom_by_changing_payload", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L710", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_assign_cross_branch_trainer_unless_explicitly_allowed", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L723", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_user_can_read_multiple_branches_but_cannot_mutate_all_without_action_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L736", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_parent_branch_access_can_include_child_branch_only_when_configured", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L747", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L760", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_update_with_stale_version", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L767", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_soft_delete_draft_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L780", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_delete_of_published_session", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L795", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L810", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_sensitive_mutations_create_audit_records", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L817", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_cancellation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L837", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_reschedule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L850", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L864", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_arabic_timetable_renders_rtl_labels", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L871", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_english_report_export_renders_ltr_labels", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L885", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_boundary_condition_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L899", "weight": 1.0}, {"source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios", "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_regression_test_checklist", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md", "source_location": "L926", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "label": "Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_07_scheduling_calendar_holiday_management",
+      "label": "Module 07 \u2013 Scheduling, Calendar & Holiday Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_document_control",
+      "label": "1. Document Control",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_baseline",
+      "label": "2. Test Data Baseline",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management",
+      "label": "3. Feature: Business Calendar Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_draft_institute_business_calendar",
+      "label": "Scenario: Create a draft institute business calendar",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_business_calendar_dates",
+      "label": "Scenario Outline: Reject invalid business calendar dates",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_activate_a_calendar_when_no_overlapping_active_calendar_exists",
+      "label": "Scenario: Activate a calendar when no overlapping active calendar exists",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L88"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_calendar_activation_when_an_overlapping_active_calendar_exists",
+      "label": "Scenario: Reject calendar activation when an overlapping active calendar exists",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L104"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management",
+      "label": "4. Feature: Holiday and Closure Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L119"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_active_holiday_for_a_branch",
+      "label": "Scenario: Create active holiday for a branch",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L127"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_duplicate_active_holiday_on_same_date_and_branch",
+      "label": "Scenario: Prevent duplicate active holiday on same date and branch",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L143"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_session_scheduling_on_active_holiday_without_override",
+      "label": "Scenario: Reject session scheduling on active holiday without override",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L155"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_holiday_override_with_permission_and_reason",
+      "label": "Scenario: Allow holiday override with permission and reason",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L170"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management",
+      "label": "5. Feature: Venue Block Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L188"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_classroom_venue_block",
+      "label": "Scenario: Create classroom venue block",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L195"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_validate_venue_block_time_bounds",
+      "label": "Scenario Outline: Validate venue block time bounds",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L212"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_session_in_blocked_classroom",
+      "label": "Scenario: Prevent session in blocked classroom",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L228"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "label": "6. Feature: Single Session Scheduling",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L243"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_valid_draft_session",
+      "label": "Scenario: Create a valid draft session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L250"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_publish_a_valid_session",
+      "label": "Scenario: Publish a valid session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L271"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_session_payload",
+      "label": "Scenario Outline: Reject invalid session payload",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L293"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_trainer_double_booking",
+      "label": "Scenario: Prevent trainer double booking",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L311"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_classroom_double_booking",
+      "label": "Scenario: Prevent classroom double booking",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L324"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_batch_overlap",
+      "label": "Scenario: Prevent batch overlap",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L337"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_batch_date_range_without_override",
+      "label": "Scenario: Reject scheduling outside batch date range without override",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L350"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_working_hours_without_override",
+      "label": "Scenario: Reject scheduling outside working hours without override",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L363"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_cancel_a_published_session_with_reason",
+      "label": "Scenario: Cancel a published session with reason",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L376"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_cancellation_without_reason",
+      "label": "Scenario: Reject cancellation without reason",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L391"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reschedule_a_published_session",
+      "label": "Scenario: Reschedule a published session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L403"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation",
+      "label": "7. Feature: Recurring Schedule Generation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L420"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_weekly_recurring_draft_sessions",
+      "label": "Scenario: Generate weekly recurring draft sessions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L427"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_recurring_sessions_with_holiday_conflict_as_conflict_draft",
+      "label": "Scenario: Generate recurring sessions with holiday conflict as conflict draft",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L444"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_recurrence_generation_beyond_allowed_range",
+      "label": "Scenario: Reject recurrence generation beyond allowed range",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L459"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api",
+      "label": "8. Feature: Conflict Check API",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L472"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_no_conflicts",
+      "label": "Scenario: Dry-run conflict check returns no conflicts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L479"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_multiple_conflicts",
+      "label": "Scenario: Dry-run conflict check returns multiple conflicts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L492"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views",
+      "label": "9. Feature: Timetable Views",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L509"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_admin_views_daily_timetable_for_assigned_branch",
+      "label": "Scenario: Admin views daily timetable for assigned branch",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L516"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_trainer_views_own_schedule",
+      "label": "Scenario: Trainer views own schedule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L529"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_views_own_enrolled_batch_timetable",
+      "label": "Scenario: Student views own enrolled batch timetable",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L542"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_cannot_read_another_batch_timetable",
+      "label": "Scenario: Student cannot read another batch timetable",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L555"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics",
+      "label": "10. Feature: Reports and Analytics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L568"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_branch_user_views_classroom_utilization_for_own_branch",
+      "label": "Scenario: Branch user views classroom utilization for own branch",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L575"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_report_requires_consolidated_permission",
+      "label": "Scenario: Consolidated report requires consolidated permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L588"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_super_admin_exports_consolidated_report",
+      "label": "Scenario: Super admin exports consolidated report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L600"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_report_date_range_validation",
+      "label": "Scenario Outline: Report date range validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L614"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards",
+      "label": "11. Feature: Authorization Guards",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L632"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_unauthenticated_access",
+      "label": "Scenario Outline: Deny unauthenticated access",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L639"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_missing_permission",
+      "label": "Scenario Outline: Deny missing permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L656"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_permission_must_not_be_inferred_from_role_name",
+      "label": "Scenario: Permission must not be inferred from role name",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L676"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation",
+      "label": "12. Feature: Branch Data Isolation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L690"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_create_session_in_unassigned_branch",
+      "label": "Scenario: User cannot create session in unassigned branch",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L697"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_access_cross_branch_classroom_by_changing_payload",
+      "label": "Scenario: User cannot access cross-branch classroom by changing payload",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L710"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_assign_cross_branch_trainer_unless_explicitly_allowed",
+      "label": "Scenario: User cannot assign cross-branch trainer unless explicitly allowed",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L723"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_user_can_read_multiple_branches_but_cannot_mutate_all_without_action_permission",
+      "label": "Scenario: Consolidated user can read multiple branches but cannot mutate all without action permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L736"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_parent_branch_access_can_include_child_branch_only_when_configured",
+      "label": "Scenario: Parent branch access can include child branch only when configured",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L747"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete",
+      "label": "13. Feature: Optimistic Locking and Soft Delete",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L760"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_update_with_stale_version",
+      "label": "Scenario: Reject update with stale version",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L767"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_soft_delete_draft_session",
+      "label": "Scenario: Soft delete draft session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L780"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_delete_of_published_session",
+      "label": "Scenario: Reject delete of published session",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L795"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications",
+      "label": "14. Feature: Audit and Notifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L810"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_sensitive_mutations_create_audit_records",
+      "label": "Scenario Outline: Sensitive mutations create audit records",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L817"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_cancellation",
+      "label": "Scenario: Notification requested for session cancellation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L837"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_reschedule",
+      "label": "Scenario: Notification requested for session reschedule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L850"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior",
+      "label": "15. Feature: Bilingual and RTL Behavior",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L864"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_arabic_timetable_renders_rtl_labels",
+      "label": "Scenario: Arabic timetable renders RTL labels",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L871"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_english_report_export_renders_ltr_labels",
+      "label": "Scenario: English report export renders LTR labels",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L885"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_boundary_condition_matrix",
+      "label": "16. Boundary Condition Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L899"
+    },
+    {
+      "id": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_regression_test_checklist",
+      "label": "17. Regression Test Checklist",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L926"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_md",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_module_07_scheduling_calendar_holiday_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_1_document_control",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_2_test_data_baseline",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_draft_institute_business_calendar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_business_calendar_dates",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_activate_a_calendar_when_no_overlapping_active_calendar_exists",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_3_feature_business_calendar_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_calendar_activation_when_an_overlapping_active_calendar_exists",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_active_holiday_for_a_branch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_duplicate_active_holiday_on_same_date_and_branch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L143",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_session_scheduling_on_active_holiday_without_override",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_4_feature_holiday_and_closure_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_allow_holiday_override_with_permission_and_reason",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_classroom_venue_block",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_validate_venue_block_time_bounds",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_5_feature_venue_block_management",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_session_in_blocked_classroom",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L228",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L243",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_create_a_valid_draft_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L250",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_publish_a_valid_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L271",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_reject_invalid_session_payload",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_trainer_double_booking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_classroom_double_booking",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L324",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_prevent_batch_overlap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_batch_date_range_without_override",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L350",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_scheduling_outside_working_hours_without_override",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L363",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_cancel_a_published_session_with_reason",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_cancellation_without_reason",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L391",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_6_feature_single_session_scheduling",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reschedule_a_published_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L403",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L420",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_weekly_recurring_draft_sessions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_generate_recurring_sessions_with_holiday_conflict_as_conflict_draft",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L444",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_7_feature_recurring_schedule_generation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_recurrence_generation_beyond_allowed_range",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L459",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L472",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_no_conflicts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L479",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_8_feature_conflict_check_api",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_dry_run_conflict_check_returns_multiple_conflicts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L492",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L509",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_admin_views_daily_timetable_for_assigned_branch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L516",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_trainer_views_own_schedule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L529",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_views_own_enrolled_batch_timetable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L542",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_9_feature_timetable_views",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_student_cannot_read_another_batch_timetable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L555",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L568",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_branch_user_views_classroom_utilization_for_own_branch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L575",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_report_requires_consolidated_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L588",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_super_admin_exports_consolidated_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L600",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_10_feature_reports_and_analytics",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_report_date_range_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L614",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L632",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_unauthenticated_access",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L639",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_deny_missing_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L656",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_11_feature_authorization_guards",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_permission_must_not_be_inferred_from_role_name",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L676",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L690",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_create_session_in_unassigned_branch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L697",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_access_cross_branch_classroom_by_changing_payload",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L710",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_user_cannot_assign_cross_branch_trainer_unless_explicitly_allowed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L723",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_consolidated_user_can_read_multiple_branches_but_cannot_mutate_all_without_action_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L736",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_12_feature_branch_data_isolation",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_parent_branch_access_can_include_child_branch_only_when_configured",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L747",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L760",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_update_with_stale_version",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L767",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_soft_delete_draft_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L780",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_13_feature_optimistic_locking_and_soft_delete",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_reject_delete_of_published_session",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L795",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L810",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_outline_sensitive_mutations_create_audit_records",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L817",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_cancellation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L837",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_14_feature_audit_and_notifications",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_notification_requested_for_session_reschedule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L850",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L864",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_arabic_timetable_renders_rtl_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L871",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_15_feature_bilingual_and_rtl_behavior",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_scenario_english_report_export_renders_ltr_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L885",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_16_boundary_condition_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L899",
+      "weight": 1.0
+    },
+    {
+      "source": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_part_9_bdd_acceptance_criteria_and_test_scenarios",
+      "target": "module_07_scheduling_calendar_holiday_management_part_9_bdd_acceptance_criteria_and_test_scenarios_17_regression_test_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 07 - Scheduling, Calendar & Holiday Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md",
+      "source_location": "L926",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

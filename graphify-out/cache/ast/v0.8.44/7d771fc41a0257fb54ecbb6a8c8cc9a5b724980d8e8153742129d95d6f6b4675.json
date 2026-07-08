@@ -1,1 +1,1263 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "label": "Part 4 \u2013 Database Entities and CRUD Matrix.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "label": "Part 4 \u2013 Database Entities and CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_module_13_document_management", "label": "Module 13 \u2013 Document Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L3"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_purpose_and_data_model_boundary", "label": "1. Purpose and Data-Model Boundary", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L5"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_1_prisma_schema_alignment_and_reconciliation", "label": "1.1 Prisma Schema Alignment and Reconciliation", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L36"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_2_aggregate_and_table_ownership_summary", "label": "2. Aggregate and Table Ownership Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L50"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "label": "3. Entity Specification \u2013 `Document`", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L70"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_1_purpose", "label": "3.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L72"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_2_physical_table", "label": "3.2 Physical table", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L76"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_3_field_specification", "label": "3.3 Field specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L81"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints", "label": "3.4 Keys and constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L103"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key", "label": "Primary key", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L105"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys", "label": "Foreign keys", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L111"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_required_check_constraints_logical_application_level", "label": "Required check constraints (Logical/Application-level)", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L118"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_5_indexes", "label": "3.5 Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L125"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_6_current_state_consistency_rules", "label": "3.6 Current-state consistency rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L133"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner", "label": "3.7 Entity Specification \u2013 `DocumentOwner`", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L145"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_1_purpose", "label": "3.7.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L147"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_2_physical_table", "label": "3.7.2 Physical table", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L151"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_3_field_specification", "label": "3.7.3 Field specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L156"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints", "label": "3.7.4 Keys and constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L167"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_unique_constraint", "label": "Unique Constraint", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L169"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_176", "label": "Foreign keys", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L176"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "label": "4. Entity Specification \u2013 `DocumentVerification`", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L185"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_1_purpose", "label": "4.1 Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L187"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_2_recommended_physical_table", "label": "4.2 Recommended physical table", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L191"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_3_field_specification", "label": "4.3 Field specification", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L196"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints", "label": "4.4 Keys and constraints", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L209"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key_211", "label": "Primary key", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L211"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_217", "label": "Foreign keys", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L217"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_rejection_remarks_constraint_application_level", "label": "Rejection remarks constraint (Application-level)", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L227"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_5_indexes", "label": "4.5 Indexes", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L233"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_6_immutability_rules", "label": "4.6 Immutability rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L240"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules", "label": "5. Relationships and Referential Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L250"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_1_owned_relationships", "label": "5.1 Owned relationships", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L252"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_2_cross_context_references", "label": "5.2 Cross-context references", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L260"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_3_polymorphic_owner_mapping_via_documentowner_join_table", "label": "5.3 Polymorphic owner mapping via DocumentOwner join table", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L272"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_4_vercel_blob_relationship", "label": "5.4 Vercel Blob relationship", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L281"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries", "label": "6. Transaction Boundaries", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L299"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_1_register_document", "label": "6.1 Register document", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L301"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_2_submit_for_verification", "label": "6.2 Submit for verification", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L316"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_3_approve_or_reject", "label": "6.3 Approve or reject", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L334"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_4_soft_delete_retire", "label": "6.4 Soft delete / retire", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L352"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model", "label": "7. Branch-Scoping Model", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L370"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_1_principle", "label": "7.1 Principle", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L372"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_2_scope_resolution_algorithm", "label": "7.2 Scope resolution algorithm", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L376"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_3_owner_specific_branch_rules", "label": "7.3 Owner-specific branch rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L390"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_person_branch_scope", "label": "Gap: Person branch scope", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L399"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_8_crud_action_definitions", "label": "8. CRUD Action Definitions", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L405"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix", "label": "9. Human Actor CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L421"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_1_document", "label": "9.1 `Document`", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L423"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_important_authorization_rule", "label": "Important authorization rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L438"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_2_documentverification", "label": "9.2 `DocumentVerification`", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L455"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_10_system_actor_crud_matrix", "label": "10. System Actor CRUD Matrix", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L472"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_11_state_dependent_crud_restrictions", "label": "11. State-Dependent CRUD Restrictions", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L490"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections", "label": "12. Read Models and Query Projections", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L503"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_1_document_registry_projection", "label": "12.1 Document Registry projection", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L507"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_2_verification_queue_projection", "label": "12.2 Verification queue projection", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L534"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_3_expiry_workbench_projection", "label": "12.3 Expiry workbench projection", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L550"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed", "label": "13. Ownership Check \u2013 Detailed", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L568"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_1_entities_owned_by_module_13", "label": "13.1 Entities owned by Module 13", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L570"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_2_referenced_entities_from_other_contexts", "label": "13.2 Referenced entities from other contexts", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L577"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_3_entities_that_should_not_exist_in_module_13", "label": "13.3 Entities that should not exist in Module 13", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L598"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements", "label": "14. Data Integrity and Concurrency Requirements", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L623"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_1_optimistic_concurrency", "label": "14.1 Optimistic concurrency", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L625"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_2_verification_decision_race_prevention", "label": "14.2 Verification decision race prevention", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L639"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_3_soft_delete_query_rule", "label": "14.3 Soft-delete query rule", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L651"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_15_data_retention_and_deletion_rules", "label": "15. Data Retention and Deletion Rules", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L665"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_16_ddd_and_er_consistency_check", "label": "16. DDD and ER Consistency Check", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L677"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "label": "17. Explicit Gaps Requiring Resolution Before Final Migration Design", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L697"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_001_prisma_schema_validation", "label": "GAP-DOC-DB-001 \u2013 Prisma schema validation", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L699"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_002_document_type_persistence_representation", "label": "GAP-DOC-DB-002 \u2013 Document type persistence representation", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L703"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_003_expired_state_persistence", "label": "GAP-DOC-DB-003 \u2013 Expired state persistence", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L707"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_008_missing_date_and_version_fields_in_prisma_critical_implementation_gap", "label": "GAP-DOC-DB-008 \u2013 Missing Date and Version fields in Prisma (CRITICAL IMPLEMENTATION GAP)", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L711"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_004_person_owner_branch_scoping", "label": "GAP-DOC-DB-004 \u2013 Person owner branch scoping", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L715"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_005_blob_operational_metadata", "label": "GAP-DOC-DB-005 \u2013 Blob operational metadata", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L719"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_006_durable_reconciliation_state", "label": "GAP-DOC-DB-006 \u2013 Durable reconciliation state", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L733"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_007_resubmission_and_replacement_chain", "label": "GAP-DOC-DB-007 \u2013 Resubmission and replacement chain", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L737"}, {"id": "module_13_document_management_part_4_database_entities_and_crud_matrix_18_final_persistence_recommendation", "label": "18. Final Persistence Recommendation", "file_type": "document", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L750"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L1", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_module_13_document_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L3", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_purpose_and_data_model_boundary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L5", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_purpose_and_data_model_boundary", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_1_prisma_schema_alignment_and_reconciliation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L36", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_2_aggregate_and_table_ownership_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L50", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L70", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L72", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_2_physical_table", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L76", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_3_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L81", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L103", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L105", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L111", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_required_check_constraints_logical_application_level", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L118", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_5_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L125", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_6_current_state_consistency_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L133", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L145", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L147", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_2_physical_table", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L151", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_3_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L156", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L167", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_unique_constraint", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L169", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_176", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L176", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L185", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L187", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_2_recommended_physical_table", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L191", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_3_field_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L196", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L209", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key_211", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L211", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_217", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L217", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_rejection_remarks_constraint_application_level", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L227", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_5_indexes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L233", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_6_immutability_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L240", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L250", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_1_owned_relationships", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L252", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_2_cross_context_references", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L260", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_3_polymorphic_owner_mapping_via_documentowner_join_table", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L272", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_4_vercel_blob_relationship", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L281", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L299", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_1_register_document", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L301", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_2_submit_for_verification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L316", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_3_approve_or_reject", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L334", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_4_soft_delete_retire", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L352", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L370", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_1_principle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L372", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_2_scope_resolution_algorithm", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L376", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_3_owner_specific_branch_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L390", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_3_owner_specific_branch_rules", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_person_branch_scope", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L399", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_8_crud_action_definitions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L405", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L421", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_1_document", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L423", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_1_document", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_important_authorization_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L438", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_2_documentverification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L455", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_10_system_actor_crud_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L472", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_11_state_dependent_crud_restrictions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L490", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L503", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_1_document_registry_projection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L507", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_2_verification_queue_projection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L534", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_3_expiry_workbench_projection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L550", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L568", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_1_entities_owned_by_module_13", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L570", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_2_referenced_entities_from_other_contexts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L577", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_3_entities_that_should_not_exist_in_module_13", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L598", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L623", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_1_optimistic_concurrency", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L625", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_2_verification_decision_race_prevention", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L639", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_3_soft_delete_query_rule", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L651", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_15_data_retention_and_deletion_rules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L665", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_16_ddd_and_er_consistency_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L677", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L697", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_001_prisma_schema_validation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L699", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_002_document_type_persistence_representation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L703", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_003_expired_state_persistence", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L707", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_008_missing_date_and_version_fields_in_prisma_critical_implementation_gap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L711", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_004_person_owner_branch_scoping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L715", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_005_blob_operational_metadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L719", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_006_durable_reconciliation_state", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L733", "weight": 1.0}, {"source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_007_resubmission_and_replacement_chain", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L737", "weight": 1.0}, {"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md", "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_18_final_persistence_recommendation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md", "source_location": "L750", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "label": "Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "label": "Part 4 \u2013 Database Entities and CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_module_13_document_management",
+      "label": "Module 13 \u2013 Document Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_purpose_and_data_model_boundary",
+      "label": "1. Purpose and Data-Model Boundary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_1_prisma_schema_alignment_and_reconciliation",
+      "label": "1.1 Prisma Schema Alignment and Reconciliation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_2_aggregate_and_table_ownership_summary",
+      "label": "2. Aggregate and Table Ownership Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L50"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "label": "3. Entity Specification \u2013 `Document`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_1_purpose",
+      "label": "3.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L72"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_2_physical_table",
+      "label": "3.2 Physical table",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L76"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_3_field_specification",
+      "label": "3.3 Field specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L81"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints",
+      "label": "3.4 Keys and constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L103"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key",
+      "label": "Primary key",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L105"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys",
+      "label": "Foreign keys",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L111"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_required_check_constraints_logical_application_level",
+      "label": "Required check constraints (Logical/Application-level)",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L118"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_5_indexes",
+      "label": "3.5 Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L125"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_6_current_state_consistency_rules",
+      "label": "3.6 Current-state consistency rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L133"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner",
+      "label": "3.7 Entity Specification \u2013 `DocumentOwner`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L145"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_1_purpose",
+      "label": "3.7.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L147"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_2_physical_table",
+      "label": "3.7.2 Physical table",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L151"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_3_field_specification",
+      "label": "3.7.3 Field specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints",
+      "label": "3.7.4 Keys and constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L167"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_unique_constraint",
+      "label": "Unique Constraint",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L169"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_176",
+      "label": "Foreign keys",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L176"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "label": "4. Entity Specification \u2013 `DocumentVerification`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L185"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_1_purpose",
+      "label": "4.1 Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_2_recommended_physical_table",
+      "label": "4.2 Recommended physical table",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L191"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_3_field_specification",
+      "label": "4.3 Field specification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L196"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints",
+      "label": "4.4 Keys and constraints",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L209"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key_211",
+      "label": "Primary key",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L211"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_217",
+      "label": "Foreign keys",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L217"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_rejection_remarks_constraint_application_level",
+      "label": "Rejection remarks constraint (Application-level)",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L227"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_5_indexes",
+      "label": "4.5 Indexes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L233"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_6_immutability_rules",
+      "label": "4.6 Immutability rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L240"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules",
+      "label": "5. Relationships and Referential Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L250"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_1_owned_relationships",
+      "label": "5.1 Owned relationships",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L252"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_2_cross_context_references",
+      "label": "5.2 Cross-context references",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L260"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_3_polymorphic_owner_mapping_via_documentowner_join_table",
+      "label": "5.3 Polymorphic owner mapping via DocumentOwner join table",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L272"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_4_vercel_blob_relationship",
+      "label": "5.4 Vercel Blob relationship",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L281"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries",
+      "label": "6. Transaction Boundaries",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L299"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_1_register_document",
+      "label": "6.1 Register document",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L301"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_2_submit_for_verification",
+      "label": "6.2 Submit for verification",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L316"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_3_approve_or_reject",
+      "label": "6.3 Approve or reject",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L334"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_4_soft_delete_retire",
+      "label": "6.4 Soft delete / retire",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L352"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model",
+      "label": "7. Branch-Scoping Model",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L370"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_1_principle",
+      "label": "7.1 Principle",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L372"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_2_scope_resolution_algorithm",
+      "label": "7.2 Scope resolution algorithm",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L376"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_3_owner_specific_branch_rules",
+      "label": "7.3 Owner-specific branch rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L390"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_person_branch_scope",
+      "label": "Gap: Person branch scope",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L399"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_8_crud_action_definitions",
+      "label": "8. CRUD Action Definitions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L405"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix",
+      "label": "9. Human Actor CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L421"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_1_document",
+      "label": "9.1 `Document`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L423"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_important_authorization_rule",
+      "label": "Important authorization rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L438"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_2_documentverification",
+      "label": "9.2 `DocumentVerification`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L455"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_10_system_actor_crud_matrix",
+      "label": "10. System Actor CRUD Matrix",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L472"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_11_state_dependent_crud_restrictions",
+      "label": "11. State-Dependent CRUD Restrictions",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L490"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections",
+      "label": "12. Read Models and Query Projections",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L503"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_1_document_registry_projection",
+      "label": "12.1 Document Registry projection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L507"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_2_verification_queue_projection",
+      "label": "12.2 Verification queue projection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L534"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_3_expiry_workbench_projection",
+      "label": "12.3 Expiry workbench projection",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L550"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed",
+      "label": "13. Ownership Check \u2013 Detailed",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L568"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_1_entities_owned_by_module_13",
+      "label": "13.1 Entities owned by Module 13",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L570"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_2_referenced_entities_from_other_contexts",
+      "label": "13.2 Referenced entities from other contexts",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L577"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_3_entities_that_should_not_exist_in_module_13",
+      "label": "13.3 Entities that should not exist in Module 13",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L598"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements",
+      "label": "14. Data Integrity and Concurrency Requirements",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L623"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_1_optimistic_concurrency",
+      "label": "14.1 Optimistic concurrency",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L625"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_2_verification_decision_race_prevention",
+      "label": "14.2 Verification decision race prevention",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L639"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_3_soft_delete_query_rule",
+      "label": "14.3 Soft-delete query rule",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L651"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_15_data_retention_and_deletion_rules",
+      "label": "15. Data Retention and Deletion Rules",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L665"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_16_ddd_and_er_consistency_check",
+      "label": "16. DDD and ER Consistency Check",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L677"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "label": "17. Explicit Gaps Requiring Resolution Before Final Migration Design",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L697"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_001_prisma_schema_validation",
+      "label": "GAP-DOC-DB-001 \u2013 Prisma schema validation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L699"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_002_document_type_persistence_representation",
+      "label": "GAP-DOC-DB-002 \u2013 Document type persistence representation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L703"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_003_expired_state_persistence",
+      "label": "GAP-DOC-DB-003 \u2013 Expired state persistence",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L707"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_008_missing_date_and_version_fields_in_prisma_critical_implementation_gap",
+      "label": "GAP-DOC-DB-008 \u2013 Missing Date and Version fields in Prisma (CRITICAL IMPLEMENTATION GAP)",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L711"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_004_person_owner_branch_scoping",
+      "label": "GAP-DOC-DB-004 \u2013 Person owner branch scoping",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L715"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_005_blob_operational_metadata",
+      "label": "GAP-DOC-DB-005 \u2013 Blob operational metadata",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L719"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_006_durable_reconciliation_state",
+      "label": "GAP-DOC-DB-006 \u2013 Durable reconciliation state",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L733"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_007_resubmission_and_replacement_chain",
+      "label": "GAP-DOC-DB-007 \u2013 Resubmission and replacement chain",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L737"
+    },
+    {
+      "id": "module_13_document_management_part_4_database_entities_and_crud_matrix_18_final_persistence_recommendation",
+      "label": "18. Final Persistence Recommendation",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L750"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_module_13_document_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_part_4_database_entities_and_crud_matrix",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_purpose_and_data_model_boundary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_purpose_and_data_model_boundary",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_1_1_prisma_schema_alignment_and_reconciliation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_2_aggregate_and_table_ownership_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_2_physical_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_3_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_required_check_constraints_logical_application_level",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_5_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_entity_specification_document",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_6_current_state_consistency_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_2_physical_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L151",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_3_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_entity_specification_documentowner",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_unique_constraint",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L169",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_3_7_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_176",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_2_recommended_physical_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_3_field_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L209",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_primary_key_211",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_foreign_keys_217",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_4_keys_and_constraints",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_rejection_remarks_constraint_application_level",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L227",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_5_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L233",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_entity_specification_documentverification",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_4_6_immutability_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L250",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_1_owned_relationships",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_2_cross_context_references",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_3_polymorphic_owner_mapping_via_documentowner_join_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_relationships_and_referential_rules",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_5_4_vercel_blob_relationship",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_1_register_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_2_submit_for_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L316",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_3_approve_or_reject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L334",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_transaction_boundaries",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_6_4_soft_delete_retire",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L352",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L370",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_1_principle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_2_scope_resolution_algorithm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_branch_scoping_model",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_3_owner_specific_branch_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L390",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_7_3_owner_specific_branch_rules",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_person_branch_scope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_8_crud_action_definitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L405",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_1_document",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L423",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_1_document",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_important_authorization_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L438",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_human_actor_crud_matrix",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_9_2_documentverification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L455",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_10_system_actor_crud_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L472",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_11_state_dependent_crud_restrictions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L490",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L503",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_1_document_registry_projection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L507",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_2_verification_queue_projection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L534",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_read_models_and_query_projections",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_12_3_expiry_workbench_projection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L550",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L568",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_1_entities_owned_by_module_13",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L570",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_2_referenced_entities_from_other_contexts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L577",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_ownership_check_detailed",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_13_3_entities_that_should_not_exist_in_module_13",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L598",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L623",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_1_optimistic_concurrency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L625",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_2_verification_decision_race_prevention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L639",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_data_integrity_and_concurrency_requirements",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_14_3_soft_delete_query_rule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L651",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_15_data_retention_and_deletion_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L665",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_16_ddd_and_er_consistency_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L677",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L697",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_001_prisma_schema_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L699",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_002_document_type_persistence_representation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L703",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_003_expired_state_persistence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L707",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_008_missing_date_and_version_fields_in_prisma_critical_implementation_gap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L711",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_004_person_owner_branch_scoping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L715",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_005_blob_operational_metadata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L719",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_006_durable_reconciliation_state",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L733",
+      "weight": 1.0
+    },
+    {
+      "source": "module_13_document_management_part_4_database_entities_and_crud_matrix_17_explicit_gaps_requiring_resolution_before_final_migration_design",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_gap_doc_db_007_resubmission_and_replacement_chain",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L737",
+      "weight": 1.0
+    },
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_13_document_management_part_4_database_entities_and_crud_matrix_md",
+      "target": "module_13_document_management_part_4_database_entities_and_crud_matrix_18_final_persistence_recommendation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 13 - Document Management/Part 4 \u2013 Database Entities and CRUD Matrix.md",
+      "source_location": "L750",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

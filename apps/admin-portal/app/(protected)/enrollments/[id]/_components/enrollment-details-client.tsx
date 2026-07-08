@@ -387,7 +387,7 @@ export function EnrollmentDetailsClient({
         return;
       }
 
-      toast.success(`Invoice successfully generated: ${res.data.invoiceNumber}`);
+      toast.success(`Invoice successfully generated: ${res.data?.invoiceNumber}`);
       router.refresh();
     });
   };
@@ -400,7 +400,7 @@ export function EnrollmentDetailsClient({
         toast.error(res.error || 'Failed to issue invoice.');
         return;
       }
-      toast.success(`Invoice ${res.data.invoiceNumber} has been published/issued.`);
+      toast.success(`Invoice ${res.data?.invoiceNumber} has been published/issued.`);
       router.refresh();
     });
   };
@@ -440,7 +440,7 @@ export function EnrollmentDetailsClient({
         return;
       }
 
-      toast.success(`Payment recorded! Receipt: ${res.data.receiptNumber}`);
+      toast.success(`Payment recorded! Receipt: ${res.data?.receiptNumber}`);
       setIsPayOpen(false);
       setPayRemarks('');
       setPayReference('');

@@ -1,1 +1,303 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_result_recording_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L1"}, {"id": "result_recording_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L1"}, {"id": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "label": "Requirement: Individual Result Recording (FR-EXC-010)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L3"}, {"id": "result_recording_spec_scenario_record_passing_result", "label": "Scenario: Record passing Result", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L7"}, {"id": "result_recording_spec_scenario_record_failing_result", "label": "Scenario: Record failing Result", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L14"}, {"id": "result_recording_spec_scenario_derive_result_status_on_server", "label": "Scenario: Derive Result status on server", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L19"}, {"id": "result_recording_spec_scenario_reject_marks_above_maximum", "label": "Scenario: Reject marks above maximum", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L25"}, {"id": "result_recording_spec_scenario_reject_enrollment_from_another_batch", "label": "Scenario: Reject Enrollment from another Batch", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L30"}, {"id": "result_recording_spec_scenario_enforce_one_active_result_per_exam_enrollment", "label": "Scenario: Enforce one active Result per Exam+Enrollment", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L35"}, {"id": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013", "label": "Requirement: Bulk Result Entry (FR-EXC-013)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L41"}, {"id": "result_recording_spec_scenario_validate_fully_valid_bulk_payload", "label": "Scenario: Validate fully valid bulk payload", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L45"}, {"id": "result_recording_spec_scenario_detect_duplicate_enrollment_rows", "label": "Scenario: Detect duplicate Enrollment rows", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L51"}, {"id": "result_recording_spec_scenario_return_row_level_validation_errors", "label": "Scenario: Return row-level validation errors", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L56"}, {"id": "result_recording_spec_scenario_prevent_silent_partial_save", "label": "Scenario: Prevent silent partial save", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L62"}, {"id": "result_recording_spec_requirement_result_finalization_fr_exc_014", "label": "Requirement: Result Finalization (FR-EXC-014)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L68"}, {"id": "result_recording_spec_scenario_finalize_a_valid_result", "label": "Scenario: Finalize a valid Result", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L72"}, {"id": "result_recording_spec_scenario_reject_finalization_of_already_finalized_result", "label": "Scenario: Reject finalization of already finalized Result", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L79"}, {"id": "result_recording_spec_requirement_result_branch_isolation_fr_exc_015", "label": "Requirement: Result Branch Isolation (FR-EXC-015)", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L84"}, {"id": "result_recording_spec_scenario_result_branch_consistency_enforced", "label": "Scenario: Result branch consistency enforced", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L88"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_result_recording_spec_md", "target": "result_recording_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "result_recording_spec_added_requirements", "target": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "target": "result_recording_spec_scenario_record_passing_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "target": "result_recording_spec_scenario_record_failing_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L14", "weight": 1.0}, {"source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "target": "result_recording_spec_scenario_derive_result_status_on_server", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L19", "weight": 1.0}, {"source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "target": "result_recording_spec_scenario_reject_marks_above_maximum", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L25", "weight": 1.0}, {"source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "target": "result_recording_spec_scenario_reject_enrollment_from_another_batch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L30", "weight": 1.0}, {"source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010", "target": "result_recording_spec_scenario_enforce_one_active_result_per_exam_enrollment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L35", "weight": 1.0}, {"source": "result_recording_spec_added_requirements", "target": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L41", "weight": 1.0}, {"source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013", "target": "result_recording_spec_scenario_validate_fully_valid_bulk_payload", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L45", "weight": 1.0}, {"source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013", "target": "result_recording_spec_scenario_detect_duplicate_enrollment_rows", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L51", "weight": 1.0}, {"source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013", "target": "result_recording_spec_scenario_return_row_level_validation_errors", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L56", "weight": 1.0}, {"source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013", "target": "result_recording_spec_scenario_prevent_silent_partial_save", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L62", "weight": 1.0}, {"source": "result_recording_spec_added_requirements", "target": "result_recording_spec_requirement_result_finalization_fr_exc_014", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L68", "weight": 1.0}, {"source": "result_recording_spec_requirement_result_finalization_fr_exc_014", "target": "result_recording_spec_scenario_finalize_a_valid_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L72", "weight": 1.0}, {"source": "result_recording_spec_requirement_result_finalization_fr_exc_014", "target": "result_recording_spec_scenario_reject_finalization_of_already_finalized_result", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L79", "weight": 1.0}, {"source": "result_recording_spec_added_requirements", "target": "result_recording_spec_requirement_result_branch_isolation_fr_exc_015", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L84", "weight": 1.0}, {"source": "result_recording_spec_requirement_result_branch_isolation_fr_exc_015", "target": "result_recording_spec_scenario_result_branch_consistency_enforced", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md", "source_location": "L88", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_result_recording_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "result_recording_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "label": "Requirement: Individual Result Recording (FR-EXC-010)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "result_recording_spec_scenario_record_passing_result",
+      "label": "Scenario: Record passing Result",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "result_recording_spec_scenario_record_failing_result",
+      "label": "Scenario: Record failing Result",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "result_recording_spec_scenario_derive_result_status_on_server",
+      "label": "Scenario: Derive Result status on server",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "result_recording_spec_scenario_reject_marks_above_maximum",
+      "label": "Scenario: Reject marks above maximum",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "result_recording_spec_scenario_reject_enrollment_from_another_batch",
+      "label": "Scenario: Reject Enrollment from another Batch",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "result_recording_spec_scenario_enforce_one_active_result_per_exam_enrollment",
+      "label": "Scenario: Enforce one active Result per Exam+Enrollment",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013",
+      "label": "Requirement: Bulk Result Entry (FR-EXC-013)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "result_recording_spec_scenario_validate_fully_valid_bulk_payload",
+      "label": "Scenario: Validate fully valid bulk payload",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L45"
+    },
+    {
+      "id": "result_recording_spec_scenario_detect_duplicate_enrollment_rows",
+      "label": "Scenario: Detect duplicate Enrollment rows",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "result_recording_spec_scenario_return_row_level_validation_errors",
+      "label": "Scenario: Return row-level validation errors",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "result_recording_spec_scenario_prevent_silent_partial_save",
+      "label": "Scenario: Prevent silent partial save",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "result_recording_spec_requirement_result_finalization_fr_exc_014",
+      "label": "Requirement: Result Finalization (FR-EXC-014)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "result_recording_spec_scenario_finalize_a_valid_result",
+      "label": "Scenario: Finalize a valid Result",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L72"
+    },
+    {
+      "id": "result_recording_spec_scenario_reject_finalization_of_already_finalized_result",
+      "label": "Scenario: Reject finalization of already finalized Result",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L79"
+    },
+    {
+      "id": "result_recording_spec_requirement_result_branch_isolation_fr_exc_015",
+      "label": "Requirement: Result Branch Isolation (FR-EXC-015)",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L84"
+    },
+    {
+      "id": "result_recording_spec_scenario_result_branch_consistency_enforced",
+      "label": "Scenario: Result branch consistency enforced",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L88"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_06_implement_module_10_exam_result_completion_specs_result_recording_spec_md",
+      "target": "result_recording_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_added_requirements",
+      "target": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "target": "result_recording_spec_scenario_record_passing_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "target": "result_recording_spec_scenario_record_failing_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "target": "result_recording_spec_scenario_derive_result_status_on_server",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "target": "result_recording_spec_scenario_reject_marks_above_maximum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "target": "result_recording_spec_scenario_reject_enrollment_from_another_batch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_individual_result_recording_fr_exc_010",
+      "target": "result_recording_spec_scenario_enforce_one_active_result_per_exam_enrollment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_added_requirements",
+      "target": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013",
+      "target": "result_recording_spec_scenario_validate_fully_valid_bulk_payload",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013",
+      "target": "result_recording_spec_scenario_detect_duplicate_enrollment_rows",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013",
+      "target": "result_recording_spec_scenario_return_row_level_validation_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_bulk_result_entry_fr_exc_013",
+      "target": "result_recording_spec_scenario_prevent_silent_partial_save",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_added_requirements",
+      "target": "result_recording_spec_requirement_result_finalization_fr_exc_014",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_result_finalization_fr_exc_014",
+      "target": "result_recording_spec_scenario_finalize_a_valid_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_result_finalization_fr_exc_014",
+      "target": "result_recording_spec_scenario_reject_finalization_of_already_finalized_result",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_added_requirements",
+      "target": "result_recording_spec_requirement_result_branch_isolation_fr_exc_015",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "result_recording_spec_requirement_result_branch_isolation_fr_exc_015",
+      "target": "result_recording_spec_scenario_result_branch_consistency_enforced",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-06-implement-module-10-exam-result-completion/specs/result-recording/spec.md",
+      "source_location": "L88",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

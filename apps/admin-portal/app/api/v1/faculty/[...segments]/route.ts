@@ -72,7 +72,18 @@ const availabilitySchema = z.object({
     'Friday',
     'Saturday',
     'Sunday',
-  ]),
+  ]).optional(),
+  daysOfWeek: z.array(
+    z.enum([
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ])
+  ).optional(),
   startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
   endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
   status: z.enum(['Active', 'Inactive']),
@@ -82,7 +93,8 @@ const availabilitySchema = z.object({
 });
 
 const authorizationSchema = z.object({
-  courseId: z.string().uuid(),
+  courseId: z.string().uuid().optional(),
+  courseIds: z.array(z.string().uuid()).optional(),
   status: z.enum(['Active', 'Inactive', 'Suspended', 'Expired']),
   effectiveStartDate: z.coerce.date(),
   effectiveEndDate: z.coerce.date().optional().nullable(),
@@ -415,13 +427,37 @@ async function handleTrainerResource(
       await requirePermission(session, 'trainer.availability.manage');
       const payload = availabilitySchema.parse(await readPayload(request));
       await ensureBranchAccess(session, payload.branchId);
-      const availability = await trainerManagementService.createAvailability(
-        trainerId,
-        payload,
-        authContext,
-      );
+
+      const days = payload.daysOfWeek && payload.daysOfWeek.length > 0
+        ? payload.daysOfWeek
+        : payload.dayOfWeek
+          ? [payload.dayOfWeek]
+          : [];
+
+      if (days.length === 0) {
+        throw new DomainError('invalid_value', 'At least one day of week must be selected.');
+      }
+
+      const results = [];
+      for (const day of days) {
+        const availability = await trainerManagementService.createAvailability(
+          trainerId,
+          {
+            branchId: payload.branchId,
+            dayOfWeek: day,
+            startTime: payload.startTime,
+            endTime: payload.endTime,
+            status: payload.status,
+            effectiveStartDate: payload.effectiveStartDate,
+            effectiveEndDate: payload.effectiveEndDate,
+          },
+          authContext,
+        );
+        results.push(availability);
+      }
+
       return success(
-        { availability },
+        { availability: results[0], availabilities: results },
         request,
         `/api/v1/faculty/trainers/${trainerId}/availability`,
         201,
@@ -489,13 +525,35 @@ async function handleTrainerResource(
     if (request.method === 'POST') {
       await requirePermission(session, 'trainer.authorization.manage');
       const payload = authorizationSchema.parse(await readPayload(request));
-      const authorization = await trainerManagementService.createAuthorization(
-        trainerId,
-        payload,
-        authContext,
-      );
+
+      const courses = payload.courseIds && payload.courseIds.length > 0
+        ? payload.courseIds
+        : payload.courseId
+          ? [payload.courseId]
+          : [];
+
+      if (courses.length === 0) {
+        throw new DomainError('invalid_value', 'At least one course must be selected.');
+      }
+
+      const results = [];
+      for (const id of courses) {
+        const authorization = await trainerManagementService.createAuthorization(
+          trainerId,
+          {
+            courseId: id,
+            status: payload.status,
+            effectiveStartDate: payload.effectiveStartDate,
+            effectiveEndDate: payload.effectiveEndDate,
+            reason: payload.reason,
+          },
+          authContext,
+        );
+        results.push(authorization);
+      }
+
       return success(
-        { authorization },
+        { authorization: results[0], authorizations: results },
         request,
         `/api/v1/faculty/trainers/${trainerId}/authorizations`,
         201,

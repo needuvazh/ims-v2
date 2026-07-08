@@ -109,16 +109,10 @@ export default async function NewTrainerPage(props: {
     <AdminFormPageLayout>
       <PageHeader
         title="Register New Trainer"
-        description="Create a trainer profile by selecting an existing IAM user and configuring their trainer details."
         backUrl="/faculty/trainers"
         breadcrumbs={
           <Breadcrumbs
             items={[
-              {
-                label: 'Dashboard',
-                href: '/dashboard',
-                icon: <Home className="h-3.5 w-3.5" />,
-              },
               {
                 label: 'Faculty',
                 href: '/faculty/trainers',

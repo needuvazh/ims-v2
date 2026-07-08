@@ -696,7 +696,9 @@ export class LeadService {
         const checkEmail =
           data.email !== undefined ? data.email : originalLead.email;
         const checkNationalId =
-          data.nationalId !== undefined ? data.nationalId : originalLead.nationalId;
+          data.nationalId !== undefined
+            ? data.nationalId
+            : originalLead.nationalId;
         const checkBranch =
           data.branchId !== undefined ? data.branchId : originalLead.branchId;
         const checkCourse =
@@ -719,7 +721,13 @@ export class LeadService {
           data.interestedCourseId !== undefined &&
           data.interestedCourseId !== originalLead.interestedCourseId;
 
-        if (phoneChanged || emailChanged || nationalIdChanged || branchChanged || courseChanged) {
+        if (
+          phoneChanged ||
+          emailChanged ||
+          nationalIdChanged ||
+          branchChanged ||
+          courseChanged
+        ) {
           const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
           // Build duplicate check conditions

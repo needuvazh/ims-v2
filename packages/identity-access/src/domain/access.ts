@@ -20,6 +20,7 @@ export const knownPermissions = [
   'scheduling.venueBlock.create',
   'scheduling.venueBlock.update',
   'scheduling.conflict.read',
+  'scheduling.holiday.create',
   'schedule.manage',
   'dashboard.view',
   'certificate.verify',
@@ -167,7 +168,7 @@ export const adminNavigation: NavigationItem[] = [
       },
       {
         href: '/scheduling/calendars',
-        label: 'Calendar Ledger',
+        label: 'Calendar',
         permission: 'scheduling.calendar.read',
       },
       {
@@ -253,6 +254,11 @@ export const adminNavigation: NavigationItem[] = [
         href: '/faculty/eligible-trainers',
         label: 'Eligible Trainers',
         permission: 'menu.faculty.eligible-trainers',
+      },
+      {
+        href: '/faculty/leaves',
+        label: 'Leaves & Time-Off',
+        permission: 'menu.faculty.leaves',
       },
       {
         href: '/faculty/reports',

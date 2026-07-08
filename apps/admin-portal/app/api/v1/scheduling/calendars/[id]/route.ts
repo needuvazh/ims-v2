@@ -22,6 +22,28 @@ const updateSchema = z.object({
   effectiveEndDate: z.coerce.date().nullable().optional(),
   status: z.enum(['Draft', 'Active', 'Closed', 'Archived']).optional(),
   version: z.number().int().nonnegative(),
+  operatingDays: z
+    .array(
+      z.object({
+        dayOfWeek: z.enum([
+          'SUNDAY',
+          'MONDAY',
+          'TUESDAY',
+          'WEDNESDAY',
+          'THURSDAY',
+          'FRIDAY',
+          'SATURDAY',
+        ]),
+        isOpen: z.boolean(),
+        workingHours: z.array(
+          z.object({
+            startTime: z.string(),
+            endTime: z.string(),
+          }),
+        ),
+      }),
+    )
+    .optional(),
 });
 
 function mapNotFound(error: Error) {

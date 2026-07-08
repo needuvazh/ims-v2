@@ -1,1 +1,1215 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_8_reports_dashboards_kpis_analytics_md", "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "label": "Part 8 - Reports, Dashboards, KPIs, Analytics", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_module_5_student_management", "label": "Module 5 \u2013 Student Management", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L3"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_1_purpose", "label": "1. Purpose", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L5"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_2_reporting_and_analytics_principles", "label": "2. Reporting and Analytics Principles", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L29"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog", "label": "3. KPI Catalog", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L51"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_design_notes", "label": "3.1 KPI Design Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L53"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_common_time_windows", "label": "Common Time Windows", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L61"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_2_core_student_master_kpis", "label": "3.2 Core Student Master KPIs", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L74"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_3_referenced_cross_module_indicators_displayable_in_student_screens", "label": "3.3 Referenced Cross-Module Indicators Displayable in Student Screens", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L106"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "label": "4. Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L121"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "label": "4.1 Admin Dashboard \u2013 Student Management Home", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L123"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_dashboard_code", "label": "Dashboard Code", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L125"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_required_permission", "label": "Required Permission", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L129"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_layout_style", "label": "Layout Style", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L135"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_001_active_students_summary_card", "label": "Widget W-SM-001 \u2014 Active Students Summary Card", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L141"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_002_new_students_today", "label": "Widget W-SM-002 \u2014 New Students Today", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L149"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_003_duplicate_review_pending", "label": "Widget W-SM-003 \u2014 Duplicate Review Pending", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L156"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_004_id_card_coverage", "label": "Widget W-SM-004 \u2014 ID Card Coverage", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L164"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_005_student_creation_trend", "label": "Widget W-SM-005 \u2014 Student Creation Trend", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L171"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_006_creation_source_distribution", "label": "Widget W-SM-006 \u2014 Creation Source Distribution", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L180"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_007_branch_wise_active_students", "label": "Widget W-SM-007 \u2014 Branch-wise Active Students", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L188"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_008_duplicate_case_backlog", "label": "Widget W-SM-008 \u2014 Duplicate Case Backlog", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L196"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_009_recent_student_activity_feed", "label": "Widget W-SM-009 \u2014 Recent Student Activity Feed", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L203"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_010_duplicate_resolution_sla_widget", "label": "Widget W-SM-010 \u2014 Duplicate Resolution SLA Widget", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L211"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_011_merge_history_snapshot", "label": "Widget W-SM-011 \u2014 Merge History Snapshot", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L218"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_012_data_completeness_heatmap", "label": "Widget W-SM-012 \u2014 Data Completeness Heatmap", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L225"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_2_branch_dashboard_widgets", "label": "4.2 Branch Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L238"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets", "label": "4.3 Student Portal Dashboard Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L253"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_001_my_profile_summary", "label": "Widget W-SM-STU-001 \u2014 My Profile Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L257"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_002_my_linked_enrollments_count", "label": "Widget W-SM-STU-002 \u2014 My Linked Enrollments Count", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L263"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_003_my_documents_summary", "label": "Widget W-SM-STU-003 \u2014 My Documents Summary", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L270"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets", "label": "4.4 Trainer Portal Widgets", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L281"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_001_batch_student_snapshot", "label": "Widget W-SM-TRN-001 \u2014 Batch Student Snapshot", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L285"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_002_student_quick_view_drawer", "label": "Widget W-SM-TRN-002 \u2014 Student Quick View Drawer", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L291"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "label": "5. Operational Reports", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L299"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_1_report_inventory", "label": "5.1 Report Inventory", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L301"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "label": "5.2 Detailed Report Specifications", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L323"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_001_student_master_register", "label": "RPT-SM-001 \u2014 Student Master Register", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L325"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_002_new_student_creation_report", "label": "RPT-SM-002 \u2014 New Student Creation Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L379"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_003_student_status_history_report", "label": "RPT-SM-003 \u2014 Student Status History Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L415"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_004_duplicate_case_backlog_report", "label": "RPT-SM-004 \u2014 Duplicate Case Backlog Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L458"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_005_duplicate_resolution_performance_report", "label": "RPT-SM-005 \u2014 Duplicate Resolution Performance Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L502"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_006_student_merge_history_report", "label": "RPT-SM-006 \u2014 Student Merge History Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L543"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_007_id_card_issuance_status_report", "label": "RPT-SM-007 \u2014 ID Card Issuance Status Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L582"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_008_creation_source_distribution_report", "label": "RPT-SM-008 \u2014 Creation Source Distribution Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L619"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_009_student_data_completeness_report", "label": "RPT-SM-009 \u2014 Student Data Completeness Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L648"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_010_student_export_audit_report", "label": "RPT-SM-010 \u2014 Student Export Audit Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L691"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_011_corporate_origin_student_register", "label": "RPT-SM-011 \u2014 Corporate-Origin Student Register", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L729"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_012_admission_handoff_to_student_reuse_report", "label": "RPT-SM-012 \u2014 Admission Handoff to Student Reuse Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L764"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_013_archived_and_restored_students_report", "label": "RPT-SM-013 \u2014 Archived and Restored Students Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L797"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_014_students_missing_contact_readiness_report", "label": "RPT-SM-014 \u2014 Students Missing Contact Readiness Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L828"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_015_students_without_id_card_report", "label": "RPT-SM-015 \u2014 Students Without ID Card Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L857"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_portal_specific_reporting_surfaces", "label": "6. Portal-Specific Reporting Surfaces", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L885"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_1_admin_portal", "label": "6.1 Admin Portal", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L887"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_2_student_portal", "label": "6.2 Student Portal", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L896"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_3_trainer_portal", "label": "6.3 Trainer Portal", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L907"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_7_permission_scope_by_dashboard_report", "label": "7. Permission Scope by Dashboard / Report", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L918"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_read_models_and_reporting_views", "label": "8. Read Models and Reporting Views", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L934"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_1_reporting_strategy", "label": "8.1 Reporting Strategy", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L936"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "label": "8.2 Recommended Read Models / Views", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L949"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_profile_summary", "label": "View: `vw_student_profile_summary`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L951"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_creation_daily_fact", "label": "View: `vw_student_creation_daily_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1001"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_status_daily_fact", "label": "View: `vw_student_status_daily_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1029"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_duplicate_case_fact", "label": "View: `vw_student_duplicate_case_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1057"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_merge_fact", "label": "View: `vw_student_merge_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1086"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_id_card_fact", "label": "View: `vw_student_id_card_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1115"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_data_completeness_fact", "label": "View: `vw_student_data_completeness_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1141"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_export_audit_fact", "label": "View: `vw_student_export_audit_fact`", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1167"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_3_materialized_view_refresh_guidance", "label": "8.3 Materialized View Refresh Guidance", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1192"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_9_performance_expectations_for_reporting", "label": "9. Performance Expectations for Reporting", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1220"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_analytics_use_cases", "label": "10. Analytics Use Cases", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1232"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_1_operational_analytics", "label": "10.1 Operational Analytics", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1234"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_2_compliance_analytics", "label": "10.2 Compliance Analytics", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1242"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_3_data_quality_analytics", "label": "10.3 Data Quality Analytics", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1249"}, {"id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_11_final_reporting_boundary_notes", "label": "11. Final Reporting Boundary Notes", "file_type": "document", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1257"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_8_reports_dashboards_kpis_analytics_md", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_module_5_student_management", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L3", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_1_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L5", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_2_reporting_and_analytics_principles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L29", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L51", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_design_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L53", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_design_notes", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_common_time_windows", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L61", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_2_core_student_master_kpis", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L74", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_3_referenced_cross_module_indicators_displayable_in_student_screens", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L106", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L121", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L123", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_dashboard_code", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L125", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_required_permission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L129", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_layout_style", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L135", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_001_active_students_summary_card", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L141", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_002_new_students_today", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L149", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_003_duplicate_review_pending", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L156", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_004_id_card_coverage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L164", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_005_student_creation_trend", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L171", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_006_creation_source_distribution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L180", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_007_branch_wise_active_students", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L188", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_008_duplicate_case_backlog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L196", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_009_recent_student_activity_feed", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L203", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_010_duplicate_resolution_sla_widget", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L211", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_011_merge_history_snapshot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L218", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_012_data_completeness_heatmap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L225", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_2_branch_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L238", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L253", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_001_my_profile_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L257", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_002_my_linked_enrollments_count", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L263", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_003_my_documents_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L270", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L281", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_001_batch_student_snapshot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L285", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_002_student_quick_view_drawer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L291", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L299", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_1_report_inventory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L301", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L323", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_001_student_master_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L325", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_002_new_student_creation_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L379", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_003_student_status_history_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L415", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_004_duplicate_case_backlog_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L458", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_005_duplicate_resolution_performance_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L502", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_006_student_merge_history_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L543", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_007_id_card_issuance_status_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L582", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_008_creation_source_distribution_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L619", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_009_student_data_completeness_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L648", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_010_student_export_audit_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L691", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_011_corporate_origin_student_register", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L729", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_012_admission_handoff_to_student_reuse_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L764", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_013_archived_and_restored_students_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L797", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_014_students_missing_contact_readiness_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L828", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_015_students_without_id_card_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L857", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_portal_specific_reporting_surfaces", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L885", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_1_admin_portal", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L887", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_2_student_portal", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L896", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_3_trainer_portal", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L907", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_7_permission_scope_by_dashboard_report", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L918", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_read_models_and_reporting_views", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L934", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_1_reporting_strategy", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L936", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L949", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_profile_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L951", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_creation_daily_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1001", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_status_daily_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1029", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_duplicate_case_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1057", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_merge_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1086", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_id_card_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1115", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_data_completeness_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1141", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_export_audit_fact", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1167", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_3_materialized_view_refresh_guidance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1192", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_9_performance_expectations_for_reporting", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1220", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_analytics_use_cases", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1232", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_1_operational_analytics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1234", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_2_compliance_analytics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1242", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_3_data_quality_analytics", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1249", "weight": 1.0}, {"source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics", "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_11_final_reporting_boundary_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md", "source_location": "L1257", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_8_reports_dashboards_kpis_analytics_md",
+      "label": "Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "label": "Part 8 - Reports, Dashboards, KPIs, Analytics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_module_5_student_management",
+      "label": "Module 5 \u2013 Student Management",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_1_purpose",
+      "label": "1. Purpose",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_2_reporting_and_analytics_principles",
+      "label": "2. Reporting and Analytics Principles",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog",
+      "label": "3. KPI Catalog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_design_notes",
+      "label": "3.1 KPI Design Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L53"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_common_time_windows",
+      "label": "Common Time Windows",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_2_core_student_master_kpis",
+      "label": "3.2 Core Student Master KPIs",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_3_referenced_cross_module_indicators_displayable_in_student_screens",
+      "label": "3.3 Referenced Cross-Module Indicators Displayable in Student Screens",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L106"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "label": "4. Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L121"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "label": "4.1 Admin Dashboard \u2013 Student Management Home",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L123"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_dashboard_code",
+      "label": "Dashboard Code",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L125"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_required_permission",
+      "label": "Required Permission",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L129"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_layout_style",
+      "label": "Layout Style",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L135"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_001_active_students_summary_card",
+      "label": "Widget W-SM-001 \u2014 Active Students Summary Card",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L141"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_002_new_students_today",
+      "label": "Widget W-SM-002 \u2014 New Students Today",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L149"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_003_duplicate_review_pending",
+      "label": "Widget W-SM-003 \u2014 Duplicate Review Pending",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_004_id_card_coverage",
+      "label": "Widget W-SM-004 \u2014 ID Card Coverage",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L164"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_005_student_creation_trend",
+      "label": "Widget W-SM-005 \u2014 Student Creation Trend",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L171"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_006_creation_source_distribution",
+      "label": "Widget W-SM-006 \u2014 Creation Source Distribution",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L180"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_007_branch_wise_active_students",
+      "label": "Widget W-SM-007 \u2014 Branch-wise Active Students",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L188"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_008_duplicate_case_backlog",
+      "label": "Widget W-SM-008 \u2014 Duplicate Case Backlog",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L196"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_009_recent_student_activity_feed",
+      "label": "Widget W-SM-009 \u2014 Recent Student Activity Feed",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L203"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_010_duplicate_resolution_sla_widget",
+      "label": "Widget W-SM-010 \u2014 Duplicate Resolution SLA Widget",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L211"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_011_merge_history_snapshot",
+      "label": "Widget W-SM-011 \u2014 Merge History Snapshot",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L218"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_012_data_completeness_heatmap",
+      "label": "Widget W-SM-012 \u2014 Data Completeness Heatmap",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L225"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_2_branch_dashboard_widgets",
+      "label": "4.2 Branch Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L238"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets",
+      "label": "4.3 Student Portal Dashboard Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L253"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_001_my_profile_summary",
+      "label": "Widget W-SM-STU-001 \u2014 My Profile Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L257"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_002_my_linked_enrollments_count",
+      "label": "Widget W-SM-STU-002 \u2014 My Linked Enrollments Count",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L263"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_003_my_documents_summary",
+      "label": "Widget W-SM-STU-003 \u2014 My Documents Summary",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L270"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets",
+      "label": "4.4 Trainer Portal Widgets",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L281"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_001_batch_student_snapshot",
+      "label": "Widget W-SM-TRN-001 \u2014 Batch Student Snapshot",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L285"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_002_student_quick_view_drawer",
+      "label": "Widget W-SM-TRN-002 \u2014 Student Quick View Drawer",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L291"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "label": "5. Operational Reports",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L299"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_1_report_inventory",
+      "label": "5.1 Report Inventory",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L301"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "label": "5.2 Detailed Report Specifications",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L323"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_001_student_master_register",
+      "label": "RPT-SM-001 \u2014 Student Master Register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L325"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_002_new_student_creation_report",
+      "label": "RPT-SM-002 \u2014 New Student Creation Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L379"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_003_student_status_history_report",
+      "label": "RPT-SM-003 \u2014 Student Status History Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L415"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_004_duplicate_case_backlog_report",
+      "label": "RPT-SM-004 \u2014 Duplicate Case Backlog Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L458"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_005_duplicate_resolution_performance_report",
+      "label": "RPT-SM-005 \u2014 Duplicate Resolution Performance Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L502"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_006_student_merge_history_report",
+      "label": "RPT-SM-006 \u2014 Student Merge History Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L543"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_007_id_card_issuance_status_report",
+      "label": "RPT-SM-007 \u2014 ID Card Issuance Status Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L582"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_008_creation_source_distribution_report",
+      "label": "RPT-SM-008 \u2014 Creation Source Distribution Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L619"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_009_student_data_completeness_report",
+      "label": "RPT-SM-009 \u2014 Student Data Completeness Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L648"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_010_student_export_audit_report",
+      "label": "RPT-SM-010 \u2014 Student Export Audit Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L691"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_011_corporate_origin_student_register",
+      "label": "RPT-SM-011 \u2014 Corporate-Origin Student Register",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L729"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_012_admission_handoff_to_student_reuse_report",
+      "label": "RPT-SM-012 \u2014 Admission Handoff to Student Reuse Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L764"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_013_archived_and_restored_students_report",
+      "label": "RPT-SM-013 \u2014 Archived and Restored Students Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L797"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_014_students_missing_contact_readiness_report",
+      "label": "RPT-SM-014 \u2014 Students Missing Contact Readiness Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L828"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_015_students_without_id_card_report",
+      "label": "RPT-SM-015 \u2014 Students Without ID Card Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L857"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_portal_specific_reporting_surfaces",
+      "label": "6. Portal-Specific Reporting Surfaces",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L885"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_1_admin_portal",
+      "label": "6.1 Admin Portal",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L887"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_2_student_portal",
+      "label": "6.2 Student Portal",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L896"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_3_trainer_portal",
+      "label": "6.3 Trainer Portal",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L907"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_7_permission_scope_by_dashboard_report",
+      "label": "7. Permission Scope by Dashboard / Report",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L918"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_read_models_and_reporting_views",
+      "label": "8. Read Models and Reporting Views",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L934"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_1_reporting_strategy",
+      "label": "8.1 Reporting Strategy",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L936"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "label": "8.2 Recommended Read Models / Views",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L949"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_profile_summary",
+      "label": "View: `vw_student_profile_summary`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L951"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_creation_daily_fact",
+      "label": "View: `vw_student_creation_daily_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1001"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_status_daily_fact",
+      "label": "View: `vw_student_status_daily_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1029"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_duplicate_case_fact",
+      "label": "View: `vw_student_duplicate_case_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1057"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_merge_fact",
+      "label": "View: `vw_student_merge_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1086"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_id_card_fact",
+      "label": "View: `vw_student_id_card_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1115"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_data_completeness_fact",
+      "label": "View: `vw_student_data_completeness_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1141"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_export_audit_fact",
+      "label": "View: `vw_student_export_audit_fact`",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1167"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_3_materialized_view_refresh_guidance",
+      "label": "8.3 Materialized View Refresh Guidance",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1192"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_9_performance_expectations_for_reporting",
+      "label": "9. Performance Expectations for Reporting",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1220"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_analytics_use_cases",
+      "label": "10. Analytics Use Cases",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1232"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_1_operational_analytics",
+      "label": "10.1 Operational Analytics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1234"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_2_compliance_analytics",
+      "label": "10.2 Compliance Analytics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1242"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_3_data_quality_analytics",
+      "label": "10.3 Data Quality Analytics",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1249"
+    },
+    {
+      "id": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_11_final_reporting_boundary_notes",
+      "label": "11. Final Reporting Boundary Notes",
+      "file_type": "document",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1257"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_docs_architecture_frd_module_05_student_management_part_8_reports_dashboards_kpis_analytics_md",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_module_5_student_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_1_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_2_reporting_and_analytics_principles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_kpi_catalog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_design_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_1_kpi_design_notes",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_common_time_windows",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_2_core_student_master_kpis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_3_3_referenced_cross_module_indicators_displayable_in_student_screens",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L123",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_dashboard_code",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_required_permission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_layout_style",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_001_active_students_summary_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_002_new_students_today",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_003_duplicate_review_pending",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_004_id_card_coverage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_005_student_creation_trend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_006_creation_source_distribution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_007_branch_wise_active_students",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_008_duplicate_case_backlog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_009_recent_student_activity_feed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_010_duplicate_resolution_sla_widget",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_011_merge_history_snapshot",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_1_admin_dashboard_student_management_home",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_012_data_completeness_heatmap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L225",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_2_branch_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L253",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_001_my_profile_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L257",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_002_my_linked_enrollments_count",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L263",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_3_student_portal_dashboard_widgets",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_stu_003_my_documents_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L270",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_001_batch_student_snapshot",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L285",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_4_4_trainer_portal_widgets",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_widget_w_sm_trn_002_student_quick_view_drawer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L291",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_operational_reports",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_1_report_inventory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L323",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_001_student_master_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_002_new_student_creation_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_003_student_status_history_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L415",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_004_duplicate_case_backlog_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L458",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_005_duplicate_resolution_performance_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L502",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_006_student_merge_history_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L543",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_007_id_card_issuance_status_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L582",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_008_creation_source_distribution_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L619",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_009_student_data_completeness_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L648",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_010_student_export_audit_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L691",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_011_corporate_origin_student_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L729",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_012_admission_handoff_to_student_reuse_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L764",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_013_archived_and_restored_students_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L797",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_014_students_missing_contact_readiness_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L828",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_5_2_detailed_report_specifications",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_rpt_sm_015_students_without_id_card_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L857",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_portal_specific_reporting_surfaces",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L885",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_1_admin_portal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L887",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_2_student_portal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L896",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_6_3_trainer_portal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L907",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_7_permission_scope_by_dashboard_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L918",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_read_models_and_reporting_views",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L934",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_1_reporting_strategy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L936",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L949",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_profile_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L951",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_creation_daily_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1001",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_status_daily_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1029",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_duplicate_case_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1057",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_merge_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1086",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_id_card_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1115",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_data_completeness_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1141",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_2_recommended_read_models_views",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_view_vw_student_export_audit_fact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1167",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_8_3_materialized_view_refresh_guidance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1192",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_9_performance_expectations_for_reporting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1220",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_analytics_use_cases",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1232",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_1_operational_analytics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1234",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_2_compliance_analytics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1242",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_10_3_data_quality_analytics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1249",
+      "weight": 1.0
+    },
+    {
+      "source": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_part_8_reports_dashboards_kpis_analytics",
+      "target": "module_05_student_management_part_8_reports_dashboards_kpis_analytics_11_final_reporting_boundary_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/architecture/frd/Module 05 - Student Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md",
+      "source_location": "L1257",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

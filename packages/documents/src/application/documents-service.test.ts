@@ -6,16 +6,14 @@ import type { DocumentType, OwnerType } from '../domain/document';
 test('DocumentsService.registerDocuments should create Document, Owner, and Verification records', async () => {
   const mockPrisma = {
     document: {
-      create: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'doc-uuid-1',
-          fileName: 'test.pdf',
-          fileKey: 'uploads/test.pdf',
-          fileType: 'application/pdf',
-          documentType: 'CIVIL_ID_FRONT',
-          branchId: 'branch-1',
-        }),
+      create: vi.fn().mockResolvedValue({
+        id: 'doc-uuid-1',
+        fileName: 'test.pdf',
+        fileKey: 'uploads/test.pdf',
+        fileType: 'application/pdf',
+        documentType: 'CIVIL_ID_FRONT',
+        branchId: 'branch-1',
+      }),
     },
     documentOwner: {
       create: vi.fn().mockResolvedValue({ id: 'owner-uuid-1' }),
@@ -217,14 +215,12 @@ test('DocumentsService.getDocumentsByOwners should return document list for mult
 test('DocumentsService.applyVerificationDecision should create verification and increment version', async () => {
   const mockPrisma = {
     document: {
-      findUnique: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'doc-1',
-          version: 1,
-          isDeleted: false,
-          branchId: 'branch-1',
-        }),
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'doc-1',
+        version: 1,
+        isDeleted: false,
+        branchId: 'branch-1',
+      }),
       update: vi.fn().mockResolvedValue({ id: 'doc-1' }),
     },
     documentVerification: {
@@ -266,14 +262,12 @@ test('DocumentsService.applyVerificationDecision should create verification and 
 test('DocumentsService.applyVerificationDecision should throw if rejected but no remarks', async () => {
   const mockPrisma = {
     document: {
-      findUnique: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'doc-1',
-          version: 1,
-          isDeleted: false,
-          branchId: 'branch-1',
-        }),
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'doc-1',
+        version: 1,
+        isDeleted: false,
+        branchId: 'branch-1',
+      }),
     },
   } as unknown as PrismaClient;
 
@@ -292,14 +286,12 @@ test('DocumentsService.applyVerificationDecision should throw if rejected but no
 test('DocumentsService.retireDocument should soft-delete the document', async () => {
   const mockPrisma = {
     document: {
-      findUnique: vi
-        .fn()
-        .mockResolvedValue({
-          id: 'doc-1',
-          version: 1,
-          isDeleted: false,
-          branchId: 'branch-1',
-        }),
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'doc-1',
+        version: 1,
+        isDeleted: false,
+        branchId: 'branch-1',
+      }),
       update: vi.fn().mockResolvedValue({ id: 'doc-1' }),
     },
     outboxEvent: {

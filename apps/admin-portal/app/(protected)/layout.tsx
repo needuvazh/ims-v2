@@ -100,6 +100,9 @@ function mapNavigationIcons(item: any): any {
     case '/faculty/eligible-trainers':
       icon = <BadgeCheck className="h-4.5 w-4.5" />;
       break;
+    case '/faculty/leaves':
+      icon = <CalendarClock className="h-4.5 w-4.5" />;
+      break;
     case '/faculty/reports':
       icon = <CalendarClock className="h-4.5 w-4.5" />;
       break;

@@ -20,11 +20,6 @@ export default async function NewVenueBlockPage() {
           <Breadcrumbs
             items={[
               {
-                label: 'Dashboard',
-                href: '/dashboard',
-                icon: <Home className="h-3.5 w-3.5 text-slate-400" />,
-              },
-              {
                 label: 'Scheduling',
                 href: '/scheduling',
                 icon: <CalendarDays className="h-3.5 w-3.5 text-slate-400" />,

@@ -1,1 +1,335 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_enrollment_lifecycle_specs_enrollment_lifecycle_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L1"}, {"id": "enrollment_lifecycle_spec_added_requirements", "label": "ADDED Requirements", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L1"}, {"id": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting", "label": "Requirement: Enrollment Creation & pricingResolution snapshotting", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L3"}, {"id": "enrollment_lifecycle_spec_scenario_resolve_and_snapshot_pricing_during_draft_creation", "label": "Scenario: Resolve and snapshot pricing during draft creation", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L7"}, {"id": "enrollment_lifecycle_spec_scenario_reject_enrollment_draft_from_unapproved_admission", "label": "Scenario: Reject enrollment draft from unapproved admission", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L22"}, {"id": "enrollment_lifecycle_spec_scenario_walk_in_fast_track_registration_bypass", "label": "Scenario: Walk-in fast-track registration bypass", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L28"}, {"id": "enrollment_lifecycle_spec_scenario_corporate_participant_enrollment_and_automatic_profile_conversion", "label": "Scenario: Corporate Participant enrollment and automatic profile conversion", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L33"}, {"id": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "label": "Requirement: Enrollment Status Transitions & Validation Matrix", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L42"}, {"id": "enrollment_lifecycle_spec_transition_matrix", "label": "Transition Matrix:", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L46"}, {"id": "enrollment_lifecycle_spec_scenario_approve_enrollment_and_check_capacity_limits", "label": "Scenario: Approve enrollment and check capacity limits", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L60"}, {"id": "enrollment_lifecycle_spec_scenario_route_full_batch_to_waitlist_during_approval", "label": "Scenario: Route full batch to waitlist during approval", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L68"}, {"id": "enrollment_lifecycle_spec_scenario_block_approval_if_batch_is_full_and_waitlist_is_disabled", "label": "Scenario: Block approval if batch is full and waitlist is disabled", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L77"}, {"id": "enrollment_lifecycle_spec_scenario_validate_corporate_credit_limit_during_approval", "label": "Scenario: Validate corporate credit limit during approval", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L84"}, {"id": "enrollment_lifecycle_spec_scenario_idempotent_event_driven_confirmation_with_document_gate", "label": "Scenario: Idempotent event-driven confirmation with document gate", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L92"}, {"id": "enrollment_lifecycle_spec_scenario_reactive_batch_start_activation", "label": "Scenario: Reactive batch start activation", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L110"}, {"id": "enrollment_lifecycle_spec_scenario_drop_active_enrollment_and_release_seat", "label": "Scenario: Drop active enrollment and release seat", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L116"}, {"id": "enrollment_lifecycle_spec_requirement_critical_actions_audit_coverage", "label": "Requirement: Critical Actions Audit Coverage", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L125"}, {"id": "enrollment_lifecycle_spec_scenario_audit_log_requirements_for_mutations", "label": "Scenario: Audit log requirements for mutations", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L129"}, {"id": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping", "label": "Requirement: Enrollment Screen Visibility & Branch Scoping", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L149"}, {"id": "enrollment_lifecycle_spec_scenario_render_enrollment_detail_screen", "label": "Scenario: Render enrollment detail screen", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L153"}, {"id": "enrollment_lifecycle_spec_scenario_reject_unauthorized_cross_branch_enrollment_access", "label": "Scenario: Reject unauthorized cross-branch enrollment access", "file_type": "document", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L159"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_enrollment_lifecycle_specs_enrollment_lifecycle_spec_md", "target": "enrollment_lifecycle_spec_added_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_added_requirements", "target": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting", "target": "enrollment_lifecycle_spec_scenario_resolve_and_snapshot_pricing_during_draft_creation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting", "target": "enrollment_lifecycle_spec_scenario_reject_enrollment_draft_from_unapproved_admission", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L22", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting", "target": "enrollment_lifecycle_spec_scenario_walk_in_fast_track_registration_bypass", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L28", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting", "target": "enrollment_lifecycle_spec_scenario_corporate_participant_enrollment_and_automatic_profile_conversion", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L33", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_added_requirements", "target": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L42", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_transition_matrix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L46", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_scenario_approve_enrollment_and_check_capacity_limits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L60", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_scenario_route_full_batch_to_waitlist_during_approval", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L68", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_scenario_block_approval_if_batch_is_full_and_waitlist_is_disabled", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L77", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_scenario_validate_corporate_credit_limit_during_approval", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L84", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_scenario_idempotent_event_driven_confirmation_with_document_gate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L92", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_scenario_reactive_batch_start_activation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L110", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix", "target": "enrollment_lifecycle_spec_scenario_drop_active_enrollment_and_release_seat", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L116", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_added_requirements", "target": "enrollment_lifecycle_spec_requirement_critical_actions_audit_coverage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L125", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_critical_actions_audit_coverage", "target": "enrollment_lifecycle_spec_scenario_audit_log_requirements_for_mutations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L129", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_added_requirements", "target": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L149", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping", "target": "enrollment_lifecycle_spec_scenario_render_enrollment_detail_screen", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L153", "weight": 1.0}, {"source": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping", "target": "enrollment_lifecycle_spec_scenario_reject_unauthorized_cross_branch_enrollment_access", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md", "source_location": "L159", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_enrollment_lifecycle_specs_enrollment_lifecycle_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_added_requirements",
+      "label": "ADDED Requirements",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting",
+      "label": "Requirement: Enrollment Creation & pricingResolution snapshotting",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_resolve_and_snapshot_pricing_during_draft_creation",
+      "label": "Scenario: Resolve and snapshot pricing during draft creation",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_reject_enrollment_draft_from_unapproved_admission",
+      "label": "Scenario: Reject enrollment draft from unapproved admission",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_walk_in_fast_track_registration_bypass",
+      "label": "Scenario: Walk-in fast-track registration bypass",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_corporate_participant_enrollment_and_automatic_profile_conversion",
+      "label": "Scenario: Corporate Participant enrollment and automatic profile conversion",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "label": "Requirement: Enrollment Status Transitions & Validation Matrix",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_transition_matrix",
+      "label": "Transition Matrix:",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_approve_enrollment_and_check_capacity_limits",
+      "label": "Scenario: Approve enrollment and check capacity limits",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_route_full_batch_to_waitlist_during_approval",
+      "label": "Scenario: Route full batch to waitlist during approval",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_block_approval_if_batch_is_full_and_waitlist_is_disabled",
+      "label": "Scenario: Block approval if batch is full and waitlist is disabled",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_validate_corporate_credit_limit_during_approval",
+      "label": "Scenario: Validate corporate credit limit during approval",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L84"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_idempotent_event_driven_confirmation_with_document_gate",
+      "label": "Scenario: Idempotent event-driven confirmation with document gate",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_reactive_batch_start_activation",
+      "label": "Scenario: Reactive batch start activation",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L110"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_drop_active_enrollment_and_release_seat",
+      "label": "Scenario: Drop active enrollment and release seat",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_requirement_critical_actions_audit_coverage",
+      "label": "Requirement: Critical Actions Audit Coverage",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L125"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_audit_log_requirements_for_mutations",
+      "label": "Scenario: Audit log requirements for mutations",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L129"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping",
+      "label": "Requirement: Enrollment Screen Visibility & Branch Scoping",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L149"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_render_enrollment_detail_screen",
+      "label": "Scenario: Render enrollment detail screen",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L153"
+    },
+    {
+      "id": "enrollment_lifecycle_spec_scenario_reject_unauthorized_cross_branch_enrollment_access",
+      "label": "Scenario: Reject unauthorized cross-branch enrollment access",
+      "file_type": "document",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L159"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_changes_archive_2026_07_02_enrollment_lifecycle_specs_enrollment_lifecycle_spec_md",
+      "target": "enrollment_lifecycle_spec_added_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_added_requirements",
+      "target": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting",
+      "target": "enrollment_lifecycle_spec_scenario_resolve_and_snapshot_pricing_during_draft_creation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting",
+      "target": "enrollment_lifecycle_spec_scenario_reject_enrollment_draft_from_unapproved_admission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting",
+      "target": "enrollment_lifecycle_spec_scenario_walk_in_fast_track_registration_bypass",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_creation_pricingresolution_snapshotting",
+      "target": "enrollment_lifecycle_spec_scenario_corporate_participant_enrollment_and_automatic_profile_conversion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_added_requirements",
+      "target": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_transition_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_scenario_approve_enrollment_and_check_capacity_limits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_scenario_route_full_batch_to_waitlist_during_approval",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_scenario_block_approval_if_batch_is_full_and_waitlist_is_disabled",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_scenario_validate_corporate_credit_limit_during_approval",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_scenario_idempotent_event_driven_confirmation_with_document_gate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_scenario_reactive_batch_start_activation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_status_transitions_validation_matrix",
+      "target": "enrollment_lifecycle_spec_scenario_drop_active_enrollment_and_release_seat",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_added_requirements",
+      "target": "enrollment_lifecycle_spec_requirement_critical_actions_audit_coverage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_critical_actions_audit_coverage",
+      "target": "enrollment_lifecycle_spec_scenario_audit_log_requirements_for_mutations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_added_requirements",
+      "target": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping",
+      "target": "enrollment_lifecycle_spec_scenario_render_enrollment_detail_screen",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "enrollment_lifecycle_spec_requirement_enrollment_screen_visibility_branch_scoping",
+      "target": "enrollment_lifecycle_spec_scenario_reject_unauthorized_cross_branch_enrollment_access",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/changes/archive/2026-07-02-enrollment-lifecycle/specs/enrollment-lifecycle/spec.md",
+      "source_location": "L159",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

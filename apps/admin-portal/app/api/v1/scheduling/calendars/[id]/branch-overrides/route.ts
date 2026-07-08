@@ -63,7 +63,7 @@ export async function POST(
                 parsed.data,
                 {
                   actorId: session.userId,
-                  branchId: session.activeBranchId ?? undefined,
+                  branchId: undefined,
                 },
               );
 

@@ -1,1 +1,207 @@
-{"nodes": [{"id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_admission_enrollment_ui_gaps_spec_md", "label": "spec.md", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L1"}, {"id": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification", "label": "Admission & Enrollment Management UI Gaps Specification", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L1"}, {"id": "admission_enrollment_ui_gaps_spec_purpose", "label": "Purpose", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L3"}, {"id": "admission_enrollment_ui_gaps_spec_requirements", "label": "Requirements", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L7"}, {"id": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions", "label": "Requirement: Enrollment Operations Console & Actions", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L9"}, {"id": "admission_enrollment_ui_gaps_spec_scenario_display_enrollment_details_action_controls", "label": "Scenario: Display Enrollment Details & Action Controls", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L13"}, {"id": "admission_enrollment_ui_gaps_spec_scenario_drop_active_enrollment_with_mandatory_reason", "label": "Scenario: Drop Active Enrollment with Mandatory Reason", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L27"}, {"id": "admission_enrollment_ui_gaps_spec_requirement_batch_enrollment_roster", "label": "Requirement: Batch Enrollment Roster", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L42"}, {"id": "admission_enrollment_ui_gaps_spec_scenario_display_batch_students_tab", "label": "Scenario: Display Batch Students Tab", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L46"}, {"id": "admission_enrollment_ui_gaps_spec_requirement_enrollment_pricing_discount_snapshot_panel", "label": "Requirement: Enrollment Pricing & Discount Snapshot Panel", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L60"}, {"id": "admission_enrollment_ui_gaps_spec_scenario_render_pricing_resolution_details", "label": "Scenario: Render Pricing Resolution Details", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L64"}, {"id": "admission_enrollment_ui_gaps_spec_requirement_student_id_card_preview_actions", "label": "Requirement: Student ID Card Preview & Actions", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L78"}, {"id": "admission_enrollment_ui_gaps_spec_scenario_download_and_preview_id_card", "label": "Scenario: Download and Preview ID Card", "file_type": "document", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L82"}], "edges": [{"source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_admission_enrollment_ui_gaps_spec_md", "target": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L1", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification", "target": "admission_enrollment_ui_gaps_spec_purpose", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L3", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification", "target": "admission_enrollment_ui_gaps_spec_requirements", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L7", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirements", "target": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L9", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions", "target": "admission_enrollment_ui_gaps_spec_scenario_display_enrollment_details_action_controls", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L13", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions", "target": "admission_enrollment_ui_gaps_spec_scenario_drop_active_enrollment_with_mandatory_reason", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L27", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirements", "target": "admission_enrollment_ui_gaps_spec_requirement_batch_enrollment_roster", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L42", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirement_batch_enrollment_roster", "target": "admission_enrollment_ui_gaps_spec_scenario_display_batch_students_tab", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L46", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirements", "target": "admission_enrollment_ui_gaps_spec_requirement_enrollment_pricing_discount_snapshot_panel", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L60", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirement_enrollment_pricing_discount_snapshot_panel", "target": "admission_enrollment_ui_gaps_spec_scenario_render_pricing_resolution_details", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L64", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirements", "target": "admission_enrollment_ui_gaps_spec_requirement_student_id_card_preview_actions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L78", "weight": 1.0}, {"source": "admission_enrollment_ui_gaps_spec_requirement_student_id_card_preview_actions", "target": "admission_enrollment_ui_gaps_spec_scenario_download_and_preview_id_card", "relation": "contains", "confidence": "EXTRACTED", "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md", "source_location": "L82", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_admission_enrollment_ui_gaps_spec_md",
+      "label": "spec.md",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification",
+      "label": "Admission & Enrollment Management UI Gaps Specification",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_purpose",
+      "label": "Purpose",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_requirements",
+      "label": "Requirements",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions",
+      "label": "Requirement: Enrollment Operations Console & Actions",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_scenario_display_enrollment_details_action_controls",
+      "label": "Scenario: Display Enrollment Details & Action Controls",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_scenario_drop_active_enrollment_with_mandatory_reason",
+      "label": "Scenario: Drop Active Enrollment with Mandatory Reason",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_requirement_batch_enrollment_roster",
+      "label": "Requirement: Batch Enrollment Roster",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_scenario_display_batch_students_tab",
+      "label": "Scenario: Display Batch Students Tab",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_requirement_enrollment_pricing_discount_snapshot_panel",
+      "label": "Requirement: Enrollment Pricing & Discount Snapshot Panel",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_scenario_render_pricing_resolution_details",
+      "label": "Scenario: Render Pricing Resolution Details",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L64"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_requirement_student_id_card_preview_actions",
+      "label": "Requirement: Student ID Card Preview & Actions",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L78"
+    },
+    {
+      "id": "admission_enrollment_ui_gaps_spec_scenario_download_and_preview_id_card",
+      "label": "Scenario: Download and Preview ID Card",
+      "file_type": "document",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L82"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_praveenkumar_documents_project_freelance_ims_v2_openspec_specs_admission_enrollment_ui_gaps_spec_md",
+      "target": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification",
+      "target": "admission_enrollment_ui_gaps_spec_purpose",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_admission_enrollment_management_ui_gaps_specification",
+      "target": "admission_enrollment_ui_gaps_spec_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirements",
+      "target": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions",
+      "target": "admission_enrollment_ui_gaps_spec_scenario_display_enrollment_details_action_controls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirement_enrollment_operations_console_actions",
+      "target": "admission_enrollment_ui_gaps_spec_scenario_drop_active_enrollment_with_mandatory_reason",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirements",
+      "target": "admission_enrollment_ui_gaps_spec_requirement_batch_enrollment_roster",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirement_batch_enrollment_roster",
+      "target": "admission_enrollment_ui_gaps_spec_scenario_display_batch_students_tab",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirements",
+      "target": "admission_enrollment_ui_gaps_spec_requirement_enrollment_pricing_discount_snapshot_panel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirement_enrollment_pricing_discount_snapshot_panel",
+      "target": "admission_enrollment_ui_gaps_spec_scenario_render_pricing_resolution_details",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirements",
+      "target": "admission_enrollment_ui_gaps_spec_requirement_student_id_card_preview_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "admission_enrollment_ui_gaps_spec_requirement_student_id_card_preview_actions",
+      "target": "admission_enrollment_ui_gaps_spec_scenario_download_and_preview_id_card",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "openspec/specs/admission-enrollment-ui-gaps/spec.md",
+      "source_location": "L82",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

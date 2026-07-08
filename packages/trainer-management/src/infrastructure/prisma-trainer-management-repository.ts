@@ -381,24 +381,72 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       input.effectiveStartDate,
       input.effectiveEndDate,
     );
-    const row = (await this.prisma.trainerProfile.create({
-      data: {
-        personId: input.personId,
-        branchId: input.branchId,
-        trainerCode: input.trainerCode,
-        trainerType: input.trainerType,
-        specialization: input.specialization,
-        qualificationSummary: input.qualificationSummary,
-        status: input.status,
-        effectiveStartDate: input.effectiveStartDate,
-        effectiveEndDate: input.effectiveEndDate,
-        createdBy: input.createdBy ?? null,
-        updatedBy: input.updatedBy ?? null,
-        deletedBy: input.deletedBy ?? null,
-        deletedAt: input.deletedAt ?? null,
-        isDeleted: false,
-      },
-      include: trainerSelect(),
+    const row = (await this.prisma.$transaction(async (tx) => {
+      const profile = await tx.trainerProfile.create({
+        data: {
+          personId: input.personId,
+          branchId: input.branchId,
+          trainerCode: input.trainerCode,
+          trainerType: input.trainerType,
+          specialization: input.specialization,
+          qualificationSummary: input.qualificationSummary,
+          status: input.status,
+          effectiveStartDate: input.effectiveStartDate,
+          effectiveEndDate: input.effectiveEndDate,
+          createdBy: input.createdBy ?? null,
+          updatedBy: input.updatedBy ?? null,
+          deletedBy: input.deletedBy ?? null,
+          deletedAt: input.deletedAt ?? null,
+          isDeleted: false,
+        },
+        include: trainerSelect(),
+      });
+
+      // Automatically assign TRAINER role if an IAM user exists for this person
+      const user = await tx.user.findUnique({
+        where: { personId: input.personId },
+      });
+
+      if (user) {
+        const role = await tx.role.findFirst({
+          where: { roleCode: 'TRAINER', isDeleted: false },
+        });
+
+        if (role) {
+          const existingUserRole = await tx.userRole.findUnique({
+            where: {
+              userId_roleId: {
+                userId: user.id,
+                roleId: role.id,
+              },
+            },
+          });
+
+          if (!existingUserRole) {
+            await tx.userRole.create({
+              data: {
+                userId: user.id,
+                roleId: role.id,
+                status: 'Active',
+                createdBy: input.createdBy ?? null,
+              },
+            });
+          } else if (existingUserRole.status !== 'Active') {
+            await tx.userRole.update({
+              where: { id: existingUserRole.id },
+              data: {
+                status: 'Active',
+                revokedAt: null,
+                revokedBy: null,
+                reason: null,
+                updatedBy: input.createdBy ?? null,
+              },
+            });
+          }
+        }
+      }
+
+      return profile;
     })) as TrainerProfileRow;
     return mapTrainerProfile(row);
   }
@@ -1361,25 +1409,52 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         branchId: input.branchId,
         isDeleted: false,
         status: 'Active',
+        effectiveStartDate: { lte: input.targetDate },
+        AND: [
+          {
+            OR: [
+              { effectiveEndDate: null },
+              { effectiveEndDate: { gte: input.targetDate } },
+            ],
+          },
+          ...(input.q
+            ? [
+                {
+                  OR: [
+                    {
+                      trainerCode: {
+                        contains: input.q,
+                        mode: 'insensitive' as const,
+                      },
+                    },
+                    {
+                      specialization: {
+                        contains: input.q,
+                        mode: 'insensitive' as const,
+                      },
+                    },
+                    {
+                      person: {
+                        firstName: {
+                          contains: input.q,
+                          mode: 'insensitive' as const,
+                        },
+                      },
+                    },
+                    {
+                      person: {
+                        lastName: {
+                          contains: input.q,
+                          mode: 'insensitive' as const,
+                        },
+                      },
+                    },
+                  ],
+                },
+              ]
+            : []),
+        ],
         ...(input.trainerType ? { trainerType: input.trainerType } : {}),
-        ...(input.q
-          ? {
-              OR: [
-                { trainerCode: { contains: input.q, mode: 'insensitive' } },
-                { specialization: { contains: input.q, mode: 'insensitive' } },
-                {
-                  person: {
-                    firstName: { contains: input.q, mode: 'insensitive' },
-                  },
-                },
-                {
-                  person: {
-                    lastName: { contains: input.q, mode: 'insensitive' },
-                  },
-                },
-              ],
-            }
-          : {}),
       },
       include: {
         person: true,
@@ -1408,6 +1483,17 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
             ],
           },
         },
+      },
+    });
+
+    const personIds = trainers.map((t) => t.personId);
+    const leaves = await this.prisma.leaveRequest.findMany({
+      where: {
+        personId: { in: personIds },
+        status: 'Approved',
+        isDeleted: false,
+        startDate: { lte: input.targetDate },
+        endDate: { gte: input.targetDate },
       },
     });
 
@@ -1445,6 +1531,39 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
               input.endTime,
             )),
       );
+
+      const trainerLeaves = leaves.filter((l) => l.personId === trainer.personId);
+      const isOnLeave = trainerLeaves.some((leave) => {
+        if (leave.isFullDay) {
+          return true;
+        }
+        if (input.startTime && input.endTime && leave.startTime && leave.endTime) {
+          return overlaps(
+            leave.startTime,
+            leave.endTime,
+            input.startTime,
+            input.endTime,
+          );
+        }
+        return false;
+      });
+
+      const reasonCodes: Array<
+        | 'TRAINER_NOT_FOUND'
+        | 'PROFILE_INACTIVE'
+        | 'PROFILE_OUTSIDE_EFFECTIVE_PERIOD'
+        | 'COURSE_NOT_AUTHORIZED'
+        | 'TRAINER_NOT_AVAILABLE'
+        | 'BRANCH_SCOPE_DENIED'
+      > = [];
+
+      if (!authorization) {
+        reasonCodes.push('COURSE_NOT_AUTHORIZED');
+      }
+      if (!availability || isOnLeave) {
+        reasonCodes.push('TRAINER_NOT_AVAILABLE');
+      }
+
       results.push({
         trainerId: trainer.id,
         trainerCode: trainer.trainerCode,
@@ -1455,15 +1574,8 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         trainerType: trainer.trainerType,
         branchName: trainer.branch?.branchName,
         status: trainer.status,
-        eligible: Boolean(authorization && availability),
-        reasonCodes:
-          authorization && availability
-            ? []
-            : [
-                !authorization
-                  ? 'COURSE_NOT_AUTHORIZED'
-                  : 'TRAINER_NOT_AVAILABLE',
-              ],
+        eligible: reasonCodes.length === 0,
+        reasonCodes,
         authorizationId: authorization?.id,
         availabilityId: availability?.id,
         schedulingConflictCheckRequired: Boolean(
@@ -1471,6 +1583,18 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         ),
       });
     }
+
+    // Sort based on eligibility (eligible first)
+    results.sort((a, b) => {
+      if (a.eligible && !b.eligible) {
+        return -1;
+      }
+      if (!a.eligible && b.eligible) {
+        return 1;
+      }
+      // If eligibility is same, sort alphabetically by displayName.en
+      return a.displayName.en.localeCompare(b.displayName.en);
+    });
 
     const slice = results.slice(
       (query.page - 1) * query.pageSize,

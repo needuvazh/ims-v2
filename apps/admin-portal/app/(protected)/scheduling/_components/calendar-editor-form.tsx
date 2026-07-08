@@ -113,6 +113,13 @@ export function CalendarEditorForm({
   instituteOptions: InstituteOption[];
 }) {
   const router = useRouter();
+  const todayLocalString = useMemo(() => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }, []);
   const [state, setState] = useState<CalendarFormState>(() =>
     buildState(initialCalendar),
   );
@@ -151,7 +158,10 @@ export function CalendarEditorForm({
       instituteId: state.instituteId,
       code: state.code,
       name: state.name,
-      nameLocalized: { en: state.nameLocalizedEn, ar: state.nameLocalizedAr },
+      nameLocalized: {
+        en: state.nameLocalizedEn || state.name,
+        ar: state.nameLocalizedAr || state.name,
+      },
       year: Number(state.year),
       countryCode: state.countryCode,
       timezone: 'Asia/Muscat',
@@ -257,22 +267,7 @@ export function CalendarEditorForm({
                 placeholder="e.g. Academic Year 2026"
                 className="sm:col-span-2"
               />
-              <Input
-                label="English label"
-                value={state.nameLocalizedEn}
-                onChange={(e) => updateField('nameLocalizedEn', e.target.value)}
-                required
-                placeholder="e.g. Academic Year 2026"
-              />
-              <Input
-                label="Arabic label"
-                value={state.nameLocalizedAr}
-                onChange={(e) => updateField('nameLocalizedAr', e.target.value)}
-                required
-                placeholder="التقويم الأكاديمي"
-                className="text-right"
-                dir="rtl"
-              />
+
               <Input
                 label="Effective Year"
                 type="number"
@@ -408,6 +403,8 @@ export function CalendarEditorForm({
                   updateField('effectiveStartDate', e.target.value)
                 }
                 required
+                min={mode === 'create' ? todayLocalString : undefined}
+                disabled={mode === 'edit'}
               />
               <Input
                 label="Effective End (Optional)"
@@ -421,24 +418,10 @@ export function CalendarEditorForm({
           </Card>
 
           <Card className="rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
-            <div className="space-y-2">
-              <h3 className="font-semibold text-slate-800">Integration note</h3>
-              <p className="text-sm text-slate-600">
-                This baseline will be used for all branches within the
-                institute.
-              </p>
-              <p className="text-sm text-slate-600">
-                Changes here may affect existing schedules if they fall within
-                this effective range.
-              </p>
-              <p className="text-sm font-semibold text-slate-700">
-                Timezone: Asia/Muscat (Fixed)
-              </p>
-            </div>
-            <div className="mt-5">
+            <div>
               <Button type="submit" loading={isSaving} className="w-full">
                 <Save className="mr-2 h-4 w-4" />{' '}
-                {mode === 'create' ? 'Create baseline' : 'Save changes'}
+                {mode === 'create' ? 'Create' : 'Save changes'}
               </Button>
             </div>
           </Card>
