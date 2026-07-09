@@ -13,27 +13,24 @@ describe('Lead to Admission Handoff Integration', () => {
   let counselorId: string;
 
   beforeAll(async () => {
-    // 1. Fetch or create a Branch
-    let branch = await prisma.branch.findFirst({ where: { status: 'Active' } });
-    if (!branch) {
-      const instituteId = createUuid(randomUUID());
-      await prisma.institute.create({
-        data: {
-          id: instituteId,
-          instituteCode: 'INST-HANDOFF',
-          instituteName: 'Handoff Institute',
-        },
-      });
-      branch = await prisma.branch.create({
-        data: {
-          id: createUuid(randomUUID()),
-          instituteId,
-          branchCode: 'BR-HANDOFF',
-          branchName: 'Handoff Branch',
-          status: 'Active',
-        },
-      });
-    }
+    // Always create a unique branch to isolate document requirement configuration
+    const instituteId = createUuid(randomUUID());
+    await prisma.institute.create({
+      data: {
+        id: instituteId,
+        instituteCode: `INST-${Math.floor(Math.random() * 1000000)}`,
+        instituteName: 'Handoff Institute',
+      },
+    });
+    const branch = await prisma.branch.create({
+      data: {
+        id: createUuid(randomUUID()),
+        instituteId,
+        branchCode: `BR-${Math.floor(Math.random() * 1000000)}`,
+        branchName: 'Handoff Branch',
+        status: 'Active',
+      },
+    });
     branchId = branch.id;
 
     // 2. Fetch or create a Course
@@ -225,6 +222,8 @@ describe('Lead to Admission Handoff Integration', () => {
         mobile: `+96890${suffix}`,
         email: `dup.${suffix}@example.om`,
         dateOfBirth: birthDate,
+        nationalId: `NID-${suffix}`,
+        nationality: 'Omani',
       },
     });
 
@@ -235,6 +234,7 @@ describe('Lead to Admission Handoff Integration', () => {
         personId: person.id,
         studentNumber: `STU-${suffix}`,
         status: 'Active',
+        branchId,
       },
     });
 
@@ -265,6 +265,8 @@ describe('Lead to Admission Handoff Integration', () => {
         interestedCourseId: courseId,
         counselorId,
         stage: 'Qualified',
+        nationalId: `NID-${suffix}`,
+        nationality: 'Omani',
       },
     });
 

@@ -136,6 +136,12 @@ export default async function Module04ReportsIndexPage() {
       icon: School,
     },
     {
+      href: '/dashboards/batches',
+      title: 'Batches Dashboard',
+      desc: 'Operational KPI analytics, fill rates, and timelines.',
+      icon: LayoutDashboard,
+    },
+    {
       href: '/dashboards/admissions/reports/id-cards',
       title: 'ID Card Report',
       desc: 'Issuance, pending, and reissue visibility.',

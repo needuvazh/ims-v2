@@ -1487,15 +1487,33 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
     });
 
     const personIds = trainers.map((t) => t.personId);
-    const leaves = await this.prisma.leaveRequest.findMany({
-      where: {
-        personId: { in: personIds },
-        status: 'Approved',
-        isDeleted: false,
-        startDate: { lte: input.targetDate },
-        endDate: { gte: input.targetDate },
-      },
-    });
+    const trainerIds = trainers.map((t) => t.id);
+
+    const [leaves, sessions] = await Promise.all([
+      this.prisma.leaveRequest.findMany({
+        where: {
+          personId: { in: personIds },
+          status: 'Approved',
+          isDeleted: false,
+          startDate: { lte: input.targetDate },
+          endDate: { gte: input.targetDate },
+        },
+      }),
+      this.prisma.session.findMany({
+        where: {
+          trainerId: { in: trainerIds },
+          sessionDate: input.targetDate,
+          isDeleted: false,
+          status: { not: 'Cancelled' },
+          ...(input.startTime && input.endTime
+            ? {
+                startTime: { lt: input.endTime },
+                endTime: { gt: input.startTime },
+              }
+            : {}),
+        },
+      }),
+    ]);
 
     const dayOfWeek = [
       'Sunday',
@@ -1548,6 +1566,12 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         return false;
       });
 
+      const hasOverlappingSession = Boolean(
+        input.startTime &&
+          input.endTime &&
+          sessions.some((s) => s.trainerId === trainer.id),
+      );
+
       const reasonCodes: Array<
         | 'TRAINER_NOT_FOUND'
         | 'PROFILE_INACTIVE'
@@ -1560,7 +1584,7 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       if (!authorization) {
         reasonCodes.push('COURSE_NOT_AUTHORIZED');
       }
-      if (!availability || isOnLeave) {
+      if (!availability || isOnLeave || hasOverlappingSession) {
         reasonCodes.push('TRAINER_NOT_AVAILABLE');
       }
 

@@ -39,6 +39,8 @@ export class LeadConversionOrchestrator {
             leadId: lead.id,
             courseId: lead.interestedCourseId,
             dateOfBirth: lead.person?.dateOfBirth,
+            nationalId: lead.nationalId,
+            nationality: lead.nationality,
           },
           actorId || null,
           tx,

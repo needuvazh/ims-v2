@@ -16,20 +16,16 @@ test.describe('Batch Creation Wizard E2E', () => {
     await page.goto('/batches/new');
 
     // Step 1: Details
-    await page.fill('input[placeholder="e.g. B-OSHA-01"]', 'B-QA-E2E-01');
-    await page.selectOption('select:has-text("Choose Course")', {
+    // Select course and branch
+    await page.selectOption('select:has-text("Select Course")', {
       label: 'OSHA Safety Certification (OSHA-101)',
     });
-    await page.selectOption('select:has-text("Choose Branch")', {
+    await page.selectOption('select:has-text("Select Branch")', {
       label: 'ASTI Muscat Branch',
     });
     await page.fill(
-      'input[placeholder="English Name"]',
+      'input[placeholder="e.g. OSHA Safety - Batch 01"]',
       'QA E2E Batch English',
-    );
-    await page.fill(
-      'input[placeholder="الاسم العربي"]',
-      'دفعة اختبار نهاية لنهاية',
     );
 
     // Input dates (represented local, which browser maps to UTC+4)
@@ -37,10 +33,10 @@ test.describe('Batch Creation Wizard E2E', () => {
     await page.fill('input[type="date"] >> nth=1', '2026-11-15');
 
     // Go to step 2
-    await page.click('button:has-text("Next Step")');
+    await page.click('button:has-text("Next: Capacity & Controls")');
 
-    // Step 2: Capacity & Waitlist
-    await expect(page.locator('text=Capacity & Waitlist')).toBeVisible();
+    // Step 2: Capacity & Student Controls
+    await expect(page.locator('text=Capacity & Student Controls')).toBeVisible();
     await page.fill('input[type="number"]', '15');
 
     // Toggle checkboxes

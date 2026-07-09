@@ -48,7 +48,21 @@ type ExistingTrainer = {
   id: string;
   trainerCode: string;
   status: string;
+  branchName?: string;
+  effectiveStartDate?: Date | string | null;
+  effectiveEndDate?: Date | string | null;
 };
+
+function formatDate(value: Date | string | null | undefined): string {
+  if (!value) return 'N/A';
+  const d = typeof value === 'string' ? new Date(value) : value;
+  if (Number.isNaN(d.getTime())) return 'N/A';
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
 
 type SearchResult = SelectedUser;
 
@@ -287,6 +301,36 @@ export function TrainerOnboardingForm({
                 >
                   <Copy className="h-3.5 w-3.5" />
                 </button>
+              </div>
+              {existingTrainer.branchName && (
+                <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-amber-200">
+                  <span className="text-xs font-medium text-amber-700 uppercase tracking-wide">
+                    Branch
+                  </span>
+                  <span className="text-sm font-semibold text-amber-900">
+                    {existingTrainer.branchName}
+                  </span>
+                </div>
+              )}
+              {existingTrainer.effectiveStartDate && (
+                <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-amber-200">
+                  <span className="text-xs font-medium text-amber-700 uppercase tracking-wide">
+                    Start Date
+                  </span>
+                  <span className="text-sm font-semibold text-amber-900">
+                    {formatDate(existingTrainer.effectiveStartDate)}
+                  </span>
+                </div>
+              )}
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-amber-200">
+                <span className="text-xs font-medium text-amber-700 uppercase tracking-wide">
+                  End Date
+                </span>
+                <span className="text-sm font-semibold text-amber-900">
+                  {existingTrainer.effectiveEndDate
+                    ? formatDate(existingTrainer.effectiveEndDate)
+                    : 'Indefinite'}
+                </span>
               </div>
             </div>
 

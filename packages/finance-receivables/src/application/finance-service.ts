@@ -213,6 +213,56 @@ export class FinanceService {
         throw new Error('ERR_FIN_INVOICE_NOT_FOUND');
       }
 
+      // Check if the invoice is linked to an enrollment and batch capacity is exceeded
+      if (invoice.enrollmentId) {
+        const enrollment = await client.enrollment.findUnique({
+          where: { id: invoice.enrollmentId },
+        });
+        if (enrollment && !enrollment.isDeleted) {
+          const batch = await client.batch.findUnique({
+            where: { id: enrollment.batchId },
+          });
+          if (batch && !batch.isDeleted) {
+            // Check if student holds a waitlist promotion reservation
+            const promotedWaitlistEntry = await client.waitingList.findFirst({
+              where: {
+                batchId: enrollment.batchId,
+                studentProfileId: enrollment.studentProfileId,
+                status: 'Promoted',
+                isDeleted: false,
+              },
+            });
+            const hasReservation = !!promotedWaitlistEntry;
+
+            const activeCount = await client.enrollment.count({
+              where: {
+                batchId: enrollment.batchId,
+                enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+                isDeleted: false,
+              },
+            });
+
+            const maxCapacity = batch.capacity || 0;
+            if (!hasReservation) {
+              const promotedCount = await client.waitingList.count({
+                where: {
+                  batchId: enrollment.batchId,
+                  status: 'Promoted',
+                  isDeleted: false,
+                },
+              });
+              const totalReserved = activeCount + promotedCount;
+
+              if (totalReserved >= maxCapacity) {
+                if (!batch.waitingListEnabled) {
+                  throw new Error('ERR_ENR_BATCH_FULL');
+                }
+              }
+            }
+          }
+        }
+      }
+
       const paymentNumber = await this.repo.getNextPaymentNumber(
         input.branchId,
         client,

@@ -2,6 +2,7 @@ import { prisma } from '@ims/database';
 import { assertPermission } from '@/lib/auth-guard';
 import { BatchesClientList } from './_components/batches-client-list';
 import { AdminListPageLayout } from '@ims/shared-ui';
+import { getDateBoundaries, getGroupWhereClause } from './_utils/date-partition';
 
 export const metadata = { title: 'Batches - Admin Portal | ASTI IMS' };
 
@@ -14,6 +15,12 @@ export default async function BatchesPage(props: {
     page?: string;
     sortBy?: string;
     sortOrder?: string;
+    group?: string;
+    showCompleted?: string;
+    showCancelled?: string;
+    showDraft?: string;
+    dateFrom?: string;
+    dateTo?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -79,29 +86,51 @@ export default async function BatchesPage(props: {
   const limit = 10;
   const skip = (page - 1) * limit;
 
-  // Build the Prisma query filters
-  const where: any = {
+  // New Grouping Parameters
+  const group = searchParams.group || 'active';
+  const showCompleted = searchParams.showCompleted === 'true';
+  const showCancelled = searchParams.showCancelled === 'true';
+  const showDraft = searchParams.showDraft === 'true';
+  const dateFrom = searchParams.dateFrom || '';
+  const dateTo = searchParams.dateTo || '';
+
+  // Get date boundaries
+  const { today, threeDaysAgo, threeDaysFromNow } = getDateBoundaries();
+
+  // Build the Base Prisma query filters (Search, Course, Branch)
+  const baseWhere: any = {
     isDeleted: false,
   };
 
   if (finalBranchId) {
-    where.branchId = finalBranchId;
+    baseWhere.branchId = finalBranchId;
   }
   if (searchParams.courseId) {
-    where.courseId = searchParams.courseId;
-  }
-  if (searchParams.status) {
-    where.status = searchParams.status;
+    baseWhere.courseId = searchParams.courseId;
   }
 
   const q = searchParams.q || '';
   if (q) {
-    where.OR = [
+    baseWhere.OR = [
       { batchCode: { contains: q, mode: 'insensitive' } },
       { batchNameEnglish: { contains: q, mode: 'insensitive' } },
       { batchNameArabic: { contains: q, mode: 'insensitive' } },
     ];
   }
+
+  // Construct the active tab group filters
+  const groupWhere = getGroupWhereClause(group, today, threeDaysAgo, threeDaysFromNow, {
+    showCompleted,
+    showCancelled,
+    showDraft,
+    dateFrom,
+    dateTo,
+  });
+
+  const where = {
+    ...baseWhere,
+    ...groupWhere,
+  };
 
   let orderBy: any = { startDate: sortOrder };
   if (sortBy === 'batchCode') {
@@ -122,7 +151,7 @@ export default async function BatchesPage(props: {
     orderBy = { status: sortOrder };
   }
 
-  // Fetch batches total and list
+  // Fetch batches total and list for the selected group/tab
   const total = await prisma.batch.count({ where });
   const batches = await prisma.batch.findMany({
     where,
@@ -154,29 +183,42 @@ export default async function BatchesPage(props: {
     },
   }));
 
-  // Calculate KPIs (respecting active branch scoped filters)
-  const kpiWhere: any = { isDeleted: false };
-  if (finalBranchId) {
-    kpiWhere.branchId = finalBranchId;
-  }
+  // Fetch Counts for each group tab trigger
+  const activeStatuses = ['OpenForEnrollment', 'InProgress'];
+  if (showCompleted) activeStatuses.push('Completed');
+  if (showCancelled) activeStatuses.push('Cancelled');
+  if (showDraft) activeStatuses.push('Draft');
 
-  const totalCount = await prisma.batch.count({ where: kpiWhere });
-  const openCount = await prisma.batch.count({
-    where: { ...kpiWhere, status: 'OpenForEnrollment' },
-  });
-  const inProgressCount = await prisma.batch.count({
-    where: { ...kpiWhere, status: 'InProgress' },
-  });
-  const cancelledCount = await prisma.batch.count({
-    where: { ...kpiWhere, status: 'Cancelled' },
-  });
-
-  const kpis = {
-    total: totalCount,
-    open: openCount,
-    inProgress: inProgressCount,
-    cancelled: cancelledCount,
-  };
+  const [activeCount, pastCount, futureCount, allCount] = await Promise.all([
+    prisma.batch.count({
+      where: {
+        ...baseWhere,
+        startDate: { lte: threeDaysFromNow },
+        endDate: { gte: threeDaysAgo },
+        status: { in: activeStatuses },
+      },
+    }),
+    prisma.batch.count({
+      where: {
+        ...baseWhere,
+        endDate: { lt: threeDaysAgo },
+        ...(!showCancelled && { status: { not: 'Cancelled' } }),
+      },
+    }),
+    prisma.batch.count({
+      where: {
+        ...baseWhere,
+        startDate: { gt: threeDaysFromNow },
+        ...(!showCancelled && { status: { not: 'Cancelled' } }),
+      },
+    }),
+    prisma.batch.count({
+      where: {
+        ...baseWhere,
+        ...(!showCancelled && { status: { not: 'Cancelled' } }),
+      },
+    }),
+  ]);
 
   const canCreate = session.permissions.includes('schedule.manage');
 
@@ -187,7 +229,6 @@ export default async function BatchesPage(props: {
         courses={courses}
         branches={branches}
         total={total}
-        kpis={kpis}
         currentPage={page}
         canCreate={canCreate}
         defaultSearch={searchParams.q || ''}
@@ -195,10 +236,22 @@ export default async function BatchesPage(props: {
         defaultBranchId={
           finalBranchId && finalBranchId !== 'none' ? finalBranchId : ''
         }
-        defaultStatus={searchParams.status || ''}
         defaultSortBy={sortBy}
         defaultSortOrder={sortOrder}
+        group={group}
+        showCompleted={showCompleted}
+        showCancelled={showCancelled}
+        showDraft={showDraft}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        tabCounts={{
+          active: activeCount,
+          past: pastCount,
+          future: futureCount,
+          all: allCount,
+        }}
       />
     </AdminListPageLayout>
   );
 }
+

@@ -91,3 +91,12 @@ export class BatchNotFull extends DomainError {
     super(message, 'ERR_CRS_BATCH_NOT_FULL');
   }
 }
+
+export class TrainerBranchMismatch extends DomainError {
+  constructor(
+    message = 'Trainer registered branch does not match batch branch.',
+  ) {
+    super(message, 'ERR_CRS_TRAINER_BRANCH_MISMATCH');
+  }
+}
+

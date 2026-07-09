@@ -110,6 +110,14 @@ interface InvoiceDetail {
   payments: PaymentReceipt[];
 }
 
+interface BatchOption {
+  id: string;
+  batchCode: string;
+  capacity: number;
+  currentEnrollmentCount: number;
+  waitingListEnabled: boolean;
+}
+
 interface EnrollmentDetailsClientProps {
   detail: {
     enrollment: EnrollmentDetail;
@@ -120,6 +128,7 @@ interface EnrollmentDetailsClientProps {
   invoices: InvoiceDetail[];
   branches: Array<{ id: string; name: string }>;
   courses: Array<{ id: string; name: string }>;
+  batches: BatchOption[];
 }
 
 export function EnrollmentDetailsClient({
@@ -129,6 +138,7 @@ export function EnrollmentDetailsClient({
   invoices: initialInvoices,
   branches,
   courses,
+  batches,
 }: EnrollmentDetailsClientProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -142,6 +152,10 @@ export function EnrollmentDetailsClient({
   const [withdrawalDate, setWithdrawalDate] = useState(new Date().toISOString().split('T')[0]);
   const [dropReasonCode, setDropReasonCode] = useState('PERSONAL');
   const [dropRemarks, setDropRemarks] = useState('');
+
+  // Change Batch Modal State
+  const [isChangeBatchOpen, setIsChangeBatchOpen] = useState(false);
+  const [selectedBatchId, setSelectedBatchId] = useState(enrollment.batchId);
 
   // Payment Record Modal state
   const [isPayOpen, setIsPayOpen] = useState(false);
@@ -318,6 +332,36 @@ export function EnrollmentDetailsClient({
         router.refresh();
       } catch (err: any) {
         toast.error(err.message || 'Failed to drop enrollment.');
+      }
+    });
+  };
+
+  const handleChangeBatchSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedBatchId || selectedBatchId === enrollment.batchId) {
+      toast.error('Please select a different batch.');
+      return;
+    }
+    startTransition(async () => {
+      try {
+        const response = await fetch(`/api/v1/enrollments/${enrollment.id}/change-batch`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ batchId: selectedBatchId }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.messageEnglish || 'Failed to change batch.');
+        }
+
+        toast.success('Batch changed successfully.');
+        setIsChangeBatchOpen(false);
+        router.refresh();
+      } catch (err: any) {
+        toast.error(err.message || 'Failed to change batch.');
       }
     });
   };

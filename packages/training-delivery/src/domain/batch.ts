@@ -156,6 +156,8 @@ export class BatchAggregate {
       primaryTrainerExists: boolean;
       allSessionsPast: boolean;
       currentDate: Date;
+      sessionsCount?: number;
+      trainersCount?: number;
     },
   ) {
     const current = this.state.status;
@@ -188,6 +190,16 @@ export class BatchAggregate {
       if (context.currentDate < new Date(this.state.startDate)) {
         throw new InvalidStateTransition(
           'Cannot start batch before its start date.',
+        );
+      }
+      if (context.sessionsCount === undefined || context.sessionsCount === 0) {
+        throw new InvalidStateTransition(
+          'The sessions should be configured before starting the batch.',
+        );
+      }
+      if (context.trainersCount === undefined || context.trainersCount === 0) {
+        throw new InvalidStateTransition(
+          'The faculty should be configured before starting the batch.',
         );
       }
     } else if (targetStatus === BATCH_STATUSES.COMPLETED) {

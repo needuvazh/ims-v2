@@ -1,20 +1,42 @@
-import { z } from 'zod';
+import { PrismaClient } from '@prisma/client';
+import { PrismaTrainerManagementRepository } from './packages/trainer-management/src/infrastructure/prisma-trainer-management-repository';
 
-const createInstituteCommandSchema = z.object({
-  instituteCode: z.string().trim().min(2).max(50),
-  instituteName: z.string().trim().min(2).max(255),
-  registrationNumber: z.string().trim().nullable().optional(),
-  taxNumber: z.string().trim().nullable().optional(),
-});
+const prisma = new PrismaClient();
+const repository = new PrismaTrainerManagementRepository(prisma);
 
-const updateInstituteCommandSchema = createInstituteCommandSchema
-  .omit({ instituteCode: true })
-  .partial();
+async function main() {
+  const input = {
+    courseId: '2f2f0a49-a64e-4cd9-96e1-92ec50193010',
+    branchId: '72f3f2ba-c38b-43f6-a0e8-c5104672d56d',
+    targetDate: new Date('2026-07-08'),
+    startTime: '10:43',
+    endTime: '12:44',
+  };
 
-console.log('empty:', updateInstituteCommandSchema.parse({ taxNumber: '' }));
-console.log('val:', updateInstituteCommandSchema.parse({ taxNumber: '123' }));
-console.log('null:', updateInstituteCommandSchema.parse({ taxNumber: null }));
-console.log(
-  'undefined:',
-  updateInstituteCommandSchema.parse({ taxNumber: undefined }),
-);
+  console.log('=== Running findEligibleTrainers with targetDate: 2026-07-08 ===');
+  console.log('Input:', input);
+
+  const result = await repository.findEligibleTrainers(input, { page: 1, pageSize: 20 });
+  console.log('\n=== RESULTS ===');
+  console.log(JSON.stringify(result, null, 2));
+
+  // Let's also print the date representation in JS
+  const dateObj = new Date('2026-07-08');
+  console.log('\n=== Date Object properties ===');
+  console.log('dateObj.toISOString():', dateObj.toISOString());
+  console.log('dateObj.getDay() (local):', dateObj.getDay());
+  console.log('dateObj.getUTCDay() (UTC):', dateObj.getUTCDay());
+  console.log('Day string resolved by repository:', [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ][dateObj.getDay()]);
+}
+
+main()
+  .catch(console.error)
+  .finally(() => prisma.$disconnect());

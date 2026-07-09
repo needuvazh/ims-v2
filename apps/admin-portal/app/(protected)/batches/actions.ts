@@ -93,6 +93,26 @@ export async function assignTrainerAction(batchId: string, data: any) {
   }
 }
 
+export async function unassignTrainerAction(batchId: string, assignmentId: string) {
+  try {
+    await assertPermission('batch.delivery.assign');
+    const session = await getSession();
+
+    const { batchService } = await import('../../lib/runtime');
+    await batchService.removeTrainer(
+      batchId,
+      assignmentId,
+      session.userId,
+    );
+
+    revalidatePath(`/batches/${batchId}`);
+    return { success: true as const };
+  } catch (error: any) {
+    return buildBatchActionFailure(error);
+  }
+}
+
+
 export async function addToWaitlistAction(batchId: string, data: any) {
   try {
     await assertPermission('waitinglist.manage');
@@ -298,6 +318,70 @@ export async function createSessionAction(batchId: string, data: any) {
   }
 }
 
+export async function updateSessionAction(
+  batchId: string,
+  sessionId: string,
+  data: any,
+) {
+  try {
+    await assertPermission('schedule.manage');
+    const sessionContext = await getSession();
+
+    const batch = await prisma.batch.findUnique({
+      where: { id: batchId },
+      include: { course: true },
+    });
+    if (!batch) throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+    const branch = await prisma.branch.findUnique({
+      where: { id: batch.branchId },
+      select: { instituteId: true },
+    });
+    if (!branch) throw new Error('ERR_ORG_BRANCH_NOT_FOUND');
+
+    const { schedulingCalendarService } = await import('../../lib/runtime');
+    const validation = await schedulingCalendarService.validateSession({
+      branchId: batch.branchId,
+      instituteId: branch.instituteId,
+      scheduledDate: new Date(data.sessionDate),
+      startTime: data.startTime,
+      endTime: data.endTime,
+      trainerId: data.trainerId || null,
+      classroomId: data.classroomId || null,
+      batchId: batch.id,
+      sessionId: sessionId,
+    });
+
+    if (!validation.isValid) {
+      throw new Error(
+        `Scheduling conflict: ${validation.conflicts[0].message}`,
+      );
+    }
+
+    const result = await prisma.session.update({
+      where: { id: sessionId },
+      data: {
+        sessionNumber: parseInt(data.sessionNumber, 10),
+        titleEnglish: data.titleEnglish,
+        titleArabic: data.titleArabic,
+        sessionDate: new Date(data.sessionDate),
+        startTime: data.startTime,
+        endTime: data.endTime,
+        classroomId: data.classroomId || null,
+        trainerId: data.trainerId || null,
+        scheduleStatus: 'Published',
+        conflictType: null,
+        isConflictIgnored: false,
+        overrideReason: null,
+      },
+    });
+
+    revalidatePath(`/batches/${batchId}`);
+    return { success: true as const, data: result };
+  } catch (error: any) {
+    return buildBatchActionFailure(error);
+  }
+}
+
 function buildBatchActionFailure(error: any) {
   if (error instanceof z.ZodError) {
     return {
@@ -354,6 +438,16 @@ function buildBatchActionFailure(error: any) {
       success: false as const,
       error:
         'A batch can only be created/updated for active published courses.',
+    };
+  }
+  if (
+    message.includes('ERR_CRS_TRAINER_BRANCH_MISMATCH') ||
+    error?.code === 'ERR_CRS_TRAINER_BRANCH_MISMATCH' ||
+    message.includes('Trainer registered branch does not match batch branch.')
+  ) {
+    return {
+      success: false as const,
+      error: 'Trainer registered branch does not match batch branch.',
     };
   }
 

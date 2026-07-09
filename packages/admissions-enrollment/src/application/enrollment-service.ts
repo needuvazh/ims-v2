@@ -126,6 +126,54 @@ export class EnrollmentService {
         );
       }
 
+      // Verify batch capacity check in Training Delivery
+      const batch = await client.batch.findUnique({
+        where: { id: data.batchId },
+      });
+      if (!batch || batch.isDeleted) {
+        throw new Error('ERR_BATCH_NOT_FOUND');
+      }
+
+      // Check if student holds a waitlist promotion reservation
+      let hasReservation = false;
+      if (studentProfileId) {
+        const promotedWaitlistEntry = await client.waitingList.findFirst({
+          where: {
+            batchId: data.batchId,
+            studentProfileId: studentProfileId,
+            status: 'Promoted',
+            isDeleted: false,
+          },
+        });
+        hasReservation = !!promotedWaitlistEntry;
+      }
+
+      const activeCount = await client.enrollment.count({
+        where: {
+          batchId: data.batchId,
+          enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+          isDeleted: false,
+        },
+      });
+
+      const maxCapacity = batch.capacity || 0;
+      if (!hasReservation) {
+        const promotedCount = await client.waitingList.count({
+          where: {
+            batchId: data.batchId,
+            status: 'Promoted',
+            isDeleted: false,
+          },
+        });
+        const totalReserved = activeCount + promotedCount;
+
+        if (totalReserved >= maxCapacity) {
+          if (!batch.waitingListEnabled) {
+            throw new Error('ERR_ENR_BATCH_FULL');
+          }
+        }
+      }
+
       // Resolve course pricing & snapshot it
       const pricing = await this.pricingService.resolveCoursePricing(
         {
@@ -1269,6 +1317,197 @@ export class EnrollmentService {
       : this.prisma.$transaction(run, {
           isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
         });
+  }
+
+  async changeEnrollmentBatch(
+    enrollmentId: string,
+    newBatchId: string,
+    actorId: string,
+    tx?: Prisma.TransactionClient,
+  ) {
+    const run = async (client: Prisma.TransactionClient) => {
+      const enrollment = await client.enrollment.findUnique({
+        where: { id: enrollmentId },
+        include: { invoices: true },
+      });
+
+      if (!enrollment || enrollment.isDeleted) {
+        throw new Error('ERR_ENROLLMENT_NOT_FOUND');
+      }
+
+      if (enrollment.batchId === newBatchId) {
+        return enrollment; // No change needed
+      }
+
+      // Check if already paid
+      const hasPayments = enrollment.invoices.some(inv => Number(inv.paidAmount) > 0);
+      const walkInPayment = await client.walkInPayment.findFirst({
+        where: { enrollmentId: enrollment.id, isDeleted: false },
+      });
+      const hasWalkInPayment = walkInPayment && Number(walkInPayment.amount) > 0;
+
+      if (hasPayments || hasWalkInPayment) {
+        throw new Error('ERR_ENR_BATCH_CHANGE_BLOCKED_PAID');
+      }
+
+      // Fetch new batch
+      const newBatch = await client.batch.findUnique({
+        where: { id: newBatchId },
+      });
+      if (!newBatch || newBatch.isDeleted) {
+        throw new Error('ERR_BATCH_NOT_FOUND');
+      }
+
+      if (newBatch.courseId !== enrollment.courseId) {
+        throw new Error('ERR_ENR_BATCH_COURSE_MISMATCH');
+      }
+
+      const isStatusActiveOrConfirmedOrApproved = ['Approved', 'Confirmed', 'Active'].includes(enrollment.enrollmentStatus);
+
+      if (isStatusActiveOrConfirmedOrApproved) {
+        // Validate capacity on new batch
+        const activeCount = await client.enrollment.count({
+          where: {
+            batchId: newBatchId,
+            enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+            isDeleted: false,
+          },
+        });
+
+        const promotedCount = await client.waitingList.count({
+          where: {
+            batchId: newBatchId,
+            status: 'Promoted',
+            isDeleted: false,
+          },
+        });
+
+        const totalReserved = activeCount + promotedCount;
+        const maxCapacity = newBatch.capacity || 0;
+
+        if (totalReserved >= maxCapacity) {
+          if (newBatch.waitingListEnabled) {
+            // Put student on waitlist of the new batch and change enrollment status back to Submitted
+            await this.batchService.enqueueWaitlist(
+              {
+                batchId: newBatchId,
+                studentProfileId: enrollment.studentProfileId,
+                leadId: null,
+                enrollmentId,
+                actorId,
+              },
+              client,
+            );
+
+            // Publish StudentAddedToWaitingList
+            await client.outboxEvent.create({
+              data: {
+                eventType: 'StudentAddedToWaitingList',
+                aggregateType: 'Enrollment',
+                aggregateId: enrollmentId,
+                payload: {
+                  enrollmentId,
+                  studentProfileId: enrollment.studentProfileId,
+                  batchId: newBatchId,
+                },
+                availableAt: new Date(),
+              },
+            });
+
+            // Update enrollment status to Submitted (since they are waitlisted)
+            await client.enrollment.update({
+              where: { id: enrollmentId },
+              data: {
+                batchId: newBatchId,
+                enrollmentStatus: 'Submitted',
+                updatedBy: actorId,
+              },
+            });
+
+            // Decrement old batch count since we moved away from it
+            const oldBatchActiveCount = await client.enrollment.count({
+              where: {
+                batchId: enrollment.batchId,
+                enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+                id: { not: enrollmentId },
+                isDeleted: false,
+              },
+            });
+            await client.batch.update({
+              where: { id: enrollment.batchId },
+              data: { currentEnrollmentCount: oldBatchActiveCount },
+            });
+
+            // Audit log
+            await client.auditLog.create({
+              data: {
+                action: 'EnrollmentBatchChanged',
+                entityType: 'Enrollment',
+                entityId: enrollmentId,
+                performedBy: actorId,
+                branchId: enrollment.branchId,
+                performedAt: new Date(),
+                module: 'AdmissionsEnrollment',
+                oldValue: { batchId: enrollment.batchId, status: enrollment.enrollmentStatus },
+                newValue: { batchId: newBatchId, status: 'Submitted', waitlisted: true },
+              },
+            });
+
+            return;
+          } else {
+            throw new Error('ERR_ENR_BATCH_FULL');
+          }
+        }
+
+        // If not full, update new batch count
+        await client.batch.update({
+          where: { id: newBatchId },
+          data: { currentEnrollmentCount: activeCount + 1 },
+        });
+
+        // Decrement old batch count
+        const oldBatchActiveCount = await client.enrollment.count({
+          where: {
+            batchId: enrollment.batchId,
+            enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+            id: { not: enrollmentId },
+            isDeleted: false,
+          },
+        });
+        await client.batch.update({
+          where: { id: enrollment.batchId },
+          data: { currentEnrollmentCount: oldBatchActiveCount },
+        });
+      }
+
+      // Update enrollment's batch
+      const updatedEnrollment = await client.enrollment.update({
+        where: { id: enrollmentId },
+        data: {
+          batchId: newBatchId,
+          updatedBy: actorId,
+        },
+      });
+
+      // Audit Log
+      await client.auditLog.create({
+        data: {
+          action: 'EnrollmentBatchChanged',
+          entityType: 'Enrollment',
+          entityId: enrollmentId,
+          performedBy: actorId,
+          branchId: enrollment.branchId,
+          performedAt: new Date(),
+          module: 'AdmissionsEnrollment',
+          oldValue: { batchId: enrollment.batchId },
+          newValue: { batchId: newBatchId },
+        },
+      });
+
+      return updatedEnrollment;
+    };
+
+    return tx ? run(tx) : this.prisma.$transaction(run);
   }
 
   private async ensureWalkInConfirmation(

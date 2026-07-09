@@ -10,6 +10,7 @@ import {
   TrainerScheduleConflict,
   CourseNotPublished,
   ScheduleConflict,
+  TrainerBranchMismatch,
 } from '../domain/errors';
 import { createUuid } from '@ims/shared-kernel';
 import { randomUUID } from 'crypto';
@@ -33,6 +34,28 @@ export interface UpdateBatchInput extends Prisma.BatchUncheckedUpdateInput {
   capacity?: number;
   startDate?: Date | string;
   endDate?: Date | string;
+}
+
+export interface FacultyEligibilityResult {
+  trainerId: string;
+  trainerCode: string;
+  displayName: {
+    en: string;
+    ar?: string | null;
+  };
+  trainerType: string;
+  branchName?: string;
+  status: string;
+  eligible: boolean;
+  isAssignable: boolean;
+  alreadyAssigned: boolean;
+  reasonCodes: string[];
+  reasons: string[];
+  assignment?: {
+    role: string;
+    assignedFrom: string;
+    assignedTo: string;
+  } | null;
 }
 
 type BatchLockRow = Batch & {
@@ -171,8 +194,10 @@ export class BatchService {
       // Verify date range chronologically
       const startDate = new Date(input.startDate);
       const endDate = new Date(input.endDate);
-      if (endDate <= startDate) {
-        throw new InvalidDateRange('Batch end date must be after start date.');
+      if (endDate < startDate) {
+        throw new InvalidDateRange(
+          'Batch end date must be greater than or equal to start date.',
+        );
       }
 
       // Check dates within parent course effective range
@@ -354,8 +379,10 @@ export class BatchService {
       const endDate = input.endDate
         ? new Date(input.endDate)
         : new Date(existing.endDate);
-      if (endDate <= startDate) {
-        throw new InvalidDateRange('Batch end date must be after start date.');
+      if (endDate < startDate) {
+        throw new InvalidDateRange(
+          'Batch end date must be greater than or equal to start date.',
+        );
       }
 
       // Classroom validation
@@ -535,6 +562,8 @@ export class BatchService {
       );
       const sessions = await this.batchRepository.findSessions(id, client);
 
+      const trainers = (await this.batchRepository.findTrainers(id, client)) || [];
+
       const now = new Date();
       const allSessionsPast = sessions.every((s) => {
         // Simple past checks
@@ -545,6 +574,8 @@ export class BatchService {
         primaryTrainerExists: !!primaryTrainer,
         allSessionsPast,
         currentDate: now,
+        sessionsCount: sessions.length,
+        trainersCount: trainers.length,
       });
 
       const updated = await this.batchRepository.update(
@@ -665,6 +696,17 @@ export class BatchService {
         throw new Error('ERR_CRS_INVALID_TRAINER_PROFILE');
       }
 
+      // Verify trainer's branch matches the batch's branch
+      const trainerProfile = await client.trainerProfile.findFirst({
+        where: { personId: trainer.personId, isDeleted: false },
+      });
+      if (!trainerProfile) {
+        throw new Error('ERR_CRS_INVALID_TRAINER_PROFILE');
+      }
+      if (trainerProfile.branchId !== batch.branchId) {
+        throw new TrainerBranchMismatch();
+      }
+
       // Enforce batch.delivery.assign permission and active branch authorization
       if (actorId) {
         const hasAccess = await client.userBranchAccess.findFirst({
@@ -720,8 +762,10 @@ export class BatchService {
       // Verify date ranges
       const assignedFrom = new Date(input.assignedFrom);
       const assignedTo = new Date(input.assignedTo);
-      if (assignedTo <= assignedFrom) {
-        throw new InvalidDateRange();
+      if (assignedTo < assignedFrom) {
+        throw new InvalidDateRange(
+          'Trainer assignment end date must be greater than or equal to start date.',
+        );
       }
       if (
         assignedFrom < new Date(batch.startDate) ||
@@ -949,6 +993,348 @@ export class BatchService {
       }
 
       return conflicts;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async getFacultyEligibilityForBatch(
+    batchId: string,
+    options?: {
+      courseId?: string;
+      targetDate?: Date;
+    },
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<FacultyEligibilityResult[]> {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.batchRepository.findById(batchId, client);
+      if (!batch) {
+        throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+      }
+
+      if (actorId) {
+        const hasAccess = await client.userBranchAccess.findFirst({
+          where: {
+            userId: actorId,
+            branchId: batch.branchId,
+            status: 'Active',
+          },
+        });
+        const isAuthorized = !!hasAccess;
+
+        const userRoles = await client.userRole.findMany({
+          where: { userId: actorId },
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: {
+                    permission: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        const isSuperAdmin = userRoles.some(
+          (ur) =>
+            ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER',
+        );
+
+        if (!isSuperAdmin) {
+          const permissions = userRoles.flatMap((ur) =>
+            ur.role.permissions.map((rp) => rp.permission.permissionCode),
+          );
+          const hasPermission = permissions.includes('batch.delivery.assign');
+          if (!isAuthorized || !hasPermission) {
+            throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+          }
+        }
+      }
+
+      const batchSessions = await this.batchRepository.findSessions(batchId, client);
+      const targetCourseId = options?.courseId || batch.courseId;
+
+      const trainers = await client.trainerProfile.findMany({
+        where: {
+          isDeleted: false,
+          branchId: batch.branchId,
+        },
+        include: {
+          person: {
+            include: {
+              user: {
+                include: {
+                  roles: {
+                    include: {
+                      role: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          branch: true,
+          authorizations: {
+            where: {
+              courseId: targetCourseId,
+              isDeleted: false,
+              status: 'Active',
+            },
+          },
+          availability: {
+            where: {
+              isDeleted: false,
+              status: 'Active',
+            },
+          },
+        },
+      });
+
+      const personIds = trainers.map((t) => t.personId);
+
+      const leaves = await client.leaveRequest.findMany({
+        where: {
+          personId: { in: personIds },
+          status: 'Approved',
+          isDeleted: false,
+        },
+      });
+
+      const currentAssignments = await client.batchTrainer.findMany({
+        where: { batchId, isDeleted: false },
+      });
+
+      const batchDates = batchSessions.map((s) => s.sessionDate);
+      const otherSessions = await client.session.findMany({
+        where: {
+          trainerId: { in: trainers.map((t) => t.id) },
+          batchId: { not: batchId },
+          status: 'Scheduled',
+          isDeleted: false,
+          sessionDate: { in: batchDates },
+        },
+        include: {
+          batch: {
+            select: {
+              batchCode: true,
+            },
+          },
+        },
+      });
+
+      const results: FacultyEligibilityResult[] = [];
+
+      for (const trainer of trainers) {
+        const reasonCodes: string[] = [];
+        const reasons: string[] = [];
+        let alreadyAssigned = false;
+
+        const user = trainer.person.user;
+        if (!user) {
+          reasonCodes.push('PROFILE_INACTIVE');
+          reasons.push(`Trainer does not have a user account registered in the system.`);
+        } else {
+          const hasTrainerRole = user.roles.some((ur) => ur.role.roleCode === 'TRAINER');
+          if (user.status !== 'Active') {
+            reasonCodes.push('PROFILE_INACTIVE');
+            reasons.push(`Trainer user account status is ${user.status}.`);
+          }
+          if (!hasTrainerRole) {
+            reasonCodes.push('PROFILE_INACTIVE');
+            reasons.push(`Trainer user account lacks the TRAINER role.`);
+          }
+        }
+
+        if (trainer.status !== 'Active') {
+          reasonCodes.push('PROFILE_INACTIVE');
+          reasons.push(`Trainer profile status is ${trainer.status}.`);
+        }
+        const targetIdForAssignment = user ? user.id : trainer.id;
+        const assignment = currentAssignments.find((a) => a.trainerId === targetIdForAssignment);
+        let assignmentDetail = null;
+        if (assignment) {
+          alreadyAssigned = true;
+          reasonCodes.push('ALREADY_ASSIGNED');
+          reasons.push(
+            `Trainer is already assigned to this batch as ${assignment.role} (from ${new Date(assignment.assignedFrom).toLocaleDateString()} to ${new Date(assignment.assignedTo).toLocaleDateString()}).`
+          );
+          assignmentDetail = {
+            role: assignment.role,
+            assignedFrom: assignment.assignedFrom.toISOString(),
+            assignedTo: assignment.assignedTo.toISOString(),
+          };
+        }
+
+        const auth = trainer.authorizations[0];
+        if (!auth) {
+          reasonCodes.push('COURSE_NOT_AUTHORIZED');
+          reasons.push(`Trainer is not authorized to teach this course.`);
+        }
+
+        if (trainer.branchId !== batch.branchId) {
+          reasonCodes.push('BRANCH_MISMATCH');
+          reasons.push(
+            `Trainer is registered to branch ${trainer.branch?.branchName || trainer.branchId}, which does not match batch branch.`
+          );
+        }
+
+        for (const session of batchSessions) {
+          const trainerLeaves = leaves.filter((l) => l.personId === trainer.personId);
+          const overlappingLeave = trainerLeaves.find((leave) => {
+            const sameDate =
+              session.sessionDate.toISOString().split('T')[0] >= leave.startDate.toISOString().split('T')[0] &&
+              session.sessionDate.toISOString().split('T')[0] <= leave.endDate.toISOString().split('T')[0];
+
+            if (!sameDate) return false;
+            if (leave.isFullDay) return true;
+
+            if (leave.startTime && leave.endTime) {
+              return session.startTime < leave.endTime && session.endTime > leave.startTime;
+            }
+            return false;
+          });
+
+          if (overlappingLeave) {
+            reasonCodes.push('LEAVE_OVERLAP');
+            const timeStr = overlappingLeave.isFullDay
+              ? 'Full Day'
+              : `${overlappingLeave.startTime}-${overlappingLeave.endTime}`;
+            reasons.push(
+              `Trainer has approved leave on ${session.sessionDate.toLocaleDateString()} (${timeStr}) for reason: ${overlappingLeave.reason || 'None'}.`
+            );
+          }
+        }
+
+        for (const session of batchSessions) {
+          const trainerSessions = otherSessions.filter(
+            (os) => os.trainerId === trainer.id &&
+              os.sessionDate.toISOString().split('T')[0] === session.sessionDate.toISOString().split('T')[0]
+          );
+
+          const overlappingSession = trainerSessions.find((os) => {
+            return session.startTime < os.endTime && session.endTime > os.startTime;
+          });
+
+          if (overlappingSession) {
+            reasonCodes.push('SESSION_OVERLAP');
+            reasons.push(
+              `Schedule conflict on ${session.sessionDate.toLocaleDateString()} at ${session.startTime}-${session.endTime}: Booked for Batch ${overlappingSession.batch.batchCode} (Session ${overlappingSession.sessionNumber}).`
+            );
+          }
+        }
+
+        const uniqueReasonCodes = Array.from(new Set(reasonCodes));
+        const isAssignable = uniqueReasonCodes.length === 0;
+
+        results.push({
+          trainerId: user ? user.id : trainer.id,
+          trainerCode: trainer.trainerCode,
+          displayName: {
+            en: `${trainer.person.firstName} ${trainer.person.lastName}`.trim(),
+            ar: null,
+          },
+          trainerType: trainer.trainerType,
+          branchName: trainer.branch?.branchName,
+          status: trainer.status,
+          eligible: isAssignable,
+          isAssignable,
+          alreadyAssigned,
+          reasonCodes: uniqueReasonCodes,
+          reasons,
+          assignment: assignmentDetail,
+        });
+      }
+
+      results.sort((a, b) => {
+        if (a.alreadyAssigned && !b.alreadyAssigned) return -1;
+        if (!a.alreadyAssigned && b.alreadyAssigned) return 1;
+        if (a.eligible && !b.eligible) return -1;
+        if (!a.eligible && b.eligible) return 1;
+        return a.displayName.en.localeCompare(b.displayName.en);
+      });
+
+      return results;
+    };
+
+    return tx ? execute(tx) : this.prisma.$transaction(execute);
+  }
+
+  async removeTrainer(
+    batchId: string,
+    assignmentId: string,
+    actorId?: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
+    const execute = async (client: Prisma.TransactionClient) => {
+      const batch = await this.batchRepository.findById(batchId, client);
+      if (!batch) {
+        throw new Error('ERR_CRS_BATCH_NOT_FOUND');
+      }
+
+      if (actorId) {
+        const hasAccess = await client.userBranchAccess.findFirst({
+          where: {
+            userId: actorId,
+            branchId: batch.branchId,
+            status: 'Active',
+          },
+        });
+        const isAuthorized = !!hasAccess;
+
+        const userRoles = await client.userRole.findMany({
+          where: { userId: actorId },
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: {
+                    permission: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        const isSuperAdmin = userRoles.some(
+          (ur) =>
+            ur.role.roleCode === 'SUPER_ADMIN' || ur.role.roleCode === 'OWNER',
+        );
+
+        if (!isSuperAdmin) {
+          const permissions = userRoles.flatMap((ur) =>
+            ur.role.permissions.map((rp) => rp.permission.permissionCode),
+          );
+          const hasPermission = permissions.includes('batch.delivery.assign');
+          if (!isAuthorized || !hasPermission) {
+            throw new Error('ERR_IAM_INSUFFICIENT_PERMISSIONS');
+          }
+        }
+      }
+
+      const assignments = await this.batchRepository.findTrainers(batchId, client);
+      const assignment = assignments.find((a) => a.id === assignmentId && a.status === 'Active');
+      if (!assignment) {
+        throw new Error('ERR_CRS_TRAINER_ASSIGNMENT_NOT_FOUND');
+      }
+
+      await this.batchRepository.removeTrainer(assignmentId, actorId || 'system', client);
+
+      await client.auditLog.create({
+        data: {
+          id: createUuid(randomUUID()),
+          module: 'TrainingDelivery',
+          performedBy: actorId || null,
+          performedAt: new Date(),
+          entityType: 'BatchTrainer',
+          entityId: assignmentId,
+          action: 'UnassignTrainer',
+          newValue: { ...assignment, status: 'Inactive', isDeleted: true },
+        },
+      });
     };
 
     return tx ? execute(tx) : this.prisma.$transaction(execute);

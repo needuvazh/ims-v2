@@ -92,6 +92,29 @@ export default async function EnrollmentDetailPage(props: {
   });
   const courses = rawCourses.map((c) => ({ id: c.id, name: c.nameEnglish }));
 
+  // Fetch course batches in the enrollment's branch
+  const rawBatches = await prisma.batch.findMany({
+    where: {
+      courseId: enrollment.courseId,
+      branchId: enrollment.branchId,
+      isDeleted: false,
+    },
+    select: {
+      id: true,
+      batchCode: true,
+      capacity: true,
+      currentEnrollmentCount: true,
+      waitingListEnabled: true,
+    },
+  });
+  const courseBatches = rawBatches.map((b) => ({
+    id: b.id,
+    batchCode: b.batchCode,
+    capacity: b.capacity,
+    currentEnrollmentCount: b.currentEnrollmentCount,
+    waitingListEnabled: b.waitingListEnabled,
+  }));
+
   // Fetch invoices for this enrollment
   const invoices = await prisma.invoice.findMany({
     where: { enrollmentId, isDeleted: false },
@@ -181,6 +204,7 @@ export default async function EnrollmentDetailPage(props: {
         invoices={serializedInvoices}
         branches={branches}
         courses={courses}
+        batches={courseBatches}
       />
     </div>
   );

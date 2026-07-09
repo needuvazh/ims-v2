@@ -34,9 +34,11 @@ import {
   Trash2,
   PlayCircle,
   ClipboardList,
+  Edit,
 } from 'lucide-react';
 import {
   assignTrainerAction,
+  unassignTrainerAction,
   addToWaitlistAction,
   manualPromoteAction,
   createSessionAction,
@@ -49,6 +51,9 @@ import { openAttendanceSessionAction } from '../../attendance/actions';
 
 interface BatchDetailsTabsProps {
   batchId: string;
+  courseId: string;
+  branchId: string;
+  batchStatus: string;
   batchStartDate: string;
   batchEndDate: string;
   sessions: any[];
@@ -62,6 +67,7 @@ interface BatchDetailsTabsProps {
   enrolledStudents: any[];
   isRegistrar: boolean;
   isCoordinator: boolean;
+  waitingListEnabled?: boolean;
 }
 
 function getSessionScheduleTone(session: any) {
@@ -96,6 +102,9 @@ function getScheduleStatusBadge(session: any) {
 
 export function BatchDetailsTabs({
   batchId,
+  courseId,
+  branchId,
+  batchStatus,
   batchStartDate,
   batchEndDate,
   sessions,
@@ -109,12 +118,14 @@ export function BatchDetailsTabs({
   enrolledStudents,
   isRegistrar,
   isCoordinator,
+  waitingListEnabled = true,
 }: BatchDetailsTabsProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     'sessions' | 'trainers' | 'waitlist' | 'students'
   >('sessions');
   const [isPending, startTransition] = useTransition();
+  const [unassigningId, setUnassigningId] = useState('');
 
   // Trainer form state
   const [selectedTrainerId, setSelectedTrainerId] = useState('');
@@ -256,6 +267,26 @@ export function BatchDetailsTabs({
         }
       } catch (err: any) {
         toast.error(err.message || 'An unexpected error occurred.');
+      }
+    });
+  };
+
+  const handleUnassignTrainer = async (assignmentId: string) => {
+    if (!confirm('Are you sure you want to unassign this trainer from this batch?')) return;
+    setUnassigningId(assignmentId);
+    startTransition(async () => {
+      try {
+        const res = await unassignTrainerAction(batchId, assignmentId);
+        if (res && !res.success) {
+          toast.error(res.error || 'Failed to unassign trainer.');
+        } else {
+          toast.success('Trainer successfully unassigned!');
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err.message || 'An unexpected error occurred.');
+      } finally {
+        setUnassigningId('');
       }
     });
   };
@@ -464,360 +495,287 @@ export function BatchDetailsTabs({
         >
           <Users className="h-4.5 w-4.5" /> Students ({enrolledStudents.length})
         </button>
-        <button
-          onClick={() => setActiveTab('waitlist')}
-          className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
-            activeTab === 'waitlist'
-              ? 'bg-indigo-600 text-white shadow-sm'
-              : 'text-slate-600 hover:bg-slate-50'
-          }`}
-        >
-          <ShieldAlert className="h-4.5 w-4.5" /> Waiting List (
-          {waitlist.length})
-        </button>
+        {waitingListEnabled && (
+          <button
+            onClick={() => setActiveTab('waitlist')}
+            className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
+              activeTab === 'waitlist'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'text-slate-600 hover:bg-slate-50'
+            }`}
+          >
+            <ShieldAlert className="h-4.5 w-4.5" /> Waiting List (
+            {waitlist.length})
+          </button>
+        )}
       </div>
 
       {/* Tab Panels */}
       {activeTab === 'sessions' && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
-              <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
+        <div className="space-y-6">
+          <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-100 pb-3 mb-4">
+              <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5 text-indigo-600" />
                 <h3 className="font-semibold text-slate-800">
                   Scheduled Sessions
                 </h3>
               </div>
-              {sessions.length === 0 ? (
-                <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
-                  No sessions scheduled for this batch yet.
+              {isCoordinator && trainers.length > 0 && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
+                <Link href={`/batches/${batchId}/sessions/new`}>
+                  <Button size="sm" className="gap-2">
+                    <PlusCircle className="h-4.5 w-4.5" /> Schedule New Session
+                  </Button>
+                </Link>
+              )}
+            </div>
+            {isCoordinator && trainers.length === 0 && (
+              <div className="mb-4 p-4 rounded-xl border border-amber-200 bg-amber-50/50 text-amber-800 flex items-start gap-2.5 text-sm">
+                <ShieldAlert className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-semibold">Faculty Assignment Required:</span> No trainers have been assigned to this batch yet. Please assign a trainer on the <span className="font-medium underline cursor-pointer hover:text-amber-900" onClick={() => setActiveTab('trainers')}>Faculty tab</span> before scheduling sessions.
                 </div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Num</TableHead>
-                      <TableHead>Session Title</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Time Range</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-right">Attendance</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {sessions.map((s) => {
-                      const attendanceSession = attendanceSessions.find(
-                        (item) => item.sessionId === s.id,
-                      );
+              </div>
+            )}
+            {sessions.length === 0 ? (
+              <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
+                No sessions scheduled for this batch yet.
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Num</TableHead>
+                    <TableHead>Session Title</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Time Range</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Attendance</TableHead>
+                    {isCoordinator && <TableHead className="text-right">Actions</TableHead>}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {sessions.map((s) => {
+                    const attendanceSession = attendanceSessions.find(
+                      (item) => item.sessionId === s.id,
+                    );
 
-                      return (
-                        <TableRow
-                          key={s.id}
-                          className={getSessionScheduleTone(s)}
-                        >
-                          <TableCell className="font-semibold text-slate-600">
-                            #{s.sessionNumber}
-                          </TableCell>
-                          <TableCell>
-                            <div className="font-medium text-slate-800">
-                              {s.titleEnglish}
-                            </div>
-                            <div className="text-xs font-arabic text-slate-400">
-                              {s.titleArabic}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            {new Date(s.sessionDate).toLocaleDateString()}
-                          </TableCell>
-                          <TableCell className="font-mono text-xs">
-                            {s.startTime} - {s.endTime}
-                          </TableCell>
-                          <TableCell>
-                            <div className="space-y-2">
-                              <Badge
-                                variant={
-                                  s.status === 'Scheduled'
-                                    ? 'info'
-                                    : s.status === 'Completed'
-                                      ? 'success'
-                                      : 'outline'
-                                }
-                              >
-                                {s.status}
-                              </Badge>
-                              <div>{getScheduleStatusBadge(s)}</div>
-                              {s.conflictType && (
-                                <div className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
-                                  {s.conflictType.split('_').join(' ')}
-                                </div>
+                    return (
+                      <TableRow
+                        key={s.id}
+                        className={getSessionScheduleTone(s)}
+                      >
+                        <TableCell className="font-semibold text-slate-600">
+                          #{s.sessionNumber}
+                        </TableCell>
+                        <TableCell>
+                          <div className="font-medium text-slate-800">
+                            {s.titleEnglish}
+                          </div>
+                          <div className="text-xs font-arabic text-slate-400">
+                            {s.titleArabic}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          {new Date(s.sessionDate).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell className="font-mono text-xs">
+                          {s.startTime} - {s.endTime}
+                        </TableCell>
+                        <TableCell>
+                          <div className="space-y-2">
+                            <Badge
+                              variant={
+                                s.status === 'Scheduled'
+                                  ? 'info'
+                                  : s.status === 'Completed'
+                                    ? 'success'
+                                    : 'outline'
+                              }
+                            >
+                              {s.status}
+                            </Badge>
+                            <div>{getScheduleStatusBadge(s)}</div>
+                            {s.conflictType && (
+                              <div className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--ims-muted)]">
+                                {s.conflictType.split('_').join(' ')}
+                              </div>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {attendanceSession ? (
+                            <div className="inline-flex items-center gap-2">
+                              <Badge variant="success">Opened</Badge>
+                              {attendanceSession.records.length === 0 ? (
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  disabled={isPending}
+                                  onClick={() => {
+                                    startTransition(async () => {
+                                      try {
+                                        const res =
+                                          await openAttendanceSessionAction(
+                                            s.id,
+                                          );
+                                        if (res && !res.success) {
+                                          toast.error(
+                                            res.error ||
+                                              'Failed to generate attendance roster.',
+                                          );
+                                          return;
+                                        }
+                                        toast.success(
+                                          'Attendance roster generated.',
+                                        );
+                                        router.refresh();
+                                      } catch (err: any) {
+                                        toast.error(
+                                          err.message ||
+                                            'An unexpected error occurred.',
+                                        );
+                                      }
+                                    });
+                                  }}
+                                  className="gap-2"
+                                >
+                                  {isPending ? (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                  ) : (
+                                    <ClipboardList className="h-4 w-4" />
+                                  )}
+                                  Generate Roster
+                                </Button>
+                              ) : (
+                                <Link
+                                  href="/attendance/sessions"
+                                  className="inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--ims-brass)] hover:underline"
+                                >
+                                  <ClipboardList className="h-3.5 w-3.5" />
+                                  View
+                                </Link>
                               )}
                             </div>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {attendanceSession ? (
-                              <div className="inline-flex items-center gap-2">
-                                <Badge variant="success">Opened</Badge>
-                                {attendanceSession.records.length === 0 ? (
-                                  <Button
-                                    type="button"
-                                    size="sm"
-                                    variant="outline"
-                                    disabled={isPending}
-                                    onClick={() => {
-                                      startTransition(async () => {
-                                        try {
-                                          const res =
-                                            await openAttendanceSessionAction(
-                                              s.id,
-                                            );
-                                          if (res && !res.success) {
-                                            toast.error(
-                                              res.error ||
-                                                'Failed to generate attendance roster.',
-                                            );
-                                            return;
-                                          }
-                                          toast.success(
-                                            'Attendance roster generated.',
-                                          );
-                                          router.refresh();
-                                        } catch (err: any) {
-                                          toast.error(
-                                            err.message ||
-                                              'An unexpected error occurred.',
-                                          );
-                                        }
-                                      });
-                                    }}
-                                    className="gap-2"
-                                  >
-                                    {isPending ? (
-                                      <Loader2 className="h-4 w-4 animate-spin" />
-                                    ) : (
-                                      <ClipboardList className="h-4 w-4" />
-                                    )}
-                                    Generate Roster
-                                  </Button>
-                                ) : (
-                                  <Link
-                                    href="/attendance/sessions"
-                                    className="inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--ims-brass)] hover:underline"
-                                  >
-                                    <ClipboardList className="h-3.5 w-3.5" />
-                                    View
-                                  </Link>
-                                )}
-                              </div>
-                            ) : (
-                              <Button
-                                type="button"
-                                size="sm"
-                                variant="outline"
-                                disabled={isPending}
-                                onClick={() => {
-                                  startTransition(async () => {
-                                    try {
-                                      const res =
-                                        await openAttendanceSessionAction(s.id);
-                                      if (res && !res.success) {
-                                        toast.error(
-                                          res.error ||
-                                            'Failed to open attendance session.',
-                                        );
-                                        return;
-                                      }
-                                      toast.success(
-                                        'Attendance session opened and roster generated.',
-                                      );
-                                      router.refresh();
-                                      router.push('/attendance/sessions');
-                                    } catch (err: any) {
+                          ) : (
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="outline"
+                              disabled={isPending}
+                              onClick={() => {
+                                startTransition(async () => {
+                                  try {
+                                    const res =
+                                      await openAttendanceSessionAction(s.id);
+                                    if (res && !res.success) {
                                       toast.error(
-                                        err.message ||
-                                          'An unexpected error occurred.',
+                                        res.error ||
+                                          'Failed to open attendance session.',
                                       );
+                                      return;
                                     }
-                                  });
-                                }}
-                                className="gap-2"
+                                    toast.success(
+                                      'Attendance session opened and roster generated.',
+                                    );
+                                    router.refresh();
+                                    router.push('/attendance/sessions');
+                                  } catch (err: any) {
+                                    toast.error(
+                                      err.message ||
+                                        'An unexpected error occurred.',
+                                    );
+                                  }
+                                });
+                              }}
+                              className="gap-2"
+                            >
+                              {isPending ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <ClipboardList className="h-4 w-4" />
+                              )}
+                              Open Attendance
+                            </Button>
+                          )}
+                        </TableCell>
+                         {isCoordinator && s.status !== 'Completed' && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
+                          <TableCell className="text-right">
+                            <Link href={`/batches/${batchId}/sessions/${s.id}/edit`}>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 w-8 p-0"
+                                title="Edit Session"
                               >
-                                {isPending ? (
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  <ClipboardList className="h-4 w-4" />
-                                )}
-                                Open Attendance
+                                <Edit className="h-4.5 w-4.5 text-indigo-600" />
                               </Button>
-                            )}
+                            </Link>
                           </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              )}
-            </Card>
-          </div>
-
-          {/* Schedule Session Form */}
-          <div>
-            {isCoordinator && (
-              <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-                <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                  <PlusCircle className="h-5 w-5 text-indigo-600" />
-                  <h3 className="font-semibold text-slate-800">
-                    Schedule Session
-                  </h3>
-                </div>
-                <form onSubmit={handleCreateSession} className="space-y-4">
-                  <FormField>
-                    <FormLabel required>Session Number</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        min="1"
-                        value={sessionNumber}
-                        onChange={(e) => setSessionNumber(e.target.value)}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <FormField>
-                    <FormLabel required>Title (English)</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g. Introduction to DDD"
-                        value={sessionTitleEnglish}
-                        onChange={(e) => setSessionTitleEnglish(e.target.value)}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <FormField>
-                    <FormLabel required>Title (Arabic)</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g. مقدمة في تصميم النطاق"
-                        value={sessionTitleArabic}
-                        onChange={(e) => setSessionTitleArabic(e.target.value)}
-                        className="text-right"
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <FormField>
-                    <FormLabel required>Session Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        value={sessionDate}
-                        onChange={(e) => setSessionDate(e.target.value)}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <FormField>
-                      <FormLabel required>Start Time</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="time"
-                          value={sessionStartTime}
-                          onChange={(e) => setSessionStartTime(e.target.value)}
-                        />
-                      </FormControl>
-                    </FormField>
-                    <FormField>
-                      <FormLabel required>End Time</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="time"
-                          value={sessionEndTime}
-                          onChange={(e) => setSessionEndTime(e.target.value)}
-                        />
-                      </FormControl>
-                    </FormField>
-                  </div>
-
-                  <FormField>
-                    <FormLabel>Trainer Assignment (Optional)</FormLabel>
-                    <FormControl>
-                      <Select
-                        placeholder="Assign Trainer"
-                        value={sessionTrainerId}
-                        onChange={(e) => setSessionTrainerId(e.target.value)}
-                        options={trainersList.map((t: any) => ({
-                          value: t.id,
-                          label: t.displayName,
-                        }))}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <FormField>
-                    <FormLabel>Classroom Booking (Optional)</FormLabel>
-                    <FormControl>
-                      <Select
-                        placeholder="Book Classroom"
-                        value={sessionClassroomId}
-                        onChange={(e) => setSessionClassroomId(e.target.value)}
-                        options={classroomsList.map((c: any) => ({
-                          value: c.id,
-                          label: c.classroomName,
-                        }))}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <Button
-                    type="submit"
-                    disabled={isPending}
-                    className="w-full mt-2"
-                  >
-                    {isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      'Schedule Session'
-                    )}
-                  </Button>
-                </form>
-              </Card>
+                        )}
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
             )}
-          </div>
+          </Card>
         </div>
       )}
 
       {activeTab === 'trainers' && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="space-y-6">
           {/* Faculty list */}
-          <div className="lg:col-span-2 space-y-6">
-            <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
-              <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
+          <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+              <div className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-indigo-600" />
                 <h3 className="font-semibold text-slate-800">
                   Faculty Assignments
                 </h3>
               </div>
-              {trainers.length === 0 ? (
-                <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
-                  No trainers have been assigned to this batch yet.
-                </div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Trainer ID</TableHead>
-                      <TableHead>Role</TableHead>
-                      <TableHead>Assigned From</TableHead>
-                      <TableHead>Assigned To</TableHead>
-                      <TableHead>Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {trainers.map((t) => (
+              {isCoordinator && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
+                <Link href={`/batches/${batchId}/faculty`}>
+                  <Button variant="outline" size="sm" className="text-xs">
+                    Manage Assignments
+                  </Button>
+                </Link>
+              )}
+            </div>
+            {trainers.length === 0 ? (
+              <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
+                No trainers have been assigned to this batch yet.
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Trainer</TableHead>
+                    <TableHead>Code & Type</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Assigned From</TableHead>
+                    <TableHead>Assigned To</TableHead>
+                    <TableHead>Status</TableHead>
+                    {isCoordinator && <TableHead className="text-right">Actions</TableHead>}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {trainers.map((t) => {
+                    const detail = trainersList.find((ut) => ut.id === t.trainerId);
+                    return (
                       <TableRow key={t.id}>
-                        <TableCell className="font-mono text-xs text-slate-600">
-                          {t.trainerId}
+                        <TableCell>
+                          <div className="font-semibold text-slate-800">
+                            {detail ? detail.displayName : 'Unknown Trainer'}
+                          </div>
+                          <div className="text-xs text-slate-500">
+                            {detail ? detail.email : t.trainerId}
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-mono text-xs">
+                          <div className="font-semibold">{detail ? detail.trainerCode : 'N/A'}</div>
+                          <div className="text-[10px] text-slate-400 font-sans">{detail ? detail.trainerType : 'N/A'}</div>
                         </TableCell>
                         <TableCell>
                           <Badge
@@ -835,147 +793,34 @@ export function BatchDetailsTabs({
                           {new Date(t.assignedTo).toLocaleDateString()}
                         </TableCell>
                         <TableCell>{t.status}</TableCell>
+                         {isCoordinator && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
+                          <TableCell className="text-right">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 text-xs font-semibold"
+                              disabled={isPending || unassigningId === t.id}
+                              onClick={() => handleUnassignTrainer(t.id)}
+                            >
+                              {unassigningId === t.id ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                              ) : (
+                                'Unassign'
+                              )}
+                            </Button>
+                          </TableCell>
+                        )}
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-            </Card>
-          </div>
-
-          {/* Inline Assignment Form */}
-          <div>
-            {isCoordinator && (
-              <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
-                <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                  <PlusCircle className="h-5 w-5 text-indigo-600" />
-                  <h3 className="font-semibold text-slate-800">
-                    Assign Faculty
-                  </h3>
-                </div>
-                <form onSubmit={handleAssignTrainer} className="space-y-4">
-                  <FormField>
-                    <FormLabel required>Select Trainer</FormLabel>
-                    <FormControl>
-                      <Select
-                        placeholder="Select Trainer Profile"
-                        value={selectedTrainerId}
-                        onChange={(e) => handleTrainerChange(e.target.value)}
-                        options={trainersList.map((t) => ({
-                          value: t.id,
-                          label: `${t.displayName} (${t.email})`,
-                        }))}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <FormField>
-                    <FormLabel required>Role Type</FormLabel>
-                    <FormControl>
-                      <select
-                        value={trainerRole}
-                        onChange={(e) => setTrainerRole(e.target.value as any)}
-                        className="flex h-10 w-full rounded-md border border-[color:var(--ims-border)] bg-[color:var(--ims-card)] px-3 py-2 text-sm focus-visible:outline-none"
-                      >
-                        <option value="Primary">Primary Trainer</option>
-                        <option value="Assistant">Assistant Trainer</option>
-                        <option value="Observer">Observer</option>
-                      </select>
-                    </FormControl>
-                  </FormField>
-
-                  <FormField>
-                    <FormLabel required>Assigned From</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        value={trainerFrom}
-                        onChange={(e) => handleFromDateChange(e.target.value)}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  <FormField>
-                    <FormLabel required>Assigned To</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        value={trainerTo}
-                        onChange={(e) => handleToDateChange(e.target.value)}
-                      />
-                    </FormControl>
-                  </FormField>
-
-                  {checkingConflicts && (
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                      <span>Checking schedule conflicts...</span>
-                    </div>
-                  )}
-
-                  {conflicts.length > 0 && (
-                    <div className="space-y-3">
-                      <div className="text-xs font-semibold text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-100">
-                        Trainer has schedule conflicts in the following batches:
-                      </div>
-                      <div className="border border-red-100 bg-red-50/20 rounded-lg overflow-hidden text-[10px]">
-                        <table className="min-w-full divide-y divide-red-100">
-                          <thead className="bg-red-50 text-red-700">
-                            <tr>
-                              <th className="px-3 py-1.5 text-left font-semibold">
-                                Batch
-                              </th>
-                              <th className="px-3 py-1.5 text-left font-semibold">
-                                Date
-                              </th>
-                              <th className="px-3 py-1.5 text-left font-semibold">
-                                Start
-                              </th>
-                              <th className="px-3 py-1.5 text-left font-semibold">
-                                End
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-red-100 text-slate-600">
-                            {conflicts.map((c, idx) => (
-                              <tr key={idx}>
-                                <td className="px-3 py-1.5 font-mono font-bold">
-                                  {c.batchCode}
-                                </td>
-                                <td className="px-3 py-1.5">
-                                  {new Date(c.sessionDate).toLocaleDateString()}
-                                </td>
-                                <td className="px-3 py-1.5">{c.startTime}</td>
-                                <td className="px-3 py-1.5">{c.endTime}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-
-                  <Button
-                    type="submit"
-                    disabled={
-                      isPending || conflicts.length > 0 || checkingConflicts
-                    }
-                    className="w-full mt-2"
-                  >
-                    {isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      'Assign Faculty'
-                    )}
-                  </Button>
-                </form>
-              </Card>
+                    );
+                  })}
+                </TableBody>
+              </Table>
             )}
-          </div>
+          </Card>
         </div>
       )}
 
-      {activeTab === 'waitlist' && (
+      {waitingListEnabled && activeTab === 'waitlist' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Waitlist list */}
           <div className="lg:col-span-2 space-y-6">
@@ -1008,7 +853,7 @@ export function BatchDetailsTabs({
                       <TableHead>Type</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Details / Reason</TableHead>
-                      {isRegistrar && (
+                       {isRegistrar && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
                         <TableHead className="text-right">Actions</TableHead>
                       )}
                     </TableRow>
@@ -1085,7 +930,7 @@ export function BatchDetailsTabs({
                           >
                             {w.statusReason || '-'}
                           </TableCell>
-                          {isRegistrar && (
+                          {isRegistrar && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
                             <TableCell className="text-right">
                               <div className="flex items-center justify-end gap-1.5">
                                 {/* Reorder Actions */}
@@ -1194,7 +1039,7 @@ export function BatchDetailsTabs({
 
           {/* Inline Waitlist placement form */}
           <div>
-            {isRegistrar && (
+            {isRegistrar && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
               <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
                   <Bookmark className="h-5 w-5 text-indigo-600" />

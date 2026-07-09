@@ -31,7 +31,7 @@ const mockPrisma = {
   branch: { findUnique: vi.fn() },
   classroom: { findUnique: vi.fn() },
   course: { findUnique: vi.fn() },
-  trainerProfile: { findUnique: vi.fn() },
+  trainerProfile: { findUnique: vi.fn(), findFirst: vi.fn() },
   userBranchAccess: { findFirst: vi.fn() },
   userRole: { findMany: vi.fn() },
   user: { findUnique: vi.fn() },
@@ -54,6 +54,11 @@ const batchService = new BatchService(
 
 beforeEach(() => {
   vi.resetAllMocks();
+  (mockPrisma as any).trainerProfile = {
+    findUnique: vi.fn(),
+    findFirst: vi.fn(),
+    findMany: vi.fn(),
+  };
   // Default mocks to bypass user branch scoping
   mockPrisma.userBranchAccess.findFirst.mockResolvedValue({ id: 'access-id' });
   mockPrisma.userRole.findMany.mockResolvedValue([
@@ -96,6 +101,15 @@ beforeEach(() => {
     instituteId: 'inst-123',
   });
   mockSchedulingService.validateSession.mockResolvedValue({ isValid: true });
+  mockPrisma.trainerProfile.findFirst.mockImplementation(async () => {
+    const lastBatch = await mockBatchRepository.findById.mock.results.slice(-1)[0]?.value;
+    return {
+      id: 'trainer-profile-id',
+      personId: 'person-id',
+      branchId: lastBatch?.branchId,
+      status: 'Active',
+    };
+  });
 });
 
 test('BatchService.createBatch should fail if course is not published', async () => {
@@ -234,6 +248,62 @@ test('BatchService.transitionBatchStatus should cascade sessions status and publ
   );
   expect(result.status).toBe('Cancelled');
   expect(mockPrisma.outboxEvent.create).toHaveBeenCalled();
+});
+
+test('BatchService.transitionBatchStatus should fail to start batch if sessions are empty', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-07-01T00:00:00.000Z'),
+    version: 1,
+  });
+
+  mockBatchRepository.findPrimaryTrainer.mockResolvedValueOnce({
+    id: 'trainer-id',
+  });
+  mockBatchRepository.findSessions.mockResolvedValueOnce([]); // Empty sessions
+  mockBatchRepository.findTrainers.mockResolvedValueOnce([{ id: 'trainer-id' }]);
+
+  await expect(
+    batchService.transitionBatchStatus(
+      batchId,
+      'InProgress',
+      1,
+      createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    ),
+  ).rejects.toThrow('The sessions should be configured before starting the batch.');
+});
+
+test('BatchService.transitionBatchStatus should fail to start batch if faculty is empty', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    status: 'OpenForEnrollment',
+    startDate: new Date('2026-07-01T00:00:00.000Z'),
+    version: 1,
+  });
+
+  mockBatchRepository.findPrimaryTrainer.mockResolvedValueOnce({
+    id: 'trainer-id',
+  });
+  mockBatchRepository.findSessions.mockResolvedValueOnce([
+    {
+      id: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+      status: 'Scheduled',
+      sessionDate: '2026-10-15T00:00:00.000Z',
+    },
+  ]);
+  mockBatchRepository.findTrainers.mockResolvedValueOnce([]); // Empty trainers list
+
+  await expect(
+    batchService.transitionBatchStatus(
+      batchId,
+      'InProgress',
+      1,
+      createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    ),
+  ).rejects.toThrow('The faculty should be configured before starting the batch.');
 });
 
 test('BatchService should support waitlist queue positioning', async () => {
@@ -1009,3 +1079,214 @@ test('BatchService.enqueueWaitlist should reject enqueuing if lead branch does n
     batchService.enqueueWaitlist({ batchId, leadId, actorId: 'user-id' }),
   ).rejects.toThrow('ERR_AUTH_BRANCH_DENIED');
 });
+
+test('BatchService.getFacultyEligibilityForBatch should evaluate trainer eligibility properly', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const courseId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId1 = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId2 = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    courseId,
+    branchId: 'Muscat',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+  });
+
+  mockBatchRepository.findSessions.mockResolvedValueOnce([
+    {
+      id: 'session-1',
+      sessionNumber: 1,
+      sessionDate: new Date('2026-10-05'),
+      startTime: '09:00',
+      endTime: '11:00',
+    },
+  ]);
+
+  (mockPrisma as any).trainerProfile = {
+    findMany: vi.fn().mockResolvedValueOnce([
+      {
+        id: trainerId1,
+        trainerCode: 'TR001',
+        trainerType: 'Internal',
+        status: 'Active',
+        personId: 'p1',
+        branchId: 'Muscat',
+        person: {
+          firstName: 'John',
+          lastName: 'Doe',
+          user: {
+            id: trainerId1,
+            status: 'Active',
+            roles: [{ role: { roleCode: 'TRAINER' } }],
+          },
+        },
+        branch: { branchName: 'Muscat Branch' },
+        authorizations: [{ id: 'auth-1' }],
+        availability: [],
+      },
+      {
+        id: trainerId2,
+        trainerCode: 'TR002',
+        trainerType: 'External',
+        status: 'Active',
+        personId: 'p2',
+        branchId: 'Muscat',
+        person: {
+          firstName: 'Jane',
+          lastName: 'Smith',
+          user: {
+            id: trainerId2,
+            status: 'Active',
+            roles: [{ role: { roleCode: 'TRAINER' } }],
+          },
+        },
+        branch: { branchName: 'Muscat Branch' },
+        authorizations: [],
+        availability: [],
+      },
+    ]),
+  };
+
+  (mockPrisma as any).leaveRequest = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  (mockPrisma as any).batchTrainer = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  (mockPrisma as any).session = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  const results = await batchService.getFacultyEligibilityForBatch(batchId);
+  expect(results).toHaveLength(2);
+  expect(results[0].trainerId).toBe(trainerId1);
+  expect(results[0].eligible).toBe(true);
+  expect(results[1].trainerId).toBe(trainerId2);
+  expect(results[1].eligible).toBe(false);
+  expect(results[1].reasonCodes).toContain('COURSE_NOT_AUTHORIZED');
+});
+
+test('BatchService.getFacultyEligibilityForBatch should filter trainers by batch branch at database level', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const courseId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId1 = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    courseId,
+    branchId: 'Muscat',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+  });
+
+  mockBatchRepository.findSessions.mockResolvedValueOnce([
+    {
+      id: 'session-1',
+      sessionNumber: 1,
+      sessionDate: new Date('2026-10-05'),
+      startTime: '09:00',
+      endTime: '11:00',
+    },
+  ]);
+
+  (mockPrisma as any).trainerProfile = {
+    findMany: vi.fn().mockResolvedValueOnce([
+      {
+        id: trainerId1,
+        trainerCode: 'TR001',
+        trainerType: 'Internal',
+        status: 'Active',
+        personId: 'p1',
+        branchId: 'Muscat',
+        person: {
+          firstName: 'John',
+          lastName: 'Doe',
+          user: {
+            id: trainerId1,
+            status: 'Active',
+            roles: [{ role: { roleCode: 'TRAINER' } }],
+          },
+        },
+        branch: { branchName: 'Muscat Branch' },
+        authorizations: [{ id: 'auth-1' }],
+        availability: [],
+      },
+    ]),
+  };
+
+  (mockPrisma as any).leaveRequest = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  (mockPrisma as any).batchTrainer = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  (mockPrisma as any).session = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  const results = await batchService.getFacultyEligibilityForBatch(batchId);
+  expect(results).toHaveLength(1);
+  expect(results[0].trainerId).toBe(trainerId1);
+  expect(results[0].eligible).toBe(true);
+
+  expect(mockPrisma.trainerProfile.findMany).toHaveBeenCalledWith(
+    expect.objectContaining({
+      where: expect.objectContaining({
+        isDeleted: false,
+        branchId: 'Muscat',
+      }),
+    }),
+  );
+});
+
+test('BatchService.assignTrainer should reject assignment if trainer branch does not match batch branch', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    branchId: 'Muscat',
+    trainers: [],
+  });
+
+  // Mock active trainer user
+  mockPrisma.user.findUnique.mockResolvedValueOnce({
+    id: trainerId,
+    personId: 'p-123',
+    status: 'Active',
+    roles: [{ role: { roleCode: 'TRAINER' } }],
+  });
+
+  // Mock trainer profile with mismatched branchId
+  mockPrisma.trainerProfile.findFirst.mockResolvedValueOnce({
+    id: 'trainer-profile-id',
+    personId: 'p-123',
+    branchId: 'Sohar',
+    status: 'Active',
+  });
+
+  const assignment = {
+    trainerId,
+    role: 'Primary' as const,
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  };
+
+  await expect(
+    batchService.assignTrainer(
+      batchId,
+      assignment,
+      createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    ),
+  ).rejects.toThrow('Trainer registered branch does not match batch branch.');
+});
+
+

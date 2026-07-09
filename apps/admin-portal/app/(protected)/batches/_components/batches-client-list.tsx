@@ -25,7 +25,11 @@ import {
   Pagination,
   ResponsiveDataTable,
   Select,
-  StatCard,
+  Checkbox,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from '@ims/shared-ui';
 
 interface BatchListItem {
@@ -59,20 +63,25 @@ interface BatchesClientListProps {
   courses: CourseOption[];
   branches: BranchOption[];
   total: number;
-  kpis: {
-    total: number;
-    open: number;
-    inProgress: number;
-    cancelled: number;
-  };
   currentPage: number;
   canCreate: boolean;
   defaultSearch: string;
   defaultCourseId: string;
   defaultBranchId: string;
-  defaultStatus: string;
   defaultSortBy: string;
   defaultSortOrder: 'asc' | 'desc';
+  group: string;
+  showCompleted: boolean;
+  showCancelled: boolean;
+  showDraft: boolean;
+  dateFrom: string;
+  dateTo: string;
+  tabCounts: {
+    active: number;
+    past: number;
+    future: number;
+    all: number;
+  };
 }
 
 type SortOrder = 'asc' | 'desc';
@@ -82,15 +91,20 @@ export function BatchesClientList({
   courses,
   branches,
   total,
-  kpis,
   currentPage,
   canCreate,
   defaultSearch,
   defaultCourseId,
   defaultBranchId,
-  defaultStatus,
   defaultSortBy,
   defaultSortOrder,
+  group,
+  showCompleted,
+  showCancelled,
+  showDraft,
+  dateFrom,
+  dateTo,
+  tabCounts,
 }: BatchesClientListProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -170,7 +184,6 @@ export function BatchesClientList({
 
   const requestedCourseId = searchParams.get('courseId') || '';
   const requestedBranchId = searchParams.get('branchId') || '';
-  const requestedStatus = searchParams.get('status') || '';
 
   const currentCourseId = courses.some(
     (course) => course.id === requestedCourseId,
@@ -186,18 +199,7 @@ export function BatchesClientList({
     : branches.some((branch) => branch.id === defaultBranchId)
       ? defaultBranchId
       : '';
-  const statusOptions = [
-    'Draft',
-    'OpenForEnrollment',
-    'InProgress',
-    'Completed',
-    'Cancelled',
-  ];
-  const currentStatus = statusOptions.includes(requestedStatus)
-    ? requestedStatus
-    : statusOptions.includes(defaultStatus)
-      ? defaultStatus
-      : '';
+
 
   const columns = [
     {
@@ -389,129 +391,227 @@ export function BatchesClientList({
         )}
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-5">
-        <StatCard
-          title="Total Batches"
-          value={kpis.total}
-          description="Schedules configured globally or in branch"
-          icon={<Layers className="h-5 w-5" />}
-          tone="indigo"
-        />
-        <StatCard
-          title="Open for Enrollment"
-          value={kpis.open}
-          description="Batches accepting new registrations"
-          icon={<Users className="h-5 w-5" />}
-          tone="emerald"
-        />
-        <StatCard
-          title="In Progress"
-          value={kpis.inProgress}
-          description="Active learning sessions currently running"
-          icon={<Calendar className="h-5 w-5" />}
-          tone="sky"
-        />
-        <StatCard
-          title="Cancelled / Suspended"
-          value={kpis.cancelled}
-          description="Batches cancelled, suspended or in draft"
-          icon={<AlertCircle className="h-5 w-5" />}
-          tone="rose"
-        />
-      </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="min-w-0 sm:col-span-2 xl:col-span-1">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
-            Search
-          </FormLabel>
-          <div className="relative">
-            <Input
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search batches by code, English name or Arabic name..."
-              leftIcon={<Search className="h-4 w-4" />}
-              className="h-12 pr-10"
+      <Tabs
+        value={group}
+        onValueChange={(val) =>
+          updateParams({
+            group: val,
+            page: '1',
+            showCompleted: null,
+            showCancelled: null,
+            showDraft: null,
+            dateFrom: null,
+            dateTo: null,
+          })
+        }
+        className="w-full"
+      >
+        <TabsList className="w-full grid grid-cols-4 mb-4">
+          <TabsTrigger value="active" className="gap-2">
+            Active
+            <Badge variant="outline" className="ml-1 px-1.5 py-0 bg-[color:var(--ims-accent-soft)]">
+              {tabCounts.active}
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger value="past" className="gap-2">
+            Past
+            <Badge variant="outline" className="ml-1 px-1.5 py-0 bg-[color:var(--ims-accent-soft)]">
+              {tabCounts.past}
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger value="future" className="gap-2">
+            Future
+            <Badge variant="outline" className="ml-1 px-1.5 py-0 bg-[color:var(--ims-accent-soft)]">
+              {tabCounts.future}
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger value="all" className="gap-2">
+            All
+            <Badge variant="outline" className="ml-1 px-1.5 py-0 bg-[color:var(--ims-accent-soft)]">
+              {tabCounts.all}
+            </Badge>
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-5 space-y-4 shadow-sm">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="min-w-0 sm:col-span-2">
+            <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+              Search
+            </FormLabel>
+            <div className="relative">
+              <Input
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                placeholder="Search batches by code, English name or Arabic name..."
+                leftIcon={<Search className="h-4 w-4" />}
+                className="h-11 pr-10"
+              />
+              {searchValue && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchValue('');
+                    updateParams({ q: null, page: '1' });
+                  }}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="min-w-0">
+            <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+              Course
+            </FormLabel>
+            <Select
+              value={currentCourseId}
+              onChange={(e) =>
+                updateParams({ courseId: e.target.value, page: '1' })
+              }
+              options={[
+                { value: '', label: 'All Courses' },
+                ...courses.map((course) => ({
+                  value: course.id,
+                  label: course.nameEnglish,
+                })),
+              ]}
+              className="h-11"
+              placeholder="All Courses"
             />
-            {searchValue && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchValue('');
-                  updateParams({ q: null, page: '1' });
-                }}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
+          </div>
+
+          <div className="min-w-0">
+            <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+              Branch
+            </FormLabel>
+            <Select
+              value={currentBranchId}
+              onChange={(e) =>
+                updateParams({ branchId: e.target.value, page: '1' })
+              }
+              options={[
+                { value: '', label: 'All Branches' },
+                ...branches.map((branch) => ({
+                  value: branch.id,
+                  label: branch.branchName,
+                })),
+              ]}
+              className="h-11"
+              placeholder="All Branches"
+            />
           </div>
         </div>
 
-        <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
-            Course
-          </FormLabel>
-          <Select
-            value={currentCourseId}
-            onChange={(e) =>
-              updateParams({ courseId: e.target.value, page: '1' })
-            }
-            options={[
-              { value: '', label: 'All Courses' },
-              ...courses.map((course) => ({
-                value: course.id,
-                label: course.nameEnglish,
-              })),
-            ]}
-            className="h-12"
-            placeholder="All Courses"
-          />
-        </div>
+        {/* Tab specific filters */}
+        {group === 'active' && (
+          <div className="flex flex-wrap items-center gap-6 pt-2 border-t border-slate-100">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              Active Status Filters:
+            </span>
+            <Checkbox
+              label="Show Completed"
+              checked={showCompleted}
+              onChange={(e) =>
+                updateParams({
+                  showCompleted: e.target.checked ? 'true' : null,
+                  page: '1',
+                })
+              }
+            />
+            <Checkbox
+              label="Show Cancelled"
+              checked={showCancelled}
+              onChange={(e) =>
+                updateParams({
+                  showCancelled: e.target.checked ? 'true' : null,
+                  page: '1',
+                })
+              }
+            />
+            <Checkbox
+              label="Show Draft"
+              checked={showDraft}
+              onChange={(e) =>
+                updateParams({
+                  showDraft: e.target.checked ? 'true' : null,
+                  page: '1',
+                })
+              }
+            />
+          </div>
+        )}
 
-        <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
-            Branch
-          </FormLabel>
-          <Select
-            value={currentBranchId}
-            onChange={(e) =>
-              updateParams({ branchId: e.target.value, page: '1' })
-            }
-            options={[
-              { value: '', label: 'All Branches' },
-              ...branches.map((branch) => ({
-                value: branch.id,
-                label: branch.branchName,
-              })),
-            ]}
-            className="h-12"
-            placeholder="All Branches"
-          />
-        </div>
+        {(group === 'past' || group === 'future' || group === 'all') && (
+          <div className="flex flex-col gap-4 pt-3 border-t border-slate-100 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex-1 max-w-2xl">
+              <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Batch Dates Between
+              </FormLabel>
+              <div className="flex items-center gap-2">
+                <Input
+                  type="date"
+                  value={dateFrom}
+                  onChange={(e) =>
+                    updateParams({
+                      dateFrom: e.target.value || null,
+                      page: '1',
+                    })
+                  }
+                  className="h-11"
+                />
+                <span className="text-slate-400 text-sm">to</span>
+                <Input
+                  type="date"
+                  value={dateTo}
+                  onChange={(e) =>
+                    updateParams({
+                      dateTo: e.target.value || null,
+                      page: '1',
+                    })
+                  }
+                  className="h-11"
+                />
+                {(dateFrom || dateTo) && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() =>
+                      updateParams({
+                        dateFrom: null,
+                        dateTo: null,
+                        page: '1',
+                      })
+                    }
+                    className="h-11 w-11 hover:bg-slate-100"
+                    title="Clear dates filter"
+                  >
+                    <X className="h-4 w-4 text-slate-500" />
+                  </Button>
+                )}
+              </div>
+            </div>
 
-        <div className="min-w-0">
-          <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
-            Status
-          </FormLabel>
-          <Select
-            value={currentStatus}
-            onChange={(e) =>
-              updateParams({ status: e.target.value, page: '1' })
-            }
-            options={[
-              { value: '', label: 'All Statuses' },
-              { value: 'Draft', label: 'Draft' },
-              { value: 'OpenForEnrollment', label: 'Open' },
-              { value: 'InProgress', label: 'In Progress' },
-              { value: 'Completed', label: 'Completed' },
-              { value: 'Cancelled', label: 'Cancelled' },
-            ]}
-            className="h-12"
-            placeholder="All Statuses"
-          />
-        </div>
+            <div className="flex items-center pb-2">
+              <Checkbox
+                label="Show Cancelled Batches"
+                checked={showCancelled}
+                onChange={(e) =>
+                  updateParams({
+                    showCancelled: e.target.checked ? 'true' : null,
+                    page: '1',
+                  })
+                }
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       <ResponsiveDataTable

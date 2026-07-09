@@ -218,4 +218,90 @@ describe('Trainer Eligibility Integration Tests', () => {
     expect(match?.eligible).toBe(true);
     expect(match?.reasonCodes).toHaveLength(0);
   });
+
+  it('flags trainer as TRAINER_NOT_AVAILABLE when they have an overlapping session', async () => {
+    const targetDate = new Date('2026-07-08'); // Wednesday
+    const trainer = await createTestTrainer({
+      trainerCode: `TRN-SESS-${Math.floor(1000 + Math.random() * 9000)}`,
+      effectiveStartDate: new Date('2025-01-01'),
+      effectiveEndDate: null,
+    });
+
+    // Create authorization
+    await prisma.trainerCourseAuthorization.create({
+      data: {
+        id: createUuid(randomUUID()),
+        trainerId: trainer.id,
+        courseId,
+        status: 'Active',
+        effectiveStartDate: new Date('2025-01-01'),
+        effectiveEndDate: null,
+      },
+    });
+
+    // Create availability window for Wednesday
+    await prisma.trainerAvailability.create({
+      data: {
+        id: createUuid(randomUUID()),
+        trainerId: trainer.id,
+        branchId,
+        dayOfWeek: 'Wednesday',
+        startTime: '09:00',
+        endTime: '17:00',
+        status: 'Active',
+        effectiveStartDate: new Date('2025-01-01'),
+        effectiveEndDate: null,
+      },
+    });
+
+    // Create an overlapping session for this trainer
+    // First need a batch for the session
+    const batchId = createUuid(randomUUID());
+    await prisma.batch.create({
+      data: {
+        id: batchId,
+        courseId,
+        branchId,
+        batchCode: `B-T-${Math.floor(1000 + Math.random() * 9000)}`,
+        batchNameEnglish: 'Test Batch',
+        batchNameArabic: 'دفعة التجربة',
+        startDate: new Date('2025-01-01'),
+        endDate: new Date('2026-12-31'),
+        capacity: 10,
+        status: 'OpenForEnrollment',
+      },
+    });
+
+    await prisma.session.create({
+      data: {
+        id: createUuid(randomUUID()),
+        batchId,
+        sessionNumber: 1,
+        titleEnglish: 'Overlapping Session',
+        titleArabic: 'جلسة متداخلة',
+        sessionDate: targetDate,
+        startTime: '10:00',
+        endTime: '12:00',
+        trainerId: trainer.id,
+        status: 'Scheduled',
+      },
+    });
+
+    // Evaluate eligibility for an overlapping slot (11:00 to 13:00)
+    const result = await repository.findEligibleTrainers(
+      {
+        courseId,
+        branchId,
+        targetDate,
+        startTime: '11:00',
+        endTime: '13:00',
+      },
+      { page: 1, pageSize: 1000 },
+    );
+
+    const match = result.items.find((item) => item.trainerId === trainer.id);
+    expect(match).toBeDefined();
+    expect(match?.eligible).toBe(false);
+    expect(match?.reasonCodes).toContain('TRAINER_NOT_AVAILABLE');
+  });
 });

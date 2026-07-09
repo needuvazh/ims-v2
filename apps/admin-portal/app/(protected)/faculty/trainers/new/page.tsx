@@ -149,6 +149,9 @@ export default async function NewTrainerPage(props: {
                 id: existingTrainer.id,
                 trainerCode: existingTrainer.trainerCode,
                 status: existingTrainer.status,
+                branchName: existingTrainer.branch?.branchName,
+                effectiveStartDate: existingTrainer.effectiveStartDate,
+                effectiveEndDate: existingTrainer.effectiveEndDate,
               }
             : null
         }

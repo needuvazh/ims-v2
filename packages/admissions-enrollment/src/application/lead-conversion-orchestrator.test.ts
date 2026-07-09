@@ -18,6 +18,8 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
       branchId: 'branch-1',
       interestedCourseId: 'course-1',
       person: { dateOfBirth: dob },
+      nationalId: '123456789',
+      nationality: 'Omani',
     }),
   } as any;
 
@@ -67,6 +69,8 @@ test('LeadConversionOrchestrator should convert lead and create admission succes
       leadId: 'lead-1',
       courseId: 'course-1',
       dateOfBirth: dob,
+      nationalId: '123456789',
+      nationality: 'Omani',
     },
     'actor-1',
     mockPrisma,
@@ -91,6 +95,8 @@ test('LeadConversionOrchestrator should be idempotent and succeed when student p
       branchId: 'branch-1',
       interestedCourseId: 'course-1',
       person: { dateOfBirth: dob },
+      nationalId: '123456789',
+      nationality: 'Omani',
     }),
   } as any;
 

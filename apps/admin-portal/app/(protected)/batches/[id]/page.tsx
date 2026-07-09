@@ -230,7 +230,7 @@ export default async function BatchDetailPage(props: {
           />
         }
         actions={
-          isCoordinator && (
+          isCoordinator && batch.status !== 'Completed' && batch.status !== 'Cancelled' && (
             <Link href={`/batches/${batch.id}/edit`}>
               <Button variant="outline" className="flex items-center gap-2">
                 <Edit className="h-4 w-4" /> Edit Batch
@@ -312,6 +312,9 @@ export default async function BatchDetailPage(props: {
         <div className="lg:col-span-2">
           <BatchDetailsTabs
             batchId={batch.id}
+            courseId={batch.courseId}
+            branchId={batch.branchId}
+            batchStatus={batch.status}
             batchStartDate={batch.startDate.toISOString()}
             batchEndDate={batch.endDate.toISOString()}
             sessions={sessions}
@@ -325,6 +328,7 @@ export default async function BatchDetailPage(props: {
             enrolledStudents={enrolledStudentsList}
             isRegistrar={isRegistrar}
             isCoordinator={isCoordinator}
+            waitingListEnabled={batch.waitingListEnabled}
           />
         </div>
       </div>

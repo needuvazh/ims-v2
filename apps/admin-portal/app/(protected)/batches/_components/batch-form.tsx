@@ -17,10 +17,7 @@ import {
   Calendar,
   Sliders,
   Loader2,
-  BookOpen,
-  Building,
   UserCheck,
-  Users,
 } from 'lucide-react';
 
 interface BatchFormProps {
@@ -36,11 +33,8 @@ interface BatchFormProps {
 export function BatchForm({
   courses,
   branches,
-  classrooms,
-  trainersList,
   onSubmitAction,
   initialData,
-  initialTrainerId,
 }: BatchFormProps) {
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -52,14 +46,8 @@ export function BatchForm({
   const [batchNameEnglish, setBatchNameEnglish] = useState(
     initialData?.batchNameEnglish || '',
   );
-  const [batchNameArabic, setBatchNameArabic] = useState(
-    initialData?.batchNameArabic || '',
-  );
   const [courseId, setCourseId] = useState(initialData?.courseId || '');
   const [branchId, setBranchId] = useState(initialData?.branchId || '');
-  const [classroomId, setClassroomId] = useState(
-    initialData?.classroomId || '',
-  );
   const [startDate, setStartDate] = useState(
     initialData?.startDate
       ? new Date(initialData.startDate).toISOString().split('T')[0]
@@ -84,52 +72,32 @@ export function BatchForm({
     initialData?.corporateAccountId || '',
   );
 
-  // Trainer assignment (Step 3)
-  const [primaryTrainerId, setPrimaryTrainerId] = useState(
-    initialTrainerId || '',
-  );
-  const [conflicts, setConflicts] = useState<any[]>([]);
-  const [checkingConflicts, setCheckingConflicts] = useState(false);
+  // Tomorrow's date string in YYYY-MM-DD
+  const getTomorrowStr = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split('T')[0];
+  };
+  const tomorrowStr = getTomorrowStr();
 
   // Step 1 Validation
   const isStep1Valid =
     batchCode.trim().length >= 3 &&
     batchNameEnglish.trim().length >= 3 &&
-    batchNameArabic.trim().length >= 3 &&
     courseId &&
     branchId &&
     startDate &&
     endDate;
 
-  const checkConflicts = async (trainerId: string) => {
-    if (!trainerId || !initialData?.id) {
-      setConflicts([]);
-      return;
-    }
-    setCheckingConflicts(true);
-    try {
-      const res = await fetch(
-        `/api/v1/batches/${initialData.id}/trainers/conflicts?trainerId=${trainerId}&assignedFrom=${startDate}&assignedTo=${endDate}`,
-      );
-      const json = await res.json();
-      if (json.success) {
-        setConflicts(json.conflicts || []);
-      } else {
-        setConflicts([]);
-      }
-    } catch {
-      setConflicts([]);
-    } finally {
-      setCheckingConflicts(false);
-    }
-  };
-
-  const handleTrainerChange = async (val: string) => {
-    setPrimaryTrainerId(val);
-    if (initialData?.id && val) {
-      await checkConflicts(val);
-    } else {
-      setConflicts([]);
+  const handleCourseChange = (selectedCourseId: string) => {
+    setCourseId(selectedCourseId);
+    if (!initialData && selectedCourseId) {
+      const course = courses.find((c) => c.id === selectedCourseId);
+      const prefix = course ? course.courseCode.toUpperCase() : 'B';
+      const cleanPrefix = prefix.replace(/[^A-Z0-9-]/g, '');
+      const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+      const truncatedPrefix = cleanPrefix.substring(0, 15);
+      setBatchCode(`${truncatedPrefix}-${randomSuffix}`);
     }
   };
 
@@ -141,16 +109,6 @@ export function BatchForm({
       }
       setErrorMsg(null);
       setStep(2);
-    } else if (step === 2) {
-      setErrorMsg(null);
-      if (initialData) {
-        return;
-      }
-      // Run pre-check for conflicts if trainer was preselected/initial trainer exists
-      if (primaryTrainerId && initialData?.id) {
-        checkConflicts(primaryTrainerId);
-      }
-      setStep(3);
     }
   };
 
@@ -158,14 +116,12 @@ export function BatchForm({
     setErrorMsg(null);
     if (step === 2) {
       setStep(1);
-    } else if (step === 3) {
-      setStep(2);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (step !== 3 && !initialData) return;
+    if (step !== 2) return;
 
     setErrorMsg(null);
     setIsSubmitting(true);
@@ -174,10 +130,10 @@ export function BatchForm({
       const res = await onSubmitAction({
         courseId,
         branchId,
-        classroomId: classroomId || null,
+        classroomId: null,
         batchCode: batchCode.trim().toUpperCase(),
         batchNameEnglish: batchNameEnglish.trim(),
-        batchNameArabic: batchNameArabic.trim(),
+        batchNameArabic: (initialData?.batchNameArabic || batchNameEnglish).trim(),
         startDate: new Date(startDate).toISOString(),
         endDate: new Date(endDate).toISOString(),
         capacity: parseInt(capacity, 10),
@@ -185,7 +141,7 @@ export function BatchForm({
         allowOverbooking,
         isWalkIn,
         corporateAccountId: corporateAccountId || null,
-        ...(initialData ? {} : { primaryTrainerId: primaryTrainerId || null }),
+        ...(initialData ? {} : { primaryTrainerId: null }),
       });
 
       if (!res.success) {
@@ -254,12 +210,10 @@ export function BatchForm({
               className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
                 step === 2
                   ? 'bg-indigo-600 text-white'
-                  : step === 3
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-slate-100 text-slate-500'
+                  : 'bg-slate-100 text-slate-500'
               }`}
             >
-              {step > 2 ? '✓' : '2'}
+              2
             </span>
             <span
               className={`text-sm font-semibold ${step === 2 ? 'text-slate-800' : 'text-slate-400'}`}
@@ -267,30 +221,9 @@ export function BatchForm({
               Capacity & Controls
             </span>
           </div>
-          {!initialData && (
-            <>
-              <div className="w-12 h-px bg-slate-200" />
-              <div className="flex items-center gap-2">
-                <span
-                  className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-bold ${
-                    step === 3
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-slate-100 text-slate-500'
-                  }`}
-                >
-                  3
-                </span>
-                <span
-                  className={`text-sm font-semibold ${step === 3 ? 'text-slate-800' : 'text-slate-400'}`}
-                >
-                  Faculty Assignment
-                </span>
-              </div>
-            </>
-          )}
         </div>
         <div className="text-xs font-medium text-slate-400">
-          Step {step} of {initialData ? '2' : '3'}
+          Step {step} of 2
         </div>
       </div>
 
@@ -314,15 +247,10 @@ export function BatchForm({
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField>
-                <FormLabel required>Batch Code (unique uppercase)</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="e.g. B-OSHA-01"
-                    value={batchCode}
-                    onChange={(e) => setBatchCode(e.target.value.toUpperCase())}
-                    className="font-mono uppercase"
-                  />
-                </FormControl>
+                <FormLabel>Batch Code</FormLabel>
+                <div className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-600 font-mono select-none text-sm h-10 flex items-center">
+                  {batchCode || 'Generated upon course selection'}
+                </div>
               </FormField>
 
               <FormField>
@@ -331,7 +259,7 @@ export function BatchForm({
                   <Select
                     placeholder="Select Course"
                     value={courseId}
-                    onChange={(e) => setCourseId(e.target.value)}
+                    onChange={(e) => handleCourseChange(e.target.value)}
                     options={courses.map((c) => ({
                       value: c.id,
                       label: `${c.nameEnglish} (${c.courseCode})`,
@@ -341,7 +269,7 @@ export function BatchForm({
               </FormField>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
               <FormField>
                 <FormLabel required>Select Branch</FormLabel>
                 <FormControl>
@@ -356,24 +284,9 @@ export function BatchForm({
                   />
                 </FormControl>
               </FormField>
-
-              <FormField>
-                <FormLabel>Classroom (Optional)</FormLabel>
-                <FormControl>
-                  <Select
-                    placeholder="Select Classroom"
-                    value={classroomId}
-                    onChange={(e) => setClassroomId(e.target.value)}
-                    options={classrooms.map((c) => ({
-                      value: c.id,
-                      label: `${c.classroomName} (Cap: ${c.capacity})`,
-                    }))}
-                  />
-                </FormControl>
-              </FormField>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
               <FormField>
                 <FormLabel required>Batch Name (English)</FormLabel>
                 <FormControl>
@@ -381,19 +294,6 @@ export function BatchForm({
                     placeholder="e.g. OSHA Safety - Batch 01"
                     value={batchNameEnglish}
                     onChange={(e) => setBatchNameEnglish(e.target.value)}
-                  />
-                </FormControl>
-              </FormField>
-
-              <FormField>
-                <FormLabel required>Batch Name (Arabic)</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="الاسم بالعربية"
-                    value={batchNameArabic}
-                    onChange={(e) => setBatchNameArabic(e.target.value)}
-                    className="text-right font-arabic"
-                    dir="rtl"
                   />
                 </FormControl>
               </FormField>
@@ -424,6 +324,7 @@ export function BatchForm({
                     <Input
                       type="date"
                       value={startDate}
+                      min={initialData ? undefined : tomorrowStr}
                       onChange={(e) => setStartDate(e.target.value)}
                     />
                   </FormControl>
@@ -435,6 +336,7 @@ export function BatchForm({
                     <Input
                       type="date"
                       value={endDate}
+                      min={startDate || undefined}
                       onChange={(e) => setEndDate(e.target.value)}
                     />
                   </FormControl>
@@ -501,6 +403,7 @@ export function BatchForm({
             </div>
 
             <div className="space-y-4 pt-4">
+              {/* Commented out for Phase 1 as requested by user
               <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
                 <input
                   id="waitingListEnabled"
@@ -544,6 +447,7 @@ export function BatchForm({
                   </span>
                 </div>
               </div>
+              */}
 
               <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
                 <input
@@ -624,182 +528,8 @@ export function BatchForm({
                 Back
               </Button>
               <Button
-                type={initialData ? 'submit' : 'button'}
-                disabled={isSubmitting}
-                onClick={initialData ? undefined : handleNext}
-                className="w-full sm:w-auto"
-              >
-                {initialData
-                  ? isSubmitting
-                    ? 'Saving...'
-                    : 'Save Changes'
-                  : 'Next: Faculty Assignment'}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {step === 3 && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
-          {/* Faculty Assignment Form */}
-          <div className="space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md lg:col-span-2 sm:p-5 lg:p-6">
-            <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
-              <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
-                <Users className="h-5 w-5" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-800">
-                  Primary Trainer Allocation
-                </h3>
-                <p className="text-xs text-slate-500">
-                  Allocate a qualified primary trainer for the batch duration.
-                </p>
-              </div>
-            </div>
-
-            <FormField>
-              <FormLabel>Select Primary Trainer (Optional in Draft)</FormLabel>
-              <FormControl>
-                <Select
-                  placeholder="Select Trainer Profile"
-                  value={primaryTrainerId}
-                  onChange={(e) => handleTrainerChange(e.target.value)}
-                  options={(trainersList || []).map((t) => ({
-                    value: t.id,
-                    label: `${t.displayName} (${t.email})`,
-                  }))}
-                />
-              </FormControl>
-            </FormField>
-
-            {!primaryTrainerId && (
-              <Alert
-                variant="warning"
-                title="Primary Trainer Required for Open Status"
-              >
-                An active Primary Trainer must be assigned before this batch can
-                be transitioned to OpenForEnrollment status. You can skip this
-                now and assign it later.
-              </Alert>
-            )}
-
-            {checkingConflicts && (
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <span>Checking trainer schedule conflicts...</span>
-              </div>
-            )}
-
-            {conflicts.length > 0 && (
-              <div className="space-y-4">
-                <Alert
-                  variant="error"
-                  title="Trainer Schedule Conflicts Detected"
-                >
-                  The selected trainer has overlapping sessions in the following
-                  batches:
-                </Alert>
-                <div className="border border-red-100 bg-red-50/30 rounded-xl overflow-hidden">
-                  <table className="min-w-full divide-y divide-red-100 text-xs">
-                    <thead className="bg-red-50 text-red-700">
-                      <tr>
-                        <th className="px-4 py-2 text-left font-semibold">
-                          Batch Code
-                        </th>
-                        <th className="px-4 py-2 text-left font-semibold">
-                          Date
-                        </th>
-                        <th className="px-4 py-2 text-left font-semibold">
-                          Start Time
-                        </th>
-                        <th className="px-4 py-2 text-left font-semibold">
-                          End Time
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-red-100 text-slate-700">
-                      {conflicts.map((c, idx) => (
-                        <tr key={idx}>
-                          <td className="px-4 py-2 font-mono font-bold">
-                            {c.batchCode}
-                          </td>
-                          <td className="px-4 py-2">
-                            {new Date(c.sessionDate).toLocaleDateString()}
-                          </td>
-                          <td className="px-4 py-2">{c.startTime}</td>
-                          <td className="px-4 py-2">{c.endTime}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Action buttons & Summary */}
-          <div className="flex flex-col justify-between space-y-5 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:p-5 lg:p-6">
-            <div className="space-y-5">
-              <div className="flex items-center gap-3 border-b border-slate-100 pb-3 sm:pb-4">
-                <div className="p-2 bg-green-50 text-green-600 rounded-lg">
-                  <UserCheck className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-800">
-                    Final Confirmation
-                  </h3>
-                  <p className="text-xs text-slate-500 font-medium">
-                    Review final settings before submitting
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-3 text-sm text-slate-600 bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
-                <div className="flex justify-between pb-2 border-b border-slate-200/50">
-                  <span className="font-medium">Batch Code:</span>
-                  <span className="font-mono text-slate-800 uppercase">
-                    {batchCode || 'Not set'}
-                  </span>
-                </div>
-                <div className="flex justify-between pb-2 border-b border-slate-200/50">
-                  <span className="font-medium">Dates Scope:</span>
-                  <span className="text-slate-800">
-                    {startDate ? `${startDate} to ${endDate}` : 'Not set'}
-                  </span>
-                </div>
-                <div className="flex justify-between pb-2 border-b border-slate-200/50">
-                  <span className="font-medium">Primary Trainer:</span>
-                  <span className="text-slate-800 font-medium text-right truncate max-w-[150px]">
-                    {primaryTrainerId
-                      ? (trainersList || []).find(
-                          (t) => t.id === primaryTrainerId,
-                        )?.displayName || 'Selected'
-                      : 'None assigned'}
-                  </span>
-                </div>
-                {conflicts.length > 0 && (
-                  <div className="text-xs font-semibold text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-100">
-                    Submit is blocked due to schedule conflicts.
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:justify-between">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleBack}
-                className="w-full sm:w-auto"
-              >
-                Back
-              </Button>
-              <Button
                 type="submit"
-                disabled={
-                  isSubmitting || conflicts.length > 0 || checkingConflicts
-                }
+                disabled={isSubmitting}
                 className="w-full sm:w-auto"
               >
                 {isSubmitting ? (
