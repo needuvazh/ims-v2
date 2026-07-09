@@ -22,6 +22,7 @@ const listQuerySchema = z.object({
   targetDate: z.coerce.date().optional(),
   startTime: z.string().trim().optional(),
   endTime: z.string().trim().optional(),
+  sessionId: z.string().uuid().optional(),
 });
 
 const trainerUpsertSchema = z.object({
@@ -697,6 +698,7 @@ export async function GET(
               endTime: query.endTime,
               trainerType: query.trainerType,
               q: query.q,
+              sessionId: query.sessionId,
             },
             { page: query.page, pageSize: query.pageSize },
             authContext,

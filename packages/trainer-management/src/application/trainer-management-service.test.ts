@@ -214,4 +214,35 @@ describe('TrainerManagementService', () => {
     ).rejects.toMatchObject({ code: 'forbidden' });
     expect(repository.resolveCompensationRate).not.toHaveBeenCalled();
   });
+
+  it('passes sessionId to repository when calling findEligibleTrainers', async () => {
+    const { service, repository } = createService();
+    const mockResult = { items: [], total: 0 };
+    repository.findEligibleTrainers.mockResolvedValue(mockResult);
+
+    const input = {
+      courseId: 'course-1',
+      branchId: 'branch-1',
+      targetDate: new Date('2025-01-01'),
+      startTime: '09:00',
+      endTime: '12:00',
+      sessionId: 'session-1',
+    };
+
+    const result = await service.findEligibleTrainers(
+      input,
+      { page: 1, pageSize: 10 },
+      {
+        actorId: 'actor-1',
+        permissions: ['trainer.eligibility.read'],
+        allowedBranchIds: ['branch-1'],
+      },
+    );
+
+    expect(result).toBe(mockResult);
+    expect(repository.findEligibleTrainers).toHaveBeenCalledWith(
+      input,
+      { page: 1, pageSize: 10 },
+    );
+  });
 });

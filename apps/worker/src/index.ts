@@ -473,6 +473,50 @@ async function processOutboxEvents() {
               branch.instituteId,
             );
           }
+        } else if (
+          event.eventType === 'LeaveRequestApproved' ||
+          event.eventType === 'LeaveRequestCancelled'
+        ) {
+          const payload = event.payload as {
+            personId: string;
+            startDate: string;
+            endDate: string;
+            branchId: string;
+          };
+          logger.info(
+            `Handling ${event.eventType} for person ${payload.personId} on dates ${payload.startDate} to ${payload.endDate}`,
+          );
+
+          const trainerProfiles = await prisma.trainerProfile.findMany({
+            where: { personId: payload.personId, isDeleted: false },
+            select: { id: true },
+          });
+          const trainerIds = trainerProfiles.map((tp) => tp.id);
+
+          if (trainerIds.length > 0) {
+            const affectedSessions = await prisma.session.findMany({
+              where: {
+                trainerId: { in: trainerIds },
+                sessionDate: {
+                  gte: new Date(payload.startDate),
+                  lte: new Date(payload.endDate),
+                },
+                isDeleted: false,
+              },
+              select: { id: true },
+            });
+
+            const branch = await prisma.branch.findUnique({
+              where: { id: payload.branchId },
+              select: { instituteId: true },
+            });
+
+            for (const s of affectedSessions) {
+              await schedulingService.flagSessionConflicts(s.id, {
+                instituteId: branch?.instituteId || '',
+              });
+            }
+          }
         } else if (event.eventType === 'EnrollmentCreationFailed') {
           const payload = event.payload as {
             batchId: string;

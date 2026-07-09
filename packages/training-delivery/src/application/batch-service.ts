@@ -37,6 +37,14 @@ export interface UpdateBatchInput extends Prisma.BatchUncheckedUpdateInput {
   endDate?: Date | string;
 }
 
+export interface SessionConflict {
+  sessionDate: string;
+  startTime: string;
+  endTime: string;
+  batchCode: string;
+  sessionNumber?: number;
+}
+
 export interface FacultyEligibilityResult {
   trainerId: string;
   trainerCode: string;
@@ -52,6 +60,7 @@ export interface FacultyEligibilityResult {
   alreadyAssigned: boolean;
   reasonCodes: string[];
   reasons: string[];
+  sessionConflicts?: SessionConflict[];
   assignment?: {
     role: string;
     assignedFrom: string;
@@ -854,12 +863,15 @@ export class BatchService {
           }
         }
 
+        // Session conflicts are non-blocking for assignments
+        /*
         if (conflicts.length > 0) {
           throw new TrainerScheduleConflict(
             `Trainer schedule conflict detected by Scheduling Engine`,
             conflicts,
           );
         }
+        */
       }
 
       const id = createUuid(randomUUID());
@@ -1221,6 +1233,29 @@ export class BatchService {
           }
         }
 
+        // Check for approved leave on specific Target Assessment Date
+        if (options?.targetDate) {
+          const targetDateStr = options.targetDate.toISOString().split('T')[0];
+          const trainerLeaves = leaves.filter((l) => l.personId === trainer.personId);
+          const overlappingLeave = trainerLeaves.find((leave) => {
+            const startStr = leave.startDate.toISOString().split('T')[0];
+            const endStr = leave.endDate.toISOString().split('T')[0];
+            return targetDateStr >= startStr && targetDateStr <= endStr;
+          });
+
+          if (overlappingLeave) {
+            reasonCodes.push('LEAVE_ON_TARGET_DATE');
+            const timeStr = overlappingLeave.isFullDay
+              ? 'Full Day'
+              : `${overlappingLeave.startTime}-${overlappingLeave.endTime}`;
+            reasons.push(
+              `Trainer has approved leave on Target Assessment Date ${options.targetDate.toLocaleDateString()} (${timeStr}) for reason: ${overlappingLeave.reason || 'None'}.`
+            );
+          }
+        }
+
+        const sessionConflicts: SessionConflict[] = [];
+
         for (const session of batchSessions) {
           const trainerSessions = otherSessions.filter(
             (os) => os.trainerId === trainer.id &&
@@ -1236,11 +1271,19 @@ export class BatchService {
             reasons.push(
               `Schedule conflict on ${session.sessionDate.toLocaleDateString()} at ${session.startTime}-${session.endTime}: Booked for Batch ${overlappingSession.batch.batchCode} (Session ${overlappingSession.sessionNumber}).`
             );
+            sessionConflicts.push({
+              sessionDate: session.sessionDate.toISOString(),
+              startTime: session.startTime,
+              endTime: session.endTime,
+              batchCode: overlappingSession.batch.batchCode,
+              sessionNumber: overlappingSession.sessionNumber ?? undefined,
+            });
           }
         }
 
         const uniqueReasonCodes = Array.from(new Set(reasonCodes));
-        const isAssignable = uniqueReasonCodes.length === 0;
+        const blockingReasonCodes = uniqueReasonCodes.filter((code) => code !== 'SESSION_OVERLAP');
+        const isAssignable = blockingReasonCodes.length === 0;
 
         results.push({
           trainerId: user ? user.id : trainer.id,
@@ -1257,6 +1300,7 @@ export class BatchService {
           alreadyAssigned,
           reasonCodes: uniqueReasonCodes,
           reasons,
+          sessionConflicts,
           assignment: assignmentDetail,
         });
       }

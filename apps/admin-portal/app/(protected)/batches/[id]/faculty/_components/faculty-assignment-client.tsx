@@ -32,6 +32,14 @@ import {
 import { toast } from 'sonner';
 import { assignTrainerAction } from '../../../actions';
 
+interface SessionConflict {
+  sessionDate: string;
+  startTime: string;
+  endTime: string;
+  batchCode: string;
+  sessionNumber?: number;
+}
+
 interface FacultyEligibilityResult {
   trainerId: string;
   trainerCode: string;
@@ -47,6 +55,7 @@ interface FacultyEligibilityResult {
   alreadyAssigned: boolean;
   reasonCodes: string[];
   reasons: string[];
+  sessionConflicts?: SessionConflict[];
   assignment?: {
     role: string;
     assignedFrom: string;
@@ -97,6 +106,10 @@ export function FacultyAssignmentClient({
 
   // More Details Modal State
   const [selectedTrainerForDetails, setSelectedTrainerForDetails] =
+    useState<FacultyEligibilityResult | null>(null);
+
+  // Conflict Details Modal State
+  const [selectedTrainerForConflicts, setSelectedTrainerForConflicts] =
     useState<FacultyEligibilityResult | null>(null);
 
   const loadTrainers = async () => {
@@ -294,13 +307,25 @@ export function FacultyAssignmentClient({
                   </div>
 
                   <div className="flex items-center gap-2 text-xs">
-                    {!t.reasonCodes.includes('LEAVE_OVERLAP') && !t.reasonCodes.includes('SESSION_OVERLAP') ? (
+                    {!t.reasonCodes.includes('LEAVE_OVERLAP') && !t.reasonCodes.includes('LEAVE_ON_TARGET_DATE') ? (
                       <span className="inline-flex items-center gap-1 text-emerald-600 font-medium">
-                        <CheckCircle className="h-3.5 w-3.5" /> No Conflicts (Leaves/Sessions)
+                        <CheckCircle className="h-3.5 w-3.5" /> No Leaves Overlap
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1 text-rose-600 font-medium">
-                        <XCircle className="h-3.5 w-3.5" /> Conflicts Found
+                        <XCircle className="h-3.5 w-3.5" /> Leave Overlap
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs">
+                    {!t.reasonCodes.includes('SESSION_OVERLAP') ? (
+                      <span className="inline-flex items-center gap-1 text-emerald-600 font-medium">
+                        <CheckCircle className="h-3.5 w-3.5" /> No Session Conflicts
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-amber-600 font-medium">
+                        <AlertCircle className="h-3.5 w-3.5" /> Session Conflicts (Non-blocking)
                       </span>
                     )}
                   </div>
@@ -320,6 +345,16 @@ export function FacultyAssignmentClient({
               </div>
 
               <div className="flex gap-2 justify-end mt-4 pt-3 border-t border-slate-100">
+                {t.reasonCodes.includes('SESSION_OVERLAP') && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-1 text-amber-700 border-amber-200 hover:bg-amber-50"
+                    onClick={() => setSelectedTrainerForConflicts(t)}
+                  >
+                    <Calendar className="h-3.5 w-3.5" /> View Conflicts
+                  </Button>
+                )}
                 {!t.eligible && (
                   <Button
                     variant="outline"
@@ -385,34 +420,6 @@ export function FacultyAssignmentClient({
                   ]}
                 />
               </div>
-
-              <div className="flex flex-col gap-1.5">
-                <FormLabel required>Assigned From Date</FormLabel>
-                <Input
-                  type="date"
-                  value={assignedFrom}
-                  min={startDate}
-                  max={endDate}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setAssignedFrom(val);
-                    if (assignedTo < val) {
-                      setAssignedTo(val);
-                    }
-                  }}
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <FormLabel required>Assigned To Date</FormLabel>
-                <Input
-                  type="date"
-                  value={assignedTo}
-                  min={assignedFrom}
-                  max={endDate}
-                  onChange={(e) => setAssignedTo(e.target.value)}
-                />
-              </div>
             </div>
 
             <DialogFooter>
@@ -469,6 +476,65 @@ export function FacultyAssignmentClient({
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline" className="w-full sm:w-auto">
+                Close
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Session Conflicts Dialog */}
+      <Dialog
+        open={!!selectedTrainerForConflicts}
+        onOpenChange={(open) => !open && setSelectedTrainerForConflicts(null)}
+      >
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-amber-600">
+              <Calendar className="h-5 w-5" />
+              Session Conflicts Details
+            </DialogTitle>
+            <DialogDescription>
+              Trainer <strong>{selectedTrainerForConflicts?.displayName.en}</strong> has schedule conflicts with other batches. These do not block assignment.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4 max-h-[350px] overflow-y-auto pr-1">
+            {selectedTrainerForConflicts?.sessionConflicts && selectedTrainerForConflicts.sessionConflicts.length > 0 ? (
+              <div className="divide-y divide-slate-100">
+                {selectedTrainerForConflicts.sessionConflicts.map((conflict, idx) => (
+                  <div key={idx} className="py-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-slate-800">
+                        <Calendar className="h-4 w-4 text-indigo-500" />
+                        {new Date(conflict.sessionDate).toLocaleDateString()}
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+                        <Clock className="h-3.5 w-3.5 text-slate-400" />
+                        {conflict.startTime} - {conflict.endTime}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5 self-start sm:self-center">
+                      <Badge variant="warning" className="text-amber-800 bg-amber-50 border border-amber-100 font-medium">
+                        Batch: {conflict.batchCode}
+                      </Badge>
+                      {conflict.sessionNumber && (
+                        <Badge variant="outline" className="text-slate-600 font-mono text-xs">
+                          Session {conflict.sessionNumber}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">No session conflict details available.</p>
+            )}
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline" className="w-full">
                 Close
               </Button>
             </DialogClose>

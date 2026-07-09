@@ -2655,8 +2655,8 @@
     "semantic_hash": ""
   },
   "apps/worker/src/index.ts": {
-    "mtime": 1783476045.2426682,
-    "ast_hash": "837af04a5bcdefd3c31ad769f1d846ac",
+    "mtime": 1783603631.7756813,
+    "ast_hash": "d15b0312acef52582054fe5fadf8c2e3",
     "semantic_hash": ""
   },
   "apps/worker/tsconfig.json": {
@@ -4840,8 +4840,8 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/application/batch-service.ts": {
-    "mtime": 1783582740.608078,
-    "ast_hash": "a1e5a984c2345dae9e5efd06eb745ea0",
+    "mtime": 1783594446.085923,
+    "ast_hash": "62f429cbc2501abb994d1c13954bb007",
     "semantic_hash": ""
   },
   "packages/training-delivery/src/domain/batch.ts": {
@@ -4870,8 +4870,8 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/tests/training-delivery.spec.ts": {
-    "mtime": 1783582896.6065533,
-    "ast_hash": "5a0be7071c83784cad5789e8655a9c25",
+    "mtime": 1783594531.7781742,
+    "ast_hash": "04a2f2186a48dd683ba482e672b63dab",
     "semantic_hash": ""
   },
   "packages/training-delivery/tsconfig.json": {
@@ -4885,8 +4885,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
-    "mtime": 1783591297.3852887,
-    "ast_hash": "1e65e1b9039ec9873335e0434a6f7bd7",
+    "mtime": 1783598500.4750063,
+    "ast_hash": "f3bd89e7cb7c4a05fcc4b67719717ad0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
@@ -4920,8 +4920,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/batch-delivery/spec.md": {
-    "mtime": 1783592951.5039263,
-    "ast_hash": "7a031a4ee531d67ab6b9c5bb06aa107f",
+    "mtime": 1783604139.676533,
+    "ast_hash": "61041e61365b54b84ec5ed3503485a49",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/batches/[id]/trainers/conflicts/route.ts": {
@@ -6365,8 +6365,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/conflict-dashboard-client.tsx": {
-    "mtime": 1783511130.8119345,
-    "ast_hash": "d532ce9504c1c5dbd833289ddcbc52d2",
+    "mtime": 1783599090.5704741,
+    "ast_hash": "fbe620a5a88183732fe3d6f68d37c8b2",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/conflict-resolution-wizard.tsx": {
@@ -6410,8 +6410,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/data.ts": {
-    "mtime": 1783511130.8130865,
-    "ast_hash": "67f5866b4c665d4dd9f09546ccb0f04a",
+    "mtime": 1783599083.703799,
+    "ast_hash": "157d640f72f6955e59e1e195d42df4a8",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/page.tsx": {
@@ -6595,8 +6595,8 @@
     "semantic_hash": ""
   },
   "packages/scheduling/src/application/scheduling-service.ts": {
-    "mtime": 1783511130.9829514,
-    "ast_hash": "ee0f26171f1135fe037855577313d2a1",
+    "mtime": 1783602878.4721954,
+    "ast_hash": "01584b348492795ceb86f55955f9122e",
     "semantic_hash": ""
   },
   "packages/scheduling/src/domain/errors.ts": {
@@ -7000,8 +7000,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/actions.ts": {
-    "mtime": 1783476040.3898265,
-    "ast_hash": "043d607b4972705198bc023cca8ed89b",
+    "mtime": 1783598487.6353457,
+    "ast_hash": "6c81e7737235f971ff1ca843821759bb",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/crm/page.test.tsx": {
@@ -7210,18 +7210,18 @@
     "semantic_hash": ""
   },
   "packages/trainer-management/src/application/trainer-management-service.ts": {
-    "mtime": 1783476073.3227835,
-    "ast_hash": "fb91a81a5423949e1cbbb8b563aa48a0",
+    "mtime": 1783597238.9495466,
+    "ast_hash": "f2656bfba73fa35182a3a1be03d53e15",
     "semantic_hash": ""
   },
   "packages/trainer-management/src/domain/repositories.ts": {
-    "mtime": 1783476073.3402796,
-    "ast_hash": "bbbe609f3145f596a55877c000022b30",
+    "mtime": 1783597235.5385423,
+    "ast_hash": "5183dc215346e33bf36a8e9643c6a42f",
     "semantic_hash": ""
   },
   "packages/trainer-management/src/domain/trainer.ts": {
-    "mtime": 1783476073.3537421,
-    "ast_hash": "040988a84e2f1b8f19818f9000855e5a",
+    "mtime": 1783597228.5162249,
+    "ast_hash": "dfc8f2eb94ab12fbeffe9bce1b9a8f75",
     "semantic_hash": ""
   },
   "packages/trainer-management/src/index.ts": {
@@ -7230,8 +7230,8 @@
     "semantic_hash": ""
   },
   "packages/trainer-management/src/infrastructure/prisma-trainer-management-repository.ts": {
-    "mtime": 1783582330.8318348,
-    "ast_hash": "b1c8ab8bff348da3c7ade23319706e7f",
+    "mtime": 1783597257.2725296,
+    "ast_hash": "9380ebae670f53780207cebaa573ac7d",
     "semantic_hash": ""
   },
   "packages/trainer-management/tsconfig.json": {
@@ -7280,8 +7280,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/faculty/[...segments]/route.ts": {
-    "mtime": 1783524423.357896,
-    "ast_hash": "53381b4b3fd0098d55b0709768b03827",
+    "mtime": 1783597453.5520294,
+    "ast_hash": "2bae5e7238087ff98074110897dcd922",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/_components/trainer-onboarding-form.tsx": {
@@ -7315,8 +7315,8 @@
     "semantic_hash": ""
   },
   "packages/trainer-management/src/application/trainer-management-service.test.ts": {
-    "mtime": 1783364090.8710387,
-    "ast_hash": "3bed180d446701e3d7d141c21f9f7e9e",
+    "mtime": 1783597377.880424,
+    "ast_hash": "2b7260494e6e18638c71ab6f24fbf8cd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/faculty/trainers/[trainerId]/_components/trainer-child-record-drawers.tsx": {
@@ -8480,8 +8480,8 @@
     "semantic_hash": ""
   },
   "openspec/specs/faculty-trainer-management/spec.md": {
-    "mtime": 1783476069.9548392,
-    "ast_hash": "e87adae948c2413678ce9c4f34ba2bbb",
+    "mtime": 1783604128.3973024,
+    "ast_hash": "1d477a376f6ae0b07586d2b3eed66d7a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/_components/certificates-client-view.tsx": {
@@ -8880,8 +8880,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/leaves/[id]/approve/route.ts": {
-    "mtime": 1783486204.248946,
-    "ast_hash": "bad19c6285df8a2173d13d8ac8eafc88",
+    "mtime": 1783602881.3131301,
+    "ast_hash": "734b90bd5f4ba6649576c22b4fa0ea09",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/leaves/[id]/reject/route.ts": {
@@ -8890,8 +8890,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/leaves/[id]/route.ts": {
-    "mtime": 1783486218.6238778,
-    "ast_hash": "999ed1c08b46fb7b7be64b3f5b8d1e13",
+    "mtime": 1783602884.3497436,
+    "ast_hash": "dec0c53af63d86a9c8f1721072736f50",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/leaves/route.ts": {
@@ -8905,8 +8905,8 @@
     "semantic_hash": ""
   },
   "packages/leave-management/src/application/leave-service.ts": {
-    "mtime": 1783486121.2589808,
-    "ast_hash": "e6af231c633a0db048ea11f47273c197",
+    "mtime": 1783603655.39236,
+    "ast_hash": "a4a81ab20674a2ddd27f980414c150d3",
     "semantic_hash": ""
   },
   "packages/leave-management/src/domain/leave.ts": {
@@ -9000,8 +9000,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/sessions/_components/session-schedule-form.tsx": {
-    "mtime": 1783582330.740878,
-    "ast_hash": "f7054bd71bb1652d61f1ebd87747fde1",
+    "mtime": 1783597803.9244602,
+    "ast_hash": "4f768b116e14fef7aee7d84d9ce66897",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/sessions/new/page.tsx": {
@@ -9015,8 +9015,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/faculty/_components/faculty-assignment-client.tsx": {
-    "mtime": 1783582330.73986,
-    "ast_hash": "ea22c2342d573395b58dfaa9d8c20d3b",
+    "mtime": 1783595864.3262186,
+    "ast_hash": "7b8df7f0cfbd25eee207fba92b2f6e5d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/faculty/page.tsx": {
@@ -9177,6 +9177,66 @@
   "openspec/changes/archive/2026-07-09-merge-batch-form-steps/tasks.md": {
     "mtime": 1783582917.0310707,
     "ast_hash": "a494359f6d4a762f92cbc94e2a643d10",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-faculty-eligibility-updates/.openspec.yaml": {
+    "mtime": 1783594302.2498245,
+    "ast_hash": "aa7d11c7440c9ad5871bd22760ec6d6d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-faculty-eligibility-updates/README.md": {
+    "mtime": 1783594302.2776031,
+    "ast_hash": "06af68888bd3cc5795d7ad49fa6b1afb",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-faculty-eligibility-updates/design.md": {
+    "mtime": 1783594336.1276524,
+    "ast_hash": "50e07b1d48159a61da455e9fadcf410a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-faculty-eligibility-updates/proposal.md": {
+    "mtime": 1783594324.8014927,
+    "ast_hash": "7968f29274f1b2219f2aca34b6f9ddf1",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-faculty-eligibility-updates/specs/batch-delivery/spec.md": {
+    "mtime": 1783594347.9941602,
+    "ast_hash": "65c8f7cb8dab1a8e5c1a2969548f2643",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-faculty-eligibility-updates/tasks.md": {
+    "mtime": 1783594543.5006003,
+    "ast_hash": "ccf826383f1c0638978864d61e180b5b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-session-trainer-availability-improvements/.openspec.yaml": {
+    "mtime": 1783597172.629567,
+    "ast_hash": "aa7d11c7440c9ad5871bd22760ec6d6d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-session-trainer-availability-improvements/README.md": {
+    "mtime": 1783597172.6621766,
+    "ast_hash": "2209ae4f4d99a80a40a00f486c52fbc5",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-session-trainer-availability-improvements/design.md": {
+    "mtime": 1783597188.2175694,
+    "ast_hash": "47f3118608ae2c96fdb1d18352689f93",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-session-trainer-availability-improvements/proposal.md": {
+    "mtime": 1783597183.9508324,
+    "ast_hash": "2dc668c7951577dc228deabd88b9392f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-session-trainer-availability-improvements/specs/faculty-trainer-management/spec.md": {
+    "mtime": 1783597191.7509856,
+    "ast_hash": "a68d6a16b3b2bea2040d8289fdb3a4d9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-09-session-trainer-availability-improvements/tasks.md": {
+    "mtime": 1783597512.7856045,
+    "ast_hash": "3e62c51166f9261210ed8802894d9220",
     "semantic_hash": ""
   }
 }

@@ -1400,6 +1400,7 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
       endTime?: string;
       trainerType?: TrainerType;
       q?: string;
+      sessionId?: string;
     },
     query: ListQuery,
   ) {
@@ -1505,12 +1506,20 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
           sessionDate: input.targetDate,
           isDeleted: false,
           status: { not: 'Cancelled' },
+          ...(input.sessionId ? { id: { not: input.sessionId } } : {}),
           ...(input.startTime && input.endTime
             ? {
                 startTime: { lt: input.endTime },
                 endTime: { gt: input.startTime },
               }
             : {}),
+        },
+        include: {
+          batch: {
+            select: {
+              batchCode: true,
+            },
+          },
         },
       }),
     ]);
@@ -1579,14 +1588,32 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         | 'COURSE_NOT_AUTHORIZED'
         | 'TRAINER_NOT_AVAILABLE'
         | 'BRANCH_SCOPE_DENIED'
+        | 'TRAINER_ON_LEAVE'
+        | 'SESSION_OVERLAP'
       > = [];
 
       if (!authorization) {
         reasonCodes.push('COURSE_NOT_AUTHORIZED');
       }
-      if (!availability || isOnLeave || hasOverlappingSession) {
+      if (!availability) {
         reasonCodes.push('TRAINER_NOT_AVAILABLE');
       }
+      if (isOnLeave) {
+        reasonCodes.push('TRAINER_ON_LEAVE');
+      }
+      if (hasOverlappingSession) {
+        reasonCodes.push('SESSION_OVERLAP');
+      }
+
+      const trainerConflicts = sessions
+        .filter((s) => s.trainerId === trainer.id)
+        .map((s) => ({
+          sessionDate: s.sessionDate.toISOString(),
+          startTime: s.startTime,
+          endTime: s.endTime,
+          batchCode: s.batch?.batchCode || 'Unknown',
+          sessionNumber: s.sessionNumber || undefined,
+        }));
 
       results.push({
         trainerId: trainer.id,
@@ -1605,6 +1632,7 @@ export class PrismaTrainerManagementRepository implements TrainerManagementRepos
         schedulingConflictCheckRequired: Boolean(
           input.startTime && input.endTime,
         ),
+        conflicts: trainerConflicts,
       });
     }
 

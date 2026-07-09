@@ -145,6 +145,25 @@ export class LeaveManagementService {
         },
       });
 
+      // Write Outbox Event
+      await tx.outboxEvent.create({
+        data: {
+          id: createUuid(randomUUID()),
+          eventType: 'LeaveRequestApproved',
+          aggregateType: 'LeaveRequest',
+          aggregateId: updated.id,
+          payload: {
+            personId: updated.personId,
+            startDate: updated.startDate.toISOString(),
+            endDate: updated.endDate.toISOString(),
+            branchId: updated.branchId,
+          },
+          status: 'Pending',
+          availableAt: new Date(),
+          createdAt: new Date(),
+        },
+      });
+
       return updated;
     });
 
@@ -246,6 +265,27 @@ export class LeaveManagementService {
           newValue: { isDeleted: true },
         },
       });
+
+      // Write Outbox Event if it was approved
+      if (leave.status === 'Approved') {
+        await tx.outboxEvent.create({
+          data: {
+            id: createUuid(randomUUID()),
+            eventType: 'LeaveRequestCancelled',
+            aggregateType: 'LeaveRequest',
+            aggregateId: leave.id,
+            payload: {
+              personId: leave.personId,
+              startDate: leave.startDate.toISOString(),
+              endDate: leave.endDate.toISOString(),
+              branchId: leave.branchId,
+            },
+            status: 'Pending',
+            availableAt: new Date(),
+            createdAt: new Date(),
+          },
+        });
+      }
     });
   }
 }

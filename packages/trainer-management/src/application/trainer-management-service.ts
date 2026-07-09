@@ -349,6 +349,7 @@ export class TrainerManagementService {
       endTime?: string;
       trainerType?: TrainerType;
       q?: string;
+      sessionId?: string;
     },
     query: ListQuery,
     context: AuthContext,

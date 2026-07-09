@@ -658,7 +658,7 @@ export function BatchDetailsTabs({
                                 </Link>
                               )}
                             </div>
-                          ) : (
+                          ) : batchStatus === 'InProgress' ? (
                             <Button
                               type="button"
                               size="sm"
@@ -698,7 +698,7 @@ export function BatchDetailsTabs({
                               )}
                               Open Attendance
                             </Button>
-                          )}
+                          ) : null}
                         </TableCell>
                          {isCoordinator && s.status !== 'Completed' && batchStatus !== 'Completed' && batchStatus !== 'Cancelled' && (
                           <TableCell className="text-right">

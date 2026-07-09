@@ -430,6 +430,16 @@ export async function loadConflictDashboardData(searchParams: {
         : globalScope || allowedBranchIds.length === 0
           ? {}
           : { batch: { branchId: { in: allowedBranchIds } } }),
+      ...(!searchParams.severity && !searchParams.conflictType
+        ? {
+            OR: [
+              { scheduleStatus: 'Conflict' },
+              { isConflictIgnored: true },
+              { overrideReason: { not: null } },
+              { conflictType: { not: null } },
+            ],
+          }
+        : {}),
       ...(searchParams.severity === 'Conflict'
         ? { scheduleStatus: 'Conflict' }
         : {}),

@@ -71,6 +71,7 @@ function formatDate(value: string) {
 }
 
 function conflictLabel(conflictType: string | null) {
+  if (!conflictType) return 'None';
   switch (conflictType) {
     case 'HOLIDAY':
       return 'Holiday';
@@ -277,7 +278,11 @@ export function ConflictDashboardClient({
       header: 'Issue',
       render: (session: ConflictSessionRow) => (
         <div className="space-y-1">
-          <Badge variant="outline">{conflictLabel(session.conflictType)}</Badge>
+          {session.conflictType ? (
+            <Badge variant="outline">{conflictLabel(session.conflictType)}</Badge>
+          ) : (
+            <span className="text-xs text-slate-400">None</span>
+          )}
           {session.overrideReason && (
             <p
               className="max-w-[18rem] truncate text-xs text-[color:var(--ims-muted)]"
@@ -366,9 +371,13 @@ export function ConflictDashboardClient({
           <div className="col-span-2 space-y-1 border-t border-slate-100 pt-2">
             <p className="font-semibold text-[var(--ims-muted)]">Issue</p>
             <div className="flex items-center gap-2">
-              <Badge variant="outline">
-                {conflictLabel(session.conflictType)}
-              </Badge>
+              {session.conflictType ? (
+                <Badge variant="outline">
+                  {conflictLabel(session.conflictType)}
+                </Badge>
+              ) : (
+                <span className="text-xs text-slate-400">None</span>
+              )}
               {session.overrideReason && (
                 <span className="text-[11px] text-[color:var(--ims-muted)] truncate max-w-[14rem]">
                   {session.overrideReason}

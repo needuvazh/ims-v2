@@ -729,9 +729,18 @@ export class SchedulingService {
     });
     if (!session || session.isDeleted) return;
 
+    let instituteId = context.instituteId;
+    if (!instituteId) {
+      const branch = await this.prisma.branch.findUnique({
+        where: { id: session.batch.branchId },
+        select: { instituteId: true },
+      });
+      instituteId = branch?.instituteId || undefined;
+    }
+
     const result = await this.validateSession({
       branchId: session.batch.branchId,
-      instituteId: context.instituteId!,
+      instituteId: instituteId!,
       scheduledDate: session.sessionDate,
       startTime: session.startTime,
       endTime: session.endTime,

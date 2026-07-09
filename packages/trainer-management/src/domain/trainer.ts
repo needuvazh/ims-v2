@@ -213,6 +213,14 @@ export interface TrainerReportRow {
   compensationConfigured?: boolean;
 }
 
+export interface SessionConflict {
+  sessionDate: string;
+  startTime: string;
+  endTime: string;
+  batchCode: string;
+  sessionNumber?: number;
+}
+
 export interface TrainerEligibilityResult {
   eligible: boolean;
   reasonCodes: Array<
@@ -222,10 +230,13 @@ export interface TrainerEligibilityResult {
     | 'COURSE_NOT_AUTHORIZED'
     | 'TRAINER_NOT_AVAILABLE'
     | 'BRANCH_SCOPE_DENIED'
+    | 'TRAINER_ON_LEAVE'
+    | 'SESSION_OVERLAP'
   >;
   authorizationId?: string;
   availabilityId?: string;
   schedulingConflictCheckRequired: boolean;
+  conflicts?: SessionConflict[];
 }
 
 export function validateEffectiveDateRange(

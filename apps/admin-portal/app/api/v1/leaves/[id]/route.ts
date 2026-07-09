@@ -44,7 +44,45 @@ export async function DELETE(
           allowedBranchIds,
         };
 
+        const { prisma: runtimePrisma } = await import('../../../../lib/runtime');
+        const leave = await runtimePrisma.leaveRequest.findUnique({
+          where: { id: leaveId },
+        });
+
         await leaveManagementService.cancelLeave(leaveId, authContext);
+
+        if (leave && leave.status === 'Approved') {
+          // Recheck conflicts for sessions within the leave date range for this trainer
+          try {
+            const trainerProfiles = await runtimePrisma.trainerProfile.findMany({
+              where: { personId: leave.personId, isDeleted: false },
+              select: { id: true },
+            });
+            const trainerIds = trainerProfiles.map((tp) => tp.id);
+
+            if (trainerIds.length > 0) {
+              const affectedSessions = await runtimePrisma.session.findMany({
+                where: {
+                  trainerId: { in: trainerIds },
+                  sessionDate: {
+                    gte: leave.startDate,
+                    lte: leave.endDate,
+                  },
+                  isDeleted: false,
+                },
+                select: { id: true },
+              });
+
+              const { schedulingCalendarService } = await import('../../../../lib/runtime');
+              for (const s of affectedSessions) {
+                await schedulingCalendarService.flagSessionConflicts(s.id);
+              }
+            }
+          } catch (conflictError) {
+            console.error('Failed to trigger conflict re-evaluation on leave cancellation:', conflictError);
+          }
+        }
+
         return success({}, request, `/api/v1/leaves/${leaveId}`);
       } catch (error) {
         return errorHandler(error, {

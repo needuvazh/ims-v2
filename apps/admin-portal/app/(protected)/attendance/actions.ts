@@ -57,6 +57,12 @@ export async function openAttendanceSessionAction(sessionId: string) {
       throw new Error('ERR_ATT_SESSION_NOT_FOUND');
     }
 
+    if (sourceSession.batch.status !== 'InProgress') {
+      throw new Error(
+        'You cannot open attendance sessions for a batch that is not in progress.',
+      );
+    }
+
     if (
       allowedBranchIds.length > 0 &&
       !allowedBranchIds.includes(sourceSession.batch.branchId)

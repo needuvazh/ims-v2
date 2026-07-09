@@ -7,6 +7,11 @@ import {
   Card,
   Badge,
   Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
   Input,
   FormField,
   FormLabel,
@@ -82,16 +87,17 @@ export function SessionScheduleForm({
   const [classroomAvailability, setClassroomAvailability] = useState<any[]>([]);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [hasCheckedOnce, setHasCheckedOnce] = useState(false);
-  const [expandedTrainerId, setExpandedTrainerId] = useState<string | null>(null);
+  const [selectedTrainerForDetails, setSelectedTrainerForDetails] = useState<any | null>(null);
 
   // Fetch availability
   const fetchAvailability = async (date: string, start: string, end: string) => {
     if (!date || !start || !end) return;
     setLoadingAvailability(true);
     try {
+      const sessionIdParam = initialData?.id ? `&sessionId=${initialData.id}` : '';
       const [trainerRes, classroomRes] = await Promise.all([
         fetch(
-          `/api/v1/faculty/eligible-trainers?courseId=${courseId}&branchId=${branchId}&targetDate=${date}&startTime=${start}&endTime=${end}`,
+          `/api/v1/faculty/eligible-trainers?courseId=${courseId}&branchId=${branchId}&targetDate=${date}&startTime=${start}&endTime=${end}${sessionIdParam}`,
         ),
         fetch(
           `/api/v1/batches/${batchId}/classrooms/availability?sessionDate=${date}&startTime=${start}&endTime=${end}`,
@@ -143,9 +149,9 @@ export function SessionScheduleForm({
         ? 'Available & Authorized'
         : match.reasonCodes
             ?.map((code: string) => {
-              if (code === 'TRAINER_NOT_AVAILABLE')
-                return 'Has overlapping scheduled sessions.';
+              if (code === 'SESSION_OVERLAP') return 'Has overlapping scheduled sessions.';
               if (code === 'TRAINER_ON_LEAVE') return 'On approved leave.';
+              if (code === 'TRAINER_NOT_AVAILABLE') return 'Weekly availability slot missing.';
               return code.split('_').join(' ').toLowerCase();
             })
             .join(', ') || 'Occupied',
@@ -230,7 +236,8 @@ export function SessionScheduleForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <>
+      <form onSubmit={handleSubmit} className="space-y-6">
       {/* Header Info */}
       <div className="flex flex-col gap-3 rounded-2xl border border-[color:var(--ims-border)] bg-white/80 p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between sm:p-5">
         <div className="flex items-center gap-3">
@@ -396,14 +403,14 @@ export function SessionScheduleForm({
                   const status = trainerAvailability.find((item) => item.trainerId === t.id);
                   const isEligible = status?.eligible ?? false;
                   const isSelected = t.id === trainerId;
-                  const isExpanded = expandedTrainerId === t.id;
                   const reason = status
                     ? status.eligible
                       ? 'Available'
                       : status.reasonCodes
                           ?.map((code: string) => {
-                            if (code === 'TRAINER_NOT_AVAILABLE') return 'Overlap';
+                            if (code === 'SESSION_OVERLAP') return 'Overlap';
                             if (code === 'TRAINER_ON_LEAVE') return 'Leave';
+                            if (code === 'TRAINER_NOT_AVAILABLE') return 'Unavailable';
                             return code.toLowerCase().split('_').join(' ');
                           })
                           .join(', ')
@@ -438,11 +445,14 @@ export function SessionScheduleForm({
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              setExpandedTrainerId(isExpanded ? null : t.id);
+                              setSelectedTrainerForDetails({
+                                ...t,
+                                status,
+                              });
                             }}
                             className="text-[10px] text-indigo-600 hover:text-indigo-800 underline font-semibold mt-1.5 block"
                           >
-                            {isExpanded ? 'Hide details' : 'Show details'}
+                            Show details
                           </button>
                         </div>
                         <Badge
@@ -452,42 +462,6 @@ export function SessionScheduleForm({
                           {reason}
                         </Badge>
                       </div>
-
-                      {isExpanded && (
-                        <div className="mt-2.5 pt-2.5 border-t border-slate-100 text-[10px] space-y-1.5 w-full">
-                          <p className="font-semibold text-slate-700">Eligibility Checklist:</p>
-                          <div className="flex items-center gap-1.5">
-                            {status ? (
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                            ) : (
-                              <XCircle className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-                            )}
-                            <span className={status ? 'text-slate-600' : 'text-rose-700 font-medium'}>
-                              Active Profile in target Branch
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            {status && !status.reasonCodes?.includes('COURSE_NOT_AUTHORIZED') ? (
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                            ) : (
-                              <XCircle className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-                            )}
-                            <span className={(status && !status.reasonCodes?.includes('COURSE_NOT_AUTHORIZED')) ? 'text-slate-600' : 'text-rose-700 font-medium'}>
-                              Authorized for Course
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            {status && !status.reasonCodes?.includes('TRAINER_NOT_AVAILABLE') ? (
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                            ) : (
-                              <XCircle className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-                            )}
-                            <span className={(status && !status.reasonCodes?.includes('TRAINER_NOT_AVAILABLE')) ? 'text-slate-600' : 'text-rose-700 font-medium'}>
-                              Schedule & Leave Available
-                            </span>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   );
                 })}
@@ -575,5 +549,122 @@ export function SessionScheduleForm({
         </div>
       </div>
     </form>
+
+    {/* Trainer Details & Conflicts Dialog */}
+    <Dialog
+      open={!!selectedTrainerForDetails}
+      onOpenChange={(open) => !open && setSelectedTrainerForDetails(null)}
+    >
+      <DialogContent className="max-w-md bg-white border border-slate-200 shadow-lg rounded-2xl p-6">
+        <DialogHeader className="pb-3 border-b border-slate-100">
+          <DialogTitle className="text-sm font-bold text-slate-800">Trainer Availability Details</DialogTitle>
+          <DialogDescription className="text-xs text-slate-450 mt-1">
+            Review authorization status, leave periods, and conflicting sessions.
+          </DialogDescription>
+        </DialogHeader>
+
+        {selectedTrainerForDetails && (
+          <div className="space-y-4 pt-4">
+            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <p className="text-xs font-bold text-slate-800">{selectedTrainerForDetails.displayName}</p>
+              <p className="text-[10px] text-slate-400 mt-0.5">{selectedTrainerForDetails.email}</p>
+            </div>
+
+            <div className="space-y-2.5 text-xs text-slate-600">
+              <p className="font-semibold text-slate-700">Eligibility Checklist:</p>
+              
+              <div className="flex items-center gap-2">
+                {selectedTrainerForDetails.status ? (
+                  <CheckCircle className="h-4 w-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-rose-600 shrink-0" />
+                )}
+                <span className={selectedTrainerForDetails.status ? 'text-slate-600' : 'text-rose-700 font-medium'}>
+                  Active Profile in target Branch
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('COURSE_NOT_AUTHORIZED') ? (
+                  <CheckCircle className="h-4 w-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-rose-600 shrink-0" />
+                )}
+                <span className={(selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('COURSE_NOT_AUTHORIZED')) ? 'text-slate-600' : 'text-rose-700 font-medium'}>
+                  Authorized for Course
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('TRAINER_NOT_AVAILABLE') ? (
+                  <CheckCircle className="h-4 w-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-rose-600 shrink-0" />
+                )}
+                <span className={(selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('TRAINER_NOT_AVAILABLE')) ? 'text-slate-600' : 'text-rose-700 font-medium'}>
+                  Weekly Schedule Availability
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('TRAINER_ON_LEAVE') ? (
+                  <CheckCircle className="h-4 w-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-rose-600 shrink-0" />
+                )}
+                <span className={(selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('TRAINER_ON_LEAVE')) ? 'text-slate-600' : 'text-rose-700 font-medium'}>
+                  Not on Approved Leave
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('SESSION_OVERLAP') ? (
+                  <CheckCircle className="h-4 w-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-rose-600 shrink-0" />
+                )}
+                <span className={(selectedTrainerForDetails.status && !selectedTrainerForDetails.status.reasonCodes?.includes('SESSION_OVERLAP')) ? 'text-slate-600' : 'text-rose-700 font-medium'}>
+                  No Scheduled Session Overlaps
+                </span>
+              </div>
+            </div>
+
+            {selectedTrainerForDetails.status?.conflicts && selectedTrainerForDetails.status.conflicts.length > 0 && (
+              <div className="space-y-2 pt-3 border-t border-slate-100">
+                <p className="text-xs font-semibold text-rose-700 flex items-center gap-1">
+                  <AlertTriangle className="h-3.5 w-3.5" />
+                  Overlapping Sessions ({selectedTrainerForDetails.status.conflicts.length})
+                </p>
+                <div className="border border-slate-150 rounded-xl overflow-hidden max-h-40 overflow-y-auto">
+                  <table className="w-full text-[10px] text-left border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-150 font-bold text-slate-600">
+                        <th className="p-2">Batch Code</th>
+                        <th className="p-2">Session</th>
+                        <th className="p-2">Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedTrainerForDetails.status.conflicts.map((conflict: any, idx: number) => (
+                        <tr key={idx} className="border-b border-slate-100 hover:bg-slate-50/50 last:border-b-0">
+                          <td className="p-2 font-medium text-slate-800">{conflict.batchCode}</td>
+                          <td className="p-2 text-slate-600">
+                            {conflict.sessionNumber ? `#${conflict.sessionNumber}` : 'N/A'}
+                          </td>
+                          <td className="p-2 text-slate-600 text-nowrap">
+                            {conflict.startTime} - {conflict.endTime}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }

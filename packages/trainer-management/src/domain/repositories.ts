@@ -190,6 +190,7 @@ export interface TrainerManagementRepository {
       endTime?: string;
       trainerType?: TrainerType;
       q?: string;
+      sessionId?: string;
     },
     query: ListQuery,
   ): Promise<{

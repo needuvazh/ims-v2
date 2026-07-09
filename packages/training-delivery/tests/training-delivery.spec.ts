@@ -239,6 +239,16 @@ test('BatchService.assignTrainer should check for trainer schedule overlaps and 
     conflicts: [{ type: 'TRAINER_OVERLAP' }],
   });
 
+  // Mock assignTrainer save
+  mockBatchRepository.assignTrainer.mockResolvedValueOnce({
+    id: 'assigned-1',
+    batchId,
+    trainerId,
+    role: 'Primary',
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  });
+
   const assignment = {
     trainerId,
     role: 'Primary' as const,
@@ -246,13 +256,13 @@ test('BatchService.assignTrainer should check for trainer schedule overlaps and 
     assignedTo: new Date('2026-10-31'),
   };
 
-  await expect(
-    batchService.assignTrainer(
-      batchId,
-      assignment,
-      createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
-    ),
-  ).rejects.toThrow('Trainer schedule conflict detected by Scheduling Engine');
+  const result = await batchService.assignTrainer(
+    batchId,
+    assignment,
+    createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+  );
+  expect(result).toBeDefined();
+  expect(mockBatchRepository.assignTrainer).toHaveBeenCalled();
 });
 
 test('BatchService.transitionBatchStatus should cascade sessions status and publish outbox event on Cancelled', async () => {
@@ -1341,6 +1351,233 @@ test('BatchService.assignTrainer should reject assignment if trainer branch does
       createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
     ),
   ).rejects.toThrow('Trainer registered branch does not match batch branch.');
+});
+
+test('BatchService.getFacultyEligibilityForBatch should evaluate leave on target date as ineligible', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const targetDate = new Date('2026-10-15');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    courseId: 'c1',
+    branchId: 'Muscat',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+  });
+
+  mockBatchRepository.findSessions.mockResolvedValueOnce([
+    {
+      id: 'session-1',
+      sessionNumber: 1,
+      sessionDate: new Date('2026-10-05'),
+      startTime: '09:00',
+      endTime: '11:00',
+    },
+  ]);
+
+  (mockPrisma as any).trainerProfile = {
+    findMany: vi.fn().mockResolvedValueOnce([
+      {
+        id: trainerId,
+        trainerCode: 'TR001',
+        trainerType: 'Internal',
+        status: 'Active',
+        personId: 'p1',
+        branchId: 'Muscat',
+        person: {
+          firstName: 'John',
+          lastName: 'Doe',
+          user: {
+            id: trainerId,
+            status: 'Active',
+            roles: [{ role: { roleCode: 'TRAINER' } }],
+          },
+        },
+        branch: { branchName: 'Muscat Branch' },
+        authorizations: [{ id: 'auth-1' }],
+        availability: [],
+      },
+    ]),
+  };
+
+  (mockPrisma as any).leaveRequest = {
+    findMany: vi.fn().mockResolvedValueOnce([
+      {
+        id: 'leave-1',
+        personId: 'p1',
+        startDate: new Date('2026-10-14'),
+        endDate: new Date('2026-10-16'),
+        isFullDay: true,
+        status: 'Approved',
+        isDeleted: false,
+      },
+    ]),
+  };
+
+  (mockPrisma as any).batchTrainer = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  (mockPrisma as any).session = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  const results = await batchService.getFacultyEligibilityForBatch(batchId, { targetDate });
+  expect(results).toHaveLength(1);
+  expect(results[0].eligible).toBe(false);
+  expect(results[0].reasonCodes).toContain('LEAVE_ON_TARGET_DATE');
+});
+
+test('BatchService.getFacultyEligibilityForBatch should evaluate session conflict as non-blocking and return conflict details', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    courseId: 'c1',
+    branchId: 'Muscat',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+  });
+
+  mockBatchRepository.findSessions.mockResolvedValueOnce([
+    {
+      id: 'session-1',
+      sessionNumber: 1,
+      sessionDate: new Date('2026-10-05'),
+      startTime: '09:00',
+      endTime: '11:00',
+    },
+  ]);
+
+  (mockPrisma as any).trainerProfile = {
+    findMany: vi.fn().mockResolvedValueOnce([
+      {
+        id: trainerId,
+        trainerCode: 'TR001',
+        trainerType: 'Internal',
+        status: 'Active',
+        personId: 'p1',
+        branchId: 'Muscat',
+        person: {
+          firstName: 'John',
+          lastName: 'Doe',
+          user: {
+            id: trainerId,
+            status: 'Active',
+            roles: [{ role: { roleCode: 'TRAINER' } }],
+          },
+        },
+        branch: { branchName: 'Muscat Branch' },
+        authorizations: [{ id: 'auth-1' }],
+        availability: [],
+      },
+    ]),
+  };
+
+  (mockPrisma as any).leaveRequest = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  (mockPrisma as any).batchTrainer = {
+    findMany: vi.fn().mockResolvedValueOnce([]),
+  };
+
+  (mockPrisma as any).session = {
+    findMany: vi.fn().mockResolvedValueOnce([
+      {
+        id: 'session-conflict-1',
+        trainerId,
+        batchId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7a'),
+        status: 'Scheduled',
+        isDeleted: false,
+        sessionDate: new Date('2026-10-05'),
+        startTime: '09:30',
+        endTime: '10:30',
+        sessionNumber: 3,
+        batch: {
+          batchCode: 'B456',
+        },
+      },
+    ]),
+  };
+
+  const results = await batchService.getFacultyEligibilityForBatch(batchId);
+  expect(results).toHaveLength(1);
+  expect(results[0].eligible).toBe(true);
+  expect(results[0].reasonCodes).toContain('SESSION_OVERLAP');
+  expect(results[0].sessionConflicts).toHaveLength(1);
+  expect(results[0].sessionConflicts?.[0].batchCode).toBe('B456');
+  expect(results[0].sessionConflicts?.[0].sessionNumber).toBe(3);
+});
+
+test('BatchService.assignTrainer should succeed even if session conflicts exist', async () => {
+  const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+  const trainerId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
+
+  mockBatchRepository.findById.mockResolvedValueOnce({
+    id: batchId,
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    branchId: 'Muscat',
+    status: 'Scheduled',
+    trainers: [],
+  });
+  mockBatchRepository.findTrainers.mockResolvedValueOnce([]);
+
+  mockPrisma.user.findUnique.mockResolvedValueOnce({
+    id: trainerId,
+    personId: 'p-123',
+    status: 'Active',
+    roles: [{ role: { roleCode: 'TRAINER' } }],
+  });
+
+  mockPrisma.trainerProfile.findFirst.mockResolvedValueOnce({
+    id: 'trainer-profile-id',
+    personId: 'p-123',
+    branchId: 'Muscat',
+    status: 'Active',
+  });
+
+  mockBatchRepository.findSessions.mockResolvedValueOnce([
+    {
+      id: 'session-1',
+      sessionDate: new Date('2026-10-05'),
+      startTime: '09:00',
+      endTime: '11:00',
+    },
+  ]);
+
+  mockSchedulingService.validateSession.mockResolvedValueOnce({
+    isValid: false,
+    conflicts: [
+      {
+        type: 'TRAINER_OVERLAP',
+        details: 'Overlap details',
+      },
+    ],
+  });
+
+  mockBatchRepository.assignTrainer.mockResolvedValueOnce({
+    id: 'assigned-1',
+    batchId,
+    trainerId,
+    role: 'Primary',
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  });
+
+  const assignment = {
+    trainerId,
+    role: 'Primary' as const,
+    assignedFrom: new Date('2026-10-01'),
+    assignedTo: new Date('2026-10-31'),
+  };
+
+  const result = await batchService.assignTrainer(batchId, assignment);
+  expect(result).toBeDefined();
+  expect(mockBatchRepository.assignTrainer).toHaveBeenCalled();
 });
 
 

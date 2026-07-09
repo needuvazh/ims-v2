@@ -45,6 +45,37 @@ export async function POST(
         };
 
         const result = await leaveManagementService.approveLeave(leaveId, authContext);
+
+        // Recheck conflicts for sessions within the leave date range for this trainer
+        try {
+          const { prisma: runtimePrisma, schedulingCalendarService } = await import('../../../../../lib/runtime');
+          const trainerProfiles = await runtimePrisma.trainerProfile.findMany({
+            where: { personId: result.personId, isDeleted: false },
+            select: { id: true },
+          });
+          const trainerIds = trainerProfiles.map((tp) => tp.id);
+
+          if (trainerIds.length > 0) {
+            const affectedSessions = await runtimePrisma.session.findMany({
+              where: {
+                trainerId: { in: trainerIds },
+                sessionDate: {
+                  gte: result.startDate,
+                  lte: result.endDate,
+                },
+                isDeleted: false,
+              },
+              select: { id: true },
+            });
+
+            for (const s of affectedSessions) {
+              await schedulingCalendarService.flagSessionConflicts(s.id);
+            }
+          }
+        } catch (conflictError) {
+          console.error('Failed to trigger conflict re-evaluation on leave approval:', conflictError);
+        }
+
         return success({ leave: result as any }, request, `/api/v1/leaves/${leaveId}/approve`);
       } catch (error) {
         return errorHandler(error, {
