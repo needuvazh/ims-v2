@@ -118,8 +118,8 @@ export function BatchDetailsTabs({
   enrolledStudents,
   isRegistrar,
   isCoordinator,
-  waitingListEnabled = true,
 }: BatchDetailsTabsProps) {
+  const waitingListEnabled = false;
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     'sessions' | 'trainers' | 'waitlist' | 'students'

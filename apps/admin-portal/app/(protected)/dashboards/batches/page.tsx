@@ -5,8 +5,19 @@ import { BatchesDashboardClient } from './_components/batches-dashboard-client';
 export const metadata = { title: 'Batches Dashboard | IMS Admin' };
 export const dynamic = 'force-dynamic';
 
-export default async function BatchesDashboardPage() {
-  const session = await assertPermission('course.catalog.view');
+export default async function BatchesDashboardPage(props: {
+  searchParams: Promise<{
+    startDate?: string;
+    endDate?: string;
+    courseId?: string;
+    status?: string;
+    branchId?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+
+  // Assert view permission
+  const session = await assertPermission('batch.delivery.dashboard.view');
 
   const { branchScopeResolver, prisma } = await import('../../../../lib/runtime');
   const allowedBranchIds = await branchScopeResolver.resolveAllowedBranches(
@@ -15,10 +26,59 @@ export default async function BatchesDashboardPage() {
   );
   const branchIds = allowedBranchIds.length > 0 ? allowedBranchIds : ['00000000-0000-0000-0000-000000000000'];
 
-  const baseWhere = {
+  // Resolve active filters
+  const selectedBranchId = searchParams.branchId;
+  const selectedCourseId = searchParams.courseId;
+  const selectedStatus = searchParams.status;
+
+  // Validate and enforce branch isolation
+  let activeBranchIds = [...branchIds];
+  if (selectedBranchId) {
+    if (branchIds.includes(selectedBranchId)) {
+      activeBranchIds = [selectedBranchId];
+    } else {
+      activeBranchIds = ['00000000-0000-0000-0000-000000000000']; // deny access
+    }
+  }
+
+  // Handle default 60-day date range filter
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let filterStartDate: Date;
+  if (searchParams.startDate) {
+    filterStartDate = new Date(searchParams.startDate);
+    filterStartDate.setHours(0, 0, 0, 0);
+  } else {
+    filterStartDate = new Date(today);
+    filterStartDate.setDate(today.getDate() - 60);
+    filterStartDate.setHours(0, 0, 0, 0);
+  }
+
+  let filterEndDate: Date | undefined;
+  if (searchParams.endDate) {
+    filterEndDate = new Date(searchParams.endDate);
+    filterEndDate.setHours(23, 59, 59, 999);
+  }
+
+  // Construct query where clause
+  const baseWhere: any = {
     isDeleted: false,
-    branchId: { in: branchIds },
+    branchId: { in: activeBranchIds },
+    startDate: { gte: filterStartDate },
   };
+
+  if (filterEndDate) {
+    baseWhere.startDate.lte = filterEndDate;
+  }
+
+  if (selectedCourseId) {
+    baseWhere.courseId = selectedCourseId;
+  }
+
+  if (selectedStatus) {
+    baseWhere.status = selectedStatus;
+  }
 
   // 1. Parallel KPI Counts
   const [totalCount, openCount, inProgressCount, cancelledCount, draftCount] = await Promise.all([
@@ -29,12 +89,11 @@ export default async function BatchesDashboardPage() {
     prisma.batch.count({ where: { ...baseWhere, status: 'Draft' } }),
   ]);
 
-  // 2. Parallel active batches retrieval for capacity aggregate processing
+  // 2. Query active batches for utilization capacity lists
   const activeBatches = await prisma.batch.findMany({
     where: {
-      isDeleted: false,
+      ...baseWhere,
       status: { in: ['OpenForEnrollment', 'InProgress'] },
-      branchId: { in: branchIds }
     },
     include: { course: true },
   });
@@ -68,17 +127,24 @@ export default async function BatchesDashboardPage() {
   })).sort((a, b) => b.fillRate - a.fillRate);
 
   // 3. Query upcoming batches starting in next 30 days
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
   const thirtyDaysFromNow = new Date(today);
   thirtyDaysFromNow.setDate(today.getDate() + 30);
 
+  // Note: upcoming batches are always relative to today, but also respect branch and course selections
+  const upcomingWhere: any = {
+    isDeleted: false,
+    branchId: { in: activeBranchIds },
+    startDate: { gt: today, lte: thirtyDaysFromNow },
+  };
+  if (selectedCourseId) {
+    upcomingWhere.courseId = selectedCourseId;
+  }
+  if (selectedStatus) {
+    upcomingWhere.status = selectedStatus;
+  }
+
   const upcomingBatches = await prisma.batch.findMany({
-    where: {
-      isDeleted: false,
-      startDate: { gt: today, lte: thirtyDaysFromNow },
-      branchId: { in: branchIds },
-    },
+    where: upcomingWhere,
     include: { course: { select: { nameEnglish: true } } },
     orderBy: { startDate: 'asc' },
     take: 5,
@@ -102,11 +168,35 @@ export default async function BatchesDashboardPage() {
     draft: draftCount,
   };
 
+  // 4. Fetch list parameters for filters dropdown
+  const filterCourses = await prisma.course.findMany({
+    where: { isDeleted: false },
+    select: { id: true, nameEnglish: true },
+    orderBy: { nameEnglish: 'asc' },
+  });
+
+  const filterBranches = await prisma.branch.findMany({
+    where: { isDeleted: false, id: { in: branchIds } },
+    select: { id: true, branchName: true },
+    orderBy: { branchName: 'asc' },
+  });
+
+  const activeFilters = {
+    startDate: filterStartDate.toISOString().split('T')[0],
+    endDate: filterEndDate ? filterEndDate.toISOString().split('T')[0] : '',
+    courseId: selectedCourseId || '',
+    status: selectedStatus || '',
+    branchId: selectedBranchId || '',
+  };
+
   return (
     <BatchesDashboardClient
       kpis={kpis}
       courseCapacities={courseCapacityList}
       upcoming={mappedUpcoming}
+      courses={filterCourses}
+      branches={filterBranches}
+      activeFilters={activeFilters}
     />
   );
 }

@@ -25,7 +25,8 @@ export interface EnqueueWaitlistInput {
   actorId?: string;
 }
 
-export interface CreateBatchInput extends Prisma.BatchUncheckedCreateInput {
+export interface CreateBatchInput extends Omit<Prisma.BatchUncheckedCreateInput, 'batchCode'> {
+  batchCode?: string;
   primaryTrainerId?: string | null;
 }
 
@@ -140,21 +141,7 @@ export class BatchService {
     tx?: Prisma.TransactionClient,
   ) {
     const execute = async (client: Prisma.TransactionClient) => {
-      // Validate code format
-      if (!CODE_REGEX.test(input.batchCode)) {
-        throw new Error('ERR_CRS_INVALID_CODE_FORMAT');
-      }
-
-      // Check unique code
-      const existing = await this.batchRepository.findByCode(
-        input.batchCode,
-        client,
-      );
-      if (existing) {
-        throw new DuplicateBatchCode();
-      }
-
-      // Check Course exists and is Published
+      // Check Course exists and is Published first
       const course = await client.course.findUnique({
         where: { id: input.courseId, isDeleted: false },
       });
@@ -163,6 +150,31 @@ export class BatchService {
       }
       if (course.status !== 'Published') {
         throw new CourseNotPublished();
+      }
+
+      let finalBatchCode = input.batchCode;
+      if (!finalBatchCode || finalBatchCode.trim() === '') {
+        const courseCode = course.courseCode.toUpperCase();
+        // Count existing batches for this course to generate next sequence suffix
+        const count = await client.batch.count({
+          where: { courseId: input.courseId },
+        });
+        const serial = (count + 1).toString().padStart(3, '0');
+        finalBatchCode = `${courseCode}-${serial}`;
+      }
+
+      // Validate code format
+      if (!CODE_REGEX.test(finalBatchCode)) {
+        throw new Error('ERR_CRS_INVALID_CODE_FORMAT');
+      }
+
+      // Check unique code
+      const existing = await this.batchRepository.findByCode(
+        finalBatchCode,
+        client,
+      );
+      if (existing) {
+        throw new DuplicateBatchCode();
       }
 
       // Check user branch access scoping
@@ -246,6 +258,7 @@ export class BatchService {
       const batch = await this.batchRepository.create(
         {
           ...batchInput,
+          batchCode: finalBatchCode,
           id,
           status: BATCH_STATUSES.DRAFT,
           currentEnrollmentCount: 0,

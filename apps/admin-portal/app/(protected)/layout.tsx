@@ -56,6 +56,8 @@ function mapNavigationIcons(item: any): any {
       break;
     case '/dashboards/crm':
     case '/dashboards/admissions':
+    case '/dashboards/batches':
+    case '/dashboards/courses':
       icon = <LayoutDashboard className="h-4.5 w-4.5" />;
       break;
     case '/leads':

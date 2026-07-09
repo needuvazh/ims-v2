@@ -1805,6 +1805,38 @@ const systemPermissions = [
     description:
       'Configure dynamic document requirement rules (Document Master).',
   },
+  {
+    moduleCode: 'courseCatalog',
+    featureCode: 'courses',
+    actionCode: 'menu.view',
+    permissionCode: 'course.catalog.menu.view',
+    permissionType: 'Action' as const,
+    description: 'View the Course Catalog menu in the sidebar.',
+  },
+  {
+    moduleCode: 'courseCatalog',
+    featureCode: 'courses',
+    actionCode: 'dashboard.view',
+    permissionCode: 'course.catalog.dashboard.view',
+    permissionType: 'Action' as const,
+    description: 'View the Courses operational dashboard.',
+  },
+  {
+    moduleCode: 'batchDelivery',
+    featureCode: 'batches',
+    actionCode: 'menu.view',
+    permissionCode: 'batch.delivery.menu.view',
+    permissionType: 'Action' as const,
+    description: 'View the Training Delivery (Batches) menu in the sidebar.',
+  },
+  {
+    moduleCode: 'batchDelivery',
+    featureCode: 'batches',
+    actionCode: 'dashboard.view',
+    permissionCode: 'batch.delivery.dashboard.view',
+    permissionType: 'Action' as const,
+    description: 'View the Batches operational dashboard.',
+  },
 ];
 
 async function seed() {
@@ -1880,6 +1912,7 @@ async function seed() {
   await prisma.userRole.deleteMany({});
   await prisma.rolePermission.deleteMany({});
   await prisma.user.deleteMany({});
+  await prisma.leaveRequest.deleteMany({});
   await prisma.person.deleteMany({});
   await prisma.role.deleteMany({});
   await prisma.permission.deleteMany({});
@@ -2145,6 +2178,10 @@ async function seed() {
     'document.verify.reject',
     'document.retire',
     'document.requirement.manage',
+    'course.catalog.menu.view',
+    'course.catalog.dashboard.view',
+    'batch.delivery.menu.view',
+    'batch.delivery.dashboard.view',
   ];
   const managerPerms = permRecords.filter((p) =>
     managerPermCodes.includes(p.permissionCode),
@@ -2248,6 +2285,10 @@ async function seed() {
     'document.verify.submit',
     'document.verify.approve',
     'document.verify.reject',
+    'course.catalog.menu.view',
+    'course.catalog.dashboard.view',
+    'batch.delivery.menu.view',
+    'batch.delivery.dashboard.view',
   ];
   const academicCoordinatorPerms = permRecords.filter((p) =>
     academicCoordinatorPermCodes.includes(p.permissionCode),
@@ -2294,6 +2335,8 @@ async function seed() {
     'document.create',
     'document.view',
     'document.verify.submit',
+    'batch.delivery.menu.view',
+    'batch.delivery.dashboard.view',
   ];
   const trainerPerms = permRecords.filter((p) =>
     trainerPermCodes.includes(p.permissionCode),

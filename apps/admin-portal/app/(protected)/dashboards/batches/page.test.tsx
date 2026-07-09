@@ -16,6 +16,16 @@ vi.mock('../../../../lib/runtime', () => ({
       count: vi.fn(),
       findMany: vi.fn(),
     },
+    course: {
+      findMany: vi.fn().mockResolvedValue([
+        { id: 'course-A', nameEnglish: 'Fullstack JS' }
+      ]),
+    },
+    branch: {
+      findMany: vi.fn().mockResolvedValue([
+        { id: 'branch-1', branchName: 'Branch 1' }
+      ]),
+    },
   },
 }));
 
@@ -31,7 +41,7 @@ describe('BatchesDashboardPage Server Component', () => {
       userId: 'user-123',
       roles: ['BRANCH_MANAGER'],
       activeBranchId: 'branch-1',
-      permissions: ['course.catalog.view'],
+      permissions: ['batch.delivery.dashboard.view'],
     } as any);
 
     // Mock count and findMany results
@@ -71,9 +81,9 @@ describe('BatchesDashboardPage Server Component', () => {
   });
 
   it('should enforce permission and check branch scoped counts', async () => {
-    await BatchesDashboardPage();
+    await BatchesDashboardPage({ searchParams: Promise.resolve({}) });
 
-    expect(assertPermission).toHaveBeenCalledWith('course.catalog.view');
+    expect(assertPermission).toHaveBeenCalledWith('batch.delivery.dashboard.view');
 
     // Count queries should respect branch-1 scope
     expect(prisma.batch.count).toHaveBeenCalledWith(
@@ -86,7 +96,7 @@ describe('BatchesDashboardPage Server Component', () => {
   });
 
   it('should correctly aggregate course capacities and fill rates in memory', async () => {
-    const result = await BatchesDashboardPage();
+    const result = await BatchesDashboardPage({ searchParams: Promise.resolve({}) });
 
     expect(result.type).toBe(BatchesDashboardClient);
     expect(result.props.kpis).toEqual({

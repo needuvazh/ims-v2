@@ -26,7 +26,7 @@ export default async function BatchesPage(props: {
   const searchParams = await props.searchParams;
 
   // Assert view permission
-  const session = await assertPermission('course.catalog.view');
+  const session = await assertPermission('batch.delivery.view');
 
   // Resolve filters based on branch access
   const isSuperAdmin =

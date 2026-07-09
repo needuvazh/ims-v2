@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Breadcrumbs,
@@ -20,6 +19,13 @@ import {
   TableRow,
   Badge,
   Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from '@ims/shared-ui';
 import {
   Home,
@@ -32,6 +38,7 @@ import {
   FileText,
   ChevronRight,
   TrendingUp,
+  SlidersHorizontal,
 } from 'lucide-react';
 
 interface BatchesDashboardClientProps {
@@ -58,14 +65,28 @@ interface BatchesDashboardClientProps {
     capacity: number;
     currentEnrollmentCount: number;
   }>;
+  courses: Array<{ id: string; nameEnglish: string }>;
+  branches: Array<{ id: string; branchName: string }>;
+  activeFilters: {
+    startDate: string;
+    endDate: string;
+    courseId: string;
+    status: string;
+    branchId: string;
+  };
 }
 
 export function BatchesDashboardClient({
   kpis,
   courseCapacities,
   upcoming,
+  courses,
+  branches,
+  activeFilters,
 }: BatchesDashboardClientProps) {
   const router = useRouter();
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [tempFilters, setTempFilters] = useState({ ...activeFilters });
 
   const getFillRateColor = (rate: number) => {
     if (rate >= 90) return 'text-rose-600 bg-rose-50 border-rose-100 dark:bg-rose-950/20';
@@ -73,8 +94,23 @@ export function BatchesDashboardClient({
     return 'text-emerald-600 bg-emerald-50 border-emerald-100 dark:bg-emerald-950/20';
   };
 
+  const handleApplyFilters = (filters: typeof activeFilters) => {
+    const params = new URLSearchParams();
+    if (filters.startDate) params.set('startDate', filters.startDate);
+    if (filters.endDate) params.set('endDate', filters.endDate);
+    if (filters.courseId) params.set('courseId', filters.courseId);
+    if (filters.branchId) params.set('branchId', filters.branchId);
+    if (filters.status) params.set('status', filters.status);
+
+    router.push(`/dashboards/batches?${params.toString()}`);
+  };
+
+  const handleResetFilters = () => {
+    router.push('/dashboards/batches');
+  };
+
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-6 sm:space-y-8 relative">
       <PageHeader
         title="Batches Operational Dashboard"
         description="Roster fill rates, scheduling horizons, and capacity metrics."
@@ -99,6 +135,37 @@ export function BatchesDashboardClient({
           />
         }
       />
+
+      {/* Active Filters Info Banner */}
+      <div className="flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-100 p-3 rounded-xl text-sm text-slate-600">
+        <span className="font-semibold text-slate-500">Active Filters:</span>
+        <span className="bg-white border border-slate-200 px-2.5 py-0.5 rounded-md text-xs font-medium">
+          Date: {activeFilters.startDate} {activeFilters.endDate ? `to ${activeFilters.endDate}` : '(default: last 60 days)'}
+        </span>
+        {activeFilters.courseId && (
+          <span className="bg-white border border-slate-200 px-2.5 py-0.5 rounded-md text-xs font-medium">
+            Course: {courses.find(c => c.id === activeFilters.courseId)?.nameEnglish || activeFilters.courseId}
+          </span>
+        )}
+        {activeFilters.branchId && (
+          <span className="bg-white border border-slate-200 px-2.5 py-0.5 rounded-md text-xs font-medium">
+            Branch: {branches.find(b => b.id === activeFilters.branchId)?.branchName || activeFilters.branchId}
+          </span>
+        )}
+        {activeFilters.status && (
+          <span className="bg-white border border-slate-200 px-2.5 py-0.5 rounded-md text-xs font-medium">
+            Status: {activeFilters.status}
+          </span>
+        )}
+        {(activeFilters.endDate || activeFilters.courseId || activeFilters.branchId || activeFilters.status) && (
+          <button
+            onClick={handleResetFilters}
+            className="ml-auto text-xs text-rose-600 hover:text-rose-700 font-semibold underline underline-offset-2"
+          >
+            Reset Filters
+          </button>
+        )}
+      </div>
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 sm:gap-5">
@@ -223,7 +290,7 @@ export function BatchesDashboardClient({
                     day: 'numeric',
                     year: 'numeric',
                   });
-                  const fillPercentage = batch.capacity > 0 
+                  const fillPercentage = batch.capacity > 0
                     ? Math.round((batch.currentEnrollmentCount / batch.capacity) * 100)
                     : 0;
 
@@ -267,6 +334,112 @@ export function BatchesDashboardClient({
             )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Floating Action Button (FAB) for Filters */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+          <DialogTrigger asChild>
+            <Button
+              className="rounded-full shadow-lg hover:shadow-xl w-12 h-12 flex items-center justify-center bg-[color:var(--ims-brass)] text-white hover:bg-[color:var(--ims-brass-dark)] transition-all cursor-pointer p-0"
+              title="Filter Dashboard"
+            >
+              <SlidersHorizontal className="h-5 w-5" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Filter Batches Dashboard</DialogTitle>
+              <DialogDescription>
+                Customize the date range and dimensions to filter batch statistics.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-500">Start Date</label>
+                  <input
+                    type="date"
+                    value={tempFilters.startDate}
+                    onChange={(e) => setTempFilters({ ...tempFilters, startDate: e.target.value })}
+                    className="w-full h-10 px-3 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[color:var(--ims-brass)]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-500">End Date</label>
+                  <input
+                    type="date"
+                    value={tempFilters.endDate}
+                    onChange={(e) => setTempFilters({ ...tempFilters, endDate: e.target.value })}
+                    className="w-full h-10 px-3 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[color:var(--ims-brass)]"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-500">Course</label>
+                <select
+                  value={tempFilters.courseId}
+                  onChange={(e) => setTempFilters({ ...tempFilters, courseId: e.target.value })}
+                  className="w-full h-10 px-3 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[color:var(--ims-brass)]"
+                >
+                  <option value="">All Courses</option>
+                  {courses.map(c => (
+                    <option key={c.id} value={c.id}>{c.nameEnglish}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-500">Branch</label>
+                <select
+                  value={tempFilters.branchId}
+                  onChange={(e) => setTempFilters({ ...tempFilters, branchId: e.target.value })}
+                  className="w-full h-10 px-3 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[color:var(--ims-brass)]"
+                >
+                  <option value="">All Authorized Branches</option>
+                  {branches.map(b => (
+                    <option key={b.id} value={b.id}>{b.branchName}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-500">Status</label>
+                <select
+                  value={tempFilters.status}
+                  onChange={(e) => setTempFilters({ ...tempFilters, status: e.target.value })}
+                  className="w-full h-10 px-3 text-sm rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[color:var(--ims-brass)]"
+                >
+                  <option value="">All Statuses</option>
+                  <option value="Draft">Draft</option>
+                  <option value="OpenForEnrollment">Open for Enrollment</option>
+                  <option value="InProgress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setIsFilterOpen(false)}
+                className="h-10 text-xs font-semibold text-slate-600"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  handleApplyFilters(tempFilters);
+                  setIsFilterOpen(false);
+                }}
+                className="h-10 text-xs font-semibold bg-[color:var(--ims-brass)] text-white hover:bg-[color:var(--ims-brass-dark)]"
+              >
+                Apply Filters
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

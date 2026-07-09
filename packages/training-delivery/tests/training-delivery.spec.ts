@@ -134,6 +134,60 @@ test('BatchService.createBatch should fail if course is not published', async ()
   ).rejects.toThrow('published courses');
 });
 
+test('BatchService.createBatch should generate batchCode sequentially if not provided', async () => {
+  mockPrisma.course.findUnique.mockResolvedValueOnce({
+    id: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    courseCode: 'PY-101',
+    status: 'Published',
+    effectiveStartDate: new Date('2026-01-01'),
+    effectiveEndDate: null,
+  });
+
+  mockPrisma.userBranchAccess.findFirst.mockResolvedValueOnce({
+    id: 'access-1',
+    userId: 'd54db80f-90e8-4228-a5b6-7b4430e70e7a',
+    branchId: 'd54db80f-90e8-4228-a5b6-7b4430e70e7b',
+    status: 'Active',
+  });
+
+  mockBatchRepository.findByCode.mockResolvedValueOnce(null);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (mockPrisma as any).batch = {
+    count: vi.fn().mockResolvedValue(2),
+  };
+
+  mockBatchRepository.create.mockResolvedValueOnce({
+    id: 'batch-123',
+    batchCode: 'PY-101-003',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+  });
+
+  const input = {
+    courseId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e'),
+    branchId: createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7b'),
+    batchNameEnglish: 'Test Batch',
+    batchNameArabic: 'دفعة تجريبية',
+    startDate: new Date('2026-10-01'),
+    endDate: new Date('2026-10-31'),
+    capacity: 20,
+  };
+
+  const result = await batchService.createBatch(
+    input,
+    createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7a'),
+  );
+
+  expect(result.batchCode).toBe('PY-101-003');
+  expect(mockBatchRepository.create).toHaveBeenCalledWith(
+    expect.objectContaining({
+      batchCode: 'PY-101-003',
+    }),
+    expect.any(Object),
+  );
+});
+
 test('BatchService.updateBatch should fail if version numbers do not match (concurrency)', async () => {
   const batchId = createUuid('d54db80f-90e8-4228-a5b6-7b4430e70e7e');
   mockBatchRepository.findById.mockResolvedValueOnce({

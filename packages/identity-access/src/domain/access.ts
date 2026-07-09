@@ -78,6 +78,10 @@ export const knownPermissions = [
   'certificate.reissue',
   'certificate.revoke',
   'document.requirement.manage',
+  'course.catalog.menu.view',
+  'course.catalog.dashboard.view',
+  'batch.delivery.menu.view',
+  'batch.delivery.dashboard.view',
 ] as const;
 
 export type KnownPermission = (typeof knownPermissions)[number];
@@ -138,15 +142,33 @@ export const adminNavigation: NavigationItem[] = [
     ],
   },
   {
-    href: '/batches',
-    label: 'Training Delivery',
-    permission: 'batch.delivery.view',
+    href: '/courses-catalog',
+    label: 'Course Catalog',
+    permission: 'course.catalog.menu.view',
     category: 'Operations',
     items: [
       {
+        href: '/dashboards/courses',
+        label: 'Courses Dashboard',
+        permission: 'course.catalog.dashboard.view',
+      },
+      {
         href: '/courses-catalog',
-        label: 'Course Catalog',
+        label: 'Courses List',
         permission: 'course.catalog.view',
+      },
+    ],
+  },
+  {
+    href: '/batches',
+    label: 'Training Delivery',
+    permission: 'batch.delivery.menu.view',
+    category: 'Operations',
+    items: [
+      {
+        href: '/dashboards/batches',
+        label: 'Batches Dashboard',
+        permission: 'batch.delivery.dashboard.view',
       },
       {
         href: '/batches',

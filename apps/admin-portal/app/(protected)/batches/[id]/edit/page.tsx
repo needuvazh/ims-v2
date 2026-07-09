@@ -29,25 +29,16 @@ export default async function EditBatchPage(props: {
     select: { id: true, courseCode: true, nameEnglish: true },
   });
 
-  // Fetch Branches the user has access to
-  const isSuperAdmin =
-    session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
-  let branches;
-  if (isSuperAdmin) {
-    branches = await prisma.branch.findMany({
-      where: { isDeleted: false },
+  // Fetch active branch context from the session
+  const branches = [];
+  if (session.activeBranchId) {
+    const activeBranch = await prisma.branch.findUnique({
+      where: { id: session.activeBranchId as string, isDeleted: false },
       select: { id: true, branchName: true },
     });
-  } else {
-    // Resolve based on user branch access mappings
-    const access = await prisma.userBranchAccess.findMany({
-      where: { userId: session.userId, status: 'Active' },
-      include: { branch: true },
-    });
-    branches = access.map((a) => ({
-      id: a.branch.id,
-      branchName: a.branch.branchName,
-    }));
+    if (activeBranch) {
+      branches.push(activeBranch);
+    }
   }
 
   // Fetch active classrooms
