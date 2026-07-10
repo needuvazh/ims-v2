@@ -10,13 +10,15 @@ import {
   AdminListPageLayout,
   LinkButton,
   PageHeader,
+  Breadcrumbs,
 } from '@ims/shared-ui';
-import { ClipboardList, Layers } from 'lucide-react';
+import { ClipboardList, Layers, Home } from 'lucide-react';
 import { AttendanceCorrectionsQueue } from '../_components/attendance-corrections-queue';
 
 export const metadata = {
   title: 'Attendance Corrections - Admin Portal | ASTI IMS',
 };
+export const dynamic = 'force-dynamic';
 
 export default async function AttendanceCorrectionsPage() {
   const session = await assertPermission('attendance.correction.review');
@@ -59,9 +61,7 @@ export default async function AttendanceCorrectionsPage() {
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
       <PageHeader
-        eyebrow="Attendance"
         title="Attendance Corrections"
-        description="Review correction requests, approval outcomes, rejection reasons, and aging by branch."
         actions={
           <LinkButton
             href="/attendance/sessions"
@@ -72,11 +72,24 @@ export default async function AttendanceCorrectionsPage() {
             Sessions
           </LinkButton>
         }
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              {
+                label: 'Attendance',
+                href: '/attendance/dashboard',
+              },
+              {
+                label: 'Corrections',
+              },
+            ]}
+          />
+        }
       />
 
       <Card>
         <CardHeader>
-          <CardTitle>Correction Queue</CardTitle>
+          <CardTitle>Correction Review Pipelines</CardTitle>
           <CardDescription>
             Pending and historical correction requests for the authorized branch
             scope.
@@ -90,8 +103,8 @@ export default async function AttendanceCorrectionsPage() {
                 No corrections found.
               </p>
               <p className="mt-1 text-sm text-[color:var(--ims-muted)]">
-                Mark attendance first, then request a correction from the record
-                workflow.
+                Mark attendance first, then request a correction from the roster
+                edit views.
               </p>
             </div>
           ) : (

@@ -34,34 +34,68 @@ export default async function ExamDetailPage(props: {
     notFound();
   }
 
-  const results = await prisma.result.findMany({
-    where: { examId: id, isDeleted: false },
+  const enrollments = await prisma.enrollment.findMany({
+    where: { batchId: exam.batchId, isDeleted: false },
     include: {
-      enrollment: {
-        select: {
-          enrollmentNumber: true,
-          studentProfile: {
-            select: {
-              person: { select: { firstName: true, lastName: true } },
-            },
+      studentProfile: {
+        include: {
+          person: {
+            select: { firstName: true, lastName: true },
           },
         },
       },
     },
   });
 
+  const existingResults = await prisma.result.findMany({
+    where: { examId: id, isDeleted: false },
+  });
+
+  const rosterResults = enrollments.map((enr) => {
+    const existing = existingResults.find((r) => r.enrollmentId === enr.id);
+    return {
+      id: existing?.id || `temp-${enr.id}`,
+      enrollmentId: enr.id,
+      examId: id,
+      marksObtained: existing ? existing.marksObtained.toNumber() : 0,
+      grade: existing?.grade || '',
+      resultStatus: existing?.resultStatus || 'Pending',
+      enrollment: {
+        enrollmentNumber: enr.enrollmentNumber,
+        studentProfile: {
+          person: {
+            firstName: enr.studentProfile?.person?.firstName || 'Unknown',
+            lastName: enr.studentProfile?.person?.lastName || 'Student',
+          },
+        },
+      },
+      exam: {
+        examName: exam.examName,
+        maxMarks: exam.maxMarks.toNumber(),
+        passMarks: exam.passMarks.toNumber(),
+        status: exam.status,
+      },
+    };
+  });
+
   const resultStats = {
-    total: results.length,
-    recorded: results.filter((r) => r.resultStatus === 'Recorded').length,
-    finalized: results.filter((r) => r.resultStatus === 'Finalized').length,
-    pending: results.filter((r) => r.resultStatus === 'Pending').length,
+    total: rosterResults.length,
+    recorded: rosterResults.filter((r) => r.resultStatus === 'Recorded').length,
+    finalized: rosterResults.filter((r) => r.resultStatus === 'Finalized').length,
+    pending: rosterResults.filter((r) => r.resultStatus === 'Pending').length,
+  };
+
+  const serializedExam = {
+    ...exam,
+    maxMarks: exam.maxMarks.toNumber(),
+    passMarks: exam.passMarks.toNumber(),
   };
 
   return (
     <AdminDetailPageLayout className="pt-1 sm:pt-0">
       <ExamDetailClient
-        exam={exam}
-        results={results}
+        exam={serializedExam}
+        results={rosterResults}
         resultStats={resultStats}
         permissions={session.permissions}
       />

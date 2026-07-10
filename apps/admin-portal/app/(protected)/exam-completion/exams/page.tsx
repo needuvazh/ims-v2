@@ -78,13 +78,14 @@ export default async function ExamsPage(props: {
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const limit = 20;
   const skip = (page - 1) * limit;
-
   const where: any = { isDeleted: false };
 
+  if (searchParams.q) {
+    where.examName = { contains: searchParams.q, mode: 'insensitive' };
+  }
   if (searchParams.batchId) {
     where.batchId = searchParams.batchId;
-  }
-  if (searchParams.courseId) {
+  } else if (searchParams.courseId) {
     const batchIds = batches
       .filter((b) => b.courseId === searchParams.courseId)
       .map((b) => b.id);
@@ -184,28 +185,18 @@ export default async function ExamsPage(props: {
               maxMarks: e.maxMarks.toNumber(),
               passMarks: e.passMarks.toNumber(),
             }))}
+            courses={courses}
+            batches={batches}
+            total={total}
+            currentPage={page}
             permissions={session.permissions}
+            defaultSearch={searchParams.q || ''}
+            defaultCourseId={searchParams.courseId || ''}
+            defaultBatchId={searchParams.batchId || ''}
+            defaultStatus={searchParams.status || ''}
           />
         </CardContent>
       </Card>
-
-      {total > limit && (
-        <div className="flex justify-center gap-2 pt-4">
-          {Array.from({ length: Math.ceil(total / limit) }, (_, i) => (
-            <Link
-              key={i}
-              href={`/exam-completion/exams?page=${i + 1}`}
-              className={`rounded px-3 py-1 text-sm font-semibold transition-colors ${
-                i + 1 === page
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
-              }`}
-            >
-              {i + 1}
-            </Link>
-          ))}
-        </div>
-      )}
     </AdminListPageLayout>
   );
 }

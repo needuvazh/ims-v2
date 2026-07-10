@@ -202,7 +202,7 @@ export function BulkResultsForm({ exams, enrollments }: BulkResultsFormProps) {
         `Bulk entry successful! Processed ${validRows.length} results.`,
         { id: toastId },
       );
-      router.push(`/exam-completion/results?examId=${examId}`);
+      router.push(`/exam-completion/exams/${examId}`);
       router.refresh();
     } catch (err: any) {
       console.error(err);

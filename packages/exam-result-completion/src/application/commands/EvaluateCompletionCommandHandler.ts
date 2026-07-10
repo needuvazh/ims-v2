@@ -122,7 +122,8 @@ export class EvaluateCompletionCommandHandler {
     };
 
     const aggregate = CourseCompletionAggregate.create(command);
-    await this.completionRepository.save(aggregate.state);
+    const evaluated = aggregate.evaluate();
+    await this.completionRepository.save(evaluated);
 
     return aggregate.state.id;
   }

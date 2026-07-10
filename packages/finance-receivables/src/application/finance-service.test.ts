@@ -288,3 +288,101 @@ test('verifyCorporateCreditLimit should throw if outstanding amount exceeds limi
 
   expect(mockPrisma.outboxEvent.create).toHaveBeenCalled();
 });
+
+test('recordPayment should not throw ERR_ENR_BATCH_FULL if student is already approved/confirmed/active and batch is at capacity', async () => {
+  const mockPrisma = {
+    $transaction: vi.fn((callback) => callback(mockPrisma)),
+    outboxEvent: { create: vi.fn().mockResolvedValue(null) },
+    enrollment: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'enroll-123',
+        studentProfileId: 'student-123',
+        batchId: 'batch-123',
+        enrollmentStatus: 'Approved',
+        isDeleted: false,
+      }),
+      count: vi.fn().mockResolvedValue(0), // Count is 0 because the query excludes 'enroll-123'
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-123',
+        capacity: 1,
+        waitingListEnabled: false,
+        isDeleted: false,
+      }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(0),
+    },
+  } as any;
+
+  const service = new FinanceService(mockPrisma);
+
+  const mockInvoice = {
+    id: 'invoice-123',
+    enrollmentId: 'enroll-123',
+    totalAmount: new Decimal(100),
+    paidAmount: new Decimal(0),
+    outstandingAmount: new Decimal(100),
+    branchId: 'branch-123',
+    invoiceDate: new Date('2026-07-04'),
+    dueDate: new Date('2026-08-01'),
+    installmentPlans: [],
+  };
+
+  const mockPayment = {
+    id: 'pay-123',
+    paymentNumber: 'PAY-2026-000001',
+    amount: new Decimal(100),
+    currency: 'OMR',
+  };
+
+  const mockReceipt = {
+    id: 'receipt-123',
+    receiptNumber: 'RCP-2026-000001',
+  };
+
+  vi.spyOn(service['repo'], 'findInvoiceById').mockResolvedValue(
+    mockInvoice as any,
+  );
+  vi.spyOn(service['repo'], 'getNextPaymentNumber').mockResolvedValue(
+    'PAY-2026-000001',
+  );
+  vi.spyOn(service['repo'], 'createPayment').mockResolvedValue(
+    mockPayment as any,
+  );
+  vi.spyOn(service['repo'], 'updateInvoiceStatus').mockResolvedValue(
+    null as any,
+  );
+  vi.spyOn(service['repo'], 'createReceipt').mockResolvedValue(
+    mockReceipt as any,
+  );
+  vi.spyOn(service['repo'], 'upsertReceivable').mockResolvedValue(null as any);
+
+  const input = {
+    invoiceId: 'invoice-123',
+    branchId: 'branch-123',
+    paymentDate: new Date(),
+    paymentMethod: 'Cash' as const,
+    currency: 'OMR',
+    amount: 100,
+    receivedBy: 'user-123',
+    idempotencyKey: 'idemp-123',
+    allocations: [],
+  };
+
+  const result = await service.recordPayment(input);
+
+  expect(result.payment.id).toBe('pay-123');
+  expect(result.receipt.id).toBe('receipt-123');
+  expect(mockPrisma.enrollment.count).toHaveBeenCalledWith({
+    where: {
+      batchId: 'batch-123',
+      enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+      id: { not: 'enroll-123' },
+      isDeleted: false,
+    },
+  });
+});
+

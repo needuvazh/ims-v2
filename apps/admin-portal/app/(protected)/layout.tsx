@@ -186,9 +186,7 @@ function mapNavigationIcons(item: any): any {
     case '/exam-completion/exams':
       icon = <FileText className="h-4.5 w-4.5" />;
       break;
-    case '/exam-completion/results':
-      icon = <FileSpreadsheet className="h-4.5 w-4.5" />;
-      break;
+
     case '/exam-completion/completions':
       icon = <BadgeCheck className="h-4.5 w-4.5" />;
       break;

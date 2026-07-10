@@ -25,8 +25,11 @@ export interface CompletionDetail {
   enrollmentId: string;
   completionStatus: string;
   attendancePercentage?: number | null;
+  attendanceOutcome?: string | null;
   examRequired: boolean;
+  examOutcome?: string | null;
   paymentRequired: boolean;
+  paymentOutcome?: string | null;
   manualApprovalRequired: boolean;
   certificateAllowed: boolean;
   evidenceStale: boolean;
@@ -58,8 +61,11 @@ export class GetCompletionDetailQueryHandler {
       enrollmentId: completion.enrollmentId,
       completionStatus: completion.completionStatus,
       attendancePercentage: completion.attendancePercentage,
+      attendanceOutcome: completion.attendanceOutcome,
       examRequired: completion.examRequired,
+      examOutcome: completion.examOutcome,
       paymentRequired: completion.paymentRequired,
+      paymentOutcome: completion.paymentOutcome,
       manualApprovalRequired: completion.manualApprovalRequired,
       certificateAllowed: completion.certificateAllowed,
       evidenceStale: completion.evidenceStale,

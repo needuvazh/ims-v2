@@ -199,6 +199,29 @@ export default async function CertificatesPage(props: {
     { label: 'Certificates', href: '/certificates' },
   ];
 
+  const serializedCertificates = certificates.map((cert) => ({
+    ...cert,
+    enrollment: {
+      ...cert.enrollment,
+      resolvedPrice: cert.enrollment.resolvedPrice.toNumber(),
+      resolvedDiscount: cert.enrollment.resolvedDiscount.toNumber(),
+      finalAmount: cert.enrollment.finalAmount.toNumber(),
+    },
+  }));
+
+  const serializedReissueRequests = reissueRequests.map((req) => ({
+    ...req,
+    certificate: {
+      ...req.certificate,
+      enrollment: {
+        ...req.certificate.enrollment,
+        resolvedPrice: req.certificate.enrollment.resolvedPrice.toNumber(),
+        resolvedDiscount: req.certificate.enrollment.resolvedDiscount.toNumber(),
+        finalAmount: req.certificate.enrollment.finalAmount.toNumber(),
+      },
+    },
+  }));
+
   return (
     <AdminListPageLayout>
       <div className="flex flex-col space-y-6 p-6">
@@ -209,9 +232,9 @@ export default async function CertificatesPage(props: {
         />
 
         <CertificatesClientView
-          certificates={certificates}
+          certificates={serializedCertificates}
           readinessQueue={readinessQueue}
-          reissueRequests={reissueRequests}
+          reissueRequests={serializedReissueRequests}
           metrics={{
             totalIssued,
             totalRevoked,

@@ -15,7 +15,10 @@ export default async function CreateExamPage() {
   });
 
   const batches = await prisma.batch.findMany({
-    where: { isDeleted: false },
+    where: {
+      isDeleted: false,
+      status: { in: ['InProgress', 'Completed'] },
+    },
     select: { id: true, batchNameEnglish: true, courseId: true },
   });
 

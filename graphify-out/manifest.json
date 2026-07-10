@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1783584543.5901046,
-    "ast_hash": "9bc8c70d358ef6389be2ea10bfd9c10c",
+    "mtime": 1783702971.5625777,
+    "ast_hash": "4726273bbf833570ae420a9090936417",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/loading.tsx": {
@@ -235,7 +235,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1783617643.3745015,
+    "mtime": 1783676201.8295846,
     "ast_hash": "4d4d47c125ad9edf2f620515ee806f3d",
     "semantic_hash": ""
   },
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783668537.6498952,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1783701697.9126968,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1783584732.7221894,
-    "ast_hash": "630d83c8fac682863385401f2d16e5d3",
+    "mtime": 1783702971.5885103,
+    "ast_hash": "479bc262941a72e459f6bd04c4306a87",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1783584537.8231683,
-    "ast_hash": "06a22d17447b7355acb0f8ecd62545df",
+    "mtime": 1783702971.590463,
+    "ast_hash": "7a6abd6cf23249e1db98654e3e57b963",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/role.ts": {
@@ -2555,7 +2555,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/actions.ts": {
-    "mtime": 1783622128.8947024,
+    "mtime": 1783676201.8257136,
     "ast_hash": "fdc143b6346afe572f2baccb43bea5eb",
     "semantic_hash": ""
   },
@@ -2670,22 +2670,22 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/admission-service.ts": {
-    "mtime": 1783616486.2984037,
+    "mtime": 1783676201.858267,
     "ast_hash": "39724d33e1de5da5a6b6926fe773b139",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/lead-conversion-orchestrator.test.ts": {
-    "mtime": 1783660305.1297848,
+    "mtime": 1783676201.8591464,
     "ast_hash": "3322adc9203653f34962b4b867105140",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/lead-conversion-orchestrator.ts": {
-    "mtime": 1783660293.2121968,
+    "mtime": 1783676201.8593514,
     "ast_hash": "08308907f2da78cd08d8fb8aaacca6d7",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/domain/admission.ts": {
-    "mtime": 1783616211.9218204,
+    "mtime": 1783676201.8599532,
     "ast_hash": "6c349474f996f7f607be61a620361207",
     "semantic_hash": ""
   },
@@ -2695,7 +2695,7 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/infrastructure/admission-repository.ts": {
-    "mtime": 1783616244.2512064,
+    "mtime": 1783676201.860169,
     "ast_hash": "0e3e1f26ac06cb3ce65a34e602439a7f",
     "semantic_hash": ""
   },
@@ -2715,7 +2715,7 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/domain/lead.ts": {
-    "mtime": 1783660274.6199653,
+    "mtime": 1783676201.8605607,
     "ast_hash": "6ef83a246d2599f4b22ef09141eb3923",
     "semantic_hash": ""
   },
@@ -3065,7 +3065,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/auth/login/route.test.ts": {
-    "mtime": 1783618073.9301353,
+    "mtime": 1783676201.8285866,
     "ast_hash": "10ac98d8bd2c987597a0949805bb70b7",
     "semantic_hash": ""
   },
@@ -3545,12 +3545,12 @@
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ER Model.md": {
-    "mtime": 1783616761.6138742,
+    "mtime": 1783676201.8300543,
     "ast_hash": "f93d8ce92a4bd4c22d86972c10816ebe",
     "semantic_hash": ""
   },
   "docs/architecture/ddd/ddd-context-map.md": {
-    "mtime": 1783615776.11348,
+    "mtime": 1783676201.8303509,
     "ast_hash": "934869ebc57ec5121daa63dc671d0bf6",
     "semantic_hash": ""
   },
@@ -4185,7 +4185,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/leads/[id]/convert/route.ts": {
-    "mtime": 1783617962.295866,
+    "mtime": 1783676201.8289893,
     "ast_hash": "c423ea5a1e990a625bdd4d3485583894",
     "semantic_hash": ""
   },
@@ -4315,7 +4315,7 @@
     "semantic_hash": ""
   },
   "openspec/specs/crm-core-models-apis/spec.md": {
-    "mtime": 1783674525.6417239,
+    "mtime": 1783676201.856897,
     "ast_hash": "f39da967dc7f33efbc032f6f8f67de37",
     "semantic_hash": ""
   },
@@ -4335,7 +4335,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/_components/leads-client-list.tsx": {
-    "mtime": 1783611142.4406857,
+    "mtime": 1783676201.8254905,
     "ast_hash": "ba4089ee099fd26768e9ab2630cdb3ff",
     "semantic_hash": ""
   },
@@ -4350,12 +4350,12 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/_components/lead-details-client.tsx": {
-    "mtime": 1783657948.1472487,
+    "mtime": 1783676201.8250756,
     "ast_hash": "67426d84cc1d5cd06d3e71dbba97b474",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/page.tsx": {
-    "mtime": 1783660320.7453825,
+    "mtime": 1783676201.8252783,
     "ast_hash": "58e91589fa1e24055181a1a2b52b8be3",
     "semantic_hash": ""
   },
@@ -4785,7 +4785,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/page.tsx": {
-    "mtime": 1783608157.1776738,
+    "mtime": 1783676201.8211038,
     "ast_hash": "64fc0291f1de625b2330dc48f09f30d7",
     "semantic_hash": ""
   },
@@ -4835,7 +4835,7 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/src/application/batch-service.ts": {
-    "mtime": 1783617832.5242562,
+    "mtime": 1783676201.8615785,
     "ast_hash": "8f7d6d329fba78ca160eeaaad51f737d",
     "semantic_hash": ""
   },
@@ -4865,7 +4865,7 @@
     "semantic_hash": ""
   },
   "packages/training-delivery/tests/training-delivery.spec.ts": {
-    "mtime": 1783617936.7230098,
+    "mtime": 1783676201.8618224,
     "ast_hash": "01d11c382eac5a3322e7fb2c834f41ed",
     "semantic_hash": ""
   },
@@ -4960,7 +4960,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batches-client-list.tsx": {
-    "mtime": 1783608168.9688838,
+    "mtime": 1783676201.820259,
     "ast_hash": "113b5aea236f8c07c565306ae7509d87",
     "semantic_hash": ""
   },
@@ -5060,13 +5060,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/pricing/route.test.ts": {
-    "mtime": 1783476044.0881593,
-    "ast_hash": "da7791ff29b687287991d6dbb59dc48b",
+    "mtime": 1783702971.5628319,
+    "ast_hash": "a53aedcfb8d5d03abc639350857e0580",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/pricing/route.ts": {
-    "mtime": 1783476044.1018448,
-    "ast_hash": "c82ea66ea88de6d2866f9ff56ba3e562",
+    "mtime": 1783702971.5630968,
+    "ast_hash": "15cddea022dc9b9b2e0a6e70a14d429a",
     "semantic_hash": ""
   },
   "apps/admin-portal/e2e/course-pricing-discounts.spec.ts": {
@@ -5155,7 +5155,7 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-service.ts": {
-    "mtime": 1783622728.0526545,
+    "mtime": 1783676201.858738,
     "ast_hash": "dd658e6c99e6a4209a111330b98b84d9",
     "semantic_hash": ""
   },
@@ -5235,17 +5235,17 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/approve/route.ts": {
-    "mtime": 1783616928.6416245,
+    "mtime": 1783676201.8264184,
     "ast_hash": "1dc832111ea3f7c969a769b67b259bf6",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/cancel/route.ts": {
-    "mtime": 1783616958.233477,
+    "mtime": 1783676201.8266337,
     "ast_hash": "dd356a41b6094350c2a7ca5382a61eac",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/reject/route.ts": {
-    "mtime": 1783616963.210711,
+    "mtime": 1783676201.8278751,
     "ast_hash": "b0efa66c0f597bfd2ef5baacc45f1cfb",
     "semantic_hash": ""
   },
@@ -5255,17 +5255,17 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/submit/route.ts": {
-    "mtime": 1783616967.572484,
+    "mtime": 1783676201.8280547,
     "ast_hash": "8accf47f2306bafc8db2bba206df8d1d",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/admission-query-service.ts": {
-    "mtime": 1783671858.3814526,
+    "mtime": 1783676201.8578348,
     "ast_hash": "36203e16f19ec17a3530f2ab3468a248",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/admission-service.test.ts": {
-    "mtime": 1783616491.0562186,
+    "mtime": 1783676201.8580585,
     "ast_hash": "2c91511e53c3188e17adce83a92a60d6",
     "semantic_hash": ""
   },
@@ -5275,13 +5275,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/[id]/_components/admission-details-client.tsx": {
-    "mtime": 1783673699.0856316,
+    "mtime": 1783676201.8190277,
     "ast_hash": "1effce6a9b523072988a93b6179f4ead",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/[id]/page.tsx": {
-    "mtime": 1783671864.332011,
-    "ast_hash": "7cb6fd4831bd06ccb5e70d494008fa22",
+    "mtime": 1783702971.5572555,
+    "ast_hash": "d972a41bce6729091c01960c323534ad",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/_components/admissions-client-list.tsx": {
@@ -5290,17 +5290,17 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/page.tsx": {
-    "mtime": 1783623179.219156,
+    "mtime": 1783676201.8199935,
     "ast_hash": "06f0828a3e6d3cefa9f416fc7f561c0f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/route.test.ts": {
-    "mtime": 1783618040.8156123,
+    "mtime": 1783676201.8282309,
     "ast_hash": "bf83b3bc130821fa8796629b67694a39",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/route.ts": {
-    "mtime": 1783617414.230564,
+    "mtime": 1783676201.8284009,
     "ast_hash": "067dbf733b17c31254b62c1090bb2405",
     "semantic_hash": ""
   },
@@ -5335,7 +5335,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/crm/leads/[id]/convert/route.test.ts": {
-    "mtime": 1783617979.8902102,
+    "mtime": 1783676201.8287823,
     "ast_hash": "cfb0fde07dc3225e8f199dfb849ec1d2",
     "semantic_hash": ""
   },
@@ -5375,7 +5375,7 @@
     "semantic_hash": ""
   },
   "openspec/specs/lead-to-admission-handoff/spec.md": {
-    "mtime": 1783674525.6426227,
+    "mtime": 1783676201.8572936,
     "ast_hash": "f3e6143d385d6a00de7fc865511beedd",
     "semantic_hash": ""
   },
@@ -5405,7 +5405,7 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-lifecycle.test.ts": {
-    "mtime": 1783622812.80147,
+    "mtime": 1783676201.8584924,
     "ast_hash": "57fa60e5a6101a95c061d28d6fe5965e",
     "semantic_hash": ""
   },
@@ -5425,12 +5425,12 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/student-query-service.test.ts": {
-    "mtime": 1783623232.1112437,
+    "mtime": 1783676201.8595424,
     "ast_hash": "433dbba4cf4c86cdd5e423f60a89e586",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/student-query-service.ts": {
-    "mtime": 1783622982.6145353,
+    "mtime": 1783676201.85973,
     "ast_hash": "322f73060b33c069ba3d31e51e231493",
     "semantic_hash": ""
   },
@@ -5460,7 +5460,7 @@
     "semantic_hash": ""
   },
   "openspec/specs/enrollment-lifecycle/spec.md": {
-    "mtime": 1783656927.8665452,
+    "mtime": 1783676201.8570998,
     "ast_hash": "99cf916741ba2d38c3b30c121ce8a2a9",
     "semantic_hash": ""
   },
@@ -5625,12 +5625,12 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/documents/[docId]/verify/route.ts": {
-    "mtime": 1783616976.415485,
+    "mtime": 1783676201.8268657,
     "ast_hash": "8407b6b19d6690b095f31decdcabea18",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/documents/route.ts": {
-    "mtime": 1783616925.5259783,
+    "mtime": 1783676201.827066,
     "ast_hash": "4df61821d20f8fe9d6e8e1fa75b84cf1",
     "semantic_hash": ""
   },
@@ -5640,17 +5640,17 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/admissions/page.tsx": {
-    "mtime": 1783621940.3423848,
+    "mtime": 1783676201.8217962,
     "ast_hash": "7084603de6cdac601c14ed363b6d40cd",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/_components/enrollment-details-client.tsx": {
-    "mtime": 1783623602.013236,
+    "mtime": 1783676201.8239472,
     "ast_hash": "7536e552414967249dcf11e42b03320f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/page.tsx": {
-    "mtime": 1783621944.843191,
+    "mtime": 1783676201.8241696,
     "ast_hash": "d44a535ebf0c2981dc096ef289731348",
     "semantic_hash": ""
   },
@@ -5665,12 +5665,12 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/page.tsx": {
-    "mtime": 1783622039.871601,
+    "mtime": 1783676201.8247705,
     "ast_hash": "3be81017a2a5d655b38b41f66095bfc0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/students/[id]/page.tsx": {
-    "mtime": 1783675582.83627,
+    "mtime": 1783676201.8261878,
     "ast_hash": "123722b04b32a55b90ed7effab3ae32e",
     "semantic_hash": ""
   },
@@ -5685,17 +5685,17 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/id-card/download/route.ts": {
-    "mtime": 1783673718.0472462,
+    "mtime": 1783676201.827291,
     "ast_hash": "04e14d886e3b75b27d2ed2ed2232e8c4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/id-card/reissue/route.ts": {
-    "mtime": 1783673872.5076795,
+    "mtime": 1783676201.8274832,
     "ast_hash": "ace384f219e0b82336df9cd7390f76ac",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/admissions/[id]/id-card/route.test.ts": {
-    "mtime": 1783673877.099072,
+    "mtime": 1783676201.8276763,
     "ast_hash": "95d64e094904ad1cf8ed2afecd53fc5d",
     "semantic_hash": ""
   },
@@ -5750,7 +5750,7 @@
     "semantic_hash": ""
   },
   "openspec/specs/student-profile-dashboard/spec.md": {
-    "mtime": 1783676108.9472578,
+    "mtime": 1783676201.8574855,
     "ast_hash": "8e8cadbbe3dba234c4cfcd2b612668e1",
     "semantic_hash": ""
   },
@@ -5780,17 +5780,17 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/admissions/reports/id-cards/page.tsx": {
-    "mtime": 1783616942.5637321,
+    "mtime": 1783676201.8220387,
     "ast_hash": "65568ea598488d686c2c55eb790aee6c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/admissions/reports/page.tsx": {
-    "mtime": 1783616983.6879706,
+    "mtime": 1783676201.823401,
     "ast_hash": "a75558c6d3ca73a27ab2b443c88421c7",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/admissions/reports/students/page.tsx": {
-    "mtime": 1783617035.9110854,
+    "mtime": 1783676201.8236535,
     "ast_hash": "35fb1a6163faea4d1ef5680bfcf708c8",
     "semantic_hash": ""
   },
@@ -5800,7 +5800,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/students/[id]/_components/student-history-tabs.tsx": {
-    "mtime": 1783675623.7909648,
+    "mtime": 1783676201.8259559,
     "ast_hash": "c9cd39dfd84d7031bbb2920fead91af7",
     "semantic_hash": ""
   },
@@ -5875,7 +5875,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/students/claim-profile/route.ts": {
-    "mtime": 1783617603.4596424,
+    "mtime": 1783676201.8293762,
     "ast_hash": "66709e5468d4fdeb85fde3378ef98606",
     "semantic_hash": ""
   },
@@ -6045,12 +6045,12 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1783660339.83004,
+    "mtime": 1783676201.8305867,
     "ast_hash": "00058a6cc68c54f4bf05a12cd70f5e92",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 03 - Lead & Inquiry Management/Part 5 \u2013 API Contracts.md": {
-    "mtime": 1783660363.3706946,
+    "mtime": 1783676201.8307996,
     "ast_hash": "a6e4afbe5c9fa4525c510382cd91fa9a",
     "semantic_hash": ""
   },
@@ -6075,12 +6075,12 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Module 4 - Admission & Enrollment Management.md": {
-    "mtime": 1783615813.5539408,
+    "mtime": 1783676201.8310323,
     "ast_hash": "2a5ca5b5d513c40492e9d76ef6d5c9db",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
-    "mtime": 1783615847.0920744,
+    "mtime": 1783676201.8312516,
     "ast_hash": "4114fff047e58aace61b45c3ad4afdd5",
     "semantic_hash": ""
   },
@@ -6095,7 +6095,7 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
-    "mtime": 1783615909.5983846,
+    "mtime": 1783676201.8314915,
     "ast_hash": "a677bb84c9592bf1c644de0b02295156",
     "semantic_hash": ""
   },
@@ -6105,7 +6105,7 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
-    "mtime": 1783615873.1869202,
+    "mtime": 1783676201.8317165,
     "ast_hash": "2745112d8e5e725542106dca2a03cdf1",
     "semantic_hash": ""
   },
@@ -6115,7 +6115,7 @@
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 04 - Admission & Enrollment Management/Part 6 \u2013 Permission Matrix.md": {
-    "mtime": 1783615879.200355,
+    "mtime": 1783676201.8319504,
     "ast_hash": "62c0dc22ae89f33ffeb30c9684aeea35",
     "semantic_hash": ""
   },
@@ -6320,13 +6320,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/corrections/page.tsx": {
-    "mtime": 1783476040.396092,
-    "ast_hash": "f4b1ef702296104950a7292a1bc483d9",
+    "mtime": 1783702971.5577865,
+    "ast_hash": "9bb1084de3ce1a632c938135114c7a50",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/dashboard/page.tsx": {
-    "mtime": 1783476040.4025645,
-    "ast_hash": "bc1332f7ef12b3aa33f81b8385c0604e",
+    "mtime": 1783702971.5580602,
+    "ast_hash": "6659c57dffa99dd9cc16546c77d74ed8",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/page.tsx": {
@@ -6335,18 +6335,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/records/page.tsx": {
-    "mtime": 1783476040.420598,
-    "ast_hash": "d6958b35b65ee14f197b4b3c654e828e",
+    "mtime": 1783702971.5582435,
+    "ast_hash": "395a6b45d666ecdc5001860d97115a8b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/reports/page.tsx": {
-    "mtime": 1783476040.4298828,
-    "ast_hash": "078bccc38c8ff1ea7193994629202e8d",
+    "mtime": 1783702971.5584714,
+    "ast_hash": "3bcb9e9c62c4fdba5e2a973a34a8fca1",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/sessions/page.tsx": {
-    "mtime": 1783476040.4447515,
-    "ast_hash": "80eb57cde8df3a19e03ad5d9dc3e6b02",
+    "mtime": 1783702971.5587242,
+    "ast_hash": "7747300184c00e983e2a27997e6434ee",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/scheduling/_components/branch-override-form.tsx": {
@@ -6985,8 +6985,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/_components/attendance-corrections-queue.tsx": {
-    "mtime": 1783476040.3601365,
-    "ast_hash": "3fd99bc60ce750d5bbeb01e943fdb4a1",
+    "mtime": 1783702971.5575383,
+    "ast_hash": "f14765bf2a35b52581a2e5559df06a34",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/attendance/_components/attendance-roster-editor.tsx": {
@@ -7360,48 +7360,38 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/completions/_components/completions-client-list.tsx": {
-    "mtime": 1783476041.102399,
-    "ast_hash": "92aa89cb59d6fed874ce16fbdff99dd6",
+    "mtime": 1783702971.5604353,
+    "ast_hash": "ef6b68b7f0e99c8e01459fd08c31642d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/completions/page.tsx": {
-    "mtime": 1783476041.147539,
-    "ast_hash": "d06fd241cf9e94359ba60364eb37d742",
+    "mtime": 1783702971.5606613,
+    "ast_hash": "6a0f139150c91a26ec4776326f3e8ba9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/dashboard/page.tsx": {
-    "mtime": 1783476041.159004,
-    "ast_hash": "326a51bf5f3212c3f78f60003c71377d",
+    "mtime": 1783702971.5609167,
+    "ast_hash": "5ff7662330f4f60f4094f6075510e10e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/[id]/_components/exam-detail-client.tsx": {
-    "mtime": 1783476041.2063825,
-    "ast_hash": "47aeed04bfab6e4e9d58fa29a1111eac",
+    "mtime": 1783702971.5611722,
+    "ast_hash": "0d78453496d37a8a5a8f8541b823c6f9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/[id]/page.tsx": {
-    "mtime": 1783476041.2182968,
-    "ast_hash": "0883ac270dc768db6f26274c05976464",
+    "mtime": 1783702971.5613706,
+    "ast_hash": "10e28a5857a48a820ebd3e8657bd701f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/_components/exams-client-list.tsx": {
-    "mtime": 1783476041.1871893,
-    "ast_hash": "8675ff0f95cc0d0e1e4f9a09967a2e80",
+    "mtime": 1783702971.5616329,
+    "ast_hash": "8cc9815402ed6920feafa425da018c5b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/page.tsx": {
-    "mtime": 1783476041.248954,
-    "ast_hash": "71cf771d1a09f49ee9af531e077b3198",
-    "semantic_hash": ""
-  },
-  "apps/admin-portal/app/(protected)/exam-completion/results/_components/results-client-list.tsx": {
-    "mtime": 1783476041.2743933,
-    "ast_hash": "5e62ec0ac08951a0362599717c07781c",
-    "semantic_hash": ""
-  },
-  "apps/admin-portal/app/(protected)/exam-completion/results/page.tsx": {
-    "mtime": 1783476041.2908013,
-    "ast_hash": "516c2b6107a0ae3c02fdf0932643d385",
+    "mtime": 1783702971.562315,
+    "ast_hash": "be8cb777d7593a383513bd736f2aab0e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/finance/_components/finance-dashboard-client.tsx": {
@@ -7590,7 +7580,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/finance/invoices/route.test.ts": {
-    "mtime": 1783618094.8781116,
+    "mtime": 1783676201.829184,
     "ast_hash": "344c8ab1e9ea7911d086b9b2c870c172",
     "semantic_hash": ""
   },
@@ -7725,8 +7715,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/commands/EvaluateCompletionCommandHandler.ts": {
-    "mtime": 1783476071.6051395,
-    "ast_hash": "ca121de450cb6a6f737402c7d349cf98",
+    "mtime": 1783702971.5887973,
+    "ast_hash": "334f27bb823da4f2cac314aa602fa31f",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/commands/FinalApproveCompletionCommandHandler.ts": {
@@ -7780,8 +7770,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/queries/GetCompletionDetailQueryHandler.ts": {
-    "mtime": 1783476071.6860378,
-    "ast_hash": "66342eed4bf040cf52c5a5edb215fa7b",
+    "mtime": 1783702971.589,
+    "ast_hash": "bdf983a0c661010e220f0c2c56b2d0f4",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/queries/GetExamDetailQueryHandler.ts": {
@@ -7835,8 +7825,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/contracts/validation-schemas.ts": {
-    "mtime": 1783476071.767341,
-    "ast_hash": "6e1b5bed7d053552b979cfb0079aadab",
+    "mtime": 1783702971.589232,
+    "ast_hash": "d30ed32def52c88894d1928786bfb2e7",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/domain/aggregates/CompletionApproval.ts": {
@@ -7845,8 +7835,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/domain/aggregates/CourseCompletion.ts": {
-    "mtime": 1783476071.7873251,
-    "ast_hash": "8be4e54118ced7a523dad59660c6af9a",
+    "mtime": 1783702971.5894988,
+    "ast_hash": "eecb070129f8f3ad0ef99c5e795ecd23",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/domain/aggregates/Exam.ts": {
@@ -7940,7 +7930,7 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/infrastructure/readers/PrismaEnrollmentReader.ts": {
-    "mtime": 1783622488.5769005,
+    "mtime": 1783676201.8610902,
     "ast_hash": "b4785323de066ba42b2aaad32715e9de",
     "semantic_hash": ""
   },
@@ -7980,8 +7970,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/tests/domain/CourseCompletionAggregate.spec.ts": {
-    "mtime": 1783476071.9827147,
-    "ast_hash": "8978cc1fd07b87382ce4d504842cdf09",
+    "mtime": 1783702971.5897417,
+    "ast_hash": "8ee2b3db06f1193209ee954a142a69cc",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/tests/domain/ExamAggregate.spec.ts": {
@@ -8005,13 +7995,13 @@
     "semantic_hash": ""
   },
   "packages/finance-receivables/src/application/finance-service.test.ts": {
-    "mtime": 1783476072.0415277,
-    "ast_hash": "7eea5e83ce7c22fafc0160e45231f2cc",
+    "mtime": 1783702971.589994,
+    "ast_hash": "c35994b22269d0dc51bc8fb2ecaad307",
     "semantic_hash": ""
   },
   "packages/finance-receivables/src/application/finance-service.ts": {
-    "mtime": 1783622532.758652,
-    "ast_hash": "fab016a1852940be6c8a98fbbf3d9dce",
+    "mtime": 1783702971.5902083,
+    "ast_hash": "93a738dfc6f35d5ba92923796ee85b0d",
     "semantic_hash": ""
   },
   "packages/finance-receivables/src/domain/corporate-credit.ts": {
@@ -8155,28 +8145,28 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/new/_components/exam-form.tsx": {
-    "mtime": 1783476041.2344897,
-    "ast_hash": "f3cd522616b2ff4515de08843f31e0da",
+    "mtime": 1783702971.5618854,
+    "ast_hash": "b944c4398f62ac7f606aecd17391a176",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/new/page.tsx": {
-    "mtime": 1783476041.2389195,
-    "ast_hash": "32dbd8b64e5f47e483bf729578d4e347",
+    "mtime": 1783702971.5620742,
+    "ast_hash": "88b79d848d0288ee2c38a1f62dbc3a54",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/bulk-results/_components/bulk-results-form.tsx": {
-    "mtime": 1783476041.0896146,
-    "ast_hash": "92023153d6b899b4ca6387ad2e291ee8",
+    "mtime": 1783702971.5596797,
+    "ast_hash": "a7b9e2d90f72de4f29ddc304cf45c814",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/bulk-results/page.tsx": {
-    "mtime": 1783476041.0938718,
-    "ast_hash": "e8b0cf6b2423f50b55e519772964d98d",
+    "mtime": 1783702971.55987,
+    "ast_hash": "35f626c565d835f41d49886f84917f94",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/completions/[id]/_components/completion-detail-client.tsx": {
-    "mtime": 1783476041.1305935,
-    "ast_hash": "e909c517da2e7f5574a873024815f67d",
+    "mtime": 1783702971.5601258,
+    "ast_hash": "becdc09c8e9f87d67e7527fdddf78c8d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/completions/[id]/page.tsx": {
@@ -8490,8 +8480,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/page.tsx": {
-    "mtime": 1783621936.3726935,
-    "ast_hash": "e4d4fe7afccd014ef4f4ec1498a2ffd7",
+    "mtime": 1783702971.5593505,
+    "ast_hash": "ed74f06d262300c66fb8d2a838819f7d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/public/v1/certificates/verify/route.ts": {
@@ -8585,7 +8575,7 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/infrastructure/PrismaAdapters.ts": {
-    "mtime": 1783622444.3115833,
+    "mtime": 1783676201.8603623,
     "ast_hash": "886ba71b4a9473667e4e81ff87b5a154",
     "semantic_hash": ""
   },
@@ -8620,7 +8610,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/public/certificates/CERT-BR1-999999.pdf": {
-    "mtime": 1783660415.7955537,
+    "mtime": 1783676201.8297791,
     "ast_hash": "40be544cdec5d415c65ede1ffbb77b9e",
     "semantic_hash": ""
   },
@@ -8940,12 +8930,12 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/create/actions.ts": {
-    "mtime": 1783616823.7626245,
+    "mtime": 1783676201.8243978,
     "ast_hash": "ec203b1412e686a493c75853886ddae5",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/create/page.tsx": {
-    "mtime": 1783617080.059766,
+    "mtime": 1783676201.8245852,
     "ast_hash": "a04f1b9561a465fdbd93bc82898af8d1",
     "semantic_hash": ""
   },
@@ -9030,12 +9020,12 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_utils/date-partition.test.ts": {
-    "mtime": 1783608176.7069347,
+    "mtime": 1783676201.8204837,
     "ast_hash": "a0660e0fe972a5ea2efd2839861548d7",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_utils/date-partition.ts": {
-    "mtime": 1783608141.9698014,
+    "mtime": 1783676201.8206735,
     "ast_hash": "2d6fa7a27bd282e4ed8bc96243b13acc",
     "semantic_hash": ""
   },
@@ -9422,6 +9412,81 @@
   "openspec/changes/archive/2026-07-10-student-profile-enhancements/tasks.md": {
     "mtime": 1783675655.0178442,
     "ast_hash": "3cb4cf0ee1035f758e9cb3400e597fed",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/attendance/reports/_components/reports-filter.tsx": {
+    "mtime": 1783678002.0702124,
+    "ast_hash": "58fee0ed2b5cf1be00a8ba6d45adce73",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-attendance-module-improvements/.openspec.yaml": {
+    "mtime": 1783677407.2749367,
+    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-attendance-module-improvements/design.md": {
+    "mtime": 1783677460.4584928,
+    "ast_hash": "e63db4a2e121bc826c1380054fe095de",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-attendance-module-improvements/proposal.md": {
+    "mtime": 1783677439.091073,
+    "ast_hash": "215d457053c5b823e02484b4a7252310",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-attendance-module-improvements/specs/attendance-management/delta-spec.md": {
+    "mtime": 1783677451.6301408,
+    "ast_hash": "fd1579077332b225c972e3347b29204f",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-attendance-module-improvements/tasks.md": {
+    "mtime": 1783678119.6921878,
+    "ast_hash": "f71b259ad115b7c3e597e2db530c9d31",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/public/certificates/CERT-8F1-082555.pdf": {
+    "mtime": 1783693082.5562482,
+    "ast_hash": "5658c608a8840bda5f588d2834579b8f",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/public/certificates/CERT-BF8-328347.pdf": {
+    "mtime": 1783702328.3479052,
+    "ast_hash": "1cb008d940719b5d987e203dcb977144",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/public/certificates/CERT-BF8-403708.pdf": {
+    "mtime": 1783702403.7084835,
+    "ast_hash": "264cfdcf4718040b6b06ae9ac0314809",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-optimize-exam-completion-modules/.openspec.yaml": {
+    "mtime": 1783699173.1388986,
+    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-optimize-exam-completion-modules/design.md": {
+    "mtime": 1783699215.857309,
+    "ast_hash": "18c023a2c9e45410a08c1555c2ab182c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-optimize-exam-completion-modules/proposal.md": {
+    "mtime": 1783699192.56958,
+    "ast_hash": "a520d9c4e070252a0c2343f79d12c599",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-optimize-exam-completion-modules/specs/exam-completion-optimization/spec.md": {
+    "mtime": 1783699205.8545532,
+    "ast_hash": "898f07fe5d67f84112c856592a059526",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-10-optimize-exam-completion-modules/tasks.md": {
+    "mtime": 1783699509.8825643,
+    "ast_hash": "ed54c1ee81d45f6ec209f2cd949488b0",
+    "semantic_hash": ""
+  },
+  "openspec/specs/exam-completion-optimization/spec.md": {
+    "mtime": 1783703045.65053,
+    "ast_hash": "e82d59c1a95dfd45718f5135ca7a88c7",
     "semantic_hash": ""
   }
 }

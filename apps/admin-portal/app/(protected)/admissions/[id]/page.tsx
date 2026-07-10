@@ -46,6 +46,13 @@ export default async function AdmissionDetailPage(props: {
             ? new Date(detail.admission.person.dateOfBirth).toISOString()
             : null,
         },
+        studentProfile: {
+          id: detail.admission.studentProfile.id as any,
+          studentNumber: detail.admission.studentProfile.studentNumber,
+          status: detail.admission.studentProfile.status,
+          idCardNumber: detail.admission.studentProfile.idCardNumber,
+          idCardIssued: detail.admission.studentProfile.idCardIssued,
+        },
         documents: detail.admission.documents.map((doc) => ({
           ...doc,
           verifiedAt: doc.verifiedAt?.toISOString() || null,

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { withPermission } from '../../../../../../lib/api-middleware';
+import { withPermission, withAuth, errorHandler } from '../../../../../../lib/api-middleware';
 import {
   applyObservabilityResponseHeaders,
   withRouteObservability,
@@ -285,78 +285,98 @@ export async function PATCH(
 
   return withRouteObservability(
     request.headers,
-    async () =>
-      withPermission(
-        request,
-        'course.pricing.override',
-        async ({ session }) => {
-          const logger = createStructuredLogger(
-            getCurrentRequestContext() ?? {},
+    async () => {
+      try {
+        const context = await withAuth(request);
+        const { session } = context;
+
+        // Retrieve pricing rule to check if it's a global default or a branch override
+        const record = await prisma.coursePricing.findFirst({
+          where: { id: parsed.data.id, isDeleted: false },
+        });
+
+        if (!record) {
+          return problemJson(
+            404,
+            'Pricing override not found.',
+            'ERR_CRS_PRICING_NOT_FOUND',
+          );
+        }
+
+        const isGlobal = !record.branchId && !record.batchId;
+        const requiredPermission = isGlobal
+          ? 'course.catalog.update'
+          : 'course.pricing.override';
+
+        const { authorizationGuard } = await import('../../../../../../lib/runtime');
+        await authorizationGuard.verifyPermission(
+          session.userId,
+          requiredPermission,
+          session.activeBranchId ?? null,
+        );
+
+        const { coursePricingService } = await import('../../../../../../lib/runtime');
+
+        if (parsed.data.action === 'disable') {
+          const result = await coursePricingService.disablePricingRule(
+            parsed.data.id,
+            session.userId,
+          );
+          const response = NextResponse.json(
+            {
+              success: true,
+              data: result,
+            },
+            { status: 200 },
           );
 
-          try {
-            const { coursePricingService } =
-              await import('../../../../../../lib/runtime');
+          applyObservabilityResponseHeaders(
+            response.headers,
+            request.headers,
+            {
+              route: '/api/v1/courses/[id]/pricing',
+              method: request.method,
+              status: 'success',
+            },
+          );
 
-            if (parsed.data.action === 'disable') {
-              const result = await coursePricingService.disablePricingRule(
-                parsed.data.id,
-                session.userId,
-              );
-              const response = NextResponse.json(
-                {
-                  success: true,
-                  data: result,
-                },
-                { status: 200 },
-              );
+          return response;
+        }
 
-              applyObservabilityResponseHeaders(
-                response.headers,
-                request.headers,
-                {
-                  route: '/api/v1/courses/[id]/pricing',
-                  method: request.method,
-                  status: 'success',
-                },
-              );
+        return problemJson(
+          400,
+          'Unsupported patch action.',
+          'CRS-VAL-PRICING-UNSUPPORTED_ACTION',
+        );
+      } catch (error) {
+        const logger = createStructuredLogger(
+          getCurrentRequestContext() ?? {},
+        );
+        logger.error('api.courses.pricing.patch.failed', {
+          status: 'failed',
+          error: error as Error,
+        });
 
-              return response;
-            }
+        const msg = (error as Error).message;
+        if (msg.includes('ERR_CRS_PRICING_NOT_FOUND')) {
+          return NextResponse.json(
+            {
+              success: false,
+              errorCode: 'ERR_CRS_PRICING_NOT_FOUND',
+              messageEnglish: 'Pricing override not found.',
+              statusCode: 404,
+            },
+            { status: 404 },
+          );
+        }
 
-            return problemJson(
-              400,
-              'Unsupported patch action.',
-              'CRS-VAL-PRICING-UNSUPPORTED_ACTION',
-            );
-          } catch (error) {
-            logger.error('api.courses.pricing.patch.failed', {
-              status: 'failed',
-              error: error as Error,
-            });
-            const msg = (error as Error).message;
-            let status = 500;
-            let code = 'ERR_SYSTEM';
-            let messageEn = 'An unexpected error occurred.';
-
-            if (msg.includes('ERR_CRS_PRICING_NOT_FOUND')) {
-              status = 404;
-              code = 'ERR_CRS_PRICING_NOT_FOUND';
-              messageEn = 'Pricing override not found.';
-            }
-
-            return NextResponse.json(
-              {
-                success: false,
-                errorCode: code,
-                messageEnglish: messageEn,
-                statusCode: status,
-              },
-              { status },
-            );
-          }
-        },
-      ),
+        return errorHandler(error, {
+          title: 'Error updating pricing',
+          detail: msg,
+          errorCode: 'ERR_SYSTEM',
+        });
+      }
+    },
     { route: '/api/v1/courses/[id]/pricing' },
   );
 }

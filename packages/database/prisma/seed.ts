@@ -751,6 +751,14 @@ const systemPermissions = [
   },
   {
     moduleCode: 'courses',
+    featureCode: 'catalog',
+    actionCode: 'override',
+    permissionCode: 'course.pricing.override',
+    permissionType: 'Action' as const,
+    description: 'Configure branch overrides and special discounts.',
+  },
+  {
+    moduleCode: 'courses',
     featureCode: 'batches',
     actionCode: 'view',
     permissionCode: 'batch.delivery.view',
@@ -2024,6 +2032,7 @@ async function seed() {
 
   // Branch Manager gets branch-scoped management permissions
   const managerPermCodes = [
+    'course.pricing.override',
     'organization.branch.manage',
     'organization.department.manage',
     'organization.classroom.manage',
@@ -2239,6 +2248,7 @@ async function seed() {
     'course.catalog.update',
     'course.catalog.publish',
     'course.catalog.archive',
+    'course.pricing.override',
     'batch.delivery.view',
     'batch.delivery.create',
     'batch.delivery.update',

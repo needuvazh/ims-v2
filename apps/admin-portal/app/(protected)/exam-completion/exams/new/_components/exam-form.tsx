@@ -33,6 +33,10 @@ interface ExamFormProps {
 export function ExamForm({ courses, batches }: ExamFormProps) {
   const router = useRouter();
 
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split('T')[0];
+
   const [courseId, setCourseId] = useState('');
   const [batchId, setBatchId] = useState('');
   const [examName, setExamName] = useState('');
@@ -61,6 +65,13 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
     }
     if (!examDate) {
       toast.error('Exam date is required.');
+      return;
+    }
+    const selectedDate = new Date(examDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate.getTime() <= today.getTime()) {
+      toast.error('Exam date must be in the future.');
       return;
     }
     if (!maxMarks || parseFloat(maxMarks) <= 0) {
@@ -171,6 +182,7 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
               disabled={isSubmitting}
+              min={minDate}
               required
             />
 

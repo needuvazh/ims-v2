@@ -238,6 +238,7 @@ export class FinanceService {
               where: {
                 batchId: enrollment.batchId,
                 enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+                id: { not: enrollment.id },
                 isDeleted: false,
               },
             });

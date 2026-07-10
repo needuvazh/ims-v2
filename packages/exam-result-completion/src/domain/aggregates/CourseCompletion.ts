@@ -173,7 +173,7 @@ export class CourseCompletionAggregate {
     if (this.state.manualApprovalRequired) {
       const updated: CourseCompletion = {
         ...this.state,
-        completionStatus: COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION,
+        completionStatus: COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL,
         version: this.state.version + 1,
         updatedAt: new Date(),
       };

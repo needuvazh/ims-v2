@@ -18,7 +18,13 @@ import { Home, Layers } from 'lucide-react';
 export const metadata = { title: 'Completions - Admin Portal | ASTI IMS' };
 
 export default async function CompletionsPage(props: {
-  searchParams: Promise<{ status?: string; page?: string }>;
+  searchParams: Promise<{
+    status?: string;
+    page?: string;
+    courseId?: string;
+    batchId?: string;
+    q?: string;
+  }>;
 }) {
   const searchParams = await props.searchParams;
 
@@ -28,8 +34,45 @@ export default async function CompletionsPage(props: {
   const limit = 20;
   const skip = (page - 1) * limit;
 
+  const courses = await prisma.course.findMany({
+    where: { isDeleted: false },
+    select: { id: true, nameEnglish: true },
+  });
+
+  const batches = await prisma.batch.findMany({
+    where: { isDeleted: false },
+    select: { id: true, batchNameEnglish: true, courseId: true },
+  });
+
   const where: any = { isDeleted: false };
   if (searchParams.status) where.completionStatus = searchParams.status;
+
+  const enrollmentFilters: any = {};
+  if (searchParams.courseId) {
+    enrollmentFilters.courseId = searchParams.courseId;
+  }
+  if (searchParams.batchId) {
+    enrollmentFilters.batchId = searchParams.batchId;
+  }
+  if (searchParams.q) {
+    enrollmentFilters.OR = [
+      { enrollmentNumber: { contains: searchParams.q, mode: 'insensitive' } },
+      {
+        studentProfile: {
+          person: {
+            OR: [
+              { firstName: { contains: searchParams.q, mode: 'insensitive' } },
+              { lastName: { contains: searchParams.q, mode: 'insensitive' } },
+            ],
+          },
+        },
+      },
+    ];
+  }
+
+  if (Object.keys(enrollmentFilters).length > 0) {
+    where.enrollment = enrollmentFilters;
+  }
 
   const [completions, total] = await Promise.all([
     prisma.courseCompletion.findMany({
@@ -129,27 +172,17 @@ export default async function CompletionsPage(props: {
               ...c,
               attendancePercentage: c.attendancePercentage?.toNumber() ?? null,
             }))}
+            courses={courses}
+            batches={batches}
+            total={total}
+            currentPage={page}
+            defaultSearch={searchParams.q || ''}
+            defaultCourseId={searchParams.courseId || ''}
+            defaultBatchId={searchParams.batchId || ''}
+            defaultStatus={searchParams.status || ''}
           />
         </CardContent>
       </Card>
-
-      {total > limit && (
-        <div className="flex justify-center gap-2 pt-4">
-          {Array.from({ length: Math.ceil(total / limit) }, (_, i) => (
-            <Link
-              key={i}
-              href={`/exam-completion/completions?page=${i + 1}`}
-              className={`rounded px-3 py-1.5 text-sm font-semibold transition-all ${
-                i + 1 === page
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
-              }`}
-            >
-              {i + 1}
-            </Link>
-          ))}
-        </div>
-      )}
     </AdminListPageLayout>
   );
 }

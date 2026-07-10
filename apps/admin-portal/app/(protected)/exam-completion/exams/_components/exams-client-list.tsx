@@ -1,10 +1,19 @@
 'use client';
 
-import Link from 'next/link';
+import { useCallback, useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {
+  Calendar,
+  PlayCircle,
+  Search,
+  X,
+  Layers,
+  ArrowRight,
+} from 'lucide-react';
 import {
   ResponsiveDataTable,
   Badge,
-  LinkButton,
+  Button,
   Card,
   CardHeader,
   CardDescription,
@@ -12,8 +21,11 @@ import {
   CardContent,
   CardFooter,
   EmptyState,
+  FormLabel,
+  Input,
+  Select,
+  Pagination,
 } from '@ims/shared-ui';
-import { Calendar, PlayCircle } from 'lucide-react';
 
 interface ExamListItem {
   id: string;
@@ -28,26 +40,102 @@ interface ExamListItem {
 
 interface ExamsClientListProps {
   exams: ExamListItem[];
+  courses: { id: string; nameEnglish: string }[];
+  batches: { id: string; batchNameEnglish: string; courseId: string }[];
+  total: number;
+  currentPage: number;
   permissions: string[];
+  defaultSearch: string;
+  defaultCourseId: string;
+  defaultBatchId: string;
+  defaultStatus: string;
 }
 
 function hasPermission(permissions: string[], code: string): boolean {
   return permissions.includes(code) || permissions.includes('SUPER_ADMIN');
 }
 
-export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
-  const canView = hasPermission(permissions, 'exam.view');
-  const canViewResults = hasPermission(permissions, 'result.view');
+export function ExamsClientList({
+  exams,
+  courses,
+  batches,
+  total,
+  currentPage,
+  permissions,
+  defaultSearch,
+  defaultCourseId,
+  defaultBatchId,
+  defaultStatus,
+}: ExamsClientListProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const totalPages = Math.ceil(total / 20); // 20 limit per page
 
-  if (exams.length === 0) {
-    return (
-      <EmptyState
-        title="No exams found"
-        description="Create your first exam schedule or adjust filters to list active records."
-        icon={<Calendar className="h-10 w-10 text-[color:var(--ims-muted)]" />}
-      />
+  const [searchValue, setSearchValue] = useState(defaultSearch);
+
+  const filteredBatches = defaultCourseId
+    ? batches.filter((b) => b.courseId === defaultCourseId)
+    : [];
+
+  const canView = hasPermission(permissions, 'exam.view');
+
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === '') {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
+
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams],
+  );
+
+  useEffect(() => {
+    const nextSearch = searchParams.get('q') || '';
+    setSearchValue((current) =>
+      current === nextSearch ? current : nextSearch,
     );
-  }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const currentSearch = searchParams.get('q') || '';
+    if (searchValue === currentSearch) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      updateParams({ q: searchValue || null, page: '1' });
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchValue, searchParams, updateParams]);
+
+  const StatusBadge = ({ status }: { status: string }) => {
+    const variants: Record<
+      string,
+      'muted' | 'info' | 'warning' | 'success' | 'error' | 'outline'
+    > = {
+      Draft: 'muted',
+      Scheduled: 'info',
+      OpenForResultEntry: 'warning',
+      Closed: 'success',
+      Cancelled: 'error',
+      Archived: 'outline',
+    };
+
+    return (
+      <Badge variant={variants[status] || 'default'}>
+        {status === 'OpenForResultEntry' ? 'Open for Entry' : status}
+      </Badge>
+    );
+  };
 
   const columns = [
     {
@@ -96,28 +184,18 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
       render: (item: ExamListItem) => (
         <div className="inline-flex items-center justify-end gap-2">
           {canView && (
-            <LinkButton
-              href={`/exam-completion/exams/${item.id}`}
-              size="sm"
-              variant="outline"
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.push(`/exam-completion/exams/${item.id}`)}
+              title="Manage Exam"
             >
-              View
-            </LinkButton>
-          )}
-          {canViewResults && item.status === 'OpenForResultEntry' && (
-            <LinkButton
-              href={`/exam-completion/results?examId=${item.id}`}
-              size="sm"
-              variant="primary"
-              className="gap-1"
-            >
-              <PlayCircle className="h-3.5 w-3.5" />
-              Results
-            </LinkButton>
+              <ArrowRight className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
+            </Button>
           )}
         </div>
       ),
-      headerClassName: 'text-right w-[200px]',
+      headerClassName: 'text-right w-[100px]',
     },
   ];
 
@@ -163,60 +241,122 @@ export function ExamsClientList({ exams, permissions }: ExamsClientListProps) {
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <div className="flex w-full gap-2">
-          {canView && (
-            <LinkButton
-              href={`/exam-completion/exams/${exam.id}`}
-              size="sm"
-              variant="outline"
-              className="flex-1 justify-center"
-            >
-              View Detail
-            </LinkButton>
-          )}
-          {canViewResults && exam.status === 'OpenForResultEntry' && (
-            <LinkButton
-              href={`/exam-completion/results?examId=${exam.id}`}
-              size="sm"
-              variant="primary"
-              className="flex-1 justify-center gap-1"
-            >
-              <PlayCircle className="h-3.5 w-3.5" />
-              Manage Results
-            </LinkButton>
-          )}
-        </div>
+        {canView && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full text-[11px]"
+            onClick={() => router.push(`/exam-completion/exams/${exam.id}`)}
+          >
+            <ArrowRight className="mr-1.5 h-3.5 w-3.5" /> Manage Exam
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
 
   return (
-    <ResponsiveDataTable
-      data={exams}
-      columns={columns}
-      renderCard={renderCard}
-      keyExtractor={(item) => item.id}
-      emptyState={null}
-    />
-  );
-}
+    <div className="space-y-4">
+      {/* Filtering Card Block */}
+      <div className="rounded-2xl border border-[color:var(--ims-border)] bg-[color:var(--ims-surface)] p-5 space-y-4 shadow-sm">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="min-w-0 sm:col-span-2">
+            <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+              Search
+            </FormLabel>
+            <div className="relative">
+              <Input
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                placeholder="Search exams by name..."
+                leftIcon={<Search className="h-4 w-4" />}
+                className="h-11 pr-10"
+              />
+              {searchValue && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchValue('');
+                    updateParams({ q: null, page: '1' });
+                  }}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full text-[color:var(--ims-muted)] transition-colors hover:text-[color:var(--ims-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ims-brass)]"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
 
-function StatusBadge({ status }: { status: string }) {
-  const variants: Record<
-    string,
-    'muted' | 'info' | 'warning' | 'success' | 'error' | 'outline'
-  > = {
-    Draft: 'muted',
-    Scheduled: 'info',
-    OpenForResultEntry: 'warning',
-    Closed: 'success',
-    Cancelled: 'error',
-    Archived: 'outline',
-  };
+          <div className="min-w-0">
+            <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+              Course
+            </FormLabel>
+            <Select
+              value={defaultCourseId}
+              onChange={(e) =>
+                updateParams({ courseId: e.target.value || null, page: '1', batchId: null })
+              }
+              options={[
+                { value: '', label: 'All Courses' },
+                ...courses.map((c) => ({
+                  value: c.id,
+                  label: c.nameEnglish,
+                })),
+              ]}
+              className="h-11"
+              placeholder="All Courses"
+            />
+          </div>
 
-  return (
-    <Badge variant={variants[status] || 'default'}>
-      {status === 'OpenForResultEntry' ? 'Open for Entry' : status}
-    </Badge>
+          <div className="min-w-0">
+            <FormLabel className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ims-muted)]">
+              Batch
+            </FormLabel>
+            <Select
+              value={defaultBatchId}
+              onChange={(e) =>
+                updateParams({ batchId: e.target.value || null, page: '1' })
+              }
+              options={[
+                { value: '', label: 'All Batches' },
+                ...filteredBatches.map((b) => ({
+                  value: b.id,
+                  label: b.batchNameEnglish,
+                })),
+              ]}
+              className="h-11"
+              placeholder="All Batches"
+              disabled={!defaultCourseId}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Data Table */}
+      <ResponsiveDataTable
+        data={exams}
+        columns={columns}
+        renderCard={renderCard}
+        keyExtractor={(item) => item.id}
+        emptyState={
+          <EmptyState
+            title="No exams found"
+            description="Create your first exam schedule or adjust filters to list active records."
+            icon={<Calendar className="h-10 w-10 text-[color:var(--ims-muted)]" />}
+          />
+        }
+      />
+
+      {/* Standardized Pagination */}
+      {totalPages > 1 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalCount={total}
+          limit={20}
+        />
+      )}
+    </div>
   );
 }

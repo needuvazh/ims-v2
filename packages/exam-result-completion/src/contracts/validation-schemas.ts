@@ -23,6 +23,16 @@ export const CreateExamSchema = CreateExamSchemaBase.refine(
     message: 'Pass marks must be <= max marks',
     path: ['passMarks'],
   },
+).refine(
+  (data) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return data.examDate.getTime() > today.getTime();
+  },
+  {
+    message: 'Exam date must be in the future',
+    path: ['examDate'],
+  },
 );
 
 export const UpdateExamSchema = CreateExamSchemaBase.partial()

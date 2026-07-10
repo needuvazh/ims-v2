@@ -43,13 +43,13 @@ describe('CourseCompletionAggregate', () => {
       expect(updated.certificateAllowed).toBe(true);
     });
 
-    it('moves to AwaitingTrainerRecommendation when manual approval required', () => {
+    it('moves to AwaitingFinalApproval when manual approval required', () => {
       const aggregate = CourseCompletionAggregate.create(
         createCommand({ manualApprovalRequired: true }),
       );
       const updated = aggregate.evaluate();
       expect(updated.completionStatus).toBe(
-        COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION,
+        COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL,
       );
     });
 
@@ -80,12 +80,26 @@ describe('CourseCompletionAggregate', () => {
 
   describe('recommendByTrainer', () => {
     it('moves to AwaitingCoordinatorReview', () => {
-      const aggregate = CourseCompletionAggregate.create(
-        createCommand({ manualApprovalRequired: true }),
-      );
-      const evaluated = aggregate.evaluate();
-      const agg2 = new CourseCompletionAggregate(evaluated);
-      const updated = agg2.recommendByTrainer();
+      const state = createCommand({ manualApprovalRequired: true });
+      const completion = {
+        id: '123',
+        enrollmentId: state.enrollmentId,
+        attendancePercentage: state.attendancePercentage,
+        attendanceOutcome: state.attendanceOutcome,
+        examRequired: state.examRequired,
+        examOutcome: state.examOutcome,
+        paymentRequired: state.paymentRequired,
+        paymentOutcome: state.paymentOutcome,
+        manualApprovalRequired: state.manualApprovalRequired,
+        completionStatus: COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION as any,
+        certificateAllowed: false,
+        evidenceStale: false,
+        version: 1,
+        createdAt: new Date(),
+        isDeleted: false,
+      };
+      const aggregate = new CourseCompletionAggregate(completion);
+      const updated = aggregate.recommendByTrainer();
       expect(updated.completionStatus).toBe(
         COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW,
       );
@@ -100,29 +114,38 @@ describe('CourseCompletionAggregate', () => {
   });
 
   describe('reviewByCoordinator', () => {
+    const createAwaitingReviewState = () => {
+      const state = createCommand({ manualApprovalRequired: true });
+      return {
+        id: '123',
+        enrollmentId: state.enrollmentId,
+        attendancePercentage: state.attendancePercentage,
+        attendanceOutcome: state.attendanceOutcome,
+        examRequired: state.examRequired,
+        examOutcome: state.examOutcome,
+        paymentRequired: state.paymentRequired,
+        paymentOutcome: state.paymentOutcome,
+        manualApprovalRequired: state.manualApprovalRequired,
+        completionStatus: COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW as any,
+        certificateAllowed: false,
+        evidenceStale: false,
+        version: 1,
+        createdAt: new Date(),
+        isDeleted: false,
+      };
+    };
+
     it('moves to AwaitingFinalApproval when approved', () => {
-      const aggregate = CourseCompletionAggregate.create(
-        createCommand({ manualApprovalRequired: true }),
-      );
-      const evaluated = aggregate.evaluate();
-      const agg2 = new CourseCompletionAggregate(evaluated);
-      const recommended = agg2.recommendByTrainer();
-      const agg3 = new CourseCompletionAggregate(recommended);
-      const updated = agg3.reviewByCoordinator(true);
+      const aggregate = new CourseCompletionAggregate(createAwaitingReviewState());
+      const updated = aggregate.reviewByCoordinator(true);
       expect(updated.completionStatus).toBe(
         COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL,
       );
     });
 
     it('moves to Rejected when not approved', () => {
-      const aggregate = CourseCompletionAggregate.create(
-        createCommand({ manualApprovalRequired: true }),
-      );
-      const evaluated = aggregate.evaluate();
-      const agg2 = new CourseCompletionAggregate(evaluated);
-      const recommended = agg2.recommendByTrainer();
-      const agg3 = new CourseCompletionAggregate(recommended);
-      const updated = agg3.reviewByCoordinator(false);
+      const aggregate = new CourseCompletionAggregate(createAwaitingReviewState());
+      const updated = aggregate.reviewByCoordinator(false);
       expect(updated.completionStatus).toBe(COMPLETION_STATUSES.REJECTED);
     });
 
@@ -141,11 +164,7 @@ describe('CourseCompletionAggregate', () => {
       );
       const evaluated = aggregate.evaluate();
       const agg2 = new CourseCompletionAggregate(evaluated);
-      const recommended = agg2.recommendByTrainer();
-      const agg3 = new CourseCompletionAggregate(recommended);
-      const reviewed = agg3.reviewByCoordinator(true);
-      const agg4 = new CourseCompletionAggregate(reviewed);
-      const updated = agg4.finalApproval(true);
+      const updated = agg2.finalApproval(true);
       expect(updated.completionStatus).toBe(COMPLETION_STATUSES.APPROVED);
       expect(updated.certificateAllowed).toBe(true);
     });
@@ -156,11 +175,7 @@ describe('CourseCompletionAggregate', () => {
       );
       const evaluated = aggregate.evaluate();
       const agg2 = new CourseCompletionAggregate(evaluated);
-      const recommended = agg2.recommendByTrainer();
-      const agg3 = new CourseCompletionAggregate(recommended);
-      const reviewed = agg3.reviewByCoordinator(true);
-      const agg4 = new CourseCompletionAggregate(reviewed);
-      const updated = agg4.finalApproval(false);
+      const updated = agg2.finalApproval(false);
       expect(updated.completionStatus).toBe(COMPLETION_STATUSES.REJECTED);
     });
 
@@ -215,25 +230,13 @@ describe('CourseCompletionAggregate', () => {
   });
 
   describe('complete state machine - manual approval path', () => {
-    it('follows full approval path', () => {
+    it('follows collapsed approval path', () => {
       let agg = CourseCompletionAggregate.create(
         createCommand({ manualApprovalRequired: true }),
       );
       expect(agg.state.completionStatus).toBe(COMPLETION_STATUSES.PENDING);
 
       let state = agg.evaluate();
-      expect(state.completionStatus).toBe(
-        COMPLETION_STATUSES.AWAITING_TRAINER_RECOMMENDATION,
-      );
-
-      agg = new CourseCompletionAggregate(state);
-      state = agg.recommendByTrainer();
-      expect(state.completionStatus).toBe(
-        COMPLETION_STATUSES.AWAITING_COORDINATOR_REVIEW,
-      );
-
-      agg = new CourseCompletionAggregate(state);
-      state = agg.reviewByCoordinator(true);
       expect(state.completionStatus).toBe(
         COMPLETION_STATUSES.AWAITING_FINAL_APPROVAL,
       );

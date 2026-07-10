@@ -56,7 +56,7 @@ export default async function BulkResultsPage() {
       <PageHeader
         title="Bulk Result Entry"
         description="Upload CSV or paste raw comma-separated records to import grades and marks in bulk for an exam roster."
-        backUrl="/exam-completion/results"
+        backUrl="/exam-completion/exams"
         breadcrumbs={
           <Breadcrumbs
             items={[
@@ -66,8 +66,8 @@ export default async function BulkResultsPage() {
                 icon: <Home className="h-3.5 w-3.5" />,
               },
               {
-                label: 'Results',
-                href: '/exam-completion/results',
+                label: 'Exams',
+                href: '/exam-completion/exams',
                 icon: <Layers className="h-3.5 w-3.5" />,
               },
               { label: 'Bulk Entry', icon: <Upload className="h-3.5 w-3.5" /> },

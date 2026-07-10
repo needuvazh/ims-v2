@@ -47,8 +47,11 @@ interface CompletionDetail {
   enrollmentId: string;
   completionStatus: string;
   attendancePercentage?: number | null;
+  attendanceOutcome?: string | null;
   examRequired: boolean;
+  examOutcome?: string | null;
   paymentRequired: boolean;
+  paymentOutcome?: string | null;
   manualApprovalRequired: boolean;
   certificateAllowed: boolean;
   evidenceStale: boolean;
@@ -237,7 +240,7 @@ export function CompletionDetailClient({
         <Card className="bg-white">
           <CardHeader className="pb-2 p-4">
             <CardDescription className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
-              Attendance Ratio
+              Attendance Outcome
             </CardDescription>
             <div className="mt-2 flex items-baseline justify-between">
               <span className="text-2xl font-bold text-slate-800">
@@ -247,52 +250,69 @@ export function CompletionDetailClient({
               </span>
               <Badge
                 variant={
-                  completion.attendancePercentage != null &&
-                  completion.attendancePercentage >= 75
-                    ? 'success'
-                    : 'error'
+                  completion.attendanceOutcome === 'Met' ? 'success' : 'error'
                 }
               >
-                {completion.attendancePercentage != null &&
-                completion.attendancePercentage >= 75
-                  ? 'Met'
-                  : 'Unmet'}
+                {completion.attendanceOutcome === 'Met' ? 'Met' : 'Unmet'}
               </Badge>
             </div>
           </CardHeader>
         </Card>
 
-        {/* Exams Required */}
+        {/* Exams Outcome */}
         <Card className="bg-white">
           <CardHeader className="pb-2 p-4">
             <CardDescription className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
-              Exam Requirement
+              Assessment Outcome
             </CardDescription>
             <div className="mt-2 flex items-baseline justify-between">
               <span className="text-base font-bold text-slate-800">
                 {completion.examRequired ? 'Required' : 'Exempt'}
               </span>
-              <Badge variant={completion.examRequired ? 'info' : 'outline'}>
-                {completion.examRequired ? 'Required' : 'N/A'}
+              <Badge
+                variant={
+                  !completion.examRequired || completion.examOutcome === 'Pass'
+                    ? 'success'
+                    : completion.examOutcome === 'Fail'
+                      ? 'error'
+                      : 'warning'
+                }
+              >
+                {!completion.examRequired
+                  ? 'Exempt'
+                  : completion.examOutcome === 'Pass'
+                    ? 'Passed'
+                    : completion.examOutcome === 'Fail'
+                      ? 'Failed'
+                      : 'Pending'}
               </Badge>
             </div>
           </CardHeader>
         </Card>
 
-        {/* Payment Required */}
+        {/* Payment Outcome */}
         <Card className="bg-white">
           <CardHeader className="pb-2 p-4">
             <CardDescription className="text-xs font-semibold text-[color:var(--ims-muted)] uppercase tracking-wider">
-              Financial Standing
+              Fee Clearance Outcome
             </CardDescription>
             <div className="mt-2 flex items-baseline justify-between">
               <span className="text-base font-bold text-slate-800">
-                {completion.paymentRequired ? 'Check Clearance' : 'Exempt'}
+                {completion.paymentRequired ? 'Dues Check' : 'Exempt'}
               </span>
               <Badge
-                variant={completion.paymentRequired ? 'success' : 'outline'}
+                variant={
+                  !completion.paymentRequired ||
+                  completion.paymentOutcome === 'Cleared'
+                    ? 'success'
+                    : 'error'
+                }
               >
-                {completion.paymentRequired ? 'Passed' : 'N/A'}
+                {!completion.paymentRequired
+                  ? 'Exempt'
+                  : completion.paymentOutcome === 'Cleared'
+                    ? 'Cleared'
+                    : 'Outstanding'}
               </Badge>
             </div>
           </CardHeader>
@@ -316,6 +336,88 @@ export function CompletionDetailClient({
         </Card>
       </div>
 
+      {/* Detailed Evidence Checklist */}
+      <Card className="bg-white border border-slate-100 shadow-sm animate-fade-in-up">
+        <CardHeader>
+          <CardTitle>Requirements Checklist</CardTitle>
+          <CardDescription>
+            The student must satisfy all criteria below before course completion can be finalized.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between py-2 border-b border-slate-50">
+            <div>
+              <p className="font-semibold text-slate-800 text-sm">Attendance Ratio</p>
+              <p className="text-xs text-slate-500">
+                {completion.attendancePercentage != null
+                  ? `Recorded attendance: ${completion.attendancePercentage}% (Requires >= 75%)`
+                  : 'No attendance records registered'}
+              </p>
+            </div>
+            <Badge
+              variant={
+                completion.attendanceOutcome === 'Met' ? 'success' : 'error'
+              }
+            >
+              {completion.attendanceOutcome === 'Met' ? 'Met' : 'Unmet'}
+            </Badge>
+          </div>
+
+          <div className="flex items-center justify-between py-2 border-b border-slate-50">
+            <div>
+              <p className="font-semibold text-slate-800 text-sm">Exam Passing Standard</p>
+              <p className="text-xs text-slate-500">
+                {completion.examRequired
+                  ? 'Requires passing score on all registered batch exams.'
+                  : 'Exempt from exam validation rules.'}
+              </p>
+            </div>
+            <Badge
+              variant={
+                !completion.examRequired || completion.examOutcome === 'Pass'
+                  ? 'success'
+                  : completion.examOutcome === 'Fail'
+                    ? 'error'
+                    : 'warning'
+              }
+            >
+              {!completion.examRequired
+                ? 'Exempt'
+                : completion.examOutcome === 'Pass'
+                  ? 'Passed'
+                  : completion.examOutcome === 'Fail'
+                    ? 'Failed'
+                    : 'Pending Roster Entry'}
+            </Badge>
+          </div>
+
+          <div className="flex items-center justify-between py-2">
+            <div>
+              <p className="font-semibold text-slate-800 text-sm">Finance & Receivables Clearance</p>
+              <p className="text-xs text-slate-500">
+                {completion.paymentRequired
+                  ? 'Requires zero outstanding balance for course fees.'
+                  : 'Exempt from financial clearance checks.'}
+              </p>
+            </div>
+            <Badge
+              variant={
+                !completion.paymentRequired ||
+                completion.paymentOutcome === 'Cleared'
+                  ? 'success'
+                  : 'error'
+              }
+            >
+              {!completion.paymentRequired
+                ? 'Exempt'
+                : completion.paymentOutcome === 'Cleared'
+                  ? 'Cleared'
+                  : 'Outstanding Dues'}
+            </Badge>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Warnings / Alerts */}
       {completion.evidenceStale && (
         <div className="rounded-2xl border border-amber-200 bg-amber-50/50 p-4 text-sm text-amber-800 flex items-start gap-3 animate-fade-in-up">
@@ -335,133 +437,61 @@ export function CompletionDetailClient({
         {/* Actions Panel */}
         <div className="lg:col-span-2 space-y-6">
           {/* Action Trigger Forms */}
-          {completion.completionStatus === 'AwaitingTrainerRecommendation' &&
-            canRecommend && (
-              <Card className="bg-white border border-slate-100 shadow-sm">
-                <CardHeader>
-                  <CardTitle>Trainer Recommendation</CardTitle>
-                  <CardDescription>
-                    As the course trainer, recommend this student for completion
-                    and certificate issuance.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Textarea
-                    label="Recommendation Remarks"
-                    rows={3}
-                    placeholder="Enter remarks or feedback regarding student performance..."
-                    value={remarks}
-                    onChange={(e) => setRemarks(e.target.value)}
+          {completion.completionStatus.startsWith('Awaiting') && (
+            <Card className="bg-white border border-slate-100 shadow-sm">
+              <CardHeader>
+                <CardTitle>Sign-off & Approval Decisions</CardTitle>
+                <CardDescription>
+                  Review student evidence checklist. Provide comments and approve or reject this course completion request.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Textarea
+                  label="Decision Remarks"
+                  rows={3}
+                  placeholder="Provide feedback or notes regarding your approval decision..."
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                  disabled={loading !== null}
+                  required
+                />
+                <div className="flex justify-end gap-3 pt-2 border-t border-slate-100">
+                  <Button
+                    onClick={() => {
+                      const action =
+                        completion.completionStatus === 'AwaitingTrainerRecommendation'
+                          ? 'recommend'
+                          : completion.completionStatus === 'AwaitingCoordinatorReview'
+                            ? 'coordinator-review'
+                            : 'final-approve';
+                      handleWorkflowAction(action, 'Rejected');
+                    }}
                     disabled={loading !== null}
-                    required
-                  />
-                  <div className="flex justify-end pt-2 border-t border-slate-100">
-                    <Button
-                      onClick={() => handleWorkflowAction('recommend')}
-                      disabled={loading !== null}
-                      variant="primary"
-                      className="gap-2"
-                    >
-                      <Send className="h-4 w-4" />
-                      {loading === 'recommend'
-                        ? 'Submitting...'
-                        : 'Recommend for Approval'}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-          {completion.completionStatus === 'AwaitingCoordinatorReview' &&
-            canReview && (
-              <Card className="bg-white border border-slate-100 shadow-sm">
-                <CardHeader>
-                  <CardTitle>Academic Coordinator Review</CardTitle>
-                  <CardDescription>
-                    Review trainer recommendation and student evidence for
-                    completion verification.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Textarea
-                    label="Review Remarks"
-                    rows={3}
-                    placeholder="Provide feedback on the review..."
-                    value={remarks}
-                    onChange={(e) => setRemarks(e.target.value)}
+                    variant="outline"
+                    className="border-red-200 text-red-600 hover:bg-red-50"
+                  >
+                    Reject Request
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      const action =
+                        completion.completionStatus === 'AwaitingTrainerRecommendation'
+                          ? 'recommend'
+                          : completion.completionStatus === 'AwaitingCoordinatorReview'
+                            ? 'coordinator-review'
+                            : 'final-approve';
+                      handleWorkflowAction(action, 'Approved');
+                    }}
                     disabled={loading !== null}
-                    required
-                  />
-                  <div className="flex justify-end gap-3 pt-2 border-t border-slate-100">
-                    <Button
-                      onClick={() =>
-                        handleWorkflowAction('coordinator-review', 'Rejected')
-                      }
-                      disabled={loading !== null}
-                      variant="outline"
-                      className="border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      Reject & Reevaluate
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        handleWorkflowAction('coordinator-review', 'Approved')
-                      }
-                      disabled={loading !== null}
-                      variant="primary"
-                      className="bg-green-600 hover:bg-green-700"
-                    >
-                      Approve Review
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-          {completion.completionStatus === 'AwaitingFinalApproval' &&
-            canApprove && (
-              <Card className="bg-white border border-slate-100 shadow-sm">
-                <CardHeader>
-                  <CardTitle>Final Management Approval</CardTitle>
-                  <CardDescription>
-                    Grant final approval for completion. This will activate
-                    certificate generation.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Textarea
-                    label="Final Approval Remarks"
-                    rows={3}
-                    placeholder="Provide final remarks..."
-                    value={remarks}
-                    onChange={(e) => setRemarks(e.target.value)}
-                    disabled={loading !== null}
-                    required
-                  />
-                  <div className="flex justify-end gap-3 pt-2 border-t border-slate-100">
-                    <Button
-                      onClick={() =>
-                        handleWorkflowAction('final-approve', 'Rejected')
-                      }
-                      disabled={loading !== null}
-                      variant="outline"
-                      className="border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      Reject Completion
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        handleWorkflowAction('final-approve', 'Approved')
-                      }
-                      disabled={loading !== null}
-                      variant="primary"
-                    >
-                      Approve Course Completion
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+                    variant="primary"
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    Approve Request
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {!completion.completionStatus.includes('Awaiting') && (
             <Card className="bg-white border border-slate-100 shadow-sm text-center py-8">

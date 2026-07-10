@@ -98,7 +98,7 @@ export default async function ExamCompletionDashboard() {
             className="cursor-pointer transition-all hover:scale-[1.01]"
           />
         </Link>
-        <Link href="/exam-completion/results?status=Pending">
+        <Link href="/exam-completion/exams?status=OpenForResultEntry">
           <StatCard
             title="Pending Results"
             value={pendingResults}

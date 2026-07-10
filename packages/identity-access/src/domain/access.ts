@@ -222,11 +222,6 @@ export const adminNavigation: NavigationItem[] = [
         permission: 'attendance.sessions.menu.view',
       },
       {
-        href: '/attendance/records',
-        label: 'Records',
-        permission: 'attendance.records.menu.view',
-      },
-      {
         href: '/attendance/corrections',
         label: 'Corrections',
         permission: 'attendance.corrections.menu.view',
@@ -333,11 +328,7 @@ export const adminNavigation: NavigationItem[] = [
         label: 'Exams',
         permission: 'exam.view',
       },
-      {
-        href: '/exam-completion/results',
-        label: 'Results',
-        permission: 'result.view',
-      },
+
       {
         href: '/exam-completion/completions',
         label: 'Completions',
