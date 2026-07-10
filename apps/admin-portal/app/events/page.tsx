@@ -1,7 +1,4 @@
-'use client';
-
 import { CalendarDays, Clock } from 'lucide-react';
-
 import {
   PublicShell,
   SectionHeading,
@@ -9,6 +6,7 @@ import {
   SplitHero,
   eventCards,
 } from '../_components/public-site';
+import { RealTimeStatStrip } from '../_components/public-site-client';
 
 export default function EventsPage() {
   return (
@@ -17,42 +15,50 @@ export default function EventsPage() {
         eyebrow="Upcoming events"
         title={
           <>
-            Public sessions,
+            Public Sessions &
             <br />
-            open intakes.
+            <span className="text-gradient-orange">Open Intakes.</span>
           </>
         }
-        description="Use the events page to show batch openings, corporate briefings, or certification clinics."
+        description="View our upcoming safety seminars, open course registration dates, and corporate certification intakes in Muscat."
         image="/alsaud/hero.jpg"
         imageAlt="Upcoming events"
         primaryHref="/contact-us"
-        primaryLabel="Ask for dates"
+        primaryLabel="Inquire about Dates"
         secondaryHref="/courses"
-        secondaryLabel="Browse courses"
+        secondaryLabel="Browse Courses"
+        showStats={false}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      {/* ─── STAT STRIP (pulls up over hero on desktop) ───── */}
+      <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
+        <RealTimeStatStrip />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Calendar"
-          title="A light-weight public schedule"
-          description="The reference site includes an events navigation item, so this page keeps a clear on-brand placeholder calendar."
+          title="Upcoming Training Intakes"
+          description="Secure your seat in one of our open public intake dates. Registration closes 48 hours prior to start."
         />
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
           {eventCards.map((event) => (
             <div
               key={event.title}
-              className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
+              className="group rounded-[2rem] border border-neutral-100 bg-white p-7 shadow-sm transition-all hover:border-orange-100 hover:shadow-xl hover:shadow-orange-600/5 hover:-translate-y-1 duration-300"
             >
-              <CalendarDays className="h-5 w-5 text-accent-700" />
-              <h3 className="mt-5 text-xl font-black text-neutral-950">
+              <div className="inline-flex rounded-xl bg-orange-500/10 p-3.5 text-orange-600 ring-1 ring-orange-500/20 mb-5">
+                <CalendarDays className="h-5 w-5" />
+              </div>
+              <h3 className="font-display text-xl font-bold text-neutral-900">
                 {event.title}
               </h3>
-              <p className="mt-3 text-sm leading-7 text-neutral-600">
+              <p className="mt-3 text-sm leading-relaxed text-neutral-600">
                 {event.detail}
               </p>
-              <div className="mt-5 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
-                <Clock className="h-4 w-4" />
-                {event.meta}
+              <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 border-t border-neutral-100 pt-5">
+                <Clock className="h-4 w-4 text-orange-500" />
+                <span>{event.meta}</span>
               </div>
             </div>
           ))}
@@ -62,9 +68,9 @@ export default function EventsPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SimpleCTA
           title="Need a private group schedule?"
-          description="The admissions team can create a course timetable for your company or site team."
+          description="Our admissions team can customize a course timetable for your company’s fleet or site team."
           href="/contact-us"
-          label="Request a schedule"
+          label="Request a Schedule"
         />
       </section>
     </PublicShell>

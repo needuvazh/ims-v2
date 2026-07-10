@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Clock, MapPin, Users } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock, MapPin, Users, ShieldCheck, BookOpen, Award, GraduationCap } from 'lucide-react';
 import {
   CourseCardSkeleton,
   StatCardSkeleton,
@@ -199,27 +199,7 @@ function RealTimeCourseCard({
             {course.descriptionEnglish}
           </p>
         )}
-        <div className="mt-auto pt-5 space-y-3">
-          {course.nextBatchDate && (
-            <div className="flex items-center gap-2 text-xs text-neutral-600">
-              <CalendarIcon className="h-4 w-4 text-primary-600" />
-              <span>
-                Next batch:{' '}
-                <strong>
-                  {new Date(course.nextBatchDate).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                  })}
-                </strong>
-              </span>
-            </div>
-          )}
-          {course.availableSeats !== null && course.availableSeats > 0 && (
-            <div className="flex items-center gap-2 text-xs text-neutral-600">
-              <Users className="h-4 w-4 text-green-600" />
-              <span>{course.availableSeats} seats available</span>
-            </div>
-          )}
+        <div className="mt-auto pt-5">
           <ul className="space-y-1.5 text-sm text-neutral-600">
             <li className="flex gap-2">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
@@ -260,13 +240,48 @@ function CalendarIcon(props: React.ComponentProps<'svg'>) {
   );
 }
 
+function AnimatedCounter({ value }: { value: string }) {
+  const numericPart = parseInt(value.replace(/[^0-9]/g, ''), 10) || 0;
+  const suffix = value.replace(/[0-9]/g, '');
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = numericPart;
+    if (start === end) return;
+
+    const duration = 1200; // ms
+    const totalFrames = Math.round(duration / 16);
+    const step = end / totalFrames;
+
+    let frame = 0;
+    const timer = setInterval(() => {
+      frame++;
+      const nextCount = Math.min(Math.floor(step * frame), end);
+      setCount(nextCount);
+      if (nextCount >= end) {
+        clearInterval(timer);
+      }
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [numericPart]);
+
+  return (
+    <>
+      {count}
+      {suffix}
+    </>
+  );
+}
+
 export function RealTimeStatStrip() {
-  const [stats, setStats] = useState<Array<{ value: string; label: string }>>([
-    { value: '25k+', label: 'Students trained' },
-    { value: '150+', label: 'Success partners' },
-    { value: '80+', label: 'Global programs' },
-    { value: '20+', label: 'Years experience' },
-  ]);
+  const stats = [
+    { value: '25k+', label: 'Students trained', icon: GraduationCap },
+    { value: '150+', label: 'Success partners', icon: ShieldCheck },
+    { value: '80+', label: 'Global programs', icon: BookOpen },
+    { value: '20+', label: 'Years experience', icon: Award },
+  ];
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -276,7 +291,7 @@ export function RealTimeStatStrip() {
 
   if (loading) {
     return (
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
         {stats.map((_, i) => (
           <StatCardSkeleton key={i} />
         ))}
@@ -285,24 +300,30 @@ export function RealTimeStatStrip() {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {stats.map((stat, index) => (
-        <motion.div
-          key={stat.label}
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: index * 0.08 }}
-          className="rounded-[2rem] border border-border-light bg-white p-6 shadow-card"
-        >
-          <p className="text-3xl font-black tracking-tight text-neutral-950">
-            {stat.value}
-          </p>
-          <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.24em] text-neutral-500">
-            {stat.label}
-          </p>
-        </motion.div>
-      ))}
+    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+      {stats.map((stat, index) => {
+        const Icon = stat.icon;
+        return (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08 }}
+            className="group rounded-[2rem] border border-neutral-100 bg-white p-7 shadow-card transition-all hover:border-orange-100 hover:shadow-xl hover:shadow-orange-600/5 hover:-translate-y-1 duration-300"
+          >
+            <div className="inline-flex rounded-2xl bg-orange-500/10 p-4 text-orange-600 ring-1 ring-orange-500/20 mb-5">
+              <Icon className="h-6 w-6" />
+            </div>
+            <p className="font-display text-4xl font-extrabold tracking-tight text-neutral-900">
+              <AnimatedCounter value={stat.value} />
+            </p>
+            <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-400 group-hover:text-orange-500 transition-colors">
+              {stat.label}
+            </p>
+          </motion.div>
+        );
+      })}
     </div>
   );
 }

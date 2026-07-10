@@ -19,10 +19,7 @@ export const mainNavigation: SiteLink[] = [
   { label: 'Courses', href: '/courses' },
   { label: 'Training Facilities', href: '/training-facilities' },
   { label: 'Upcoming Events', href: '/events' },
-  { label: 'Brochures', href: '/brochures' },
-  { label: 'Careers', href: '/careers' },
   { label: 'Contact', href: '/contact-us' },
-  { label: 'IELTS Booking', href: '/ielts/register' },
 ];
 
 export const courseCatalog: CourseCard[] = [];

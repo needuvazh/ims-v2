@@ -185,6 +185,7 @@ export default async function EnrollmentDetailPage(props: {
         enrollment.walkInEnrollment?.paymentCollected?.toString() || '0.00',
       enrollmentType: enrollment.enrollmentType,
       studentProfileId: enrollment.studentProfileId,
+      photoUrl: enrollment.studentProfile.person.photoUrl || null,
     },
     history: auditLogs.map((log) => ({
       id: log.id,

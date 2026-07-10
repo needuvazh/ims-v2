@@ -1,24 +1,25 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import {
   PublicShell,
   SplitHero,
   SectionHeading,
-  SectionCardGrid,
   SectionCardGridByName,
   ContactBlock,
   SimpleCTA,
-  facilityCards,
   contactInfo,
   FAQAccordion,
   TestimonialGrid,
   WhatsAppButton,
+  AccreditationStrip,
+  DarkFacilitiesSection,
+  CourseCardSkeleton,
 } from './_components/public-site';
 import {
-  RealTimeCourseGrid,
   RealTimeStatStrip,
-  RealTimeBatchSchedule,
 } from './_components/public-site-client';
+import { CoursesClient } from './_components/courses-page-client';
 
 const homeFeatures = [
   {
@@ -95,29 +96,35 @@ export const dynamic = 'force-dynamic';
 export default function HomePage() {
   return (
     <PublicShell>
+      {/* ─── HERO ─────────────────────────────────────────── */}
       <SplitHero
         eyebrow="Al-Saud Training Institute"
         title={
           <>
-            Redefining
+            Oman&apos;s Leading
             <br />
-            Professional Growth.
+            <span className="text-gradient-orange">Heavy Machinery</span>
+            <br />
+            Training Center.
           </>
         }
-        description="Building a future-ready workforce for Oman through hands-on training in heavy machinery, crane operation, and practical certification pathways."
+        description="Building a future-ready workforce through NPORS-accredited, hands-on training in forklift operation, crane work, elevated work platforms, and more — right here in Muscat."
         image="/alsaud/hero.jpg"
-        imageAlt="Al-Saud Training Institute"
+        imageAlt="Al-Saud Training Institute — Heavy Machinery Training"
         primaryHref="/courses"
         primaryLabel="Browse Courses"
         secondaryHref="/about"
         secondaryLabel="About Us"
+        showStats={false}
       />
 
-      <section className="mx-auto max-w-7xl px-4 -mt-6 sm:px-6 lg:px-8 relative z-10">
+      {/* ─── STAT STRIP (pulls up over hero on desktop) ───── */}
+      <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
         <RealTimeStatStrip />
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      {/* ─── WHY CHOOSE US ─── White background ────────────── */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Why choose us"
           title="Focused training built for real workplaces"
@@ -128,61 +135,50 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      {/* ─── ACCREDITATION STRIP ─── Light neutral bg ──────── */}
+      <section className="bg-neutral-50 border-y border-neutral-100 py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AccreditationStrip />
+        </div>
+      </section>
+
+      {/* ─── COURSES GRID ─── Warm tinted background ────────── */}
+      <section className="bg-gradient-to-b from-amber-50/60 to-orange-50/30 py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              eyebrow="Our courses"
+              title="Latest training programs"
+              description="Filter our heavy equipment, crane, forklift, and safety courses by category or search below."
+            />
+          </div>
+          <div className="mt-10">
+            <Suspense fallback={<CoursesSkeleton />}>
+              <CoursesClient />
+            </Suspense>
+          </div>
+        </div>
+      </section>
+      {/* ─── FACILITIES ─── Dark navy background ─────────────── */}
+      <DarkFacilitiesSection />
+
+      {/* ─── TESTIMONIALS ─── Light gradient bg ──────────────── */}
+      <section className="bg-gradient-to-b from-neutral-50 to-white py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Our courses"
-            title="Latest training programs"
-            description="Core programs cover forklift operation, crane work, elevated platforms, and customized professional courses."
+            eyebrow="Testimonials"
+            title="What our graduates say"
+            description="Hear from professionals who advanced their careers through our training programs."
+            align="center"
           />
-          <Link
-            href="/courses"
-            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-accent-700 transition-colors hover:text-primary-700"
-          >
-            View full directory
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="mt-10">
-          <RealTimeCourseGrid limit={6} />
+          <div className="mt-12">
+            <TestimonialGrid testimonials={testimonials} />
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow="Upcoming batches"
-          title="Next available training dates"
-          description="Secure your spot in the next available batch. Limited seats per session for focused, hands-on learning."
-        />
-        <div className="mt-10">
-          <RealTimeBatchSchedule />
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow="Training facilities"
-          title="Practical spaces that support real learning"
-          description="Dedicated rooms and practical areas help learners build confidence before assessment and deployment."
-        />
-        <div className="mt-10">
-          <SectionCardGrid items={facilityCards} />
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow="Testimonials"
-          title="What our graduates say"
-          description="Hear from professionals who advanced their careers through our training programs."
-          align="center"
-        />
-        <div className="mt-10">
-          <TestimonialGrid testimonials={testimonials} />
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+      {/* ─── FAQ ─── White background ─────────────────────────── */}
+      <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="FAQ"
           title="Frequently asked questions"
@@ -194,6 +190,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── CTA ─── Dark background ──────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SimpleCTA
           title="Need a course recommendation or a group booking?"
@@ -203,11 +200,22 @@ export default function HomePage() {
         />
       </section>
 
+      {/* ─── CONTACT BLOCK ───────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <ContactBlock />
       </section>
 
       <WhatsAppButton />
     </PublicShell>
+  );
+}
+
+function CoursesSkeleton() {
+  return (
+    <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <CourseCardSkeleton key={i} />
+      ))}
+    </div>
   );
 }

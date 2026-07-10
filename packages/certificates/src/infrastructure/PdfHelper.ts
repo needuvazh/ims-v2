@@ -1,31 +1,48 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import { put } from '@vercel/blob';
 
-export function saveLocalMockPdf(
+/**
+ * Generates a minimal but valid PDF for a certificate and uploads it to
+ * Vercel Blob storage. Returns the public blob URL so that it can be
+ * persisted on the Certificate record and served from anywhere (including
+ * Vercel's read-only serverless runtime where the local filesystem is not
+ * writable).
+ *
+ * The PDF content is a lightweight hand-crafted PDF-1.4 document – no
+ * external PDF library dependency required. Replace with a proper template
+ * renderer (e.g. react-pdf / puppeteer) when a production design is ready.
+ */
+export async function savePdfToBlob(
+  certNumber: string,
+  studentNumber: string,
+  verificationCode: string,
+): Promise<string> {
+  const pdfContent = buildMinimalPdf(certNumber, studentNumber, verificationCode);
+
+  const blob = await put(
+    `certificates/${certNumber}.pdf`,
+    Buffer.from(pdfContent, 'utf-8'),
+    {
+      access: 'public',
+      contentType: 'application/pdf',
+      // Allow overwrite so that a replacement certificate with the same
+      // number can be re-generated without a conflict error.
+      allowOverwrite: true,
+    },
+  );
+
+  return blob.url;
+}
+
+// ---------------------------------------------------------------------------
+// Internal helpers
+// ---------------------------------------------------------------------------
+
+function buildMinimalPdf(
   certNumber: string,
   studentNumber: string,
   verificationCode: string,
 ): string {
-  // Dynamically find workspace root to support all executing directories (e.g. root, apps, packages)
-  let baseDir = process.cwd();
-  while (
-    baseDir &&
-    baseDir !== '/' &&
-    !fs.existsSync(path.join(baseDir, 'apps/admin-portal'))
-  ) {
-    const parent = path.dirname(baseDir);
-    if (parent === baseDir) break;
-    baseDir = parent;
-  }
-
-  const publicDir = path.join(baseDir, 'apps/admin-portal/public/certificates');
-
-  try {
-    if (!fs.existsSync(publicDir)) {
-      fs.mkdirSync(publicDir, { recursive: true });
-    }
-
-    const pdfContent = `%PDF-1.4
+  return `%PDF-1.4
 %
 1 0 obj
 << /Title (Certificate of Completion) /Author (ASTI) /Creator (IMS-V2) >>
@@ -75,11 +92,4 @@ trailer
 startxref
 620
 %%EOF`;
-
-    fs.writeFileSync(path.join(publicDir, `${certNumber}.pdf`), pdfContent);
-    return `/certificates/${certNumber}.pdf`;
-  } catch (err) {
-    console.error('Failed to write local certificate PDF:', err);
-    return `/certificates/${certNumber}.pdf`; // Fallback relative path
-  }
 }

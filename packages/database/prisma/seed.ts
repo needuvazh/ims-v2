@@ -2479,11 +2479,11 @@ async function seed() {
       instituteCode: 'AST-HQ',
       instituteName: 'Al-Saud Training Institute',
       registrationNumber: 'REG-2024-001',
-      primaryEmail: 'info@al-saud.edu.sa',
-      primaryPhone: '+966-11-4567890',
-      website: 'https://al-saud.edu.sa',
-      address: 'King Fahd Road, Olaya',
-      country: 'Saudi Arabia',
+      primaryEmail: 'contactus@alsaud-intl.com',
+      primaryPhone: '+96896589150',
+      website: 'https://www.alsaud-intl.com/',
+      address: 'Muscat, Azaiba North, Al Anwar Street, Building No. 648',
+      country: 'Oman',
       status: 'Active',
     },
   });
@@ -2494,7 +2494,7 @@ async function seed() {
       id: crypto.randomUUID(),
       instituteId: institute.id,
       branchCode: 'AST-RIYADH',
-      branchName: 'Riyadh Main Campus',
+      branchName: 'Riyadh Campus',
       address: 'King Fahd Road, Olaya, Riyadh',
       city: 'Riyadh',
       country: 'Saudi Arabia',
@@ -2504,19 +2504,19 @@ async function seed() {
       effectiveStartDate: new Date(),
     },
   });
-  console.log(`  ✓ Branch created: Riyadh Main Campus (AST-RIYADH)`);
+  console.log(`  ✓ Branch created: Riyadh Campus (AST-RIYADH)`);
 
   const muscatBranch = await prisma.branch.create({
     data: {
       id: crypto.randomUUID(),
       instituteId: institute.id,
       branchCode: 'AST-MUSCAT',
-      branchName: 'Muscat Campus',
-      address: 'Al Khuwair, Muscat',
+      branchName: 'Muscat Campus (HQ)',
+      address: 'Azaiba North, Al Anwar Street, Building No. 648, Muscat',
       city: 'Muscat',
       country: 'Oman',
-      phone: '+968-24-123456',
-      email: 'muscat@al-saud.edu.om',
+      phone: '+96896589150',
+      email: 'contactus@alsaud-intl.com',
       status: 'Active',
       effectiveStartDate: new Date(),
     },
@@ -2592,6 +2592,19 @@ async function seed() {
   });
   console.log(`  ✓ Department created: English Training (AST-MUSCAT-ENG)`);
 
+  const muscatVocDept = await prisma.department.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: muscatBranch.id,
+      departmentCode: 'AST-MUSCAT-VOC',
+      departmentName: 'Vocational & Safety Training',
+      description: 'Heavy machinery, crane operation, and safety training.',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Department created: Vocational & Safety Training (AST-MUSCAT-VOC)`);
+
   const muscatRoom101 = await prisma.classroom.create({
     data: {
       id: crypto.randomUUID(),
@@ -2658,13 +2671,13 @@ async function seed() {
 
   await prisma.user.update({
     where: { id: superAdminUser.id },
-    data: { defaultBranchId: riyadhBranch.id },
+    data: { defaultBranchId: muscatBranch.id },
   });
   await prisma.userBranchAccess.create({
     data: {
       id: crypto.randomUUID(),
       userId: superAdminUser.id,
-      branchId: riyadhBranch.id,
+      branchId: muscatBranch.id,
       isDefault: true,
       status: 'Active',
     },
@@ -2673,7 +2686,7 @@ async function seed() {
     data: {
       id: crypto.randomUUID(),
       userId: superAdminUser.id,
-      branchId: muscatBranch.id,
+      branchId: riyadhBranch.id,
       isDefault: false,
       status: 'Active',
     },
@@ -2709,13 +2722,13 @@ async function seed() {
 
   await prisma.user.update({
     where: { id: smokeUser.id },
-    data: { defaultBranchId: riyadhBranch.id },
+    data: { defaultBranchId: muscatBranch.id },
   });
   await prisma.userBranchAccess.create({
     data: {
       id: crypto.randomUUID(),
       userId: smokeUser.id,
-      branchId: riyadhBranch.id,
+      branchId: muscatBranch.id,
       isDefault: true,
       status: 'Active',
     },
@@ -2724,7 +2737,7 @@ async function seed() {
     data: {
       id: crypto.randomUUID(),
       userId: smokeUser.id,
-      branchId: muscatBranch.id,
+      branchId: riyadhBranch.id,
       isDefault: false,
       status: 'Active',
     },
@@ -2808,6 +2821,43 @@ async function seed() {
   });
   console.log(
     `  ✓ User created: counselor.riyadh@ims.com (COUNSELOR, Branch AST-RIYADH)`,
+  );
+
+  // User C2: Muscat Counselor
+  const muscatCounselorPerson = await prisma.person.create({
+    data: {
+      id: crypto.randomUUID(),
+      firstName: 'Muscat',
+      lastName: 'Counselor',
+      mobile: '+968-500000003',
+    },
+  });
+  const muscatCounselorUser = await prisma.user.create({
+    data: {
+      id: crypto.randomUUID(),
+      personId: muscatCounselorPerson.id,
+      username: 'counselor.muscat@ims.com',
+      email: 'counselor.muscat@ims.com',
+      userType: 'Counselor',
+      status: 'Active',
+      passwordHash,
+      effectiveStartDate: new Date(),
+    },
+  });
+  await prisma.userRole.create({
+    data: { userId: muscatCounselorUser.id, roleId: roleMap['COUNSELOR'].id },
+  });
+  await prisma.userBranchAccess.create({
+    data: {
+      id: crypto.randomUUID(),
+      userId: muscatCounselorUser.id,
+      branchId: muscatBranch.id,
+      isDefault: true,
+      status: 'Active',
+    },
+  });
+  console.log(
+    `  ✓ User created: counselor.muscat@ims.com (COUNSELOR, Branch AST-MUSCAT)`,
   );
 
   // User D: Riyadh Trainer
@@ -2921,6 +2971,43 @@ async function seed() {
     `  ✓ User created: accountant.riyadh@ims.com (ACCOUNTANT, Branch AST-RIYADH)`,
   );
 
+  // User E2: Muscat Accountant
+  const muscatAccountantPerson = await prisma.person.create({
+    data: {
+      id: crypto.randomUUID(),
+      firstName: 'Muscat',
+      lastName: 'Accountant User',
+      mobile: '+968-500000005',
+    },
+  });
+  const muscatAccountantUser = await prisma.user.create({
+    data: {
+      id: crypto.randomUUID(),
+      personId: muscatAccountantPerson.id,
+      username: 'accountant.muscat@ims.com',
+      email: 'accountant.muscat@ims.com',
+      userType: 'Accountant',
+      status: 'Active',
+      passwordHash,
+      effectiveStartDate: new Date(),
+    },
+  });
+  await prisma.userRole.create({
+    data: { userId: muscatAccountantUser.id, roleId: roleMap['ACCOUNTANT'].id },
+  });
+  await prisma.userBranchAccess.create({
+    data: {
+      id: crypto.randomUUID(),
+      userId: muscatAccountantUser.id,
+      branchId: muscatBranch.id,
+      isDefault: true,
+      status: 'Active',
+    },
+  });
+  console.log(
+    `  ✓ User created: accountant.muscat@ims.com (ACCOUNTANT, Branch AST-MUSCAT)`,
+  );
+
   // User F: Muscat Branch Manager
   const muscatManagerPerson = await prisma.person.create({
     data: {
@@ -2981,40 +3068,78 @@ async function seed() {
     console.log(`  ✓ Course Category seeded: ${techCategory.nameEnglish}`);
   }
 
-  const defaultCourses = [
+  
+  // 6b. Create vocational active Courses
+  const vocationalCategoryCode = 'CAT-VOC';
+  let vocCategory = await prisma.courseCategory.findUnique({
+    where: { code: vocationalCategoryCode },
+  });
+  if (!vocCategory) {
+    vocCategory = await prisma.courseCategory.create({
+      data: {
+        id: crypto.randomUUID(),
+        code: vocationalCategoryCode,
+        nameEnglish: 'Vocational & Safety Training',
+        nameArabic: 'التدريب المهني والسلامة',
+        description: 'Heavy machinery operation, crane operation, and workplace safety training.',
+        status: 'Active',
+      },
+    });
+    console.log(`  ✓ Course Category seeded: ${vocCategory.nameEnglish}`);
+  }
+
+  const vocationalCourses = [
     {
-      code: 'CS-FSWD',
-      nameEnglish: 'Full Stack Web Development',
-      nameArabic: 'تطوير تطبيقات الويب بالكامل',
+      code: 'MECH-FLOP',
+      nameEnglish: 'Forklift Operator Training',
+      nameArabic: 'تدريب مشغلي الرافعة الشوكية',
+      descriptionEnglish: 'It aims to provide participants with the necessary skills to operate these machines safely and effectively. The course includes learning how to operate and maintain forklifts, load and unload cargo, and adhere to safety standards.',
+      descriptionArabic: 'يهدف البرنامج إلى تزويد المشاركين بالمهارات اللازمة لتشغيل هذه الآلات بأمان وفعالية. وتشمل الدورة تعلم كيفية تشغيل وصيانة الرافعات الشوكية، وتحميل وتفريغ الشحنات، والالتزام بمعايير السلامة.',
+      bannerImage: '/alsaud/courses/forklift-operator.jpg',
     },
     {
-      code: 'CS-MDEV',
-      nameEnglish: 'Mobile App Development (iOS/Android)',
-      nameArabic: 'تطوير تطبيقات الهاتف المحمول',
+      code: 'MECH-FL-END',
+      nameEnglish: 'Forklift Endorsement Course',
+      nameArabic: 'دورة اعتماد الرافعة الشوكية',
+      descriptionEnglish: 'It aims to equip participants with the skills and knowledge necessary for the safe and professional operation of forklifts. The program includes familiarizing participants with various types of forklifts, training on how to control them, and efficiently perform tasks.',
+      descriptionArabic: 'تهدف الدورة إلى تزويد المشاركين بالمهارات والمعارف اللازمة للتشغيل الآمن والمهني للرافعات الشوكية. ويشمل البرنامج تعريف المشاركين بأنواع مختلفة من الرافعات الشوكية، والتدريب على كيفية التحكم فيها، وأداء المهام بكفاءة.',
+      bannerImage: '/alsaud/courses/forklift-endorsement.jpg',
     },
     {
-      code: 'CS-CSEC',
-      nameEnglish: 'Advanced Cyber Security & Ethical Hacking',
-      nameArabic: 'الأمن السيبراني المتقدم والاختراق الأخلاقي',
+      code: 'MECH-TMC',
+      nameEnglish: 'Truck Mounted Crane',
+      nameArabic: 'رافعة مثبتة على شاحنة',
+      descriptionEnglish: 'It is a specialized training program aimed at teaching participants how to safely and efficiently control and operate truck-mounted cranes. The course covers the study of the main components of the crane and how to operate it safely and effectively.',
+      descriptionArabic: 'هو برنامج تدريبي متخصص يهدف إلى تعليم المشاركين كيفية التحكم وتشغيل الرافعات المثبتة على الشاحنات بأمان وفعالية. تغطي الدورة دراسة المكونات الرئيسية للرافعة وكيفية تشغيلها بشكل آمن وفعال.',
+      bannerImage: '/alsaud/courses/truck-mounted-crane.jpg',
     },
     {
-      code: 'CS-DSAI',
-      nameEnglish: 'Data Science and Artificial Intelligence',
-      nameArabic: 'علم البيانات والذكاء الاصطناعي',
+      code: 'MECH-OGC',
+      nameEnglish: 'Overhead Gantry Crane Operation',
+      nameArabic: 'تشغيل الرافعة الجسرية العلوية',
+      descriptionEnglish: 'It aims to educate participants on how to safely and efficiently control and operate overhead bridge cranes. The training includes a study of the components, safety measures, and how to handle these heavy machines.',
+      descriptionArabic: 'تهدف الدورة إلى تدريب المشاركين على كيفية التحكم وتشغيل الرافعات الجسرية العلوية بأمان وفعالية. ويشمل التدريب دراسة المكونات، وتدابير السلامة، وكيفية التعامل مع هذه الآلات الثقيلة.',
+      bannerImage: '/alsaud/courses/overhead-gantry.jpg',
     },
     {
-      code: 'CS-CLAW',
-      nameEnglish: 'Cloud Solutions Architecture (AWS/Azure)',
-      nameArabic: 'هندسة حلول السحابة',
+      code: 'MECH-EWP',
+      nameEnglish: 'Elevated Work Platforms',
+      nameArabic: 'منصات العمل المرتفعة',
+      descriptionEnglish: 'It is a specialized training program aimed at providing participants with the necessary skills and knowledge to work safely and efficiently on elevated work platforms, such as safety platforms, communication towers, and others.',
+      descriptionArabic: 'هو برنامج تدريبي متخصص يهدف إلى تزويد المشاركين بالمهارات والمعرفة اللازمة للعمل بأمان وفعالية على منصات العمل المرتفعة، مثل منصات السلامة، وأبراج الاتصالات، وغيرها.',
+      bannerImage: '/alsaud/courses/elevated-work-platforms.jpg',
     },
     {
-      code: 'CS-UIUX',
-      nameEnglish: 'UI/UX Design & Product Strategy',
-      nameArabic: 'تصميم واجهة وتجربة المستخدم',
+      code: 'MECH-OTH',
+      nameEnglish: 'Other Courses Available',
+      nameArabic: 'دورات إضافية متوفرة',
+      descriptionEnglish: 'Please see our list of specialist courses or we can customize the course to suit your requirements. Includes mini crawler crane operation, cab-controlled crane, and work platform lift.',
+      descriptionArabic: 'يرجى الاطلاع على قائمة دوراتنا المتخصصة أو يمكننا تخصيص الدورة التدريبية لتناسب متطلباتك. تشمل تشغيل الرافعة الزاحفة الصغيرة، والرافعة التي يتم التحكم فيها من الكابينة، ورفع منصة العمل.',
+      bannerImage: '/alsaud/courses/other-courses.jpg',
     },
   ];
 
-  for (const c of defaultCourses) {
+  for (const c of vocationalCourses) {
     const existing = await prisma.course.findUnique({
       where: { courseCode: c.code },
     });
@@ -3025,16 +3150,20 @@ async function seed() {
           courseCode: c.code,
           nameEnglish: c.nameEnglish,
           nameArabic: c.nameArabic,
-          descriptionEnglish: `${c.nameEnglish} course template.`,
-          descriptionArabic: `دورة ${c.nameEnglish}.`,
-          departmentId: riyadhItDept.id,
-          categoryId: techCategory.id,
+          descriptionEnglish: c.descriptionEnglish,
+          descriptionArabic: c.descriptionArabic,
+          departmentId: muscatVocDept.id,
+          categoryId: vocCategory.id,
           courseClassification: 'Regular',
           durationType: 'Weeks',
-          durationValue: 12,
-          allowWalkInCompletion: false,
+          durationValue: 1,
+          allowWalkInCompletion: true,
           status: 'Published',
           effectiveStartDate: new Date(),
+          bannerImage: c.bannerImage,
+          isPubliclyExposed: true,
+          showPricingPublicly: true,
+          hasPracticalInstruction: true,
         },
       });
 
@@ -3045,7 +3174,7 @@ async function seed() {
           courseId: newCourse.id,
           customerType: 'Individual',
           batchType: 'Regular',
-          basePrice: 500.0,
+          basePrice: 150.0,
           effectiveStartDate: new Date(),
           status: 'Active',
         },
@@ -3054,13 +3183,13 @@ async function seed() {
         data: {
           id: crypto.randomUUID(),
           courseId: newCourse.id,
-          minimumAttendancePercent: 80,
+          minimumAttendancePercent: 100,
           effectiveStartDate: new Date(),
           status: 'Active',
         },
       });
 
-      console.log(`  ✓ Course seeded: ${c.nameEnglish}`);
+      console.log(`  ✓ Vocational Course seeded: ${c.nameEnglish}`);
     }
   }
 
@@ -3120,7 +3249,7 @@ async function seed() {
           connect: { id: person.id },
         },
         branch: {
-          connect: { id: riyadhBranch.id },
+          connect: { id: muscatBranch.id },
         },
         studentNumber: ms.number,
         status: 'Active',
@@ -3170,7 +3299,7 @@ async function seed() {
         id: crypto.randomUUID(),
         leadNumber: ml.number,
         personId: person.id,
-        branchId: riyadhBranch.id,
+        branchId: muscatBranch.id,
         firstName: ml.firstName,
         lastName: ml.lastName,
         email: ml.email,

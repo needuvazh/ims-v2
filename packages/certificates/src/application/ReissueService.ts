@@ -9,7 +9,7 @@ import {
   GenerateReplacementCertificateSchema,
 } from '../domain/validators';
 import { AuditPort, NumberingPort, EnrollmentReadPort } from '../ports';
-import { saveLocalMockPdf } from '../infrastructure/PdfHelper';
+import { savePdfToBlob } from '../infrastructure/PdfHelper';
 
 export class ReissueService {
   constructor(
@@ -179,8 +179,8 @@ export class ReissueService {
     );
     const verificationCode = `VER-${context.courseCode}-${Date.now().toString().slice(-4)}-REP`;
 
-    // Render local replacement PDF and set public URL
-    const certificateUrl = saveLocalMockPdf(
+    // Upload replacement PDF to Vercel Blob and obtain public URL
+    const certificateUrl = await savePdfToBlob(
       certNumber,
       context.studentProfileId,
       verificationCode,

@@ -64,6 +64,7 @@ export class PrismaUserRepository implements IUserRepository {
       deletedAt: row.deletedAt,
       deletedBy: row.deletedBy,
       isDeleted: row.isDeleted,
+      photoUrl: row.photoUrl,
     };
   }
 
@@ -122,6 +123,7 @@ export class PrismaUserRepository implements IUserRepository {
           nationality: person.nationality,
           dateOfBirth: person.dateOfBirth,
           gender: person.gender,
+          photoUrl: person.photoUrl,
           createdBy: person.createdBy,
           updatedBy: person.updatedBy,
           deletedAt: person.deletedAt,
@@ -169,6 +171,7 @@ export class PrismaUserRepository implements IUserRepository {
             nationality: person.nationality,
             dateOfBirth: person.dateOfBirth,
             gender: person.gender,
+            photoUrl: person.photoUrl,
             updatedBy: person.updatedBy,
             deletedAt: person.deletedAt,
             deletedBy: person.deletedBy,

@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { createUuid, DomainError } from '@ims/shared-kernel';
 import { getSession } from '../../../lib/auth-guard';
 import {
@@ -88,3 +89,45 @@ export async function updateProfileAction(
     { action: 'identity.updateProfile', route: '/account/profile' },
   );
 }
+
+export async function terminateSessionAction(
+  sessionId: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const session = await getSession();
+    const { prisma } = await import('../../../lib/runtime');
+
+    const userSession = await prisma.userSession.findUnique({
+      where: { id: sessionId },
+    });
+
+    if (!userSession || userSession.userId !== session.userId) {
+      return { success: false, error: 'Unauthorized session revocation.' };
+    }
+
+    await prisma.userSession.update({
+      where: { id: sessionId },
+      data: { status: 'Revoked' },
+    });
+
+    await prisma.auditLog.create({
+      data: {
+        module: 'iam',
+        performedBy: session.userId,
+        performedAt: new Date(),
+        entityType: 'UserSession',
+        entityId: sessionId,
+        action: 'iam.session.terminated',
+        oldValue: { status: 'Active' },
+        newValue: { status: 'Revoked' },
+        reason: 'user_terminated_own',
+      },
+    });
+
+    revalidatePath('/account/profile');
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+

@@ -11,7 +11,7 @@ import {
   NumberingPort,
   AuditPort,
 } from '../ports';
-import { saveLocalMockPdf } from '../infrastructure/PdfHelper';
+import { savePdfToBlob } from '../infrastructure/PdfHelper';
 
 export class GenerateCertificateService {
   constructor(
@@ -94,8 +94,8 @@ export class GenerateCertificateService {
     );
     const verificationCode = `VER-${context.courseCode}-${Date.now().toString().slice(-4)}-${Math.random().toString(36).slice(-4).toUpperCase()}`;
 
-    // 7. Render local PDF and set public URL
-    const certificateUrl = saveLocalMockPdf(
+    // 7. Upload PDF to Vercel Blob and obtain public URL
+    const certificateUrl = await savePdfToBlob(
       certNumber,
       context.studentProfileId,
       verificationCode,

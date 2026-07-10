@@ -8,6 +8,7 @@ import {
   CourseCardSkeleton,
 } from '../_components/public-site';
 import { CoursesClient } from '../_components/courses-page-client';
+import { RealTimeStatStrip } from '../_components/public-site-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,7 +31,13 @@ export default function CoursesPage() {
         primaryLabel="Ask about pricing"
         secondaryHref="/about"
         secondaryLabel="About the institute"
+        showStats={false}
       />
+
+      {/* ─── STAT STRIP (pulls up over hero on desktop) ───── */}
+      <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
+        <RealTimeStatStrip />
+      </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SectionHeading

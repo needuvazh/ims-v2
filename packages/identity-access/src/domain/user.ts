@@ -37,6 +37,7 @@ export interface Person {
   deletedAt?: Date | null;
   deletedBy?: Uuid | null;
   isDeleted?: boolean;
+  photoUrl?: string | null;
 }
 
 export interface User {

@@ -20,6 +20,7 @@ import {
   Trash2,
   AlertCircle,
   ArrowDownToLine,
+  CreditCard,
 } from 'lucide-react';
 import {
   Card,
@@ -73,6 +74,7 @@ interface EnrollmentDetail {
   paymentCollected: string;
   enrollmentType: string;
   studentProfileId: string;
+  photoUrl: string | null;
 }
 
 interface InvoiceLineItem {
@@ -165,6 +167,34 @@ export function EnrollmentDetailsClient({
   const [payDate, setPayDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [payReference, setPayReference] = useState('');
   const [payRemarks, setPayRemarks] = useState('');
+
+  // ID Card Generation State
+  const [downloadingCard, setDownloadingCard] = useState(false);
+
+  const handleDownloadCard = async () => {
+    setDownloadingCard(true);
+    try {
+      const res = await fetch(`/api/v1/enrollments/${enrollment.id}/id-card/download`);
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.messageEnglish || 'Failed to download course card.');
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `course-card-${enrollment.enrollmentNumber}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+      toast.success('Course card downloaded successfully.');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to download course card.');
+    } finally {
+      setDownloadingCard(false);
+    }
+  };
 
   // Invoice Generation State (if no invoices exist)
   const [invoiceSubCategory, setInvoiceSubCategory] = useState<
@@ -630,6 +660,149 @@ export function EnrollmentDetailsClient({
               </div>
             </Card>
           </div>
+
+          {/* Enrollment Course ID Card (Provisioned) */}
+          {enrollment.enrollmentStatus === 'Confirmed' && (
+            <Card className="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 space-y-4">
+              <h3 className="font-bold text-slate-800 text-sm uppercase flex items-center gap-2 mb-4 font-outfit">
+                <CreditCard className="h-5 w-5 text-emerald-600" />
+                Course Identity Card (Provisioned)
+              </h3>
+
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                {/* Mock Visual 3D Flip ID Card Design */}
+                <div className="w-80 h-48 [perspective:1000px] group cursor-pointer mx-auto md:mx-0">
+                  <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                    
+                    {/* Front Side */}
+                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-gradient-to-br from-teal-800 to-teal-950 rounded-2xl p-4 text-white flex flex-col justify-between shadow-lg border border-teal-700/50">
+                      <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+                        <CreditCard className="h-48 w-48 -mr-10 -mb-10" />
+                      </div>
+
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <span className="text-[10px] tracking-widest text-teal-200 block uppercase font-bold font-outfit">
+                            AL SAUD TRAINING INST.
+                          </span>
+                          <span className="text-[8px] text-teal-300 block">
+                            ASTI Institute Management System
+                          </span>
+                        </div>
+                        <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-[8px] hover:bg-emerald-500/20 font-semibold">
+                          ENROLLED
+                        </Badge>
+                      </div>
+
+                      <div className="my-2 flex gap-3 items-center">
+                        <div className="h-14 w-14 rounded-lg bg-teal-900 border border-teal-700/50 flex items-center justify-center text-teal-300 text-[10px] font-bold overflow-hidden shrink-0">
+                          {enrollment.photoUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={`/api/v1/students/${enrollment.studentProfileId}/profile-photo/view?v=${encodeURIComponent(enrollment.photoUrl)}`}
+                              alt="Student Avatar"
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            'PHOTO'
+                          )}
+                        </div>
+                        <div className="space-y-0.5 text-left min-w-0 flex-1">
+                          <span className="text-xs font-semibold block truncate">
+                            {enrollment.studentName}
+                          </span>
+                          <span className="text-[10px] text-teal-200 block font-mono font-medium">
+                            ID: {enrollment.enrollmentNumber}
+                          </span>
+                          <span className="text-[8px] text-teal-300 block truncate">
+                            Course: {enrollment.courseName}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-end border-t border-teal-800/40 pt-2 text-[8px] text-teal-200">
+                        <div>
+                          <span>VALID UNTIL: </span>
+                          <span className="font-mono">DEC 2026</span>
+                        </div>
+                        <div className="font-mono">ASTI-ENR-CARD</div>
+                      </div>
+                    </div>
+
+                    {/* Back Side */}
+                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between shadow-lg border border-slate-800">
+                      <div className="space-y-2">
+                        <div className="border-b border-slate-800 pb-1 flex justify-between items-center">
+                          <span className="text-[8px] tracking-widest text-slate-300 font-bold uppercase font-outfit">
+                            TERMS & CONDITIONS
+                          </span>
+                          <span className="text-[6px] text-slate-400 font-mono">ASTI-ENR-V1</span>
+                        </div>
+                        <p className="text-[6.5px] text-slate-300 leading-relaxed text-left font-sans">
+                          1. This card is issued for the enrolled course only and is non-transferable.
+                          <br />
+                          2. Cardholder must present this card upon request by institute authorities.
+                          <br />
+                          3. If lost, damaged, or withdrawn, this card becomes void immediately.
+                        </p>
+                      </div>
+
+                      <div className="space-y-1.5 border-t border-slate-900 pt-2 text-left">
+                        <div className="flex justify-between items-center text-[6px] text-slate-400">
+                          <div>
+                            <span className="block font-bold text-slate-300">ASTI Dubai Campus</span>
+                            <span>Tel: +971 4 123 4567 | info@asti.ae</span>
+                          </div>
+                          <div className="text-right">
+                            <span className="block border-b border-slate-800 pb-1 w-16 text-center font-serif italic text-[5px]">
+                              Registrar
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Barcode Mock */}
+                        <div className="h-5 bg-white rounded flex items-center justify-center p-1">
+                          <div className="w-full h-full bg-[repeating-linear-gradient(90deg,black,black_1px,transparent_1px,transparent_3px)]" />
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                {/* Actions Column */}
+                <div className="space-y-3 w-full md:w-64 text-left">
+                  <div className="text-xs space-y-1">
+                    <div className="text-slate-500">
+                      ID Card Status:{' '}
+                      <span className="font-semibold text-emerald-600">
+                        Active & Confirmed
+                      </span>
+                    </div>
+                    <div className="text-slate-500">
+                      Card Number:{' '}
+                      <span className="font-mono">{enrollment.enrollmentNumber}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <Button
+                      id="enrollment-course-card-visual-download-btn"
+                      onClick={handleDownloadCard}
+                      disabled={downloadingCard}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-1.5 h-9 w-full flex justify-center items-center gap-2 font-semibold shadow-sm"
+                    >
+                      {downloadingCard ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <ArrowDownToLine className="h-4.5 w-4.5" />
+                      )}
+                      Download Course Card PDF
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          )}
 
           {/* Dynamic Resolved Price Snapshot Card */}
           <PricingPanel
@@ -1120,6 +1293,22 @@ export function EnrollmentDetailsClient({
                 </Button>
               )}
 
+              {enrollment.enrollmentStatus === 'Confirmed' && sessionPermissions.includes('enrollment.read') && (
+                <Button
+                  id="enrollment-course-card-download-btn"
+                  onClick={handleDownloadCard}
+                  disabled={downloadingCard}
+                  className="w-full flex justify-center items-center gap-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-semibold"
+                >
+                  {downloadingCard ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <ArrowDownToLine className="h-4.5 w-4.5" />
+                  )}
+                  Download Course Card
+                </Button>
+              )}
+
               {!canSubmit && !canApprove && !canCancel && !canDrop && !canChangeBatch && (
                 <p className="text-xs text-slate-400 italic text-center py-2">
                   No workflow actions are currently available for this status.
@@ -1292,7 +1481,7 @@ export function EnrollmentDetailsClient({
             <DialogHeader>
               <DialogTitle>Assign or Change Batch</DialogTitle>
               <DialogDescription>
-                Select a different batch to assign to this student's enrollment.
+                Select a different batch to assign to this student&apos;s enrollment.
               </DialogDescription>
             </DialogHeader>
 

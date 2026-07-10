@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { isGlobalScope } from '@ims/shared-auth';
-import { AppShell } from '@ims/shared-ui';
+import { AppShell, Avatar } from '@ims/shared-ui';
 import {
   resolvePortalNavigation,
   resolvePortalShellUser,
@@ -244,6 +244,8 @@ export default async function ProtectedLayout({
   }
 
   const shellUser = resolvePortalShellUser(session);
+  const { userService } = await import('../lib/runtime');
+  const user = await userService.getUser(session.userId);
   const rawNav = resolvePortalNavigation('admin', session);
   const nav = rawNav.map(mapNavigationIcons);
 
@@ -290,12 +292,25 @@ export default async function ProtectedLayout({
     <AppShell
       appName="IMS Admin"
       branchName={branchName}
-      userName={shellUser.userName}
+      userName={user.fullName || shellUser.userName}
+      userAvatar={
+        <Avatar
+          src={
+            user.photoUrl
+              ? `/api/v1/users/${user.id}/profile-photo/view?v=${encodeURIComponent(
+                  user.photoUrl,
+                )}`
+              : undefined
+          }
+          fallback={user.fullName || shellUser.userName}
+          size="sm"
+        />
+      }
       items={nav}
       aside={
         <div className="space-y-4">
           <UserControls
-            userName={shellUser.userName}
+            userName={user.fullName || shellUser.userName}
             activeBranchId={activeBranchId}
             branches={branches}
             isGlobal={isGlobal}

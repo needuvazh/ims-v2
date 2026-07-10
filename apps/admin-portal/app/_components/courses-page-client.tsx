@@ -13,6 +13,7 @@ import {
   SlidersHorizontal,
   Users,
   X,
+  FolderOpen,
 } from 'lucide-react';
 import { CourseCardSkeleton } from './public-site';
 
@@ -129,7 +130,7 @@ export function CoursesClient() {
   return (
     <div>
       {/* Filter Bar */}
-      <div className="mb-8 space-y-4">
+      <div className="mb-8 space-y-6">
         <form
           onSubmit={handleSearch}
           className="flex flex-col sm:flex-row gap-3"
@@ -141,7 +142,7 @@ export function CoursesClient() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search courses..."
-              className="w-full pl-11 pr-4 py-3 rounded-xl border border-border-light bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-all"
+              className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-100 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-sm"
             />
             {search && (
               <button
@@ -150,7 +151,7 @@ export function CoursesClient() {
                   setSearch('');
                   updateParams({ search: null });
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-surface-100"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-neutral-50"
               >
                 <X className="h-4 w-4 text-neutral-400" />
               </button>
@@ -158,14 +159,14 @@ export function CoursesClient() {
           </div>
           <button
             type="submit"
-            className="px-6 py-3 rounded-xl bg-accent-600 text-white text-sm font-bold uppercase tracking-[0.1em] hover:bg-accent-700 transition-colors"
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 text-white text-sm font-bold uppercase tracking-[0.1em] hover:shadow-lg hover:shadow-orange-600/20 hover:-translate-y-0.5 transition-all"
           >
             Search
           </button>
           <button
             type="button"
             onClick={() => setShowFilters(!showFilters)}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border-light bg-white text-sm font-bold text-neutral-700 hover:border-border-accent transition-colors sm:hidden"
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-neutral-100 bg-white text-sm font-bold text-neutral-700 hover:border-orange-100 hover:text-orange-600 transition-all sm:hidden"
           >
             <SlidersHorizontal className="h-4 w-4" />
             Filters
@@ -177,10 +178,10 @@ export function CoursesClient() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleCategoryChange(null)}
-              className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all ${
+              className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all ${
                 !categoryId
-                  ? 'bg-accent-600 text-white shadow-md shadow-accent-600/20'
-                  : 'bg-white border border-border-light text-neutral-600 hover:border-border-accent'
+                  ? 'bg-orange-600 text-white shadow-md shadow-orange-600/20'
+                  : 'bg-white border border-neutral-100 text-neutral-600 hover:border-orange-100 hover:text-orange-600'
               }`}
             >
               All ({categories.reduce((sum, c) => sum + c.courseCount, 0)})
@@ -191,10 +192,10 @@ export function CoursesClient() {
                 onClick={() =>
                   handleCategoryChange(cat.id === categoryId ? null : cat.id)
                 }
-                className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all ${
+                className={`px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all ${
                   categoryId === cat.id
-                    ? 'bg-accent-600 text-white shadow-md shadow-accent-600/20'
-                    : 'bg-white border border-border-light text-neutral-600 hover:border-border-accent'
+                    ? 'bg-orange-600 text-white shadow-md shadow-orange-600/20'
+                    : 'bg-white border border-neutral-100 text-neutral-600 hover:border-orange-100 hover:text-orange-600'
                 }`}
               >
                 {cat.nameEnglish} ({cat.courseCount})
@@ -206,13 +207,13 @@ export function CoursesClient() {
         {activeCategory && (
           <div className="flex items-center gap-2 text-xs text-neutral-500">
             <span>Filtered by:</span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-accent-50 text-accent-700 font-bold">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-50 text-orange-700 font-bold border border-orange-100">
               {activeCategory.nameEnglish}
               <button
                 onClick={() => handleCategoryChange(null)}
-                className="ml-1 hover:text-accent-900"
+                className="ml-1 hover:text-orange-950 transition-colors"
               >
-                <X className="h-3 w-3" />
+                <X className="h-3.5 w-3.5" />
               </button>
             </span>
           </div>
@@ -230,17 +231,20 @@ export function CoursesClient() {
 
       {/* Empty State */}
       {!loading && !courses?.courses.length && (
-        <div className="text-center py-16">
-          <p className="text-lg font-bold text-neutral-900">No courses found</p>
-          <p className="mt-2 text-sm text-neutral-500">
-            Try adjusting your search or filter criteria.
+        <div className="flex flex-col items-center justify-center text-center py-20 px-4 rounded-[2rem] border border-neutral-100 bg-white shadow-sm">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-50 text-orange-500 mb-6 border border-orange-100/50">
+            <FolderOpen className="h-7 w-7" />
+          </div>
+          <h3 className="font-display text-xl font-bold text-neutral-900">No courses found</h3>
+          <p className="mt-2 text-sm text-neutral-500 max-w-md">
+            We couldn&apos;t find any courses matching your current search or filter. Try checking your spelling or selecting another category.
           </p>
           <button
             onClick={() => {
               setSearch('');
               handleCategoryChange(null);
             }}
-            className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-accent-600 hover:text-accent-700"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-[0.15em] text-orange-600 shadow-sm transition-all hover:bg-orange-600 hover:text-white hover:border-orange-600"
           >
             Clear all filters <ArrowRight className="h-4 w-4" />
           </button>
@@ -258,11 +262,11 @@ export function CoursesClient() {
 
           {/* Pagination */}
           {courses.pagination.pages > 1 && (
-            <div className="mt-12 flex items-center justify-center gap-2">
+            <div className="mt-16 flex items-center justify-center gap-2">
               <button
                 onClick={() => handlePageChange(page - 1)}
                 disabled={page <= 1}
-                className="px-4 py-2 rounded-lg text-sm font-bold text-neutral-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-100 transition-colors"
+                className="px-4 py-2 rounded-lg text-sm font-bold text-neutral-500 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-50 hover:text-orange-600 transition-colors"
               >
                 Previous
               </button>
@@ -275,8 +279,8 @@ export function CoursesClient() {
                   onClick={() => handlePageChange(p)}
                   className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${
                     p === page
-                      ? 'bg-accent-600 text-white shadow-md shadow-accent-600/20'
-                      : 'text-neutral-600 hover:bg-surface-100'
+                      ? 'bg-orange-600 text-white shadow-md shadow-orange-600/20'
+                      : 'text-neutral-500 hover:bg-orange-50 hover:text-orange-600'
                   }`}
                 >
                   {p}
@@ -285,7 +289,7 @@ export function CoursesClient() {
               <button
                 onClick={() => handlePageChange(page + 1)}
                 disabled={page >= courses.pagination.pages}
-                className="px-4 py-2 rounded-lg text-sm font-bold text-neutral-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-100 transition-colors"
+                className="px-4 py-2 rounded-lg text-sm font-bold text-neutral-500 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-50 hover:text-orange-600 transition-colors"
               >
                 Next
               </button>
@@ -312,6 +316,24 @@ function CourseCard({
     ? `${course.currency ?? 'OMR'} ${parseFloat(course.basePrice).toFixed(3)}`
     : 'Please enquire';
 
+  const normalizedImageUrl = (() => {
+    if (!course.imageUrl) return null;
+    const url = course.imageUrl.trim();
+    if (!url) return null;
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      try {
+        new URL(url);
+        return url;
+      } catch {
+        return null;
+      }
+    }
+    if (url.startsWith('/')) {
+      return url;
+    }
+    return `/${url}`;
+  })();
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -322,9 +344,9 @@ function CourseCard({
       className="group flex flex-col overflow-hidden rounded-[2rem] border border-border-light bg-white shadow-sm transition-all hover:border-border-strong hover:shadow-2xl hover:shadow-primary-950/5"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-surface-100">
-        {course.imageUrl ? (
+        {normalizedImageUrl ? (
           <Image
-            src={course.imageUrl}
+            src={normalizedImageUrl}
             alt={course.nameEnglish}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -369,27 +391,7 @@ function CourseCard({
             {course.descriptionEnglish}
           </p>
         )}
-        <div className="mt-auto pt-5 space-y-3">
-          {course.nextBatchDate && (
-            <div className="flex items-center gap-2 text-xs text-neutral-600">
-              <CalendarIcon className="h-4 w-4 text-primary-600" />
-              <span>
-                Next batch:{' '}
-                <strong>
-                  {new Date(course.nextBatchDate).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                  })}
-                </strong>
-              </span>
-            </div>
-          )}
-          {course.availableSeats !== null && course.availableSeats > 0 && (
-            <div className="flex items-center gap-2 text-xs text-neutral-600">
-              <Users className="h-4 w-4 text-green-600" />
-              <span>{course.availableSeats} seats available</span>
-            </div>
-          )}
+        <div className="mt-auto pt-5">
           <ul className="space-y-1.5 text-sm text-neutral-600">
             <li className="flex gap-2">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
