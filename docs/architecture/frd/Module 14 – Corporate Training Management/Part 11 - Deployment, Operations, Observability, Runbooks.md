@@ -1243,7 +1243,7 @@ Check:
 
 ## Symptoms
 
-- CTM says BILLED but Finance has no invoice;
+- CTM says INVOICED but Finance has no invoice;
 - CTM remains BILLING_REQUESTED after invoice exists.
 
 ## Diagnosis
@@ -1891,18 +1891,18 @@ CONSISTENT WITH EXPLICIT GAPS
 
 | Gap ID | Gap | Status |
 |---|---|---|
-| GAP-CTM-FINAL-001 | Account-to-Branch authorization relation missing | Open |
-| GAP-CTM-FINAL-002 | Account Manager portfolio assignment model missing | Open |
-| GAP-CTM-FINAL-003 | Corporate Nomination aggregate missing | Open |
-| GAP-CTM-FINAL-004 | Corporate Training Program/Project model incomplete | Open |
-| GAP-CTM-FINAL-005 | Equipment ownership/model missing | Open |
-| GAP-CTM-FINAL-006 | Travel & Accommodation ownership/model missing | Open |
-| GAP-CTM-FINAL-007 | Costing/Profitability ownership/model missing | Open |
-| GAP-CTM-FINAL-008 | Project Closure aggregate/state missing | Open |
-| GAP-CTM-FINAL-009 | GIVT ownership/model unresolved | Open |
-| GAP-CTM-FINAL-010 | Credit field write ownership overlap requires final decision | Open |
-| GAP-CTM-FINAL-011 | Corporate Portal authentication/scope model future/conditional | Open |
-| GAP-CTM-FINAL-012 | Final retention schedules require central compliance approval | Open |
+| GAP-CTM-FINAL-001 | Account-to-Branch authorization relation missing | Architecture decision required |
+| GAP-CTM-FINAL-002 | Account Manager portfolio assignment model missing | Architecture decision required |
+| GAP-CTM-FINAL-003 | Corporate Nomination aggregate missing | Deferred |
+| GAP-CTM-FINAL-004 | Corporate Training Program/Project model incomplete | Deferred |
+| GAP-CTM-FINAL-005 | Equipment ownership/model missing | Deferred |
+| GAP-CTM-FINAL-006 | Travel & Accommodation ownership/model missing | Deferred |
+| GAP-CTM-FINAL-007 | Costing/Profitability ownership/model missing | Deferred |
+| GAP-CTM-FINAL-008 | Project Closure aggregate/state missing | Deferred |
+| GAP-CTM-FINAL-009 | GIVT ownership/model unresolved | Deferred |
+| GAP-CTM-FINAL-010 | Credit field write ownership overlap requires final decision | Architecture decision required |
+| GAP-CTM-FINAL-011 | Corporate Portal authentication/scope model future/conditional | Deferred |
+| GAP-CTM-FINAL-012 | Final retention schedules require central compliance approval | Architecture decision required |
 
 None of these gaps should be resolved by:
 
@@ -1966,7 +1966,7 @@ After reviewing Module 14 across Parts 1-11 against the DDD Context Map and ER M
 
 ```text
 Overall Alignment Status:
-ALIGNED, WITH EXPLICITLY DOCUMENTED OPEN MODELING GAPS
+ALIGNED FOR CTM CORE DEVELOPMENT, WITH EXPLICITLY DEFERRED MODEL DECISIONS
 ```
 
 The FRD consistently preserves:
@@ -1987,6 +1987,6 @@ The FRD consistently preserves:
 - Communication ownership of notification delivery;
 - Reporting views as explicitly read-only projections.
 
-The module is suitable to proceed to implementation planning only after the critical authorization-scope gap for CorporateAccount-to-Branch ownership is resolved or formally governed.
+The module is suitable to proceed to implementation planning and development for the CTM-owned core. The deferred capabilities remain out of scope until their architecture decisions are approved.
 
 The remaining workflow gaps—Nomination, Corporate Training Program/Project, Equipment, Travel & Accommodation, Costing/Profitability, Project Closure, and GIVT—remain intentionally outside the physical CTM model until the DDD and ER source documents are updated through an approved architecture decision.

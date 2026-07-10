@@ -236,7 +236,7 @@ Rules:
 **KPI ID:** KPI-CTM-016
 
 ```text
-COUNT(status IN READY_FOR_BILLING, BILLING_REQUESTED, BILLED)
+COUNT(status IN READY_FOR_BILLING, BILLING_REQUESTED, INVOICED, PARTIALLY_SETTLED, SETTLED)
 ------------------------------------------------------------- × 100
 COUNT(billable corporate enrollment links)
 ```
@@ -244,7 +244,7 @@ COUNT(billable corporate enrollment links)
 Rules:
 
 - CTM billing status is coordination state only;
-- `BILLED` must be validated against Finance confirmation;
+- `INVOICED`, `PARTIALLY_SETTLED`, and `SETTLED` must be validated against Finance confirmation;
 - Finance invoice state remains authoritative.
 
 ---
@@ -1485,16 +1485,16 @@ All CTM reporting views, materialized views, metric snapshots, and dashboard pro
 
 | Gap ID | Gap | Impact |
 |---|---|---|
-| GAP-CTM-RPT-001 | Account-to-Branch relationship not approved | Branch-level account KPIs and isolation cannot be finalized |
-| GAP-CTM-RPT-002 | Account Manager assignment model not defined | Portfolio dashboard scope cannot be made durable |
-| GAP-CTM-RPT-003 | Corporate Nomination aggregate missing | Nomination funnel/reporting cannot be defined authoritatively |
-| GAP-CTM-RPT-004 | Corporate Training Program/Project model incomplete | Project progress and closure reports cannot be defined |
-| GAP-CTM-RPT-005 | Equipment ownership missing | Equipment utilization reports unavailable |
-| GAP-CTM-RPT-006 | Travel & Accommodation model missing | Travel cost report unavailable |
-| GAP-CTM-RPT-007 | Costing/Profitability model not approved | Profit and margin KPI cannot be authoritative |
-| GAP-CTM-RPT-008 | GIVT domain ownership unresolved | GIVT-specific separate reporting cannot be implemented safely |
-| GAP-CTM-RPT-009 | Contract utilization denominator not fully modeled | KPI-CTM-022 remains conditional |
-| GAP-CTM-RPT-010 | Exact consolidated executive permission catalog remains open | Final dashboard role bundles require governance approval |
+| GAP-CTM-RPT-001 | Account-to-Branch relationship not approved | Branch-level account KPIs and isolation cannot be finalized | Architecture decision required |
+| GAP-CTM-RPT-002 | Account Manager assignment model not defined | Portfolio dashboard scope cannot be made durable | Deferred |
+| GAP-CTM-RPT-003 | Corporate Nomination aggregate missing | Nomination funnel/reporting cannot be defined authoritatively | Deferred |
+| GAP-CTM-RPT-004 | Corporate Training Program/Project model incomplete | Project progress and closure reports cannot be defined | Deferred |
+| GAP-CTM-RPT-005 | Equipment ownership missing | Equipment utilization reports unavailable | Deferred |
+| GAP-CTM-RPT-006 | Travel & Accommodation model missing | Travel cost report unavailable | Deferred |
+| GAP-CTM-RPT-007 | Costing/Profitability model not approved | Profit and margin KPI cannot be authoritative | Deferred |
+| GAP-CTM-RPT-008 | GIVT domain ownership unresolved | GIVT-specific separate reporting cannot be implemented safely | Deferred |
+| GAP-CTM-RPT-009 | Contract utilization denominator not fully modeled | KPI-CTM-022 remains conditional | Deferred |
+| GAP-CTM-RPT-010 | Exact consolidated executive permission catalog remains open | Final dashboard role bundles require governance approval | Architecture decision required |
 
 ---
 

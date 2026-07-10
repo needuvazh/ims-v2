@@ -4,8 +4,8 @@ import {
   SectionHeading,
   SimpleCTA,
   SplitHero,
-  eventCards,
 } from '../_components/public-site';
+import { eventCards } from '../_components/public-site-data';
 import { RealTimeStatStrip } from '../_components/public-site-client';
 
 export default function EventsPage() {

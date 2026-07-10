@@ -474,10 +474,12 @@ export const BulkCorporateEnrollmentSchema = z.object({
 ```ts
 export const UpdateCorporateEnrollmentBillingStatusSchema = z.object({
   toStatus: z.enum([
-    "NOT_READY",
+    "NOT_REQUESTED",
     "READY_FOR_BILLING",
     "BILLING_REQUESTED",
-    "BILLED",
+    "INVOICED",
+    "PARTIALLY_SETTLED",
+    "SETTLED",
     "ON_HOLD",
     "CANCELLED",
   ]),
@@ -489,7 +491,7 @@ export const UpdateCorporateEnrollmentBillingStatusSchema = z.object({
 ### Rules
 
 - CTM billing status is coordination state, not Finance ledger truth;
-- `BILLED` may only be set after Finance confirms invoice linkage/status;
+- `INVOICED`, `PARTIALLY_SETTLED`, and `SETTLED` may only be set after Finance confirms invoice linkage/status;
 - `ON_HOLD` requires reason;
 - `CANCELLED` cannot erase historical Finance linkage;
 - invalid transition returns conflict.
@@ -792,7 +794,7 @@ export type ApiErrorResponse = {
 | Code | HTTP | Meaning |
 |---|---:|---|
 | `CTM_BILLING_STATUS_INVALID_TRANSITION` | 409 | Invalid CTM coordination transition |
-| `CTM_FINANCE_CONFIRMATION_REQUIRED` | 409 | Cannot mark BILLED without Finance confirmation |
+| `CTM_FINANCE_CONFIRMATION_REQUIRED` | 409 | Cannot mark INVOICED/SETTLED without Finance confirmation |
 | `CTM_RECONCILIATION_NOT_FOUND` | 404 | Reconciliation case not found |
 | `CTM_RECONCILIATION_REPAIR_NOT_ALLOWED` | 409 | Repair conditions not satisfied |
 | `CTM_RECONCILIATION_TARGET_INVALID` | 409 | Proposed target Enrollment does not match |
@@ -1075,16 +1077,16 @@ dependencyReference, where applicable
 
 | Gap ID | Gap | Validation/Notification Impact |
 |---|---|---|
-| GAP-CTM-VN-001 | Account-to-Branch association not approved | Branch validation cannot be finalized |
-| GAP-CTM-VN-002 | Corporate Nomination model missing | No durable nomination validation/event lifecycle can be defined |
-| GAP-CTM-VN-003 | CorporateTrainingProgram/Project model incomplete | No project status validation or closure notifications |
-| GAP-CTM-VN-004 | Equipment ownership/model missing | Equipment availability validation cannot be implemented |
-| GAP-CTM-VN-005 | Travel & Accommodation ownership missing | Cost/travel validation and alerts cannot be finalized |
-| GAP-CTM-VN-006 | Costing/Profitability aggregate not approved | Margin validation and approval notifications cannot be defined |
-| GAP-CTM-VN-007 | GIVT dedicated model/ownership unresolved | GIVT-specific validations and notifications must not be invented |
-| GAP-CTM-VN-008 | Corporate portal phase/auth model not approved | External notification and submit permissions remain conditional |
-| GAP-CTM-VN-009 | Exact contract expiry reminder thresholds not approved | Must be configurable in Communication/Configuration |
-| GAP-CTM-VN-010 | Credit field ownership overlaps ER and Finance DDD responsibilities | Write validation ownership must be finalized |
+| GAP-CTM-VN-001 | Account-to-Branch association not approved | Branch validation cannot be finalized | Architecture decision required |
+| GAP-CTM-VN-002 | Corporate Nomination model missing | No durable nomination validation/event lifecycle can be defined | Deferred |
+| GAP-CTM-VN-003 | CorporateTrainingProgram/Project model incomplete | No project status validation or closure notifications | Deferred |
+| GAP-CTM-VN-004 | Equipment ownership/model missing | Equipment availability validation cannot be implemented | Deferred |
+| GAP-CTM-VN-005 | Travel & Accommodation ownership missing | Cost/travel validation and alerts cannot be finalized | Deferred |
+| GAP-CTM-VN-006 | Costing/Profitability aggregate not approved | Margin validation and approval notifications cannot be defined | Deferred |
+| GAP-CTM-VN-007 | GIVT dedicated model/ownership unresolved | GIVT-specific validations and notifications must not be invented | Deferred |
+| GAP-CTM-VN-008 | Corporate portal phase/auth model not approved | External notification and submit permissions remain conditional | Deferred |
+| GAP-CTM-VN-009 | Exact contract expiry reminder thresholds not approved | Must be configurable in Communication/Configuration | Deferred |
+| GAP-CTM-VN-010 | Credit field ownership overlaps ER and Finance DDD responsibilities | Write validation ownership must be finalized | Architecture decision required |
 
 ---
 

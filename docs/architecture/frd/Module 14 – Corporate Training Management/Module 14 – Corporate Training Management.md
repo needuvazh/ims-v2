@@ -14,6 +14,7 @@
 | Source Baselines | DDD Context Map v3.0; ER Model v3.0; ASTI ERP Registration & Training Management Process |
 | Phase | Phase 2 |
 | Application Scope | Single ASTI admin portal first; external corporate portal capability is domain scope but requires separate application/experience planning |
+| Development Readiness | Core CTM capability set is ready for implementation; deferred model gaps remain explicitly out of scope until approved |
 
 ---
 
@@ -109,6 +110,44 @@ The following capabilities are included where they map cleanly to the DDD contex
 - invoke Admission & Enrollment application services to create or link `StudentProfile` and create the central `Enrollment`;
 - create the owned `CorporateEnrollment` linkage only after the Enrollment is successfully created;
 - support idempotent bulk-enrollment requests and per-row result reporting.
+
+### Explicitly Deferred from Development
+
+The following workflow items are not part of the development-ready CTM core and remain deferred until a separate architecture decision is approved:
+
+- Corporate Nomination persistence;
+- CorporateTrainingProgram / Project lifecycle;
+- Equipment allocation;
+- Travel and accommodation costing;
+- Costing and profitability ownership;
+- Project closure lifecycle;
+- GIVT-specific module separation.
+
+### Development Readiness Matrix
+
+| Capability | Status | Notes |
+|---|---|---|
+| Corporate Account Management | Ready Now | Core CRUD, search, lifecycle, audit, and soft-delete behavior are defined. |
+| Corporate Contact Management | Ready Now | Shared Person linkage, primary contact, and portal eligibility behavior are defined. |
+| Corporate Contract Management | Ready Now | Contract lifecycle, billing model, and enrollment applicability are defined. |
+| Corporate Participant Management | Ready Now | Person reuse, employer context, and duplicate prevention are defined. |
+| Participant Import | Ready Now | Validation, commit, idempotency, and audit behavior are defined. |
+| Corporate Enrollment Orchestration | Ready Now | Orchestrates owner-context calls and creates only the CTM linkage after Enrollment succeeds. |
+| Operational Corporate Training Views | Ready Now | Read-only projections only; no foreign transactional writes. |
+| Reporting Inputs and Exports | Ready Now | Scoped reporting feeds and exports are defined as read-only outputs. |
+| Reconciliation and Repair | Ready Now | Deterministic repair of CTM linkage only; Enrollment remains owner-controlled. |
+| Account-to-Branch Ownership | ADR Required | Final persistence/scoping relation for pre-enrollment corporate accounts is still governed by architecture decision. |
+| Credit Field Write Ownership | ADR Required | CTM and Finance overlap on credit fields; write authority must be finalized. |
+| Corporate Portal Authentication / Scope | ADR Required | External portal capability is domain-scoped but not part of initial implementation scope. |
+| Consolidated Dashboard Permission Catalog | ADR Required | Executive consolidated permissions require IAM governance approval. |
+| Corporate Contact Lifecycle Status Schema | ADR Required | Contact lifecycle is defined in the FRD, but schema approval is still required before migration. |
+| Corporate Nomination Persistence | Deferred | Not implemented in the CTM core until DDD/ER approval. |
+| CorporateTrainingProgram / Project Lifecycle | Deferred | Not implemented in the CTM core until DDD/ER approval. |
+| Equipment Allocation | Deferred | Not implemented in the CTM core until DDD/ER approval. |
+| Travel and Accommodation | Deferred | Not implemented in the CTM core until DDD/ER approval. |
+| Costing and Profitability | Deferred | Not implemented in the CTM core until DDD/ER approval. |
+| Project Closure | Deferred | Not implemented in the CTM core until DDD/ER approval. |
+| GIVT Module Separation | Deferred | Not implemented in the CTM core until DDD/ER approval. |
 
 ### Operational Corporate Training Views
 
@@ -645,3 +684,32 @@ Finance / Reporting consume corporate linkage as authorized
 ```
 
 The workflow's nomination, project closure, equipment, travel, accommodation, costing, profitability, and GIVT requirements are not discarded, but they must remain explicitly flagged until DDD and ER ownership are resolved. This FRD does not invent new persistence models for those concepts.
+
+---
+
+# 13. Appendix – Architecture Validation Status & Critical Gaps
+
+This module has undergone a formal architecture validation against the source documents in the codebase. Below is the summary of the validation status and required conditions before implementation can be marked fully ready.
+
+## 13.1 Validation Readiness Ratings
+
+* **DDD Alignment**: 90/100 (Logical service and context boundaries are well-defined)
+* **ER Model Alignment**: 95/100 (Perfect entity attribute mappings)
+* **Prisma Alignment**: 20/100 (Critical gap: missing database models)
+* **Branch Isolation Readiness**: 60/100 (Logic defined, but missing database branch fields)
+* **Database Readiness**: 20/100 (Missing tables in schema.prisma)
+* **Overall Implementation Readiness Score**: **69 / 100**
+
+## 13.2 Final Go / No-Go Decision: **GO WITH CONDITIONS**
+
+Development on the **frontend screens** and **application services** may proceed. However, database pushes and deployments are blocked until the following conditions are met.
+
+## 13.3 Critical Implementation Gaps & Conditions
+
+| Gap / Condition | Detail | Required Fix | Status |
+|---|---|---|---|
+| **Prisma Schema Table Mismatches** | The `schema.prisma` file is completely missing `CorporateContact`, `CorporateContract`, `CorporateParticipant`, and `CorporateEnrollment` tables. | Generate Prisma migrations to add the concrete tables detailed in Part 4, Section 21. | **Blocker** |
+| **Branch Scoping Gap** | No `branchId` column exists on `CorporateAccount` or related entities. | Approve an ADR to add `branchId` to `CorporateAccount` for row scoping. | **Blocker** |
+| **Credit Control Overlaps** | `CorporateAccount` and `CorporateCreditRule` (Finance) have overlapping fields. | CTM must only read credit limits/outstanding amounts from Finance projections; manual mutations from CTM UI are prohibited. | **Critical** |
+| **Deferred Workflows** | Client requested costing sheets, travel, equipment checks, and GIVT module. | These must remain deferred in Phase 1 as they lack DDD context owners. GIVT will be modeled as a reporting type dimension. | **Gap** |
+

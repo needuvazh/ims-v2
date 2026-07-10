@@ -1402,48 +1402,48 @@ The ER model gives `CorporateEnrollment.billingStatus` but does not define its e
 
 ### Proposed CTM Coordination States
 
-- `NotReady` – enrollment linkage exists but billing prerequisites/reference are not ready.
-- `ReadyForBilling` – CTM has sufficient operational/commercial linkage for Finance to act.
-- `BillingRequested` – CTM has requested or signaled Finance billing processing.
-- `Invoiced` – Finance projection confirms invoice issuance linked to the corporate training relationship.
-- `PartiallyPaid` – Finance projection confirms partial settlement.
-- `Paid` – Finance projection confirms settlement according to Finance rules.
-- `BillingHold` – billing is held due to a business exception or unresolved commercial reference.
-- `Cancelled` – the corporate billing coordination relationship is cancelled according to approved business rules; Finance records are not deleted or rewritten.
+- `NOT_REQUESTED` – enrollment linkage exists but billing prerequisites/reference are not ready.
+- `READY_FOR_BILLING` – CTM has sufficient operational/commercial linkage for Finance to act.
+- `BILLING_REQUESTED` – CTM has requested or signaled Finance billing processing.
+- `INVOICED` – Finance projection confirms invoice issuance linked to the corporate training relationship.
+- `PARTIALLY_SETTLED` – Finance projection confirms partial settlement.
+- `SETTLED` – Finance projection confirms settlement according to Finance rules.
+- `ON_HOLD` – billing is held due to a business exception or unresolved commercial reference.
+- `CANCELLED` – the corporate billing coordination relationship is cancelled according to approved business rules; Finance records are not deleted or rewritten.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> NotReady
-    NotReady --> ReadyForBilling: prerequisites satisfied
-    NotReady --> BillingHold: blocking issue
-    BillingHold --> ReadyForBilling: issue resolved
-    ReadyForBilling --> BillingRequested: request finance processing
-    BillingRequested --> Invoiced: finance confirms invoice
-    BillingRequested --> BillingHold: finance/commercial exception
-    Invoiced --> PartiallyPaid: finance projection
-    PartiallyPaid --> Paid: finance projection
-    Invoiced --> Paid: finance projection
-    NotReady --> Cancelled: cancel before billing
-    ReadyForBilling --> Cancelled: cancel before finance issuance
+    [*] --> NOT_REQUESTED
+    NOT_REQUESTED --> READY_FOR_BILLING: prerequisites satisfied
+    NOT_REQUESTED --> ON_HOLD: blocking issue
+    ON_HOLD --> READY_FOR_BILLING: issue resolved
+    READY_FOR_BILLING --> BILLING_REQUESTED: request finance processing
+    BILLING_REQUESTED --> INVOICED: finance confirms invoice
+    BILLING_REQUESTED --> ON_HOLD: finance/commercial exception
+    INVOICED --> PARTIALLY_SETTLED: finance projection
+    PARTIALLY_SETTLED --> SETTLED: finance projection
+    INVOICED --> SETTLED: finance projection
+    NOT_REQUESTED --> CANCELLED: cancel before billing
+    READY_FOR_BILLING --> CANCELLED: cancel before finance issuance
 ```
 
 ### Transition Rules Matrix – CorporateEnrollment Billing Status
 
 | From | To | Allowed | Required Permission/Authority | Guard / Source of Truth | Notes |
 |---|---|---:|---|---|---|
-| New | NotReady | Yes | CTM enrollment-link application authority | Valid CorporateEnrollment created | Initial CTM coordination state |
-| NotReady | ReadyForBilling | Yes | `corporate-training.billing.prepare` | Required contract/commercial linkage complete | Does not create invoice |
-| NotReady | BillingHold | Yes | `corporate-training.billing.hold` | Blocking issue and reason recorded | CTM coordination only |
-| BillingHold | ReadyForBilling | Yes | `corporate-training.billing.release` | Hold reason resolved | Audit required |
-| ReadyForBilling | BillingRequested | Yes | `corporate-training.billing.request` | Finance request accepted/correlated | Finance owns downstream invoice |
-| BillingRequested | Invoiced | Yes/System projection authority | Finance confirms invoice linkage | CTM reflects owner-context result |
-| BillingRequested | BillingHold | Yes | Finance integration/application authority | Exception returned | Must preserve reason/reference |
-| Invoiced | PartiallyPaid | Yes/System projection authority | Finance projection only | CTM must not calculate authoritative paid amount |
-| PartiallyPaid | Paid | Yes/System projection authority | Finance projection only | Finance source of truth |
-| Invoiced | Paid | Yes/System projection authority | Finance projection only | Supports full settlement in one payment |
-| NotReady | Cancelled | Conditional | `corporate-training.billing.cancel` | No conflicting finance issuance; reason required | Cannot delete Finance history |
-| ReadyForBilling | Cancelled | Conditional | `corporate-training.billing.cancel` | Billing not yet issued; owner checks pass | Audit required |
-| Invoiced | Cancelled | No direct CTM transition | N/A | Invoice correction/credit note belongs to Finance | CTM reflects finance outcome separately |
+| New | NOT_REQUESTED | Yes | CTM enrollment-link application authority | Valid CorporateEnrollment created | Initial CTM coordination state |
+| NOT_REQUESTED | READY_FOR_BILLING | Yes | `corporate-training.billing.prepare` | Required contract/commercial linkage complete | Does not create invoice |
+| NOT_REQUESTED | ON_HOLD | Yes | `corporate-training.billing.hold` | Blocking issue and reason recorded | CTM coordination only |
+| ON_HOLD | READY_FOR_BILLING | Yes | `corporate-training.billing.release` | Hold reason resolved | Audit required |
+| READY_FOR_BILLING | BILLING_REQUESTED | Yes | `corporate-training.billing.request` | Finance request accepted/correlated | Finance owns downstream invoice |
+| BILLING_REQUESTED | INVOICED | Yes/System projection authority | Finance confirms invoice linkage | CTM reflects owner-context result |
+| BILLING_REQUESTED | ON_HOLD | Yes | Finance integration/application authority | Exception returned | Must preserve reason/reference |
+| INVOICED | PARTIALLY_SETTLED | Yes/System projection authority | Finance projection only | CTM must not calculate authoritative paid amount |
+| PARTIALLY_SETTLED | SETTLED | Yes/System projection authority | Finance projection only | Finance source of truth |
+| INVOICED | SETTLED | Yes/System projection authority | Finance projection only | Supports full settlement in one payment |
+| NOT_REQUESTED | CANCELLED | Conditional | `corporate-training.billing.cancel` | No conflicting finance issuance; reason required | Cannot delete Finance history |
+| READY_FOR_BILLING | CANCELLED | Conditional | `corporate-training.billing.cancel` | Billing not yet issued; owner checks pass | Audit required |
+| INVOICED | CANCELLED | No direct CTM transition | N/A | Invoice correction/credit note belongs to Finance | CTM reflects finance outcome separately |
 
 ### Ownership Warning
 

@@ -810,7 +810,7 @@ Scenario: Corporate Training delegates Enrollment creation to Admission and Enro
 Scenario: CorporateEnrollment billing endpoint cannot change Enrollment lifecycle state
   Given CorporateEnrollment CE-1 references Enrollment E-1
   And E-1 is ACTIVE in Admission & Enrollment
-  When a user calls the CTM billing status transition endpoint with toStatus "BILLED"
+  When a user calls the CTM billing status transition endpoint with toStatus "INVOICED"
   Then only CTM billing coordination state is evaluated
   And Enrollment E-1 remains ACTIVE
   And CTM does not issue direct Enrollment status mutation
@@ -911,7 +911,7 @@ Scenario: Duplicate participant IDs cannot create duplicate enrollments
 ```gherkin
 @billing @positive
 Scenario: Mark corporate enrollment ready for billing
-  Given CorporateEnrollment CE-1 is in NOT_READY
+  Given CorporateEnrollment CE-1 is in NOT_REQUESTED
   And business preconditions for billing readiness are satisfied
   And I have "corporate-training.enrollment.billing-status.manage"
   When I transition CE-1 to READY_FOR_BILLING
@@ -920,14 +920,14 @@ Scenario: Mark corporate enrollment ready for billing
   And no Invoice is created by CTM
 ```
 
-## Scenario CTM-BIL-002 – Cannot mark BILLED without Finance confirmation
+## Scenario CTM-BIL-002 – Cannot mark INVOICED without Finance confirmation
 
 ```gherkin
 @billing @negative @cross-context
-Scenario: Finance confirmation is required before BILLED
+Scenario: Finance confirmation is required before INVOICED
   Given CE-1 is BILLING_REQUESTED
   And Finance has not returned an invoice confirmation
-  When a user attempts to set CTM billing status to BILLED
+  When a user attempts to set CTM billing status to INVOICED
   Then the command fails with "CTM_FINANCE_CONFIRMATION_REQUIRED"
   And CTM state remains BILLING_REQUESTED
 ```
@@ -1756,7 +1756,7 @@ Verify:
 - credit WARN where policy allows continuation;
 - credit BLOCK;
 - timeout;
-- invoice confirmation for BILLED transition;
+- invoice confirmation for INVOICED transition;
 - Finance projection read authorization.
 
 ## 30.7 Admission & Enrollment

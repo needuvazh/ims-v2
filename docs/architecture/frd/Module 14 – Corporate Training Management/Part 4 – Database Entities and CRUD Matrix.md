@@ -1024,18 +1024,18 @@ Audit data should include actor, action, entity type, entity ID, old value, new 
 
 | Gap ID | Gap | Impact | Required Resolution Before |
 |---|---|---|---|
-| CTM-DATA-GAP-001 | No CorporateAccount branch assignment model | Cannot safely scope pre-enrollment accounts | Production account CRUD and branch isolation tests |
-| CTM-DATA-GAP-002 | DDD names CorporateDepartment but ER has only department strings | Cannot normalize corporate department/coordinator hierarchy | Department CRUD or analytics requiring stable department IDs |
-| CTM-DATA-GAP-003 | DDD names CorporateCoordinator without ER model | Coordinator role/history cannot be persisted explicitly | Corporate portal/coordinator assignment workflow |
-| CTM-DATA-GAP-004 | DDD names CorporateTrainingProgram but ER lacks it | No approved project/program aggregate or lifecycle | Project closure, program profitability, delivery grouping |
-| CTM-DATA-GAP-005 | Nomination workflow lacks persistence model | Cannot implement durable nomination lifecycle/status | Nomination approval/history/portal submission workflow |
-| CTM-DATA-GAP-006 | Credit fields overlap CTM ER and Finance CorporateCreditRule | Risk of dual source of truth | Schema implementation and credit update APIs |
-| CTM-DATA-GAP-007 | `billingStatus` enum and authority undefined | Risk of duplicate Finance truth | API/status implementation |
-| CTM-DATA-GAP-008 | CorporateContact status absent from ER but lifecycle requires it | Schema mismatch | Migration creation |
-| CTM-DATA-GAP-009 | Equipment availability/assignment has no approved context model | Cannot persist allocation in CTM | Equipment-aware batch allocation |
-| CTM-DATA-GAP-010 | Travel/accommodation has no approved owner/model | Cannot create CTM tables safely | Travel costing workflow |
-| CTM-DATA-GAP-011 | Costing/profitability model absent | Cannot persist direct/indirect cost sheet | Profitability workflow/report |
-| CTM-DATA-GAP-012 | GIVT separate module requested operationally but absent from DDD/ER current contexts | Cannot create isolated duplicate training schema | GIVT implementation |
+| CTM-DATA-GAP-001 | No CorporateAccount branch assignment model | Cannot safely scope pre-enrollment accounts | Architecture decision required |
+| CTM-DATA-GAP-002 | DDD names CorporateDepartment but ER has only department strings | Cannot normalize corporate department/coordinator hierarchy | Deferred |
+| CTM-DATA-GAP-003 | DDD names CorporateCoordinator without ER model | Coordinator role/history cannot be persisted explicitly | Deferred |
+| CTM-DATA-GAP-004 | DDD names CorporateTrainingProgram but ER lacks it | No approved project/program aggregate or lifecycle | Deferred |
+| CTM-DATA-GAP-005 | Nomination workflow lacks persistence model | Cannot implement durable nomination lifecycle/status | Deferred |
+| CTM-DATA-GAP-006 | Credit fields overlap CTM ER and Finance CorporateCreditRule | Risk of dual source of truth | Architecture decision required |
+| CTM-DATA-GAP-007 | `billingStatus` enum and authority undefined | Risk of duplicate Finance truth | Architecture decision required |
+| CTM-DATA-GAP-008 | CorporateContact status absent from ER but lifecycle requires it | Schema mismatch | Architecture decision required |
+| CTM-DATA-GAP-009 | Equipment availability/assignment has no approved context model | Cannot persist allocation in CTM | Deferred |
+| CTM-DATA-GAP-010 | Travel/accommodation has no approved owner/model | Cannot create CTM tables safely | Deferred |
+| CTM-DATA-GAP-011 | Costing/profitability model absent | Cannot persist direct/indirect cost sheet | Deferred |
+| CTM-DATA-GAP-012 | GIVT separate module requested operationally but absent from DDD/ER current contexts | Cannot create isolated duplicate training schema | Deferred |
 
 ---
 
@@ -1077,12 +1077,138 @@ Audit data should include actor, action, entity type, entity ID, old value, new 
 
 ---
 
-# 21. DDD and ER Consistency Conclusion
+# 21. Appendix – Recommended Prisma Schema Code Snippets
+
+The following concrete Prisma schema models are recommended to implement the database design defined in this Part 4. These models must be added to `packages/database/prisma/schema.prisma`.
+
+```prisma
+model CorporateContact {
+  id                  String   @id @default(uuid()) @db.Uuid
+  corporateAccountId  String   @db.Uuid
+  personId            String   @db.Uuid
+  designation         String?  @db.VarChar(150)
+  department          String?  @db.VarChar(150)
+  email               String?  @db.VarChar(320)
+  phone               String?  @db.VarChar(32)
+  isPrimary           Boolean  @default(false)
+  portalAccessEnabled Boolean  @default(false)
+  status              String   @default("Active") @db.VarChar(30)
+  version             Int      @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  person           Person           @relation(fields: [personId], references: [id], onDelete: Restrict)
+
+  @@unique([corporateAccountId, personId])
+  @@index([corporateAccountId, status])
+  @@index([personId])
+  @@map("corporate_contacts")
+}
+
+model CorporateContract {
+  id                 String    @id @default(uuid()) @db.Uuid
+  corporateAccountId String    @db.Uuid
+  contractNumber     String    @unique @db.VarChar(80)
+  contractValue      Decimal   @db.Decimal(18, 3)
+  startDate          DateTime  @db.Date
+  endDate            DateTime  @db.Date
+  billingModel       String    @db.VarChar(50) // PER_STUDENT, PER_BATCH, PER_HOUR, FIXED_CONTRACT
+  paymentTerms       String    @db.Text
+  status             String    @default("Draft") @db.VarChar(30)
+  version            Int       @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  enrollments      CorporateEnrollment[]
+
+  @@index([corporateAccountId, status])
+  @@index([startDate, endDate])
+  @@map("corporate_contracts")
+}
+
+model CorporateParticipant {
+  id                     String  @id @default(uuid()) @db.Uuid
+  corporateAccountId     String  @db.Uuid
+  personId               String  @db.Uuid
+  employeeCode           String? @db.VarChar(80)
+  department             String? @db.VarChar(150)
+  designation            String? @db.VarChar(150)
+  linkedStudentProfileId String? @db.Uuid
+  status                 String  @default("Active") @db.VarChar(30)
+  version                Int     @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  person           Person           @relation(fields: [personId], references: [id], onDelete: Restrict)
+  studentProfile   StudentProfile?  @relation(fields: [linkedStudentProfileId], references: [id], onDelete: Restrict)
+  enrollments      CorporateEnrollment[]
+
+  @@unique([corporateAccountId, personId])
+  @@index([corporateAccountId, status])
+  @@index([personId])
+  @@index([linkedStudentProfileId])
+  @@map("corporate_participants")
+}
+
+model CorporateEnrollment {
+  id                     String  @id @default(uuid()) @db.Uuid
+  corporateAccountId     String  @db.Uuid
+  corporateParticipantId String  @db.Uuid
+  enrollmentId           String  @db.Uuid
+  contractId             String? @db.Uuid
+  billingStatus          String  @default("NotRequested") @db.VarChar(50)
+  version                Int     @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount     @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  participant      CorporateParticipant @relation(fields: [corporateParticipantId], references: [id], onDelete: Restrict)
+  enrollment       Enrollment           @relation(fields: [enrollmentId], references: [id], onDelete: Restrict)
+  contract         CorporateContract?   @relation(fields: [contractId], references: [id], onDelete: Restrict)
+
+  @@unique([enrollmentId])
+  @@index([corporateAccountId, billingStatus])
+  @@index([corporateParticipantId])
+  @@index([contractId])
+  @@map("corporate_enrollments")
+}
+```
+
+---
+
+# 22. DDD and ER Consistency Conclusion
 
 This Part 4 remains consistent with the current architecture baseline by limiting CTM-owned persistence to the five models explicitly defined in the ER Model: `CorporateAccount`, `CorporateContact`, `CorporateContract`, `CorporateParticipant`, and `CorporateEnrollment`.
 
 The database design preserves the DDD aggregate boundary around CorporateAccount and prevents CTM from becoming the owner of Enrollment, Course, Batch, Attendance, Completion, Certificate, Finance, Document, Notification, Reporting, Audit, or IAM data.
 
-The most significant implementation blocker is **branch scope for corporate records before an Enrollment exists**. Because no approved CTM entity currently carries a branch relation, this must be resolved architecturally before production CRUD is implemented. The next most important reconciliation items are credit ownership, CorporateEnrollment billing-status authority, CorporateContact lifecycle state, and missing DDD concepts such as CorporateTrainingProgram and Nomination.
+The most significant implementation decision is **branch scope for corporate records before an Enrollment exists**. Because no approved CTM entity currently carries a branch relation, this remains an architecture decision gate before production CRUD is implemented. The next most important reconciliation items are credit ownership, CorporateEnrollment billing-status authority, CorporateContact lifecycle state, and missing DDD concepts such as CorporateTrainingProgram and Nomination.
 
 No table in this document should be added to the Prisma schema until these explicit gaps are either resolved or formally accepted with a documented implementation policy.

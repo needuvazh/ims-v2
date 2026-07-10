@@ -1287,7 +1287,7 @@ z.object({
   accountId: z.string().optional(),
   participantId: z.string().optional(),
   enrollmentStatus: z.string().max(50).optional(),
-  billingStatus: z.string().max(50).optional(),
+  billingStatus: z.enum(['NOT_REQUESTED','READY_FOR_BILLING','BILLING_REQUESTED','INVOICED','PARTIALLY_SETTLED','SETTLED','ON_HOLD','CANCELLED']).optional(),
   courseId: z.string().optional(),
   batchId: z.string().optional(),
   branchId: z.string().optional(),
@@ -1311,7 +1311,7 @@ type CorporateEnrollmentListItemDto = {
   course: { id: string; code: string; name: { en: string; ar: string | null } };
   batch: { id: string; code: string; startDate: string; endDate: string };
   contract: { id: string; number: string } | null;
-  billingStatus: string;
+  billingStatus: 'NOT_REQUESTED'|'READY_FOR_BILLING'|'BILLING_REQUESTED'|'INVOICED'|'PARTIALLY_SETTLED'|'SETTLED'|'ON_HOLD'|'CANCELLED';
   completionStatus: string | null;
   certificateStatus: string | null;
 };
@@ -1337,7 +1337,7 @@ type CorporateEnrollmentDetailDto = {
     participantId: string;
     enrollmentId: string;
     contractId: string | null;
-    billingStatus: string;
+  billingStatus: 'NOT_REQUESTED'|'READY_FOR_BILLING'|'BILLING_REQUESTED'|'INVOICED'|'PARTIALLY_SETTLED'|'SETTLED'|'ON_HOLD'|'CANCELLED';
     version: number;
   };
   participant: CorporateParticipantDto;
@@ -1374,7 +1374,7 @@ Unauthorized sections are omitted.
 
 ```ts
 z.object({
-  toStatus: z.enum(['PENDING_BILLING','BILLING_REQUESTED','INVOICED','PARTIALLY_PAID','PAID','ON_HOLD','CANCELLED']),
+  toStatus: z.enum(['NOT_REQUESTED','READY_FOR_BILLING','BILLING_REQUESTED','INVOICED','PARTIALLY_SETTLED','SETTLED','ON_HOLD','CANCELLED']),
   sourceReference: z.object({
     context: z.enum(['CTM','FINANCE']),
     entityId: z.string().min(1)
@@ -1384,7 +1384,7 @@ z.object({
 });
 ```
 
-Finance-backed states (`INVOICED`, `PARTIALLY_PAID`, `PAID`) require verification against Finance owner data; CTM cannot self-declare them.
+Finance-backed states (`INVOICED`, `PARTIALLY_SETTLED`, `SETTLED`) require verification against Finance owner data; CTM cannot self-declare them.
 
 ### Success – 200
 

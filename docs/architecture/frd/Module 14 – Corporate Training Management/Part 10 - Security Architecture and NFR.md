@@ -1143,16 +1143,16 @@ The following architecture tests are required:
 
 | Gap ID | Gap | Impact |
 |---|---|---|
-| GAP-CTM-SEC-001 | Account-to-Branch model unresolved | Branch authorization cannot be finalized |
-| GAP-CTM-SEC-002 | Account Manager assignment model unresolved | Account portfolio scope incomplete |
-| GAP-CTM-SEC-003 | Corporate portal auth model not approved | External access security incomplete |
-| GAP-CTM-SEC-004 | Corporate Nomination model missing | Nomination-specific permissions/audit absent |
-| GAP-CTM-SEC-005 | CorporateTrainingProgram/Project missing | Project closure security/audit unavailable |
-| GAP-CTM-SEC-006 | Costing ownership unresolved | Profitability access controls cannot be finalized |
-| GAP-CTM-SEC-007 | Credit data write ownership overlap | Sensitive field mutation authority must be clarified |
-| GAP-CTM-SEC-008 | Exact retention periods not approved | Compliance retention policy incomplete |
-| GAP-CTM-SEC-009 | Exact platform MFA policy not supplied | Strong-auth requirements remain IAM-governed |
-| GAP-CTM-SEC-010 | Exact SLO/error budget policy not supplied | Availability target subject to platform NFR governance |
+| GAP-CTM-SEC-001 | Account-to-Branch model unresolved | Branch authorization cannot be finalized | Architecture decision required |
+| GAP-CTM-SEC-002 | Account Manager assignment model unresolved | Account portfolio scope incomplete | Deferred |
+| GAP-CTM-SEC-003 | Corporate portal auth model not approved | External access security incomplete | Deferred |
+| GAP-CTM-SEC-004 | Corporate Nomination model missing | Nomination-specific permissions/audit absent | Deferred |
+| GAP-CTM-SEC-005 | CorporateTrainingProgram/Project missing | Project closure security/audit unavailable | Deferred |
+| GAP-CTM-SEC-006 | Costing ownership unresolved | Profitability access controls cannot be finalized | Deferred |
+| GAP-CTM-SEC-007 | Credit data write ownership overlap | Sensitive field mutation authority must be clarified | Architecture decision required |
+| GAP-CTM-SEC-008 | Exact retention periods not approved | Compliance retention policy incomplete | Deferred |
+| GAP-CTM-SEC-009 | Exact platform MFA policy not supplied | Strong-auth requirements remain IAM-governed | Deferred |
+| GAP-CTM-SEC-010 | Exact SLO/error budget policy not supplied | Availability target subject to platform NFR governance | Deferred |
 
 ---
 

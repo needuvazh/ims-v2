@@ -320,7 +320,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783712930.7665617,
+    "mtime": 1783715713.7382905,
     "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
@@ -2835,8 +2835,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site.tsx": {
-    "mtime": 1783709830.3741424,
-    "ast_hash": "4c0d47290f568bc0362b59a5995340a0",
+    "mtime": 1783714315.1895647,
+    "ast_hash": "fafcf636e2c39f4f256c7db07955411f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/about/page.tsx": {
@@ -2865,8 +2865,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/events/page.tsx": {
-    "mtime": 1783712082.2632473,
-    "ast_hash": "101a787f7f4bda14bcbd5a0a6c1d8bf5",
+    "mtime": 1783714320.6532829,
+    "ast_hash": "b58aeadb47bcfe12bd737339d927c649",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/facilities/page.tsx": {
@@ -3585,8 +3585,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site-data.ts": {
-    "mtime": 1783709289.9739554,
-    "ast_hash": "9d1b6dafc4619b96b1c08d21b73a702d",
+    "mtime": 1783714304.3780017,
+    "ast_hash": "c14aeb160aeebff5c92a4ec55745c615",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260629120000_user_roles_lifecycle_fields/migration.sql": {
@@ -9582,6 +9582,66 @@
   "openspec/changes/improve-profile-page/tasks.md": {
     "mtime": 1783712919.9178963,
     "ast_hash": "5feb8a8e3abafba6d1d66d2fe9a6e9db",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Module 14 \u2013 Corporate Training Management.md": {
+    "mtime": 1783715719.7194371,
+    "ast_hash": "f2aad0f64313359336eaa65b3fbcd50c",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 1 \u2013 Business Overview, Functional Requirements, Business Rules.md": {
+    "mtime": 1783713605.7566326,
+    "ast_hash": "e1b7b552a24390e69a29bf00b9369df7",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 10 - Security Architecture and NFR.md": {
+    "mtime": 1783714755.2229939,
+    "ast_hash": "ef0248919ec040bf5e6701147588b347",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 11 - Deployment, Operations, Observability, Runbooks.md": {
+    "mtime": 1783715003.1600263,
+    "ast_hash": "574aed1fea19bff023ec20ae0912cb00",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 2 \u2013 User Stories, Use Cases, Workflows, State Machines.md": {
+    "mtime": 1783714593.3958685,
+    "ast_hash": "fda3578d98cc408c2a6857ad91d8bba6",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 3 \u2013 Screen Specifications and UI Components.md": {
+    "mtime": 1783713605.7769387,
+    "ast_hash": "14d9475e90440af99ff3e763a2ffe698",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 4 \u2013 Database Entities and CRUD Matrix.md": {
+    "mtime": 1783715700.28614,
+    "ast_hash": "43b72996960202afc7a3c60afbf8eaae",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 5 \u2013 API Contracts.md": {
+    "mtime": 1783714602.2375479,
+    "ast_hash": "198e85f1b6baa587d4e17b45dcafbeee",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 6 \u2013 Permission Matrix.md": {
+    "mtime": 1783713605.828545,
+    "ast_hash": "8761ca9f0070a79eb1622920fda4d977",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 7 \u2013 Validation Rules, Error Catalog, Notifications.md": {
+    "mtime": 1783714733.178146,
+    "ast_hash": "0110401217d96f1985ed53cfae78272d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 8 - Reports, Dashboards, KPIs, Analytics.md": {
+    "mtime": 1783714744.3675578,
+    "ast_hash": "ea91ad08cc474984f098e9857064e1b5",
+    "semantic_hash": ""
+  },
+  "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
+    "mtime": 1783714672.6153307,
+    "ast_hash": "587036134254fbb863dbd4739f8bc5b2",
     "semantic_hash": ""
   }
 }
