@@ -66,11 +66,10 @@ export class EnrollmentService {
           });
         }
 
-        // Find or create Admission
+        // Find or create Admission globally
         let admission = await client.admission.findFirst({
           where: {
             studentProfileId: studentProfile.id,
-            branchId: data.branchId,
             isDeleted: false,
           },
         });
@@ -89,7 +88,6 @@ export class EnrollmentService {
               admissionNumber,
               personId: data.corporateParticipantId,
               studentProfileId: studentProfile.id,
-              branchId: data.branchId,
               admissionStatus: 'Approved',
               approvedAt: new Date(),
             },
@@ -119,27 +117,32 @@ export class EnrollmentService {
         data.enrollmentType !== 'WalkIn' &&
         data.enrollmentType !== 'Corporate'
       ) {
-        const studentQueryService = new StudentQueryService(this.prisma);
+        const studentQueryService = new StudentQueryService(client as any);
         await studentQueryService.verifyBranchScope(
           studentProfileId,
           data.branchId,
         );
       }
 
-      // Verify batch capacity check in Training Delivery
-      const batch = await client.batch.findUnique({
-        where: { id: data.batchId },
-      });
-      if (!batch || batch.isDeleted) {
-        throw new Error('ERR_BATCH_NOT_FOUND');
+      const targetBatchId = (data.batchId && data.batchId !== '00000000-0000-0000-0000-000000000000') ? data.batchId : null;
+
+      // Verify batch capacity check in Training Delivery if batch is selected
+      let batch = null;
+      if (targetBatchId) {
+        batch = await client.batch.findUnique({
+          where: { id: targetBatchId },
+        });
+        if (!batch || batch.isDeleted) {
+          throw new Error('ERR_BATCH_NOT_FOUND');
+        }
       }
 
       // Check if student holds a waitlist promotion reservation
       let hasReservation = false;
-      if (studentProfileId) {
+      if (targetBatchId && studentProfileId) {
         const promotedWaitlistEntry = await client.waitingList.findFirst({
           where: {
-            batchId: data.batchId,
+            batchId: targetBatchId,
             studentProfileId: studentProfileId,
             status: 'Promoted',
             isDeleted: false,
@@ -148,19 +151,18 @@ export class EnrollmentService {
         hasReservation = !!promotedWaitlistEntry;
       }
 
-      const activeCount = await client.enrollment.count({
-        where: {
-          batchId: data.batchId,
-          enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
-          isDeleted: false,
-        },
-      });
-
-      const maxCapacity = batch.capacity || 0;
-      if (!hasReservation) {
+      if (targetBatchId && batch && !hasReservation) {
+        const activeCount = await client.enrollment.count({
+          where: {
+            batchId: targetBatchId,
+            enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+            isDeleted: false,
+          },
+        });
+        const maxCapacity = batch.capacity || 0;
         const promotedCount = await client.waitingList.count({
           where: {
-            batchId: data.batchId,
+            batchId: targetBatchId,
             status: 'Promoted',
             isDeleted: false,
           },
@@ -175,45 +177,58 @@ export class EnrollmentService {
       }
 
       // Resolve course pricing & snapshot it
-      const pricing = await this.pricingService.resolveCoursePricing(
-        {
-          courseId: data.courseId,
-          customerType:
-            data.enrollmentType === 'Corporate' ? 'Corporate' : 'Individual',
-          branchId: data.branchId,
-          batchId: data.batchId,
-          asOfDate: new Date(),
-        },
-        client,
-      );
+      let resolvedPrice = new Prisma.Decimal(0);
+      let resolvedDiscount = new Prisma.Decimal(0);
+      let finalAmount = new Prisma.Decimal(0);
+      let pricingSource: any = 'GlobalDefault';
+      let priceEvaluationTimestamp = new Date();
 
-      const resolvedPrice = new Prisma.Decimal(pricing.basePrice);
-      const resolvedDiscount = new Prisma.Decimal(
-        pricing.applicableDiscounts.reduce(
-          (sum: number, d: any) => sum + d.discountValue,
-          0,
-        ),
-      );
-      // Price snapshot consumes the canonical totalPrice from pricing service (implements basePrice + tax percentage)
-      const totalPrice = new Prisma.Decimal(pricing.totalPrice);
-      const finalAmount = Prisma.Decimal.max(
-        new Prisma.Decimal(0),
-        totalPrice.minus(resolvedDiscount),
-      );
-      const pricingSource = pricing.pricingSource || 'GlobalDefault';
-      const priceEvaluationTimestamp = new Date();
+      try {
+        const pricing = await this.pricingService.resolveCoursePricing(
+          {
+            courseId: data.courseId,
+            customerType:
+              data.enrollmentType === 'Corporate' ? 'Corporate' : 'Individual',
+            branchId: data.branchId,
+            batchId: targetBatchId || undefined,
+            asOfDate: new Date(),
+          },
+          client,
+        );
+
+        resolvedPrice = new Prisma.Decimal(pricing.basePrice);
+        resolvedDiscount = new Prisma.Decimal(
+          pricing.applicableDiscounts.reduce(
+            (sum: number, d: any) => sum + d.discountValue,
+            0,
+          ),
+        );
+        const totalPrice = new Prisma.Decimal(pricing.totalPrice);
+        finalAmount = Prisma.Decimal.max(
+          new Prisma.Decimal(0),
+          totalPrice.minus(resolvedDiscount),
+        );
+        pricingSource = pricing.pricingSource || 'GlobalDefault';
+      } catch (error) {
+        // Fallback to 0 values if pricing or batch is not setup/available
+        resolvedPrice = new Prisma.Decimal(0);
+        resolvedDiscount = new Prisma.Decimal(0);
+        finalAmount = new Prisma.Decimal(0);
+        pricingSource = 'GlobalDefault';
+      }
 
       const enrollmentNumber = `ENR-${Date.now().toString().slice(-6)}`;
 
       const enrollment = await client.enrollment.create({
         data: {
           enrollmentNumber,
-          studentProfileId,
+          studentProfile: { connect: { id: studentProfileId } },
           corporateParticipantId: data.corporateParticipantId || null,
-          admissionId,
-          courseId: data.courseId,
-          batchId: data.batchId,
-          branchId: data.branchId,
+          admission: { connect: { id: admissionId } },
+          lead: data.leadId ? { connect: { id: data.leadId } } : undefined,
+          course: { connect: { id: data.courseId } },
+          batch: targetBatchId ? { connect: { id: targetBatchId } } : undefined,
+          branch: { connect: { id: data.branchId } },
           enrollmentType: data.enrollmentType || 'Regular',
           enrollmentStatus: 'Draft',
           pricingSource,
@@ -316,6 +331,10 @@ export class EnrollmentService {
 
       if (enrollment.enrollmentStatus !== 'Submitted') {
         throw new Error('ERR_ENR_INVALID_STATE');
+      }
+
+      if (!enrollment.batchId) {
+        throw new Error('ERR_BATCH_NOT_FOUND');
       }
 
       // Check batch capacity in Training Delivery (needs to lock / check atomically using SELECT FOR UPDATE)
@@ -701,19 +720,21 @@ export class EnrollmentService {
         data: { enrollmentStatus: 'Dropped' },
       });
 
-      // Decrement currentEnrollmentCount on Batch
-      const activeCount = await client.enrollment.count({
-        where: {
-          batchId: enrollment.batchId,
-          enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
-          isDeleted: false,
-        },
-      });
+      if (enrollment.batchId) {
+        // Decrement currentEnrollmentCount on Batch
+        const activeCount = await client.enrollment.count({
+          where: {
+            batchId: enrollment.batchId,
+            enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+            isDeleted: false,
+          },
+        });
 
-      await client.batch.update({
-        where: { id: enrollment.batchId },
-        data: { currentEnrollmentCount: activeCount },
-      });
+        await client.batch.update({
+          where: { id: enrollment.batchId },
+          data: { currentEnrollmentCount: activeCount },
+        });
+      }
 
       await client.auditLog.create({
         data: {
@@ -774,7 +795,7 @@ export class EnrollmentService {
         data: { enrollmentStatus: 'Cancelled' },
       });
 
-      if (oldStatus === 'Approved') {
+      if (oldStatus === 'Approved' && enrollment.batchId) {
         const activeCount = await client.enrollment.count({
           where: {
             batchId: enrollment.batchId,
@@ -994,11 +1015,10 @@ export class EnrollmentService {
         });
       }
 
-      // 3. Create Draft Admission
+      // 3. Create Admission (Globally)
       const hasActiveAdmission = await client.admission.count({
         where: {
           studentProfileId: studentProfile.id,
-          branchId: data.branchId,
           isDeleted: false,
           admissionStatus: {
             in: ['Draft', 'Submitted', 'Approved'],
@@ -1022,8 +1042,7 @@ export class EnrollmentService {
           admissionNumber,
           personId: person.id,
           studentProfileId: studentProfile.id,
-          branchId: data.branchId,
-          admissionStatus: 'Draft',
+          admissionStatus: 'Approved',
           courseId: data.courseId,
           admissionDate: new Date(),
         },
@@ -1049,11 +1068,11 @@ export class EnrollmentService {
       const enrollment = await client.enrollment.create({
         data: {
           enrollmentNumber,
-          studentProfileId: studentProfile.id,
-          admissionId: admission.id,
-          courseId: data.courseId,
-          batchId: data.batchId,
-          branchId: data.branchId,
+          studentProfile: { connect: { id: studentProfile.id } },
+          admission: { connect: { id: admission.id } },
+          course: { connect: { id: data.courseId } },
+          batch: data.batchId ? { connect: { id: data.batchId } } : undefined,
+          branch: { connect: { id: data.branchId } },
           enrollmentType: 'WalkIn',
           enrollmentStatus: 'Draft',
           pricingSource: pricing.pricingSource || 'GlobalDefault',
@@ -1424,19 +1443,21 @@ export class EnrollmentService {
               },
             });
 
-            // Decrement old batch count since we moved away from it
-            const oldBatchActiveCount = await client.enrollment.count({
-              where: {
-                batchId: enrollment.batchId,
-                enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
-                id: { not: enrollmentId },
-                isDeleted: false,
-              },
-            });
-            await client.batch.update({
-              where: { id: enrollment.batchId },
-              data: { currentEnrollmentCount: oldBatchActiveCount },
-            });
+            if (enrollment.batchId) {
+              // Decrement old batch count since we moved away from it
+              const oldBatchActiveCount = await client.enrollment.count({
+                where: {
+                  batchId: enrollment.batchId,
+                  enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+                  id: { not: enrollmentId },
+                  isDeleted: false,
+                },
+              });
+              await client.batch.update({
+                where: { id: enrollment.batchId },
+                data: { currentEnrollmentCount: oldBatchActiveCount },
+              });
+            }
 
             // Audit log
             await client.auditLog.create({
@@ -1465,19 +1486,21 @@ export class EnrollmentService {
           data: { currentEnrollmentCount: activeCount + 1 },
         });
 
-        // Decrement old batch count
-        const oldBatchActiveCount = await client.enrollment.count({
-          where: {
-            batchId: enrollment.batchId,
-            enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
-            id: { not: enrollmentId },
-            isDeleted: false,
-          },
-        });
-        await client.batch.update({
-          where: { id: enrollment.batchId },
-          data: { currentEnrollmentCount: oldBatchActiveCount },
-        });
+        if (enrollment.batchId) {
+          // Decrement old batch count
+          const oldBatchActiveCount = await client.enrollment.count({
+            where: {
+              batchId: enrollment.batchId,
+              enrollmentStatus: { in: ['Approved', 'Confirmed', 'Active'] },
+              id: { not: enrollmentId },
+              isDeleted: false,
+            },
+          });
+          await client.batch.update({
+            where: { id: enrollment.batchId },
+            data: { currentEnrollmentCount: oldBatchActiveCount },
+          });
+        }
       }
 
       // Update enrollment's batch

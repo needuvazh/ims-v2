@@ -235,7 +235,12 @@ export const organizationService = new OrganizationService(
         const [leadsCount, admissionsCount, inquiriesCount] = await Promise.all(
           [
             prisma.lead.count({ where: { branchId, isDeleted: false } }),
-            prisma.admission.count({ where: { branchId, isDeleted: false } }),
+            prisma.admission.count({
+              where: {
+                studentProfile: { branchId },
+                isDeleted: false,
+              },
+            }),
             prisma.inquiry.count({ where: { branchId, isDeleted: false } }),
           ],
         );
@@ -314,6 +319,7 @@ export const leadConversionOrchestrator = new LeadConversionOrchestrator(
   prisma,
   leadService,
   admissionService,
+  enrollmentService,
 );
 
 // ─── Course Catalog Repositories & Services ────────────────────────────────

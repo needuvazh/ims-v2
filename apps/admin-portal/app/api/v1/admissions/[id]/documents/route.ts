@@ -26,9 +26,10 @@ export async function POST(
 
           const admission = await prisma.admission.findUnique({
             where: { id: admissionId },
+            include: { studentProfile: true },
           });
 
-          if (!admission) {
+          if (!admission || !admission.studentProfile) {
             return NextResponse.json(
               { success: false, messageEnglish: 'Admission not found' },
               { status: 404 },
@@ -40,7 +41,7 @@ export async function POST(
               session.userId,
               session.activeBranchId ?? null,
             );
-          if (!allowedBranches.includes(admission.branchId as Uuid)) {
+          if (!allowedBranches.includes(admission.studentProfile.branchId as Uuid)) {
             return NextResponse.json(
               { success: false, messageEnglish: 'Access Denied' },
               { status: 403 },
@@ -105,7 +106,7 @@ export async function POST(
             await documentsService.registerDocuments(
               admission.personId,
               'Person',
-              admission.branchId,
+              admission.studentProfile.branchId,
               [
                 {
                   documentType: documentType as any,

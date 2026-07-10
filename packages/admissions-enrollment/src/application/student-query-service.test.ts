@@ -91,6 +91,9 @@ describe('StudentQueryService', () => {
       person: {
         findFirst: vi.fn().mockResolvedValue(person),
       },
+      admission: {
+        findFirst: vi.fn().mockResolvedValue(null),
+      },
       enrollment: {
         count: vi.fn().mockResolvedValue(2),
       },
@@ -107,11 +110,6 @@ describe('StudentQueryService', () => {
     expect(result.studentNumber).toBe('STU-123');
     expect(result.branchInfo).toEqual([
       { branchId: 'branch-home', branchName: 'Muscat Main', relation: 'Home' },
-      {
-        branchId: 'branch-admission',
-        branchName: 'Seeb Center',
-        relation: 'Admission',
-      },
       {
         branchId: 'branch-enrollment',
         branchName: 'Nizwa Campus',
@@ -213,7 +211,6 @@ describe('StudentQueryService', () => {
           status: 'Active',
           admissions: {
             some: {
-              branchId: { in: ['branch-1'] },
               admissionStatus: 'Draft',
               isDeleted: false,
             },

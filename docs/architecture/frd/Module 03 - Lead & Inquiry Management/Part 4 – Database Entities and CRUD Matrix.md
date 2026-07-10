@@ -69,6 +69,7 @@ Represents a qualified sales lead, actively managed by a counselor through the p
 | `lostReasonCode`     | `String`     | `VARCHAR(50)`       | NULL        | -        | Matches LookupValue code         |
 | `lostReasonNotes`    | `String`     | `TEXT`              | NULL        | -        | -                                |
 | `inquiryId`          | `String`     | `UUID`              | NULL        | FK       | References `inquiries(id)`       |
+| `admissionNumber`    | `String`     | `VARCHAR(50)`       | NULL        | -        | Resolved student admission ref   |
 | `version`            | `Int`        | `INTEGER`           | NOT NULL    | -        | Optimistic Lock: Default `1`     |
 | **Audit Columns**    |              |                     |             |          |                                  |
 | `createdAt`          | `DateTime`   | `TIMESTAMPTZ`       | NOT NULL    | -        | `@default(now())`                |

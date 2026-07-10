@@ -13,14 +13,19 @@ export async function createEnrollmentWithBillingAction(data: any) {
     // 2. Resolve branch from the selected admission
     const admission = await prisma.admission.findUnique({
       where: { id: data.admissionId },
-      select: { branchId: true }
+      select: {
+        studentProfile: {
+          select: { branchId: true }
+        }
+      }
     });
-    if (!admission) {
+    if (!admission || !admission.studentProfile) {
       throw new Error('ERR_ADMISSION_NOT_FOUND');
     }
+    const branchId = admission.studentProfile.branchId;
     
     // 3. Assert active branch scope
-    await assertBranchScope(admission.branchId);
+    await assertBranchScope(branchId);
 
     // Run in a single transaction
     const result = await prisma.$transaction(async (tx) => {
@@ -44,7 +49,7 @@ export async function createEnrollmentWithBillingAction(data: any) {
         admissionId: data.admissionId,
         courseId: data.courseId,
         batchId: data.batchId,
-        branchId: admission.branchId,
+        branchId: branchId,
         enrollmentType: data.enrollmentType,
         promoCodes: data.promoCodes,
         actorId: session.userId
@@ -76,7 +81,7 @@ export async function createEnrollmentWithBillingAction(data: any) {
         return {
           enrollmentId: enrollment.id,
           courseId: item.courseId || data.courseId,
-          sourceBranchId: item.sourceBranchId || admission.branchId,
+          sourceBranchId: item.sourceBranchId || branchId,
           descriptionEnglish: item.descriptionEnglish,
           quantity: Number(item.quantity) || 1,
           unitPrice: itemPrice,
@@ -93,7 +98,7 @@ export async function createEnrollmentWithBillingAction(data: any) {
         studentProfileId: enrollment.studentProfileId,
         corporateAccountId: data.corporateAccountId || null,
         enrollmentId: enrollment.id,
-        branchId: admission.branchId,
+        branchId: branchId,
         invoiceDate: new Date(data.invoiceDate),
         dueDate: new Date(data.invoiceDueDate),
         currency: 'OMR',
@@ -118,7 +123,7 @@ export async function createEnrollmentWithBillingAction(data: any) {
           paymentDate: new Date(data.paymentDate),
           referenceNumber: data.paymentReference || null,
           remarks: data.paymentRemarks || null,
-          branchId: admission.branchId,
+          branchId: branchId,
           currency: 'OMR',
           receivedBy: session.userId,
           idempotencyKey: randomUUID(),

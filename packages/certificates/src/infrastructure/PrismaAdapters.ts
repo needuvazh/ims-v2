@@ -34,7 +34,7 @@ export class PrismaEnrollmentReadAdapter implements EnrollmentReadPort {
       enrollmentNumber: enrollment.enrollmentNumber,
       studentProfileId: enrollment.studentProfileId,
       courseId: enrollment.courseId,
-      batchId: enrollment.batchId,
+      batchId: enrollment.batchId || '',
       branchId: enrollment.branchId,
       paymentValidationRequired: enrollment.paymentValidationRequired,
       studentDisplayName: `${enrollment.studentProfile.person.firstName} ${enrollment.studentProfile.person.lastName}`,
@@ -42,8 +42,8 @@ export class PrismaEnrollmentReadAdapter implements EnrollmentReadPort {
       courseCode: enrollment.course.courseCode,
       courseNameEnglish: enrollment.course.nameEnglish,
       courseNameArabic: enrollment.course.nameArabic,
-      batchCode: enrollment.batch.batchCode,
-      batchName: enrollment.batch.batchNameEnglish,
+      batchCode: enrollment.batch?.batchCode || 'N/A',
+      batchName: enrollment.batch?.batchNameEnglish || 'N/A',
     };
   }
 }

@@ -3,9 +3,7 @@
 ## Purpose
 
 TBD - created by archiving change enrollment-lifecycle. Update Purpose after archive.
-
 ## Requirements
-
 ### Requirement: Enrollment Creation & pricingResolution snapshotting
 
 The system SHALL support creating regular and corporate enrollments, resolving and snapshotting pricing to prevent pricing drift.
@@ -13,7 +11,7 @@ The system SHALL support creating regular and corporate enrollments, resolving a
 #### Scenario: Resolve and snapshot pricing during draft creation
 
 - **GIVEN** an approved Admission exists for a student
-- **WHEN** the Registrar initiates an enrollment draft with `courseId`, `batchId`, `branchId`, `enrollmentType`, and `customerType`
+- **WHEN** the Registrar or the lead conversion pipeline initiates an enrollment draft with `courseId`, `batchId`, `branchId`, `enrollmentType`, `customerType`, and optionally a `leadId`
 - **THEN** the system SHALL resolve pricing by calling the Course Catalog's `CoursePricingService` passing:
   - `courseId`, `customerType` ('Individual' or 'Corporate'), `branchId`, `batchId`, and the current timestamp as `asOfDate`
 - **AND** snapshot the following immutable pricing fields on the `Enrollment` record:
@@ -23,7 +21,8 @@ The system SHALL support creating regular and corporate enrollments, resolving a
   - `finalAmount` (totalPrice - resolvedDiscount, minimum 0, where totalPrice is course pricing basePrice plus tax)
   - `paymentValidationRequired` (true if finalAmount > 0, else false)
   - `priceEvaluationTimestamp` (DateTime set to current timestamp)
-- **AND** initialize the status to "Draft".
+- **AND** save the optional `leadId` to link the enrollment back to its CRM lead source
+- **AND** initialize the enrollment status to "Draft".
 
 #### Scenario: Reject enrollment draft from unapproved admission
 
@@ -43,7 +42,19 @@ The system SHALL support creating regular and corporate enrollments, resolving a
 - **THEN** if no `StudentProfile` exists for the participant, the system SHALL automatically create a `StudentProfile` and Admission in the same database transaction.
 - **AND** create the `Enrollment` draft linked to the corporate participant, student profile, and admission.
 
----
+#### Scenario: Course waitlist queue enrollment
+
+- **WHEN** an enrollment draft is created for a course that does not have an active batch or pricing configured
+- **THEN** the system SHALL allow the draft enrollment to be created with `batchId: null`
+- **AND** skip resolving pricing fields (marking `resolvedPrice`, `resolvedDiscount`, `finalAmount` as 0), designating the enrollment as part of the course waiting list queue.
+
+#### Scenario: Assign or change enrollment batch
+
+- **WHEN** the Registrar or Coordinator assigns or changes the batch of an enrollment that has no payments recorded
+- **THEN** the system SHALL validate the new batch's capacity
+- **AND** update the enrollment's `batchId` to the new batch
+- **AND** update the batch's `currentEnrollmentCount` capacity metric
+- **AND** if capacity is exceeded and waitlist is enabled, automatically enqueue the student into the batch waitlist.
 
 ### Requirement: Enrollment Status Transitions & Validation Matrix
 
@@ -167,3 +178,4 @@ The system SHALL show enrollment status, pricing snapshot fields, and enforce br
 - **WHEN** a user requests details for an enrollment belonging to another branch
 - **AND** the user does not possess global Super Admin rights
 - **THEN** the system SHALL block the request with "ERR_AUTH_BRANCH_DENIED" (403 Forbidden).
+

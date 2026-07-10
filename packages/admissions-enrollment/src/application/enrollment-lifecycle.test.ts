@@ -41,9 +41,29 @@ test('EnrollmentService createEnrollment should validate Approved Admission and 
     enrollment: {
       create: vi
         .fn()
-        .mockImplementation(({ data }) =>
-          Promise.resolve({ id: 'enr-1', ...data }),
-        ),
+        .mockImplementation(({ data }) => {
+          const result: any = { id: 'enr-1', ...data };
+          if (data.studentProfile?.connect?.id) {
+            result.studentProfileId = data.studentProfile.connect.id;
+          }
+          if (data.admission?.connect?.id) {
+            result.admissionId = data.admission.connect.id;
+          }
+          return Promise.resolve(result);
+        }),
+      count: vi.fn().mockResolvedValue(0),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 10,
+        waitingListEnabled: false,
+        isDeleted: false,
+      }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(0),
     },
     studentProfile: {
       findUnique: vi.fn().mockResolvedValue({
@@ -146,9 +166,29 @@ test('EnrollmentService createEnrollment should auto-convert Corporate Participa
     enrollment: {
       create: vi
         .fn()
-        .mockImplementation(({ data }) =>
-          Promise.resolve({ id: 'enr-1', ...data }),
-        ),
+        .mockImplementation(({ data }) => {
+          const result: any = { id: 'enr-1', ...data };
+          if (data.studentProfile?.connect?.id) {
+            result.studentProfileId = data.studentProfile.connect.id;
+          }
+          if (data.admission?.connect?.id) {
+            result.admissionId = data.admission.connect.id;
+          }
+          return Promise.resolve(result);
+        }),
+      count: vi.fn().mockResolvedValue(0),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 10,
+        waitingListEnabled: false,
+        isDeleted: false,
+      }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(0),
     },
     auditLog: {
       create: vi.fn().mockResolvedValue(null),
@@ -334,6 +374,19 @@ test('EnrollmentService createEnrollment should consume canonical totalPrice con
         .mockImplementation(({ data }) =>
           Promise.resolve({ id: 'enr-1', ...data }),
         ),
+      count: vi.fn().mockResolvedValue(0),
+    },
+    batch: {
+      findUnique: vi.fn().mockResolvedValue({
+        id: 'batch-1',
+        capacity: 10,
+        waitingListEnabled: false,
+        isDeleted: false,
+      }),
+    },
+    waitingList: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      count: vi.fn().mockResolvedValue(0),
     },
     studentProfile: {
       findUnique: vi.fn().mockResolvedValue({

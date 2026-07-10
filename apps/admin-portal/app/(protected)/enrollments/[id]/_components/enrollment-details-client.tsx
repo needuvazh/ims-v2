@@ -59,7 +59,7 @@ interface EnrollmentDetail {
   branchId: string;
   courseId: string;
   courseName: string;
-  batchId: string;
+  batchId: string | null;
   batchCode: string;
   studentName: string;
   studentEmail: string;
@@ -155,7 +155,7 @@ export function EnrollmentDetailsClient({
 
   // Change Batch Modal State
   const [isChangeBatchOpen, setIsChangeBatchOpen] = useState(false);
-  const [selectedBatchId, setSelectedBatchId] = useState(enrollment.batchId);
+  const [selectedBatchId, setSelectedBatchId] = useState<string | null>(enrollment.batchId);
 
   // Payment Record Modal state
   const [isPayOpen, setIsPayOpen] = useState(false);
@@ -525,6 +525,11 @@ export function EnrollmentDetailsClient({
     ['Confirmed', 'Active'].includes(enrollment.enrollmentStatus) &&
     sessionPermissions.includes('enrollment.drop');
 
+  const canChangeBatch =
+    ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active'].includes(enrollment.enrollmentStatus) &&
+    sessionPermissions.includes('enrollment.submit') &&
+    !invoices.some((inv) => Number(inv.paidAmount) > 0);
+
   return (
     <div className="space-y-6">
       {/* Header section */}
@@ -565,9 +570,26 @@ export function EnrollmentDetailsClient({
                   <span>Target Course:</span>
                   <span className="font-semibold text-slate-800">{enrollment.courseName}</span>
                 </div>
-                <div className="flex justify-between">
+                 <div className="flex justify-between items-center h-8">
                   <span>Assigned Batch:</span>
-                  <span className="font-mono font-bold text-slate-800">{enrollment.batchCode}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono font-bold text-slate-800">
+                      {enrollment.batchCode || 'Course Waitlist (No Batch)'}
+                    </span>
+                    {canChangeBatch && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setSelectedBatchId(enrollment.batchId);
+                          setIsChangeBatchOpen(true);
+                        }}
+                        className="h-7 px-2 text-xs border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                      >
+                        {enrollment.batchId ? 'Change' : 'Assign'}
+                      </Button>
+                    )}
+                  </div>
                 </div>
                 <div className="flex justify-between">
                   <span>Branch Location:</span>
@@ -1073,6 +1095,20 @@ export function EnrollmentDetailsClient({
                 </Button>
               )}
 
+               {canChangeBatch && (
+                <Button
+                  onClick={() => {
+                    setSelectedBatchId(enrollment.batchId);
+                    setIsChangeBatchOpen(true);
+                  }}
+                  disabled={isPending}
+                  className="w-full flex justify-center items-center gap-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200"
+                >
+                  <Calendar className="h-4.5 w-4.5" />
+                  {enrollment.batchId ? 'Change Batch' : 'Assign Batch'}
+                </Button>
+              )}
+
               {canDrop && (
                 <Button
                   onClick={() => setIsDropOpen(true)}
@@ -1084,7 +1120,7 @@ export function EnrollmentDetailsClient({
                 </Button>
               )}
 
-              {!canSubmit && !canApprove && !canCancel && !canDrop && (
+              {!canSubmit && !canApprove && !canCancel && !canDrop && !canChangeBatch && (
                 <p className="text-xs text-slate-400 italic text-center py-2">
                   No workflow actions are currently available for this status.
                 </p>
@@ -1243,6 +1279,48 @@ export function EnrollmentDetailsClient({
               </DialogClose>
               <Button type="submit" disabled={isPending} className="bg-emerald-600 text-white hover:bg-emerald-700">
                 {isPending ? 'Posting...' : 'Record Payment'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Change Batch Modal */}
+      <Dialog open={isChangeBatchOpen} onOpenChange={setIsChangeBatchOpen}>
+        <DialogContent>
+          <form onSubmit={handleChangeBatchSubmit} className="space-y-4">
+            <DialogHeader>
+              <DialogTitle>Assign or Change Batch</DialogTitle>
+              <DialogDescription>
+                Select a different batch to assign to this student's enrollment.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 py-2 text-sm">
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-700">Select Batch</label>
+                <select
+                  value={selectedBatchId || ''}
+                  onChange={(e) => setSelectedBatchId(e.target.value)}
+                  className="w-full h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm focus:outline-none"
+                  required
+                >
+                  <option value="" disabled>-- Select a Batch --</option>
+                  {batches.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.batchCode} (Capacity: {b.currentEnrollmentCount}/{b.capacity})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" disabled={isPending} className="bg-indigo-600 text-white hover:bg-indigo-700">
+                {isPending ? 'Saving...' : 'Confirm Assignment'}
               </Button>
             </DialogFooter>
           </form>

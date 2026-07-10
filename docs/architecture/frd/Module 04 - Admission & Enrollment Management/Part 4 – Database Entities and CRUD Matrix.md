@@ -25,24 +25,24 @@ This module owns the admission and enrollment lifecycle data. The current Prisma
 
 ### 1.3 `Admission`
 
-- Purpose: administrative admission record for a student profile in a branch.
-- Fields: `id`, `admissionNumber`, `personId`, `studentProfileId`, `branchId`, `leadId?`, `admissionDate`, `admissionStatus`, `submittedAt?`, `approvedAt?`, `approvedBy?`, `remarks?`, audit fields, soft delete fields.
+- Purpose: administrative admission record for a student profile globally at the institute level.
+- Fields: `id`, `admissionNumber`, `personId`, `studentProfileId`, `leadId?`, `admissionDate`, `admissionStatus`, `submittedAt?`, `approvedAt?`, `approvedBy?`, `remarks?`, audit fields, soft delete fields.
 - Constraints:
   - `admissionNumber` unique.
   - `studentProfileId` required.
-  - `branchId` required.
   - `leadId` is optional and read-only to CRM ownership.
 
 ### 1.4 `Enrollment`
 
 - Purpose: central aggregate for course and batch assignment.
-- Fields: `id`, `enrollmentNumber`, `studentProfileId`, `corporateParticipantId?`, `admissionId`, `courseId`, `batchId`, `branchId`, `enrollmentType`, `enrollmentStatus`, `pricingSource`, `resolvedPrice`, `resolvedDiscount`, `finalAmount`, `paymentValidationRequired`, `completionStatus`, `certificateStatus`, `confirmedAt?`, `completedAt?`, audit fields, soft delete fields.
+- Fields: `id`, `enrollmentNumber`, `studentProfileId`, `corporateParticipantId?`, `admissionId`, `leadId?`, `courseId`, `batchId`, `branchId`, `enrollmentType`, `enrollmentStatus`, `pricingSource`, `resolvedPrice`, `resolvedDiscount`, `finalAmount`, `paymentValidationRequired`, `completionStatus`, `certificateStatus`, `confirmedAt?`, `completedAt?`, audit fields, soft delete fields.
 - Constraints:
   - `courseId` required.
   - `batchId` required.
   - `branchId` required.
   - `enrollmentNumber` unique.
   - `studentProfileId` required.
+  - `leadId` is optional and links to its CRM lead source.
 
 ### 1.5 `WalkInEnrollment`
 
@@ -72,7 +72,6 @@ This module owns the admission and enrollment lifecycle data. The current Prisma
 | `StudentProfile`     | 1 to many `Admission`                               |
 | `StudentProfile`     | 1 to many `Enrollment`                              |
 | `Admission`          | many to 1 `Person`                                  |
-| `Admission`          | many to 1 `Branch`                                  |
 | `Admission`          | many to 1 `StudentProfile`                          |
 | `Admission`          | 0..1 to 1 `Lead` (logical reference only)           |
 | `Enrollment`         | many to 1 `StudentProfile`                          |
@@ -80,6 +79,7 @@ This module owns the admission and enrollment lifecycle data. The current Prisma
 | `Enrollment`         | many to 1 `Course`                                  |
 | `Enrollment`         | many to 1 `Batch`                                   |
 | `Enrollment`         | many to 1 `Branch`                                  |
+| `Enrollment`         | 0..1 to 1 `Lead` (logical reference only)           |
 | `Enrollment`         | 0..1 to `CorporateParticipant` (external reference) |
 | `WalkInEnrollment`   | 1 to 1 `Enrollment`                                 |
 | `WalkInConfirmation` | 1 to 1 `WalkInEnrollment`                           |
@@ -91,13 +91,13 @@ This module owns the admission and enrollment lifecycle data. The current Prisma
 | Actor          | Entity              | Allowed Actions                          | Scope                                 |
 | -------------- | ------------------- | ---------------------------------------- | ------------------------------------- |
 | Super Admin    | All module entities | Create, Read, Update, Soft Delete, Audit | Global                                |
-| Branch Manager | Admission           | Read, Approve, Reject, Cancel            | Active branch                         |
+| Branch Manager | Admission           | Read, Approve, Reject, Cancel            | Dynamic (Student home/enrollment branches match manager branch) |
 | Branch Manager | Enrollment          | Read, Approve, Cancel, Drop              | Active branch                         |
 | Registrar      | Person              | Lookup, create-link                      | Branch-scoped lookup only             |
 | Registrar      | StudentProfile      | Create, Read, Update, Soft Delete        | Active branch                         |
-| Registrar      | Admission           | Create, Read, Submit, Cancel             | Active branch                         |
+| Registrar      | Admission           | Create, Read, Submit, Cancel             | Global (Institute-level)              |
 | Registrar      | Enrollment          | Create, Read, Submit, Cancel             | Active branch                         |
-| Counselor      | Admission           | Create, Read, Submit                     | Assigned branch or assigned lead only |
+| Counselor      | Admission           | Create, Read, Submit                     | Global (Institute-level)              |
 | Counselor      | Enrollment          | Create, Read, Submit                     | Assigned branch or assigned lead only |
 | Accountant     | Enrollment          | Read                                     | Branch-scoped                         |
 
@@ -169,7 +169,6 @@ model Admission {
   admissionNumber String          @unique @db.VarChar(50)
   personId        String          @db.Uuid
   studentProfileId String         @db.Uuid
-  branchId        String          @db.Uuid
   leadId          String?         @db.Uuid
   admissionDate   DateTime        @default(now()) @db.Timestamptz(6)
   admissionStatus AdmissionStatus @default(Draft)
@@ -192,6 +191,7 @@ model Enrollment {
   studentProfileId        String           @db.Uuid
   corporateParticipantId  String?          @db.Uuid
   admissionId             String           @db.Uuid
+  leadId                  String?          @db.Uuid
   courseId                String           @db.Uuid
   batchId                 String           @db.Uuid
   branchId                String           @db.Uuid

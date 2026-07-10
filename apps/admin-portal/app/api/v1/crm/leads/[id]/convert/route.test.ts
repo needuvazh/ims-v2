@@ -90,6 +90,7 @@ describe('CRM lead convert API route', () => {
     expect(body.data.admissionId).toBe('admission-123');
     expect(convertLeadToAdmissionMock).toHaveBeenCalledWith(
       'lead-123',
+      '00000000-0000-0000-0000-000000000000',
       [
         {
           fileName: 'civil.pdf',
@@ -98,6 +99,8 @@ describe('CRM lead convert API route', () => {
           documentType: 'CIVIL_ID_FRONT',
         },
       ],
+      undefined,
+      undefined,
       'user-1',
     );
   });

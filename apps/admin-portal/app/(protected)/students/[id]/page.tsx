@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { IdCardPanel } from '../_components/id-card-panel';
 import { StudentHistoryTabs } from './_components/student-history-tabs';
+import { LearnerProfileCard } from './_components/learner-profile-card';
 
 export const metadata = {
   title: 'Student Profile Dashboard - Admin Portal | ASTI IMS',
@@ -50,12 +51,30 @@ export default async function StudentProfileDashboardPage(props: {
   const profile = await prisma.studentProfile.findFirst({
     where: { id: params.id, isDeleted: false },
     include: {
-      person: true,
+      person: {
+        include: {
+          leads: {
+            where: { isDeleted: false },
+            include: {
+              interestedCourse: true,
+              counselor: {
+                select: {
+                  username: true,
+                  person: {
+                    select: {
+                      firstName: true,
+                      lastName: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      branch: true,
       admissions: {
         where: { isDeleted: false },
-        include: {
-          branch: true,
-        },
       },
       enrollments: {
         where: { isDeleted: false },
@@ -63,6 +82,27 @@ export default async function StudentProfileDashboardPage(props: {
           course: true,
           batch: true,
           branch: true,
+          attendanceRecords: {
+            where: { isDeleted: false },
+          },
+        },
+      },
+      certificates: {
+        where: { deletedAt: null },
+        include: {
+          course: true,
+          batch: true,
+        },
+      },
+      invoices: {
+        where: { isDeleted: false },
+        orderBy: { invoiceDate: 'desc' },
+      },
+      payments: {
+        where: { isDeleted: false },
+        orderBy: { paymentDate: 'desc' },
+        include: {
+          invoice: true,
         },
       },
     },
@@ -74,9 +114,7 @@ export default async function StudentProfileDashboardPage(props: {
 
   // Enforce branch scope visibility: Student must have at least one admission or enrollment in operator's branch scopes
   const hasBranchAccess =
-    profile.admissions.some((adm) =>
-      allowedBranchIds.includes(adm.branchId as any),
-    ) ||
+    allowedBranchIds.includes(profile.branchId as any) ||
     profile.enrollments.some((enr) =>
       allowedBranchIds.includes(enr.branchId as any),
     );
@@ -107,6 +145,19 @@ export default async function StudentProfileDashboardPage(props: {
     session.permissions.includes('student.update') ||
     session.permissions.includes('student.write');
 
+  const canReadLeads =
+    session.permissions.includes('student.related.lead.read') ||
+    session.permissions.includes('lead.read');
+  const canReadCertificates =
+    session.permissions.includes('student.related.certificate.read') ||
+    session.permissions.includes('certificate.view');
+  const canReadPayments =
+    session.permissions.includes('student.related.payment.read') ||
+    session.permissions.includes('payment.create');
+  const canReadAttendance =
+    session.permissions.includes('attendance.record.read') ||
+    session.permissions.includes('attendance.report.student.view');
+
   const displayMobile = canRevealPII
     ? profile.person.mobile
     : maskPhone(profile.person.mobile);
@@ -116,6 +167,17 @@ export default async function StudentProfileDashboardPage(props: {
   const displayNationalId = canRevealPII
     ? profile.person.nationalId
     : '********* (Masked)';
+
+  const displayPassport = canRevealPII
+    ? profile.person.passportNumber
+    : profile.person.passportNumber
+      ? '********* (Masked)'
+      : null;
+  const displayVisa = canRevealPII
+    ? profile.person.visaNumber
+    : profile.person.visaNumber
+      ? '********* (Masked)'
+      : null;
 
   const documents = canReadDocuments
     ? await prisma.documentOwner.findMany({
@@ -181,95 +243,51 @@ export default async function StudentProfileDashboardPage(props: {
       })
     : [];
 
-  return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between gap-2">
-        <Link href="/students">
-          <Button variant="outline" size="sm" className="h-8 gap-1">
-            <ChevronLeft className="h-4 w-4" /> Back to Directory
-          </Button>
-        </Link>
-        <div className="flex items-center gap-2">
-          {canUpdate && (
-            <Link href={`/students/${profile.id}/edit`}>
-              <Button variant="outline" size="sm" className="h-8 gap-1">
-                <PencilLine className="h-4 w-4" /> Edit Profile
-              </Button>
-            </Link>
-          )}
-        </div>
-      </div>
+  const headerActions = canUpdate ? (
+    <Link href={`/students/${profile.id}/edit`}>
+      <Button variant="outline" size="sm" className="h-8 gap-1">
+        <PencilLine className="h-4 w-4" /> Edit Profile
+      </Button>
+    </Link>
+  ) : undefined;
 
+  return (
+    <div className="space-y-8 p-6">
       <PageHeader
+        backUrl="/students"
         eyebrow="Academic Registry"
         title={`${profile.person.firstName} ${profile.person.lastName}`}
         description={`Student Number: ${profile.studentNumber} | Profile Status: ${profile.status}`}
+        actions={headerActions}
       />
 
       <div className="space-y-6">
         {/* Learner profile row */}
-        <Card className="p-6 space-y-6">
-          <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
-            <div className="h-10 w-10 rounded-full bg-[color:var(--ims-brass-soft)] flex items-center justify-center text-[color:var(--ims-brass)]">
-              <User className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-800">Learner Profile</h3>
-              <p className="text-xs text-slate-400">
-                Canonical Identity Details
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2 lg:grid-cols-4">
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                National/Civil ID
-              </span>
-              <p className="font-semibold text-slate-700">
-                {displayNationalId}
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Phone className="h-3.5 w-3.5" /> Mobile Phone
-              </span>
-              <p className="font-semibold text-slate-700">
-                {displayMobile || 'N/A'}
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Mail className="h-3.5 w-3.5" /> Email address
-              </span>
-              <p className="font-semibold text-slate-700 break-all">
-                {displayEmail || 'N/A'}
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5" /> Registry Joined At
-              </span>
-              <p className="font-semibold text-slate-700">
-                {new Date(profile.joinedAt).toLocaleDateString(undefined, {
-                  dateStyle: 'medium',
-                })}
-              </p>
-            </div>
-          </div>
-
-          {!canRevealPII && (
-            <div className="p-3 bg-amber-50 rounded-lg border border-amber-100 text-amber-800 text-xs">
-              Contact information is masked. You need{' '}
-              <strong>student.identity.unmasked.read</strong> or{' '}
-              <strong>student.reveal_pii</strong> permission to reveal complete
-              records.
-            </div>
-          )}
-        </Card>
+        <LearnerProfileCard
+          studentProfile={{
+            id: profile.id,
+            joinedAt: profile.joinedAt instanceof Date ? profile.joinedAt.toISOString() : profile.joinedAt,
+            person: {
+              firstName: profile.person.firstName,
+              lastName: profile.person.lastName,
+              photoUrl: profile.person.photoUrl,
+              email: profile.person.email,
+              mobile: profile.person.mobile,
+              nationalId: profile.person.nationalId,
+              passportNumber: profile.person.passportNumber,
+              visaNumber: profile.person.visaNumber,
+              nationality: profile.person.nationality,
+              dateOfBirth: profile.person.dateOfBirth ? profile.person.dateOfBirth.toISOString() : null,
+              gender: profile.person.gender,
+            },
+          }}
+          displayEmail={displayEmail}
+          displayMobile={displayMobile}
+          displayNationalId={displayNationalId}
+          displayPassport={displayPassport}
+          displayVisa={displayVisa}
+          canRevealPII={canRevealPII}
+        />
 
         {/* ID Card Management Panel */}
         {canManageIdCard && (
@@ -296,12 +314,16 @@ export default async function StudentProfileDashboardPage(props: {
           showEnrollments={canReadEnrollments}
           showDocuments={canReadDocuments}
           showAudits={canReadAudits}
+          showLeads={canReadLeads}
+          showCertificates={canReadCertificates}
+          showFinance={canReadPayments}
+          showAttendance={canReadAttendance}
           admissions={
             canReadAdmissions
               ? profile.admissions.map((adm) => ({
                   id: adm.id,
                   admissionNumber: adm.admissionNumber,
-                  branchName: adm.branch.branchName,
+                  branchName: profile.branch?.branchName || 'N/A',
                   admissionStatus: adm.admissionStatus,
                 }))
               : []
@@ -311,7 +333,7 @@ export default async function StudentProfileDashboardPage(props: {
               ? profile.enrollments.map((enr) => ({
                   id: enr.id,
                   courseName: enr.course.nameEnglish,
-                  batchCode: enr.batch.batchCode,
+                  batchCode: enr.batch?.batchCode || 'Course Waitlist (No Batch)',
                   branchName: enr.branch.branchName,
                   enrollmentStatus: enr.enrollmentStatus,
                 }))
@@ -344,6 +366,90 @@ export default async function StudentProfileDashboardPage(props: {
             createdAt: a.createdAt.toISOString(),
             performedBy: a.performedBy,
           }))}
+          leads={
+            canReadLeads
+              ? profile.person.leads.map((l) => ({
+                  id: l.id,
+                  leadNumber: l.leadNumber,
+                  stage: l.stage,
+                  source: l.source,
+                  counselorName: l.counselor
+                    ? `${l.counselor.person?.firstName || ''} ${l.counselor.person?.lastName || ''}`.trim() || l.counselor.username
+                    : 'Unassigned',
+                  interestedCourse: l.interestedCourse.nameEnglish,
+                  createdAt: l.createdAt.toISOString(),
+                }))
+              : []
+          }
+          certificates={
+            canReadCertificates
+              ? profile.certificates.map((c) => ({
+                  id: c.id,
+                  certificateNumber: c.certificateNumber,
+                  courseName: c.course.nameEnglish,
+                  batchCode: c.batch.batchCode,
+                  issuedDate: c.issuedDate ? c.issuedDate.toISOString() : null,
+                  status: c.certificateStatus,
+                  verificationCode: c.verificationCode,
+                }))
+              : []
+          }
+          invoices={
+            canReadPayments
+              ? profile.invoices.map((i) => ({
+                  id: i.id,
+                  invoiceNumber: i.invoiceNumber,
+                  invoiceDate: i.invoiceDate.toISOString(),
+                  dueDate: i.dueDate.toISOString(),
+                  totalAmount: Number(i.totalAmount),
+                  paidAmount: Number(i.paidAmount),
+                  outstandingAmount: Number(i.outstandingAmount),
+                  status: i.status,
+                }))
+              : []
+          }
+          payments={
+            canReadPayments
+              ? profile.payments.map((p) => ({
+                  id: p.id,
+                  paymentNumber: p.paymentNumber,
+                  paymentDate: p.paymentDate.toISOString(),
+                  paymentMethod: p.paymentMethod,
+                  amount: Number(p.amount),
+                  referenceNumber: p.referenceNumber,
+                  status: p.status,
+                }))
+              : []
+          }
+          attendanceSummary={
+            canReadAttendance
+              ? profile.enrollments.map((enr) => {
+                  const records = enr.attendanceRecords || [];
+                  const total = records.length;
+                  const present = records.filter((r) => r.status === 'Present').length;
+                  const late = records.filter((r) => r.status === 'Late').length;
+                  const absent = records.filter((r) => r.status === 'Absent').length;
+                  const excused = records.filter((r) => r.status === 'Excused').length;
+                  const unmarked = records.filter((r) => r.status === 'Unmarked').length;
+
+                  const totalForRate = present + late + absent;
+                  const attendanceRate = totalForRate > 0 ? Math.round(((present + late) / totalForRate) * 100) : 100;
+
+                  return {
+                    id: enr.id,
+                    courseName: enr.course.nameEnglish,
+                    batchCode: enr.batch?.batchCode || 'No Batch',
+                    total,
+                    present,
+                    late,
+                    absent,
+                    excused,
+                    unmarked,
+                    attendanceRate,
+                  };
+                })
+              : []
+          }
         />
       </div>
     </div>

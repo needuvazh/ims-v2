@@ -832,13 +832,15 @@ LeadStageHistory M → 1 User as Performer
 
 ## 11.1 Admission
 
+Institute-level (global) concept. Reuses student profiles and does not scope to individual branches.
+
 ```text
 id
 admissionNumber
 leadId
 personId
 studentProfileId
-admissionStatus
+admissionStatus (Draft, Submitted, Approved, Rejected, Cancelled)
 submittedAt
 approvedAt
 approvedBy
@@ -853,6 +855,11 @@ Admission M → 1 Person
 Admission 1 → 0..1 StudentProfile
 Admission 1 → M Enrollment
 ```
+
+Rules:
+- Admission is global. Once created, a student profile is linked globally.
+- During lead conversion, new admissions are auto-approved to simplify the counselor workflow.
+- Pre-existing students reuse their existing student profile and linked admission, rather than creating duplicates.
 
 ---
 
@@ -888,6 +895,7 @@ enrollmentNumber
 studentProfileId
 corporateParticipantId
 admissionId
+leadId
 courseId
 batchId
 branchId
@@ -911,6 +919,7 @@ Enrollment M → 1 StudentProfile
 Enrollment M → 1 Course
 Enrollment M → 1 Batch
 Enrollment M → 1 Branch
+Enrollment 0..1 → Lead
 Enrollment 0..1 → CorporateParticipant
 Enrollment 1 → M InvoiceLineItem
 Enrollment 1 → M AttendanceRecord

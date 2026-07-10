@@ -135,7 +135,7 @@ export default async function EnrollmentsPage(props: {
     createdAt: e.createdAt.toISOString(),
     branchName: e.branch.branchName,
     courseName: e.course.nameEnglish,
-    batchCode: e.batch.batchCode,
+    batchCode: e.batch?.batchCode || 'Course Waitlist (No Batch)',
     studentName: `${e.studentProfile.person.firstName} ${e.studentProfile.person.lastName}`,
     studentEmail: e.studentProfile.person.email || 'N/A',
   }));
@@ -166,18 +166,19 @@ export default async function EnrollmentsPage(props: {
     select: { id: true, batchCode: true, courseId: true },
   });
 
-  // Fetch approved admissions for enrollment setup
   const approvedAdmissions = await prisma.admission.findMany({
     where: {
       admissionStatus: 'Approved',
       isDeleted: false,
-      branchId:
-        allowedBranchIds.length > 0
-          ? { in: allowedBranchIds.map((id) => id as string) }
-          : undefined,
+      studentProfile: allowedBranchIds.length > 0
+        ? {
+            branchId: { in: allowedBranchIds.map((id) => id as string) },
+          }
+        : undefined,
     },
     include: {
       person: true,
+      studentProfile: true,
     },
   });
 
@@ -185,7 +186,7 @@ export default async function EnrollmentsPage(props: {
     id: adm.id,
     studentProfileId: adm.studentProfileId,
     courseId: adm.courseId || '',
-    branchId: adm.branchId,
+    branchId: adm.studentProfile?.branchId || '',
     label: `${adm.person.firstName} ${adm.person.lastName} (${adm.admissionNumber})`,
   }));
 

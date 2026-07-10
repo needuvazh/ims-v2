@@ -132,7 +132,6 @@ export async function POST(request: Request) {
           const existingAdmission = await prisma.admission.count({
             where: {
               studentProfileId: parsed.data.existingStudentProfileId,
-              branchId: parsed.data.branchId,
               isDeleted: false,
               admissionStatus: { in: ['Draft', 'Submitted', 'Approved'] },
             },
@@ -156,9 +155,7 @@ export async function POST(request: Request) {
               courseId: null,
               leadId: null,
             },
-            parsed.data.branchId,
             session.userId,
-            prisma,
           );
 
           logger.info('api.students.claim-profile.success', {

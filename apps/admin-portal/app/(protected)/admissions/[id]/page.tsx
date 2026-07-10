@@ -35,10 +35,17 @@ export default async function AdmissionDetailPage(props: {
       admission: {
         ...detail.admission,
         admissionDate: detail.admission.admissionDate.toISOString(),
+        createdAt: detail.admission.createdAt.toISOString(),
         submittedAt: detail.admission.submittedAt?.toISOString() || null,
         approvedAt: detail.admission.approvedAt?.toISOString() || null,
         rejectedAt: detail.admission.rejectedAt?.toISOString() || null,
         cancelledAt: detail.admission.cancelledAt?.toISOString() || null,
+        person: {
+          ...detail.admission.person,
+          dateOfBirth: detail.admission.person.dateOfBirth
+            ? new Date(detail.admission.person.dateOfBirth).toISOString()
+            : null,
+        },
         documents: detail.admission.documents.map((doc) => ({
           ...doc,
           verifiedAt: doc.verifiedAt?.toISOString() || null,
@@ -49,7 +56,7 @@ export default async function AdmissionDetailPage(props: {
           id: enr.id,
           enrollmentNumber: enr.enrollmentNumber,
           courseName: enr.course.nameEnglish,
-          batchCode: enr.batch.batchCode,
+          batchCode: enr.batch?.batchCode || 'Course Waitlist (No Batch)',
           branchName: enr.branch.branchName,
           enrollmentStatus: enr.enrollmentStatus,
           enrolledAt: enr.createdAt

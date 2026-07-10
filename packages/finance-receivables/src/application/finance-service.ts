@@ -218,7 +218,7 @@ export class FinanceService {
         const enrollment = await client.enrollment.findUnique({
           where: { id: invoice.enrollmentId },
         });
-        if (enrollment && !enrollment.isDeleted) {
+        if (enrollment && !enrollment.isDeleted && enrollment.batchId) {
           const batch = await client.batch.findUnique({
             where: { id: enrollment.batchId },
           });

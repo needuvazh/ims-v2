@@ -58,7 +58,7 @@ export async function POST(
   return withRouteObservability(
     request.headers,
     async () =>
-      withPermission(request, 'idcard.reissue', async ({ session }) => {
+      withPermission(request, 'student.idcard.manage', async ({ session }) => {
         const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
         try {
@@ -73,7 +73,7 @@ export async function POST(
             },
           });
 
-          if (!admission || admission.isDeleted) {
+          if (!admission || admission.isDeleted || !admission.studentProfile) {
             throw new Error('ERR_ADMISSION_NOT_FOUND');
           }
 
@@ -83,7 +83,7 @@ export async function POST(
               session.userId,
               session.activeBranchId ?? null,
             );
-          if (!allowedBranches.includes(admission.branchId as Uuid)) {
+          if (!allowedBranches.includes(admission.studentProfile.branchId as Uuid)) {
             throw new Error('ERR_AUTH_BRANCH_DENIED');
           }
 
@@ -118,7 +118,7 @@ export async function POST(
                 performedAt: new Date(),
                 entityType: 'StudentProfile',
                 entityId: profile.id,
-                branchId: admission.branchId,
+                branchId: admission.studentProfile.branchId,
                 oldValue: {
                   idCardNumber: currentCardNumber || profile.studentNumber,
                   idCardIssued: profile.idCardIssued,

@@ -246,7 +246,21 @@ export async function updateLeadAction(data: any) {
   }
 }
 
-export async function convertLeadAction(leadId: string, documents: any[]) {
+export async function convertLeadAction(
+  leadId: string,
+  targetBatchId: string | null | undefined,
+  documents: any[],
+  profileUpdates?: {
+    email?: string;
+    phone?: string;
+    dateOfBirth?: string;
+    nationality?: string;
+    nationalId?: string;
+    gender?: string;
+  },
+  discountCode?: string,
+  manualDiscountAmount?: number,
+) {
   try {
     // Enforce lead conversion permission
     const session = await assertPermission('lead.convert');
@@ -258,7 +272,41 @@ export async function convertLeadAction(leadId: string, documents: any[]) {
     await assertBranchScope(lead.branchId);
 
     const actorId = await getActorId();
-    const { leadConversionOrchestrator } = await import('../../lib/runtime');
+    const { leadConversionOrchestrator, leadService } = await import('../../lib/runtime');
+
+    // Apply profile updates if provided
+    if (profileUpdates) {
+      // Enforce lead update permission
+      await assertPermission('lead.update');
+
+      const updatePayload: any = {
+        firstName: lead.firstName,
+        lastName: lead.lastName,
+        email: profileUpdates.email ?? lead.email,
+        phone: profileUpdates.phone ?? lead.phone,
+        nationality: profileUpdates.nationality ?? lead.nationality,
+        nationalId: profileUpdates.nationalId ?? lead.nationalId,
+        dateOfBirth: profileUpdates.dateOfBirth ? new Date(profileUpdates.dateOfBirth) : (lead.person?.dateOfBirth ? new Date(lead.person.dateOfBirth) : undefined),
+        version: lead.version,
+        branchId: lead.branchId,
+        source: lead.source,
+      };
+
+      await leadService.updateLead(
+        leadId,
+        updatePayload,
+        undefined,
+        session.userId,
+      );
+
+      // Direct prisma update for gender on the linked Person record
+      if (profileUpdates.gender) {
+        await prisma.person.update({
+          where: { id: lead.personId },
+          data: { gender: profileUpdates.gender },
+        });
+      }
+    }
 
     // Map string URLs to DocumentCaptureInput structure
     const mappedDocs = documents.map((docOrUrl: any, index: number) => {
@@ -283,9 +331,32 @@ export async function convertLeadAction(leadId: string, documents: any[]) {
 
     const result = await leadConversionOrchestrator.convertLeadToAdmission(
       leadId,
+      targetBatchId,
       mappedDocs,
+      discountCode,
+      manualDiscountAmount,
       actorId,
     );
+
+    // If targetBatchId is selected, update the Admission's remarks field
+    if (targetBatchId) {
+      const targetBatch = await prisma.batch.findUnique({
+        where: { id: targetBatchId },
+        select: {
+          batchCode: true,
+          course: { select: { nameEnglish: true } },
+        },
+      });
+      if (targetBatch) {
+        await prisma.admission.update({
+          where: { id: result.admissionId },
+          data: {
+            remarks: `Target batch selected during conversion: ${targetBatch.batchCode} (${targetBatch.course.nameEnglish})`,
+          },
+        });
+      }
+    }
+
     revalidatePath('/leads');
     return { success: true, data: result };
   } catch (error: any) {
@@ -378,3 +449,198 @@ export async function updateLeadStageAction(
     return buildCrmActionFailure(error, 'stage');
   }
 }
+
+export async function getUpcomingBatchesAction(courseId: string, branchId: string) {
+  try {
+    await assertPermission('lead.read');
+
+    const batches = await prisma.batch.findMany({
+      where: {
+        courseId,
+        branchId,
+        status: { in: ['Draft', 'OpenForEnrollment'] },
+        isWalkIn: false,
+      },
+      select: {
+        id: true,
+        batchCode: true,
+        batchNameEnglish: true,
+        startDate: true,
+        currentEnrollmentCount: true,
+        capacity: true,
+      },
+      orderBy: {
+        startDate: 'asc',
+      },
+    });
+
+    return { success: true, data: batches };
+  } catch (error: any) {
+    return { success: false, error: error.message || 'Failed to fetch batches' };
+  }
+}
+
+export async function saveLeadProfileWizardAction(
+  leadId: string,
+  profileUpdates: {
+    email: string;
+    phone: string;
+    dateOfBirth: string;
+    nationality: string;
+    nationalId: string;
+    gender: string;
+  },
+) {
+  try {
+    const session = await assertPermission('lead.update');
+    const lead = await assertCounselorLeadScope(leadId, session);
+    await assertBranchScope(lead.branchId);
+
+    const { leadService } = await import('../../lib/runtime');
+
+    const updatePayload: any = {
+      firstName: lead.firstName,
+      lastName: lead.lastName,
+      email: profileUpdates.email,
+      phone: profileUpdates.phone,
+      nationality: profileUpdates.nationality,
+      nationalId: profileUpdates.nationalId,
+      dateOfBirth: new Date(profileUpdates.dateOfBirth),
+      version: lead.version,
+      branchId: lead.branchId,
+      source: lead.source,
+    };
+
+    await leadService.updateLead(
+      leadId,
+      updatePayload,
+      undefined,
+      session.userId,
+    );
+
+    // Direct prisma update for gender on the linked Person record
+    await prisma.person.update({
+      where: { id: lead.personId },
+      data: { gender: profileUpdates.gender },
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message || 'Failed to save profile updates' };
+  }
+}
+
+export async function lookupStudentProfileAction(query: {
+  email?: string;
+  phone?: string;
+  nationalId?: string;
+}) {
+  try {
+    await assertPermission('lead.read');
+
+    const profile = await prisma.studentProfile.findFirst({
+      where: {
+        isDeleted: false,
+        OR: [
+          query.email ? { person: { email: query.email } } : undefined,
+          query.phone ? { person: { mobile: query.phone } } : undefined,
+          query.nationalId ? { person: { nationalId: query.nationalId } } : undefined,
+        ].filter(Boolean) as any,
+      },
+      include: {
+        person: true,
+        admissions: {
+          where: { isDeleted: false },
+          orderBy: { admissionDate: 'desc' },
+        },
+      },
+    });
+
+    if (!profile) {
+      return { success: true, data: null };
+    }
+
+    return {
+      success: true,
+      data: {
+        id: profile.id,
+        studentNumber: profile.studentNumber,
+        status: profile.status,
+        person: {
+          firstName: profile.person.firstName,
+          lastName: profile.person.lastName,
+          email: profile.person.email,
+          phone: profile.person.mobile,
+          dateOfBirth: profile.person.dateOfBirth?.toISOString(),
+          nationality: profile.person.nationality,
+          nationalId: profile.person.nationalId,
+          gender: profile.person.gender,
+        },
+        admissions: profile.admissions.map(adm => ({
+          id: adm.id,
+          admissionNumber: adm.admissionNumber,
+          admissionStatus: adm.admissionStatus,
+          admissionDate: adm.admissionDate.toISOString(),
+        })),
+      },
+    };
+  } catch (error: any) {
+    return { success: false, error: error.message || 'Failed to lookup student profile' };
+  }
+}
+
+export async function resolveCoursePricingAction(params: {
+  courseId: string;
+  branchId: string;
+  batchId: string;
+  discountCode?: string;
+  manualDiscountAmount?: number;
+}) {
+  try {
+    await assertPermission('lead.read');
+    
+    const { coursePricingService } = await import('@/lib/runtime');
+    const pricingService = coursePricingService;
+    
+    const pricing = await pricingService.resolveCoursePricing({
+      courseId: params.courseId,
+      customerType: 'Individual',
+      branchId: params.branchId,
+      batchId: params.batchId,
+      asOfDate: new Date(),
+    });
+
+    const basePrice = pricing.basePrice;
+    const taxPercentage = pricing.taxPercentage;
+    const taxAmount = (basePrice * taxPercentage) / 100;
+    const totalPrice = pricing.totalPrice; // basePrice + taxAmount
+    
+    let resolvedDiscount = pricing.applicableDiscounts.reduce(
+      (sum: number, d: any) => sum + d.discountValue,
+      0,
+    );
+
+    // Support manual discount override
+    if (params.manualDiscountAmount) {
+      resolvedDiscount += params.manualDiscountAmount;
+    }
+
+    const finalAmount = Math.max(0, totalPrice - resolvedDiscount);
+
+    return {
+      success: true,
+      data: {
+        basePrice,
+        taxPercentage,
+        taxAmount,
+        totalPrice,
+        discountAmount: resolvedDiscount,
+        finalAmount,
+        pricingSource: pricing.pricingSource || 'GlobalDefault',
+      },
+    };
+  } catch (error: any) {
+    return { success: false, error: error.message || 'Failed to resolve pricing' };
+  }
+}
+

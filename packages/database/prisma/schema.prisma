@@ -587,7 +587,6 @@ model Branch {
   isDeleted Boolean   @default(false)
 
   leads                  Lead[]
-  admissions             Admission[]
   inquiries              Inquiry[]
   userBranchAccesses     UserBranchAccess[]
   documents              Document[]             @relation("BranchDocuments")
@@ -1704,6 +1703,7 @@ model Lead {
   inquiryId          String?    @db.Uuid
   version            Int        @default(1)
   nextFollowUpDate   DateTime?  @db.Timestamptz(6)
+  admissionNumber    String?    @db.VarChar(50)
 
   person           Person             @relation(fields: [personId], references: [id])
   branch           Branch             @relation(fields: [branchId], references: [id])
@@ -1715,6 +1715,7 @@ model Lead {
   notesRelation    LeadNote[]         @relation("LeadNotes")
   stageHistory     LeadStageHistory[] @relation("StageHistory")
   admissions       Admission[]
+  enrollments      Enrollment[]
 
   createdAt DateTime     @default(now()) @db.Timestamptz(6)
   createdBy String?      @db.Uuid
@@ -1988,7 +1989,6 @@ model Admission {
   admissionNumber  String          @unique @db.VarChar(50)
   personId         String          @db.Uuid
   studentProfileId String          @db.Uuid
-  branchId         String          @db.Uuid
   leadId           String?         @db.Uuid
   courseId         String?         @db.Uuid
   admissionDate    DateTime        @default(now()) @db.Timestamptz(6)
@@ -2004,7 +2004,6 @@ model Admission {
 
   person         Person         @relation(fields: [personId], references: [id])
   studentProfile StudentProfile @relation(fields: [studentProfileId], references: [id])
-  branch         Branch         @relation(fields: [branchId], references: [id])
   lead           Lead?          @relation(fields: [leadId], references: [id])
   course         Course?        @relation(fields: [courseId], references: [id])
   enrollments    Enrollment[]
@@ -2019,7 +2018,6 @@ model Admission {
 
   @@index([personId])
   @@index([studentProfileId])
-  @@index([branchId])
   @@index([leadId])
   @@map("admissions")
 }
@@ -2030,8 +2028,9 @@ model Enrollment {
   studentProfileId          String           @db.Uuid
   corporateParticipantId    String?          @db.Uuid
   admissionId               String           @db.Uuid
+  leadId                    String?          @db.Uuid
   courseId                  String           @db.Uuid
-  batchId                   String           @db.Uuid
+  batchId                   String?          @db.Uuid
   branchId                  String           @db.Uuid
   enrollmentType            EnrollmentType   @default(Regular)
   enrollmentStatus          EnrollmentStatus @default(Draft)
@@ -2050,7 +2049,8 @@ model Enrollment {
   admission        Admission         @relation(fields: [admissionId], references: [id])
   branch           Branch            @relation(fields: [branchId], references: [id])
   course           Course            @relation(fields: [courseId], references: [id])
-  batch            Batch             @relation(fields: [batchId], references: [id])
+  batch            Batch?            @relation(fields: [batchId], references: [id])
+  lead             Lead?             @relation(fields: [leadId], references: [id])
   walkInEnrollment WalkInEnrollment?
   walkInPayment    WalkInPayment?
   attendanceRecords AttendanceRecord[]
@@ -2074,6 +2074,7 @@ model Enrollment {
   @@index([admissionId])
   @@index([batchId])
   @@index([branchId])
+  @@index([leadId])
   @@index([studentProfileId, batchId])
   @@map("enrollments")
 }

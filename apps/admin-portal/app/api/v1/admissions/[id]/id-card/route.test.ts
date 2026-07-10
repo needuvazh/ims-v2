@@ -67,6 +67,7 @@ describe('Admissions ID Card API routes', () => {
           studentNumber: 'STU-2026-00001',
           idCardNumber: null,
           idCardIssued: false,
+          branchId: 'branch-1',
         },
         person: {
           firstName: 'John',
@@ -113,6 +114,12 @@ describe('Admissions ID Card API routes', () => {
         branchId: 'branch-1',
         admissionStatus: 'Draft', // Not Approved!
         isDeleted: false,
+        studentProfile: {
+          studentNumber: 'STU-2026-00001',
+          idCardNumber: null,
+          idCardIssued: false,
+          branchId: 'branch-1',
+        },
       });
 
       const { GET } = await import('./download/route');
@@ -136,7 +143,7 @@ describe('Admissions ID Card API routes', () => {
         cb({
           session: {
             userId: 'user-1',
-            permissions: ['idcard.reissue'],
+            permissions: ['student.idcard.manage'],
             activeBranchId: 'branch-1',
           },
         }),
@@ -154,6 +161,7 @@ describe('Admissions ID Card API routes', () => {
           studentNumber: 'STU-2026-00001',
           idCardNumber: 'STU-2026-00001-R1',
           idCardIssued: true,
+          branchId: 'branch-1',
         },
       });
 

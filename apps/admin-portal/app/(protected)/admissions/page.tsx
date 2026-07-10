@@ -46,7 +46,9 @@ export default async function AdmissionsPage(props: {
   };
 
   if (filterBranchIds.length > 0) {
-    whereClause.branchId = { in: filterBranchIds };
+    whereClause.studentProfile = {
+      branchId: { in: filterBranchIds },
+    };
   }
 
   if (searchParams.status) {
@@ -78,7 +80,7 @@ export default async function AdmissionsPage(props: {
   } else if (sortBy === 'courseName') {
     orderBy = { course: { nameEnglish: sortOrder } };
   } else if (sortBy === 'branchName') {
-    orderBy = { branch: { branchName: sortOrder } };
+    orderBy = { studentProfile: { branch: { branchName: sortOrder } } };
   } else {
     orderBy = { [sortBy]: sortOrder };
   }
@@ -91,7 +93,11 @@ export default async function AdmissionsPage(props: {
       take: limit,
       include: {
         person: true,
-        branch: true,
+        studentProfile: {
+          include: {
+            branch: true,
+          },
+        },
         course: true,
       },
     }),
@@ -106,7 +112,7 @@ export default async function AdmissionsPage(props: {
     admissionStatus: adm.admissionStatus,
     admissionDate: adm.admissionDate.toISOString(),
     createdAt: adm.createdAt.toISOString(),
-    branchName: adm.branch.branchName,
+    branchName: adm.studentProfile?.branch?.branchName || 'N/A',
     courseName: adm.course?.nameEnglish || 'N/A',
     studentName: `${adm.person.firstName} ${adm.person.lastName}`,
     studentEmail: adm.person.email || 'N/A',
@@ -137,9 +143,11 @@ export default async function AdmissionsPage(props: {
   // Calculate high-level KPIs for Admissions
   const kpiWhere = {
     isDeleted: false,
-    branchId:
+    studentProfile:
       allowedBranchIds.length > 0
-        ? { in: allowedBranchIds.map((id) => id as string) }
+        ? {
+            branchId: { in: allowedBranchIds.map((id) => id as string) },
+          }
         : undefined,
   };
 

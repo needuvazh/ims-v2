@@ -2,7 +2,7 @@
 
 ## Module 04: Admission & Enrollment Management - Fine-Grained Permission Matrix
 
-All permissions are server-enforced and branch-scoped. UI visibility is not authorization.
+All permissions are server-enforced. For branch-scoped roles, enrollment permissions are scoped strictly to the enrollment's branch, while student and admission permissions are dynamically scoped based on the student's Home Branch or any active/historical Enrollments under the user's assigned branch. UI visibility is not authorization.
 
 ---
 

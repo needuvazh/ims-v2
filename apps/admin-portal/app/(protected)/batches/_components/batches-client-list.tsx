@@ -539,7 +539,7 @@ export function BatchesClientList({
               checked={showDraft}
               onChange={(e) =>
                 updateParams({
-                  showDraft: e.target.checked ? 'true' : null,
+                  showDraft: e.target.checked ? null : 'false',
                   page: '1',
                 })
               }
@@ -598,13 +598,23 @@ export function BatchesClientList({
               </div>
             </div>
 
-            <div className="flex items-center pb-2">
+            <div className="flex flex-wrap items-center gap-6 pb-2">
               <Checkbox
-                label="Show Cancelled Batches"
+                label="Show Cancelled"
                 checked={showCancelled}
                 onChange={(e) =>
                   updateParams({
                     showCancelled: e.target.checked ? 'true' : null,
+                    page: '1',
+                  })
+                }
+              />
+              <Checkbox
+                label="Show Draft"
+                checked={showDraft}
+                onChange={(e) =>
+                  updateParams({
+                    showDraft: e.target.checked ? null : 'false',
                     page: '1',
                   })
                 }

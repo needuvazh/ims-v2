@@ -1573,17 +1573,16 @@ export class BatchService {
           throw new Error('ERR_STU_PROFILE_INACTIVE');
         }
 
-        // Verify Student Branch Admission scope
-        const hasAdmissionInBranch = await client.admission.findFirst({
+        // Verify Student has an active Admission globally
+        const activeAdmission = await client.admission.findFirst({
           where: {
             studentProfileId,
-            branchId: batch.branchId,
             admissionStatus: { in: ['Submitted', 'Approved'] },
             isDeleted: false,
           },
         });
-        if (!hasAdmissionInBranch) {
-          throw new Error('ERR_AUTH_BRANCH_DENIED');
+        if (!activeAdmission) {
+          throw new Error('ERR_ADM_NOT_FOUND');
         }
       }
 

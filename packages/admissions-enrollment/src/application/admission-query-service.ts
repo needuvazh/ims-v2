@@ -11,6 +11,7 @@ export class AdmissionQueryService {
         person: true,
         studentProfile: {
           include: {
+            branch: true,
             enrollments: {
               where: { isDeleted: false },
               include: {
@@ -21,7 +22,6 @@ export class AdmissionQueryService {
             },
           },
         },
-        branch: true,
         course: true,
         lead: true,
       },
@@ -31,7 +31,8 @@ export class AdmissionQueryService {
       throw new Error('ERR_ADMISSION_NOT_FOUND');
     }
 
-    if (!branchIdScope.includes(admission.branchId)) {
+    const branchId = admission.studentProfile?.branchId;
+    if (!branchId || !branchIdScope.includes(branchId)) {
       throw new Error('ERR_AUTH_BRANCH_DENIED');
     }
 
@@ -49,8 +50,8 @@ export class AdmissionQueryService {
     // Resolve required documents list using the resolver
     const resolver = new RequirementsResolver(this.prisma);
     const requiredDocTypes = await resolver.getRequiredDocuments(
-      admission.courseId,
-      admission.branchId,
+      admission.courseId || '',
+      branchId,
     );
 
     // Fetch documents linked to the Person
@@ -103,10 +104,11 @@ export class AdmissionQueryService {
         cancelledAt: admission.cancelledAt,
         cancelledBy: admission.cancelledBy,
         remarks: admission.remarks,
-        branchId: admission.branchId,
-        branchName: admission.branch?.branchName,
+        branchId: branchId || '',
+        branchName: admission.studentProfile?.branch?.branchName || '',
         courseId: admission.courseId,
         courseName: admission.course?.nameEnglish,
+        createdAt: admission.createdAt,
         studentProfile: {
           id: admission.studentProfileId,
           studentNumber: admission.studentProfile?.studentNumber,
@@ -121,6 +123,13 @@ export class AdmissionQueryService {
           lastName: admission.person?.lastName,
           email: admission.person?.email,
           mobile: admission.person?.mobile,
+          nationalId: admission.person?.nationalId,
+          passportNumber: admission.person?.passportNumber,
+          visaNumber: admission.person?.visaNumber,
+          nationality: admission.person?.nationality,
+          dateOfBirth: admission.person?.dateOfBirth,
+          gender: admission.person?.gender,
+          photoUrl: admission.person?.photoUrl,
         },
         leadId: admission.leadId,
         documents,

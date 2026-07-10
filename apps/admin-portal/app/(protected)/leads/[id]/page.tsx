@@ -153,13 +153,171 @@ export default async function LeadDetailsPage(props: {
     documentType: doc.documentType,
   }));
 
-  let admissionId: string | null = null;
-  if (lead.stage === 'Converted') {
-    const linkedAdmission = await prisma.admission.findFirst({
-      where: { leadId },
-      select: { id: true },
+  let admissionData = null;
+  let enrollmentData = null;
+
+  if (lead.stage === 'Converted' || lead.stage === 'Won') {
+    const dbAdmission = lead.admissionNumber
+      ? await prisma.admission.findUnique({
+          where: { admissionNumber: lead.admissionNumber },
+          select: {
+            id: true,
+            admissionNumber: true,
+            admissionStatus: true,
+            admissionDate: true,
+            approvedAt: true,
+          },
+        })
+      : await prisma.admission.findFirst({
+          where: { leadId, isDeleted: false },
+          select: {
+            id: true,
+            admissionNumber: true,
+            admissionStatus: true,
+            admissionDate: true,
+            approvedAt: true,
+          },
+        });
+
+    if (dbAdmission) {
+      admissionData = {
+        id: dbAdmission.id,
+        admissionNumber: dbAdmission.admissionNumber,
+        admissionStatus: dbAdmission.admissionStatus,
+        admissionDate: dbAdmission.admissionDate.toISOString(),
+        approvedAt: dbAdmission.approvedAt?.toISOString() || null,
+      };
+    }
+
+    const dbEnrollment = await prisma.enrollment.findFirst({
+      where: { leadId, isDeleted: false },
+      include: {
+        batch: {
+          select: {
+            id: true,
+            batchCode: true,
+            startDate: true,
+          },
+        },
+        courseCompletion: {
+          select: {
+            id: true,
+            completionStatus: true,
+            attendancePercentage: true,
+            attendanceOutcome: true,
+            examOutcome: true,
+            paymentOutcome: true,
+          },
+        },
+        certificates: {
+          where: { isActive: true },
+          select: {
+            id: true,
+            certificateNumber: true,
+            certificateStatus: true,
+            issuedDate: true,
+            certificateUrl: true,
+          },
+        },
+        invoices: {
+          where: { isDeleted: false },
+          select: {
+            id: true,
+            invoiceNumber: true,
+            status: true,
+            totalAmount: true,
+            paidAmount: true,
+            outstandingAmount: true,
+            dueDate: true,
+          },
+        },
+      },
     });
-    admissionId = linkedAdmission?.id || null;
+
+    if (dbEnrollment) {
+      // Calculate attendance statistics
+      const [presentCount, totalAttendanceCount] = await Promise.all([
+        prisma.attendanceRecord.count({
+          where: {
+            enrollmentId: dbEnrollment.id,
+            status: { in: ['Present', 'Late'] },
+            isDeleted: false,
+          },
+        }),
+        prisma.attendanceRecord.count({
+          where: {
+            enrollmentId: dbEnrollment.id,
+            isDeleted: false,
+          },
+        }),
+      ]);
+
+      // Fetch last 5 attendance logs for progress view
+      const dbAttendanceLogs = await prisma.attendanceRecord.findMany({
+        where: {
+          enrollmentId: dbEnrollment.id,
+          isDeleted: false,
+        },
+        orderBy: { createdAt: 'desc' },
+        take: 5,
+        select: {
+          id: true,
+          status: true,
+          createdAt: true,
+        },
+      });
+
+      enrollmentData = {
+        id: dbEnrollment.id,
+        enrollmentNumber: dbEnrollment.enrollmentNumber,
+        enrollmentStatus: dbEnrollment.enrollmentStatus,
+        enrollmentType: dbEnrollment.enrollmentType,
+        studentProfileId: dbEnrollment.studentProfileId,
+        batch: dbEnrollment.batch
+          ? {
+              id: dbEnrollment.batch.id,
+              batchCode: dbEnrollment.batch.batchCode,
+              startDate: dbEnrollment.batch.startDate.toISOString(),
+            }
+          : null,
+        courseCompletion: dbEnrollment.courseCompletion
+          ? {
+              id: dbEnrollment.courseCompletion.id,
+              completionStatus: dbEnrollment.courseCompletion.completionStatus,
+              attendancePercentage: dbEnrollment.courseCompletion.attendancePercentage ? Number(dbEnrollment.courseCompletion.attendancePercentage) : null,
+              attendanceOutcome: dbEnrollment.courseCompletion.attendanceOutcome,
+              examOutcome: dbEnrollment.courseCompletion.examOutcome,
+              paymentOutcome: dbEnrollment.courseCompletion.paymentOutcome,
+            }
+          : null,
+        certificates: dbEnrollment.certificates.map((c) => ({
+          id: c.id,
+          certificateNumber: c.certificateNumber,
+          certificateStatus: c.certificateStatus,
+          issuedDate: c.issuedDate?.toISOString() || null,
+          certificateUrl: c.certificateUrl,
+        })),
+        invoices: dbEnrollment.invoices.map((inv) => ({
+          id: inv.id,
+          invoiceNumber: inv.invoiceNumber,
+          status: inv.status,
+          totalAmount: Number(inv.totalAmount),
+          paidAmount: Number(inv.paidAmount),
+          outstandingAmount: Number(inv.outstandingAmount),
+          dueDate: inv.dueDate.toISOString(),
+        })),
+        attendance: {
+          presentCount,
+          totalCount: totalAttendanceCount,
+          percentage: totalAttendanceCount > 0 ? Math.round((presentCount / totalAttendanceCount) * 100) : 0,
+          logs: dbAttendanceLogs.map((log) => ({
+            id: log.id,
+            status: log.status,
+            date: log.createdAt.toISOString(),
+          })),
+        },
+      };
+    }
   }
 
   return (
@@ -171,8 +329,11 @@ export default async function LeadDetailsPage(props: {
         followUps={mappedFollowUps}
         followUpsTotal={followUpsTotal}
         currentFollowUpPage={followUpPage}
-        admissionId={admissionId}
+        admissionId={admissionData?.id || null}
         initialDocuments={initialDocuments}
+        admission={admissionData}
+        enrollment={enrollmentData}
+        sessionPermissions={session.permissions}
       />
     </div>
   );

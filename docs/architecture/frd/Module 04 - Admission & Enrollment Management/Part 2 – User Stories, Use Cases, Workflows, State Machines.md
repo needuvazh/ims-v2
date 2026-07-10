@@ -45,13 +45,15 @@
 - **Acceptance Criteria:**
   ```gherkin
   Scenario: Successfully convert a qualified CRM lead to admission
-    Given the Counselor has converted a Lead in Module 03
+    Given the Counselor has initiated the conversion wizard
     And the Lead contains first name "Fatima", mobile "+96899887766", and courseId "crs-111"
-    When the Counselor initiates the "Convert Lead to Admission" command
+    When the Counselor clicks the "Convert & Enroll" button
     Then the system should verify the person record exists or create one
-    And initialize an Admission record in the Counselor's branch with status "Draft"
+    And initialize a global Admission record (institute-level) directly with status "Approved"
     And link the Admission to the original leadId
-    And publish an "AdmissionCreated" event to the outbox
+    And auto-verify documents (saving status as AutoVerified with counselor verifier logging)
+    And create an Enrollment record in status "Draft" (linking Course, Batch, Branch, and Lead)
+    And publish the "AdmissionCreated", "AdmissionApproved", and "EnrollmentCreated" outbox events
   ```
 
 ---
@@ -193,20 +195,21 @@
 - **Primary Actor:** Counselor
 - **Preconditions:**
   - Lead exists in CRM (Module 03) in status "Qualified" or "Pre-Registered".
-  - Counselor is authenticated and assigned to the same branch context as the Lead.
+  - Counselor is authenticated.
 - **Main Success Scenario:**
-  1.  Counselor clicks "Convert to Admission" on the Lead Detail view.
-  2.  System calls the CRM service to retrieve contact details (Name, Civil ID, Mobile, Email, Course Interest).
-  3.  System checks the master Person directory using Civil ID and mobile number to detect duplicates. No match is found.
-  4.  System creates or links a `Person` record through the shared identity service.
-  5.  System generates a `StudentProfile`, auto-generating a unique `studentNumber` (e.g. `STU-2026-00342`).
-  6.  System creates a new `Admission` record linked to the student profile and lead in the status `Draft`.
-  7.  System publishes `AdmissionCreated` and `StudentProfileCreated` events.
+  1.  Counselor initiates the conversion wizard for the Lead.
+  2.  System retrieves contact details (Name, Civil ID, Mobile, Email, Course Interest) and checks if a StudentProfile exists. No match is found.
+  3.  System displays the onboarding flow (wizard step 1: edit demographics, step 2: upload documents, step 3: select batch & pricing).
+  4.  Counselor fills out the details and clicks the "Convert & Enroll" button.
+  5.  System creates or links a `Person` record and a `StudentProfile` (auto-generating `studentNumber`).
+  6.  System creates a new global `Admission` record linked to the student profile in `Approved` status, auto-verifying the uploaded documents with counselor audit logging.
+  7.  System creates a new `Enrollment` record in `Draft` status scoped to the selected course, batch, branch, and linked directly to the `Lead`.
+  8.  System publishes `AdmissionCreated`, `AdmissionApproved`, `StudentProfileCreated`, and `EnrollmentCreated` events.
 - **Alternative Flows:**
-  - _A1: Person Already Exists:_ In step 3, if the Person is found (matching Civil ID or Mobile), the system skips `Person` creation and links the new `StudentProfile` to the existing `Person` record.
-  - _A2: Student Profile Already Links to Person:_ In step 3, if a `StudentProfile` is already linked to the found Person, the system blocks the creation and redirects the counselor to the existing StudentProfile.
+  - _A1: Person Found but No Student Profile:_ If the Person exists but has no student profile, the system links the new `StudentProfile` to the existing `Person` record.
+  - _A2: Student Profile Already Exists (Returning Student):_ If a `StudentProfile` is found, the wizard launches the Returning Student Flow. It pre-populates all demographics, skips document upload (only requesting missing or expired mandatory documents), and directs the counselor straight to course, batch, and pricing selection.
 - **Postconditions:**
-  - StudentProfile and Admission records are successfully written. Lead status in CRM updates to "Converted".
+  - StudentProfile (Active), Admission (Approved), and Enrollment (Draft) records are written in a single database transaction. Lead stage updates to "Converted".
 
 ---
 
@@ -266,16 +269,12 @@ sequenceDiagram
     participant ENR as Enrollment Context
     participant FIN as Finance (Module 09)
 
-    Counselor->>CRM: Convert Qualified Lead
-    CRM->>ADM: Initialize Admission (Draft)
-    ADM-->>Registrar: Notify New Admission Application
-    Registrar->>ADM: Verify Documents & Submit
-    Registrar->>Manager: Request Admission Approval
-    Manager->>ADM: Approve Admission (Admission Status -> Approved)
+    Counselor->>CRM: Convert Lead Wizard ("Convert & Enroll" click)
+    CRM->>ADM: Create Admission (Auto-Approved) & StudentProfile
     ADM->>IDG: Trigger Student ID Card Generation (Asynchronous outbox)
-
-    Registrar->>ENR: Create Enrollment Draft (Links Course & Batch)
+    CRM->>ENR: Create Enrollment (Status -> Draft, links Course, Batch, Branch, Lead)
     ENR->>ENR: Resolve Pricing (Batch Override -> Branch -> Default)
+    
     Registrar->>ENR: Submit Enrollment
     ENR->>ENR: Check Batch Capacity & Credit Limits
     Manager->>ENR: Approve Enrollment (Status -> Approved)

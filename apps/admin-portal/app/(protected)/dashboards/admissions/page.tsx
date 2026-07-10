@@ -158,106 +158,72 @@ export default async function AdmissionsDashboardPage(props: {
     prisma.studentProfile.count({
       where: {
         isDeleted: false,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.studentProfile.count({
       where: {
         isDeleted: false,
         status: 'Active',
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.studentProfile.count({
       where: {
         isDeleted: false,
         status: 'Suspended',
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.studentProfile.count({
       where: {
         isDeleted: false,
         status: 'Inactive',
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.admission.count({
       where: {
         isDeleted: false,
-        branchId: { in: branchIds },
+        studentProfile: {
+          branchId: { in: branchIds },
+        },
         admissionStatus: 'Draft',
       },
     }),
     prisma.admission.count({
       where: {
         isDeleted: false,
-        branchId: { in: branchIds },
+        studentProfile: {
+          branchId: { in: branchIds },
+        },
         admissionStatus: 'Submitted',
       },
     }),
     prisma.admission.count({
       where: {
         isDeleted: false,
-        branchId: { in: branchIds },
+        studentProfile: {
+          branchId: { in: branchIds },
+        },
         admissionStatus: 'Approved',
       },
     }),
     prisma.admission.count({
       where: {
         isDeleted: false,
-        branchId: { in: branchIds },
+        studentProfile: {
+          branchId: { in: branchIds },
+        },
         admissionStatus: 'Rejected',
       },
     }),
     prisma.admission.count({
       where: {
         isDeleted: false,
-        branchId: { in: branchIds },
+        studentProfile: {
+          branchId: { in: branchIds },
+        },
         admissionStatus: 'Cancelled',
       },
     }),
@@ -349,50 +315,36 @@ export default async function AdmissionsDashboardPage(props: {
       where: {
         isDeleted: false,
         idCardIssued: true,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.studentProfile.count({
       where: {
         isDeleted: false,
         idCardIssued: false,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.batch.count({
       where: { isDeleted: false, branchId: { in: branchIds } },
     }),
     prisma.admission.findMany({
-      where: { isDeleted: false, branchId: { in: branchIds } },
+      where: {
+        isDeleted: false,
+        studentProfile: {
+          branchId: { in: branchIds },
+        },
+      },
       orderBy: { createdAt: 'desc' },
       take: 5,
       include: {
         person: true,
-        branch: true,
+        studentProfile: {
+          include: {
+            branch: true,
+          },
+        },
         course: true,
-        studentProfile: true,
       },
     }),
     prisma.enrollment.findMany({
@@ -611,7 +563,7 @@ export default async function AdmissionsDashboardPage(props: {
                           {admission.person.lastName}
                         </p>
                         <p className="text-[11px] text-[color:var(--ims-muted)]">
-                          {admission.branch.branchName}
+                          {admission.studentProfile?.branch?.branchName || 'N/A'}
                         </p>
                       </div>
                     </TableCell>
@@ -677,7 +629,7 @@ export default async function AdmissionsDashboardPage(props: {
                       </div>
                     </TableCell>
                     <TableCell className="text-sm text-[color:var(--ims-muted)]">
-                      {enrollment.batch.batchCode}
+                      {enrollment.batch?.batchCode ?? 'N/A'}
                     </TableCell>
                     <TableCell>
                       <Badge variant={statusTone(enrollment.enrollmentStatus)}>

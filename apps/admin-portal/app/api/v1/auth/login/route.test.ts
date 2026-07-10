@@ -32,6 +32,7 @@ describe('auth login route', () => {
     loginMock.mockResolvedValue({
       accessToken: 'access-token',
       refreshToken: 'refresh-token',
+      accessTokenExpiresAt: new Date(Date.now() + 3600 * 1000),
       user: {
         id: 'user-1',
         username: 'test.user',

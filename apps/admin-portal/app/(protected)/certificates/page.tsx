@@ -141,7 +141,7 @@ export default async function CertificatesPage(props: {
       studentName: `${enrollment.studentProfile.person.firstName} ${enrollment.studentProfile.person.lastName}`,
       studentNumber: enrollment.studentProfile.studentNumber,
       courseName: enrollment.course.nameEnglish,
-      batchCode: enrollment.batch.batchCode,
+      batchCode: enrollment.batch?.batchCode || 'N/A',
       branchName: enrollment.branch.branchName,
       paymentValidationRequired: enrollment.paymentValidationRequired,
       paymentPassed,

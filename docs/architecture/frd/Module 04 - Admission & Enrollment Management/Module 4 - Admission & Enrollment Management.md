@@ -17,9 +17,9 @@ The primary purpose of **Module 04: Admission & Enrollment Management** is to ma
 ### Core Objectives:
 
 - **Shared Person Linkage:** Maintain a unified single-person registry to prevent duplicate student profiles, connecting the `StudentProfile` entity to a shared `Person` record.
-- **Structured Admissions:** Manage the legal and administrative approval of a student to study at ASTI under a specific branch context.
+- **Structured Admissions:** Manage the legal and administrative approval of a student to study at ASTI globally at the institute level.
 - **Unified Enrollment Aggregate:** Provide a single state-machine engine for all learner pathways (Regular, Corporate, Walk-In, Online) linking a student to a course, branch, and batch.
-- **Branch Scoping and Security:** Ensure strict data isolation so branch-level operations cannot view, edit, or manipulate student data outside their authorized branch scope.
+- **Branch Scoping and Security:** Enforce branch data isolation dynamically using the student's Home Branch and active/historical course enrollments to authorize branch-level operations.
 - **Automatic Identity Provisioning:** Generate digital Student ID Cards asynchronously upon successful admission approval.
 
 ---
@@ -121,7 +121,7 @@ Module 04: Admission & Enrollment Management
 
 - **FR-ADM-001:** Search and link existing `Person` record during `StudentProfile` creation.
 - **FR-ADM-002:** Create `StudentProfile` with auto-generated unique `studentNumber`.
-- **FR-ADM-003:** Create Admission record scoped to a `branchId` (logical reference) and optional `leadId`.
+- **FR-ADM-003:** Create Admission record globally at the institute level with an optional `leadId` link.
 - **FR-ADM-004:** Request upload and verification of mandatory identity documents (Passport, Civil ID, Certificates) through the Document Management context, storing only document references in this module.
 - **FR-ADM-005:** Submit Admission for review.
 - **FR-ADM-006:** Approve Admission, triggering asynchronous student ID card compilation.
@@ -151,20 +151,20 @@ The module uses Role-Based Access Control (RBAC) enforced server-side. Permissio
 
 | Permission Name       | Authorized Roles                                           | Scope / Constraints                            |
 | :-------------------- | :--------------------------------------------------------- | :--------------------------------------------- |
-| `admission.create`    | Registrar, Counselor, Super Admin                          | Write scoped to user's active branch.          |
-| `admission.approve`   | Branch Manager, Super Admin                                | Write scoped to user's assigned branch.        |
-| `admission.read`      | Registrar, Counselor, Branch Manager, Super Admin          | Read scoped to user's active branch.           |
+| `admission.create`    | Registrar, Counselor, Super Admin                          | Write scoped globally (registers with ASTI).   |
+| `admission.approve`   | Branch Manager, Super Admin                                | Write scoped globally.                         |
+| `admission.read`      | Registrar, Counselor, Branch Manager, Super Admin          | Read dynamically scoped using student's home branch and enrollment branches. |
 | `enrollment.create`   | Registrar, Counselor, Super Admin                          | Write scoped to user's active branch.          |
 | `enrollment.approve`  | Branch Manager, Super Admin                                | Write scoped to user's assigned branch.        |
 | `enrollment.confirm`  | System / Finance integration                               | Event-driven only.                             |
 | `enrollment.override` | Super Admin                                                | Allows bypassing capacity and discount limits. |
-| `student.read`        | Registrar, Counselor, Trainer, Branch Manager, Super Admin | Scoped to branch (unless Super Admin).         |
+| `student.read`        | Registrar, Counselor, Trainer, Branch Manager, Super Admin | Read dynamically scoped using student's home branch and enrollment branches. |
 
 ---
 
 ## 9. Security & Audit Requirements
 
-1.  **Branch Isolation Guard:** All database read queries must apply a WHERE condition on `branchId` based on the authenticated branch context. Cross-branch operations are blocked unless executed by a Super Admin.
+1.  **Branch Isolation Guard:** Reads on `Enrollment` must apply a WHERE condition on `branchId` based on the user's branch context. Reads on `StudentProfile` and `Admission` are dynamically filtered, restricting branch-scoped roles to students whose home branch or active/historical enrollment branch matches the user's assigned branch. Cross-branch operations are blocked unless executed by a Super Admin.
 2.  **PII Encryption:** Sensitive identity fields in the `Person` record (e.g., National ID) must be encrypted at rest.
 3.  **Critical State Audit:** Any transition in `enrollmentStatus` or `admissionStatus` must write a record to the `AuditLog` table containing:
     - Target record ID.

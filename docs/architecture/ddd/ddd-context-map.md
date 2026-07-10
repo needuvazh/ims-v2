@@ -617,12 +617,12 @@ Manages registration, admissions, learner profiles, and enrollment lifecycle.
 
 ### Important Rules
 
-- Admission means the person is registered with ASTI.
-- Enrollment means the person joined a course and batch.
-- Enrollment must always link to course and batch.
-- One student may have multiple enrollments.
-- Corporate participant becomes student once enrolled.
+- Admission is institute-scoped, meaning the person is registered with the ASTI organization globally. A student profile can have at most one active admission.
+- Enrollment is branch-scoped, linking the student to a specific course and batch at a particular branch.
+- One student may have multiple enrollments across different branches over time.
+- Corporate participant becomes a student once enrolled.
 - Enrollment is the central aggregate for the learning lifecycle.
+- Access to student profiles and admissions for branch-scoped roles (e.g. Branch Managers) is dynamically resolved based on the student's Home Branch (on StudentProfile) and any active or historical Enrollments in the manager's assigned branch.
 
 ---
 

@@ -62,10 +62,9 @@ export class AdmissionService {
         studentProfileId = existingProfile.id;
         studentNumber = existingProfile.studentNumber;
 
-        // Check for active admission in target branch
+        // Check for active admission globally (institute-level)
         const hasActive = await this.admissionRepository.hasActiveAdmission(
           studentProfileId,
-          input.branchId,
           activeClient,
         );
         if (hasActive) {
@@ -96,9 +95,27 @@ export class AdmissionService {
             admissionNumber: result.admissionNumber,
             studentProfileId: result.studentProfileId,
             personId: result.personId,
-            branchId: input.branchId,
+            branchId: input.branchId, // Use student home branch for tracking
             leadId: input.leadId || null,
             courseId: input.courseId || null,
+          },
+          availableAt: new Date(),
+        },
+      });
+
+      await activeClient.outboxEvent.create({
+        data: {
+          eventType: 'AdmissionApproved',
+          aggregateType: 'Admission',
+          aggregateId: result.admissionId,
+          payload: {
+            admissionId: result.admissionId,
+            admissionNumber: result.admissionNumber,
+            studentProfileId: result.studentProfileId,
+            personId: result.personId,
+            branchId: input.branchId,
+            approvedBy: actorId,
+            approvedAt: new Date(),
           },
           availableAt: new Date(),
         },
@@ -133,7 +150,7 @@ export class AdmissionService {
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           newValue: {
-            status: 'Draft',
+            status: 'Approved',
             studentProfileId: result.studentProfileId,
             branchId: input.branchId,
           },
@@ -152,7 +169,6 @@ export class AdmissionService {
 
   async createAdmissionDraftDirect(
     input: CreateAdmissionInput,
-    branchId: string,
     actorId: string | null = null,
     tx?: Prisma.TransactionClient,
   ) {
@@ -174,10 +190,9 @@ export class AdmissionService {
         throw new Error('ERR_STU_PROFILE_INACTIVE');
       }
 
-      // Check for active admission in target branch
+      // Check for active admission globally (institute-level)
       const hasActive = await this.admissionRepository.hasActiveAdmission(
         input.studentProfileId,
-        branchId,
         activeClient,
       );
       if (hasActive) {
@@ -206,7 +221,6 @@ export class AdmissionService {
         await this.admissionRepository.getNextAdmissionNumber(activeClient);
       const result = await this.admissionRepository.createAdmissionDraft(
         input.studentProfileId,
-        branchId,
         admissionNumber,
         input.courseId,
         input.leadId,
@@ -217,7 +231,7 @@ export class AdmissionService {
         where: { id: result.admissionId },
       });
 
-      // Write transactional outbox event
+      // Write transactional outbox event using student's home branchId
       await activeClient.outboxEvent.create({
         data: {
           eventType: 'AdmissionCreated',
@@ -228,7 +242,7 @@ export class AdmissionService {
             admissionNumber,
             studentProfileId: input.studentProfileId,
             personId: admission?.personId,
-            branchId,
+            branchId: studentProfile.branchId,
             leadId: input.leadId || null,
             courseId: input.courseId || null,
           },
@@ -243,14 +257,14 @@ export class AdmissionService {
           entityType: 'Admission',
           entityId: result.admissionId,
           performedBy: actorId,
-          branchId,
+          branchId: studentProfile.branchId,
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           newValue: {
             status: 'Draft',
             admissionNumber,
             studentProfileId: input.studentProfileId,
-            branchId,
+            branchId: studentProfile.branchId,
           },
         },
       });
@@ -273,6 +287,7 @@ export class AdmissionService {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
         where: { id: admissionId },
+        include: { studentProfile: true },
       });
 
       if (!admission) {
@@ -298,7 +313,7 @@ export class AdmissionService {
           entityType: 'Admission',
           entityId: admissionId,
           performedBy: actorId,
-          branchId: admission.branchId,
+          branchId: admission.studentProfile?.branchId || (admission as any).branchId,
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Draft' },
@@ -322,6 +337,7 @@ export class AdmissionService {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
         where: { id: admissionId },
+        include: { studentProfile: true },
       });
 
       if (!admission) {
@@ -352,7 +368,7 @@ export class AdmissionService {
           entityType: 'Admission',
           entityId: admissionId,
           performedBy: actorId,
-          branchId: admission.branchId,
+          branchId: admission.studentProfile?.branchId || (admission as any).branchId,
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Submitted' },
@@ -368,7 +384,7 @@ export class AdmissionService {
           payload: {
             admissionId,
             studentProfileId: admission.studentProfileId,
-            branchId: admission.branchId,
+            branchId: admission.studentProfile?.branchId || (admission as any).branchId,
             personId: admission.personId,
           },
           availableAt: new Date(),
@@ -396,6 +412,7 @@ export class AdmissionService {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
         where: { id: admissionId },
+        include: { studentProfile: true },
       });
 
       if (!admission) {
@@ -423,7 +440,7 @@ export class AdmissionService {
           entityType: 'Admission',
           entityId: admissionId,
           performedBy: actorId,
-          branchId: admission.branchId,
+          branchId: admission.studentProfile?.branchId || (admission as any).branchId,
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: 'Submitted' },
@@ -447,6 +464,7 @@ export class AdmissionService {
     const run = async (activeClient: Prisma.TransactionClient) => {
       const admission = await activeClient.admission.findUnique({
         where: { id: admissionId },
+        include: { studentProfile: true },
       });
 
       if (!admission) {
@@ -476,7 +494,7 @@ export class AdmissionService {
           entityType: 'Admission',
           entityId: admissionId,
           performedBy: actorId,
-          branchId: admission.branchId,
+          branchId: admission.studentProfile?.branchId || (admission as any).branchId,
           performedAt: new Date(),
           module: 'AdmissionsEnrollment',
           oldValue: { status: admission.admissionStatus },
@@ -502,6 +520,7 @@ export class AdmissionService {
       where: { id: admissionId },
       include: {
         lead: true,
+        studentProfile: true,
       },
     });
 
@@ -519,7 +538,7 @@ export class AdmissionService {
     const resolver = new RequirementsResolver(this.prisma);
     const requiredTypes = await resolver.getRequiredDocuments(
       courseId,
-      admission.branchId,
+      admission.studentProfile?.branchId || (admission as any).branchId,
       client,
     );
 

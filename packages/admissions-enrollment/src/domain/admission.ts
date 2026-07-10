@@ -65,12 +65,10 @@ export interface IAdmissionRepository {
   getNextAdmissionNumber(tx?: any): Promise<string>;
   hasActiveAdmission(
     studentProfileId: string,
-    branchId: string,
     tx?: any,
   ): Promise<boolean>;
   createAdmissionDraft(
     studentProfileId: string,
-    branchId: string,
     admissionNumber: string,
     courseId?: string | null,
     leadId?: string | null,

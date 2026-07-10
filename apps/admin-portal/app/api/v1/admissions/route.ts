@@ -81,7 +81,6 @@ export async function POST(request: Request) {
               courseId: parsed.courseId || null,
               leadId: parsed.leadId || null,
             },
-            targetBranchId,
             session.userId,
           );
 

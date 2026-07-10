@@ -56,6 +56,8 @@ describe('Finance Invoices API route', () => {
         method: 'POST',
         body: JSON.stringify({
           invoiceType: 'StudentInvoice',
+          category: 'Student',
+          subCategory: 'FullPayment',
           studentProfileId: '22222222-2222-2222-2222-222222222222',
           branchId: '11111111-1111-1111-1111-111111111111',
           invoiceDate: '2026-07-04',

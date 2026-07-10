@@ -54,6 +54,7 @@ export const LeadSchema = z.object({
   lostReasonCode: z.string().nullable().optional(),
   lostReasonNotes: z.string().nullable().optional(),
   inquiryId: z.string().uuid().nullable().optional(),
+  admissionNumber: z.string().nullable().optional(),
   version: z.number().int().default(1),
   createdAt: z.date(),
   status: z.enum(['Draft', 'Active', 'Inactive', 'Archived']).default('Active'),

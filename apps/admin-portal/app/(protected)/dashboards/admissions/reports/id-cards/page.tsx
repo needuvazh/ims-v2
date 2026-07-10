@@ -50,39 +50,18 @@ export default async function IdCardReportPage() {
     await prisma.studentProfile.findMany({
       where: {
         isDeleted: false,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
       select: { id: true },
     })
   ).map((student) => student.id);
+
   const students = await prisma.studentProfile.findMany({
     where: {
       isDeleted: false,
       idCardIssued: true,
       idCardNumber: null,
-      OR: [
-        {
-          admissions: {
-            some: { branchId: { in: branchIds }, isDeleted: false },
-          },
-        },
-        {
-          enrollments: {
-            some: { branchId: { in: branchIds }, isDeleted: false },
-          },
-        },
-      ],
+      branchId: { in: branchIds },
     },
     take: 8,
     orderBy: { joinedAt: 'desc' },
@@ -100,36 +79,14 @@ export default async function IdCardReportPage() {
       where: {
         isDeleted: false,
         idCardIssued: true,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.studentProfile.count({
       where: {
         isDeleted: false,
         idCardIssued: false,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.studentProfile.count({
@@ -137,18 +94,7 @@ export default async function IdCardReportPage() {
         isDeleted: false,
         idCardIssued: true,
         idCardNumber: null,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.studentIdCardHistory.count({

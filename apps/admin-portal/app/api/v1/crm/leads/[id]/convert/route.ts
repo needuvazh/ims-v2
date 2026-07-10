@@ -120,7 +120,25 @@ export async function POST(
           );
         }
 
-        const parsed = ConvertLeadSchema.safeParse(payload);
+        const convertSchema = z.object({
+          batchId: z.string().uuid().optional().default('00000000-0000-0000-0000-000000000000'),
+          documents: z.array(
+            z.object({
+              fileName: z.string().min(1),
+              fileKey: z.string().min(1),
+              fileType: z.string().min(1),
+              documentType: z.any(),
+              expiryDate: z.preprocess(
+                (val) => (typeof val === 'string' && val ? new Date(val) : val),
+                z.date().optional().nullable(),
+              ),
+            })
+          ).min(1),
+          discountCode: z.string().optional(),
+          manualDiscountAmount: z.number().optional(),
+        });
+
+        const parsed = convertSchema.safeParse(payload);
         if (!parsed.success) {
           return problemJson(
             400,
@@ -167,7 +185,10 @@ export async function POST(
           const admissionResult =
             await leadConversionOrchestrator.convertLeadToAdmission(
               leadId,
-              parsed.data.documents,
+              parsed.data.batchId,
+              parsed.data.documents as any,
+              parsed.data.discountCode,
+              parsed.data.manualDiscountAmount,
               session.userId,
             );
 

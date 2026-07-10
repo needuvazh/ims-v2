@@ -44,26 +44,26 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 
 ### FR-ADM-002: Create Admission
 
-- **Description & Actors:** Registers an official admission application for a student to study at ASTI. Handled by the Counselor or Registrar.
+- **Description & Actors:** Registers an official admission record for a student to study at ASTI globally at the institute level. Handled by the Counselor or Registrar.
 - **Preconditions:**
   - The `StudentProfile` record must exist and be active.
-  - The `Branch` (logical reference) must be active.
 - **Inputs:**
   - `studentProfileId` (UUID)
-  - `branchId` (UUID)
   - `admissionDate` (Date)
   - `leadId` (UUID, Nullable)
+  - `documents` (List of DocumentCaptureInput, Optional)
 - **Processing Steps:**
   1.  Verify the student profile is active in the database.
-  2.  Validate branch status by calling a read-only query service in the Organization Management context.
-  3.  Generate a unique `admissionNumber` using the configuration numbering series (e.g. `ADM-YYYY-XXXXX`).
-  4.  Create the `Admission` record in the `Draft` state with the generated `admissionNumber`.
-  5.  If `leadId` is provided, verify it is in a qualified stage and write an audit log entry documenting lead handoff.
-  6.  Save default metadata: `createdAt`, `createdBy` set to active user, `isDeleted = false`.
-  7.  Write a record to the `AuditLog` table capturing the creation of the admission application in `Draft` state under the active branch.
-  8.  Publish `AdmissionCreated` to the outbox.
+  2.  Verify that no active admission (Draft, Submitted, or Approved) already exists globally for the student profile (throw `ERR_ADM_ACTIVE_ADMISSION_EXISTS` if true).
+  3.  Generate a unique `admissionNumber` using the configuration numbering series (e.g., `ADM-YYYY-XXXXX`).
+  4.  Create the `Admission` record globally (without branch scoping) directly in the `Approved` state with the generated `admissionNumber`.
+  5.  If `documents` are uploaded during conversion, save them directly as `Verified` (status set to `AutoVerified` or similar), recording `verifiedBy: activeUserId` and `verifiedAt: now()` to establish the counselor audit trail.
+  6.  If `leadId` is provided, link it to the admission and mark the lead as converted.
+  7.  Save default metadata: `createdAt`, `createdBy` set to active user, `isDeleted = false`.
+  8.  Write a record to the `AuditLog` table capturing the creation of the admission record in `Approved` state at the institute level.
+  9.  Publish `AdmissionCreated` and `AdmissionApproved` to the outbox.
 - **Outputs & Postconditions:**
-  - Persists a new `Admission` record linked to the student profile and branch, containing a unique `admissionNumber`.
+  - Persists a new global `Admission` record in `Approved` state linked to the student profile, containing a unique `admissionNumber`.
 - **Priority:** Must Have (MoSCoW).
 
 ---
@@ -79,12 +79,12 @@ The Admission & Enrollment Management module acts as the core intake engine of t
   - `entityType` (Enum: StudentProfile, Admission)
   - `reasonCode` (String)
 - **Processing Steps:**
-  1.  Validate that the user's session has write access to the targeted record's `branchId` (or global access for Super Admin).
+  1.  Validate that the user's session has write access to the target `StudentProfile`'s `branchId` (Home Branch), or global access for Super Admin. For Admissions, lookup the linked `StudentProfile` first.
   2.  Check for active dependencies:
       - If `entityType = StudentProfile`, verify that the student profile does not have any active or confirmed `Enrollment` records. If they do, block deletion and throw `ERR_STUDENT_HAS_ACTIVE_ENROLLMENTS`.
       - If `entityType = Admission`, verify no active `Enrollment` is linked to this admission. If there is, block deletion.
   3.  Perform the soft delete: update the target record setting `isDeleted = true`, `deletedAt = now()`, and `deletedBy = activeUserId`.
-  4.  Write a record to the `AuditLog` table capturing the soft deletion event, the entity type, the record ID, and the `reasonCode` under the target branch.
+  4.  Write a record to the `AuditLog` table capturing the soft deletion event, the entity type, the record ID, and the `reasonCode` under the student profile's home branch.
   5.  Publish `StudentProfileDeleted` or `AdmissionDeleted` to the outbox.
 - **Outputs & Postconditions:**
   - The record is marked as deleted (`isDeleted = true`) in the database.
@@ -94,7 +94,7 @@ The Admission & Enrollment Management module acts as the core intake engine of t
 
 ### FR-ENR-001: Create Enrollment Draft
 
-- **Description & Actors:** Initiates a course enrollment request for an admitted student. Initiated by the Registrar, Counselor, or via online API for online registrations.
+- **Description & Actors:** Initiates a course enrollment request for an admitted student. Initiated by the Registrar, Counselor, or via online API for online registrations / Lead Conversion.
 - **Preconditions:**
   - An approved `Admission` record must exist for the student profile.
   - The target `Course` and `Batch` must be active (verified via Course Catalog & Training Delivery query services).
@@ -106,6 +106,7 @@ The Admission & Enrollment Management module acts as the core intake engine of t
   - `branchId` (UUID)
   - `enrollmentType` (Enum: Regular, Corporate, WalkIn, Online)
   - `corporateParticipantId` (UUID, Nullable)
+  - `leadId` (UUID, Nullable)
 - **Processing Steps:**
   1.  Verify the `Admission` status is `Approved` (except for Walk-In flows which bypass the normal admission approval path).
   2.  Validate course and batch status by querying the Course Catalog and Training Delivery modules respectively.
@@ -113,9 +114,10 @@ The Admission & Enrollment Management module acts as the core intake engine of t
   4.  Generate a unique `enrollmentNumber`.
   5.  Initialize `enrollmentStatus = Draft`.
   6.  Trigger automated pricing resolution (see `FR-ENR-002`).
-  7.  Save and persist the aggregate root.
+  7.  If `leadId` is provided, link the enrollment record to the CRM lead to record the conversion path.
+  8.  Save and persist the aggregate root.
 - **Outputs & Postconditions:**
-  - Persists an `Enrollment` record in `Draft` state with computed base prices.
+  - Persists an `Enrollment` record in `Draft` state with computed base prices and optional `leadId` linkage.
 - **Priority:** Must Have (MoSCoW).
 
 ---
@@ -227,7 +229,7 @@ The system enforces the following declarative constraints. Any operational handl
 | Rule Code      | Rule Title                    | Targeted Model / Fields          | Business Logic / Invariant Constraint                                                                                                                                                               |
 | :------------- | :---------------------------- | :------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **BR-ADM-001** | Person Link Constraint        | `StudentProfile.personId`        | A student profile cannot exist without pointing to a valid record in the `Person` table. Names, phones, and emails are resolved via this relation.                                                  |
-| **BR-ADM-002** | Branch Scoping                | All Read/Write Operations        | Every admission and enrollment record must have a valid `branchId`. Operations are restricted based on user branch permission contexts.                                                             |
+| **BR-ADM-002** | Branch Scoping                | StudentProfile, Admission, Enrollment | Every enrollment record must have a valid `branchId`. Admission is institute-scoped (global). Access control is dynamically checked against the student profile's home branch or enrollment branches. |
 | **BR-ADM-003** | Soft Delete Protection        | `deletedAt`, `isDeleted`         | No entity (StudentProfile, Admission, Enrollment) is hard-deleted from the database. A delete call sets `isDeleted = true` and logs `deletedAt` and `deletedBy`.                                    |
 | **BR-ENR-001** | Structure Integrity           | `courseId`, `batchId`            | An enrollment cannot be created or saved in the database without both a valid `courseId` and a scheduled `batchId` (logical UUIDs).                                                                 |
 | **BR-ENR-002** | Pricing Resolution Hierarchy  | `resolvedPrice`, `pricingSource` | Resolution must proceed in Course Catalog: <br>1. Batch override <br>2. Branch override <br>3. Global course pricing.                                                                               |

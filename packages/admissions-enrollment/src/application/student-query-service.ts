@@ -81,14 +81,7 @@ export class StudentQueryService {
               where: { isDeleted: false },
               select: {
                 id: true,
-                branchId: true,
                 admissionStatus: true,
-                branch: {
-                  select: {
-                    id: true,
-                    branchName: true,
-                  },
-                },
               },
             },
             enrollments: {
@@ -137,18 +130,15 @@ export class StudentQueryService {
         });
       }
 
-      const activeAdmission = activeBranchId
-        ? await this.prisma.admission.findFirst({
-            where: {
-              studentProfileId: studentProfile.id,
-              branchId: activeBranchId,
-              isDeleted: false,
-              admissionStatus: {
-                in: ['Draft', 'Submitted', 'Approved'],
-              },
-            },
-          })
-        : null;
+      const activeAdmission = await this.prisma.admission.findFirst({
+        where: {
+          studentProfileId: studentProfile.id,
+          isDeleted: false,
+          admissionStatus: {
+            in: ['Draft', 'Submitted', 'Approved'],
+          },
+        },
+      });
 
       const enrollmentCount = await this.prisma.enrollment.count({
         where: {
@@ -157,15 +147,7 @@ export class StudentQueryService {
         },
       });
 
-      for (const admission of studentProfile.admissions || []) {
-        if (admission.branch) {
-          branchInfoMap.set(admission.branch.id, {
-            branchId: admission.branch.id,
-            branchName: admission.branch.branchName,
-            relation: 'Admission',
-          });
-        }
-      }
+
 
       for (const enrollment of studentProfile.enrollments || []) {
         if (enrollment.branch) {
@@ -243,46 +225,37 @@ export class StudentQueryService {
       whereClause.status = options.studentStatus;
     }
 
+    whereClause.OR = [
+      {
+        branchId: { in: targetBranchIds },
+      },
+      {
+        enrollments: {
+          some: {
+            branchId: { in: targetBranchIds },
+            isDeleted: false,
+          },
+        },
+      },
+      {
+        person: {
+          leads: {
+            some: {
+              branchId: { in: targetBranchIds },
+              isDeleted: false,
+            },
+          },
+        },
+      },
+    ];
+
     if (options?.admissionStatus) {
       whereClause.admissions = {
         some: {
-          branchId: { in: targetBranchIds },
           admissionStatus: options.admissionStatus,
           isDeleted: false,
         },
       };
-    } else {
-      whereClause.OR = [
-        {
-          branchId: { in: targetBranchIds },
-        },
-        {
-          admissions: {
-            some: {
-              branchId: { in: targetBranchIds },
-              isDeleted: false,
-            },
-          },
-        },
-        {
-          enrollments: {
-            some: {
-              branchId: { in: targetBranchIds },
-              isDeleted: false,
-            },
-          },
-        },
-        {
-          person: {
-            leads: {
-              some: {
-                branchId: { in: targetBranchIds },
-                isDeleted: false,
-              },
-            },
-          },
-        },
-      ];
     }
 
     if (trimmed) {
@@ -335,7 +308,6 @@ export class StudentQueryService {
             id: true,
             admissionNumber: true,
             admissionStatus: true,
-            branchId: true,
           },
         },
         enrollments: {
@@ -389,7 +361,7 @@ export class StudentQueryService {
       include: {
         person: true,
         admissions: {
-          where: { branchId, isDeleted: false },
+          where: { isDeleted: false },
         },
         enrollments: {
           where: { branchId, isDeleted: false },

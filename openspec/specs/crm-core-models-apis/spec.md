@@ -3,9 +3,7 @@
 ## Purpose
 
 This specification defines the core data models, validation rules, business logic, and API endpoints for managing raw inquiries, prospects (leads), scheduled follow-ups, and admissions handoff.
-
 ## Requirements
-
 ### Requirement: crm.inquiry.capture
 
 The system MUST provide a secure mechanism to capture raw customer inquiries from web forms, walk-ins, and other lead sources.
@@ -181,3 +179,11 @@ The system MUST protect prospect contact details and enforce audited unmasking r
 - **WHEN** A user with `lead.reveal_pii` permission requests unmasked contact details via `/api/v1/crm/leads/{id}/reveal-pii`.
 - **THEN** The system MUST log the access event details (User ID, Lead ID, revealed field, timestamp, and reason) to the `AuditLog` table using Muscat Time (GST, UTC+4) under zero-PII logging rules (no raw values stored in logs).
 - **AND** Return the unmasked value in the response DTO.
+
+### Requirement: Lead Model Admission Number Schema Support
+The Lead entity schema MUST support an optional, nullable `admissionNumber` field.
+
+#### Scenario: Verify Field Presence
+- **WHEN** a lead is retrieved via lead endpoints or domain repository queries
+- **THEN** the Lead record MUST include the `admissionNumber` property.
+

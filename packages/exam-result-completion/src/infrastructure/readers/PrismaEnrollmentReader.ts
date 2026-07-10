@@ -27,7 +27,7 @@ export class PrismaEnrollmentReader implements EnrollmentReader {
       id: enrollment.id,
       studentProfileId: enrollment.studentProfileId,
       courseId: enrollment.courseId,
-      batchId: enrollment.batchId,
+      batchId: enrollment.batchId || '',
       branchId: enrollment.branchId,
       enrollmentStatus: enrollment.enrollmentStatus,
     };

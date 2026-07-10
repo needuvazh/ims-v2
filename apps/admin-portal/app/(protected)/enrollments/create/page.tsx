@@ -18,13 +18,15 @@ export default async function CreateEnrollmentPage() {
     where: {
       admissionStatus: 'Approved',
       isDeleted: false,
-      branchId:
-        allowedBranchIds.length > 0
-          ? { in: allowedBranchIds.map((id) => id as string) }
-          : undefined,
+      studentProfile: allowedBranchIds.length > 0
+        ? {
+            branchId: { in: allowedBranchIds.map((id) => id as string) },
+          }
+        : undefined,
     },
     include: {
       person: true,
+      studentProfile: true,
     },
   });
 
@@ -32,7 +34,7 @@ export default async function CreateEnrollmentPage() {
     id: adm.id,
     studentProfileId: adm.studentProfileId,
     courseId: adm.courseId || '',
-    branchId: adm.branchId,
+    branchId: adm.studentProfile?.branchId || '',
     label: `${adm.person.firstName} ${adm.person.lastName} (${adm.admissionNumber})`,
   }));
 

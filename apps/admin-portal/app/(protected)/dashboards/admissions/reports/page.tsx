@@ -76,22 +76,16 @@ export default async function Module04ReportsIndexPage() {
     prisma.studentProfile.count({
       where: {
         isDeleted: false,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
     prisma.admission.count({
-      where: { isDeleted: false, branchId: { in: branchIds } },
+      where: {
+        isDeleted: false,
+        studentProfile: {
+          branchId: { in: branchIds },
+        },
+      },
     }),
     prisma.enrollment.count({
       where: { isDeleted: false, branchId: { in: branchIds } },
@@ -100,18 +94,7 @@ export default async function Module04ReportsIndexPage() {
       where: {
         isDeleted: false,
         idCardIssued: true,
-        OR: [
-          {
-            admissions: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-          {
-            enrollments: {
-              some: { branchId: { in: branchIds }, isDeleted: false },
-            },
-          },
-        ],
+        branchId: { in: branchIds },
       },
     }),
   ]);

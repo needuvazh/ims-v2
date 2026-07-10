@@ -28,11 +28,19 @@ describe('getGroupWhereClause', () => {
   const threeDaysAgo = new Date('2026-07-06T00:00:00Z');
   const threeDaysFromNow = new Date('2026-07-12T00:00:00Z');
 
-  it('should build where clause for active group by default', () => {
+  it('should build where clause for active group by default (including draft)', () => {
     const where = getGroupWhereClause('active', today, threeDaysAgo, threeDaysFromNow, {});
 
     expect(where.startDate).toEqual({ lte: threeDaysFromNow });
     expect(where.endDate).toEqual({ gte: threeDaysAgo });
+    expect(where.status).toEqual({ in: ['OpenForEnrollment', 'InProgress', 'Draft'] });
+  });
+
+  it('should exclude Draft when showDraft toggle is false in active group', () => {
+    const where = getGroupWhereClause('active', today, threeDaysAgo, threeDaysFromNow, {
+      showDraft: false,
+    });
+
     expect(where.status).toEqual({ in: ['OpenForEnrollment', 'InProgress'] });
   });
 
@@ -48,12 +56,20 @@ describe('getGroupWhereClause', () => {
     });
   });
 
-  it('should build where clause for past group default', () => {
+  it('should build where clause for past group default (including draft)', () => {
     const where = getGroupWhereClause('past', today, threeDaysAgo, threeDaysFromNow, {});
 
     expect(where.endDate).toEqual({ lt: threeDaysAgo });
-    expect(where.status).toEqual({ not: 'Cancelled' });
+    expect(where.status).toEqual({ notIn: ['Cancelled'] });
     expect(where.AND).toBeUndefined();
+  });
+
+  it('should exclude Draft in past group when showDraft is false', () => {
+    const where = getGroupWhereClause('past', today, threeDaysAgo, threeDaysFromNow, {
+      showDraft: false,
+    });
+
+    expect(where.status).toEqual({ notIn: ['Cancelled', 'Draft'] });
   });
 
   it('should include Cancelled status in past group when showCancelled is true', () => {
@@ -62,6 +78,15 @@ describe('getGroupWhereClause', () => {
     });
 
     expect(where.status).toBeUndefined();
+  });
+
+  it('should exclude Draft in past group when showCancelled is true and showDraft is false', () => {
+    const where = getGroupWhereClause('past', today, threeDaysAgo, threeDaysFromNow, {
+      showCancelled: true,
+      showDraft: false,
+    });
+
+    expect(where.status).toEqual({ notIn: ['Draft'] });
   });
 
   it('should append date range filters in past group', () => {
@@ -80,13 +105,13 @@ describe('getGroupWhereClause', () => {
     const where = getGroupWhereClause('future', today, threeDaysAgo, threeDaysFromNow, {});
 
     expect(where.startDate).toEqual({ gt: threeDaysFromNow });
-    expect(where.status).toEqual({ not: 'Cancelled' });
+    expect(where.status).toEqual({ notIn: ['Cancelled'] });
   });
 
   it('should build where clause for all group default', () => {
     const where = getGroupWhereClause('all', today, threeDaysAgo, threeDaysFromNow, {});
 
-    expect(where.status).toEqual({ not: 'Cancelled' });
+    expect(where.status).toEqual({ notIn: ['Cancelled'] });
     expect(where.startDate).toBeUndefined();
     expect(where.endDate).toBeUndefined();
   });

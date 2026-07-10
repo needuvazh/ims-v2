@@ -53,14 +53,12 @@ export class AdmissionRepository implements IAdmissionRepository {
 
   async hasActiveAdmission(
     studentProfileId: string,
-    branchId: string,
     tx?: Prisma.TransactionClient,
   ): Promise<boolean> {
     const client = tx || this.prisma;
     const count = await client.admission.count({
       where: {
         studentProfileId,
-        branchId,
         isDeleted: false,
         admissionStatus: {
           in: ['Draft', 'Submitted', 'Approved'],
@@ -72,7 +70,6 @@ export class AdmissionRepository implements IAdmissionRepository {
 
   async createAdmissionDraft(
     studentProfileId: string,
-    branchId: string,
     admissionNumber: string,
     courseId?: string | null,
     leadId?: string | null,
@@ -90,7 +87,6 @@ export class AdmissionRepository implements IAdmissionRepository {
         admissionNumber,
         personId: studentProfile.personId,
         studentProfileId,
-        branchId,
         courseId: courseId || null,
         leadId: leadId || null,
         admissionStatus: 'Draft',
@@ -147,16 +143,15 @@ export class AdmissionRepository implements IAdmissionRepository {
 
     const admissionNumber = await this.getNextAdmissionNumber(tx);
 
-    // Create admission
+    // Create admission (directly in Approved state)
     const admission = await client.admission.create({
       data: {
         admissionNumber,
         personId: person.id,
         studentProfileId: studentProfile.id,
-        branchId: data.branchId,
         leadId: data.leadId || null,
         courseId: data.courseId || null,
-        admissionStatus: 'Draft',
+        admissionStatus: 'Approved',
         admissionDate: data.admissionDate || undefined,
       },
     });

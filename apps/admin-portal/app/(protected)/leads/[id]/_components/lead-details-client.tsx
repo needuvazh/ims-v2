@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
+import Link from 'next/link';
 import {
   Button,
   Dialog,
@@ -28,9 +29,12 @@ import {
   TableRow,
   Pagination,
   EmptyState,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from '@ims/shared-ui';
 import {
-  convertLeadAction,
   addLeadNoteAction,
   updateLeadStageAction,
 } from '../../actions';
@@ -43,10 +47,18 @@ import {
   Activity,
   Home,
   ClipboardList,
+  Check,
   Eye,
   MessageSquare,
   ChevronDown,
   ChevronUp,
+  School,
+  GraduationCap,
+  ExternalLink,
+  BookOpen,
+  Award,
+  AlertCircle,
+  Clock3,
 } from 'lucide-react';
 
 interface LeadNoteDto {
@@ -75,6 +87,9 @@ interface LeadDetailsClientProps {
   currentFollowUpPage: number;
   admissionId?: string | null;
   initialDocuments?: any[];
+  admission?: any;
+  enrollment?: any;
+  sessionPermissions?: string[];
 }
 
 export function LeadDetailsClient({
@@ -85,7 +100,9 @@ export function LeadDetailsClient({
   followUpsTotal,
   currentFollowUpPage,
   admissionId: initialAdmissionId,
-  initialDocuments = [],
+  admission,
+  enrollment,
+  sessionPermissions = [],
 }: LeadDetailsClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -93,182 +110,64 @@ export function LeadDetailsClient({
   const [admissionId, setAdmissionId] = useState(initialAdmissionId);
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
 
-  // Convert Dialog State
-  const [showConvertDialog, setShowConvertDialog] = useState(false);
-  const [requirements, setRequirements] = useState<any[]>([]);
-  const [uploadedFiles, setUploadedFiles] = useState<
-    Record<string, { url: string; fileName: string; id?: string }>
-  >({});
-  const [uploadingStates, setUploadingStates] = useState<
-    Record<string, boolean>
-  >({});
+  const getAdmissionStatusBadge = (status: string) => {
+    switch (status) {
+      case 'Approved':
+        return 'success';
+      case 'Submitted':
+        return 'warning';
+      case 'Draft':
+        return 'default';
+      case 'Rejected':
+        return 'error';
+      case 'Cancelled':
+        return 'outline';
+      default:
+        return 'outline';
+    }
+  };
+
+  const getEnrollmentStatusBadge = (status: string) => {
+    switch (status) {
+      case 'Confirmed':
+      case 'Active':
+      case 'CertificateIssued':
+        return 'success';
+      case 'Draft':
+      case 'Submitted':
+      case 'Approved':
+        return 'warning';
+      case 'Cancelled':
+      case 'Dropped':
+        return 'error';
+      default:
+        return 'outline';
+    }
+  };
+
+  const getInvoiceStatusBadge = (status: string) => {
+    switch (status) {
+      case 'Paid':
+        return 'success';
+      case 'PartiallyPaid':
+      case 'Issued':
+        return 'warning';
+      case 'Draft':
+        return 'default';
+      case 'Overdue':
+      case 'Cancelled':
+        return 'error';
+      default:
+        return 'outline';
+    }
+  };
 
   useEffect(() => {
     setLead(initialLead);
     setAdmissionId(initialAdmissionId);
+  }, [initialLead, initialAdmissionId]);
 
-    const initialMap: Record<
-      string,
-      { url: string; fileName: string; id?: string }
-    > = {};
-    for (const doc of initialDocuments) {
-      initialMap[doc.documentType] = {
-        url: doc.fileKey,
-        fileName: doc.fileName,
-        id: doc.id,
-      };
-    }
-    setUploadedFiles(initialMap);
-  }, [initialLead, initialAdmissionId, initialDocuments]);
-
-  // Fetch dynamic requirements checklist
-  useEffect(() => {
-    if (!showConvertDialog) return;
-    const fetchReqs = async () => {
-      try {
-        const res = await fetch(
-          `/api/v1/documents/requirements?targetEntity=STUDENT&branchId=${lead.branchId}&courseId=${lead.interestedCourseId || ''}`,
-        );
-        if (res.ok) {
-          const result = await res.json();
-          setRequirements(result.data || []);
-        }
-      } catch (err) {
-        console.error('Failed to fetch requirements', err);
-      }
-    };
-    fetchReqs();
-  }, [showConvertDialog, lead]);
-
-  const handleLeadDocUpload = async (
-    documentType: string,
-    file: File | undefined,
-  ) => {
-    if (!file) return;
-
-    setUploadingStates((prev) => ({ ...prev, [documentType]: true }));
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('ownerId', lead.personId);
-      formData.append('documentType', documentType);
-      formData.append('branchId', lead.branchId);
-
-      const res = await fetch('/api/v1/documents/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await res.json();
-      if (!res.ok) {
-        throw new Error(result.messageEnglish || 'Failed to upload file');
-      }
-
-      setUploadedFiles((prev) => ({
-        ...prev,
-        [documentType]: {
-          url: result.data.url,
-          fileName: result.data.fileName,
-          id: result.data.id,
-        },
-      }));
-      toast.success(`Uploaded ${result.data.fileName} successfully!`);
-      router.refresh();
-    } catch (err: any) {
-      toast.error(err.message || 'File upload failed');
-    } finally {
-      setUploadingStates((prev) => ({ ...prev, [documentType]: false }));
-    }
-  };
-
-  const handleClearDoc = async (documentType: string) => {
-    const targetFile = uploadedFiles[documentType];
-    if (!targetFile) return;
-
-    if (
-      !confirm(
-        'Are you sure you want to delete this document? The entire document will be deleted.',
-      )
-    ) {
-      return;
-    }
-
-    if (targetFile.id) {
-      try {
-        const res = await fetch(`/api/v1/documents/${targetFile.id}`, {
-          method: 'DELETE',
-        });
-        const result = await res.json();
-        if (!res.ok) {
-          throw new Error(result.messageEnglish || 'Failed to delete document');
-        }
-        toast.success('Document deleted successfully!');
-      } catch (err: any) {
-        toast.error(err.message || 'Failed to delete document');
-        return;
-      }
-    }
-
-    setUploadedFiles((prev) => {
-      const copy = { ...prev };
-      delete copy[documentType];
-      return copy;
-    });
-    router.refresh();
-  };
-
-  const [docError, setDocError] = useState<string | null>(null);
-  const [isConverting, setIsConverting] = useState(false);
-
-  const handleConvertSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setDocError(null);
-
-    const missingMandatory = requirements
-      .filter((r) => r.isMandatory && !uploadedFiles[r.documentType])
-      .map((r) => r.documentType.replace(/_/g, ' '));
-
-    if (missingMandatory.length > 0) {
-      setDocError(
-        `The following required documents are missing: ${missingMandatory.join(', ')}`,
-      );
-      return;
-    }
-
-    try {
-      setIsConverting(true);
-      const docsPayload = Object.entries(uploadedFiles).map(([docType, f]) => ({
-        documentType: docType,
-        fileKey: f.url,
-        fileName: f.fileName,
-        fileType: 'application/pdf', // fallback
-        expiryDate: null,
-      }));
-
-      const response = await convertLeadAction(lead.id, docsPayload);
-      const res = response as any;
-      if (res && !res.success) {
-        setDocError(
-          res.error ||
-            'Conversion failed. Make sure lead has valid DOB and Email.',
-        );
-      } else {
-        toast.success('Lead converted to student successfully!');
-        setShowConvertDialog(false);
-        setUploadedFiles({});
-        const createdAdmissionId = res.data?.admissionId;
-        if (createdAdmissionId) {
-          setAdmissionId(createdAdmissionId);
-        }
-        setLead({ ...lead, stage: 'Converted' });
-        router.refresh();
-      }
-    } catch (err: any) {
-      setDocError(err.message || 'An unexpected conversion error occurred.');
-    } finally {
-      setIsConverting(false);
-    }
-  }; // Notes State
+  // Notes State
   const [localNotes, setLocalNotes] = useState<LeadNoteDto[]>(notes);
   const [newNoteContent, setNewNoteContent] = useState('');
   const [isAddingNote, setIsAddingNote] = useState(false);
@@ -450,6 +349,17 @@ export function LeadDetailsClient({
     notesPage * notesLimit,
   );
 
+  const handleStepClick = (clickedStageName: string) => {
+    if (lead.stage === 'Converted') return;
+    if (lead.stage === clickedStageName) return;
+
+    setStageValue(clickedStageName);
+    setLostCodeValue('');
+    setLostNotesValue('');
+    setStageError(null);
+    setIsEditingStage(true);
+  };
+
   return (
     <div className="space-y-8">
       <PageHeader
@@ -490,7 +400,7 @@ export function LeadDetailsClient({
               <Button
                 size="sm"
                 className="gap-2 bg-[color:var(--ims-ink)] hover:bg-[color:var(--ims-brass)] text-white"
-                onClick={() => setShowConvertDialog(true)}
+                onClick={() => router.push(`/leads/${lead.id}/convert`)}
               >
                 <UserCheck className="h-4 w-4" />
                 Convert to Student
@@ -525,6 +435,250 @@ export function LeadDetailsClient({
             </Button>
           </div>
         )}
+
+        {/* Progression Stepper Card */}
+        {(() => {
+          const standardStages = ['New', 'Contacted', 'FollowUp', 'Qualified', 'Negotiation'];
+          const displayStages = [...standardStages];
+          if (lead.stage === 'Lost') {
+            displayStages.push('Lost');
+          } else if (lead.stage === 'Converted') {
+            displayStages.push('Converted');
+          } else {
+            displayStages.push('Won');
+          }
+
+          return (
+            <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl bg-white/80 shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] font-display">
+                  <Activity className="h-4 w-4 text-[color:var(--ims-brass)]" />
+                  Lead Progression
+                </h3>
+                {lead.stage !== 'Converted' && (
+                  <span className="text-[10px] text-[color:var(--ims-muted)] hidden sm:inline">
+                    Click a stage to transition the lead
+                  </span>
+                )}
+              </div>
+
+              {/* Stepper horizontal scroll container */}
+              <div className="w-full overflow-x-auto pb-2 scrollbar-none">
+                <div className="flex items-center justify-between min-w-[650px] md:min-w-0 py-2">
+                  {displayStages.map((stageName, idx) => {
+                    const currentIdx = displayStages.indexOf(lead.stage);
+                    const isCurrent = lead.stage === stageName;
+                    const isCompleted = idx < currentIdx;
+                    const isClickable = lead.stage !== 'Converted' && stageName !== 'Converted';
+
+                    return (
+                      <div key={stageName} className="flex items-center flex-1 last:flex-none">
+                        {/* Step Node */}
+                        <div className="flex flex-col items-center relative min-w-[80px]">
+                          <button
+                            type="button"
+                            disabled={!isClickable}
+                            onClick={() => handleStepClick(stageName)}
+                            className={`flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all duration-200
+                              ${isCurrent
+                                ? stageName === 'Lost'
+                                  ? 'border-red-500 bg-red-500 text-white ring-4 ring-red-100 shadow-md font-bold'
+                                  : stageName === 'Converted'
+                                    ? 'border-emerald-600 bg-emerald-600 text-white ring-4 ring-emerald-100 shadow-md font-bold'
+                                    : 'border-indigo-600 bg-indigo-600 text-white ring-4 ring-indigo-100 shadow-md font-bold'
+                                : isCompleted
+                                  ? 'border-emerald-500 bg-emerald-500 text-white hover:bg-emerald-600 hover:border-emerald-600'
+                                  : 'border-slate-300 bg-white text-slate-500 hover:border-slate-400 hover:text-slate-700'
+                              }
+                              ${!isClickable && 'cursor-default'}
+                            `}
+                          >
+                            {isCompleted ? (
+                              <Check className="h-4 w-4 stroke-[3]" />
+                            ) : (
+                              <span className="text-xs font-semibold">{idx + 1}</span>
+                            )}
+                          </button>
+                          <span
+                            className={`mt-2 text-[11px] font-medium tracking-wide whitespace-nowrap
+                              ${isCurrent
+                                ? stageName === 'Lost'
+                                  ? 'text-red-600 font-semibold'
+                                  : stageName === 'Converted'
+                                    ? 'text-emerald-600 font-semibold'
+                                    : 'text-indigo-600 font-semibold'
+                                : 'text-[color:var(--ims-muted)]'
+                              }
+                            `}
+                          >
+                            {stageName}
+                          </span>
+                        </div>
+
+                        {/* Connecting Line */}
+                        {idx < displayStages.length - 1 && (
+                          <div
+                            className={`h-0.5 flex-grow mx-2 min-w-[20px] transition-colors duration-200
+                              ${idx < currentIdx ? 'bg-emerald-500' : 'bg-slate-200'}
+                            `}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Status details bar below stepper when NOT editing */}
+              {!isEditingStage && (
+                <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-xs">
+                  <div className="flex items-center gap-6">
+                    <div>
+                      <span className="text-[color:var(--ims-muted)] block mb-0.5 text-[10px] uppercase tracking-wider">
+                        Current Stage
+                      </span>
+                      <Badge variant={getStageBadgeVariant(lead.stage)} className="text-xs px-2.5 py-0.5">
+                        {lead.stage}
+                      </Badge>
+                    </div>
+                    {lead.priority && (
+                      <div>
+                        <span className="text-[color:var(--ims-muted)] block mb-0.5 text-[10px] uppercase tracking-wider">
+                          Priority
+                        </span>
+                        <span className="font-semibold text-[color:var(--ims-ink)] text-sm">
+                          {lead.priority}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {lead.stage !== 'Converted' && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-[10px] h-7 px-3 gap-1 flex items-center border-slate-200"
+                      onClick={() => {
+                        setStageValue(lead.stage);
+                        setLostCodeValue(lead.lostReasonCode || '');
+                        setLostNotesValue(lead.lostReasonNotes || '');
+                        setIsEditingStage(true);
+                      }}
+                    >
+                      <Pencil className="h-3 w-3" />
+                      Change Stage
+                    </Button>
+                  )}
+                </div>
+              )}
+
+              {/* Lost info display */}
+              {!isEditingStage && lead.stage === 'Lost' && (
+                <div className="mt-4 p-4 bg-red-50/50 border border-red-100 rounded-xl space-y-2 text-xs">
+                  <div>
+                    <span className="font-bold text-[color:var(--ims-error)]">Lost Reason Code:</span>{' '}
+                    <span className="font-semibold text-[color:var(--ims-ink)]">
+                      {lead.lostReasonCode || 'N/A'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="font-bold text-[color:var(--ims-error)]">Lost Explanatory Notes:</span>
+                    <p className="mt-1 text-slate-600 bg-white p-2.5 rounded-lg border border-slate-100 whitespace-pre-wrap">
+                      {lead.lostReasonNotes || 'No explanatory notes provided.'}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Inline Form Confirmation */}
+              {isEditingStage && (
+                <form
+                  onSubmit={handleStageUpdate}
+                  className="mt-4 pt-4 border-t border-slate-100 space-y-4 max-w-xl text-xs"
+                >
+                  {stageError && (
+                    <div className="p-2 bg-red-50 border border-red-200 text-[color:var(--ims-error)] rounded-lg text-xs">
+                      {stageError}
+                    </div>
+                  )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField>
+                      <FormLabel required>Pipeline Stage</FormLabel>
+                      <Select
+                        value={stageValue}
+                        onChange={(e) => setStageValue(e.target.value)}
+                        options={[
+                          { value: 'New', label: 'New' },
+                          { value: 'Contacted', label: 'Contacted' },
+                          { value: 'FollowUp', label: 'FollowUp' },
+                          { value: 'Qualified', label: 'Qualified' },
+                          { value: 'Negotiation', label: 'Negotiation' },
+                          { value: 'Won', label: 'Won' },
+                          { value: 'Lost', label: 'Lost' },
+                        ]}
+                      />
+                    </FormField>
+                  </div>
+
+                  {stageValue === 'Lost' && (
+                    <div className="border border-[color:var(--ims-border)] p-4 rounded-xl bg-slate-50 space-y-4">
+                      <FormField>
+                        <FormLabel required>Lost Reason Code</FormLabel>
+                        <Select
+                          value={lostCodeValue}
+                          onChange={(e) => setLostCodeValue(e.target.value)}
+                          options={[
+                            { value: '', label: 'Select reason' },
+                            { value: 'PriceTooHigh', label: 'Price too high' },
+                            {
+                              value: 'CompetitorChosen',
+                              label: 'Chose competitor',
+                            },
+                            {
+                              value: 'TimingNotGood',
+                              label: 'Timing not good',
+                            },
+                            {
+                              value: 'NoResponse',
+                              label: 'Lost contact / no response',
+                            },
+                            { value: 'Other', label: 'Other reason' },
+                          ]}
+                        />
+                      </FormField>
+                      <FormField>
+                        <FormLabel required>
+                          Lost Details (Min 15 characters)
+                        </FormLabel>
+                        <Textarea
+                          placeholder="Please specify lost reason in details..."
+                          rows={3}
+                          value={lostNotesValue}
+                          onChange={(e) => setLostNotesValue(e.target.value)}
+                        />
+                      </FormField>
+                    </div>
+                  )}
+
+                  <div className="flex gap-2 pt-2">
+                    <Button type="submit" size="sm" disabled={isSavingStage}>
+                      {isSavingStage ? 'Saving...' : 'Save Stage'}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setIsEditingStage(false)}
+                      disabled={isSavingStage}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </div>
+          );
+        })()}
 
         {/* First Row: Lead Profile Card (Accordion format) */}
         <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
@@ -652,6 +806,368 @@ export function LeadDetailsClient({
           </div>
         </div>
 
+        {/* Student Registry & Enrollment Progress Console */}
+        {(lead.stage === 'Converted' || lead.stage === 'Won') && (
+          <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl bg-white/80 shadow-sm space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-brass)] font-display">
+                  <GraduationCap className="h-4.5 w-4.5" />
+                  Student Registry & Enrollment Progress Console
+                </h3>
+                <p className="text-[11px] text-[color:var(--ims-muted)] mt-0.5">
+                  Downstream handoff lifecycle tracking: admissions, enrollments, attendance, and finances.
+                </p>
+              </div>
+            </div>
+
+            <Tabs defaultValue="academic" className="space-y-4">
+              <TabsList className="w-full flex-wrap justify-start rounded-2xl bg-slate-50 p-1 border border-slate-100">
+                <TabsTrigger value="academic" className="gap-2 text-xs py-1.5 px-3">
+                  <School className="h-3.5 w-3.5" />
+                  Academic Handoff
+                </TabsTrigger>
+                <TabsTrigger value="attendance" className="gap-2 text-xs py-1.5 px-3">
+                  <Activity className="h-3.5 w-3.5" />
+                  Attendance & Progress
+                </TabsTrigger>
+                <TabsTrigger value="finance" className="gap-2 text-xs py-1.5 px-3">
+                  <Compass className="h-3.5 w-3.5" />
+                  Payments & Finance
+                </TabsTrigger>
+              </TabsList>
+
+              {/* Tab: Academic Handoff */}
+              <TabsContent value="academic" className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Admission Card */}
+                  <div className="border border-slate-100 rounded-xl p-4 bg-slate-50/50 space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-xs text-slate-700 flex items-center gap-1.5">
+                        <School className="h-3.5 w-3.5 text-indigo-500" />
+                        Admission Registry
+                      </h4>
+                      {admission ? (
+                        <Badge variant={getAdmissionStatusBadge(admission.admissionStatus)} className="text-[10px] px-1.5 py-0">
+                          {admission.admissionStatus}
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-[10px] px-1.5 py-0">Not Generated</Badge>
+                      )}
+                    </div>
+                    {admission ? (
+                      <div className="text-xs space-y-1">
+                        <div>
+                          <span className="text-slate-500">Admission Num:</span>{" "}
+                          <span className="font-mono font-bold text-slate-800">{admission.admissionNumber}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500">Admission Date:</span>{" "}
+                          <span className="font-medium text-slate-700">{new Date(admission.admissionDate).toLocaleDateString()}</span>
+                        </div>
+                        {admission.approvedAt && (
+                          <div>
+                            <span className="text-slate-500">Approved On:</span>{" "}
+                            <span className="font-medium text-slate-700">{new Date(admission.approvedAt).toLocaleDateString()}</span>
+                          </div>
+                        )}
+                        <div className="pt-2 border-t border-slate-100 mt-2">
+                          <Link href={`/admissions/${admission.id}`} className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1">
+                            View Admission Details <ExternalLink className="h-3 w-3" />
+                          </Link>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-slate-500 italic">No admission record has been initialized for this lead.</p>
+                    )}
+                  </div>
+
+                  {/* Enrollment Card */}
+                  <div className="border border-slate-100 rounded-xl p-4 bg-slate-50/50 space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-xs text-slate-700 flex items-center gap-1.5">
+                        <GraduationCap className="h-3.5 w-3.5 text-emerald-500" />
+                        Course Enrollment
+                      </h4>
+                      {enrollment ? (
+                        <Badge variant={getEnrollmentStatusBadge(enrollment.enrollmentStatus)} className="text-[10px] px-1.5 py-0">
+                          {enrollment.enrollmentStatus}
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-[10px] px-1.5 py-0">Not Enrolled</Badge>
+                      )}
+                    </div>
+                    {enrollment ? (
+                      <div className="text-xs space-y-1">
+                        <div>
+                          <span className="text-slate-500">Enrollment Num:</span>{" "}
+                          <span className="font-mono font-bold text-slate-800">{enrollment.enrollmentNumber}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500">Enrollment Type:</span>{" "}
+                          <span className="font-medium text-slate-700">{enrollment.enrollmentType}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500">Assigned Batch:</span>{" "}
+                          <span className="font-mono text-slate-800 font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">
+                            {enrollment.batch?.batchCode || 'Course Waitlist (No Batch)'}
+                          </span>
+                        </div>
+                        <div className="pt-2 border-t border-slate-100 mt-2 flex justify-between items-center">
+                          <Link href={`/enrollments/${enrollment.id}`} className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1">
+                            View Enrollment Console <ExternalLink className="h-3 w-3" />
+                          </Link>
+                          {enrollment.studentProfileId && (
+                            <Link href={`/students/${enrollment.studentProfileId}`} className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1">
+                              Student Profile <ExternalLink className="h-3 w-3" />
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-slate-500 italic">No enrollment record exists for this lead.</p>
+                    )}
+                  </div>
+
+                  {/* Course Completion Card */}
+                  <div className="border border-slate-100 rounded-xl p-4 bg-slate-50/50 space-y-2.5">
+                    <h4 className="font-semibold text-xs text-slate-700 flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
+                      <BookOpen className="h-3.5 w-3.5 text-amber-500" />
+                      Course Completion Review
+                    </h4>
+                    {enrollment?.courseCompletion ? (
+                      <div className="text-xs space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500">Overall Status:</span>
+                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-white">
+                            {enrollment.courseCompletion.completionStatus}
+                          </Badge>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-[10px] text-center">
+                          <div className="p-1 bg-white rounded border border-slate-100">
+                            <span className="block text-[8px] uppercase tracking-wider text-slate-400">Attendance</span>
+                            <span className={`font-bold ${enrollment.courseCompletion.attendanceOutcome === 'Pass' ? 'text-emerald-600' : 'text-slate-600'}`}>
+                              {enrollment.courseCompletion.attendanceOutcome || 'Pending'}
+                            </span>
+                          </div>
+                          <div className="p-1 bg-white rounded border border-slate-100">
+                            <span className="block text-[8px] uppercase tracking-wider text-slate-400">Exam</span>
+                            <span className={`font-bold ${enrollment.courseCompletion.examOutcome === 'Pass' ? 'text-emerald-600' : 'text-slate-600'}`}>
+                              {enrollment.courseCompletion.examOutcome || 'Pending'}
+                            </span>
+                          </div>
+                          <div className="p-1 bg-white rounded border border-slate-100">
+                            <span className="block text-[8px] uppercase tracking-wider text-slate-400">Payment</span>
+                            <span className={`font-bold ${enrollment.courseCompletion.paymentOutcome === 'Pass' ? 'text-emerald-600' : 'text-slate-600'}`}>
+                              {enrollment.courseCompletion.paymentOutcome || 'Pending'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-slate-500 italic">No completion assessment exists yet.</p>
+                    )}
+                  </div>
+
+                  {/* Certificate Generation Card */}
+                  <div className="border border-slate-100 rounded-xl p-4 bg-slate-50/50 space-y-2.5">
+                    <h4 className="font-semibold text-xs text-slate-700 flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
+                      <Award className="h-3.5 w-3.5 text-purple-500" />
+                      Certificate Status
+                    </h4>
+                    {enrollment?.certificates && enrollment.certificates.length > 0 ? (
+                      <div className="text-xs space-y-1.5">
+                        {enrollment.certificates.map((cert: any) => (
+                          <div key={cert.id} className="space-y-1 bg-white p-2 rounded border border-slate-100">
+                            <div className="flex justify-between items-center">
+                              <span className="font-mono font-bold text-slate-800 text-[11px]">{cert.certificateNumber}</span>
+                              <Badge className="text-[8px] px-1 py-0">{cert.certificateStatus}</Badge>
+                            </div>
+                            <div className="text-[10px] text-slate-500">
+                              Issued: {cert.issuedDate ? new Date(cert.issuedDate).toLocaleDateString() : 'N/A'}
+                            </div>
+                            {cert.certificateUrl && (
+                              <a
+                                href={cert.certificateUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[10px] text-indigo-600 hover:text-indigo-700 font-semibold inline-flex items-center gap-0.5 mt-1"
+                              >
+                                <Eye className="h-3 w-3" /> View / Download Certificate
+                              </a>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-xs text-slate-500 italic space-y-1">
+                        <p>No certificates issued for this enrollment.</p>
+                        <p className="text-[10px] text-slate-400">Status: {enrollment?.certificateStatus || 'NotEligible'}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Tab: Attendance & Progress */}
+              <TabsContent value="attendance" className="space-y-4">
+                {enrollment?.attendance ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                    <div className="md:col-span-1 flex flex-col items-center justify-center p-4 bg-slate-50/50 rounded-xl border border-slate-100">
+                      <span className="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Attendance Rate</span>
+                      <div className="relative flex items-center justify-center">
+                        <div className="text-3xl font-extrabold text-indigo-600 font-display">
+                          {enrollment.attendance.percentage}%
+                        </div>
+                      </div>
+                      <span className="text-[10px] text-slate-500 mt-2 font-medium">
+                        {enrollment.attendance.presentCount} / {enrollment.attendance.totalCount} Sessions Present
+                      </span>
+                    </div>
+
+                    <div className="md:col-span-2 space-y-3">
+                      <h4 className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+                        <Clock3 className="h-3.5 w-3.5 text-slate-500" />
+                        Recent Attendance Sessions
+                      </h4>
+                      {enrollment.attendance.logs.length === 0 ? (
+                        <p className="text-xs text-slate-500 italic">No attendance records found yet.</p>
+                      ) : (
+                        <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden bg-white">
+                          {enrollment.attendance.logs.map((log: any) => (
+                            <div key={log.id} className="flex justify-between items-center p-2.5 text-xs">
+                              <span className="text-slate-600">{new Date(log.date).toLocaleDateString()}</span>
+                              <Badge
+                                variant={
+                                  log.status === 'Present'
+                                    ? 'success'
+                                    : log.status === 'Late'
+                                      ? 'warning'
+                                      : log.status === 'Absent'
+                                        ? 'error'
+                                        : 'outline'
+                                }
+                                className="text-[10px] px-1.5"
+                              >
+                                {log.status}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {enrollment.studentProfileId && (
+                        <div className="pt-1">
+                          <Link
+                            href={`/students/${enrollment.studentProfileId}`}
+                            className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
+                          >
+                            View All Attendance Roster Details <ExternalLink className="h-3 w-3" />
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-500 italic p-4 border border-slate-100 rounded-xl bg-slate-50/50">
+                    No enrollment or attendance details found for this lead.
+                  </p>
+                )}
+              </TabsContent>
+
+              {/* Tab: Payments & Finance */}
+              <TabsContent value="finance" className="space-y-4">
+                {enrollment ? (
+                  sessionPermissions?.includes('finance.invoice.read') ? (
+                    <div className="space-y-4">
+                      {enrollment.invoices && enrollment.invoices.length > 0 ? (
+                        <>
+                          <div className="overflow-x-auto rounded-xl border border-slate-100 bg-white">
+                            <Table>
+                              <TableHeader className="bg-slate-50/50">
+                                <TableRow>
+                                  <TableHead className="text-xs">Invoice #</TableHead>
+                                  <TableHead className="text-xs">Due Date</TableHead>
+                                  <TableHead className="text-xs">Total Amount</TableHead>
+                                  <TableHead className="text-xs">Paid</TableHead>
+                                  <TableHead className="text-xs">Outstanding</TableHead>
+                                  <TableHead className="text-xs">Status</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {enrollment.invoices.map((inv: any) => (
+                                  <TableRow key={inv.id}>
+                                    <TableCell className="font-mono text-xs font-semibold">{inv.invoiceNumber}</TableCell>
+                                    <TableCell className="text-xs">{new Date(inv.dueDate).toLocaleDateString()}</TableCell>
+                                    <TableCell className="text-xs">OMR {inv.totalAmount.toFixed(3)}</TableCell>
+                                    <TableCell className="text-xs text-emerald-600">OMR {inv.paidAmount.toFixed(3)}</TableCell>
+                                    <TableCell className="text-xs text-red-600">OMR {inv.outstandingAmount.toFixed(3)}</TableCell>
+                                    <TableCell>
+                                      <Badge variant={getInvoiceStatusBadge(inv.status)} className="text-[9px] px-1 py-0">
+                                        {inv.status}
+                                      </Badge>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </div>
+                          <div className="pt-1 flex justify-between items-center text-xs">
+                            <span className="text-slate-500">
+                              Financial verification status is synced from the invoices registry.
+                            </span>
+                            {enrollment.studentProfileId && (
+                              <Link
+                                href={`/students/${enrollment.studentProfileId}`}
+                                className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
+                              >
+                                View Financial Ledgers <ExternalLink className="h-3 w-3" />
+                              </Link>
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <p className="text-xs text-slate-500 italic">No invoice records generated for this enrollment.</p>
+                      )}
+                    </div>
+                  ) : (
+                    /* Counselor masked finance info */
+                    <div className="p-4 bg-amber-50/50 border border-amber-100 rounded-xl space-y-3">
+                      <div className="flex items-start gap-2 text-xs text-amber-800">
+                        <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-semibold">Financial Access Restricted</p>
+                          <p className="text-[11px] text-amber-700 mt-0.5">
+                            You do not have permissions to view detailed invoice ledgers. A high-level payment status check is provided below.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-amber-100 pt-3 text-xs">
+                        <div>
+                          <span className="text-slate-500 block mb-0.5">Payment Validation Outcome:</span>
+                          <span className={`font-bold ${enrollment.courseCompletion?.paymentOutcome === 'Pass' ? 'text-emerald-600' : 'text-slate-600'}`}>
+                            {enrollment.courseCompletion?.paymentOutcome === 'Pass' ? 'Pass (Settled)' : 'Pending / Outstanding'}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500 block mb-0.5">Payment Validation Required:</span>
+                          <span className="font-semibold text-slate-700">
+                            {enrollment.paymentValidationRequired ? 'Yes (Enforced)' : 'No'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <p className="text-xs text-slate-500 italic p-4 border border-slate-100 rounded-xl bg-slate-50/50">
+                    No enrollment details found to query billing.
+                  </p>
+                )}
+              </TabsContent>
+            </Tabs>
+          </div>
+        )}
+
         {/* Second Row: Follow-Up Engagements */}
         <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2">
@@ -768,266 +1284,109 @@ export function LeadDetailsClient({
 
         {/* Third Row: Pipeline & Timeline Notes */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column: Pipeline Status & Stage History */}
+          {/* Left Column: Stage History Timeline */}
           <div className="lg:col-span-1 space-y-6">
             <div className="border border-[color:var(--ims-border)] p-6 rounded-2xl space-y-4 bg-white/80 shadow-sm">
               <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                 <h3 className="text-sm font-semibold flex items-center gap-2 text-[color:var(--ims-ink)] font-display">
                   <Activity className="h-4 w-4 text-[color:var(--ims-brass)]" />
-                  Pipeline Status
+                  Stage History Timeline
                 </h3>
-                {!isEditingStage && lead.stage !== 'Converted' && (
+                {stageHistory.length + 1 > 2 && (
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className="text-[10px] h-7 px-2"
-                    onClick={() => {
-                      setStageValue(lead.stage);
-                      setLostCodeValue(lead.lostReasonCode || '');
-                      setLostNotesValue(lead.lostReasonNotes || '');
-                      setIsEditingStage(true);
-                    }}
+                    className="text-[10px] h-6 px-2 hover:bg-slate-100 text-[color:var(--ims-brass)] border border-slate-200"
+                    onClick={() => setIsTimelineExpanded(!isTimelineExpanded)}
                   >
-                    Change Stage
+                    {isTimelineExpanded
+                      ? 'Collapse'
+                      : `Show all (+${stageHistory.length + 1 - 2} more)`}
                   </Button>
                 )}
               </div>
 
-              {isEditingStage ? (
-                <form
-                  onSubmit={handleStageUpdate}
-                  className="space-y-4 max-w-lg text-xs"
-                >
-                  {stageError && (
-                    <div className="p-2 bg-red-50 border border-red-200 text-[color:var(--ims-error)] rounded-lg text-xs">
-                      {stageError}
-                    </div>
-                  )}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <FormField>
-                      <FormLabel required>Pipeline Stage</FormLabel>
-                      <Select
-                        value={stageValue}
-                        onChange={(e) => setStageValue(e.target.value)}
-                        options={[
-                          { value: 'New', label: 'New' },
-                          { value: 'Contacted', label: 'Contacted' },
-                          { value: 'FollowUp', label: 'FollowUp' },
-                          { value: 'Qualified', label: 'Qualified' },
-                          { value: 'Negotiation', label: 'Negotiation' },
-                          { value: 'Won', label: 'Won' },
-                          { value: 'Lost', label: 'Lost' },
-                        ]}
-                      />
-                    </FormField>
-                  </div>
+              {(() => {
+                const creationEvent = {
+                  id: 'creation',
+                  performedAt: lead.createdAt,
+                  performerName: lead.createdBy || 'System',
+                  oldStage: 'None',
+                  newStage: 'New',
+                  lostReasonCode: null,
+                  lostReasonNotes: null,
+                  isCreation: true,
+                };
 
-                  {stageValue === 'Lost' && (
-                    <div className="border border-[color:var(--ims-border)] p-4 rounded-xl bg-slate-50 space-y-4">
-                      <FormField>
-                        <FormLabel required>Lost Reason Code</FormLabel>
-                        <Select
-                          value={lostCodeValue}
-                          onChange={(e) => setLostCodeValue(e.target.value)}
-                          options={[
-                            { value: '', label: 'Select reason' },
-                            { value: 'PriceTooHigh', label: 'Price too high' },
-                            {
-                              value: 'CompetitorChosen',
-                              label: 'Chose competitor',
-                            },
-                            {
-                              value: 'TimingNotGood',
-                              label: 'Timing not good',
-                            },
-                            {
-                              value: 'NoResponse',
-                              label: 'Lost contact / no response',
-                            },
-                            { value: 'Other', label: 'Other reason' },
-                          ]}
-                        />
-                      </FormField>
-                      <FormField>
-                        <FormLabel required>
-                          Lost Details (Min 15 characters)
-                        </FormLabel>
-                        <Textarea
-                          placeholder="Please specify lost reason in details..."
-                          rows={3}
-                          value={lostNotesValue}
-                          onChange={(e) => setLostNotesValue(e.target.value)}
-                        />
-                      </FormField>
-                    </div>
-                  )}
+                const fullTimeline = [creationEvent, ...stageHistory];
+                const visibleTimeline = isTimelineExpanded
+                  ? fullTimeline
+                  : fullTimeline.slice(-2);
 
-                  <div className="flex gap-2">
-                    <Button type="submit" size="sm" disabled={isSavingStage}>
-                      {isSavingStage ? 'Saving...' : 'Save Stage'}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setIsEditingStage(false)}
-                      disabled={isSavingStage}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </form>
-              ) : (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div>
-                      <span className="text-[color:var(--ims-muted)] block mb-1">
-                        Current Stage
-                      </span>
-                      <Badge
-                        variant={getStageBadgeVariant(lead.stage)}
-                        className="text-xs px-2.5 py-1"
-                      >
-                        {lead.stage}
-                      </Badge>
-                    </div>
-                    {lead.priority && (
-                      <div>
-                        <span className="text-[color:var(--ims-muted)] block mb-1">
-                          Priority
-                        </span>
-                        <span className="font-semibold text-[color:var(--ims-ink)]">
-                          {lead.priority}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  {lead.stage === 'Lost' && (
-                    <div className="p-3 bg-red-50/50 border border-red-100 rounded-lg space-y-2 text-xs">
-                      <div>
-                        <span className="font-bold text-[color:var(--ims-error)]">
-                          Lost Reason Code:
-                        </span>{' '}
-                        <span className="font-semibold text-[color:var(--ims-ink)]">
-                          {lead.lostReasonCode || 'N/A'}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-bold text-[color:var(--ims-error)]">
-                          Lost Explanatory Notes:
-                        </span>
-                        <p className="mt-1 text-slate-600 bg-white p-2 rounded border border-slate-100 whitespace-pre-wrap">
-                          {lead.lostReasonNotes ||
-                            'No explanatory notes provided.'}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Chronological Stage History Timeline Chart */}
-              <div className="mt-6 border-t border-slate-100 pt-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-xs font-semibold text-[color:var(--ims-ink)] uppercase tracking-wider font-display">
-                    Stage History Timeline
-                  </h4>
-                  {stageHistory.length + 1 > 2 && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-[10px] h-6 px-2 hover:bg-slate-100 text-[color:var(--ims-brass)] border border-slate-200"
-                      onClick={() => setIsTimelineExpanded(!isTimelineExpanded)}
-                    >
-                      {isTimelineExpanded
-                        ? 'Collapse'
-                        : `Show all (+${stageHistory.length + 1 - 2} more)`}
-                    </Button>
-                  )}
-                </div>
-
-                {(() => {
-                  const creationEvent = {
-                    id: 'creation',
-                    performedAt: lead.createdAt,
-                    performerName: lead.createdBy || 'System',
-                    oldStage: 'None',
-                    newStage: 'New',
-                    lostReasonCode: null,
-                    lostReasonNotes: null,
-                    isCreation: true,
-                  };
-
-                  const fullTimeline = [creationEvent, ...stageHistory];
-                  const visibleTimeline = isTimelineExpanded
-                    ? fullTimeline
-                    : fullTimeline.slice(-2);
-
-                  return (
-                    <div className="relative border-l-2 border-slate-200 ml-3 pl-6 space-y-6 my-4">
-                      {visibleTimeline.map((event) => {
-                        if ('isCreation' in event && event.isCreation) {
-                          return (
-                            <div key={event.id} className="relative">
-                              <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-slate-200 bg-white ring-8 ring-white">
-                                <span className="h-2 w-2 rounded-full bg-slate-400" />
-                              </span>
-                              <div>
-                                <span className="text-xs font-semibold text-slate-800">
-                                  Lead created at stage{' '}
-                                  <Badge variant="default">New</Badge>
-                                </span>
-                                <span className="block text-[10px] text-[color:var(--ims-muted)] mt-1">
-                                  {new Date(event.performedAt).toLocaleString()}
-                                </span>
-                              </div>
-                            </div>
-                          );
-                        }
-
+                return (
+                  <div className="relative border-l-2 border-slate-200 ml-3 pl-6 space-y-6 my-4">
+                    {visibleTimeline.map((event) => {
+                      if ('isCreation' in event && event.isCreation) {
                         return (
                           <div key={event.id} className="relative">
-                            {/* Timeline circle marker */}
                             <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-slate-200 bg-white ring-8 ring-white">
-                              <span className="h-2 w-2 rounded-full bg-[color:var(--ims-brass)]" />
+                              <span className="h-2 w-2 rounded-full bg-slate-400" />
                             </span>
-                            <div className="flex flex-col md:flex-row md:justify-between gap-1">
-                              <div>
-                                <span className="text-xs font-semibold text-slate-800">
-                                  Stage updated from{' '}
-                                  <span className="font-mono bg-slate-100 px-1 rounded">
-                                    {event.oldStage}
-                                  </span>{' '}
-                                  to{' '}
-                                  <Badge
-                                    variant={getStageBadgeVariant(
-                                      event.newStage,
-                                    )}
-                                  >
-                                    {event.newStage}
-                                  </Badge>
-                                </span>
-                                {event.lostReasonCode && (
-                                  <p className="text-[10px] text-[color:var(--ims-error)] font-medium mt-1">
-                                    Reason: {event.lostReasonCode} -{' '}
-                                    {event.lostReasonNotes}
-                                  </p>
-                                )}
-                              </div>
-                              <div className="text-[10px] text-[color:var(--ims-muted)] md:text-right">
-                                <span>By {event.performerName}</span>
-                                <span className="block mt-0.5">
-                                  {new Date(event.performedAt).toLocaleString()}
-                                </span>
-                              </div>
+                            <div>
+                              <span className="text-xs font-semibold text-slate-800">
+                                Lead created at stage{' '}
+                                <Badge variant="default">New</Badge>
+                              </span>
+                              <span className="block text-[10px] text-[color:var(--ims-muted)] mt-1">
+                                {new Date(event.performedAt).toLocaleString()}
+                              </span>
                             </div>
                           </div>
                         );
-                      })}
-                    </div>
-                  );
-                })()}
-              </div>
+                      }
+
+                      return (
+                        <div key={event.id} className="relative">
+                          {/* Timeline circle marker */}
+                          <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-slate-200 bg-white ring-8 ring-white">
+                            <span className="h-2 w-2 rounded-full bg-[color:var(--ims-brass)]" />
+                          </span>
+                          <div className="flex flex-col md:flex-row md:justify-between gap-1">
+                            <div>
+                              <span className="text-xs font-semibold text-slate-800">
+                                Stage updated from{' '}
+                                <span className="font-mono bg-slate-100 px-1 rounded">
+                                  {event.oldStage}
+                                </span>{' '}
+                                to{' '}
+                                <Badge
+                                  variant={getStageBadgeVariant(
+                                    event.newStage,
+                                  )}
+                                >
+                                  {event.newStage}
+                                </Badge>
+                              </span>
+                              {event.lostReasonCode && (
+                                <p className="text-[10px] text-[color:var(--ims-error)] font-medium mt-1">
+                                  Reason: {event.lostReasonCode} -{' '}
+                                  {event.lostReasonNotes}
+                                </p>
+                              )}
+                            </div>
+                            <div className="text-[10px] text-[color:var(--ims-muted)] md:text-right">
+                              <span>By {event.performerName}</span>
+                              <span className="block mt-0.5">
+                                {new Date(event.performedAt).toLocaleString()}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </div>
           </div>
 
@@ -1171,94 +1530,6 @@ export function LeadDetailsClient({
         </div>
       </div>
 
-      {/* Convert Lead Dialog Modal */}
-      <Dialog
-        open={showConvertDialog}
-        onOpenChange={(open) => !open && setShowConvertDialog(false)}
-      >
-        <DialogContent className="max-w-md bg-white border border-[color:var(--ims-border)] shadow-2xl rounded-2xl p-6">
-          <DialogHeader>
-            <DialogTitle className="text-lg font-bold text-[color:var(--ims-ink)]">
-              Convert Lead to Student
-            </DialogTitle>
-            <DialogDescription className="text-xs text-[color:var(--ims-muted)]">
-              To complete the admissions handoff, please upload or enter URL
-              links for at least one identity document (e.g., Omani Civil ID
-              scan, passport copy).
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleConvertSubmit} className="space-y-4 py-2">
-            {docError && (
-              <div className="text-xs bg-red-50 text-[color:var(--ims-error)] p-3 rounded-xl border border-[color:var(--ims-error-border)]">
-                {docError}
-              </div>
-            )}
-
-            {requirements.map((req) => {
-              const file = uploadedFiles[req.documentType];
-              const isUploading = uploadingStates[req.documentType];
-              return (
-                <FormField key={req.documentType}>
-                  <FormLabel required={req.isMandatory}>
-                    {req.documentType.replace(/_/g, ' ')}{' '}
-                    {req.isMandatory ? '' : '(Optional)'}
-                  </FormLabel>
-                  <FormControl>
-                    {file ? (
-                      <div className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs">
-                        <span className="truncate max-w-[200px] font-mono font-medium">
-                          {file.fileName}
-                        </span>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleClearDoc(req.documentType)}
-                          className="h-5 px-1.5 text-xs text-rose-600 hover:bg-rose-50"
-                          disabled={isConverting}
-                        >
-                          Clear
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="space-y-1">
-                        <input
-                          type="file"
-                          onChange={(e) => {
-                            const f = e.target.files?.[0];
-                            handleLeadDocUpload(req.documentType, f);
-                          }}
-                          disabled={isConverting || isUploading}
-                          className="block w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
-                        />
-                        {isUploading && (
-                          <span className="text-[10px] text-slate-500 italic">
-                            Uploading to store...
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </FormControl>
-                </FormField>
-              );
-            })}
-
-            <DialogFooter className="mt-6 border-t border-[color:var(--ims-border)] pt-4">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setShowConvertDialog(false)}
-                disabled={isConverting}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isConverting}>
-                {isConverting ? 'Converting...' : 'Complete Admissions Handoff'}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
 
       {/* Schedule Follow-Up Dialog Modal */}
       <Dialog

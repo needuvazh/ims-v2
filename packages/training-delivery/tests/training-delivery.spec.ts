@@ -1085,7 +1085,7 @@ test('BatchService.enqueueWaitlist should reject enqueuing if student profile la
       studentProfileId,
       actorId: 'user-id',
     }),
-  ).rejects.toThrow('ERR_AUTH_BRANCH_DENIED');
+  ).rejects.toThrow('ERR_ADM_NOT_FOUND');
 });
 
 test('BatchService.enqueueWaitlist should reject enqueuing if lead is converted', async () => {

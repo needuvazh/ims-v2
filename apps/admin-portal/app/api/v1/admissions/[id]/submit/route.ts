@@ -52,9 +52,10 @@ export async function POST(
 
           const admission = await prisma.admission.findUnique({
             where: { id: admissionId },
+            include: { studentProfile: true },
           });
 
-          if (!admission) {
+          if (!admission || !admission.studentProfile) {
             throw new Error('ERR_ADMISSION_NOT_FOUND');
           }
 
@@ -63,7 +64,7 @@ export async function POST(
               session.userId,
               session.activeBranchId ?? null,
             );
-          if (!allowedBranches.includes(admission.branchId as Uuid)) {
+          if (!allowedBranches.includes(admission.studentProfile.branchId as Uuid)) {
             throw new Error('ERR_AUTH_BRANCH_DENIED');
           }
 

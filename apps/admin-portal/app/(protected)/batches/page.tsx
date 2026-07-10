@@ -90,7 +90,7 @@ export default async function BatchesPage(props: {
   const group = searchParams.group || 'active';
   const showCompleted = searchParams.showCompleted === 'true';
   const showCancelled = searchParams.showCancelled === 'true';
-  const showDraft = searchParams.showDraft === 'true';
+  const showDraft = searchParams.showDraft !== 'false';
   const dateFrom = searchParams.dateFrom || '';
   const dateTo = searchParams.dateTo || '';
 
@@ -189,6 +189,14 @@ export default async function BatchesPage(props: {
   if (showCancelled) activeStatuses.push('Cancelled');
   if (showDraft) activeStatuses.push('Draft');
 
+  const statusesToExclude = [];
+  if (!showCancelled) {
+    statusesToExclude.push('Cancelled');
+  }
+  if (!showDraft) {
+    statusesToExclude.push('Draft');
+  }
+
   const [activeCount, pastCount, futureCount, allCount] = await Promise.all([
     prisma.batch.count({
       where: {
@@ -202,20 +210,26 @@ export default async function BatchesPage(props: {
       where: {
         ...baseWhere,
         endDate: { lt: threeDaysAgo },
-        ...(!showCancelled && { status: { not: 'Cancelled' } }),
+        ...(statusesToExclude.length > 0 && {
+          status: { notIn: statusesToExclude },
+        }),
       },
     }),
     prisma.batch.count({
       where: {
         ...baseWhere,
         startDate: { gt: threeDaysFromNow },
-        ...(!showCancelled && { status: { not: 'Cancelled' } }),
+        ...(statusesToExclude.length > 0 && {
+          status: { notIn: statusesToExclude },
+        }),
       },
     }),
     prisma.batch.count({
       where: {
         ...baseWhere,
-        ...(!showCancelled && { status: { not: 'Cancelled' } }),
+        ...(statusesToExclude.length > 0 && {
+          status: { notIn: statusesToExclude },
+        }),
       },
     }),
   ]);

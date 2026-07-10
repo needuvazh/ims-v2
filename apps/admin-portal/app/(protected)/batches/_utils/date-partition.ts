@@ -39,14 +39,21 @@ export function getGroupWhereClause(
     const activeStatuses = ['OpenForEnrollment', 'InProgress'];
     if (options.showCompleted) activeStatuses.push('Completed');
     if (options.showCancelled) activeStatuses.push('Cancelled');
-    if (options.showDraft) activeStatuses.push('Draft');
+    if (options.showDraft !== false) activeStatuses.push('Draft');
 
     where.status = { in: activeStatuses };
   } else if (group === 'past') {
     where.endDate = { lt: threeDaysAgo };
 
+    const statusesToExclude = [];
     if (!options.showCancelled) {
-      where.status = { not: 'Cancelled' };
+      statusesToExclude.push('Cancelled');
+    }
+    if (options.showDraft === false) {
+      statusesToExclude.push('Draft');
+    }
+    if (statusesToExclude.length > 0) {
+      where.status = { notIn: statusesToExclude };
     }
 
     if (options.dateFrom || options.dateTo) {
@@ -64,8 +71,15 @@ export function getGroupWhereClause(
   } else if (group === 'future') {
     where.startDate = { gt: threeDaysFromNow };
 
+    const statusesToExclude = [];
     if (!options.showCancelled) {
-      where.status = { not: 'Cancelled' };
+      statusesToExclude.push('Cancelled');
+    }
+    if (options.showDraft === false) {
+      statusesToExclude.push('Draft');
+    }
+    if (statusesToExclude.length > 0) {
+      where.status = { notIn: statusesToExclude };
     }
 
     if (options.dateFrom || options.dateTo) {
@@ -81,8 +95,15 @@ export function getGroupWhereClause(
       }
     }
   } else if (group === 'all') {
+    const statusesToExclude = [];
     if (!options.showCancelled) {
-      where.status = { not: 'Cancelled' };
+      statusesToExclude.push('Cancelled');
+    }
+    if (options.showDraft === false) {
+      statusesToExclude.push('Draft');
+    }
+    if (statusesToExclude.length > 0) {
+      where.status = { notIn: statusesToExclude };
     }
 
     if (options.dateFrom || options.dateTo) {
@@ -101,3 +122,4 @@ export function getGroupWhereClause(
 
   return where;
 }
+

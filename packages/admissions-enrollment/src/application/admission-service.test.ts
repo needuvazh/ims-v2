@@ -45,7 +45,7 @@ test('createStudentAdmission should check duplicates, generate STU/ADM numbers a
   );
 
   // Verify Outbox events
-  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledTimes(2); // AdmissionCreated & StudentProfileCreated (isNewProfile = true)
+  expect(mockPrisma.outboxEvent.create).toHaveBeenCalledTimes(3); // AdmissionCreated, AdmissionApproved & StudentProfileCreated (isNewProfile = true)
   expect(mockPrisma.auditLog.create).toHaveBeenCalled();
 });
 

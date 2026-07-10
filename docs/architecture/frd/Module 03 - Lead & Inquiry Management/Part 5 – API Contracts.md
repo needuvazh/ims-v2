@@ -529,6 +529,7 @@ export const CreateLeadSchema = z.object({
         "stage": "New",
         "counselorId": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
         "interestedCourseId": "c182b740-12ef-4cb3-912b-40ab12f00101",
+        "admissionNumber": null,
         "createdAt": "2026-06-30T16:30:00.000Z"
       }
     ],
@@ -569,6 +570,7 @@ export const CreateLeadSchema = z.object({
     "campaignId": null,
     "priority": "Medium",
     "notes": "Interested in HSE course.",
+    "admissionNumber": null,
     "version": 1,
     "createdAt": "2026-06-30T16:30:00.000Z",
     "followUps": [],
