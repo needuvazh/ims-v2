@@ -1,5 +1,3 @@
-'use server';
-
 import { assertPermission } from '../../lib/auth-guard';
 import { prisma } from '@ims/database';
 import type { Prisma } from '@prisma/client';

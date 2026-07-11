@@ -1,5 +1,3 @@
-'use server';
-
 import { notFound } from 'next/navigation';
 import { assertPermission } from '../../../lib/auth-guard';
 import { CertificateService } from '@ims/certificates';
