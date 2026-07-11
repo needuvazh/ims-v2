@@ -76,6 +76,13 @@ interface EnrollmentDetail {
   enrollmentType: string;
   studentProfileId: string;
   photoUrl: string | null;
+  resolvedDiscounts?: Array<{
+    id: string;
+    discountType: string;
+    discountMode: string;
+    discountValue: number;
+    calculatedAmount: number;
+  }>;
 }
 
 interface InvoiceLineItem {
@@ -152,6 +159,15 @@ interface EnrollmentDetailsClientProps {
   courses: Array<{ id: string; name: string }>;
   batches: BatchOption[];
 }
+
+const formatDateSafe = (dateStr: string | Date) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 
 export function EnrollmentDetailsClient({
   detail,
@@ -262,7 +278,20 @@ export function EnrollmentDetailsClient({
       },
     ];
 
-    if (Number(enrollment.resolvedDiscount) > 0) {
+    if (enrollment.resolvedDiscounts && enrollment.resolvedDiscounts.length > 0) {
+      enrollment.resolvedDiscounts.forEach((d) => {
+        defaultItems.push({
+          descriptionEnglish: `Discount: ${d.discountType} (${d.discountMode === 'Percentage' ? d.discountValue + '%' : d.discountValue + ' OMR'}) (${enrollment.enrollmentNumber})`,
+          quantity: 1,
+          unitPrice: d.calculatedAmount,
+          isDiscount: true,
+          enrollmentId: enrollment.id,
+          courseId: enrollment.courseId,
+          sourceBranchId: enrollment.branchId,
+          isFromMaster: true,
+        });
+      });
+    } else if (Number(enrollment.resolvedDiscount) > 0) {
       defaultItems.push({
         descriptionEnglish: `Discount: Scholarship/Promo (${enrollment.enrollmentNumber})`,
         quantity: 1,
@@ -413,8 +442,8 @@ export function EnrollmentDetailsClient({
 
   const handleChangeBatchSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedBatchId || selectedBatchId === enrollment.batchId) {
-      toast.error('Please select a different batch.');
+    if (!selectedBatchId) {
+      toast.error('Please select a batch.');
       return;
     }
     startTransition(async () => {
@@ -635,7 +664,7 @@ export function EnrollmentDetailsClient({
   const isApprovedWithoutPayment = enrollment.enrollmentStatus === 'Approved' && !hasPaymentRecord;
 
   const canChangeBatch =
-    ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active'].includes(enrollment.enrollmentStatus) &&
+    ['Draft', 'Submitted', 'Approved'].includes(enrollment.enrollmentStatus) &&
     sessionPermissions.includes('enrollment.submit');
 
   return (
@@ -709,7 +738,7 @@ export function EnrollmentDetailsClient({
                 </div>
                 <div className="flex justify-between">
                   <span>Created At:</span>
-                  <span>{new Date(enrollment.createdAt).toLocaleDateString()}</span>
+                  <span>{formatDateSafe(enrollment.createdAt)}</span>
                 </div>
               </div>
             </Card>
@@ -1197,7 +1226,7 @@ export function EnrollmentDetailsClient({
                           </Badge>
                         </div>
                         <p className="text-xs text-slate-500 mt-1">
-                          Date: {new Date(inv.invoiceDate).toLocaleDateString()} | Split: {inv.subCategory}
+                          Date: {formatDateSafe(inv.invoiceDate)} | Split: {inv.subCategory}
                         </p>
                       </div>
 
@@ -1333,7 +1362,7 @@ export function EnrollmentDetailsClient({
                                 <tr key={p.id} className="hover:bg-slate-50/50">
                                   <td className="p-2.5 font-bold font-mono text-slate-900">{p.paymentNumber}</td>
                                   <td className="p-2.5">{p.paymentMethod}</td>
-                                  <td className="p-2.5">{new Date(p.paymentDate).toLocaleDateString()}</td>
+                                  <td className="p-2.5">{formatDateSafe(p.paymentDate)}</td>
                                   <td className="p-2.5 font-mono text-slate-400">{p.referenceNumber || 'N/A'}</td>
                                   <td className="p-2.5 text-right font-mono font-bold text-slate-900">{p.amount.toFixed(3)} OMR</td>
                                 </tr>

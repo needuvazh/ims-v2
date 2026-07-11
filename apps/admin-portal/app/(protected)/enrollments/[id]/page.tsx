@@ -182,6 +182,36 @@ export default async function EnrollmentDetailPage(props: {
     })),
   }));
 
+  // Resolve course pricing to fetch individual discounts
+  const { coursePricingService } = await import('@/lib/runtime');
+  let resolvedDiscounts: any[] = [];
+  if (enrollment.batchId) {
+    try {
+      const pricing = await coursePricingService.resolveCoursePricing({
+        courseId: enrollment.courseId,
+        branchId: enrollment.branchId,
+        batchId: enrollment.batchId,
+        customerType: enrollment.enrollmentType === 'Corporate' ? 'Corporate' : 'Individual',
+        asOfDate: enrollment.priceEvaluationTimestamp || enrollment.createdAt,
+      });
+      resolvedDiscounts = (pricing.applicableDiscounts || []).map((d: any) => {
+        const val =
+          d.discountMode === 'Percentage'
+            ? (pricing.basePrice * d.discountValue) / 100
+            : d.discountValue;
+        return {
+          id: d.id,
+          discountType: d.discountType,
+          discountMode: d.discountMode,
+          discountValue: d.discountValue,
+          calculatedAmount: val,
+        };
+      });
+    } catch (err) {
+      // Keep empty if resolve fails
+    }
+  }
+
   // Map values for client component
   const mappedDetail = {
     enrollment: {
@@ -201,6 +231,7 @@ export default async function EnrollmentDetailPage(props: {
       pricingSource: enrollment.pricingSource,
       resolvedPrice: enrollment.resolvedPrice.toString(),
       resolvedDiscount: enrollment.resolvedDiscount.toString(),
+      resolvedDiscounts,
       finalAmount: enrollment.finalAmount.toString(),
       paymentValidationRequired: enrollment.paymentValidationRequired,
       priceEvaluationTimestamp:
