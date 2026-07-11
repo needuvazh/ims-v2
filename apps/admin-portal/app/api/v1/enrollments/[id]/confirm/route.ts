@@ -7,11 +7,6 @@ import {
   getCurrentRequestContext,
 } from '../../../../../../lib/observability';
 import type { Uuid } from '@ims/shared-kernel';
-import { z } from 'zod';
-
-const ChangeBatchRequestSchema = z.object({
-  batchId: z.string().uuid(),
-});
 
 function errorResponse(error: Error) {
   const msg = error.message;
@@ -21,21 +16,12 @@ function errorResponse(error: Error) {
   if (msg.includes('ERR_ENROLLMENT_NOT_FOUND')) {
     status = 404;
     code = 'ERR_ENROLLMENT_NOT_FOUND';
-  } else if (msg.includes('ERR_BATCH_NOT_FOUND')) {
-    status = 404;
-    code = 'ERR_BATCH_NOT_FOUND';
-  } else if (msg.includes('ERR_ENR_BATCH_COURSE_MISMATCH')) {
+  } else if (msg.includes('ERR_ENR_INVALID_STATE')) {
     status = 400;
-    code = 'ERR_ENR_BATCH_COURSE_MISMATCH';
-  } else if (msg.includes('ERR_ENR_BATCH_CHANGE_BLOCKED_PAID')) {
+    code = 'ERR_ENR_INVALID_STATE';
+  } else if (msg.includes('ERR_DOCUMENTS_VERIFICATION_GATE_FAILED')) {
     status = 422;
-    code = 'ERR_ENR_BATCH_CHANGE_BLOCKED_PAID';
-  } else if (msg.includes('ERR_ENR_BATCH_CHANGE_BLOCKED_STATUS')) {
-    status = 422;
-    code = 'ERR_ENR_BATCH_CHANGE_BLOCKED_STATUS';
-  } else if (msg.includes('ERR_ENR_BATCH_FULL')) {
-    status = 422;
-    code = 'ERR_ENR_BATCH_FULL';
+    code = 'ERR_DOCUMENTS_VERIFICATION_GATE_FAILED';
   } else if (msg.includes('ERR_AUTH_BRANCH_DENIED')) {
     status = 403;
     code = 'ERR_AUTH_BRANCH_DENIED';
@@ -60,13 +46,10 @@ export async function POST(
   return withRouteObservability(
     request.headers,
     async () =>
-      withPermission(request, 'enrollment.submit', async ({ session }) => {
+      withPermission(request, 'enrollment.approve', async ({ session }) => {
         const logger = createStructuredLogger(getCurrentRequestContext() ?? {});
 
         try {
-          const body = await request.json();
-          const parsed = ChangeBatchRequestSchema.parse(body);
-
           const { enrollmentService, branchScopeResolver } =
             await import('../../../../../../lib/runtime');
 
@@ -76,7 +59,6 @@ export async function POST(
               session.activeBranchId ?? null,
             );
 
-          // Fetch enrollment to verify branch scope before modifying
           const prisma = (await import('../../../../../../lib/runtime')).prisma;
           const enrollment = await prisma.enrollment.findUnique({
             where: { id: enrollmentId },
@@ -90,35 +72,39 @@ export async function POST(
             throw new Error('ERR_AUTH_BRANCH_DENIED');
           }
 
-          await enrollmentService.changeEnrollmentBatch(
+          await enrollmentService.confirmEnrollment(
             enrollmentId,
-            parsed.batchId,
             session.userId,
           );
+
+          const updated = await prisma.enrollment.findUnique({
+            where: { id: enrollmentId },
+          });
 
           const response = NextResponse.json(
             {
               success: true,
-              message: 'Enrollment batch changed successfully.',
+              enrollmentStatus: updated?.enrollmentStatus || 'Approved',
+              message: 'Enrollment confirmed successfully.',
             },
             { status: 200 },
           );
 
           applyObservabilityResponseHeaders(response.headers, request.headers, {
-            route: '/api/v1/enrollments/[id]/change-batch',
+            route: '/api/v1/enrollments/[id]/confirm',
             method: request.method,
             status: 'success',
           });
 
           return response;
         } catch (error) {
-          logger.error('api.enrollments.change-batch.failed', {
+          logger.error('api.enrollments.confirm.failed', {
             status: 'failed',
             error: error as Error,
           });
           return errorResponse(error as Error);
         }
       }),
-    { route: '/api/v1/enrollments/[id]/change-batch' },
+    { route: '/api/v1/enrollments/[id]/confirm' },
   );
 }
