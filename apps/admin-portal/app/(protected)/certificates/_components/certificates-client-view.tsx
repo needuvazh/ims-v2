@@ -1,6 +1,8 @@
+
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import {
@@ -25,11 +27,8 @@ import {
   CheckCircle,
   AlertTriangle,
   RotateCcw,
-  Trash2,
   ExternalLink,
   ShieldAlert,
-  Calendar,
-  Languages,
 } from 'lucide-react';
 import {
   generateCertificateAction,
@@ -39,17 +38,18 @@ import {
   generateReplacementCertificateAction,
   revokeCertificateAction,
 } from '../actions';
+import type {
+  CertificateMetricsViewModel,
+  CertificateReadinessItemViewModel,
+  CertificateRegistryItemViewModel,
+  CertificateReissueRequestItemViewModel,
+} from '../view-models';
 
 interface CertificatesClientViewProps {
-  certificates: any[];
-  readinessQueue: any[];
-  reissueRequests: any[];
-  metrics: {
-    totalIssued: number;
-    totalRevoked: number;
-    totalGenerated: number;
-    pendingReissues: number;
-  };
+  certificates: CertificateRegistryItemViewModel[];
+  readinessQueue: CertificateReadinessItemViewModel[];
+  reissueRequests: CertificateReissueRequestItemViewModel[];
+  metrics: CertificateMetricsViewModel;
   total: number;
   page: number;
   pageSize: number;
@@ -61,9 +61,6 @@ export function CertificatesClientView({
   readinessQueue,
   reissueRequests,
   metrics,
-  total,
-  page,
-  pageSize,
   currentTab,
 }: CertificatesClientViewProps) {
   const router = useRouter();
@@ -399,17 +396,10 @@ export function CertificatesClientView({
                         {cert.certificateNumber}
                       </TableCell>
                       <TableCell>
-                        <div className="font-medium text-gray-800">
-                          {cert.enrollment.studentProfile.person.firstName}{' '}
-                          {cert.enrollment.studentProfile.person.lastName}
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          {cert.enrollment.studentProfile.studentNumber}
-                        </div>
+                        <div className="font-medium text-gray-800">{cert.studentName}</div>
+                        <div className="text-xs text-gray-400">{cert.studentNumber}</div>
                       </TableCell>
-                      <TableCell>
-                        {cert.enrollment.course.nameEnglish}
-                      </TableCell>
+                      <TableCell>{cert.courseName}</TableCell>
                       <TableCell className="uppercase text-xs font-bold text-gray-500">
                         {cert.language}
                       </TableCell>
@@ -466,15 +456,11 @@ export function CertificatesClientView({
                             </Button>
                           </>
                         )}
-                        <a
-                          href={`/api/v1/certificates/${cert.id}/download`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <Link href={`/certificates/${cert.id}`}>
                           <Button size="sm" variant="outline">
                             <ExternalLink className="h-3.5 w-3.5" />
                           </Button>
-                        </a>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -617,19 +603,10 @@ export function CertificatesClientView({
                       className="hover:bg-gray-50/50 transition-colors"
                     >
                       <TableCell className="font-semibold text-gray-700">
-                        {req.certificate.certificateNumber}
+                        {req.certificateNumber}
                       </TableCell>
                       <TableCell>
-                        <div className="font-medium text-gray-800">
-                          {
-                            req.certificate.enrollment.studentProfile.person
-                              .firstName
-                          }{' '}
-                          {
-                            req.certificate.enrollment.studentProfile.person
-                              .lastName
-                          }
-                        </div>
+                        <div className="font-medium text-gray-800">{req.studentName}</div>
                       </TableCell>
                       <TableCell
                         className="max-w-xs truncate text-sm text-gray-600"
@@ -653,7 +630,7 @@ export function CertificatesClientView({
                         </Badge>
                       </TableCell>
                       <TableCell className="text-sm text-gray-500">
-                        {req.requestedByUser.username}
+                        {req.requestedByUsername}
                       </TableCell>
                       <TableCell className="text-right space-x-2">
                         {req.status === 'PendingReview' && (

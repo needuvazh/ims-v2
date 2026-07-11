@@ -7,3 +7,4 @@ export * from './application/IssueCertificateService';
 export * from './application/ReissueService';
 export * from './application/RevocationService';
 export * from './application/VerificationService';
+export * from './application/CertificateService';
