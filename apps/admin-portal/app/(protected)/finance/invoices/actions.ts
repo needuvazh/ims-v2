@@ -94,8 +94,14 @@ export async function createInvoiceAction(data: any) {
       branchId: targetBranchId,
     });
 
+    // Automatically transition invoice status from Draft to Issued
+    await financeService.issueInvoice(result.id);
+
     revalidatePath('/finance/invoices');
     revalidatePath('/finance');
+    if (parsed.enrollmentId) {
+      revalidatePath(`/enrollments/${parsed.enrollmentId}`);
+    }
 
     return {
       success: true,
@@ -184,7 +190,7 @@ export async function recordPaymentAction(data: any) {
     const { prisma, financeService } = await import('../../../lib/runtime');
     const invoice = await prisma.invoice.findUnique({
       where: { id: parsed.invoiceId },
-      select: { branchId: true, currency: true },
+      select: { branchId: true, currency: true, enrollmentId: true },
     });
     if (!invoice) {
       throw new Error('ERR_FIN_INVOICE_NOT_FOUND');
@@ -212,6 +218,25 @@ export async function recordPaymentAction(data: any) {
     revalidatePath('/finance/invoices');
     revalidatePath('/finance/payments');
     revalidatePath('/finance');
+    if (invoice.enrollmentId) {
+      revalidatePath(`/enrollments/${invoice.enrollmentId}`);
+    }
+
+    // Try to auto-confirm if enrollment is Approved
+    if (invoice.enrollmentId) {
+      const enrollment = await prisma.enrollment.findUnique({
+        where: { id: invoice.enrollmentId },
+        select: { enrollmentStatus: true },
+      });
+      if (enrollment?.enrollmentStatus === 'Approved') {
+        try {
+          const { enrollmentService } = await import('../../../lib/runtime');
+          await enrollmentService.confirmEnrollment(invoice.enrollmentId, session.userId);
+        } catch (enrErr: any) {
+          console.warn('Auto-confirmation during payment skipped:', enrErr.message);
+        }
+      }
+    }
 
     return {
       success: true,

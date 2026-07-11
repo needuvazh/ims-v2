@@ -615,8 +615,13 @@ export async function resolveCoursePricingAction(params: {
     const taxAmount = (basePrice * taxPercentage) / 100;
     const totalPrice = pricing.totalPrice; // basePrice + taxAmount
     
-    let resolvedDiscount = pricing.applicableDiscounts.reduce(
-      (sum: number, d: any) => sum + d.discountValue,
+    let resolvedDiscount = (pricing.applicableDiscounts || []).reduce(
+      (sum: number, d: any) => {
+        if (d?.discountMode === 'Percentage') {
+          return sum + (basePrice * Number(d.discountValue || 0)) / 100;
+        }
+        return sum + Number(d?.discountValue || 0);
+      },
       0,
     );
 

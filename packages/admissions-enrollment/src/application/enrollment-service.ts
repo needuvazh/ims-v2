@@ -198,8 +198,13 @@ export class EnrollmentService {
 
         resolvedPrice = new Prisma.Decimal(pricing.basePrice);
         resolvedDiscount = new Prisma.Decimal(
-          pricing.applicableDiscounts.reduce(
-            (sum: number, d: any) => sum + d.discountValue,
+          (pricing.applicableDiscounts || []).reduce(
+            (sum: number, d: any) => {
+              if (d?.discountMode === 'Percentage') {
+                return sum + (pricing.basePrice * Number(d.discountValue || 0)) / 100;
+              }
+              return sum + Number(d?.discountValue || 0);
+            },
             0,
           ),
         );
@@ -1355,18 +1360,65 @@ export class EnrollmentService {
       }
 
       if (enrollment.batchId === newBatchId) {
-        return enrollment; // No change needed
+        // Just re-resolve pricing and snapshot it to the same batch (pricing refresh path)
+        let resolvedPrice = enrollment.resolvedPrice;
+        let resolvedDiscount = enrollment.resolvedDiscount;
+        let finalAmount = enrollment.finalAmount;
+        let pricingSource = enrollment.pricingSource;
+
+        try {
+          const pricing = await this.pricingService.resolveCoursePricing(
+            {
+              courseId: enrollment.courseId,
+              customerType:
+                enrollment.enrollmentType === 'Corporate' ? 'Corporate' : 'Individual',
+              branchId: enrollment.branchId,
+              batchId: newBatchId || undefined,
+              asOfDate: new Date(),
+            },
+            client,
+          );
+
+          resolvedPrice = new Prisma.Decimal(pricing.basePrice);
+          resolvedDiscount = new Prisma.Decimal(
+            (pricing.applicableDiscounts || []).reduce(
+              (sum: number, d: any) => {
+                if (d?.discountMode === 'Percentage') {
+                  return sum + (pricing.basePrice * Number(d.discountValue || 0)) / 100;
+                }
+                return sum + Number(d?.discountValue || 0);
+              },
+              0,
+            ),
+          );
+          const totalPrice = new Prisma.Decimal(pricing.totalPrice);
+          finalAmount = Prisma.Decimal.max(
+            new Prisma.Decimal(0),
+            totalPrice.minus(resolvedDiscount),
+          );
+          pricingSource = pricing.pricingSource || 'GlobalDefault';
+        } catch (error) {
+          // Keep existing
+        }
+
+        const updatedEnrollment = await client.enrollment.update({
+          where: { id: enrollmentId },
+          data: {
+            resolvedPrice,
+            resolvedDiscount,
+            finalAmount,
+            pricingSource,
+            updatedBy: actorId,
+          },
+        });
+
+        return updatedEnrollment;
       }
 
-      // Check if already paid
-      const hasPayments = enrollment.invoices.some(inv => Number(inv.paidAmount) > 0);
-      const walkInPayment = await client.walkInPayment.findFirst({
-        where: { enrollmentId: enrollment.id, isDeleted: false },
-      });
-      const hasWalkInPayment = walkInPayment && Number(walkInPayment.amount) > 0;
-
-      if (hasPayments || hasWalkInPayment) {
-        throw new Error('ERR_ENR_BATCH_CHANGE_BLOCKED_PAID');
+      // Check if enrollment status is valid for batch changes (blocks Confirmed, Active, Completed, Cancelled, Dropped, CertificateIssued)
+      const allowedStatuses = ['Draft', 'Submitted', 'Approved'];
+      if (!allowedStatuses.includes(enrollment.enrollmentStatus)) {
+        throw new Error('ERR_ENR_BATCH_CHANGE_BLOCKED_STATUS');
       }
 
       // Fetch new batch
@@ -1503,11 +1555,56 @@ export class EnrollmentService {
         }
       }
 
-      // Update enrollment's batch
+      // Resolve course pricing & snapshot it for the new batch
+      let resolvedPrice = enrollment.resolvedPrice;
+      let resolvedDiscount = enrollment.resolvedDiscount;
+      let finalAmount = enrollment.finalAmount;
+      let pricingSource = enrollment.pricingSource;
+
+      try {
+        const pricing = await this.pricingService.resolveCoursePricing(
+          {
+            courseId: enrollment.courseId,
+            customerType:
+              enrollment.enrollmentType === 'Corporate' ? 'Corporate' : 'Individual',
+            branchId: enrollment.branchId,
+            batchId: newBatchId,
+            asOfDate: new Date(),
+          },
+          client,
+        );
+
+        resolvedPrice = new Prisma.Decimal(pricing.basePrice);
+        resolvedDiscount = new Prisma.Decimal(
+          (pricing.applicableDiscounts || []).reduce(
+            (sum: number, d: any) => {
+              if (d?.discountMode === 'Percentage') {
+                return sum + (pricing.basePrice * Number(d.discountValue || 0)) / 100;
+              }
+              return sum + Number(d?.discountValue || 0);
+            },
+            0,
+          ),
+        );
+        const totalPrice = new Prisma.Decimal(pricing.totalPrice);
+        finalAmount = Prisma.Decimal.max(
+          new Prisma.Decimal(0),
+          totalPrice.minus(resolvedDiscount),
+        );
+        pricingSource = pricing.pricingSource || 'GlobalDefault';
+      } catch (error) {
+        // Fallback or keep existing
+      }
+
+      // Update enrollment's batch and resolved pricing snapshot
       const updatedEnrollment = await client.enrollment.update({
         where: { id: enrollmentId },
         data: {
           batchId: newBatchId,
+          resolvedPrice,
+          resolvedDiscount,
+          finalAmount,
+          pricingSource,
           updatedBy: actorId,
         },
       });

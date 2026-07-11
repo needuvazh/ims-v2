@@ -158,9 +158,12 @@ export async function GET(
     <!-- Header -->
     <div class="header">
       <div class="header-top">
-        <div>
-          <div class="institute-name">Al-Saud Training Institute</div>
-          <div class="institute-sub">${invoice.branch?.branchName || ''} · ${invoice.branch?.branchCode || ''}</div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <img src="/alsaud/logo-white.png" alt="ASTI Logo" style="height: 56px; width: auto; display: block;" />
+          <div>
+            <div class="institute-name">Al-Saud Training Institute</div>
+            <div class="institute-sub">${invoice.branch?.branchName || ''} · ${invoice.branch?.branchCode || ''}</div>
+          </div>
         </div>
         <div class="invoice-label">
           <div class="tag">Invoice</div>
