@@ -29,6 +29,7 @@ export const mainNavigation: SiteLink[] = [
   { label: 'Courses', href: '/courses' },
   { label: 'Training Facilities', href: '/training-facilities' },
   { label: 'Upcoming Events', href: '/events' },
+  { label: 'Verify Certificate', href: '/verify' },
   { label: 'Contact', href: '/contact-us' },
 ];
 
@@ -36,6 +37,7 @@ export const quickLinks: SiteLink[] = [
   { label: 'About Al-Saud Training Institute', href: '/about' },
   { label: 'Training Courses', href: '/courses' },
   { label: 'Training Facilities', href: '/training-facilities' },
+  { label: 'Verify Certificate', href: '/verify' },
   { label: 'Contact Us', href: '/contact-us' },
   { label: 'IMS Login', href: '/login' },
 ];

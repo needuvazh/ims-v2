@@ -102,16 +102,32 @@ export const adminNavigation: NavigationItem[] = [
     category: 'Overview',
   },
   {
-    href: '/dashboards/crm',
-    label: 'CRM Dashboard',
-    permission: 'REPORTING_VIEW_CRM_DASHBOARD',
-    category: 'CRM',
-  },
-  {
     href: '/leads',
-    label: 'Leads',
+    label: 'Lead Management',
     permission: 'dashboard.view',
     category: 'CRM',
+    items: [
+      {
+        href: '/dashboards/crm',
+        label: 'CRM Dashboard',
+        permission: 'REPORTING_VIEW_CRM_DASHBOARD',
+      },
+      {
+        href: '/leads',
+        label: 'Leads List',
+        permission: 'dashboard.view',
+      },
+      {
+        href: '/leads/follow-ups',
+        label: 'Follow-ups',
+        permission: 'dashboard.view',
+      },
+      {
+        href: '/leads/counselor-dashboard',
+        label: 'Counselor Dashboard',
+        permission: 'dashboard.view',
+      },
+    ],
   },
   {
     href: '/admissions',

@@ -396,7 +396,7 @@ export function LeadDetailsClient({
                 Edit Details
               </Button>
             )}
-            {lead.stage !== 'Converted' && (
+            {lead.stage === 'Qualified' && (
               <Button
                 size="sm"
                 className="gap-2 bg-[color:var(--ims-ink)] hover:bg-[color:var(--ims-brass)] text-white"
@@ -988,7 +988,7 @@ export function LeadDetailsClient({
                             </div>
                             {cert.certificateUrl && (
                               <a
-                                href={cert.certificateUrl}
+                                href={`/api/v1/certificates/${cert.id}/download`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[10px] text-indigo-600 hover:text-indigo-700 font-semibold inline-flex items-center gap-0.5 mt-1"

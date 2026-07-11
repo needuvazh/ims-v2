@@ -382,6 +382,194 @@ export async function updateSessionAction(
   }
 }
 
+export async function cloneBatchAction(data: any) {
+  try {
+    await assertPermission('batch.delivery.create');
+    await assertPermission('schedule.manage');
+    const sessionContext = await getSession();
+
+    await assertBranchScope(data.branchId);
+
+    const result = await prisma.$transaction(async (tx) => {
+      // Check Course exists and is Published first
+      const course = await tx.course.findUnique({
+        where: { id: data.courseId, isDeleted: false },
+      });
+      if (!course) {
+        throw new Error('ERR_CRS_COURSE_NOT_FOUND');
+      }
+      if (course.status !== 'Published') {
+        throw new Error('ERR_CRS_COURSE_NOT_PUBLISHED');
+      }
+
+      // Generate new batch code
+      const courseCode = course.courseCode.toUpperCase();
+      const count = await tx.batch.count({
+        where: { courseId: data.courseId },
+      });
+      const serial = (count + 1).toString().padStart(3, '0');
+      const finalBatchCode = `${courseCode}-${serial}`;
+
+      // Date validations
+      const startDate = new Date(data.startDate);
+      const endDate = new Date(data.endDate);
+      if (endDate < startDate) {
+        throw new Error('ERR_CRS_INVALID_DATE_RANGE');
+      }
+      const courseStart = new Date(course.effectiveStartDate);
+      if (startDate < courseStart) {
+        throw new Error('ERR_CRS_INVALID_DATE_RANGE');
+      }
+      if (course.effectiveEndDate) {
+        const courseEnd = new Date(course.effectiveEndDate);
+        if (endDate > courseEnd) {
+          throw new Error('ERR_CRS_INVALID_DATE_RANGE');
+        }
+      }
+
+      // Verify corporate account if provided
+      if (data.corporateAccountId) {
+        const corp = await tx.corporateAccount.findUnique({
+          where: { id: data.corporateAccountId },
+        });
+        if (!corp) {
+          throw new Error('ERR_CRS_INVALID_CORPORATE_ACCOUNT');
+        }
+      }
+
+      // Create batch
+      const newBatchId = crypto.randomUUID();
+      const batch = await tx.batch.create({
+        data: {
+          id: newBatchId,
+          courseId: data.courseId,
+          branchId: data.branchId,
+          classroomId: null,
+          batchCode: finalBatchCode,
+          batchNameEnglish: data.batchNameEnglish,
+          batchNameArabic: data.batchNameArabic,
+          startDate,
+          endDate,
+          capacity: data.capacity,
+          currentEnrollmentCount: 0,
+          waitingListEnabled: data.waitingListEnabled,
+          allowOverbooking: data.allowOverbooking,
+          isWalkIn: data.isWalkIn,
+          corporateAccountId: data.corporateAccountId || null,
+          status: 'Draft',
+          version: 1,
+          createdBy: sessionContext.userId,
+        },
+      });
+
+      // Assign Primary Trainer if provided
+      if (data.primaryTrainerId) {
+        await tx.batchTrainer.create({
+          data: {
+            id: crypto.randomUUID(),
+            batchId: newBatchId,
+            trainerId: data.primaryTrainerId,
+            role: 'Primary',
+            assignedFrom: startDate,
+            assignedTo: endDate,
+            status: 'Active',
+            createdBy: sessionContext.userId,
+          },
+        });
+      }
+
+      // Create duplicate sessions
+      const branchObj = await tx.branch.findUnique({
+        where: { id: data.branchId },
+        select: { instituteId: true },
+      });
+      if (!branchObj) throw new Error('ERR_ORG_BRANCH_NOT_FOUND');
+
+      const { schedulingCalendarService } = await import('../../lib/runtime');
+
+      const createdSessions = [];
+      if (data.sessions && Array.isArray(data.sessions)) {
+        for (const s of data.sessions) {
+          const validation = await schedulingCalendarService.validateSession(
+            {
+              branchId: data.branchId,
+              instituteId: branchObj.instituteId,
+              scheduledDate: new Date(s.sessionDate),
+              startTime: s.startTime,
+              endTime: s.endTime,
+              trainerId: s.trainerId || null,
+              classroomId: s.classroomId || null,
+              batchId: newBatchId,
+            },
+            tx,
+          );
+
+          const validConflictTypes = [
+            'HOLIDAY',
+            'VENUE',
+            'TRAINER_OVERLAP',
+            'CLASSROOM_OVERLAP',
+            'OPERATING_HOURS',
+          ];
+          let sessionConflictType: any = null;
+          let scheduleStatus: any = 'Published';
+
+          if (!validation.isValid && validation.conflicts.length > 0) {
+            scheduleStatus = 'Conflict';
+            const mainConflict = validation.conflicts[0].type;
+            if (validConflictTypes.includes(mainConflict)) {
+              sessionConflictType = mainConflict;
+            }
+          }
+
+          const sessionRecord = await tx.session.create({
+            data: {
+              id: crypto.randomUUID(),
+              batchId: newBatchId,
+              sessionNumber: parseInt(s.sessionNumber, 10),
+              titleEnglish: s.titleEnglish,
+              titleArabic: s.titleArabic,
+              sessionDate: new Date(s.sessionDate),
+              startTime: s.startTime,
+              endTime: s.endTime,
+              classroomId: s.classroomId || null,
+              trainerId: s.trainerId || null,
+              status: 'Scheduled',
+              scheduleStatus,
+              conflictType: sessionConflictType,
+              createdBy: sessionContext.userId,
+            },
+          });
+          createdSessions.push(sessionRecord);
+        }
+      }
+
+      // Audit log
+      await tx.auditLog.create({
+        data: {
+          id: crypto.randomUUID(),
+          module: 'TrainingDelivery',
+          performedBy: sessionContext.userId,
+          performedAt: new Date(),
+          entityType: 'Batch',
+          entityId: newBatchId,
+          action: 'BATCH_CLONED',
+          newValue: JSON.parse(JSON.stringify(batch)),
+        },
+      });
+
+      return { batch, sessions: createdSessions };
+    });
+
+    revalidatePath('/batches');
+    return { success: true as const, data: result };
+  } catch (error: any) {
+    console.error('cloneBatchAction error:', error);
+    return buildBatchActionFailure(error);
+  }
+}
+
+
 function buildBatchActionFailure(error: any) {
   if (error instanceof z.ZodError) {
     return {

@@ -16,6 +16,17 @@ export interface VerificationResult {
   language?: string;
   revocationReason?: string;
   revokedAt?: Date;
+  photoUrl?: string;
+  email?: string;
+  mobile?: string;
+  nationalId?: string;
+  passportNumber?: string;
+  nationality?: string;
+  gender?: string;
+  dateOfBirth?: Date;
+  batchCode?: string;
+  batchName?: string;
+  certificateUrl?: string;
 }
 
 export class VerificationService {
@@ -35,6 +46,7 @@ export class VerificationService {
           },
         },
         course: true,
+        batch: true,
       },
     });
 
@@ -47,6 +59,11 @@ export class VerificationService {
       certificate.language === 'ar'
         ? certificate.course.nameArabic
         : certificate.course.nameEnglish;
+
+    const batchName =
+      certificate.language === 'ar'
+        ? certificate.batch.batchNameArabic
+        : certificate.batch.batchNameEnglish;
 
     let resultStatus: 'VALID' | 'REVOKED' | 'REPLACED' = 'VALID';
     if (certificate.certificateStatus === 'Revoked') {
@@ -76,6 +93,17 @@ export class VerificationService {
       language: certificate.language,
       revocationReason: certificate.revocationReason || undefined,
       revokedAt: certificate.revokedAt || undefined,
+      photoUrl: certificate.studentProfile.person.photoUrl || undefined,
+      email: certificate.studentProfile.person.email || undefined,
+      mobile: certificate.studentProfile.person.mobile || undefined,
+      nationalId: certificate.studentProfile.person.nationalId || undefined,
+      passportNumber: certificate.studentProfile.person.passportNumber || undefined,
+      nationality: certificate.studentProfile.person.nationality || undefined,
+      gender: certificate.studentProfile.person.gender || undefined,
+      dateOfBirth: certificate.studentProfile.person.dateOfBirth || undefined,
+      batchCode: certificate.batch.batchCode,
+      batchName,
+      certificateUrl: certificate.certificateUrl || undefined,
     };
   }
 }

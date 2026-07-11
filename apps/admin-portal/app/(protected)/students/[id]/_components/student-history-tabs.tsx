@@ -28,6 +28,7 @@ import {
   FileText,
   UserCheck,
   Calendar,
+  Download,
 } from 'lucide-react';
 
 interface StudentAdmissionRow {
@@ -771,11 +772,18 @@ export function StudentHistoryTabs({
                             </Badge>
                           </TableCell>
                           <TableCell className="text-right">
-                            <Link href={`/verify?code=${cert.verificationCode}`} target="_blank">
-                              <Button variant="outline" size="sm" className="gap-1">
-                                <Eye className="h-3.5 w-3.5" /> Verify
-                              </Button>
-                            </Link>
+                            <div className="flex justify-end gap-2">
+                              <Link href={`/verify?code=${cert.verificationCode}`} target="_blank">
+                                <Button variant="outline" size="sm" className="gap-1">
+                                  <Eye className="h-3.5 w-3.5" /> Verify
+                                </Button>
+                              </Link>
+                              <a href={`/api/v1/certificates/${cert.id}/download`} target="_blank" rel="noopener noreferrer">
+                                <Button variant="outline" size="sm" className="gap-1">
+                                  <Download className="h-3.5 w-3.5" /> Download
+                                </Button>
+                              </a>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}

@@ -63,6 +63,12 @@ function mapNavigationIcons(item: any): any {
     case '/leads':
       icon = <TrendingUp className="h-4.5 w-4.5" />;
       break;
+    case '/leads/follow-ups':
+      icon = <CalendarClock className="h-4.5 w-4.5" />;
+      break;
+    case '/leads/counselor-dashboard':
+      icon = <BarChart3 className="h-4.5 w-4.5" />;
+      break;
     case '/admissions':
       icon = <UserCheck className="h-4.5 w-4.5" />;
       break;

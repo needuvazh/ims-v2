@@ -171,6 +171,9 @@ model Person {
   studentProfiles StudentProfile[]
   trainerProfiles TrainerProfile[]
   leaveRequests   LeaveRequest[]
+  corporateContacts    CorporateContact[]
+  corporateParticipants CorporateParticipant[]
+
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -598,6 +601,8 @@ model Branch {
   attendanceAlerts       AttendanceAlert[]
   trainerAvailability    TrainerAvailability[]
   studentStatusHistories StudentStatusHistory[]
+  corporateAccounts      CorporateAccount[]
+
   studentIdCardHistories StudentIdCardHistory[]
   studentDuplicateCases  StudentDuplicateCase[]
   studentMergeLogs       StudentMergeLog[]
@@ -1235,6 +1240,14 @@ model CorporateAccount {
   payments           Payment[]
   creditRules        CorporateCreditRule[]
 
+  branchId           String? @db.Uuid
+  branch             Branch? @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  contacts           CorporateContact[]
+  contracts          CorporateContract[]
+  participants       CorporateParticipant[]
+  enrollments        CorporateEnrollment[]
+
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
   updatedAt DateTime? @updatedAt @db.Timestamptz(6)
@@ -1245,8 +1258,128 @@ model CorporateAccount {
 
   @@index([organizationId])
   @@index([status])
+  @@index([branchId])
   @@map("corporate_accounts")
 }
+
+model CorporateContact {
+  id                  String   @id @default(uuid()) @db.Uuid
+  corporateAccountId  String   @db.Uuid
+  personId            String   @db.Uuid
+  designation         String?  @db.VarChar(150)
+  department          String?  @db.VarChar(150)
+  email               String?  @db.VarChar(320)
+  phone               String?  @db.VarChar(32)
+  isPrimary           Boolean  @default(false)
+  portalAccessEnabled Boolean  @default(false)
+  status              String   @default("Active") @db.VarChar(30)
+  version             Int      @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  person           Person           @relation(fields: [personId], references: [id], onDelete: Restrict)
+
+  @@unique([corporateAccountId, personId])
+  @@index([corporateAccountId, status])
+  @@index([personId])
+  @@map("corporate_contacts")
+}
+
+model CorporateContract {
+  id                 String    @id @default(uuid()) @db.Uuid
+  corporateAccountId String    @db.Uuid
+  contractNumber     String    @unique @db.VarChar(80)
+  contractValue      Decimal   @db.Decimal(18, 3)
+  startDate          DateTime  @db.Date
+  endDate            DateTime  @db.Date
+  billingModel       String    @db.VarChar(50) // PER_STUDENT, PER_BATCH, PER_HOUR, FIXED_CONTRACT
+  paymentTerms       String    @db.Text
+  status             String    @default("Draft") @db.VarChar(30)
+  version            Int       @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  enrollments      CorporateEnrollment[]
+
+  @@index([corporateAccountId, status])
+  @@index([startDate, endDate])
+  @@map("corporate_contracts")
+}
+
+model CorporateParticipant {
+  id                     String  @id @default(uuid()) @db.Uuid
+  corporateAccountId     String  @db.Uuid
+  personId               String  @db.Uuid
+  employeeCode           String? @db.VarChar(80)
+  department             String? @db.VarChar(150)
+  designation            String? @db.VarChar(150)
+  linkedStudentProfileId String? @db.Uuid
+  status                 String  @default("Active") @db.VarChar(30)
+  version                Int     @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  person           Person           @relation(fields: [personId], references: [id], onDelete: Restrict)
+  studentProfile   StudentProfile?  @relation(fields: [linkedStudentProfileId], references: [id], onDelete: Restrict)
+  enrollments      CorporateEnrollment[]
+
+  @@unique([corporateAccountId, personId])
+  @@index([corporateAccountId, status])
+  @@index([personId])
+  @@index([linkedStudentProfileId])
+  @@map("corporate_participants")
+}
+
+model CorporateEnrollment {
+  id                     String  @id @default(uuid()) @db.Uuid
+  corporateAccountId     String  @db.Uuid
+  corporateParticipantId String  @db.Uuid
+  enrollmentId           String  @db.Uuid
+  contractId             String? @db.Uuid
+  billingStatus          String  @default("NotRequested") @db.VarChar(50)
+  version                Int     @default(1)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  createdBy String?   @db.Uuid
+  updatedAt DateTime? @updatedAt @db.Timestamptz(6)
+  updatedBy String?   @db.Uuid
+  deletedAt DateTime? @db.Timestamptz(6)
+  deletedBy String?   @db.Uuid
+  isDeleted Boolean   @default(false)
+
+  corporateAccount CorporateAccount     @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  participant      CorporateParticipant @relation(fields: [corporateParticipantId], references: [id], onDelete: Restrict)
+  enrollment       Enrollment           @relation(fields: [enrollmentId], references: [id], onDelete: Restrict)
+  contract         CorporateContract?   @relation(fields: [contractId], references: [id], onDelete: Restrict)
+
+  @@unique([enrollmentId])
+  @@index([corporateAccountId, billingStatus])
+  @@index([corporateParticipantId])
+  @@index([contractId])
+  @@map("corporate_enrollments")
+}
+
 
 model BatchTrainer {
   id           String   @id @default(uuid()) @db.Uuid
@@ -1792,6 +1925,8 @@ model StudentProfile {
   invoices            Invoice[]
   payments            Payment[]
   certificates        Certificate[]
+  corporateParticipants CorporateParticipant[]
+
 
   // Audit columns
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -2061,6 +2196,8 @@ model Enrollment {
   results           Result[]
   courseCompletion  CourseCompletion?
   certificates      Certificate[]
+  corporateEnrollments CorporateEnrollment[]
+
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid

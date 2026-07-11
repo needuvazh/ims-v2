@@ -149,3 +149,55 @@ test('CrmDashboardQueryService omits counselor performance widget if lacking per
   );
   expect(counselorPerformanceWidget).toBeUndefined();
 });
+
+test('CrmDashboardQueryService getCounselorDashboardData verification', async () => {
+  const mockReadService = {
+    getLeadStatusDistribution: vi
+      .fn()
+      .mockResolvedValue([
+        { stage: 'New', count: 5 },
+        { stage: 'FollowUp', count: 2 },
+      ]),
+    getLeadConversionRate: vi
+      .fn()
+      .mockResolvedValue({ rate: 25, total: 8, converted: 2 }),
+    getLeadsBySource: vi.fn().mockResolvedValue([{ source: 'Web', count: 7 }]),
+    getFollowUpCounts: vi
+      .fn()
+      .mockResolvedValue({ today: 3, overdue: 1, future: 4 }),
+  } as unknown as LeadAnalyticsReadService;
+
+  const mockAuditRepo = {
+    append: vi.fn().mockResolvedValue(undefined),
+  } as unknown as AuditLogRepository;
+
+  const service = new CrmDashboardQueryService(
+    mockReadService,
+    mockAuditRepo,
+  );
+
+  const context = {
+    userId: '11111111-1111-1111-1111-111111111111',
+    activeBranchId: '22222222-2222-2222-2222-222222222222',
+    permissions: ['dashboard.view'],
+  };
+
+  const result = await service.getCounselorDashboardData(context);
+
+  expect(mockAuditRepo.append).toHaveBeenCalledWith(
+    expect.objectContaining({
+      action: 'DashboardAccessed',
+      entityId: 'counselor',
+    }),
+  );
+
+  expect(result.metrics).toEqual({
+    myActiveLeads: 7, // New (5) + FollowUp (2)
+    myConversions: 2,
+    conversionRate: 25,
+    todayFollowUps: 3,
+    overdueFollowUps: 1,
+  });
+  expect(result.leadsByStage).toBeDefined();
+  expect(result.leadsBySource).toBeDefined();
+});

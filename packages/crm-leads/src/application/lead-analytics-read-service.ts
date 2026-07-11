@@ -149,4 +149,57 @@ export class LeadAnalyticsReadService {
       target,
     };
   }
+
+  async getFollowUpCounts(userContext: UserContext) {
+    const where = this.getScopedWhere(userContext);
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+    const endOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+
+    const [today, overdue, future] = await Promise.all([
+      this.prisma.leadFollowUp.count({
+        where: {
+          isDeleted: false,
+          status: { in: ['Scheduled', 'Overdue'] },
+          followUpDate: {
+            gte: startOfToday,
+            lte: endOfToday,
+          },
+          lead: {
+            ...where,
+          },
+        },
+      }),
+      this.prisma.leadFollowUp.count({
+        where: {
+          isDeleted: false,
+          status: { in: ['Scheduled', 'Overdue'] },
+          followUpDate: {
+            lt: startOfToday,
+          },
+          lead: {
+            ...where,
+          },
+        },
+      }),
+      this.prisma.leadFollowUp.count({
+        where: {
+          isDeleted: false,
+          status: { in: ['Scheduled', 'Overdue'] },
+          followUpDate: {
+            gt: endOfToday,
+          },
+          lead: {
+            ...where,
+          },
+        },
+      }),
+    ]);
+
+    return {
+      today,
+      overdue,
+      future,
+    };
+  }
 }

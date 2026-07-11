@@ -467,7 +467,7 @@ export function CertificatesClientView({
                           </>
                         )}
                         <a
-                          href={cert.certificateUrl}
+                          href={`/api/v1/certificates/${cert.id}/download`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

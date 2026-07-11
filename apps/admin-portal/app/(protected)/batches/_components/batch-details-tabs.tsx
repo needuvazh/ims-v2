@@ -650,7 +650,7 @@ export function BatchDetailsTabs({
                                 </Button>
                               ) : (
                                 <Link
-                                  href="/attendance/sessions"
+                                  href={`/attendance/sessions?sessionId=${attendanceSession.id}`}
                                   className="inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--ims-brass)] hover:underline"
                                 >
                                   <ClipboardList className="h-3.5 w-3.5" />
@@ -680,7 +680,11 @@ export function BatchDetailsTabs({
                                       'Attendance session opened and roster generated.',
                                     );
                                     router.refresh();
-                                    router.push('/attendance/sessions');
+                                    if (res && 'data' in res && res.data) {
+                                      router.push(`/attendance/sessions?sessionId=${res.data.id}`);
+                                    } else {
+                                      router.push('/attendance/sessions');
+                                    }
                                   } catch (err: any) {
                                     toast.error(
                                       err.message ||
@@ -1156,7 +1160,7 @@ export function BatchDetailsTabs({
                     </TableCell>
                     <TableCell className="font-medium text-slate-900">
                       <Link
-                        href={`/admissions?q=${s.studentNumber}`}
+                        href={`/enrollments/${s.id}`}
                         className="text-indigo-600 hover:text-indigo-700 hover:underline"
                       >
                         {s.firstName} {s.lastName}

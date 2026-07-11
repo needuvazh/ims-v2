@@ -13,7 +13,7 @@ import {
   TableCell,
   Button,
 } from '@ims/shared-ui';
-import { Home, Edit, Layers } from 'lucide-react';
+import { Home, Edit, Layers, Copy } from 'lucide-react';
 import Link from 'next/link';
 import { TransitionButtons } from '../_components/transition-buttons';
 import { BatchDetailsTabs } from '../_components/batch-details-tabs';
@@ -230,12 +230,21 @@ export default async function BatchDetailPage(props: {
           />
         }
         actions={
-          isCoordinator && batch.status !== 'Completed' && batch.status !== 'Cancelled' && (
-            <Link href={`/batches/${batch.id}/edit`}>
-              <Button variant="outline" className="flex items-center gap-2">
-                <Edit className="h-4 w-4" /> Edit Batch
-              </Button>
-            </Link>
+          isCoordinator && (
+            <div className="flex items-center gap-2">
+              <Link href={`/batches/${batch.id}/clone`}>
+                <Button id="batch-clone-btn" variant="outline" className="flex items-center gap-2">
+                  <Copy className="h-4 w-4" /> Clone Batch
+                </Button>
+              </Link>
+              {batch.status !== 'Completed' && batch.status !== 'Cancelled' && (
+                <Link href={`/batches/${batch.id}/edit`}>
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <Edit className="h-4 w-4" /> Edit Batch
+                  </Button>
+                </Link>
+              )}
+            </div>
           )
         }
       />

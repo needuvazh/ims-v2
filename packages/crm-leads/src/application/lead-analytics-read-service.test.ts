@@ -85,3 +85,41 @@ test('LeadAnalyticsReadService scoping with manager context (has LEAD_VIEW_ALL_I
     }),
   );
 });
+
+test('LeadAnalyticsReadService getFollowUpCounts scoping', async () => {
+  const mockPrisma = {
+    leadFollowUp: {
+      count: vi.fn().mockImplementation(({ where }) => {
+        expect(where.isDeleted).toBe(false);
+        expect(where.status.in).toEqual(['Scheduled', 'Overdue']);
+        expect(where.lead.branchId).toBe('branch-1');
+        if (!where.lead.counselorId) {
+          // Manager bypasses counselorId scoping
+        } else {
+          expect(where.lead.counselorId).toBe('user-counselor');
+        }
+        return Promise.resolve(3);
+      }),
+    },
+  } as any;
+
+  const service = new LeadAnalyticsReadService(mockPrisma);
+
+  // Counselor context
+  const counselorCtx: UserContext = {
+    userId: 'user-counselor',
+    activeBranchId: 'branch-1',
+    permissions: ['dashboard.view'],
+  };
+  const countsCounselor = await service.getFollowUpCounts(counselorCtx);
+  expect(countsCounselor).toEqual({ today: 3, overdue: 3, future: 3 });
+
+  // Manager context
+  const managerCtx: UserContext = {
+    userId: 'user-manager',
+    activeBranchId: 'branch-1',
+    permissions: ['dashboard.view', 'LEAD_VIEW_ALL_IN_BRANCH'],
+  };
+  const countsManager = await service.getFollowUpCounts(managerCtx);
+  expect(countsManager).toEqual({ today: 3, overdue: 3, future: 3 });
+});

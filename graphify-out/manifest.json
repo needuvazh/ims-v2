@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1783712847.039257,
-    "ast_hash": "e4ba9237682b9b8d0c36f6f3aae4b912",
+    "mtime": 1783758839.3959987,
+    "ast_hash": "d357c881d1893f04dca213afa4f961f9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/loading.tsx": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/verify/page.tsx": {
-    "mtime": 1783476045.0335665,
-    "ast_hash": "8f14226101faa33c528d58c2ab96824c",
+    "mtime": 1783762134.2870994,
+    "ast_hash": "1ca952f13b6fdcad3173529a3f08aec1",
     "semantic_hash": ""
   },
   "apps/admin-portal/instrumentation.ts": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783715713.7382905,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1783760220.6215444,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1783702971.590463,
-    "ast_hash": "7a6abd6cf23249e1db98654e3e57b963",
+    "mtime": 1783758836.7028658,
+    "ast_hash": "04388ca4fac93b24130aea6d44b26ccd",
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/role.ts": {
@@ -3585,8 +3585,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site-data.ts": {
-    "mtime": 1783714304.3780017,
-    "ast_hash": "c14aeb160aeebff5c92a4ec55745c615",
+    "mtime": 1783762180.7561958,
+    "ast_hash": "9570f39f60a9d8f558d1e4d9c0038210",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260629120000_user_roles_lifecycle_fields/migration.sql": {
@@ -4215,8 +4215,8 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/followup-service.ts": {
-    "mtime": 1783476070.7890027,
-    "ast_hash": "7ec8e3b83cd07c839547d24a1d9b08f0",
+    "mtime": 1783758770.7340431,
+    "ast_hash": "9b20510621b7c9b9c821a088363cf6d4",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/inquiry-service.ts": {
@@ -4335,8 +4335,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/_components/lead-details-client.tsx": {
-    "mtime": 1783676201.8250756,
-    "ast_hash": "67426d84cc1d5cd06d3e71dbba97b474",
+    "mtime": 1783761779.1407588,
+    "ast_hash": "8d395025394163caf822b1afecc9e244",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/page.tsx": {
@@ -4450,23 +4450,23 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-analytics-read-service.test.ts": {
-    "mtime": 1783476070.8236039,
-    "ast_hash": "6e54736893317ef20ced49d244ec397a",
+    "mtime": 1783758789.8015962,
+    "ast_hash": "ace794f6d0c02db5482fe3ff42ee11c9",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-analytics-read-service.ts": {
-    "mtime": 1783476070.8365633,
-    "ast_hash": "51f66ecd1b34bf2ea1b6b3b020aaf495",
+    "mtime": 1783758761.431278,
+    "ast_hash": "4f650b1e51640255fb5b84ee22ba20d3",
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.test.ts": {
-    "mtime": 1783511130.982742,
-    "ast_hash": "6d23a6ff5b479acb01e904715bbda837",
+    "mtime": 1783758966.5356467,
+    "ast_hash": "975688ca8f4dd6595633f86ce241582b",
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.ts": {
-    "mtime": 1783476072.7503648,
-    "ast_hash": "6ccd5592985f0688ca288b4715d54f81",
+    "mtime": 1783758780.6611826,
+    "ast_hash": "a13aeb5c6b856f6b37da2b05ea5ab483",
     "semantic_hash": ""
   },
   "tests/crm-dashboard.spec.ts": {
@@ -4750,8 +4750,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
-    "mtime": 1783582330.7402582,
-    "ast_hash": "af96a04c177e650b75ebee4fe8d70c7b",
+    "mtime": 1783762270.0822399,
+    "ast_hash": "719833763fd4e0d16e8fef1cbe84e50b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
@@ -4760,8 +4760,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/actions.ts": {
-    "mtime": 1783582330.7423983,
-    "ast_hash": "c7dca495d66100dbe971d872d6534408",
+    "mtime": 1783758818.300721,
+    "ast_hash": "793e013eabdef86800f94db18a10fe24",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/new/page.tsx": {
@@ -4865,8 +4865,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
-    "mtime": 1783605692.8284807,
-    "ast_hash": "f3bd89e7cb7c4a05fcc4b67719717ad0",
+    "mtime": 1783762450.308883,
+    "ast_hash": "32ccc8519cbba7c0041be9272928c00a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
@@ -5785,8 +5785,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/students/[id]/_components/student-history-tabs.tsx": {
-    "mtime": 1783676201.8259559,
-    "ast_hash": "c9cd39dfd84d7031bbb2920fead91af7",
+    "mtime": 1783761916.5932543,
+    "ast_hash": "adf1a508d8d0f87558415007ae4a30cf",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/students/[id]/edit/page.tsx": {
@@ -8455,8 +8455,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/_components/certificates-client-view.tsx": {
-    "mtime": 1783476040.6015255,
-    "ast_hash": "3a2b70e673aecf136ceb001bef8fd2f9",
+    "mtime": 1783761774.709886,
+    "ast_hash": "b4eeb0d0ecf6284c4b581823b0792e71",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/actions.ts": {
@@ -8535,13 +8535,13 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/application/VerificationService.ts": {
-    "mtime": 1783476070.4875178,
-    "ast_hash": "f668a318958faf5584e34a550572aca5",
+    "mtime": 1783762047.8287048,
+    "ast_hash": "9ade778c6fc2bf0dc4daf121bec22203",
     "semantic_hash": ""
   },
   "packages/certificates/src/application/certificates.test.ts": {
-    "mtime": 1783476070.444389,
-    "ast_hash": "6bf8b80cc444aab451762edfa1efe6c5",
+    "mtime": 1783761759.159892,
+    "ast_hash": "44b0f2c44319d364e81e2932d3f4e9b8",
     "semantic_hash": ""
   },
   "packages/certificates/src/domain/errors.ts": {
@@ -8590,8 +8590,8 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/infrastructure/PdfHelper.ts": {
-    "mtime": 1783707323.3093002,
-    "ast_hash": "a6398b817e72d395a130676dfe235fec",
+    "mtime": 1783761754.8946826,
+    "ast_hash": "687f93deebd5c928d302221996462c3a",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/certificates/CERT-BR1-999999.pdf": {
@@ -9642,6 +9642,146 @@
   "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Part 9 \u2013 BDD Acceptance Criteria and Test Scenarios.md": {
     "mtime": 1783714672.6153307,
     "ast_hash": "587036134254fbb863dbd4739f8bc5b2",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260710204249_add_corporate_training_entities/migration.sql": {
+    "mtime": 1783716169.4092512,
+    "ast_hash": "c499e70394e3c4694411db43d28dafe0",
+    "semantic_hash": ""
+  },
+  "openspec/changes/setup-corporate-training-db/.openspec.yaml": {
+    "mtime": 1783715985.049566,
+    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/setup-corporate-training-db/design.md": {
+    "mtime": 1783716025.2014287,
+    "ast_hash": "c044111d7afe9202aeffb9474c7388fb",
+    "semantic_hash": ""
+  },
+  "openspec/changes/setup-corporate-training-db/proposal.md": {
+    "mtime": 1783716002.0420713,
+    "ast_hash": "6e9804935f6a0d2e0314a15dd9f857e3",
+    "semantic_hash": ""
+  },
+  "openspec/changes/setup-corporate-training-db/specs/corporate-training-db/spec.md": {
+    "mtime": 1783716012.0611327,
+    "ast_hash": "f327fbc9374b9530970c34d3d21b9a30",
+    "semantic_hash": ""
+  },
+  "openspec/changes/setup-corporate-training-db/tasks.md": {
+    "mtime": 1783716176.6718695,
+    "ast_hash": "af7f4ce1d557ce7f7a0629323a0cdc88",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/[id]/clone/page.tsx": {
+    "mtime": 1783758825.6800697,
+    "ast_hash": "d15f80885d14e5f364bf0e1fd55c66e6",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/batches/_components/clone-batch-form.tsx": {
+    "mtime": 1783758840.7150965,
+    "ast_hash": "c27a29f45888fba161addb0f8411123d",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/leads/counselor-dashboard/page.tsx": {
+    "mtime": 1783758921.5003119,
+    "ast_hash": "d46ee21f2d01b0c7654f97e4e181783c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/leads/follow-ups/_components/follow-ups-client.tsx": {
+    "mtime": 1783758862.6371512,
+    "ast_hash": "7d10c4eb70908521838719a27e4393a6",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/leads/follow-ups/page.tsx": {
+    "mtime": 1783760407.362813,
+    "ast_hash": "b4c90a166fa0dd588f1931ff3294a7c7",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/crm/leads/follow-ups/counts/route.ts": {
+    "mtime": 1783759040.6166368,
+    "ast_hash": "19275383b4a09096d94c3bc11d81de26",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/crm/leads/follow-ups/future/route.ts": {
+    "mtime": 1783759008.6804078,
+    "ast_hash": "4fb3c71d1cf3d72b87be395e03c02249",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/crm/leads/follow-ups/past/route.ts": {
+    "mtime": 1783759013.5749435,
+    "ast_hash": "5a89a54a3e519d4cf83637db237cb50c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/crm/leads/follow-ups/route.test.ts": {
+    "mtime": 1783758824.8266394,
+    "ast_hash": "ee0c3d45485e2ebe0ea2aa3eeb25cc79",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/crm/leads/follow-ups/today/route.ts": {
+    "mtime": 1783759003.524259,
+    "ast_hash": "9445b2d6f96176fc1d7ee4f4f97fc83c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/clone-batch-feature/.openspec.yaml": {
+    "mtime": 1783758422.1965544,
+    "ast_hash": "145b3979ac90c49abaf8eac7a3e26147",
+    "semantic_hash": ""
+  },
+  "openspec/changes/clone-batch-feature/design.md": {
+    "mtime": 1783758432.1285155,
+    "ast_hash": "34ec46378059c42041e433f87596ad3d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/clone-batch-feature/proposal.md": {
+    "mtime": 1783758426.2569244,
+    "ast_hash": "5b6e6c558dd4744bf9b1030fd38df7de",
+    "semantic_hash": ""
+  },
+  "openspec/changes/clone-batch-feature/specs/batch-cloning/spec.md": {
+    "mtime": 1783758441.9549558,
+    "ast_hash": "db8a3945a147888bcec7ad26804c28c7",
+    "semantic_hash": ""
+  },
+  "openspec/changes/clone-batch-feature/tasks.md": {
+    "mtime": 1783762280.943347,
+    "ast_hash": "1ec0e9e992d70569b27cd70ea8eb0675",
+    "semantic_hash": ""
+  },
+  "openspec/changes/group-leads-menu-and-followups-screen/.openspec.yaml": {
+    "mtime": 1783758419.2696297,
+    "ast_hash": "145b3979ac90c49abaf8eac7a3e26147",
+    "semantic_hash": ""
+  },
+  "openspec/changes/group-leads-menu-and-followups-screen/design.md": {
+    "mtime": 1783758473.4812446,
+    "ast_hash": "c1ba50ca937609c27217cc27a203eddb",
+    "semantic_hash": ""
+  },
+  "openspec/changes/group-leads-menu-and-followups-screen/proposal.md": {
+    "mtime": 1783758441.63447,
+    "ast_hash": "20319fa281424bbf095aaa8ca5650f1b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/group-leads-menu-and-followups-screen/specs/counselor-dashboard.md": {
+    "mtime": 1783758456.6092649,
+    "ast_hash": "1d20f3a07e321a64429712ffab4df339",
+    "semantic_hash": ""
+  },
+  "openspec/changes/group-leads-menu-and-followups-screen/specs/leads-followups-listing.md": {
+    "mtime": 1783758460.0991764,
+    "ast_hash": "f9668af349495ca4f68022698482c0be",
+    "semantic_hash": ""
+  },
+  "openspec/changes/group-leads-menu-and-followups-screen/tasks.md": {
+    "mtime": 1783759062.7187989,
+    "ast_hash": "8df0ce9a2be89d0b694a06008c7a275c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/certificates/[id]/download/route.ts": {
+    "mtime": 1783761770.549623,
+    "ast_hash": "8fd6f94b7d26f5ea76b3e8c4cd1343f1",
     "semantic_hash": ""
   }
 }

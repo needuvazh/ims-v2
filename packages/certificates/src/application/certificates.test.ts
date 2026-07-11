@@ -49,6 +49,13 @@ vi.mock('@ims/database', () => {
   return { prisma: mockPrisma };
 });
 
+vi.mock('@vercel/blob', () => {
+  return {
+    put: vi.fn().mockResolvedValue({ url: 'https://mock-blob-url.com/certificates/test.pdf' }),
+    del: vi.fn().mockResolvedValue(undefined),
+  };
+});
+
 const mockEnrollmentReadPort = {
   getEnrollmentContext: vi.fn(),
 };

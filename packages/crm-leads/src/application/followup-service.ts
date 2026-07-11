@@ -312,4 +312,100 @@ export class FollowUpApplicationService {
     const client = tx || this.prisma;
     return this.followUpRepository.findById(id, client);
   }
+
+  async findGroupedFollowUps(
+    group: 'today' | 'future' | 'past',
+    filters: {
+      counselorId?: string;
+      branchIds?: string[];
+    },
+    pagination: { page: number; limit: number },
+    tx?: Prisma.TransactionClient,
+  ) {
+    const client = tx || this.prisma;
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+    const endOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+
+    const where: any = {
+      isDeleted: false,
+    };
+
+    if (filters.counselorId) {
+      where.counselorId = filters.counselorId;
+    }
+
+    if (filters.branchIds && filters.branchIds.length > 0) {
+      where.lead = {
+        branchId: { in: filters.branchIds },
+        isDeleted: false,
+      };
+    } else {
+      where.lead = {
+        isDeleted: false,
+      };
+    }
+
+    if (group === 'today') {
+      where.followUpDate = {
+        gte: startOfToday,
+        lte: endOfToday,
+      };
+      where.status = { in: ['Scheduled', 'Overdue'] };
+    } else if (group === 'future') {
+      where.followUpDate = {
+        gt: endOfToday,
+      };
+      where.status = { in: ['Scheduled', 'Overdue'] };
+    } else if (group === 'past') {
+      where.followUpDate = {
+        lt: startOfToday,
+      };
+      where.status = { in: ['Scheduled', 'Overdue'] };
+    }
+
+    const total = await client.leadFollowUp.count({ where });
+    const items = await client.leadFollowUp.findMany({
+      where,
+      skip: (pagination.page - 1) * pagination.limit,
+      take: pagination.limit,
+      orderBy: {
+        followUpDate: group === 'past' ? 'desc' : 'asc',
+      },
+      include: {
+        lead: {
+          select: {
+            id: true,
+            leadNumber: true,
+            firstName: true,
+            lastName: true,
+            phone: true,
+            email: true,
+            stage: true,
+            version: true,
+            interestedCourse: {
+              select: {
+                id: true,
+                nameEnglish: true,
+              },
+            },
+            branch: {
+              select: {
+                id: true,
+                branchName: true,
+              },
+            },
+          },
+        },
+        counselor: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
+    });
+
+    return { items, total };
+  }
 }

@@ -179,4 +179,72 @@ export class CrmDashboardQueryService {
 
     throw new DomainError('not_found', 'Report definition not found');
   }
+
+  async getCounselorDashboardData(
+    userContext: UserContext,
+  ): Promise<{
+    metrics: {
+      myActiveLeads: number;
+      myConversions: number;
+      conversionRate: number;
+      todayFollowUps: number;
+      overdueFollowUps: number;
+    };
+    leadsByStage: Array<{ stage: string; count: number }>;
+    leadsBySource: Array<{ source: string; count: number }>;
+  }> {
+    if (!userContext.permissions.includes('dashboard.view')) {
+      throw new DomainError(
+        'forbidden',
+        'Unauthorized: Missing permission dashboard.view',
+      );
+    }
+
+    await this.auditLogRepository.append({
+      id: createUuid(crypto.randomUUID()),
+      actorId: createUuid(userContext.userId),
+      occurredAt: new Date(),
+      branchId: userContext.activeBranchId
+        ? createBranchId(userContext.activeBranchId)
+        : null,
+      action: 'DashboardAccessed',
+      entityType: 'Dashboard',
+      entityId: 'counselor',
+      details: {
+        dashboard: 'counselor',
+        userId: userContext.userId,
+        branchId: userContext.activeBranchId,
+      },
+    });
+
+    const leadsByStage =
+      await this.leadAnalyticsReadService.getLeadStatusDistribution(
+        userContext,
+      );
+    const conversionData =
+      await this.leadAnalyticsReadService.getLeadConversionRate(userContext);
+    const leadsBySource =
+      await this.leadAnalyticsReadService.getLeadsBySource(userContext);
+    const followUpCounts =
+      await this.leadAnalyticsReadService.getFollowUpCounts(userContext);
+
+    let myActiveLeads = 0;
+    for (const item of leadsByStage) {
+      if (item.stage === 'New' || item.stage === 'FollowUp') {
+        myActiveLeads += item.count;
+      }
+    }
+
+    return {
+      metrics: {
+        myActiveLeads,
+        myConversions: conversionData.converted,
+        conversionRate: conversionData.rate,
+        todayFollowUps: followUpCounts.today,
+        overdueFollowUps: followUpCounts.overdue,
+      },
+      leadsByStage,
+      leadsBySource,
+    };
+  }
 }

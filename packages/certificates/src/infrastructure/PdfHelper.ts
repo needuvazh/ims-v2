@@ -22,7 +22,8 @@ export async function savePdfToBlob(
     `certificates/${certNumber}.pdf`,
     Buffer.from(pdfContent, 'utf-8'),
     {
-      access: 'public',
+      access: 'private',
+      token: process.env.BLOB_READ_WRITE_TOKEN,
       contentType: 'application/pdf',
       // Allow overwrite so that a replacement certificate with the same
       // number can be re-generated without a conflict error.
