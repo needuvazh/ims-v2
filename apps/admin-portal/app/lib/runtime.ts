@@ -329,11 +329,13 @@ import {
   CoursePricingRepository,
   CourseDiscountRepository,
   CourseCompletionRuleRepository,
+  CourseExamTemplateRepository,
   CourseService,
   CategoryService,
   CoursePricingService,
   CourseDiscountService,
   CourseCompletionRuleService,
+  CourseExamTemplateService,
   PublicCourseQueryService,
 } from '@ims/course-catalog';
 
@@ -344,6 +346,7 @@ const courseDiscountRepository = new CourseDiscountRepository(prisma);
 const courseCompletionRuleRepository = new CourseCompletionRuleRepository(
   prisma,
 );
+const courseExamTemplateRepository = new CourseExamTemplateRepository(prisma);
 
 export const courseService = new CourseService(prisma, courseRepository);
 export const categoryService = new CategoryService(prisma, categoryRepository);
@@ -359,6 +362,11 @@ export const courseDiscountService = new CourseDiscountService(
 export const courseCompletionRuleService = new CourseCompletionRuleService(
   prisma,
   courseCompletionRuleRepository,
+);
+export const courseExamTemplateService = new CourseExamTemplateService(
+  prisma,
+  courseExamTemplateRepository,
+  courseRepository,
 );
 export const publicCourseQueryService = new PublicCourseQueryService(prisma);
 

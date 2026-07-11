@@ -13,6 +13,7 @@ import {
 export interface CreateExamInput {
   courseId: string;
   batchId: string;
+  courseExamTemplateId?: string | null;
   examName: string;
   examDate: Date;
   maxMarks: number;
@@ -39,6 +40,7 @@ export class CreateExamCommandHandler {
     const command: CreateExamCommand = {
       courseId: input.courseId,
       batchId: input.batchId,
+      courseExamTemplateId: input.courseExamTemplateId || null,
       examName: input.examName,
       examDate: input.examDate,
       maxMarks: input.maxMarks,

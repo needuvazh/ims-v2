@@ -4,6 +4,7 @@ import { z } from 'zod';
 export const CreateExamSchemaBase = z.object({
   courseId: z.string().uuid('Invalid course ID'),
   batchId: z.string().uuid('Invalid batch ID'),
+  courseExamTemplateId: z.string().uuid('Invalid template ID').nullable().optional(),
   examName: z
     .string()
     .trim()

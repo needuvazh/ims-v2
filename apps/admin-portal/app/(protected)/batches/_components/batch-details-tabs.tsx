@@ -68,6 +68,9 @@ interface BatchDetailsTabsProps {
   isRegistrar: boolean;
   isCoordinator: boolean;
   waitingListEnabled?: boolean;
+  examRequired: boolean;
+  examTemplates: any[];
+  scheduledExams: any[];
 }
 
 function getSessionScheduleTone(session: any) {
@@ -118,11 +121,14 @@ export function BatchDetailsTabs({
   enrolledStudents,
   isRegistrar,
   isCoordinator,
+  examRequired,
+  examTemplates,
+  scheduledExams,
 }: BatchDetailsTabsProps) {
   const waitingListEnabled = false;
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
-    'sessions' | 'trainers' | 'waitlist' | 'students'
+    'sessions' | 'trainers' | 'waitlist' | 'students' | 'exams'
   >('sessions');
   const [isPending, startTransition] = useTransition();
   const [unassigningId, setUnassigningId] = useState('');
@@ -238,6 +244,96 @@ export function BatchDetailsTabs({
         toast.error(err.message || 'An unexpected error occurred.');
       }
     });
+  };
+
+  // Exam scheduling states
+  const [examDates, setExamDates] = useState<Record<string, string>>({});
+  const [examSubmitting, setExamSubmitting] = useState<Record<string, boolean>>({});
+
+  const handleScheduleExam = async (templateId: string, templateName: string, maxMarks: number, passMarks: number) => {
+    const examDate = examDates[templateId];
+    if (!examDate) {
+      toast.error('Please select an exam date.');
+      return;
+    }
+
+    const selectedDate = new Date(examDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate.getTime() <= today.getTime()) {
+      toast.error('Exam date must be in the future.');
+      return;
+    }
+
+    setExamSubmitting(prev => ({ ...prev, [templateId]: true }));
+    const toastId = toast.loading('Scheduling batch exam...');
+
+    try {
+      const response = await fetch('/api/v1/exams', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          courseId,
+          batchId,
+          courseExamTemplateId: templateId,
+          examName: templateName,
+          examDate,
+          maxMarks,
+          passMarks,
+        }),
+      });
+
+      const json = await response.json();
+      if (!response.ok || !json.success) {
+        throw new Error(json.messageEnglish || json.error || 'Failed to schedule exam.');
+      }
+
+      toast.success('Exam successfully scheduled in Draft status!', { id: toastId });
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to schedule exam.', { id: toastId });
+    } finally {
+      setExamSubmitting(prev => ({ ...prev, [templateId]: false }));
+    }
+  };
+
+  const handleRescheduleExam = async (examId: string, templateId: string) => {
+    const examDate = examDates[templateId];
+    if (!examDate) {
+      toast.error('Please select a new exam date.');
+      return;
+    }
+
+    const selectedDate = new Date(examDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate.getTime() <= today.getTime()) {
+      toast.error('Exam date must be in the future.');
+      return;
+    }
+
+    setExamSubmitting(prev => ({ ...prev, [templateId]: true }));
+    const toastId = toast.loading('Rescheduling batch exam...');
+
+    try {
+      const response = await fetch(`/api/v1/exams/${examId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ examDate }),
+      });
+
+      const json = await response.json();
+      if (!response.ok || !json.success) {
+        throw new Error(json.messageEnglish || json.error || 'Failed to reschedule exam.');
+      }
+
+      toast.success('Exam date updated successfully!', { id: toastId });
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to reschedule exam.', { id: toastId });
+    } finally {
+      setExamSubmitting(prev => ({ ...prev, [templateId]: false }));
+    }
   };
 
   // Handle Faculty Assignment
@@ -508,6 +604,16 @@ export function BatchDetailsTabs({
             {waitlist.length})
           </button>
         )}
+        <button
+          onClick={() => setActiveTab('exams')}
+          className={`flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 flex justify-center items-center gap-2 ${
+            activeTab === 'exams'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'text-slate-600 hover:bg-slate-50'
+          }`}
+        >
+          <ClipboardList className="h-4.5 w-4.5" /> Exams
+        </button>
       </div>
 
       {/* Tab Panels */}
@@ -1188,6 +1294,139 @@ export function BatchDetailsTabs({
                 ))}
               </TableBody>
             </Table>
+          )}
+        </Card>
+      )}
+
+      {activeTab === 'exams' && (
+        <Card className="bg-white/80 backdrop-blur-md border border-[color:var(--ims-border)] shadow-sm rounded-2xl p-6">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+            <div className="flex items-center gap-2">
+              <ClipboardList className="h-5 w-5 text-indigo-600" />
+              <h3 className="font-semibold text-slate-800">
+                Batch Course Exams
+              </h3>
+            </div>
+            <span className="text-xs text-slate-500 font-medium">
+              Inherited from Course Exam Masters
+            </span>
+          </div>
+
+          {examTemplates.length === 0 ? (
+            <div className="p-8 text-center text-sm text-[color:var(--ims-muted)]">
+              No exam templates are configured for this course. Please configure them in the course catalog.
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {examTemplates.map((template) => {
+                const scheduled = scheduledExams.find(
+                  (se) => se.courseExamTemplateId === template.id
+                );
+                const isSubmitting = examSubmitting[template.id] || false;
+                const currentDateValue = examDates[template.id] || '';
+
+                return (
+                  <div
+                    key={template.id}
+                    className="p-4 border border-slate-100 rounded-xl bg-slate-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  >
+                    <div className="space-y-1">
+                      <h4 className="font-semibold text-slate-800 text-sm">
+                        {template.examName}
+                      </h4>
+                      <div className="flex gap-4 text-xs text-slate-500">
+                        <span>Max Marks: <strong className="text-slate-700">{template.maxMarks}</strong></span>
+                        <span>Passing Marks: <strong className="text-slate-700">{template.passMarks}</strong></span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                      {scheduled ? (
+                        <>
+                          <div className="flex flex-col items-start sm:items-end">
+                            <Badge variant="success">Scheduled</Badge>
+                            <span className="text-xs text-slate-500 mt-1">
+                              Date: {new Date(scheduled.examDate).toLocaleDateString()}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <Input
+                              type="date"
+                              value={currentDateValue}
+                              onChange={(e) =>
+                                setExamDates((prev) => ({
+                                  ...prev,
+                                  [template.id]: e.target.value,
+                                }))
+                              }
+                              className="h-9 w-40 text-xs"
+                              disabled={isSubmitting}
+                            />
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleRescheduleExam(scheduled.id, template.id)}
+                              disabled={isSubmitting || !currentDateValue}
+                            >
+                              Reschedule
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="primary"
+                              onClick={() =>
+                                router.push(`/exam-completion/exams/${scheduled.id}`)
+                              }
+                              className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium"
+                            >
+                              Grading
+                            </Button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex flex-col items-start sm:items-end">
+                            <Badge variant="outline">Unscheduled</Badge>
+                            <span className="text-xs text-slate-400 mt-1">Pending setup</span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <Input
+                              type="date"
+                              value={currentDateValue}
+                              onChange={(e) =>
+                                setExamDates((prev) => ({
+                                  ...prev,
+                                  [template.id]: e.target.value,
+                                }))
+                              }
+                              className="h-9 w-40 text-xs"
+                              disabled={isSubmitting}
+                            />
+                            <Button
+                              size="sm"
+                              variant="primary"
+                              onClick={() =>
+                                handleScheduleExam(
+                                  template.id,
+                                  template.examName,
+                                  template.maxMarks,
+                                  template.passMarks
+                                )
+                              }
+                              disabled={isSubmitting || !currentDateValue}
+                              className="text-white font-medium"
+                            >
+                              Schedule
+                            </Button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </Card>
       )}

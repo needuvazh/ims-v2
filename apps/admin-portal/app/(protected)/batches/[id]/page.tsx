@@ -76,6 +76,43 @@ export default async function BatchDetailPage(props: {
     orderBy: { queuePosition: 'asc' },
   });
 
+  // Fetch completion rules to see if exams are required
+  const completionRule = await prisma.courseCompletionRule.findFirst({
+    where: { courseId: batch.courseId, status: 'Active', isDeleted: false },
+    select: { examRequired: true },
+  });
+  const examRequired = completionRule?.examRequired ?? false;
+
+  // Fetch course exam templates (Exam Masters)
+  const examTemplatesRaw = await prisma.courseExamTemplate.findMany({
+    where: { courseId: batch.courseId, status: 'Active', isDeleted: false },
+    orderBy: { createdAt: 'asc' },
+  });
+
+  const examTemplates = examTemplatesRaw.map((t) => ({
+    id: t.id,
+    examName: t.examName,
+    maxMarks: t.maxMarks.toNumber(),
+    passMarks: t.passMarks.toNumber(),
+    status: t.status,
+  }));
+
+  // Fetch scheduled exams for this batch
+  const scheduledExamsRaw = await prisma.exam.findMany({
+    where: { batchId: id, isDeleted: false },
+    orderBy: { examDate: 'asc' },
+  });
+
+  const scheduledExams = scheduledExamsRaw.map((e) => ({
+    id: e.id,
+    courseExamTemplateId: e.courseExamTemplateId,
+    examName: e.examName,
+    examDate: e.examDate.toISOString(),
+    maxMarks: e.maxMarks.toNumber(),
+    passMarks: e.passMarks.toNumber(),
+    status: e.status,
+  }));
+
   // Fetch active trainers with person details
   const trainersListRaw = await prisma.user.findMany({
     where: {
@@ -338,6 +375,9 @@ export default async function BatchDetailPage(props: {
             isRegistrar={isRegistrar}
             isCoordinator={isCoordinator}
             waitingListEnabled={batch.waitingListEnabled}
+            examRequired={examRequired}
+            examTemplates={examTemplates}
+            scheduledExams={scheduledExams}
           />
         </div>
       </div>

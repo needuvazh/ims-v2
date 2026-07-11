@@ -68,3 +68,47 @@ export const CreateCourseSchema = z.object({
 export const UpdateCourseSchema = CreateCourseSchema.partial().omit({
   courseCode: true,
 });
+
+export const CreateCourseExamTemplateSchema = z.object({
+  examName: z
+    .string()
+    .trim()
+    .min(3, 'Exam name must be at least 3 characters')
+    .max(200, 'Exam name must be at most 200 characters'),
+  maxMarks: z.coerce
+    .number()
+    .positive('Max marks must be greater than 0'),
+  passMarks: z.coerce
+    .number()
+    .nonnegative('Pass marks must be >= 0'),
+  status: z.enum(['Draft', 'Active', 'Inactive', 'Superseded']).optional(),
+}).refine(data => data.passMarks <= data.maxMarks, {
+  message: 'Passing marks cannot exceed maximum marks',
+  path: ['passMarks'],
+});
+
+export const UpdateCourseExamTemplateSchema = z.object({
+  examName: z
+    .string()
+    .trim()
+    .min(3, 'Exam name must be at least 3 characters')
+    .max(200, 'Exam name must be at most 200 characters')
+    .optional(),
+  maxMarks: z.coerce
+    .number()
+    .positive('Max marks must be greater than 0')
+    .optional(),
+  passMarks: z.coerce
+    .number()
+    .nonnegative('Pass marks must be >= 0')
+    .optional(),
+  status: z.enum(['Draft', 'Active', 'Inactive', 'Superseded']).optional(),
+}).refine(data => {
+  if (data.passMarks !== undefined && data.maxMarks !== undefined) {
+    return data.passMarks <= data.maxMarks;
+  }
+  return true;
+}, {
+  message: 'Passing marks cannot exceed maximum marks',
+  path: ['passMarks'],
+});

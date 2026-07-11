@@ -39,8 +39,10 @@ import {
   ChevronDown,
   Search,
   X,
+  FileText,
 } from 'lucide-react';
 import * as Popover from '@radix-ui/react-popover';
+import { CourseExamsConfigTab } from './course-exams-config-tab';
 
 interface BranchOption {
   id: string;
@@ -241,7 +243,7 @@ export function CourseConfigsPanel({
   branches,
   batches,
 }: CourseConfigsPanelProps) {
-  const [activeTab, setActiveTab] = useState<'pricing' | 'discounts' | 'rules'>(
+  const [activeTab, setActiveTab] = useState<'pricing' | 'discounts' | 'rules' | 'exams'>(
     'pricing',
   );
 
@@ -1471,6 +1473,17 @@ export function CourseConfigsPanel({
             <GraduationCap className="h-4 w-4" />
             Graduation Completion Rules
           </button>
+          <button
+            onClick={() => setActiveTab('exams')}
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 transition-all ${
+              activeTab === 'exams'
+                ? 'border-[color:var(--ims-brand)] text-[color:var(--ims-brand)]'
+                : 'border-transparent text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            <FileText className="h-4 w-4" />
+            Exam Masters
+          </button>
         </div>
 
         <button
@@ -1834,6 +1847,10 @@ export function CourseConfigsPanel({
               />
             )}
           </div>
+        )}
+
+        {!loading && activeTab === 'exams' && (
+          <CourseExamsConfigTab courseId={courseId} />
         )}
       </div>
 

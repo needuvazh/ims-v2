@@ -116,4 +116,20 @@ export interface CourseCompletionRule {
   deletedBy?: string | null;
   isDeleted: boolean;
 }
+
+export interface CourseExamTemplate {
+  id: string;
+  courseId: string;
+  examName: string;
+  maxMarks: Prisma.Decimal;
+  passMarks: Prisma.Decimal;
+  status: string; // ConfigStatus
+  createdAt: Date;
+  createdBy?: string | null;
+  updatedAt?: Date | null;
+  updatedBy?: string | null;
+  deletedAt?: Date | null;
+  deletedBy?: string | null;
+  isDeleted: boolean;
+}
 import { Prisma } from '@prisma/client';

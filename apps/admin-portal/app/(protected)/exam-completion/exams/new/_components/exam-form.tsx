@@ -14,6 +14,8 @@ import {
   CardContent,
 } from '@ims/shared-ui';
 
+import { useEffect } from 'react';
+
 type CourseItem = {
   id: string;
   nameEnglish: string;
@@ -44,6 +46,36 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
   const [maxMarks, setMaxMarks] = useState('');
   const [passMarks, setPassMarks] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [loadingTemplates, setLoadingTemplates] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState('');
+
+  useEffect(() => {
+    if (!courseId) {
+      setTemplates([]);
+      setSelectedTemplateId('');
+      return;
+    }
+
+    const fetchTemplates = async () => {
+      try {
+        setLoadingTemplates(true);
+        const res = await fetch(`/api/v1/courses/${courseId}/exam-templates`);
+        if (res.ok) {
+          const json = await res.json();
+          const activeTemplates = (json.data || []).filter((t: any) => t.status === 'Active');
+          setTemplates(activeTemplates);
+        }
+      } catch {
+        toast.error('Failed to load exam templates for this course.');
+      } finally {
+        setLoadingTemplates(false);
+      }
+    };
+
+    fetchTemplates();
+  }, [courseId]);
 
   // Filter batches based on selected courseId
   const filteredBatches = batches.filter((b) => b.courseId === courseId);
@@ -97,6 +129,7 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
         body: JSON.stringify({
           courseId,
           batchId,
+          courseExamTemplateId: selectedTemplateId || null,
           examName,
           examDate,
           maxMarks: parseFloat(maxMarks),
@@ -152,6 +185,28 @@ export function ExamForm({ courses, batches }: ExamFormProps) {
               disabled={isSubmitting}
               required
             />
+
+            {courseId && templates.length > 0 && (
+              <Select
+                label="Select from Course Exam Templates"
+                placeholder="Select a template to pre-populate fields"
+                value={selectedTemplateId}
+                onValueChange={(val) => {
+                  setSelectedTemplateId(val);
+                  const template = templates.find((t) => t.id === val);
+                  if (template) {
+                    setExamName(template.examName);
+                    setMaxMarks(template.maxMarks.toString());
+                    setPassMarks(template.passMarks.toString());
+                  }
+                }}
+                options={templates.map((t) => ({
+                  value: t.id,
+                  label: `${t.examName} (Max: ${Number(t.maxMarks)}, Pass: ${Number(t.passMarks)})`,
+                }))}
+                disabled={isSubmitting || loadingTemplates}
+              />
+            )}
 
             <Select
               label="Batch"

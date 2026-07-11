@@ -5,6 +5,7 @@ import {
   CoursePricing,
   CourseDiscount,
   CourseCompletionRule,
+  CourseExamTemplate,
 } from './course';
 
 export interface ICourseRepository {
@@ -168,4 +169,29 @@ export interface ICourseCompletionRuleRepository {
     filters: { courseId?: string; status?: string; activeAt?: Date },
     tx?: Prisma.TransactionClient,
   ): Promise<CourseCompletionRule[]>;
+}
+
+export interface ICourseExamTemplateRepository {
+  create(
+    data: Prisma.CourseExamTemplateUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseExamTemplate>;
+  update(
+    id: string,
+    data: Prisma.CourseExamTemplateUncheckedUpdateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseExamTemplate>;
+  findById(
+    id: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseExamTemplate | null>;
+  findAll(
+    filters: { courseId?: string; status?: string },
+    tx?: Prisma.TransactionClient,
+  ): Promise<CourseExamTemplate[]>;
+  delete(
+    id: string,
+    deletedBy: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<void>;
 }

@@ -21,6 +21,7 @@ export interface Exam {
   id: string;
   courseId: string;
   batchId: string;
+  courseExamTemplateId?: string | null;
   examName: string;
   examDate: Date;
   maxMarks: number;
@@ -39,6 +40,7 @@ export interface Exam {
 export interface CreateExamCommand {
   courseId: string;
   batchId: string;
+  courseExamTemplateId?: string | null;
   examName: string;
   examDate: Date;
   maxMarks: number;
@@ -56,6 +58,7 @@ export class ExamAggregate {
       id: id || crypto.randomUUID(),
       courseId: command.courseId,
       batchId: command.batchId,
+      courseExamTemplateId: command.courseExamTemplateId || null,
       examName: command.examName,
       examDate: command.examDate,
       maxMarks: command.maxMarks,

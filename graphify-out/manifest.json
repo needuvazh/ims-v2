@@ -175,7 +175,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1783758839.3959987,
+    "mtime": 1783762756.6369681,
     "ast_hash": "d357c881d1893f04dca213afa4f961f9",
     "semantic_hash": ""
   },
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/runtime.ts": {
-    "mtime": 1783676201.8295846,
-    "ast_hash": "4d4d47c125ad9edf2f620515ee806f3d",
+    "mtime": 1783767875.531383,
+    "ast_hash": "e8ebd8c625151c94e51b182b0829d026",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
@@ -310,7 +310,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/verify/page.tsx": {
-    "mtime": 1783762134.2870994,
+    "mtime": 1783762756.6380494,
     "ast_hash": "1ca952f13b6fdcad3173529a3f08aec1",
     "semantic_hash": ""
   },
@@ -320,7 +320,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783760220.6215444,
+    "mtime": 1783762756.638236,
     "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
@@ -495,7 +495,7 @@
     "semantic_hash": ""
   },
   "packages/identity-access/src/domain/access.ts": {
-    "mtime": 1783758836.7028658,
+    "mtime": 1783762756.6686704,
     "ast_hash": "04388ca4fac93b24130aea6d44b26ccd",
     "semantic_hash": ""
   },
@@ -3585,7 +3585,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site-data.ts": {
-    "mtime": 1783762180.7561958,
+    "mtime": 1783762756.6378388,
     "ast_hash": "9570f39f60a9d8f558d1e4d9c0038210",
     "semantic_hash": ""
   },
@@ -4215,7 +4215,7 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/followup-service.ts": {
-    "mtime": 1783758770.7340431,
+    "mtime": 1783762756.6676822,
     "ast_hash": "9b20510621b7c9b9c821a088363cf6d4",
     "semantic_hash": ""
   },
@@ -4335,7 +4335,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/_components/lead-details-client.tsx": {
-    "mtime": 1783761779.1407588,
+    "mtime": 1783762756.637276,
     "ast_hash": "8d395025394163caf822b1afecc9e244",
     "semantic_hash": ""
   },
@@ -4450,22 +4450,22 @@
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-analytics-read-service.test.ts": {
-    "mtime": 1783758789.8015962,
+    "mtime": 1783762756.6678698,
     "ast_hash": "ace794f6d0c02db5482fe3ff42ee11c9",
     "semantic_hash": ""
   },
   "packages/crm-leads/src/application/lead-analytics-read-service.ts": {
-    "mtime": 1783758761.431278,
+    "mtime": 1783762756.668075,
     "ast_hash": "4f650b1e51640255fb5b84ee22ba20d3",
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.test.ts": {
-    "mtime": 1783758966.5356467,
+    "mtime": 1783762756.668906,
     "ast_hash": "975688ca8f4dd6595633f86ce241582b",
     "semantic_hash": ""
   },
   "packages/reporting-dashboards/src/queries/crm-dashboard-query-service.ts": {
-    "mtime": 1783758780.6611826,
+    "mtime": 1783762756.669105,
     "ast_hash": "a13aeb5c6b856f6b37da2b05ea5ab483",
     "semantic_hash": ""
   },
@@ -4625,8 +4625,8 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/course.ts": {
-    "mtime": 1783360371.7027948,
-    "ast_hash": "b8e9ebd43c2040b8e094dff7564bf1de",
+    "mtime": 1783767819.5792217,
+    "ast_hash": "e74cae11d6a9cfb3261052d086bca30f",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/errors.ts": {
@@ -4635,18 +4635,18 @@
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/repositories.ts": {
-    "mtime": 1783476070.662093,
-    "ast_hash": "cafa9fa4450ecae797025087e3c1a0a3",
+    "mtime": 1783767836.0434172,
+    "ast_hash": "35629470612068d07673df8fe091cd81",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/domain/validation-schemas.ts": {
-    "mtime": 1783476070.6709812,
-    "ast_hash": "aee0c62b8ef4cd65712a8595e74da13f",
+    "mtime": 1783768106.7481322,
+    "ast_hash": "3c7dac3da6d5bb279ad56eb5b8a55694",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/index.ts": {
-    "mtime": 1783252156.2162223,
-    "ast_hash": "8a336a29442d53485f3b914c0e1a2853",
+    "mtime": 1783767866.9784586,
+    "ast_hash": "e5cfa97d92867ce9db7b8312ebacc559",
     "semantic_hash": ""
   },
   "packages/course-catalog/src/infrastructure/category-repository.ts": {
@@ -4750,8 +4750,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/page.tsx": {
-    "mtime": 1783762270.0822399,
-    "ast_hash": "719833763fd4e0d16e8fef1cbe84e50b",
+    "mtime": 1783767992.5844874,
+    "ast_hash": "dda76257d2c403800171112252426b03",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-form.tsx": {
@@ -4760,7 +4760,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/actions.ts": {
-    "mtime": 1783758818.300721,
+    "mtime": 1783762756.6364856,
     "ast_hash": "793e013eabdef86800f94db18a10fe24",
     "semantic_hash": ""
   },
@@ -4865,8 +4865,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/_components/batch-details-tabs.tsx": {
-    "mtime": 1783762450.308883,
-    "ast_hash": "32ccc8519cbba7c0041be9272928c00a",
+    "mtime": 1783768146.139659,
+    "ast_hash": "fe4591c70f43a8f972fd9b0beae5c846",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/batches/[id]/edit/page.tsx": {
@@ -5020,8 +5020,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/courses-catalog/[id]/edit/_components/course-configs-panel.tsx": {
-    "mtime": 1783476040.7731402,
-    "ast_hash": "766591a9276838310eb25328208c76ca",
+    "mtime": 1783767972.3597085,
+    "ast_hash": "63a024e3b20d5466a23d19196a1eb6aa",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/courses/[id]/completion-rules/active/route.ts": {
@@ -5785,7 +5785,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/students/[id]/_components/student-history-tabs.tsx": {
-    "mtime": 1783761916.5932543,
+    "mtime": 1783762756.6375682,
     "ast_hash": "adf1a508d8d0f87558415007ae4a30cf",
     "semantic_hash": ""
   },
@@ -7695,8 +7695,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/commands/CreateExamCommandHandler.ts": {
-    "mtime": 1783476071.5986335,
-    "ast_hash": "a38a6fe9f17c6b6b7b41299624d82715",
+    "mtime": 1783767900.2025502,
+    "ast_hash": "96920982cacee329677c4a7357a81374",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/application/commands/EvaluateCompletionCommandHandler.ts": {
@@ -7810,8 +7810,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/contracts/validation-schemas.ts": {
-    "mtime": 1783702971.589232,
-    "ast_hash": "d30ed32def52c88894d1928786bfb2e7",
+    "mtime": 1783767910.9140897,
+    "ast_hash": "a6a1333589c319bfed738ff06b272c8a",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/domain/aggregates/CompletionApproval.ts": {
@@ -7825,8 +7825,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/domain/aggregates/Exam.ts": {
-    "mtime": 1783476071.7956026,
-    "ast_hash": "3f831b2ab6ee4dc33133c9d9ca95291a",
+    "mtime": 1783767897.4659817,
+    "ast_hash": "4d1d116ded1bd75533f27c9769206ece",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/domain/aggregates/Result.ts": {
@@ -7940,8 +7940,8 @@
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/infrastructure/repositories/PrismaExamRepository.ts": {
-    "mtime": 1783476071.9423876,
-    "ast_hash": "0e4f1d8ef6a78d683455db29bcf481a4",
+    "mtime": 1783767907.8986058,
+    "ast_hash": "faca9b13e7904e24641f1bcee7b928be",
     "semantic_hash": ""
   },
   "packages/exam-result-completion/src/infrastructure/repositories/PrismaResultRepository.ts": {
@@ -8130,8 +8130,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/new/_components/exam-form.tsx": {
-    "mtime": 1783702971.5618854,
-    "ast_hash": "b944c4398f62ac7f606aecd17391a176",
+    "mtime": 1783768061.3087482,
+    "ast_hash": "3c0d5d0434719e56f3fb60bc954eb5b0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/exam-completion/exams/new/page.tsx": {
@@ -8455,7 +8455,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/_components/certificates-client-view.tsx": {
-    "mtime": 1783761774.709886,
+    "mtime": 1783762756.6367145,
     "ast_hash": "b4eeb0d0ecf6284c4b581823b0792e71",
     "semantic_hash": ""
   },
@@ -8535,12 +8535,12 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/application/VerificationService.ts": {
-    "mtime": 1783762047.8287048,
+    "mtime": 1783762756.6662197,
     "ast_hash": "9ade778c6fc2bf0dc4daf121bec22203",
     "semantic_hash": ""
   },
   "packages/certificates/src/application/certificates.test.ts": {
-    "mtime": 1783761759.159892,
+    "mtime": 1783762756.667205,
     "ast_hash": "44b0f2c44319d364e81e2932d3f4e9b8",
     "semantic_hash": ""
   },
@@ -8590,7 +8590,7 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/infrastructure/PdfHelper.ts": {
-    "mtime": 1783761754.8946826,
+    "mtime": 1783762756.6674263,
     "ast_hash": "687f93deebd5c928d302221996462c3a",
     "semantic_hash": ""
   },
@@ -9782,6 +9782,76 @@
   "apps/admin-portal/app/api/v1/certificates/[id]/download/route.ts": {
     "mtime": 1783761770.549623,
     "ast_hash": "8fd6f94b7d26f5ea76b3e8c4cd1343f1",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(protected)/courses-catalog/[id]/edit/_components/course-exams-config-tab.tsx": {
+    "mtime": 1783768257.5066464,
+    "ast_hash": "b88115fae7a10b5ceed731b9affacc22",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/courses/[id]/exam-templates/[templateId]/route.ts": {
+    "mtime": 1783767886.931389,
+    "ast_hash": "52d15c0578f3aac41cea62c7547a4c7c",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/courses/[id]/exam-templates/route.ts": {
+    "mtime": 1783767883.0215442,
+    "ast_hash": "de0d0c7b21d0b46affe6dfc1dde7bf5f",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/application/course-exam-template-service.ts": {
+    "mtime": 1783767862.5436828,
+    "ast_hash": "9511f20a3b4d21c735e8160845053e65",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/src/infrastructure/course-exam-template-repository.ts": {
+    "mtime": 1783767845.0937562,
+    "ast_hash": "24b1a870236653339638bdf4e59eb836",
+    "semantic_hash": ""
+  },
+  "packages/course-catalog/tests/course-exam-template.spec.ts": {
+    "mtime": 1783768087.0593367,
+    "ast_hash": "ffe5a7bf77599d9e09aee84c12ad25d2",
+    "semantic_hash": ""
+  },
+  "packages/database/prisma/migrations/20260711110330_add_course_exam_templates/migration.sql": {
+    "mtime": 1783767810.072206,
+    "ast_hash": "6c5460004542e74ec8613fdd92c5c96c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/course-exam-master-templates/.openspec.yaml": {
+    "mtime": 1783767333.3104517,
+    "ast_hash": "145b3979ac90c49abaf8eac7a3e26147",
+    "semantic_hash": ""
+  },
+  "openspec/changes/course-exam-master-templates/design.md": {
+    "mtime": 1783767384.8693013,
+    "ast_hash": "fcece8c8244b293df5bca59a4cae6193",
+    "semantic_hash": ""
+  },
+  "openspec/changes/course-exam-master-templates/proposal.md": {
+    "mtime": 1783767355.6935508,
+    "ast_hash": "a5f52c707f276251c246a99ca45592f4",
+    "semantic_hash": ""
+  },
+  "openspec/changes/course-exam-master-templates/specs/batch-exam-cohort-scheduling/spec.md": {
+    "mtime": 1783767373.457743,
+    "ast_hash": "a82308acd626d708a438a087b3c189c9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/course-exam-master-templates/specs/course-exam-master-templates/spec.md": {
+    "mtime": 1783767370.072177,
+    "ast_hash": "9209cdc80d8359020815cfeb5c2d3b81",
+    "semantic_hash": ""
+  },
+  "openspec/changes/course-exam-master-templates/specs/exam-completion-optimization/spec.md": {
+    "mtime": 1783767376.2880385,
+    "ast_hash": "6d9c3f062f447a17a2c281a1e918c3fe",
+    "semantic_hash": ""
+  },
+  "openspec/changes/course-exam-master-templates/tasks.md": {
+    "mtime": 1783768348.371757,
+    "ast_hash": "a48581e7d359c3d5679300b53b4963f8",
     "semantic_hash": ""
   }
 }
