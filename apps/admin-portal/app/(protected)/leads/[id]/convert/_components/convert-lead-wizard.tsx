@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -427,7 +428,14 @@ export function ConvertLeadWizard({ lead, initialDocuments = [] }: ConvertLeadWi
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white border border-slate-200/80 shadow-xl rounded-2xl p-6 md:p-8">
+    <div className="max-w-4xl mx-auto space-y-4">
+      <Link
+        href="/leads"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+      >
+        <ArrowLeft className="h-3.5 w-3.5" /> Back to Leads
+      </Link>
+      <div className="bg-white border border-slate-200/80 shadow-xl rounded-2xl p-6 md:p-8">
       {/* Wizard Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-6 mb-8 gap-4">
         <div>
@@ -849,36 +857,6 @@ export function ConvertLeadWizard({ lead, initialDocuments = [] }: ConvertLeadWi
                   )}
                 </div>
 
-                {selectedBatchId && (
-                  <div className="space-y-4 animate-fadeIn">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Discounts & Overrides</h4>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-semibold text-slate-500">Discount Code</label>
-                        <div className="flex gap-1.5">
-                          <Input
-                            type="text"
-                            value={discountCode}
-                            onChange={(e) => setDiscountCode(e.target.value)}
-                            placeholder="CODE"
-                            className="text-xs h-8"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-semibold text-slate-500">Manual Discount (OMR)</label>
-                        <Input
-                          type="number"
-                          value={manualDiscount || ''}
-                          onChange={(e) => setManualDiscount(Number(e.target.value))}
-                          placeholder="Amount"
-                          className="text-xs h-8"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Pricing Preview Panel */}
@@ -900,16 +878,6 @@ export function ConvertLeadWizard({ lead, initialDocuments = [] }: ConvertLeadWi
                     <div className="flex justify-between">
                       <span className="text-slate-500">VAT / Tax ({pricingDetails.taxPercentage}%)</span>
                       <span className="font-semibold text-slate-800">OMR {pricingDetails.taxAmount.toFixed(3)}</span>
-                    </div>
-                    <div className="flex justify-between border-t border-slate-200 pt-2 font-medium">
-                      <span className="text-slate-600">Subtotal</span>
-                      <span className="text-slate-800">OMR {pricingDetails.totalPrice.toFixed(3)}</span>
-                    </div>
-                    <div className="flex justify-between text-red-600">
-                      <span className="flex items-center gap-1">
-                        <Tag className="h-3.5 w-3.5" /> Discounts Applied
-                      </span>
-                      <span>- OMR {pricingDetails.discountAmount.toFixed(3)}</span>
                     </div>
 
                     <div className="bg-emerald-600/5 border border-emerald-500/20 rounded-xl p-3 flex justify-between items-center mt-4">
@@ -1085,6 +1053,7 @@ export function ConvertLeadWizard({ lead, initialDocuments = [] }: ConvertLeadWi
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );
