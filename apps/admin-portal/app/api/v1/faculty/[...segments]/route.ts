@@ -679,10 +679,10 @@ export async function GET(
   return withRouteObservability(
     request.headers,
     async () => {
-      const { session } = await withAuth(request);
-      const segments = (await params).segments ?? [];
-
       try {
+        const { session } = await withAuth(request);
+        const segments = (await params).segments ?? [];
+
         if (segments.length === 1 && segments[0] === 'eligible-trainers') {
           await requirePermission(session, 'trainer.eligibility.read');
           const query = parseQuery(request);

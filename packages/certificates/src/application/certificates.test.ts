@@ -302,6 +302,11 @@ test('VerificationService - returns Valid status for authentic issued certificat
       courseCode: 'CRS-101',
       nameEnglish: 'Process Safety Fundamentals',
     },
+    batch: {
+      batchCode: 'BAT-101',
+      batchNameEnglish: 'Morning Batch',
+      batchNameArabic: 'الدفعة الصباحية',
+    },
   } as any);
 
   const service = new VerificationService();

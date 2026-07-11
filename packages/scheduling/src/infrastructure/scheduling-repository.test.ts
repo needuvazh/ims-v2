@@ -3,6 +3,37 @@ import type { PrismaClient } from '@prisma/client';
 import { PrismaSchedulingRepository } from './scheduling-repository';
 
 describe('PrismaSchedulingRepository.resolveCalendar', () => {
+  it('falls back to a default weekly calendar when no institute calendar exists', async () => {
+    const prisma = {
+      businessCalendar: {
+        findFirst: vi.fn().mockResolvedValue(null),
+      },
+      branchCalendarOverride: {
+        findFirst: vi.fn(),
+      },
+      holiday: {
+        findMany: vi.fn().mockResolvedValue([]),
+      },
+    } as unknown as PrismaClient;
+
+    const repository = new PrismaSchedulingRepository(prisma);
+    const result = await repository.resolveCalendar(
+      '44444444-4444-4444-4444-444444444444',
+      new Date('2026-07-11'),
+      '22222222-2222-2222-2222-222222222222',
+    );
+
+    expect(result.source).toBe('system-default');
+    expect(result.resolvedOperatingDays).toHaveLength(7);
+    expect(result.resolvedOperatingDays.every((day) => day.isOpen)).toBe(true);
+    expect(result.resolvedOperatingDays[0].workingHours[0]).toEqual({
+      id: expect.any(String),
+      operatingDayId: expect.any(String),
+      startTime: '00:00',
+      endTime: '23:59',
+    });
+  });
+
   it('merges branch overrides into institute working hours and returns holidays', async () => {
     const prisma = {
       businessCalendar: {

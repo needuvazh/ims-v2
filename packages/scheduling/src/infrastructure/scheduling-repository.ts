@@ -125,6 +125,34 @@ function mapVenueBlock(row: any): VenueBlock {
   };
 }
 
+function buildSystemDefaultOperatingDays(): CalendarOperatingDay[] {
+  const dayOrder: Array<CalendarOperatingDay['dayOfWeek']> = [
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+    'SUNDAY',
+  ];
+
+  return dayOrder.map((dayOfWeek, index) => ({
+    id: `system-default-${dayOfWeek.toLowerCase()}-${index}` as any,
+    businessCalendarId: null,
+    branchCalendarOverrideId: null,
+    dayOfWeek,
+    isOpen: true,
+    workingHours: [
+      {
+        id: `system-default-wh-${dayOfWeek.toLowerCase()}-${index}` as any,
+        operatingDayId: `system-default-${dayOfWeek.toLowerCase()}-${index}` as any,
+        startTime: '00:00',
+        endTime: '23:59',
+      },
+    ],
+  }));
+}
+
 export class PrismaSchedulingRepository implements ISchedulingRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
@@ -553,6 +581,7 @@ export class PrismaSchedulingRepository implements ISchedulingRepository {
       tx,
     );
     if (!businessCalendar) {
+      const fallbackOperatingDays = buildSystemDefaultOperatingDays();
       return {
         businessCalendar: {
           id: '' as any,
@@ -568,10 +597,10 @@ export class PrismaSchedulingRepository implements ISchedulingRepository {
           timezone: 'Asia/Muscat',
           effectiveStartDate: new Date(date),
           effectiveEndDate: null,
-          status: 'Draft',
-          isActive: false,
+          status: 'Active',
+          isActive: true,
           version: 1,
-          operatingDays: [],
+          operatingDays: fallbackOperatingDays,
           createdAt: new Date(0),
           createdBy: null,
           updatedAt: null,
@@ -582,7 +611,7 @@ export class PrismaSchedulingRepository implements ISchedulingRepository {
         },
         branchOverride: null,
         holidays: [],
-        resolvedOperatingDays: [],
+        resolvedOperatingDays: fallbackOperatingDays,
         source: 'system-default',
       };
     }
