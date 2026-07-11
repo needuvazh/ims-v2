@@ -1358,15 +1358,10 @@ export class EnrollmentService {
         return enrollment; // No change needed
       }
 
-      // Check if already paid
-      const hasPayments = enrollment.invoices.some(inv => Number(inv.paidAmount) > 0);
-      const walkInPayment = await client.walkInPayment.findFirst({
-        where: { enrollmentId: enrollment.id, isDeleted: false },
-      });
-      const hasWalkInPayment = walkInPayment && Number(walkInPayment.amount) > 0;
-
-      if (hasPayments || hasWalkInPayment) {
-        throw new Error('ERR_ENR_BATCH_CHANGE_BLOCKED_PAID');
+      // Check if enrollment status is valid for batch changes (blocks Completed, Cancelled, Dropped, CertificateIssued)
+      const allowedStatuses = ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active'];
+      if (!allowedStatuses.includes(enrollment.enrollmentStatus)) {
+        throw new Error('ERR_ENR_BATCH_CHANGE_BLOCKED_STATUS');
       }
 
       // Fetch new batch

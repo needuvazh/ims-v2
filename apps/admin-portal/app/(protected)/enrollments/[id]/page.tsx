@@ -123,6 +123,15 @@ export default async function EnrollmentDetailPage(props: {
       payments: {
         where: { isDeleted: false },
       },
+      installmentPlans: {
+        where: { isDeleted: false },
+        include: {
+          installments: {
+            where: { isDeleted: false },
+            orderBy: { sequenceNumber: 'asc' },
+          },
+        },
+      },
     },
     orderBy: { createdAt: 'desc' },
   });
@@ -155,6 +164,21 @@ export default async function EnrollmentDetailPage(props: {
       paymentDate: p.paymentDate.toISOString(),
       referenceNumber: p.referenceNumber || '',
       remarks: p.remarks || '',
+    })),
+    installmentPlans: inv.installmentPlans.map((plan) => ({
+      id: plan.id,
+      planName: plan.planName,
+      status: plan.status,
+      numberOfInstallments: plan.numberOfInstallments,
+      totalAmount: Number(plan.totalAmount),
+      installments: plan.installments.map((inst) => ({
+        id: inst.id,
+        sequenceNumber: inst.sequenceNumber,
+        dueDate: inst.dueDate.toISOString(),
+        amount: Number(inst.amount),
+        paidAmount: Number(inst.paidAmount),
+        status: inst.status,
+      })),
     })),
   }));
 

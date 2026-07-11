@@ -208,6 +208,32 @@ async function handleReceiptGenerated(payload: Record<string, unknown>) {
   await enrollmentService.confirmEnrollment(enrollmentId, 'System');
 }
 
+async function handlePaymentRecorded(payload: Record<string, unknown>) {
+  const invoiceId = payload.invoiceId as string | undefined;
+  if (!invoiceId) {
+    logger.warn('PaymentRecorded event payload missing invoiceId');
+    return;
+  }
+  logger.info(
+    `Processing PaymentRecorded confirmation gate for invoice ${invoiceId}`,
+  );
+  try {
+    const invoice = await prisma.invoice.findUnique({
+      where: { id: invoiceId },
+      select: { enrollmentId: true },
+    });
+    if (invoice?.enrollmentId) {
+      // confirmEnrollment is already idempotent and checks document verification gates internally
+      await enrollmentService.confirmEnrollment(invoice.enrollmentId, 'System');
+    }
+  } catch (error: any) {
+    logger.warn(
+      `Auto-confirmation during PaymentRecorded failed for invoice ${invoiceId}: ${error.message}`,
+    );
+  }
+}
+
+
 async function handleBatchStarted(payload: Record<string, unknown>) {
   const batchId = payload.batchId as string | undefined;
   if (!batchId) {
@@ -415,6 +441,10 @@ async function processOutboxEvents() {
           );
         } else if (event.eventType === 'ReceiptGenerated') {
           await handleReceiptGenerated(
+            event.payload as Record<string, unknown>,
+          );
+        } else if (event.eventType === 'PaymentRecorded') {
+          await handlePaymentRecorded(
             event.payload as Record<string, unknown>,
           );
         } else if (event.eventType === 'BatchStarted') {

@@ -21,6 +21,8 @@ import {
   AlertCircle,
   ArrowDownToLine,
   CreditCard,
+  Lock,
+  Landmark,
 } from 'lucide-react';
 import {
   Card,
@@ -35,7 +37,6 @@ import {
   DialogClose,
 } from '@ims/shared-ui';
 import { toast } from 'sonner';
-import { PricingPanel } from '../../_components/pricing-panel';
 import Link from 'next/link';
 import {
   createInvoiceAction,
@@ -98,6 +99,24 @@ interface PaymentReceipt {
   remarks: string;
 }
 
+interface ClientInstallment {
+  id: string;
+  sequenceNumber: number;
+  dueDate: string;
+  amount: number;
+  paidAmount: number;
+  status: string;
+}
+
+interface ClientInstallmentPlan {
+  id: string;
+  planName: string;
+  status: string;
+  numberOfInstallments: number;
+  totalAmount: number;
+  installments: ClientInstallment[];
+}
+
 interface InvoiceDetail {
   id: string;
   invoiceNumber: string;
@@ -110,6 +129,7 @@ interface InvoiceDetail {
   outstandingAmount: number;
   lineItems: InvoiceLineItem[];
   payments: PaymentReceipt[];
+  installmentPlans: ClientInstallmentPlan[];
 }
 
 interface BatchOption {
@@ -148,6 +168,11 @@ export function EnrollmentDetailsClient({
 
   // Invoice logs state
   const [invoices, setInvoices] = useState<InvoiceDetail[]>(initialInvoices);
+
+  // Sync initialInvoices prop to invoices state reactively
+  useEffect(() => {
+    setInvoices(initialInvoices);
+  }, [initialInvoices]);
 
   // Drop Modal State
   const [isDropOpen, setIsDropOpen] = useState(false);
@@ -216,6 +241,7 @@ export function EnrollmentDetailsClient({
       enrollmentId: string | null;
       courseId: string | null;
       sourceBranchId: string;
+      isFromMaster?: boolean;
     }>
   >([]);
   const [numberOfInstallments, setNumberOfInstallments] = useState(2);
@@ -232,6 +258,7 @@ export function EnrollmentDetailsClient({
         enrollmentId: enrollment.id,
         courseId: enrollment.courseId,
         sourceBranchId: enrollment.branchId,
+        isFromMaster: true,
       },
     ];
 
@@ -244,6 +271,7 @@ export function EnrollmentDetailsClient({
         enrollmentId: enrollment.id,
         courseId: enrollment.courseId,
         sourceBranchId: enrollment.branchId,
+        isFromMaster: true,
       });
     }
     setLineItems(defaultItems);
@@ -263,6 +291,22 @@ export function EnrollmentDetailsClient({
   const taxableAmount = Math.max(0, subtotal - totalDiscount);
   const vatAmount = Number((taxableAmount * (taxRate / 100)).toFixed(3));
   const finalInvoiceTotal = Number((taxableAmount + vatAmount).toFixed(3));
+
+  // Dynamically resolve values to display in the header snapshot grid
+  const displayBasePrice = invoices.length > 0
+    ? Number(enrollment.resolvedPrice)
+    : subtotal;
+
+  const displayDiscount = invoices.length > 0
+    ? Math.max(
+        Number(enrollment.resolvedDiscount),
+        invoices.reduce((sum, inv) => sum + inv.lineItems.reduce((liSum, li) => liSum + li.discountAmount, 0), 0)
+      )
+    : totalDiscount;
+
+  const displayFinalAmount = invoices.length > 0
+    ? (displayBasePrice - displayDiscount)
+    : taxableAmount;
 
   // Auto-planner for installments
   useEffect(() => {
@@ -300,6 +344,7 @@ export function EnrollmentDetailsClient({
         enrollmentId: null,
         courseId: null,
         sourceBranchId: enrollment.branchId,
+        isFromMaster: false,
       },
     ]);
   };
@@ -312,8 +357,8 @@ export function EnrollmentDetailsClient({
     setLineItems(lineItems.filter((_, idx) => idx !== index));
   };
 
-  // Workflow transitions (Submit, Approve, Cancel)
-  const handleTransition = async (action: 'submit' | 'approve' | 'cancel') => {
+  // Workflow transitions (Submit, Approve, Cancel, Confirm)
+  const handleTransition = async (action: 'submit' | 'approve' | 'cancel' | 'confirm') => {
     startTransition(async () => {
       try {
         const response = await fetch(`/api/v1/enrollments/${enrollment.id}/${action}`, {
@@ -328,7 +373,7 @@ export function EnrollmentDetailsClient({
           throw new Error(data.messageEnglish || `Failed to ${action} enrollment.`);
         }
 
-        toast.success(`Enrollment successfully ${action}ed!`);
+        toast.success(`Enrollment successfully ${action === 'confirm' ? 'confirmed' : action + 'ed'}!`);
         router.refresh();
       } catch (err: any) {
         toast.error(err.message || `Failed to transition state.`);
@@ -428,7 +473,7 @@ export function EnrollmentDetailsClient({
           courseId: item.courseId,
           sourceBranchId: item.sourceBranchId,
           descriptionEnglish: item.descriptionEnglish,
-          quantity: Number(item.quantity),
+          quantity: 1,
           unitPrice: itemPrice,
           discountAmount: Number(itemDiscount.toFixed(3)),
           taxRate: taxRate / 100,
@@ -450,9 +495,9 @@ export function EnrollmentDetailsClient({
         numberOfInstallments: invoiceSubCategory === 'Installment' ? numberOfInstallments : null,
         installments: invoiceSubCategory === 'Installment'
           ? installments.map((inst) => ({
-              dueDate: new Date(inst.dueDate),
-              amount: Number(inst.amount),
-            }))
+            dueDate: new Date(inst.dueDate),
+            amount: Number(inst.amount),
+          }))
           : null,
       });
 
@@ -522,6 +567,31 @@ export function EnrollmentDetailsClient({
     });
   };
 
+  const getSourceBadge = (source: string) => {
+    switch (source) {
+      case 'BatchLevelOverride':
+      case 'BatchLevel':
+        return (
+          <Badge className="bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-50 text-[10px]">
+            Batch Level Override
+          </Badge>
+        );
+      case 'BranchLevelOverride':
+      case 'BranchLevel':
+        return (
+          <Badge className="bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-50 text-[10px]">
+            Branch Level Override
+          </Badge>
+        );
+      default:
+        return (
+          <Badge className="bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-50 text-[10px]">
+
+          </Badge>
+        );
+    }
+  };
+
   const getStatusBadgeVariant = (s: string) => {
     switch (s) {
       case 'Active':
@@ -542,9 +612,11 @@ export function EnrollmentDetailsClient({
     }
   };
 
+  const hasPaymentRecord = invoices.some((inv) => inv.payments && inv.payments.length > 0);
   const canSubmit =
     enrollment.enrollmentStatus === 'Draft' &&
-    sessionPermissions.includes('enrollment.submit');
+    sessionPermissions.includes('enrollment.submit') &&
+    hasPaymentRecord;
   const canApprove =
     enrollment.enrollmentStatus === 'Submitted' &&
     sessionPermissions.includes('enrollment.approve');
@@ -554,11 +626,17 @@ export function EnrollmentDetailsClient({
   const canDrop =
     ['Confirmed', 'Active'].includes(enrollment.enrollmentStatus) &&
     sessionPermissions.includes('enrollment.drop');
+  const canConfirm =
+    enrollment.enrollmentStatus === 'Approved' &&
+    sessionPermissions.includes('enrollment.approve') &&
+    hasPaymentRecord;
+
+  const isDraftWithoutPayment = enrollment.enrollmentStatus === 'Draft' && !hasPaymentRecord;
+  const isApprovedWithoutPayment = enrollment.enrollmentStatus === 'Approved' && !hasPaymentRecord;
 
   const canChangeBatch =
     ['Draft', 'Submitted', 'Approved', 'Confirmed', 'Active'].includes(enrollment.enrollmentStatus) &&
-    sessionPermissions.includes('enrollment.submit') &&
-    !invoices.some((inv) => Number(inv.paidAmount) > 0);
+    sessionPermissions.includes('enrollment.submit');
 
   return (
     <div className="space-y-6">
@@ -600,7 +678,7 @@ export function EnrollmentDetailsClient({
                   <span>Target Course:</span>
                   <span className="font-semibold text-slate-800">{enrollment.courseName}</span>
                 </div>
-                 <div className="flex justify-between items-center h-8">
+                <div className="flex justify-between items-center h-8">
                   <span>Assigned Batch:</span>
                   <div className="flex items-center gap-2">
                     <span className="font-mono font-bold text-slate-800">
@@ -673,7 +751,7 @@ export function EnrollmentDetailsClient({
                 {/* Mock Visual 3D Flip ID Card Design */}
                 <div className="w-80 h-48 [perspective:1000px] group cursor-pointer mx-auto md:mx-0">
                   <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                    
+
                     {/* Front Side */}
                     <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-gradient-to-br from-teal-800 to-teal-950 rounded-2xl p-4 text-white flex flex-col justify-between shadow-lg border border-teal-700/50">
                       <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none">
@@ -804,23 +882,53 @@ export function EnrollmentDetailsClient({
             </Card>
           )}
 
-          {/* Dynamic Resolved Price Snapshot Card */}
-          <PricingPanel
-            pricingSource={enrollment.pricingSource}
-            resolvedPrice={enrollment.resolvedPrice}
-            resolvedDiscount={enrollment.resolvedDiscount}
-            finalAmount={enrollment.finalAmount}
-            paymentValidationRequired={enrollment.paymentValidationRequired}
-            priceEvaluationTimestamp={enrollment.priceEvaluationTimestamp}
-          />
-
-          {/* New Integrated Invoices & Billings Lifecycle Card */}
+          {/* Combined Pricing Snapshot & Billing console */}
           <Card className="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 space-y-6">
-            <div className="flex items-center gap-2 border-b border-slate-50 pb-3">
-              <Receipt className="h-5 w-5 text-indigo-600" />
-              <h4 className="font-bold text-slate-800 text-sm uppercase">
-                Invoices & Billing Lifecycle
-              </h4>
+            <div className="flex flex-col gap-4 border-b border-slate-100 pb-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Receipt className="h-5 w-5 text-indigo-600" />
+                  <h4 className="font-bold text-slate-800 text-sm uppercase">
+                    Pricing & Billing Console
+                  </h4>
+                </div>
+                {getSourceBadge(enrollment.pricingSource)}
+              </div>
+
+              {/* Pricing Resolution details inline */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-slate-50/50 p-4 rounded-xl border border-slate-100/50 text-xs">
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-medium">Base Catalog Price</span>
+                  <p className="font-mono text-sm font-semibold text-slate-800">
+                    {displayBasePrice.toFixed(3)} OMR
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-medium text-emerald-600">Applied Discount</span>
+                  <p className="font-mono text-sm font-bold text-emerald-600">
+                    -{displayDiscount.toFixed(3)} OMR
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-medium text-indigo-600">Net Resolved Price</span>
+                  <p className="font-mono text-sm font-extrabold text-indigo-600">
+                    {displayFinalAmount.toFixed(3)} OMR
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-medium">Payment Validation</span>
+                  <p className="text-sm font-semibold text-slate-800">
+                    {enrollment.paymentValidationRequired ? 'Required' : 'Not Required'}
+                  </p>
+                </div>
+              </div>
+
+              {enrollment.priceEvaluationTimestamp && (
+                <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-medium">
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>Pricing snapshot evaluated on {new Date(enrollment.priceEvaluationTimestamp).toLocaleString()}</span>
+                </div>
+              )}
             </div>
 
             {invoices.length === 0 ? (
@@ -892,8 +1000,7 @@ export function EnrollmentDetailsClient({
                         <tr>
                           <th className="p-3 w-12 text-center">#</th>
                           <th className="p-3">Description (English)</th>
-                          <th className="p-3 w-20 text-center">Qty</th>
-                          <th className="p-3 w-32 text-right">Unit Price</th>
+                          <th className="p-3 w-32 text-right">Price</th>
                           <th className="p-3 w-28 text-center">Discount?</th>
                           <th className="p-3 w-12 text-center">Delete</th>
                         </tr>
@@ -907,18 +1014,9 @@ export function EnrollmentDetailsClient({
                                 type="text"
                                 value={item.descriptionEnglish}
                                 onChange={(e) => handleLineItemChange(index, 'descriptionEnglish', e.target.value)}
-                                className="w-full h-8 rounded border border-slate-200 text-xs px-2 focus:outline-none"
+                                className="w-full h-8 rounded border border-slate-200 text-xs px-2 focus:outline-none disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed font-medium text-slate-800"
                                 required
-                              />
-                            </td>
-                            <td className="p-2 text-center">
-                              <input
-                                type="number"
-                                min="1"
-                                value={item.quantity}
-                                onChange={(e) => handleLineItemChange(index, 'quantity', parseInt(e.target.value) || 1)}
-                                className="w-16 h-8 rounded border border-slate-200 text-xs text-center focus:outline-none"
-                                required
+                                disabled={item.isFromMaster}
                               />
                             </td>
                             <td className="p-2 text-right">
@@ -929,8 +1027,9 @@ export function EnrollmentDetailsClient({
                                   min="0"
                                   value={item.unitPrice}
                                   onChange={(e) => handleLineItemChange(index, 'unitPrice', parseFloat(e.target.value) || 0)}
-                                  className="w-24 h-8 rounded border border-slate-200 text-xs text-right px-2 focus:outline-none font-mono"
+                                  className="w-24 h-8 rounded border border-slate-200 text-xs text-right px-2 focus:outline-none font-mono disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed"
                                   required
+                                  disabled={item.isFromMaster}
                                 />
                                 <span className="text-[10px] text-slate-400">OMR</span>
                               </div>
@@ -940,17 +1039,24 @@ export function EnrollmentDetailsClient({
                                 type="checkbox"
                                 checked={item.isDiscount}
                                 onChange={(e) => handleLineItemChange(index, 'isDiscount', e.target.checked)}
-                                className="h-4 w-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500"
+                                className="h-4 w-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={item.isFromMaster}
                               />
                             </td>
                             <td className="p-2 text-center">
-                              <button
-                                type="button"
-                                onClick={() => deleteLineItem(index)}
-                                className="text-slate-400 hover:text-rose-600 transition-colors"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
+                              {item.isFromMaster ? (
+                                <div className="flex justify-center text-slate-400" title="Configured from Pricing Master">
+                                  <Lock className="h-4 w-4" />
+                                </div>
+                              ) : (
+                                <button
+                                  type="button"
+                                  onClick={() => deleteLineItem(index)}
+                                  className="text-slate-400 hover:text-rose-600 transition-colors"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
+                              )}
                             </td>
                           </tr>
                         ))}
@@ -981,19 +1087,21 @@ export function EnrollmentDetailsClient({
 
                       <div className="grid grid-cols-1 gap-2.5">
                         {installments.map((inst, index) => (
-                          <div key={index} className="flex gap-2 items-center bg-white p-2 rounded-lg border border-slate-200 shadow-sm">
-                            <span className="text-xs font-semibold text-slate-500 w-8">#{index + 1}</span>
-                            <input
-                              type="date"
-                              value={inst.dueDate}
-                              onChange={(e) => {
-                                const copy = [...installments];
-                                copy[index].dueDate = e.target.value;
-                                setInstallments(copy);
-                              }}
-                              className="h-8 rounded border border-slate-200 text-xs px-2 focus:outline-none flex-1"
-                            />
-                            <div className="flex items-center gap-1 w-28">
+                          <div key={index} className="flex gap-2 items-center bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm justify-between">
+                            <div className="flex items-center gap-2 flex-1">
+                              <span className="text-xs font-bold text-slate-400 w-6">#{index + 1}</span>
+                              <input
+                                type="date"
+                                value={inst.dueDate}
+                                onChange={(e) => {
+                                  const copy = [...installments];
+                                  copy[index].dueDate = e.target.value;
+                                  setInstallments(copy);
+                                }}
+                                className="h-8 rounded-lg border border-slate-200 text-xs px-2.5 focus:outline-none w-36 font-medium text-slate-700"
+                              />
+                            </div>
+                            <div className="flex items-center gap-1.5 shrink-0">
                               <input
                                 type="number"
                                 step="0.001"
@@ -1003,9 +1111,9 @@ export function EnrollmentDetailsClient({
                                   copy[index].amount = e.target.value;
                                   setInstallments(copy);
                                 }}
-                                className="h-8 rounded border border-slate-200 text-xs px-2 focus:outline-none w-full text-right font-mono"
+                                className="h-8 w-24 rounded-lg border border-slate-200 text-xs px-2.5 focus:outline-none text-right font-mono font-bold text-slate-800"
                               />
-                              <span className="text-xs text-slate-400">OMR</span>
+                              <span className="text-xs font-semibold text-slate-400">OMR</span>
                             </div>
                           </div>
                         ))}
@@ -1144,6 +1252,67 @@ export function EnrollmentDetailsClient({
                       </div>
                     </div>
 
+                    {/* Installment Plan details if subCategory is Installment */}
+                    {inv.installmentPlans && inv.installmentPlans.length > 0 && (
+                      <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-4 space-y-3">
+                        <span className="text-xs font-bold text-slate-700 block">
+                          Installment Schedule Details ({inv.installmentPlans[0].planName})
+                        </span>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {inv.installmentPlans[0].installments.map((inst) => (
+                            <div
+                              key={inst.id}
+                              className={`p-3 rounded-lg border text-xs flex flex-col justify-between space-y-1.5 shadow-sm ${
+                                inst.status === 'Paid'
+                                  ? 'bg-emerald-50/30 border-emerald-100'
+                                  : inst.status === 'Overdue'
+                                    ? 'bg-rose-50/30 border-rose-100'
+                                    : 'bg-white border-slate-200'
+                              }`}
+                            >
+                              <div className="flex justify-between items-center font-semibold">
+                                <span className="text-slate-500">Part #{inst.sequenceNumber}</span>
+                                <Badge
+                                  className="text-[10px] px-1.5 py-0.5"
+                                  variant={
+                                    inst.status === 'Paid'
+                                      ? 'success'
+                                      : inst.status === 'Overdue'
+                                        ? 'error'
+                                        : 'outline'
+                                  }
+                                >
+                                  {inst.status}
+                                </Badge>
+                              </div>
+                              <div className="flex justify-between items-baseline font-mono">
+                                <span className="text-slate-400 text-[10px]">Due Date:</span>
+                                <span className="text-slate-600 font-semibold">
+                                  {new Date(inst.dueDate).toLocaleDateString('en-OM', {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric',
+                                  })}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-baseline font-mono border-t border-slate-100 pt-1.5 mt-1">
+                                <span className="text-slate-400 text-[10px]">Amount:</span>
+                                <span className="text-slate-800 font-bold">
+                                  {inst.amount.toFixed(3)} OMR
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-baseline font-mono">
+                                <span className="text-slate-400 text-[10px]">Paid:</span>
+                                <span className="text-emerald-600 font-semibold">
+                                  {inst.paidAmount.toFixed(3)} OMR
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Receipts listing */}
                     {inv.payments.length > 0 && (
                       <div className="space-y-2.5">
@@ -1238,6 +1407,24 @@ export function EnrollmentDetailsClient({
                 </Button>
               )}
 
+              {isDraftWithoutPayment && (
+                <div className="space-y-2">
+                  <Button
+                    disabled
+                    className="w-full flex justify-center items-center gap-2 bg-slate-100 text-slate-400 cursor-not-allowed font-semibold border border-slate-200/50"
+                  >
+                    <Clock className="h-4.5 w-4.5" />
+                    Submit for Review
+                  </Button>
+                  <div className="bg-rose-50 border border-rose-100 text-rose-800 text-[11px] p-2.5 rounded-xl flex gap-1.5 leading-relaxed">
+                    <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
+                    <span>
+                      An invoice must be generated and at least one payment recorded before submitting this enrollment for review.
+                    </span>
+                  </div>
+                </div>
+              )}
+
               {canApprove && (
                 <Button
                   onClick={() => handleTransition('approve')}
@@ -1268,7 +1455,40 @@ export function EnrollmentDetailsClient({
                 </Button>
               )}
 
-               {canChangeBatch && (
+              {canConfirm && (
+                <Button
+                  onClick={() => handleTransition('confirm')}
+                  disabled={isPending}
+                  className="w-full flex justify-center items-center gap-2 bg-emerald-600 text-white hover:bg-emerald-700 font-semibold"
+                >
+                  {isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <CheckCircle className="h-4.5 w-4.5" />
+                  )}
+                  Confirm Enrollment
+                </Button>
+              )}
+
+              {isApprovedWithoutPayment && (
+                <div className="space-y-2">
+                  <Button
+                    disabled
+                    className="w-full flex justify-center items-center gap-2 bg-slate-100 text-slate-400 cursor-not-allowed font-semibold border border-slate-200/50"
+                  >
+                    <CheckCircle className="h-4.5 w-4.5" />
+                    Confirm Enrollment
+                  </Button>
+                  <div className="bg-amber-50 border border-amber-100 text-amber-800 text-[11px] p-2.5 rounded-xl flex gap-1.5 leading-relaxed">
+                    <AlertCircle className="h-4 w-4 shrink-0 text-amber-600 mt-0.5" />
+                    <span>
+                      At least one payment must be recorded on the invoice before this approved enrollment can be confirmed.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {canChangeBatch && (
                 <Button
                   onClick={() => {
                     setSelectedBatchId(enrollment.batchId);
@@ -1309,7 +1529,7 @@ export function EnrollmentDetailsClient({
                 </Button>
               )}
 
-              {!canSubmit && !canApprove && !canCancel && !canDrop && !canChangeBatch && (
+              {!canSubmit && !canApprove && !canCancel && !canDrop && !canChangeBatch && !canConfirm && !isDraftWithoutPayment && !isApprovedWithoutPayment && (
                 <p className="text-xs text-slate-400 italic text-center py-2">
                   No workflow actions are currently available for this status.
                 </p>
@@ -1495,11 +1715,13 @@ export function EnrollmentDetailsClient({
                   required
                 >
                   <option value="" disabled>-- Select a Batch --</option>
-                  {batches.map((b) => (
-                    <option key={b.id} value={b.id}>
-                      {b.batchCode} (Capacity: {b.currentEnrollmentCount}/{b.capacity})
-                    </option>
-                  ))}
+                  {batches
+                    .filter((b) => b.id === enrollment.batchId || b.currentEnrollmentCount < b.capacity || b.waitingListEnabled)
+                    .map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.batchCode} (Capacity: {b.currentEnrollmentCount}/{b.capacity}){b.currentEnrollmentCount >= b.capacity && b.waitingListEnabled ? ' [Waitlist Only]' : ''}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
