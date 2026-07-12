@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/sign-in/page.tsx": {
-    "mtime": 1783476040.1788013,
-    "ast_hash": "0bf5625e2af3cf770ce51fb348035d98",
+    "mtime": 1783792715.984948,
+    "ast_hash": "698ca71cb92a133ab6f9152d31ab2ead",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/sign-in/schema.ts": {
@@ -320,7 +320,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783790804.8170745,
+    "mtime": 1783793236.3621304,
     "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
     "semantic_hash": ""
   },
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/database/prisma/seed.ts": {
-    "mtime": 1783712495.2119937,
-    "ast_hash": "acea837e5742901eeee1ec9c003defd3",
+    "mtime": 1783793967.6893928,
+    "ast_hash": "7c7e9a5c80be8786afb7cdf0b5e1b09e",
     "semantic_hash": ""
   },
   "packages/database/src/client.ts": {
@@ -2555,8 +2555,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/actions.ts": {
-    "mtime": 1783788928.4863722,
-    "ast_hash": "fdc143b6346afe572f2baccb43bea5eb",
+    "mtime": 1783791221.7991097,
+    "ast_hash": "49612f5b7de9e161e834cf7f4661ce96",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/page.tsx": {
@@ -2655,8 +2655,8 @@
     "semantic_hash": ""
   },
   "apps/worker/src/index.ts": {
-    "mtime": 1783788928.4876754,
-    "ast_hash": "d15b0312acef52582054fe5fadf8c2e3",
+    "mtime": 1783791221.8002112,
+    "ast_hash": "0d3cb4eb44326d475913b395a73f285f",
     "semantic_hash": ""
   },
   "apps/worker/tsconfig.json": {
@@ -5140,8 +5140,8 @@
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/enrollment-service.ts": {
-    "mtime": 1783788928.4882727,
-    "ast_hash": "dd658e6c99e6a4209a111330b98b84d9",
+    "mtime": 1783791221.800615,
+    "ast_hash": "5a2a2a6163f8b80f01eb7c4c709e653c",
     "semantic_hash": ""
   },
   "packages/admissions-enrollment/src/application/requirements-resolver.ts": {
@@ -5260,7 +5260,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/admissions/[id]/_components/admission-details-client.tsx": {
-    "mtime": 1783790346.4995992,
+    "mtime": 1783792713.070287,
     "ast_hash": "104fa9dff2fa1206fc5fe9158cb2a39c",
     "semantic_hash": ""
   },
@@ -5630,13 +5630,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/_components/enrollment-details-client.tsx": {
-    "mtime": 1783788928.4838936,
-    "ast_hash": "a8eb009f77d6dcd6ef4ab6510b17bfeb",
+    "mtime": 1783791221.7977934,
+    "ast_hash": "110fcfe8b31b7f49f8a814f614f29842",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/[id]/page.tsx": {
-    "mtime": 1783788928.4847987,
-    "ast_hash": "22009a77db5b4297fc27620f7256fde7",
+    "mtime": 1783791221.798176,
+    "ast_hash": "0c89549bbbd5b664c0af63393464741d",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/enrollments/_components/enrollments-client-list.tsx": {
@@ -6600,12 +6600,12 @@
     "semantic_hash": ""
   },
   "packages/scheduling/src/infrastructure/scheduling-repository.test.ts": {
-    "mtime": 1783790346.5476627,
+    "mtime": 1783792713.1471977,
     "ast_hash": "865fcfce731d48572fc1e303c6d994d1",
     "semantic_hash": ""
   },
   "packages/scheduling/src/infrastructure/scheduling-repository.ts": {
-    "mtime": 1783790346.5483482,
+    "mtime": 1783792713.1474507,
     "ast_hash": "979739495496b4db8e196db0bcb5688d",
     "semantic_hash": ""
   },
@@ -7260,7 +7260,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/faculty/[...segments]/route.ts": {
-    "mtime": 1783790346.5048358,
+    "mtime": 1783792713.0738711,
     "ast_hash": "2dc2afe313b733d8eee28bee73d987bb",
     "semantic_hash": ""
   },
@@ -7395,8 +7395,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/finance/invoices/actions.ts": {
-    "mtime": 1783788928.4851868,
-    "ast_hash": "ff4501b3b2f92d3b150cf9f56c5894df",
+    "mtime": 1783791221.7985222,
+    "ast_hash": "914b84dd106166410e27e36cd2feab11",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/finance/invoices/create/page.tsx": {
@@ -7560,8 +7560,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/finance/invoices/[id]/download/route.ts": {
-    "mtime": 1783788928.4871213,
-    "ast_hash": "6e18bfeb16dc67fa3e0567fe4ab8e0d4",
+    "mtime": 1783791221.7999249,
+    "ast_hash": "e3a2a1d845042aba664f66cfde31292b",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/finance/invoices/route.test.ts": {
@@ -7605,7 +7605,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/courses/[slug]/page.tsx": {
-    "mtime": 1783789106.8351328,
+    "mtime": 1783792713.0741045,
     "ast_hash": "aff442603b34494cee284997b31d9a25",
     "semantic_hash": ""
   },
@@ -8455,7 +8455,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/_components/certificates-client-view.tsx": {
-    "mtime": 1783790346.5019646,
+    "mtime": 1783792713.0723274,
     "ast_hash": "cedae247e4c2a6a3326c5f9b7b0eb264",
     "semantic_hash": ""
   },
@@ -8465,7 +8465,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/page.tsx": {
-    "mtime": 1783790800.5498862,
+    "mtime": 1783792713.073007,
     "ast_hash": "b4cfaad761fef64834ee642489439a86",
     "semantic_hash": ""
   },
@@ -8525,7 +8525,7 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/application/ReissueService.ts": {
-    "mtime": 1783789136.4526384,
+    "mtime": 1783792713.145927,
     "ast_hash": "ecef5514804b8ecf87d7e31b792f015c",
     "semantic_hash": ""
   },
@@ -8540,7 +8540,7 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/application/certificates.test.ts": {
-    "mtime": 1783789136.45292,
+    "mtime": 1783792713.1466603,
     "ast_hash": "475640ea0b998698209068bb9d2dc0fc",
     "semantic_hash": ""
   },
@@ -8555,7 +8555,7 @@
     "semantic_hash": ""
   },
   "packages/certificates/src/index.ts": {
-    "mtime": 1783790346.5448377,
+    "mtime": 1783792713.1469462,
     "ast_hash": "ab41ebbb3ac765c18e19d6c61171fbd1",
     "semantic_hash": ""
   },
@@ -9020,8 +9020,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/enrollments/[id]/change-batch/route.ts": {
-    "mtime": 1783788928.4868796,
-    "ast_hash": "638177dddf88e47aa07461c4d13241e6",
+    "mtime": 1783791221.799461,
+    "ast_hash": "c612ba69e7ca4827aee0eb2854138934",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/dashboards/batches/_components/batches-dashboard-client.tsx": {
@@ -9210,8 +9210,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/convert/_components/convert-lead-wizard.tsx": {
-    "mtime": 1783788928.485832,
-    "ast_hash": "39f9af7bc12a25524a54fdab2390e886",
+    "mtime": 1783791221.7988412,
+    "ast_hash": "ddfb99afdac1d0bf598a45338b6c07b4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/leads/[id]/convert/page.tsx": {
@@ -9785,123 +9785,128 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/[certificateId]/page.tsx": {
-    "mtime": 1783790798.6180203,
+    "mtime": 1783792713.0708885,
     "ast_hash": "feca4c66f45f9e3a35a80498769c3f88",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/_components/certificate-page.tsx": {
-    "mtime": 1783790346.5009553,
+    "mtime": 1783792713.0713816,
     "ast_hash": "221b26ab1033756469cf025d20366cf8",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/_components/print-certificate-button.tsx": {
-    "mtime": 1783790346.5024314,
+    "mtime": 1783792713.0724971,
     "ast_hash": "e26aec4f23f3400737ed6de945a2283c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/certificates/view-models.ts": {
-    "mtime": 1783790346.5035493,
+    "mtime": 1783792713.073208,
     "ast_hash": "071066b2f37348757de662e03c7b678a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/faculty/[...segments]/route.test.ts": {
-    "mtime": 1783790346.503925,
+    "mtime": 1783792713.0735023,
     "ast_hash": "9c655a99f3085d05f74eae823216146a",
     "semantic_hash": ""
   },
   "packages/certificates/src/application/CertificateService.test.ts": {
-    "mtime": 1783790346.542141,
+    "mtime": 1783792713.1453109,
     "ast_hash": "005db2674b34d5116756be59a820efa8",
     "semantic_hash": ""
   },
   "packages/certificates/src/application/CertificateService.ts": {
-    "mtime": 1783790346.5425296,
+    "mtime": 1783792713.1455848,
     "ast_hash": "6c38ccd16af4b0fa41740f13ceb6cf2d",
     "semantic_hash": ""
   },
   "public/images/certificate/Certificate_Complete_Page.pdf": {
-    "mtime": 1783790346.5676594,
+    "mtime": 1783792713.158376,
     "ast_hash": "bd0c643a53ee49c40099c13bc41549ee",
     "semantic_hash": ""
   },
   ".codex-tmp/pdf-inspect/certificate-spec-page-1.png": {
-    "mtime": 1783790346.496459,
+    "mtime": 1783792713.0690107,
     "ast_hash": "08836ff14eecadacbb2f8cbae7ca84c8",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/certificate/certificate-approved-template.jpeg": {
-    "mtime": 1783790346.5160959,
+    "mtime": 1783792713.0829859,
     "ast_hash": "0b9f915b227721721dac2cc5afbf7aec",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/certificate/logo-alsaud.png": {
-    "mtime": 1783790346.5239124,
+    "mtime": 1783792713.0895445,
     "ast_hash": "45e300453091c7c5c158270594854984",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/certificate/logo-onti.png": {
-    "mtime": 1783790346.5278122,
+    "mtime": 1783792713.0916333,
     "ast_hash": "f409bc20fb8950886f4a82d86f9cd196",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/sponsors/ministries-logo.png": {
-    "mtime": 1783790346.5302374,
+    "mtime": 1783792713.0923903,
     "ast_hash": "ec4368c43eaadbc1b41a2d834b45d24d",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/sponsors/npros-logo.png": {
-    "mtime": 1783790346.536444,
+    "mtime": 1783792713.0970418,
     "ast_hash": "4895fa0531a1a5d62b1252cc9e03b117",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/sponsors/opal-logo.png": {
-    "mtime": 1783790346.5370555,
+    "mtime": 1783792713.0978825,
     "ast_hash": "b5f191b23003f87f4e01b7b52dbf65e5",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/sponsors/provider-logo.png": {
-    "mtime": 1783790346.5378616,
+    "mtime": 1783792713.0986576,
     "ast_hash": "0a77e5ad27c69d96a2d8f9c43c51f17f",
     "semantic_hash": ""
   },
   "apps/admin-portal/public/images/sponsors/signature.png": {
-    "mtime": 1783790346.5415251,
+    "mtime": 1783792713.100943,
     "ast_hash": "df8ae4208ebc1a0afbafc717585719b0",
     "semantic_hash": ""
   },
   "public/images/certificate/logo-alsaud.png": {
-    "mtime": 1783790346.5734396,
+    "mtime": 1783792713.1630523,
     "ast_hash": "45e300453091c7c5c158270594854984",
     "semantic_hash": ""
   },
   "public/images/certificate/logo-onti.png": {
-    "mtime": 1783790346.5741796,
+    "mtime": 1783792713.163687,
     "ast_hash": "f409bc20fb8950886f4a82d86f9cd196",
     "semantic_hash": ""
   },
   "public/images/sponsors/ministries-logo.png": {
-    "mtime": 1783790346.5745237,
+    "mtime": 1783792713.1640127,
     "ast_hash": "ec4368c43eaadbc1b41a2d834b45d24d",
     "semantic_hash": ""
   },
   "public/images/sponsors/npros-logo.png": {
-    "mtime": 1783790346.578481,
+    "mtime": 1783792713.1654124,
     "ast_hash": "4895fa0531a1a5d62b1252cc9e03b117",
     "semantic_hash": ""
   },
   "public/images/sponsors/opal-logo.png": {
-    "mtime": 1783790346.5787847,
+    "mtime": 1783792713.1655498,
     "ast_hash": "b5f191b23003f87f4e01b7b52dbf65e5",
     "semantic_hash": ""
   },
   "public/images/sponsors/provider-logo.png": {
-    "mtime": 1783790346.5791929,
+    "mtime": 1783792713.1659205,
     "ast_hash": "0a77e5ad27c69d96a2d8f9c43c51f17f",
     "semantic_hash": ""
   },
   "public/images/sponsors/signature.png": {
-    "mtime": 1783790346.579832,
+    "mtime": 1783792713.1663594,
     "ast_hash": "df8ae4208ebc1a0afbafc717585719b0",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/api/v1/enrollments/[id]/confirm/route.ts": {
+    "mtime": 1783791221.7996786,
+    "ast_hash": "2fdf5417ade05fd956c22e0cbc2ab60e",
     "semantic_hash": ""
   }
 }
