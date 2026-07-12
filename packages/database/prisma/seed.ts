@@ -1951,9 +1951,9 @@ async function seed() {
       desc: 'Full unrestricted access to all IMS modules.',
     },
     {
-      code: 'OWNER',
-      name: 'Owner',
-      desc: 'Global owner-level management and financial approvals.',
+      code: 'ADMIN',
+      name: 'Administrator',
+      desc: 'Central administrator for courses, branches, and system operations.',
     },
     {
       code: 'BRANCH_MANAGER',
@@ -1966,39 +1966,14 @@ async function seed() {
       desc: 'Lead management, admissions, and student views.',
     },
     {
+      code: 'MARKETING',
+      name: 'Marketing Executive',
+      desc: 'B2B sales representative, marketing visits, and quotes.',
+    },
+    {
       code: 'TRAINER',
       name: 'Trainer',
       desc: 'Mark attendance, recommend completion, and view schedules.',
-    },
-    {
-      code: 'ACCOUNTANT',
-      name: 'Accountant',
-      desc: 'Manage payments, issue receipts, and request refunds.',
-    },
-    {
-      code: 'STUDENT',
-      name: 'Student',
-      desc: 'View fees, certificates, and attendance on portal.',
-    },
-    {
-      code: 'ACADEMIC_COORDINATOR',
-      name: 'Academic Coordinator',
-      desc: 'Manage syllabus, courses, and exam evaluations.',
-    },
-    {
-      code: 'MANAGEMENT',
-      name: 'Management',
-      desc: 'Global read-only access to audit logs and business analytics.',
-    },
-    {
-      code: 'AUDITOR',
-      name: 'Auditor',
-      desc: 'Audit-only access to compliance-sensitive records and exports.',
-    },
-    {
-      code: 'READ_ONLY_EXECUTIVE',
-      name: 'Read Only Executive',
-      desc: 'Executive reporting access without mutation permissions.',
     },
   ];
 
@@ -2019,16 +1994,16 @@ async function seed() {
   }
 
   // 4. Assign Permissions to Roles
-  // Super Admin & Owner get all permissions
+  // Super Admin and Admin get all permissions
   for (const perm of permRecords) {
     await prisma.rolePermission.create({
       data: { roleId: roleMap['SUPER_ADMIN'].id, permissionId: perm.id },
     });
     await prisma.rolePermission.create({
-      data: { roleId: roleMap['OWNER'].id, permissionId: perm.id },
+      data: { roleId: roleMap['ADMIN'].id, permissionId: perm.id },
     });
   }
-  console.log(`  ✓ Assigned all permissions to SUPER_ADMIN & OWNER`);
+  console.log(`  ✓ Assigned all permissions to SUPER_ADMIN & ADMIN`);
 
   // Branch Manager gets branch-scoped management permissions
   const managerPermCodes = [
@@ -2221,6 +2196,7 @@ async function seed() {
     'dashboard.crm',
     'report.iam.user',
     'dashboard.view',
+    'dashboard.training',
     'REPORTING_VIEW_CRM_DASHBOARD',
     'admission.read',
     'admission.create',
@@ -2240,78 +2216,38 @@ async function seed() {
   }
   console.log(`  ✓ Assigned permissions to COUNSELOR`);
 
-  // Academic Coordinator permissions
-  const academicCoordinatorPermCodes = [
-    'course.manage',
+  // Marketing permissions
+  const marketingPermCodes = [
+    'lead.read',
+    'lead.write',
+    'lead.create',
+    'lead.update',
+    'lead.assign',
+    'lead.lost',
+    'lead.qualify',
+    'lead.convert',
+    'crm.leads.read.all',
+    'followup.create',
+    'followup.update',
     'course.catalog.view',
-    'course.catalog.create',
-    'course.catalog.update',
-    'course.catalog.publish',
-    'course.catalog.archive',
-    'course.pricing.override',
     'batch.delivery.view',
-    'batch.delivery.create',
-    'batch.delivery.update',
-    'batch.delivery.assign',
-    'batch.delivery.transition',
-    'schedule.manage',
-    'scheduling.calendar.read',
-    'scheduling.calendar.create',
-    'scheduling.calendar.update',
-    'scheduling.conflict.read',
-    'scheduling.holiday.create',
-    'menu.faculty',
-    'menu.faculty.trainers',
-    'menu.faculty.eligible-trainers',
-    'menu.faculty.reports',
-    'menu.faculty.leaves',
-    'leave.read',
-    'leave.apply',
-    'leave.approve',
-    'trainer.read',
-    'trainer.update',
-    'trainer.qualification.read',
-    'trainer.qualification.manage',
-    'trainer.availability.read',
-    'trainer.availability.manage',
-    'trainer.authorization.read',
-    'trainer.authorization.manage',
-    'trainer.compensation.read',
-    'trainer.report.view',
-    'trainer.report.export',
-    'trainer.eligibility.read',
-    'exam.view',
-    'result.view',
-    'result.create',
-    'result.finalize',
-    'completion.view',
-    'completion.evaluate',
-    'completion.coordinator-review',
-    'exam-completion.report.view',
-    'exam-completion.menu.view',
-    'certificate.view',
-    'certificate.reissue',
+    'dashboard.crm',
+    'dashboard.view',
+    'REPORTING_VIEW_CRM_DASHBOARD',
+    'course.pricing.override',
+    'document.create',
     'document.view',
-    'document.verify.submit',
-    'document.verify.approve',
-    'document.verify.reject',
-    'course.catalog.menu.view',
-    'course.catalog.dashboard.view',
-    'batch.delivery.menu.view',
-    'batch.delivery.dashboard.view',
   ];
-  const academicCoordinatorPerms = permRecords.filter((p) =>
-    academicCoordinatorPermCodes.includes(p.permissionCode),
+  const marketingPerms = permRecords.filter((p) =>
+    marketingPermCodes.includes(p.permissionCode),
   );
-  for (const perm of academicCoordinatorPerms) {
+  for (const perm of marketingPerms) {
     await prisma.rolePermission.create({
-      data: {
-        roleId: roleMap['ACADEMIC_COORDINATOR'].id,
-        permissionId: perm.id,
-      },
+      data: { roleId: roleMap['MARKETING'].id, permissionId: perm.id },
     });
   }
-  console.log(`  ✓ Assigned permissions to ACADEMIC_COORDINATOR`);
+  console.log(`  ✓ Assigned permissions to MARKETING`);
+
 
   // Trainer permissions
   const trainerPermCodes = [
@@ -2347,6 +2283,8 @@ async function seed() {
     'document.verify.submit',
     'batch.delivery.menu.view',
     'batch.delivery.dashboard.view',
+    'course.catalog.view',
+    'course.catalog.menu.view',
   ];
   const trainerPerms = permRecords.filter((p) =>
     trainerPermCodes.includes(p.permissionCode),
@@ -2360,117 +2298,6 @@ async function seed() {
   console.log(
     `  ✓ TRAINER role includes attendance access; SUPER_ADMIN receives all permissions`,
   );
-
-  // Accountant permissions
-  const accountantPermCodes = [
-    'student.read',
-    'payment.create',
-    'refund.request',
-    'refund.approve',
-    'dashboard.finance',
-    'dashboard.view',
-    'enrollment.read',
-    'finance.menu.view',
-    'finance.invoice.read',
-    'finance.invoice.create',
-    'finance.payment.read',
-    'finance.payment.create',
-    'finance.refund.read',
-  ];
-  const accountantPerms = permRecords.filter((p) =>
-    accountantPermCodes.includes(p.permissionCode),
-  );
-  for (const perm of accountantPerms) {
-    await prisma.rolePermission.create({
-      data: { roleId: roleMap['ACCOUNTANT'].id, permissionId: perm.id },
-    });
-  }
-  console.log(`  ✓ Assigned permissions to ACCOUNTANT`);
-
-  // Student permissions (mostly read-only dashboard)
-  const studentPerms = permRecords.filter((p) =>
-    [
-      'certificate.verify',
-      'attendance.record.read',
-      'attendance.report.student.view',
-      'document.create',
-      'document.view',
-    ].includes(p.permissionCode),
-  );
-  for (const perm of studentPerms) {
-    await prisma.rolePermission.create({
-      data: { roleId: roleMap['STUDENT'].id, permissionId: perm.id },
-    });
-  }
-  console.log(`  ✓ Assigned permissions to STUDENT`);
-
-  // Auditor permissions
-  const auditorPermCodes = [
-    'attendance.audit.read',
-    'attendance.report.daily.view',
-    'attendance.report.batch.view',
-    'attendance.report.student.view',
-    'attendance.report.trainer.view',
-    'attendance.report.lowAttendance.view',
-    'attendance.report.correctionAging.view',
-    'attendance.report.export',
-    'attendance.consolidated.read',
-    'iam.audit.read',
-    'report.iam.audit-trail',
-    'dashboard.compliance',
-    'exam.view',
-    'result.view',
-    'result.export',
-    'completion.view',
-    'exam-completion.report.view',
-    'exam-completion.report.export',
-    'exam-completion.menu.view',
-  ];
-  const auditorPerms = permRecords.filter((p) =>
-    auditorPermCodes.includes(p.permissionCode),
-  );
-  for (const perm of auditorPerms) {
-    await prisma.rolePermission.create({
-      data: { roleId: roleMap['AUDITOR'].id, permissionId: perm.id },
-    });
-  }
-  console.log(`  ✓ Assigned permissions to AUDITOR`);
-
-  // Read-only executive permissions
-  const execPermCodes = [
-    'attendance.dashboard.view',
-    'attendance.dashboard.branch.view',
-    'attendance.dashboard.consolidated.view',
-    'attendance.report.daily.view',
-    'attendance.report.batch.view',
-    'attendance.report.student.view',
-    'attendance.report.trainer.view',
-    'attendance.report.lowAttendance.view',
-    'attendance.report.correctionAging.view',
-    'attendance.report.export',
-    'attendance.consolidated.read',
-    'dashboard.ceo',
-    'dashboard.view',
-    'report.iam.session',
-    'report.iam.audit-trail',
-    'exam.view',
-    'result.view',
-    'completion.view',
-    'exam-completion.report.view',
-    'exam-completion.menu.view',
-  ];
-  const execPerms = permRecords.filter((p) =>
-    execPermCodes.includes(p.permissionCode),
-  );
-  for (const perm of execPerms) {
-    await prisma.rolePermission.create({
-      data: {
-        roleId: roleMap['READ_ONLY_EXECUTIVE'].id,
-        permissionId: perm.id,
-      },
-    });
-  }
-  console.log(`  ✓ Assigned permissions to READ_ONLY_EXECUTIVE`);
 
   // 5. Seed Institute & Branches
   const institute = await prisma.institute.create({
@@ -2489,23 +2316,6 @@ async function seed() {
   });
   console.log(`  ✓ Institute created: Al-Saud Training Institute`);
 
-  const riyadhBranch = await prisma.branch.create({
-    data: {
-      id: crypto.randomUUID(),
-      instituteId: institute.id,
-      branchCode: 'AST-RIYADH',
-      branchName: 'Riyadh Campus',
-      address: 'King Fahd Road, Olaya, Riyadh',
-      city: 'Riyadh',
-      country: 'Saudi Arabia',
-      phone: '+966-11-4567890',
-      email: 'riyadh@al-saud.edu.sa',
-      status: 'Active',
-      effectiveStartDate: new Date(),
-    },
-  });
-  console.log(`  ✓ Branch created: Riyadh Campus (AST-RIYADH)`);
-
   const muscatBranch = await prisma.branch.create({
     data: {
       id: crypto.randomUUID(),
@@ -2523,62 +2333,7 @@ async function seed() {
   });
   console.log(`  ✓ Branch created: Muscat Campus (AST-MUSCAT)`);
 
-  // Seed Riyadh Departments & Classrooms
-  const riyadhItDept = await prisma.department.create({
-    data: {
-      id: crypto.randomUUID(),
-      branchId: riyadhBranch.id,
-      departmentCode: 'AST-RIYADH-IT',
-      departmentName: 'Information Technology',
-      description: 'IT and software development training department.',
-      status: 'Active',
-      effectiveStartDate: new Date(),
-    },
-  });
-  console.log(`  ✓ Department created: Information Technology (AST-RIYADH-IT)`);
-
-  const riyadhBizDept = await prisma.department.create({
-    data: {
-      id: crypto.randomUUID(),
-      branchId: riyadhBranch.id,
-      departmentCode: 'AST-RIYADH-BIZ',
-      departmentName: 'Business Administration',
-      description: 'Management and business training department.',
-      status: 'Active',
-      effectiveStartDate: new Date(),
-    },
-  });
-  console.log(
-    `  ✓ Department created: Business Administration (AST-RIYADH-BIZ)`,
-  );
-
-  const riyadhLabA = await prisma.classroom.create({
-    data: {
-      id: crypto.randomUUID(),
-      branchId: riyadhBranch.id,
-      classroomName: 'Lab A',
-      capacity: 25,
-      location: '1st Floor, Building A',
-      status: 'Active',
-      effectiveStartDate: new Date(),
-    },
-  });
-  console.log(`  ✓ Classroom created: Lab A (Riyadh)`);
-
-  const riyadhLecture1 = await prisma.classroom.create({
-    data: {
-      id: crypto.randomUUID(),
-      branchId: riyadhBranch.id,
-      classroomName: 'Lecture Hall 1',
-      capacity: 45,
-      location: '2nd Floor, Building A',
-      status: 'Active',
-      effectiveStartDate: new Date(),
-    },
-  });
-  console.log(`  ✓ Classroom created: Lecture Hall 1 (Riyadh)`);
-
-  // Seed Muscat Departments & Classrooms
+  // Seed Muscat Departments
   const muscatEngDept = await prisma.department.create({
     data: {
       id: crypto.randomUUID(),
@@ -2605,21 +2360,57 @@ async function seed() {
   });
   console.log(`  ✓ Department created: Vocational & Safety Training (AST-MUSCAT-VOC)`);
 
-  const muscatRoom101 = await prisma.classroom.create({
+  const muscatItDept = await prisma.department.create({
     data: {
       id: crypto.randomUUID(),
       branchId: muscatBranch.id,
-      classroomName: 'Room 101',
-      capacity: 20,
-      location: 'Ground Floor, Muscat Campus',
+      departmentCode: 'AST-MUSCAT-IT',
+      departmentName: 'Information Technology',
+      description: 'IT and software development training department.',
       status: 'Active',
       effectiveStartDate: new Date(),
     },
   });
-  console.log(`  ✓ Classroom created: Room 101 (Muscat)`);
+  console.log(`  ✓ Department created: Information Technology (AST-MUSCAT-IT)`);
+
+  const muscatBizDept = await prisma.department.create({
+    data: {
+      id: crypto.randomUUID(),
+      branchId: muscatBranch.id,
+      departmentCode: 'AST-MUSCAT-BIZ',
+      departmentName: 'Business Administration',
+      description: 'Management and business training department.',
+      status: 'Active',
+      effectiveStartDate: new Date(),
+    },
+  });
+  console.log(`  ✓ Department created: Business Administration (AST-MUSCAT-BIZ)`);
+
+  // Seed Classrooms for Muscat Campus
+  const classrooms = [
+    { name: 'Room 101', capacity: 20, location: 'Ground Floor' },
+    { name: 'Room 102', capacity: 20, location: 'Ground Floor' },
+    { name: 'Lab A', capacity: 25, location: '1st Floor' },
+    { name: 'Lecture Hall 1', capacity: 45, location: '2nd Floor' },
+  ];
+  for (const cr of classrooms) {
+    await prisma.classroom.create({
+      data: {
+        id: crypto.randomUUID(),
+        branchId: muscatBranch.id,
+        classroomName: cr.name,
+        capacity: cr.capacity,
+        location: cr.location,
+        status: 'Active',
+        effectiveStartDate: new Date(),
+      },
+    });
+  }
+  console.log(`  ✓ Muscat classrooms created.`);
 
   // 6. Seed Users, Roles, and Branch Access
   const passwordHash = await argon2.hash('Password@123');
+  const legacyTestPasswordHash = await argon2.hash('Password123!');
 
   await prisma.securityPolicy.create({
     data: {
@@ -2643,433 +2434,149 @@ async function seed() {
   });
   console.log('  ✓ Security Policy created');
 
-  // User A: Super Admin (Global Scope)
-  const superAdminPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
+  const usersToSeed = [
+    {
       firstName: 'System',
-      lastName: 'Administrator',
-      mobile: '+966-500000001',
-    },
-  });
-  const superAdminUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: superAdminPerson.id,
-      username: 'admin@ims.com',
-      email: 'admin@ims.com',
+      lastName: 'SuperAdmin',
+      email: 'superadmin@alsaud-intl.com',
+      username: 'superadmin@alsaud-intl.com',
       userType: 'Admin',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
+      roleCode: 'SUPER_ADMIN',
+      phone: '+96896589151',
+      password: passwordHash,
     },
-  });
-  await prisma.userRole.create({
-    data: { userId: superAdminUser.id, roleId: roleMap['SUPER_ADMIN'].id },
-  });
-  console.log(`  ✓ User created: admin@ims.com (SUPER_ADMIN)`);
-
-  await prisma.user.update({
-    where: { id: superAdminUser.id },
-    data: { defaultBranchId: muscatBranch.id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: superAdminUser.id,
-      branchId: muscatBranch.id,
-      isDefault: true,
-      status: 'Active',
+    {
+      firstName: 'System',
+      lastName: 'Admin',
+      email: 'admin@alsaud-intl.com',
+      username: 'admin@alsaud-intl.com',
+      userType: 'Admin',
+      roleCode: 'ADMIN',
+      phone: '+96896589152',
+      password: passwordHash,
     },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: superAdminUser.id,
-      branchId: riyadhBranch.id,
-      isDefault: false,
-      status: 'Active',
+    {
+      firstName: 'Muscat',
+      lastName: 'Branch Manager',
+      email: 'manager@alsaud-intl.com',
+      username: 'manager@alsaud-intl.com',
+      userType: 'BranchManager',
+      roleCode: 'BRANCH_MANAGER',
+      phone: '+96896589153',
+      password: passwordHash,
     },
-  });
-  console.log(`  ✓ Branch access created for admin@ims.com (SUPER_ADMIN)`);
-
-  const smokePerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
+    {
+      firstName: 'Muscat',
+      lastName: 'Core Trainer',
+      email: 'trainer@alsaud-intl.com',
+      username: 'trainer@alsaud-intl.com',
+      userType: 'Trainer',
+      roleCode: 'TRAINER',
+      phone: '+96896589154',
+      password: passwordHash,
+    },
+    {
+      firstName: 'Muscat',
+      lastName: 'Counselor',
+      email: 'counselor@alsaud-intl.com',
+      username: 'counselor@alsaud-intl.com',
+      userType: 'Counselor',
+      roleCode: 'COUNSELOR',
+      phone: '+96896589155',
+      password: passwordHash,
+    },
+    {
+      firstName: 'Muscat',
+      lastName: 'Marketing Executive',
+      email: 'marketing@alsaud-intl.com',
+      username: 'marketing@alsaud-intl.com',
+      userType: 'Counselor',
+      roleCode: 'MARKETING',
+      phone: '+96896589156',
+      password: passwordHash,
+    },
+    // Option A Legacy Test Accounts:
+    {
+      firstName: 'QA',
+      lastName: 'Coordinator',
+      email: 'coordinator@ims.com',
+      username: 'coordinator@ims.com',
+      userType: 'Admin',
+      roleCode: 'SUPER_ADMIN',
+      phone: '+96896589157',
+      password: legacyTestPasswordHash,
+    },
+    {
       firstName: 'Smoke',
       lastName: 'Admin',
-      mobile: '+966-500000007',
-    },
-  });
-  const smokeUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: smokePerson.id,
-      username: 'smoke.iam@ims.com',
       email: 'smoke.iam@ims.com',
+      username: 'smoke.iam@ims.com',
       userType: 'Admin',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
+      roleCode: 'SUPER_ADMIN',
+      phone: '+96896589158',
+      password: passwordHash,
     },
-  });
-  await prisma.userRole.create({
-    data: { userId: smokeUser.id, roleId: roleMap['SUPER_ADMIN'].id },
-  });
-  console.log(
-    `  ✓ User created: smoke.iam@ims.com (SUPER_ADMIN smoke account)`,
-  );
+  ];
 
-  await prisma.user.update({
-    where: { id: smokeUser.id },
-    data: { defaultBranchId: muscatBranch.id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: smokeUser.id,
-      branchId: muscatBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: smokeUser.id,
-      branchId: riyadhBranch.id,
-      isDefault: false,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ Smoke user branch access created for AST-RIYADH and AST-MUSCAT`,
-  );
-
-  // User B: Riyadh Branch Manager
-  const riyadhManagerPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Riyadh',
-      lastName: 'Branch Manager',
-      mobile: '+966-500000002',
-    },
-  });
-  const riyadhManagerUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: riyadhManagerPerson.id,
-      username: 'manager.riyadh@ims.com',
-      email: 'manager.riyadh@ims.com',
-      userType: 'BranchManager',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: {
-      userId: riyadhManagerUser.id,
-      roleId: roleMap['BRANCH_MANAGER'].id,
-    },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhManagerUser.id,
-      branchId: riyadhBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: manager.riyadh@ims.com (BRANCH_MANAGER, Branch AST-RIYADH)`,
-  );
-
-  // User C: Riyadh Counselor
-  const riyadhCounselorPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Riyadh',
-      lastName: 'Counselor',
-      mobile: '+966-500000003',
-    },
-  });
-  const riyadhCounselorUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: riyadhCounselorPerson.id,
-      username: 'counselor.riyadh@ims.com',
-      email: 'counselor.riyadh@ims.com',
-      userType: 'Counselor',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: { userId: riyadhCounselorUser.id, roleId: roleMap['COUNSELOR'].id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhCounselorUser.id,
-      branchId: riyadhBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: counselor.riyadh@ims.com (COUNSELOR, Branch AST-RIYADH)`,
-  );
-
-  // User C2: Muscat Counselor
-  const muscatCounselorPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Muscat',
-      lastName: 'Counselor',
-      mobile: '+968-500000003',
-    },
-  });
-  const muscatCounselorUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: muscatCounselorPerson.id,
-      username: 'counselor.muscat@ims.com',
-      email: 'counselor.muscat@ims.com',
-      userType: 'Counselor',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: { userId: muscatCounselorUser.id, roleId: roleMap['COUNSELOR'].id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: muscatCounselorUser.id,
-      branchId: muscatBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: counselor.muscat@ims.com (COUNSELOR, Branch AST-MUSCAT)`,
-  );
-
-  // User D: Riyadh Trainer
-  const riyadhTrainerPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Riyadh',
-      lastName: 'Core Trainer',
-      mobile: '+966-500000004',
-    },
-  });
-  const riyadhTrainerUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: riyadhTrainerPerson.id,
-      username: 'trainer.riyadh@ims.com',
-      email: 'trainer.riyadh@ims.com',
-      userType: 'Trainer',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: { userId: riyadhTrainerUser.id, roleId: roleMap['TRAINER'].id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhTrainerUser.id,
-      branchId: riyadhBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: trainer.riyadh@ims.com (TRAINER, Branch AST-RIYADH)`,
-  );
-
-  // User D2: Muscat Trainer
-  const muscatTrainerPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Muscat',
-      lastName: 'Session Trainer',
-      mobile: '+968-500000004',
-    },
-  });
-  const muscatTrainerUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: muscatTrainerPerson.id,
-      username: 'trainer.muscat@ims.com',
-      email: 'trainer.muscat@ims.com',
-      userType: 'Trainer',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: { userId: muscatTrainerUser.id, roleId: roleMap['TRAINER'].id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: muscatTrainerUser.id,
-      branchId: muscatBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: trainer.muscat@ims.com (TRAINER, Branch AST-MUSCAT)`,
-  );
-
-  // User E: Riyadh Accountant
-  const riyadhAccountantPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Riyadh',
-      lastName: 'Accountant User',
-      mobile: '+966-500000005',
-    },
-  });
-  const riyadhAccountantUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: riyadhAccountantPerson.id,
-      username: 'accountant.riyadh@ims.com',
-      email: 'accountant.riyadh@ims.com',
-      userType: 'Accountant',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: { userId: riyadhAccountantUser.id, roleId: roleMap['ACCOUNTANT'].id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: riyadhAccountantUser.id,
-      branchId: riyadhBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: accountant.riyadh@ims.com (ACCOUNTANT, Branch AST-RIYADH)`,
-  );
-
-  // User E2: Muscat Accountant
-  const muscatAccountantPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Muscat',
-      lastName: 'Accountant User',
-      mobile: '+968-500000005',
-    },
-  });
-  const muscatAccountantUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: muscatAccountantPerson.id,
-      username: 'accountant.muscat@ims.com',
-      email: 'accountant.muscat@ims.com',
-      userType: 'Accountant',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: { userId: muscatAccountantUser.id, roleId: roleMap['ACCOUNTANT'].id },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: muscatAccountantUser.id,
-      branchId: muscatBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: accountant.muscat@ims.com (ACCOUNTANT, Branch AST-MUSCAT)`,
-  );
-
-  // User F: Muscat Branch Manager
-  const muscatManagerPerson = await prisma.person.create({
-    data: {
-      id: crypto.randomUUID(),
-      firstName: 'Muscat',
-      lastName: 'Branch Manager',
-      mobile: '+966-500000006',
-    },
-  });
-  const muscatManagerUser = await prisma.user.create({
-    data: {
-      id: crypto.randomUUID(),
-      personId: muscatManagerPerson.id,
-      username: 'manager.muscat@ims.com',
-      email: 'manager.muscat@ims.com',
-      userType: 'BranchManager',
-      status: 'Active',
-      passwordHash,
-      effectiveStartDate: new Date(),
-    },
-  });
-  await prisma.userRole.create({
-    data: {
-      userId: muscatManagerUser.id,
-      roleId: roleMap['BRANCH_MANAGER'].id,
-    },
-  });
-  await prisma.userBranchAccess.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: muscatManagerUser.id,
-      branchId: muscatBranch.id,
-      isDefault: true,
-      status: 'Active',
-    },
-  });
-  console.log(
-    `  ✓ User created: manager.muscat@ims.com (BRANCH_MANAGER, Branch AST-MUSCAT)`,
-  );
-
-  // 6. Create default active Courses
-  const defaultCategoryCode = 'CAT-TECH';
-  let techCategory = await prisma.courseCategory.findUnique({
-    where: { code: defaultCategoryCode },
-  });
-  if (!techCategory) {
-    techCategory = await prisma.courseCategory.create({
+  for (const u of usersToSeed) {
+    const person = await prisma.person.create({
       data: {
         id: crypto.randomUUID(),
-        code: defaultCategoryCode,
-        nameEnglish: 'Technology & Engineering',
-        nameArabic: 'التكنولوجيا والهندسة',
-        description:
-          'Tech courses, software engineering, cyber security, data science',
+        firstName: u.firstName,
+        lastName: u.lastName,
+        mobile: u.phone,
+        email: u.email,
+      },
+    });
+
+    const user = await prisma.user.create({
+      data: {
+        id: crypto.randomUUID(),
+        personId: person.id,
+        username: u.username,
+        email: u.email,
+        userType: u.userType,
+        status: 'Active',
+        passwordHash: u.password,
+        defaultBranchId: muscatBranch.id,
+        effectiveStartDate: new Date(),
+      },
+    });
+
+    await prisma.userRole.create({
+      data: { userId: user.id, roleId: roleMap[u.roleCode].id },
+    });
+
+    await prisma.userBranchAccess.create({
+      data: {
+        id: crypto.randomUUID(),
+        userId: user.id,
+        branchId: muscatBranch.id,
+        isDefault: true,
         status: 'Active',
       },
     });
-    console.log(`  ✓ Course Category seeded: ${techCategory.nameEnglish}`);
+
+    if (u.roleCode === 'TRAINER') {
+      await prisma.trainerProfile.create({
+        data: {
+          id: crypto.randomUUID(),
+          personId: person.id,
+          branchId: muscatBranch.id,
+          trainerCode: 'TRN-MUSCAT-01',
+          trainerType: 'FullTime',
+          specialization: 'Heavy Machinery & Safety Training',
+          qualificationSummary: 'Certified safety specialist with 10+ years training experience.',
+          status: 'Active',
+          effectiveStartDate: new Date(),
+        },
+      });
+    }
+
+    console.log(`  ✓ User created: ${u.email} (${u.roleCode})`);
   }
 
-  
-  // 6b. Create vocational active Courses
+
   const vocationalCategoryCode = 'CAT-VOC';
   let vocCategory = await prisma.courseCategory.findUnique({
     where: { code: vocationalCategoryCode },
@@ -3193,141 +2700,11 @@ async function seed() {
     }
   }
 
-  // Seed Mock Student Profiles
-  console.log('\n🌱 Seeding mock students & CRM leads...');
-  const firstCourse = await prisma.course.findFirst({
-    where: { isDeleted: false },
-  });
-  const firstCourseId = firstCourse ? firstCourse.id : crypto.randomUUID();
-
-  const mockStudents = [
-    {
-      firstName: 'Ahmed',
-      lastName: 'Al-Balushi',
-      email: 'ahmed.balushi@asti.edu',
-      mobile: '+96899123456',
-      number: 'STU-2026-0001',
-    },
-    {
-      firstName: 'Fatima',
-      lastName: 'Al-Hashmi',
-      email: 'fatima.hashmi@asti.edu',
-      mobile: '+96899123457',
-      number: 'STU-2026-0002',
-    },
-    {
-      firstName: 'Said',
-      lastName: 'Al-Siyabi',
-      email: 'said.siyabi@asti.edu',
-      mobile: '+96899123458',
-      number: 'STU-2026-0003',
-    },
-    {
-      firstName: 'Muna',
-      lastName: 'Al-Riyami',
-      email: 'muna.riyami@asti.edu',
-      mobile: '+96899123459',
-      number: 'STU-2026-0004',
-    },
-  ];
-
-  for (const ms of mockStudents) {
-    const person = await prisma.person.create({
-      data: {
-        id: crypto.randomUUID(),
-        firstName: ms.firstName,
-        lastName: ms.lastName,
-        email: ms.email,
-        mobile: ms.mobile,
-      },
-    });
-
-    await prisma.studentProfile.create({
-      data: {
-        id: crypto.randomUUID(),
-        person: {
-          connect: { id: person.id },
-        },
-        branch: {
-          connect: { id: muscatBranch.id },
-        },
-        studentNumber: ms.number,
-        status: 'Active',
-      },
-    });
-    console.log(`  ✓ Mock Student created: ${ms.firstName} ${ms.lastName}`);
-  }
-
-  // Seed Mock Leads
-  const mockLeads = [
-    {
-      firstName: 'Khalid',
-      lastName: 'Al-Busaidi',
-      email: 'khalid.busaidi@gmail.com',
-      mobile: '+96899789012',
-      number: 'LD-2026-0001',
-    },
-    {
-      firstName: 'Asma',
-      lastName: 'Al-Kharusi',
-      email: 'asma.kharusi@gmail.com',
-      mobile: '+96899789013',
-      number: 'LD-2026-0002',
-    },
-    {
-      firstName: 'Salim',
-      lastName: 'Al-Mamari',
-      email: 'salim.mamari@gmail.com',
-      mobile: '+96899789014',
-      number: 'LD-2026-0003',
-    },
-  ];
-
-  for (const ml of mockLeads) {
-    const person = await prisma.person.create({
-      data: {
-        id: crypto.randomUUID(),
-        firstName: ml.firstName,
-        lastName: ml.lastName,
-        email: ml.email,
-        mobile: ml.mobile,
-      },
-    });
-
-    await prisma.lead.create({
-      data: {
-        id: crypto.randomUUID(),
-        leadNumber: ml.number,
-        personId: person.id,
-        branchId: muscatBranch.id,
-        firstName: ml.firstName,
-        lastName: ml.lastName,
-        email: ml.email,
-        phone: ml.mobile,
-        interestedCourseId: firstCourseId,
-        stage: 'New',
-        source: 'Web',
-      },
-    });
-    console.log(`  ✓ Mock CRM Lead created: ${ml.firstName} ${ml.lastName}`);
-  }
-
-  // Seed Document Requirements (Document Master)
+  // 8. Seed Document Requirements
   console.log('\n🌱 Seeding document requirements...');
   await prisma.documentRequirement.deleteMany({});
 
-  const riyadh = await prisma.branch.findFirst({
-    where: { branchCode: 'AST-RIYADH' },
-  });
-  const muscat = await prisma.branch.findFirst({
-    where: { branchCode: 'AST-MUSCAT' },
-  });
-  const uiux = await prisma.course.findFirst({
-    where: { courseCode: 'CS-UIUX' },
-  });
-
   const dynamicRequirements = [
-    // Student requirements
     {
       targetEntity: 'STUDENT' as const,
       documentType: 'CIVIL_ID_FRONT' as const,
@@ -3342,22 +2719,6 @@ async function seed() {
       branchId: null,
       courseId: null,
     },
-    {
-      targetEntity: 'STUDENT' as const,
-      documentType: 'ACADEMIC_TRANSCRIPT' as const,
-      isMandatory: true,
-      branchId: riyadh?.id || null,
-      courseId: null,
-    },
-    {
-      targetEntity: 'STUDENT' as const,
-      documentType: 'SPONSORSHIP_LETTER' as const,
-      isMandatory: false,
-      branchId: null,
-      courseId: uiux?.id || null,
-    },
-
-    // Trainer requirements
     {
       targetEntity: 'TRAINER' as const,
       documentType: 'CIVIL_ID_FRONT' as const,
@@ -3369,20 +2730,6 @@ async function seed() {
       targetEntity: 'TRAINER' as const,
       documentType: 'CIVIL_ID_BACK' as const,
       isMandatory: true,
-      branchId: null,
-      courseId: null,
-    },
-    {
-      targetEntity: 'TRAINER' as const,
-      documentType: 'OTHER' as const,
-      isMandatory: true,
-      branchId: muscat?.id || null,
-      courseId: null,
-    },
-    {
-      targetEntity: 'TRAINER' as const,
-      documentType: 'PASSPORT_SCAN' as const,
-      isMandatory: false,
       branchId: null,
       courseId: null,
     },
