@@ -306,7 +306,7 @@ export function AdmissionDetailsClient({
     setIsSubmitting(true);
     try {
       const res = await fetch(
-        `/api/v1/admissions/${detail.admission.id}/documents/${docId}/verify`,
+        `/api/v1/documents/${docId}/verify`,
         {
           method: 'POST',
           headers: {

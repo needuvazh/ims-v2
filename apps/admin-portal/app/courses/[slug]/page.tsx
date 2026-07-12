@@ -53,16 +53,11 @@ type PublicCourseDetail = {
 
 async function fetchCourse(slug: string): Promise<PublicCourseDetail | null> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/public/courses/${slug}`,
-      {
-        next: { revalidate: 300 },
-      },
-    );
-    if (!res.ok) return null;
-    const json = await res.json();
-    return json.data.course;
-  } catch {
+    const { publicCourseQueryService } = await import('@/lib/runtime');
+    const course = await publicCourseQueryService.getCourseBySlug(slug);
+    return course as any;
+  } catch (error) {
+    console.error('Error fetching course detail:', error);
     return null;
   }
 }

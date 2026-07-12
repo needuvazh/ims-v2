@@ -189,6 +189,15 @@ export class ReissueService {
 
     // Execute database operations in a transaction to guarantee atomicity
     const result = await prisma.$transaction(async (tx) => {
+      // Update original certificate status to Replaced first to prevent unique constraint violation on enrollmentId
+      await tx.certificate.update({
+        where: { id: originalCert.id },
+        data: {
+          certificateStatus: 'Replaced',
+          version: { increment: 1 },
+        },
+      });
+
       // Create new certificate (Issued status directly)
       const newCert = await tx.certificate.create({
         data: {
@@ -205,15 +214,6 @@ export class ReissueService {
           issuedDate: new Date(),
           issuedBy: actorUserId,
           createdBy: actorUserId,
-        },
-      });
-
-      // Update original certificate status to Replaced
-      await tx.certificate.update({
-        where: { id: originalCert.id },
-        data: {
-          certificateStatus: 'Replaced',
-          version: { increment: 1 },
         },
       });
 
