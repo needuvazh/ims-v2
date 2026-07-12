@@ -81,7 +81,7 @@ export default async function AdmissionsDashboardPage(props: {
   }
 
   const isSuperAdmin =
-    session.roles.includes('SUPER_ADMIN') || session.roles.includes('OWNER');
+    session.roles.includes('SUPER_ADMIN') || session.roles.includes('ADMIN');
 
   if (
     !isSuperAdmin &&
