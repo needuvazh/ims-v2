@@ -470,4 +470,15 @@ export const financeService = new FinanceService(prisma);
 
 export const leaveManagementService = new LeaveManagementService(prisma);
 
+// ─── Corporate Sales Repositories & Services ──────────────────────────────
+import {
+  CorporateSalesService,
+  QuotationService,
+  SalesOrderService,
+} from '@ims/corporate-sales';
+
+export const corporateSalesService = new CorporateSalesService(prisma);
+export const quotationService = new QuotationService(prisma);
+export const salesOrderService = new SalesOrderService(prisma);
+
 export { prisma };

@@ -69,6 +69,24 @@ function mapNavigationIcons(item: any): any {
     case '/leads/counselor-dashboard':
       icon = <BarChart3 className="h-4.5 w-4.5" />;
       break;
+    case '/corporate-sales/leads':
+      icon = <TrendingUp className="h-4.5 w-4.5" />;
+      break;
+    case '/corporate-sales/follow-ups':
+      icon = <CalendarClock className="h-4.5 w-4.5" />;
+      break;
+    case '/corporate-sales/quotations':
+      icon = <FileText className="h-4.5 w-4.5" />;
+      break;
+    case '/corporate-sales/orders':
+      icon = <Receipt className="h-4.5 w-4.5" />;
+      break;
+    case '/corporate-sales/cost-elements':
+      icon = <FileSliders className="h-4.5 w-4.5" />;
+      break;
+    case '/corporate-sales/approvals':
+      icon = <UserCheck className="h-4.5 w-4.5" />;
+      break;
     case '/admissions':
       icon = <UserCheck className="h-4.5 w-4.5" />;
       break;

@@ -88,6 +88,9 @@ importers:
       '@ims/certificates':
         specifier: workspace:*
         version: link:../../packages/certificates
+      '@ims/corporate-sales':
+        specifier: workspace:*
+        version: link:../../packages/corporate-sales
       '@ims/course-catalog':
         specifier: workspace:*
         version: link:../../packages/course-catalog
@@ -291,6 +294,21 @@ importers:
       '@vercel/blob':
         specifier: ^2.5.0
         version: 2.5.0
+      zod:
+        specifier: ^3.23.0
+        version: 3.25.76
+
+  packages/corporate-sales:
+    dependencies:
+      '@ims/course-catalog':
+        specifier: workspace:*
+        version: link:../course-catalog
+      '@ims/database':
+        specifier: workspace:*
+        version: link:../database
+      '@ims/shared-kernel':
+        specifier: workspace:*
+        version: link:../shared-kernel
       zod:
         specifier: ^3.23.0
         version: 3.25.76

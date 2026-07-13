@@ -39,6 +39,7 @@ export * from './components/alert';
 
 // ─── Overlays (client) ──────────────────────────────────────────────────────
 export * from './components/dialog';
+export * from './components/sheet';
 export * from './components/dropdown-menu';
 export * from './components/tabs';
 export * from './components/tooltip';

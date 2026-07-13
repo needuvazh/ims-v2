@@ -82,6 +82,8 @@ export const knownPermissions = [
   'course.catalog.dashboard.view',
   'batch.delivery.menu.view',
   'batch.delivery.dashboard.view',
+  'lead.read',
+  'lead.write',
 ] as const;
 
 export type KnownPermission = (typeof knownPermissions)[number];
@@ -126,6 +128,44 @@ export const adminNavigation: NavigationItem[] = [
         href: '/leads/counselor-dashboard',
         label: 'Counselor Dashboard',
         permission: 'dashboard.view',
+      },
+    ],
+  },
+  {
+    href: '/corporate-sales/leads',
+    label: 'Corporate Sales',
+    permission: 'lead.read',
+    category: 'CRM',
+    items: [
+      {
+        href: '/corporate-sales/leads',
+        label: 'B2B Leads',
+        permission: 'lead.read',
+      },
+      {
+        href: '/corporate-sales/follow-ups',
+        label: 'Corporate Follow-ups',
+        permission: 'lead.read',
+      },
+      {
+        href: '/corporate-sales/quotations',
+        label: 'Quotations Pipeline',
+        permission: 'lead.read',
+      },
+      {
+        href: '/corporate-sales/orders',
+        label: 'Sales Orders',
+        permission: 'lead.read',
+      },
+      {
+        href: '/corporate-sales/cost-elements',
+        label: 'Cost Elements Master',
+        permission: 'lead.read',
+      },
+      {
+        href: '/corporate-sales/approvals',
+        label: 'Approvals Queue',
+        permission: 'lead.read',
       },
     ],
   },

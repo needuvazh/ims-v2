@@ -1,0 +1,1 @@
+{"nodes": [{"id": "pkg_claude_seo", "label": "claude-seo", "file_type": "code", "type": "package", "ecosystem": "python", "source_file": "claude-seo/pyproject.toml", "source_location": "L1", "version": "2.2.0"}], "edges": []}
