@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { PublicShell } from '../_components/public-site';
 import {
   Award,
   ArrowLeft,
@@ -401,33 +402,8 @@ function VerificationContent() {
 
 export default function PublicVerificationPage() {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans overflow-hidden text-slate-900">
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200/50 py-4">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-3 group">
-            <Image
-              src="/alsaud/logo.png"
-              alt="Al-Saud Training Institute"
-              width={156}
-              height={52}
-              className="h-10 w-auto"
-              priority
-            />
-            <span className="font-black text-lg tracking-tight">
-              Certificate<span className="text-amber-500">Verify</span>
-            </span>
-          </Link>
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-amber-600 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Home
-          </Link>
-        </div>
-      </nav>
-
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 min-h-screen flex items-center justify-center">
+    <PublicShell>
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 min-h-[70vh] flex items-center justify-center">
         {/* Animated Background Elements */}
         <motion.div
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
@@ -449,6 +425,6 @@ export default function PublicVerificationPage() {
           <VerificationContent />
         </Suspense>
       </section>
-    </div>
+    </PublicShell>
   );
 }

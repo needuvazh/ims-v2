@@ -590,10 +590,18 @@ export function HeroSection({
                   ? iconMap[item.icon as keyof typeof iconMap] || Users
                   : item.icon;
               return (
-                <div key={item.label} className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm">
-                  <Icon className="h-5 w-5 text-orange-400 mb-2" />
-                  <p className="font-display text-2xl font-bold text-white">{item.value}</p>
-                  <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.15em] text-neutral-400 text-center">{item.label}</p>
+                <div key={item.label} className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-4 backdrop-blur-sm min-w-0">
+                  <Icon className="h-5 w-5 text-orange-400 mb-2 shrink-0" />
+                  <p className={`font-display font-bold text-white text-center break-words w-full ${
+                    item.value.length > 12 
+                      ? 'text-xs sm:text-sm' 
+                      : item.value.length > 8 
+                        ? 'text-sm sm:text-base' 
+                        : 'text-base sm:text-lg'
+                  }`}>
+                    {item.value}
+                  </p>
+                  <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.15em] text-neutral-400 text-center w-full break-words">{item.label}</p>
                 </div>
               );
             })}
@@ -619,14 +627,20 @@ export function HeroSection({
                 return (
                   <div
                     key={item.label}
-                    className="group relative flex flex-col items-center justify-center overflow-hidden bg-[#031a27]/85 px-6 py-8 transition-all hover:bg-[#0b4565]/90"
+                    className="group relative flex flex-col items-center justify-center overflow-hidden bg-[#031a27]/85 px-4 py-8 transition-all hover:bg-[#0b4565]/90 min-w-0"
                   >
                     <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <Icon className="mb-3 h-7 w-7 text-orange-400" />
-                    <p className="font-display text-3xl font-bold text-white">
+                    <Icon className="mb-3 h-7 w-7 text-orange-400 shrink-0" />
+                    <p className={`font-display font-bold text-white text-center break-words w-full ${
+                      item.value.length > 12 
+                        ? 'text-sm lg:text-base xl:text-lg' 
+                        : item.value.length > 8 
+                          ? 'text-base lg:text-lg xl:text-xl' 
+                          : 'text-lg lg:text-xl xl:text-2xl'
+                    }`}>
                       {item.value}
                     </p>
-                    <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+                    <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 text-center w-full break-words">
                       {item.label}
                     </p>
                   </div>
@@ -1039,6 +1053,13 @@ export function CourseDetailPage({ slug }: { slug: string }) {
     })),
   };
 
+  const courseStats = [
+    { value: 'Hands-on', label: 'Practical focus', icon: GraduationCap },
+    { value: 'Safety-first', label: 'Training method', icon: ShieldCheck },
+    { value: 'Certified', label: 'Outcome', icon: Award },
+    { value: 'Please enquire', label: 'Price', icon: FileText },
+  ];
+
   return (
     <PublicShell>
       <JsonLd data={[courseStructuredData, breadcrumbStructuredData, faqStructuredData]} />
@@ -1051,126 +1072,206 @@ export function CourseDetailPage({ slug }: { slug: string }) {
         primaryLabel="Book Now"
         secondaryHref="/courses"
         secondaryLabel="Back to Courses"
-        stats={[
-          { value: 'Hands-on', label: 'Practical focus', icon: GraduationCap },
-          {
-            value: 'Safety-first',
-            label: 'Training method',
-            icon: ShieldCheck,
-          },
-          { value: 'Certified', label: 'Outcome', icon: Award },
-          { value: 'Please enquire', label: 'Price', icon: FileText },
-        ]}
+        showStats={false}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:pt-48">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
-          <DetailPanel
-            title="What this course covers"
-            bullets={course.points}
-          />
-          <div className="space-y-8">
-            <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">
-                Course summary
-              </p>
-              <p className="mt-4 leading-relaxed text-neutral-600">
-                {course.summary} Please enquire about pricing, dates, and group
-                delivery options. The institute tailors delivery based on
-                attendee count and location.
-              </p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                    Duration
-                  </p>
-                  <p className="mt-2 font-display text-xl font-bold text-neutral-900">
-                    {course.duration}
-                  </p>
+      {/* ─── STAT STRIP (pulls up over hero on desktop) ───── */}
+      <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+          {courseStats.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.label}
+                className="rounded-[2rem] border border-border-light bg-white p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              >
+                <div className="inline-flex rounded-2xl bg-gradient-to-br from-accent-50 to-accent-100 p-4 text-accent-600 ring-1 ring-accent-600/10">
+                  <Icon className="h-6 w-6" />
                 </div>
-                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                    Price
-                  </p>
-                  <p className="mt-2 font-display text-xl font-bold text-neutral-900">
-                    {course.price}
-                  </p>
-                </div>
+                <p className={`mt-5 font-display font-bold text-neutral-900 break-words leading-tight ${
+                  item.value.length > 12 
+                    ? 'text-xl sm:text-2xl xl:text-3xl' 
+                    : 'text-2xl sm:text-3xl xl:text-4xl'
+                }`}>
+                  {item.value}
+                </p>
+                <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+                  {item.label}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ─── SECTION 1: COURSE SUMMARY & QUICK SPECS (White Background) ─── */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div>
+            <SectionHeading
+              eyebrow="Course summary"
+              title="A complete overview of this training"
+              description={`${course.summary} Please enquire about pricing, dates, and group delivery options. The institute tailors delivery based on attendee count and location.`}
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+                  Duration
+                </p>
+                <p className="mt-2 font-display text-xl font-bold text-neutral-900 leading-snug">
+                  {course.duration}
+                </p>
+              </div>
+              <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+                  Price
+                </p>
+                <p className="mt-2 font-display text-xl font-bold text-neutral-900 leading-snug">
+                  {course.price}
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">
-                Who this suits
-              </p>
-              <div className="mt-5 grid gap-5 sm:grid-cols-3">
-                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                    Audience
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
-                    {detailCopy.audience.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-500" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                    Outcomes
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
-                    {detailCopy.outcomes.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-500" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                    Prerequisites
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
-                    {detailCopy.prerequisites.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-500" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+          {/* Right Column: CTA card matching Facilities page design */}
+          <div className="rounded-[2.5rem] border border-neutral-100 bg-gradient-to-br from-[#031a27] to-[#0b4565] p-8 md:p-10 text-white shadow-xl">
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-orange-400">
+              Al-Saud Training Institute
+            </p>
+            <h3 className="mt-4 font-display text-3xl font-bold leading-tight">
+              Ready to start your training?
+            </h3>
+            <p className="mt-6 text-sm leading-relaxed text-neutral-300">
+              Book a slot or request a customized group delivery session for your company. Our certified instructors provide comprehensive training at our modern Muscat facilities or on-site.
+            </p>
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <Link
+                href="/contact-us"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-orange-600 to-orange-500 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.15em] text-white shadow-lg transition-all hover:-translate-y-0.5"
+              >
+                <span>Book Now</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+              <span className="text-[11px] font-bold uppercase tracking-wider text-orange-400/85">
+                NPORS Certified Center
+              </span>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5">
-              <SectionHeading
-                eyebrow="Course FAQ"
-                title="Common questions about this training"
-                description="Answers based on how this course is delivered, assessed, and booked."
+      {/* ─── SECTION 2: COURSE DETAILS & OUTLINE (Light Neutral Background) ─── */}
+      <section className="bg-neutral-50 border-y border-neutral-100 py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] items-center">
+            {/* Left: Illustrative image or card info */}
+            <div className="relative h-[300px] sm:h-[400px] overflow-hidden rounded-[2.5rem] border border-neutral-100 shadow-lg">
+              <Image
+                src={course.image}
+                alt={course.imageAlt ?? course.title}
+                fill
+                className="object-cover"
               />
-              <div className="mt-8 space-y-4">
-                {detailCopy.faqs.map((item) => (
-                  <div key={item.question} className="rounded-2xl border border-neutral-100 bg-neutral-50 p-5">
-                    <p className="font-display text-lg font-bold text-neutral-900">
-                      {item.question}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-neutral-600">
-                      {item.answer}
-                    </p>
-                  </div>
-                ))}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            </div>
+
+            {/* Right: Actual details panel */}
+            <div>
+              <SectionHeading
+                eyebrow="Course details"
+                title="What this course covers"
+                description="Our comprehensive curriculum balances classroom safety guidelines with extensive hands-on operational practice."
+              />
+              <div className="mt-8">
+                <BulletList items={course.points} />
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ─── SECTION 3: TARGET AUDIENCE & OUTCOMES (White Background) ─── */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Target audience & outcomes"
+          title="Who this training suits"
+          description="We design our training to meet the needs of diverse learners and rigorous corporate compliance standards."
+          align="center"
+        />
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          {/* Audience box */}
+          <div className="group relative overflow-hidden rounded-[2rem] border border-neutral-100 bg-white p-8 shadow-sm hover:shadow-xl hover:shadow-orange-600/5 hover:-translate-y-1 transition-all duration-300">
+            <div className="mb-6 inline-flex rounded-2xl bg-orange-500/10 p-4 text-orange-600 ring-1 ring-orange-500/20">
+              <Users className="h-6 w-6" />
+            </div>
+            <h3 className="font-display text-xl font-bold text-neutral-900">
+              Target Audience
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-neutral-600">
+              {detailCopy.audience.map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-orange-600" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Outcomes box */}
+          <div className="group relative overflow-hidden rounded-[2rem] border border-neutral-100 bg-white p-8 shadow-sm hover:shadow-xl hover:shadow-orange-600/5 hover:-translate-y-1 transition-all duration-300">
+            <div className="mb-6 inline-flex rounded-2xl bg-orange-500/10 p-4 text-orange-600 ring-1 ring-orange-500/20">
+              <GraduationCap className="h-6 w-6" />
+            </div>
+            <h3 className="font-display text-xl font-bold text-neutral-900">
+              Key Outcomes
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-neutral-600">
+              {detailCopy.outcomes.map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-orange-600" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Prerequisites box */}
+          <div className="group relative overflow-hidden rounded-[2rem] border border-neutral-100 bg-white p-8 shadow-sm hover:shadow-xl hover:shadow-orange-600/5 hover:-translate-y-1 transition-all duration-300">
+            <div className="mb-6 inline-flex rounded-2xl bg-orange-500/10 p-4 text-orange-600 ring-1 ring-orange-500/20">
+              <ShieldCheck className="h-6 w-6" />
+            </div>
+            <h3 className="font-display text-xl font-bold text-neutral-900">
+              Prerequisites
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-neutral-600">
+              {detailCopy.prerequisites.map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-orange-600" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SECTION 4: COURSE FAQ (Light Neutral Background) ─── */}
+      <section className="bg-neutral-50 border-t border-neutral-100 py-20">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="FAQ"
+            title="Frequently asked questions"
+            description="Quick answers based on how this course is delivered, assessed, and booked."
+            align="center"
+          />
+          <div className="mt-12">
+            <FAQAccordion items={detailCopy.faqs} />
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="rounded-[2.5rem] border border-neutral-100 bg-white p-8 shadow-sm">
+        <div className="rounded-[2.5rem] border border-neutral-100 bg-white p-6 sm:p-8 shadow-sm">
           <SectionHeading
             eyebrow="Related courses"
             title="Compare this training path with other operator courses"

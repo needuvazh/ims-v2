@@ -115,7 +115,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/layout.tsx": {
-    "mtime": 1783919879.472185,
+    "mtime": 1783953824.6347194,
     "ast_hash": "b552230e102f49f023fcc337c4f66d81",
     "semantic_hash": ""
   },
@@ -175,7 +175,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/layout.tsx": {
-    "mtime": 1783919879.4725063,
+    "mtime": 1783953824.6351712,
     "ast_hash": "370befbfcd492e00fa50f86b453dd637",
     "semantic_hash": ""
   },
@@ -215,7 +215,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/layout.tsx": {
-    "mtime": 1783919879.476841,
+    "mtime": 1783953824.6397016,
     "ast_hash": "498b6ed83f98f5b2b959f9b057d03fe0",
     "semantic_hash": ""
   },
@@ -240,7 +240,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/page.tsx": {
-    "mtime": 1783953147.293999,
+    "mtime": 1783953824.6407177,
     "ast_hash": "f284cfbcfca2a7f1d4cf854468f13b84",
     "semantic_hash": ""
   },
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783919889.290824,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1783954739.9958727,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -2835,37 +2835,37 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site.tsx": {
-    "mtime": 1783919879.4732835,
-    "ast_hash": "bc2ac80db8a7911a61ade27a68eb8aed",
+    "mtime": 1783955723.524405,
+    "ast_hash": "d0e69ab69934986b79865c12b81f1db9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/about/page.tsx": {
-    "mtime": 1783919879.4737756,
+    "mtime": 1783953824.636924,
     "ast_hash": "75d6a5a8852fdd30867d78c57a5202f0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/contact-us/page.tsx": {
-    "mtime": 1783919879.474248,
+    "mtime": 1783953824.6372437,
     "ast_hash": "2dbbfe96b15948d52c5fecd5cad92895",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/contact/page.tsx": {
-    "mtime": 1783953624.6634927,
+    "mtime": 1783953824.637602,
     "ast_hash": "d9cb2c91a78ea9d3561e0a7b2a9d70b6",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/courses/page.tsx": {
-    "mtime": 1783919879.4755015,
+    "mtime": 1783953824.6383088,
     "ast_hash": "fc1e95e66935b9049093e7067312e746",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/elevated-work-platforms-2/page.tsx": {
-    "mtime": 1783919879.4757102,
+    "mtime": 1783953824.638576,
     "ast_hash": "3cbff28f388f12a281cdc7be752edb5c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/events/page.tsx": {
-    "mtime": 1783919879.4760206,
+    "mtime": 1783953824.6388776,
     "ast_hash": "8add9ce600c5365fd153a529f78a3516",
     "semantic_hash": ""
   },
@@ -2875,27 +2875,27 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/forklift-operator-training-course/page.tsx": {
-    "mtime": 1783919879.4762049,
+    "mtime": 1783953824.6391282,
     "ast_hash": "638a816ad005ea50bc7423d6940fea22",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/forklift-operator-training/page.tsx": {
-    "mtime": 1783919879.476529,
+    "mtime": 1783953824.6393495,
     "ast_hash": "19a72a4df8f660f0d1046a2bc707179a",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/login/page.tsx": {
-    "mtime": 1783919879.4771106,
+    "mtime": 1783953824.6399398,
     "ast_hash": "136dde79bd7b8791e6fb73a323bcf060",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/other-courses-available/page.tsx": {
-    "mtime": 1783919879.4773047,
+    "mtime": 1783953824.640213,
     "ast_hash": "e74494dcfc790e72df1d586539b5313f",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/overhead-gantry-crane-operation/page.tsx": {
-    "mtime": 1783919879.4774756,
+    "mtime": 1783953824.6404724,
     "ast_hash": "a91fd558c9a452b3cd4e2e522e01ab5a",
     "semantic_hash": ""
   },
@@ -2910,7 +2910,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/sitemap/page.tsx": {
-    "mtime": 1783919879.4786417,
+    "mtime": 1783953824.6414642,
     "ast_hash": "7678855ac76709d230220c52af16f086",
     "semantic_hash": ""
   },
@@ -2920,12 +2920,12 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/training-facilities/page.tsx": {
-    "mtime": 1783919879.4795012,
+    "mtime": 1783953824.6418502,
     "ast_hash": "6284f23baa28afd004a3e71e0274c0d0",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/truck-mounted-crane/page.tsx": {
-    "mtime": 1783919879.479679,
+    "mtime": 1783953824.642085,
     "ast_hash": "a2fdaeeb6647ffb7fe6bde09c0bfebd0",
     "semantic_hash": ""
   },
@@ -7605,7 +7605,7 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/courses/[slug]/page.tsx": {
-    "mtime": 1783919879.475067,
+    "mtime": 1783953824.6380188,
     "ast_hash": "836dec5da1d39cc2551a0c9b8ae02cc0",
     "semantic_hash": ""
   },
@@ -9489,59 +9489,9 @@
     "ast_hash": "b412c3f59945cb5e1a04dbaea7fe63c3",
     "semantic_hash": ""
   },
-  "openspec/changes/course-enrollment-id-card/.openspec.yaml": {
-    "mtime": 1783704520.2012799,
-    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-enrollment-id-card/design.md": {
-    "mtime": 1783704628.5905766,
-    "ast_hash": "df5d6b0207bf94249219b6f0b0214340",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-enrollment-id-card/proposal.md": {
-    "mtime": 1783704562.6645174,
-    "ast_hash": "c82f78c9e3ed219b6f833bb13089e536",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-enrollment-id-card/specs/enrollment-id-card-generation/spec.md": {
-    "mtime": 1783704662.0274868,
-    "ast_hash": "c40cd7ccf414d1972ecaa57c88494631",
-    "semantic_hash": ""
-  },
-  "openspec/changes/course-enrollment-id-card/tasks.md": {
-    "mtime": 1783707798.0430436,
-    "ast_hash": "4b2ff6cea37e5dc3dd08014076c86fb4",
-    "semantic_hash": ""
-  },
   "apps/admin-portal/public/alsaud/logo-white.png": {
     "mtime": 1783704563.1280324,
     "ast_hash": "904d23d3f90671b6c757aa3fd11558ff",
-    "semantic_hash": ""
-  },
-  "openspec/changes/seed-asti-website-data/.openspec.yaml": {
-    "mtime": 1783711431.6279771,
-    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
-    "semantic_hash": ""
-  },
-  "openspec/changes/seed-asti-website-data/design.md": {
-    "mtime": 1783711462.760286,
-    "ast_hash": "99400ff2e6e25cda0b67e654f2da6f36",
-    "semantic_hash": ""
-  },
-  "openspec/changes/seed-asti-website-data/proposal.md": {
-    "mtime": 1783711448.3588958,
-    "ast_hash": "24d9fbc19ce8b830c1685e22417a49d1",
-    "semantic_hash": ""
-  },
-  "openspec/changes/seed-asti-website-data/specs/no-changes.md": {
-    "mtime": 1783711474.3080919,
-    "ast_hash": "999319fd353027f5a5b7fcaeeea785ab",
-    "semantic_hash": ""
-  },
-  "openspec/changes/seed-asti-website-data/tasks.md": {
-    "mtime": 1783711709.6249988,
-    "ast_hash": "39b69204e92ac617c4695993346dca60",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/users/[id]/profile-photo/route.ts": {
@@ -9552,36 +9502,6 @@
   "apps/admin-portal/app/api/v1/users/[id]/profile-photo/view/route.ts": {
     "mtime": 1783712794.8669508,
     "ast_hash": "a92661e3c64471d24941def9534dac73",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-profile-page/.openspec.yaml": {
-    "mtime": 1783712675.2901754,
-    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-profile-page/design.md": {
-    "mtime": 1783712710.9279287,
-    "ast_hash": "fa8758d91596b7a7614016b9e19d39e5",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-profile-page/proposal.md": {
-    "mtime": 1783712688.8521936,
-    "ast_hash": "c9e00ecef8f70502b81066b8d5ee1851",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-profile-page/specs/user-profile-photo.md": {
-    "mtime": 1783712700.0940983,
-    "ast_hash": "7762f3bba36abd20361e93e13462af16",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-profile-page/specs/user-security-audit.md": {
-    "mtime": 1783712702.6924815,
-    "ast_hash": "a1cf3b9be4d01ec91618393f6374255a",
-    "semantic_hash": ""
-  },
-  "openspec/changes/improve-profile-page/tasks.md": {
-    "mtime": 1783712919.9178963,
-    "ast_hash": "5feb8a8e3abafba6d1d66d2fe9a6e9db",
     "semantic_hash": ""
   },
   "docs/architecture/frd/Module 14 \u2013 Corporate Training Management/Module 14 \u2013 Corporate Training Management.md": {
@@ -9649,31 +9569,6 @@
     "ast_hash": "c499e70394e3c4694411db43d28dafe0",
     "semantic_hash": ""
   },
-  "openspec/changes/setup-corporate-training-db/.openspec.yaml": {
-    "mtime": 1783715985.049566,
-    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
-    "semantic_hash": ""
-  },
-  "openspec/changes/setup-corporate-training-db/design.md": {
-    "mtime": 1783716025.2014287,
-    "ast_hash": "c044111d7afe9202aeffb9474c7388fb",
-    "semantic_hash": ""
-  },
-  "openspec/changes/setup-corporate-training-db/proposal.md": {
-    "mtime": 1783716002.0420713,
-    "ast_hash": "6e9804935f6a0d2e0314a15dd9f857e3",
-    "semantic_hash": ""
-  },
-  "openspec/changes/setup-corporate-training-db/specs/corporate-training-db/spec.md": {
-    "mtime": 1783716012.0611327,
-    "ast_hash": "f327fbc9374b9530970c34d3d21b9a30",
-    "semantic_hash": ""
-  },
-  "openspec/changes/setup-corporate-training-db/tasks.md": {
-    "mtime": 1783716176.6718695,
-    "ast_hash": "af7f4ce1d557ce7f7a0629323a0cdc88",
-    "semantic_hash": ""
-  },
   "apps/admin-portal/app/(protected)/batches/[id]/clone/page.tsx": {
     "mtime": 1783758825.6800697,
     "ast_hash": "d15f80885d14e5f364bf0e1fd55c66e6",
@@ -9722,61 +9617,6 @@
   "apps/admin-portal/app/api/v1/crm/leads/follow-ups/today/route.ts": {
     "mtime": 1783759003.524259,
     "ast_hash": "9445b2d6f96176fc1d7ee4f4f97fc83c",
-    "semantic_hash": ""
-  },
-  "openspec/changes/clone-batch-feature/.openspec.yaml": {
-    "mtime": 1783758422.1965544,
-    "ast_hash": "145b3979ac90c49abaf8eac7a3e26147",
-    "semantic_hash": ""
-  },
-  "openspec/changes/clone-batch-feature/design.md": {
-    "mtime": 1783758432.1285155,
-    "ast_hash": "34ec46378059c42041e433f87596ad3d",
-    "semantic_hash": ""
-  },
-  "openspec/changes/clone-batch-feature/proposal.md": {
-    "mtime": 1783758426.2569244,
-    "ast_hash": "5b6e6c558dd4744bf9b1030fd38df7de",
-    "semantic_hash": ""
-  },
-  "openspec/changes/clone-batch-feature/specs/batch-cloning/spec.md": {
-    "mtime": 1783758441.9549558,
-    "ast_hash": "db8a3945a147888bcec7ad26804c28c7",
-    "semantic_hash": ""
-  },
-  "openspec/changes/clone-batch-feature/tasks.md": {
-    "mtime": 1783762280.943347,
-    "ast_hash": "1ec0e9e992d70569b27cd70ea8eb0675",
-    "semantic_hash": ""
-  },
-  "openspec/changes/group-leads-menu-and-followups-screen/.openspec.yaml": {
-    "mtime": 1783758419.2696297,
-    "ast_hash": "145b3979ac90c49abaf8eac7a3e26147",
-    "semantic_hash": ""
-  },
-  "openspec/changes/group-leads-menu-and-followups-screen/design.md": {
-    "mtime": 1783758473.4812446,
-    "ast_hash": "c1ba50ca937609c27217cc27a203eddb",
-    "semantic_hash": ""
-  },
-  "openspec/changes/group-leads-menu-and-followups-screen/proposal.md": {
-    "mtime": 1783758441.63447,
-    "ast_hash": "20319fa281424bbf095aaa8ca5650f1b",
-    "semantic_hash": ""
-  },
-  "openspec/changes/group-leads-menu-and-followups-screen/specs/counselor-dashboard.md": {
-    "mtime": 1783758456.6092649,
-    "ast_hash": "1d20f3a07e321a64429712ffab4df339",
-    "semantic_hash": ""
-  },
-  "openspec/changes/group-leads-menu-and-followups-screen/specs/leads-followups-listing.md": {
-    "mtime": 1783758460.0991764,
-    "ast_hash": "f9668af349495ca4f68022698482c0be",
-    "semantic_hash": ""
-  },
-  "openspec/changes/group-leads-menu-and-followups-screen/tasks.md": {
-    "mtime": 1783759062.7187989,
-    "ast_hash": "8df0ce9a2be89d0b694a06008c7a275c",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/api/v1/certificates/[id]/download/route.ts": {
@@ -11944,76 +11784,6 @@
     "ast_hash": "24dbdde958a5a260a0a62fa7a5f59a9d",
     "semantic_hash": ""
   },
-  "openspec/changes/add-corporate-sales-visit-forms/.openspec.yaml": {
-    "mtime": 1783853601.8180892,
-    "ast_hash": "be083c7982e1be250fd7f9023d23ad62",
-    "semantic_hash": ""
-  },
-  "openspec/changes/add-corporate-sales-visit-forms/design.md": {
-    "mtime": 1783853632.792884,
-    "ast_hash": "501607e35bf8730f7cbcaad90936f579",
-    "semantic_hash": ""
-  },
-  "openspec/changes/add-corporate-sales-visit-forms/proposal.md": {
-    "mtime": 1783853620.863495,
-    "ast_hash": "3c3d4d9deb1c8d3be4727eb2c5807bbe",
-    "semantic_hash": ""
-  },
-  "openspec/changes/add-corporate-sales-visit-forms/specs/corporate-sales-visit-forms/spec.md": {
-    "mtime": 1783853641.028936,
-    "ast_hash": "d65166f4366368f662126979c7b22b70",
-    "semantic_hash": ""
-  },
-  "openspec/changes/add-corporate-sales-visit-forms/tasks.md": {
-    "mtime": 1783853784.7089698,
-    "ast_hash": "89bbecf7306abc28e5cd0dd7930ab1db",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-lead-details/.openspec.yaml": {
-    "mtime": 1783905556.6345818,
-    "ast_hash": "4a544af65220ddab0aaed6db46e883cc",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-lead-details/README.md": {
-    "mtime": 1783905556.661116,
-    "ast_hash": "1c2609c9af97d322831cb2701eb707d9",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-lead-details/design.md": {
-    "mtime": 1783905587.3914006,
-    "ast_hash": "568cb093c9daee80c00f4eac1005a84c",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-lead-details/proposal.md": {
-    "mtime": 1783905572.3496015,
-    "ast_hash": "45490735cfde0f8633df8a14056d4297",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-lead-details/tasks.md": {
-    "mtime": 1783905714.3792093,
-    "ast_hash": "5da09a6db69299d9e61e622983c1530c",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-sales-ui/.openspec.yaml": {
-    "mtime": 1783872785.2133698,
-    "ast_hash": "be083c7982e1be250fd7f9023d23ad62",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-sales-ui/design.md": {
-    "mtime": 1783872792.9489777,
-    "ast_hash": "671a3e11c6e5fbdda097678ba7306b13",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-sales-ui/proposal.md": {
-    "mtime": 1783872788.9646013,
-    "ast_hash": "09ef4d7ec44c0258e7e649cdae860a3a",
-    "semantic_hash": ""
-  },
-  "openspec/changes/align-corporate-sales-ui/tasks.md": {
-    "mtime": 1783872947.3644152,
-    "ast_hash": "8ccdb57987b79eb19f0ee8bbdb67f421",
-    "semantic_hash": ""
-  },
   "openspec/changes/archive/2026-07-12-implement-corporate-sales/.openspec.yaml": {
     "mtime": 1783840846.0188003,
     "ast_hash": "be083c7982e1be250fd7f9023d23ad62",
@@ -12120,28 +11890,278 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-content.tsx": {
-    "mtime": 1783919879.4727392,
+    "mtime": 1783953824.6357005,
     "ast_hash": "90dca18946d84908e3ed5ba9982f0226",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-metadata.ts": {
-    "mtime": 1783919879.4729238,
+    "mtime": 1783953824.6360292,
     "ast_hash": "336602a405e618a3e3601d1ede948e8e",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/robots.ts": {
-    "mtime": 1783919879.4781675,
+    "mtime": 1783953824.6410081,
     "ast_hash": "6bc47b31297e4095bad8391062130e97",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/sitemap.ts": {
-    "mtime": 1783919879.4783075,
+    "mtime": 1783953824.6412337,
     "ast_hash": "ee33d38b36a7cd8adbdc8b2a5aa7d653",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/verify/layout.tsx": {
-    "mtime": 1783919879.4798212,
+    "mtime": 1783953824.6422796,
     "ast_hash": "6e69c83b320c8cf1304d0adaf364c2e8",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-add-corporate-sales-visit-forms/.openspec.yaml": {
+    "mtime": 1783853601.8180892,
+    "ast_hash": "be083c7982e1be250fd7f9023d23ad62",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-add-corporate-sales-visit-forms/design.md": {
+    "mtime": 1783853632.792884,
+    "ast_hash": "501607e35bf8730f7cbcaad90936f579",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-add-corporate-sales-visit-forms/proposal.md": {
+    "mtime": 1783853620.863495,
+    "ast_hash": "3c3d4d9deb1c8d3be4727eb2c5807bbe",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-add-corporate-sales-visit-forms/specs/corporate-sales-visit-forms/spec.md": {
+    "mtime": 1783853641.028936,
+    "ast_hash": "d65166f4366368f662126979c7b22b70",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-add-corporate-sales-visit-forms/tasks.md": {
+    "mtime": 1783853784.7089698,
+    "ast_hash": "89bbecf7306abc28e5cd0dd7930ab1db",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-lead-details/.openspec.yaml": {
+    "mtime": 1783905556.6345818,
+    "ast_hash": "4a544af65220ddab0aaed6db46e883cc",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-lead-details/README.md": {
+    "mtime": 1783905556.661116,
+    "ast_hash": "1c2609c9af97d322831cb2701eb707d9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-lead-details/design.md": {
+    "mtime": 1783905587.3914006,
+    "ast_hash": "568cb093c9daee80c00f4eac1005a84c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-lead-details/proposal.md": {
+    "mtime": 1783905572.3496015,
+    "ast_hash": "45490735cfde0f8633df8a14056d4297",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-lead-details/tasks.md": {
+    "mtime": 1783905714.3792093,
+    "ast_hash": "5da09a6db69299d9e61e622983c1530c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-sales-ui/.openspec.yaml": {
+    "mtime": 1783872785.2133698,
+    "ast_hash": "be083c7982e1be250fd7f9023d23ad62",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-sales-ui/design.md": {
+    "mtime": 1783872792.9489777,
+    "ast_hash": "671a3e11c6e5fbdda097678ba7306b13",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-sales-ui/proposal.md": {
+    "mtime": 1783872788.9646013,
+    "ast_hash": "09ef4d7ec44c0258e7e649cdae860a3a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-align-corporate-sales-ui/tasks.md": {
+    "mtime": 1783872947.3644152,
+    "ast_hash": "8ccdb57987b79eb19f0ee8bbdb67f421",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-clone-batch-feature/.openspec.yaml": {
+    "mtime": 1783758422.1965544,
+    "ast_hash": "145b3979ac90c49abaf8eac7a3e26147",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-clone-batch-feature/design.md": {
+    "mtime": 1783758432.1285155,
+    "ast_hash": "34ec46378059c42041e433f87596ad3d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-clone-batch-feature/proposal.md": {
+    "mtime": 1783758426.2569244,
+    "ast_hash": "5b6e6c558dd4744bf9b1030fd38df7de",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-clone-batch-feature/specs/batch-cloning/spec.md": {
+    "mtime": 1783758441.9549558,
+    "ast_hash": "db8a3945a147888bcec7ad26804c28c7",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-clone-batch-feature/tasks.md": {
+    "mtime": 1783762280.943347,
+    "ast_hash": "1ec0e9e992d70569b27cd70ea8eb0675",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-course-enrollment-id-card/.openspec.yaml": {
+    "mtime": 1783704520.2012799,
+    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-course-enrollment-id-card/design.md": {
+    "mtime": 1783704628.5905766,
+    "ast_hash": "df5d6b0207bf94249219b6f0b0214340",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-course-enrollment-id-card/proposal.md": {
+    "mtime": 1783704562.6645174,
+    "ast_hash": "c82f78c9e3ed219b6f833bb13089e536",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-course-enrollment-id-card/specs/enrollment-id-card-generation/spec.md": {
+    "mtime": 1783704662.0274868,
+    "ast_hash": "c40cd7ccf414d1972ecaa57c88494631",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-course-enrollment-id-card/tasks.md": {
+    "mtime": 1783707798.0430436,
+    "ast_hash": "4b2ff6cea37e5dc3dd08014076c86fb4",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-group-leads-menu-and-followups-screen/.openspec.yaml": {
+    "mtime": 1783758419.2696297,
+    "ast_hash": "145b3979ac90c49abaf8eac7a3e26147",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-group-leads-menu-and-followups-screen/design.md": {
+    "mtime": 1783758473.4812446,
+    "ast_hash": "c1ba50ca937609c27217cc27a203eddb",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-group-leads-menu-and-followups-screen/proposal.md": {
+    "mtime": 1783758441.63447,
+    "ast_hash": "20319fa281424bbf095aaa8ca5650f1b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-group-leads-menu-and-followups-screen/specs/counselor-dashboard.md": {
+    "mtime": 1783758456.6092649,
+    "ast_hash": "1d20f3a07e321a64429712ffab4df339",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-group-leads-menu-and-followups-screen/specs/leads-followups-listing.md": {
+    "mtime": 1783758460.0991764,
+    "ast_hash": "f9668af349495ca4f68022698482c0be",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-group-leads-menu-and-followups-screen/tasks.md": {
+    "mtime": 1783759062.7187989,
+    "ast_hash": "8df0ce9a2be89d0b694a06008c7a275c",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-improve-profile-page/.openspec.yaml": {
+    "mtime": 1783712675.2901754,
+    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-improve-profile-page/design.md": {
+    "mtime": 1783712710.9279287,
+    "ast_hash": "fa8758d91596b7a7614016b9e19d39e5",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-improve-profile-page/proposal.md": {
+    "mtime": 1783712688.8521936,
+    "ast_hash": "c9e00ecef8f70502b81066b8d5ee1851",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-improve-profile-page/specs/user-profile-photo.md": {
+    "mtime": 1783712700.0940983,
+    "ast_hash": "7762f3bba36abd20361e93e13462af16",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-improve-profile-page/specs/user-security-audit.md": {
+    "mtime": 1783712702.6924815,
+    "ast_hash": "a1cf3b9be4d01ec91618393f6374255a",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-improve-profile-page/tasks.md": {
+    "mtime": 1783712919.9178963,
+    "ast_hash": "5feb8a8e3abafba6d1d66d2fe9a6e9db",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-seed-asti-website-data/.openspec.yaml": {
+    "mtime": 1783711431.6279771,
+    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-seed-asti-website-data/design.md": {
+    "mtime": 1783711462.760286,
+    "ast_hash": "99400ff2e6e25cda0b67e654f2da6f36",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-seed-asti-website-data/proposal.md": {
+    "mtime": 1783711448.3588958,
+    "ast_hash": "24d9fbc19ce8b830c1685e22417a49d1",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-seed-asti-website-data/specs/no-changes.md": {
+    "mtime": 1783711474.3080919,
+    "ast_hash": "999319fd353027f5a5b7fcaeeea785ab",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-seed-asti-website-data/tasks.md": {
+    "mtime": 1783711709.6249988,
+    "ast_hash": "39b69204e92ac617c4695993346dca60",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-setup-corporate-training-db/.openspec.yaml": {
+    "mtime": 1783715985.049566,
+    "ast_hash": "a4980ad0f497704c46cfa140cda4a1fd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-setup-corporate-training-db/design.md": {
+    "mtime": 1783716025.2014287,
+    "ast_hash": "c044111d7afe9202aeffb9474c7388fb",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-setup-corporate-training-db/proposal.md": {
+    "mtime": 1783716002.0420713,
+    "ast_hash": "6e9804935f6a0d2e0314a15dd9f857e3",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-setup-corporate-training-db/specs/corporate-training-db/spec.md": {
+    "mtime": 1783716012.0611327,
+    "ast_hash": "f327fbc9374b9530970c34d3d21b9a30",
+    "semantic_hash": ""
+  },
+  "openspec/changes/archive/2026-07-13-setup-corporate-training-db/tasks.md": {
+    "mtime": 1783716176.6718695,
+    "ast_hash": "af7f4ce1d557ce7f7a0629323a0cdc88",
+    "semantic_hash": ""
+  },
+  "openspec/specs/batch-cloning/spec.md": {
+    "mtime": 1783954202.6114337,
+    "ast_hash": "b1ab66f875d1ae39d6f947519db3c296",
+    "semantic_hash": ""
+  },
+  "openspec/specs/corporate-sales-visit-forms/spec.md": {
+    "mtime": 1783954200.2700179,
+    "ast_hash": "143e72c1a27b106072425a694361c4bd",
+    "semantic_hash": ""
+  },
+  "openspec/specs/corporate-training-db/spec.md": {
+    "mtime": 1783954213.6619263,
+    "ast_hash": "04d092a754aa96a28ce295bde0ce9c7d",
+    "semantic_hash": ""
+  },
+  "openspec/specs/enrollment-id-card-generation/spec.md": {
+    "mtime": 1783954209.4699047,
+    "ast_hash": "c42bbe2c199f3d448157cac667ba0289",
     "semantic_hash": ""
   }
 }
