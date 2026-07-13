@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -46,6 +47,13 @@ import {
   Award,
   FileText,
 } from 'lucide-react';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 function mapNavigationIcons(item: any): any {
   let icon: ReactNode | undefined;

@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import {
@@ -8,18 +7,23 @@ import {
   SectionCardGridByName,
   ContactBlock,
   SimpleCTA,
-  contactInfo,
   FAQAccordion,
+  FAQStructuredData,
   TestimonialGrid,
   WhatsAppButton,
   AccreditationStrip,
   DarkFacilitiesSection,
-  CourseCardSkeleton,
 } from './_components/public-site';
-import {
-  RealTimeStatStrip,
-} from './_components/public-site-client';
-import { CoursesClient } from './_components/courses-page-client';
+import { PublicCourseGrid, PublicStatStrip } from './_components/public-content';
+import { buildPublicMetadata } from './_components/public-metadata';
+import { contactInfo, courseCatalog } from './_components/public-site-data';
+
+export const metadata = buildPublicMetadata({
+  title: 'Al-Saud Training Institute',
+  description:
+    'Al-Saud Training Institute in Muscat provides forklift, crane, and safety training for individuals and corporate teams.',
+  path: '/',
+});
 
 const homeFeatures = [
   {
@@ -120,7 +124,7 @@ export default function HomePage() {
 
       {/* ─── STAT STRIP (pulls up over hero on desktop) ───── */}
       <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
-        <RealTimeStatStrip />
+        <PublicStatStrip />
       </section>
 
       {/* ─── WHY CHOOSE US ─── White background ────────────── */}
@@ -132,6 +136,36 @@ export default function HomePage() {
         />
         <div className="mt-10">
           <SectionCardGridByName items={homeFeatures} />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Training paths"
+          title="Popular courses people start with"
+          description="Use these course pages to compare the core training paths, then contact admissions for the right recommendation."
+        />
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {courseCatalog.slice(0, 4).map((course) => (
+            <Link
+              key={course.slug}
+              href={`/${course.slug}`}
+              className="group rounded-[2rem] border border-neutral-100 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-orange-100 hover:shadow-xl hover:shadow-orange-600/5"
+            >
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-orange-600">
+                {course.duration}
+              </p>
+              <h3 className="mt-3 font-display text-lg font-bold text-neutral-900">
+                {course.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+                {course.summary}
+              </p>
+              <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-orange-700 transition-colors group-hover:text-orange-600">
+                View course <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -149,13 +183,20 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Our courses"
               title="Latest training programs"
-              description="Filter our heavy equipment, crane, forklift, and safety courses by category or search below."
+              description="Browse the most requested training programs first, then open the full course directory for more options."
             />
           </div>
           <div className="mt-10">
-            <Suspense fallback={<CoursesSkeleton />}>
-              <CoursesClient />
-            </Suspense>
+            <PublicCourseGrid courses={courseCatalog.slice(0, 6)} />
+          </div>
+          <div className="mt-8 text-center">
+            <Link
+              href="/courses"
+              className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-accent-700 transition-colors hover:text-primary-700"
+            >
+              View all courses
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -179,6 +220,7 @@ export default function HomePage() {
 
       {/* ─── FAQ ─── White background ─────────────────────────── */}
       <section className="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:px-8">
+        <FAQStructuredData items={faqItems} />
         <SectionHeading
           eyebrow="FAQ"
           title="Frequently asked questions"
@@ -207,15 +249,5 @@ export default function HomePage() {
 
       <WhatsAppButton />
     </PublicShell>
-  );
-}
-
-function CoursesSkeleton() {
-  return (
-    <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <CourseCardSkeleton key={i} />
-      ))}
-    </div>
   );
 }

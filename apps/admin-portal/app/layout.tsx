@@ -29,9 +29,24 @@ const arabicFont = Noto_Sans_Arabic({
   variable: '--font-noto-sans-arabic',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ims-asti-uat.vercel.app';
+
 export const metadata: Metadata = {
-  title: 'IMS Admin Portal',
-  description: 'Institute Management System admin portal foundation.',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Al-Saud Training Institute',
+    template: '%s | Al-Saud Training Institute',
+  },
+  description:
+    'Al-Saud Training Institute in Muscat provides forklift, crane, and safety training for individuals and corporate teams.',
+  openGraph: {
+    type: 'website',
+    locale: 'en_OM',
+    siteName: 'Al-Saud Training Institute',
+  },
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export default function RootLayout({

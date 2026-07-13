@@ -1,5 +1,3 @@
-'use client';
-
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 
 import {
@@ -7,13 +5,48 @@ import {
   PublicShell,
   SectionHeading,
   SimpleCTA,
+  FAQAccordion,
+  FAQStructuredData,
   SplitHero,
-  contactInfo,
 } from '../_components/public-site';
+import { PublicStatStrip } from '../_components/public-content';
+import { contactInfo, courseCatalog } from '../_components/public-site-data';
+import Link from 'next/link';
+
+export const metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+const contactFaqItems = [
+  {
+    question: 'What are your office hours?',
+    answer:
+      'We are open Saturday to Thursday, 8:00 AM to 5:00 PM, for admissions and course enquiries.',
+  },
+  {
+    question: 'How fast can I get a response?',
+    answer:
+      'Phone calls are usually the fastest way to get course dates, batch pricing, and schedule confirmation.',
+  },
+  {
+    question: 'Can you handle group bookings?',
+    answer:
+      'Yes, we can arrange group training, company delivery, and custom intake planning for teams.',
+  },
+  {
+    question: 'Do you offer course recommendations?',
+    answer:
+      'Yes, the admissions team can recommend the best course based on your experience level and job role.',
+  },
+];
 
 export default function ContactPage() {
   return (
     <PublicShell>
+      <FAQStructuredData items={contactFaqItems} />
       <SplitHero
         eyebrow="Contact"
         title={
@@ -30,7 +63,12 @@ export default function ContactPage() {
         primaryLabel="Email us"
         secondaryHref={contactInfo.phoneHref}
         secondaryLabel="Call now"
+        showStats={false}
       />
+
+      <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
+        <PublicStatStrip />
+      </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SectionHeading
@@ -61,6 +99,9 @@ export default function ContactPage() {
               <p className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4.5 w-4.5 text-orange-600 shrink-0" />{' '}
                 {contactInfo.address}
+              </p>
+              <p className="rounded-2xl bg-neutral-50 px-4 py-3 text-xs uppercase tracking-[0.16em] text-neutral-500">
+                Office hours: Saturday to Thursday, 8:00 AM to 5:00 PM
               </p>
             </div>
           </div>
@@ -100,12 +141,43 @@ export default function ContactPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Quick links"
+          title="Choose a course before you call"
+          description="If you already know the category you need, jump straight to the relevant public course page and then return here for pricing and scheduling."
+        />
+        <div className="mt-10 flex flex-wrap gap-3">
+          {courseCatalog.slice(0, 4).map((course) => (
+            <Link
+              key={course.slug}
+              href={`/${course.slug}`}
+              className="inline-flex items-center rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm font-semibold text-neutral-700 transition-colors hover:border-orange-200 hover:text-orange-700"
+            >
+              {course.title}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SimpleCTA
           title="Need the fastest response?"
           description="Call our admissions desk directly for immediate course confirmation, dates, and group pricing."
           href={contactInfo.phoneHref}
           label="Call Admissions"
         />
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 pb-20 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="FAQ"
+          title="Common contact questions"
+          description="Useful answers before you call or send a message."
+          align="center"
+        />
+        <div className="mt-10">
+          <FAQAccordion items={contactFaqItems} />
+        </div>
       </section>
     </PublicShell>
   );
