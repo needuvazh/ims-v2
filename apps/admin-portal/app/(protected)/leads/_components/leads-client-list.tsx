@@ -34,6 +34,8 @@ interface LeadsClientListProps {
   leads: any[];
   branches: any[];
   total: number;
+  canCreate?: boolean;
+  canUpdate?: boolean;
 }
 
 type SortOrder = 'asc' | 'desc';
@@ -42,6 +44,8 @@ export function LeadsClientList({
   leads,
   branches,
   total,
+  canCreate = false,
+  canUpdate = false,
 }: LeadsClientListProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -264,7 +268,7 @@ export function LeadsClientList({
             </Button>
           </SimpleTooltip>
 
-          {lead.stage !== 'Converted' && (
+          {lead.stage !== 'Converted' && canUpdate && (
             <SimpleTooltip content="Edit Details">
               <Button
                 variant="outline"
@@ -342,7 +346,7 @@ export function LeadsClientList({
         >
           <Eye className="mr-1.5 h-3.5 w-3.5" /> View
         </Button>
-        {lead.stage !== 'Converted' && (
+        {lead.stage !== 'Converted' && canUpdate && (
           <Button
             variant="outline"
             size="sm"
@@ -402,13 +406,15 @@ export function LeadsClientList({
           </h1>
         </div>
 
-        <Button
-          className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4"
-          onClick={() => router.push('/leads/create')}
-        >
-          <User className="h-4 w-4 sm:mr-2" />
-          <span className="sr-only sm:not-sr-only">Create Lead</span>
-        </Button>
+        {canCreate && (
+          <Button
+            className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4"
+            onClick={() => router.push('/leads/create')}
+          >
+            <User className="h-4 w-4 sm:mr-2" />
+            <span className="sr-only sm:not-sr-only">Create Lead</span>
+          </Button>
+        )}
       </header>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))]">

@@ -104,6 +104,7 @@ export async function loadSchedulingCalendars(filters: {
 export async function loadSchedulingOverview() {
   const session = await getSession();
   const hasCalRead = hasPermission(session, 'scheduling.calendar.read');
+  const hasCalCreate = hasPermission(session, 'schedule.manage');
   const hasVenueRead =
     hasPermission(session, 'scheduling.venueBlock.read') ||
     hasPermission(session, 'schedule.manage');
@@ -218,6 +219,7 @@ export async function loadSchedulingOverview() {
     },
     permissions: {
       hasCalRead,
+      hasCalCreate,
       hasVenueRead,
       hasConflictRead,
     },

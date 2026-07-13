@@ -246,6 +246,8 @@ export default async function InvoicesListPage(props: {
     </Card>
   );
 
+  const canCreate = session.permissions.includes('finance.invoice.create');
+
   return (
     <AdminListPageLayout>
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
@@ -254,11 +256,13 @@ export default async function InvoicesListPage(props: {
           title="Invoice Management"
           description="View details, print invoices, track outstanding payments, and issue balance receipts."
         />
-        <Link href="/finance/invoices/create" className="shrink-0">
-          <Button className="h-10 gap-2 w-full sm:w-auto">
-            <Plus className="h-4 w-4" /> Create Invoice
-          </Button>
-        </Link>
+        {canCreate && (
+          <Link href="/finance/invoices/create" className="shrink-0">
+            <Button className="h-10 gap-2 w-full sm:w-auto">
+              <Plus className="h-4 w-4" /> Create Invoice
+            </Button>
+          </Link>
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">

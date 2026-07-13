@@ -73,6 +73,7 @@ interface AdmissionsClientListProps {
     submitted: number;
     draft: number;
   };
+  canCreate?: boolean;
 }
 
 type SortOrder = 'asc' | 'desc';
@@ -85,6 +86,7 @@ export function AdmissionsClientList({
   total,
   currentPage,
   kpis,
+  canCreate = false,
 }: AdmissionsClientListProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -339,13 +341,15 @@ export function AdmissionsClientList({
             Admissions
           </h1>
         </div>
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4"
-        >
-          <Plus className="h-4 w-4 sm:mr-2" />
-          <span className="sr-only sm:not-sr-only">Direct Intake</span>
-        </Button>
+        {canCreate && (
+          <Button
+            onClick={() => setIsOpen(true)}
+            className="h-10 w-10 shrink-0 gap-0 px-0 sm:w-auto sm:px-4"
+          >
+            <Plus className="h-4 w-4 sm:mr-2" />
+            <span className="sr-only sm:not-sr-only">Direct Intake</span>
+          </Button>
+        )}
       </div>
 
       {/* KPI Stats Cards */}

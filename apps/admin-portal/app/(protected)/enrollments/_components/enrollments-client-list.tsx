@@ -66,6 +66,8 @@ interface EnrollmentsClientListProps {
   defaultBatchId?: string;
   defaultSortBy?: string;
   defaultSortOrder?: string;
+  canCreate?: boolean;
+  canUpdate?: boolean;
 }
 
 export function EnrollmentsClientList({
@@ -84,6 +86,8 @@ export function EnrollmentsClientList({
   defaultBatchId,
   defaultSortBy,
   defaultSortOrder,
+  canCreate = false,
+  canUpdate = false,
 }: EnrollmentsClientListProps) {
   const router = useRouter();
   const totalPages = Math.ceil(total / 10);
@@ -149,16 +153,18 @@ export function EnrollmentsClientList({
             track operational states.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Link href="/enrollments/create">
-            <Button
-              className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
-            >
-              <Plus className="h-4 w-4" />
-              New Enrollment
-            </Button>
-          </Link>
-        </div>
+        {canCreate && (
+          <div className="flex items-center gap-2">
+            <Link href="/enrollments/create">
+              <Button
+                className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white"
+              >
+                <Plus className="h-4 w-4" />
+                New Enrollment
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* KPI Stats Cards */}

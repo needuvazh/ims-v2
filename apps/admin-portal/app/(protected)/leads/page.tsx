@@ -92,9 +92,23 @@ export default async function LeadsPage(props: {
           .filter((b) => allowedBranchIds.includes(b.id as any))
           .map((b) => ({ id: b.id, name: b.branchName }));
 
+  const canCreate =
+    session.permissions.includes('lead.create') ||
+    session.permissions.includes('lead.write');
+
+  const canUpdate =
+    session.permissions.includes('lead.update') ||
+    session.permissions.includes('lead.write');
+
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
-      <LeadsClientList leads={leads} branches={branches} total={total} />
+      <LeadsClientList
+        leads={leads}
+        branches={branches}
+        total={total}
+        canCreate={canCreate}
+        canUpdate={canUpdate}
+      />
     </AdminListPageLayout>
   );
 }

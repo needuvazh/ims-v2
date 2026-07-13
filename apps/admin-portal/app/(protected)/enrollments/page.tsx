@@ -224,6 +224,14 @@ export default async function EnrollmentsPage(props: {
     draft: draftCount,
   };
 
+  const canCreate =
+    session.permissions.includes('enrollment.create') ||
+    session.permissions.includes('enrollment.write');
+
+  const canUpdate =
+    session.permissions.includes('enrollment.update') ||
+    session.permissions.includes('enrollment.write');
+
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
       <EnrollmentsClientList
@@ -239,6 +247,8 @@ export default async function EnrollmentsPage(props: {
         total={total}
         currentPage={page}
         kpis={kpis}
+        canCreate={canCreate}
+        canUpdate={canUpdate}
         defaultSearch={searchParams.q || ''}
         defaultStatus={searchParams.status || ''}
         defaultBranchId={searchParams.branchId || ''}

@@ -176,6 +176,10 @@ export default async function AdmissionsPage(props: {
     draft: draftAdmissionsCount,
   };
 
+  const canCreate =
+    session.permissions.includes('admission.create') ||
+    session.permissions.includes('admission.write');
+
   return (
     <AdminListPageLayout className="pt-1 sm:pt-0">
       <AdmissionsClientList
@@ -189,6 +193,7 @@ export default async function AdmissionsPage(props: {
         total={total}
         currentPage={page}
         kpis={kpis}
+        canCreate={canCreate}
       />
     </AdminListPageLayout>
   );

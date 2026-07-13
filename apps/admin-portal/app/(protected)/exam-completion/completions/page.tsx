@@ -28,7 +28,8 @@ export default async function CompletionsPage(props: {
 }) {
   const searchParams = await props.searchParams;
 
-  await assertPermission('completion.view');
+  const session = await assertPermission('completion.view');
+  const canEvaluate = session.permissions.includes('completion.evaluate');
 
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const limit = 20;
@@ -125,13 +126,15 @@ export default async function CompletionsPage(props: {
           />
         }
         actions={
-          <LinkButton
-            href="/exam-completion/evaluate"
-            variant="primary"
-            className="gap-2"
-          >
-            Evaluate Completion
-          </LinkButton>
+          canEvaluate && (
+            <LinkButton
+              href="/exam-completion/evaluate"
+              variant="primary"
+              className="gap-2"
+            >
+              Evaluate Completion
+            </LinkButton>
+          )
         }
       />
 

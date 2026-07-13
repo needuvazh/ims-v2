@@ -359,10 +359,13 @@ export default function SignInPage() {
             const selectedEmail = event.target.value;
             if (!selectedEmail) return;
             const demoUsers = [
-              { email: 'admin@ims.com', password: 'Password@123' },
-              { email: 'manager.riyadh@ims.com', password: 'Password@123' },
-              { email: 'manager.muscat@ims.com', password: 'Password@123' },
-              { email: 'counselor.riyadh@ims.com', password: 'Password@123' },
+              { email: 'superadmin@alsaud-intl.com', password: 'Password@123' },
+              { email: 'admin@alsaud-intl.com', password: 'Password@123' },
+              { email: 'branchmanager@alsaud-intl.com', password: 'Password@123' },
+              { email: 'counselor@alsaud-intl.com', password: 'Password@123' },
+              { email: 'finance@alsaud-intl.com', password: 'Password@123' },
+              { email: 'trainer@alsaud-intl.com', password: 'Password@123' },
+              { email: 'coordinator@ims.com', password: 'Password123!' },
             ];
             const demoUser = demoUsers.find((u) => u.email === selectedEmail);
             if (!demoUser) return;
@@ -383,15 +386,22 @@ export default function SignInPage() {
           <option value="" disabled>
             Select a demo role...
           </option>
-          <option value="admin@ims.com">Super Admin (admin@ims.com)</option>
-          <option value="manager.riyadh@ims.com">
-            Riyadh Branch Manager (manager.riyadh@ims.com)
+          <option value="superadmin@alsaud-intl.com">Super Admin (superadmin@alsaud-intl.com)</option>
+          <option value="admin@alsaud-intl.com">Admin (admin@alsaud-intl.com)</option>
+          <option value="branchmanager@alsaud-intl.com">
+            Muscat Branch Manager (branchmanager@alsaud-intl.com)
           </option>
-          <option value="manager.muscat@ims.com">
-            Muscat Branch Manager (manager.muscat@ims.com)
+          <option value="counselor@alsaud-intl.com">
+            Muscat Counselor (counselor@alsaud-intl.com)
           </option>
-          <option value="counselor.riyadh@ims.com">
-            Riyadh Counselor (counselor.riyadh@ims.com)
+          <option value="finance@alsaud-intl.com">
+            Muscat Finance (finance@alsaud-intl.com)
+          </option>
+          <option value="trainer@alsaud-intl.com">
+            Muscat Trainer (trainer@alsaud-intl.com)
+          </option>
+          <option value="coordinator@ims.com">
+            QA Coordinator (coordinator@ims.com)
           </option>
         </select>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-500">

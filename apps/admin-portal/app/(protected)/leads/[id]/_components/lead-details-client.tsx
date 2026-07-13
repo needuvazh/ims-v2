@@ -385,7 +385,7 @@ export function LeadDetailsClient({
         }
         actions={
           <div className="flex items-center gap-2">
-            {lead.stage !== 'Converted' && (
+            {lead.stage !== 'Converted' && (sessionPermissions.includes('lead.update') || sessionPermissions.includes('lead.write')) && (
               <Button
                 variant="outline"
                 size="sm"
@@ -396,7 +396,7 @@ export function LeadDetailsClient({
                 Edit Details
               </Button>
             )}
-            {lead.stage === 'Qualified' && (
+            {lead.stage === 'Qualified' && sessionPermissions.includes('lead.convert') && (
               <Button
                 size="sm"
                 className="gap-2 bg-[color:var(--ims-ink)] hover:bg-[color:var(--ims-brass)] text-white"
@@ -553,7 +553,7 @@ export function LeadDetailsClient({
                     )}
                   </div>
 
-                  {lead.stage !== 'Converted' && (
+                  {lead.stage !== 'Converted' && (sessionPermissions.includes('lead.update') || sessionPermissions.includes('lead.write')) && (
                     <Button
                       variant="outline"
                       size="sm"
@@ -1177,7 +1177,8 @@ export function LeadDetailsClient({
             </h3>
             {lead.stage !== 'Converted' &&
               lead.stage !== 'Lost' &&
-              lead.stage !== 'Won' && (
+              lead.stage !== 'Won' &&
+              sessionPermissions.includes('followup.create') && (
                 <Button
                   size="sm"
                   className="text-[10px] h-7 px-2"
@@ -1398,7 +1399,7 @@ export function LeadDetailsClient({
                 Lead Timeline & Notes
               </h3>
 
-              {lead.stage !== 'Converted' && (
+               {lead.stage !== 'Converted' && (sessionPermissions.includes('lead.update') || sessionPermissions.includes('lead.write')) && (
                 <form onSubmit={handleAddNote} className="space-y-3">
                   <FormField>
                     <FormLabel>Add Note</FormLabel>

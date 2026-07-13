@@ -42,7 +42,7 @@ export default async function SchedulingHomePage() {
         title="Scheduling & Calendar"
         eyebrow="Scheduling"
         actions={
-          permissions.hasCalRead && (
+          permissions.hasCalCreate && (
             <Link href="/scheduling/calendars/new">
               <Button size="sm" className="gap-2">
                 <Plus className="h-4 w-4" /> Create Calendar
@@ -228,35 +228,35 @@ export default async function SchedulingHomePage() {
             </h3>
             <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
               {permissions.hasCalRead && (
-                <>
-                  <Link href="/scheduling/calendars" className="group">
-                    <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-sky-200">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-sky-600 group-hover:bg-sky-100 transition-colors">
-                        <CalendarClock className="h-4.5 w-4.5" />
-                      </div>
-                      <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-sky-700 transition-colors">
-                        Calendar
-                      </h4>
-                      <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
-                        Maintain baseline rules & overrides.
-                      </p>
+                <Link href="/scheduling/calendars" className="group">
+                  <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-sky-200">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-sky-600 group-hover:bg-sky-100 transition-colors">
+                      <CalendarClock className="h-4.5 w-4.5" />
                     </div>
-                  </Link>
+                    <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-sky-700 transition-colors">
+                      Calendar
+                    </h4>
+                    <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
+                      Maintain baseline rules & overrides.
+                    </p>
+                  </div>
+                </Link>
+              )}
 
-                  <Link href="/scheduling/calendars/new" className="group">
-                    <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-emerald-200">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition-colors">
-                        <Plus className="h-4.5 w-4.5" />
-                      </div>
-                      <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-emerald-700 transition-colors">
-                        New Calendar
-                      </h4>
-                      <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
-                        Create new academic baseline cycle.
-                      </p>
+              {permissions.hasCalCreate && (
+                <Link href="/scheduling/calendars/new" className="group">
+                  <div className="flex flex-col h-full rounded-2xl border border-slate-200/60 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-emerald-200">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition-colors">
+                      <Plus className="h-4.5 w-4.5" />
                     </div>
-                  </Link>
-                </>
+                    <h4 className="mt-3 text-xs font-black text-slate-800 group-hover:text-emerald-700 transition-colors">
+                      New Calendar
+                    </h4>
+                    <p className="mt-1 text-[10px] text-slate-500 leading-relaxed font-semibold">
+                      Create new academic baseline cycle.
+                    </p>
+                  </div>
+                </Link>
               )}
 
               {permissions.hasVenueRead && (

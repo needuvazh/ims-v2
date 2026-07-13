@@ -239,6 +239,7 @@ export function CoursesClientList({
   };
 
   const canCreate = sessionPermissions.includes('course.catalog.create');
+  const canUpdate = sessionPermissions.includes('course.catalog.update');
 
   const columns = [
     {
@@ -315,14 +316,16 @@ export function CoursesClientList({
       header: 'Actions',
       className: 'text-right',
       render: (course: CoursesClientListProps['courses'][number]) => (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => router.push(`/courses-catalog/${course.id}/edit`)}
-          title="Edit Course"
-        >
-          <ArrowRight className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
-        </Button>
+        canUpdate ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push(`/courses-catalog/${course.id}/edit`)}
+            title="Edit Course"
+          >
+            <ArrowRight className="h-4 w-4 text-slate-500 hover:text-indigo-600" />
+          </Button>
+        ) : null
       ),
       headerClassName: 'w-[100px] text-right',
     },
@@ -369,16 +372,18 @@ export function CoursesClientList({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="p-card-p pt-0">
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full text-[11px]"
-          onClick={() => router.push(`/courses-catalog/${course.id}/edit`)}
-        >
-          <ArrowRight className="mr-1.5 h-3.5 w-3.5" /> Edit Course
-        </Button>
-      </CardFooter>
+      {canUpdate && (
+        <CardFooter className="p-card-p pt-0">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full text-[11px]"
+            onClick={() => router.push(`/courses-catalog/${course.id}/edit`)}
+          >
+            <ArrowRight className="mr-1.5 h-3.5 w-3.5" /> Edit Course
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 

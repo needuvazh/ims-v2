@@ -27,6 +27,7 @@ export default async function TrainersPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const session = await assertPermission('trainer.read');
+  const canCreate = session.permissions.includes('trainer.create');
   const { authContext } = await getFacultyTrainerContext();
 
   const { branchScopeResolver } = await import('@/lib/runtime');
@@ -136,7 +137,9 @@ export default async function TrainersPage(props: {
         eyebrow="Faculty & Trainer"
         title="Trainer Registry"
         actions={
-          <LinkButton href="/faculty/trainers/new">New trainer</LinkButton>
+          canCreate && (
+            <LinkButton href="/faculty/trainers/new">New trainer</LinkButton>
+          )
         }
       />
 
