@@ -39,7 +39,6 @@ export const quickLinks: SiteLink[] = [
   { label: 'Training Facilities', href: '/training-facilities' },
   { label: 'Verify Certificate', href: '/verify' },
   { label: 'Contact Us', href: '/contact-us' },
-  { label: 'IMS Login', href: '/login' },
 ];
 
 export const eventCards = [

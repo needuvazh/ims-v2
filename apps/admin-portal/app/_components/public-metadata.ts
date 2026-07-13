@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
-const siteUrl = 'https://ims-asti-uat.vercel.app';
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ims-asti-uat.vercel.app';
 
 type PublicMetadataInput = {
   title: string;

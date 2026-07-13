@@ -418,6 +418,12 @@ export default function PublicVerificationPage() {
 
         <Suspense fallback={
           <div className="max-w-3xl mx-auto w-full text-center py-12">
+            <h1 className="mb-4 text-4xl font-black tracking-tight text-slate-900">
+              Verify Certificate Authenticity
+            </h1>
+            <p className="mx-auto mb-8 max-w-xl text-base text-slate-500">
+              Use the public Al-Saud Training Institute certificate verification tool to confirm credential status.
+            </p>
             <div className="h-10 w-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mx-auto mb-4" />
             <p className="text-slate-500 font-bold text-sm">Loading verification page...</p>
           </div>

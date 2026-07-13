@@ -10,7 +10,7 @@ import { courseCatalog } from '../_components/public-site-data';
 import Link from 'next/link';
 
 export const metadata = buildPublicMetadata({
-  title: 'About Al-Saud Training Institute',
+  title: 'About ASTI',
   description:
     'Learn about Al-Saud Training Institute in Muscat, its vocational training approach, mission, and safety-focused delivery model.',
   path: '/about',

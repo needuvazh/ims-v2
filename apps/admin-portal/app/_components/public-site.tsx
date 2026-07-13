@@ -40,6 +40,7 @@ import {
   careerCards,
   courseCatalog,
 } from './public-site-data';
+import { siteUrl } from './public-metadata';
 
 export {
   type SiteLink,
@@ -77,7 +78,7 @@ export const stats: StatCard[] = [
   { value: '20+', label: 'Years Experience', icon: Award },
 ];
 
-const SITE_URL = 'https://ims-asti-uat.vercel.app';
+const SITE_URL = siteUrl;
 
 const siteStructuredData = [
   {
@@ -86,6 +87,27 @@ const siteStructuredData = [
     name: 'Al-Saud Training Institute',
     url: SITE_URL,
     logo: `${SITE_URL}/alsaud/logo.png`,
+    image: [`${SITE_URL}/alsaud/logo.png`, `${SITE_URL}/alsaud/hero.jpg`],
+    slogan: contactInfo.tagline,
+    foundingDate: '2003',
+    priceRange: '$$',
+    areaServed: [
+      {
+        '@type': 'City',
+        name: 'Muscat',
+      },
+      {
+        '@type': 'Country',
+        name: 'Oman',
+      },
+    ],
+    knowsAbout: [
+      'Forklift operator training',
+      'Crane operation training',
+      'Elevated work platform training',
+      'Industrial safety training',
+      'Corporate operator training',
+    ],
     telephone: contactInfo.phoneHref.replace('tel:', ''),
     email: contactInfo.email,
     address: {
@@ -262,9 +284,9 @@ export function PublicShell({ children }: { children: ReactNode }) {
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline text-[9px] tracking-[0.25em] text-neutral-500">
+            {/* <span className="hidden sm:inline text-[9px] tracking-[0.25em] text-neutral-500">
               العربية
-            </span>
+            </span> */}
             <Link
               href="/login"
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[9px] font-bold tracking-[0.2em] text-white transition-all hover:bg-white/10 hover:border-white/30"

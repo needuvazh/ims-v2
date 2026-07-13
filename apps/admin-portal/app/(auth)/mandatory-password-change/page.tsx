@@ -1,10 +1,22 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Alert } from '@ims/shared-ui';
 import ResetPasswordForm from '../reset-password/ResetPasswordForm';
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-export const metadata = { title: 'Mandatory Password Change | IMS Admin' };
+export const metadata: Metadata = {
+  title: 'Mandatory Password Change',
+  description:
+    'Complete a required password change for an Al-Saud Training Institute IMS portal account.',
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: '/mandatory-password-change',
+  },
+};
 
 export default async function MandatoryPasswordChangePage({
   searchParams,

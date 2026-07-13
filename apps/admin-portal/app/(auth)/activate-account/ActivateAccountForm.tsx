@@ -108,14 +108,14 @@ export function ActivateAccountForm({ token = '' }: { token?: string }) {
                 </span>
               </div>
 
-              <h1 className="mb-6 text-5xl font-black leading-[1.1] xl:text-7xl">
+              <div className="mb-6 text-5xl font-black leading-[1.1] xl:text-7xl">
                 Activate. <br />
                 <span className="bg-gradient-to-r from-brand-100 via-accent-200 to-white bg-clip-text text-transparent">
                   Secure.
                 </span>
                 <br />
                 Start.
-              </h1>
+              </div>
 
               <p className="mb-8 max-w-md text-lg text-accent-50/80">
                 Use the activation token from your email to complete account

@@ -9,7 +9,7 @@ import { buildPublicMetadata } from '../_components/public-metadata';
 import { contactInfo, courseCatalog } from '../_components/public-site-data';
 
 export const metadata = buildPublicMetadata({
-  title: 'Courses at Al-Saud Training Institute',
+  title: 'Training Courses in Muscat',
   description:
     'Browse forklift, crane, and elevated work platform courses at Al-Saud Training Institute in Muscat, Oman.',
   path: '/courses',

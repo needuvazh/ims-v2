@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 import { courseCatalog, mainNavigation } from './_components/public-site-data';
 
-const siteUrl = 'https://ims-asti-uat.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ims-asti-uat.vercel.app';
 
 const staticPaths = [
   '/',

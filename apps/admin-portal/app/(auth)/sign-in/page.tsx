@@ -105,14 +105,14 @@ export default function SignInPage() {
                 </span>
               </div>
 
-              <h1 className="mb-6 text-5xl font-black leading-[1.1] xl:text-7xl">
+              <div className="mb-6 text-5xl font-black leading-[1.1] xl:text-7xl">
                 Manage. <br />
                 <span className="bg-gradient-to-r from-brand-100 via-accent-200 to-white bg-clip-text text-transparent">
                   Empower.
                 </span>
                 <br />
                 Succeed.
-              </h1>
+              </div>
 
               <p className="mb-8 max-w-md text-lg text-accent-50/85">
                 The central hub for managing Al-Saud Training Institute — staff,

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const siteUrl = 'https://ims-asti-uat.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ims-asti-uat.vercel.app';
 
 export default function robots(): MetadataRoute.Robots {
   return {

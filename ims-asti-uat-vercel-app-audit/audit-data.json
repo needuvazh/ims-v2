@@ -1,0 +1,295 @@
+{
+  "summary": {
+    "health_score": 69,
+    "business_type": "Local vocational training institute / heavy machinery and safety training center in Muscat, Oman",
+    "top_findings": [
+      "Incorrect homepage canonicals on indexable legal pages and noindex utility pages",
+      "Auth utility pages are publicly discoverable despite robots disallow/noindex",
+      "Thin content on 9 discovered pages, including legal and utility pages",
+      "Incomplete security headers and exposed X-Powered-By on some routes",
+      "No llms.txt and limited verifiable E-E-A-T/citation proof blocks"
+    ],
+    "quick_wins": [
+      "Set self-referencing canonicals for /privacy and /terms",
+      "Remove public links to auth utility pages from marketing navigation/crawl paths",
+      "Add one H1 per utility page or demote decorative hero text",
+      "Create /llms.txt with canonical course/contact resources",
+      "Add geo/hasMap/sameAs/priceRange to LocalBusiness schema"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 72,
+      "what_works": [
+        "robots.txt is available and references sitemap.xml",
+        "HTTPS and HSTS are enabled through Vercel",
+        "No crawl-time 5xx or redirect-chain failures were found across 20 discovered pages"
+      ],
+      "findings": [
+        {
+          "title": "Robots disallows auth paths, but crawler-visible links still expose auth utility pages",
+          "severity": "High",
+          "description": "robots.txt disallows /sign-in, /forgot-password, /activate-account, and /mandatory-password-change, but internal links from /login and auth pages expose them. These pages return 200 and contain noindex, which avoids indexing but still wastes crawl paths and exposes demo-login text.",
+          "recommendation": "Remove public/internal links to auth utility pages from the marketing crawl path, keep noindex, and consider returning authenticated-only or gated experiences for operational routes."
+        },
+        {
+          "title": "Several public utility pages use the homepage canonical",
+          "severity": "High",
+          "description": "/privacy and /terms return canonical https://ims-asti-uat.vercel.app even though they are indexable 200 pages. /verify also uses homepage canonical while noindex. Incorrect canonicalization can consolidate signals into the wrong URL and suppress the intended page.",
+          "recommendation": "Set self-referencing canonicals for indexable legal pages. For noindex pages, either omit canonical or use a deliberate self-canonical if the page should remain accessible but not indexed."
+        },
+        {
+          "title": "Security headers are incomplete",
+          "severity": "Medium",
+          "description": "HSTS is present, but crawl headers expose X-Powered-By: Next.js on some dynamic routes and do not show common hardening headers such as Content-Security-Policy, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy.",
+          "recommendation": "Add platform-wide security headers in Next.js/Vercel config and remove X-Powered-By where possible."
+        },
+        {
+          "title": "UAT Vercel hostname is indexable",
+          "severity": "Medium",
+          "description": "The audited domain is ims-asti-uat.vercel.app. Public marketing pages are indexable and included in sitemap.xml. If this is not the final production domain, search engines may index a staging/UAT URL.",
+          "recommendation": "If this is a staging/UAT environment, apply site-wide noindex and remove it from public sitemaps. If it is production, migrate to the final branded domain and 301 redirect the Vercel host."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 68,
+      "what_works": [
+        "Homepage, About, Courses, Facilities, and course detail pages provide clear training-institute positioning",
+        "Course pages include practical details, target audiences, outcomes, prerequisites, FAQs, and related-course links",
+        "Local contact details and institute history are visible across pages"
+      ],
+      "findings": [
+        {
+          "title": "9 discovered pages have fewer than 300 words",
+          "severity": "High",
+          "description": "Thin pages include legal pages, verification/auth pages, and some operational utility pages. Thin public pages reduce topical depth and can dilute perceived quality when indexed.",
+          "recommendation": "Expand indexable pages such as Privacy and Terms into complete policies. Keep auth/utility pages noindex and remove them from public discovery."
+        },
+        {
+          "title": "E-E-A-T evidence is present but underdeveloped",
+          "severity": "Medium",
+          "description": "The site mentions NPORS accreditation, 20+ years, 25k+ students, and Muscat location, but lacks detailed instructor credentials, accreditation proof pages, certificate samples, safety governance, client logos/case studies, or verifiable review/testimonial sources.",
+          "recommendation": "Add an accreditation/trust page, instructor profile sections, corporate client proof, safety standards followed, and testimonial attribution where permitted."
+        },
+        {
+          "title": "Course content is templated across similar pages",
+          "severity": "Medium",
+          "description": "Course pages are useful but repeat the same page structure, CTA language, comparison blocks, pricing text, and related-course modules. This can look mechanically generated without deeper course-specific details.",
+          "recommendation": "Add unique course-specific syllabus modules, equipment examples, assessment criteria, duration ranges, eligibility, PPE requirements, and workplace outcomes for each course."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 70,
+      "what_works": [
+        "Most primary pages have readable title tags and meta descriptions",
+        "Public pages generally use a single visible H1",
+        "Internal navigation exposes all major course pages from the homepage and footer"
+      ],
+      "findings": [
+        {
+          "title": "Title tags are over length or generic on 5 pages",
+          "severity": "Medium",
+          "description": "Examples include About (61 chars), Contact (63 chars), and several utility/auth pages using the generic title 'Al-Saud Training Institute'. Long titles may truncate; generic titles reduce query relevance.",
+          "recommendation": "Keep unique page titles around 45-60 characters and include high-intent local modifiers such as Muscat, Oman, forklift training, crane training, or certificate verification where relevant."
+        },
+        {
+          "title": "6 pages have missing or multiple H1s",
+          "severity": "Medium",
+          "description": "/verify has no H1 in the static HTML, while auth pages such as /sign-in, /forgot-password, /activate-account, and /mandatory-password-change contain two H1s.",
+          "recommendation": "Use exactly one descriptive H1 per rendered page. For auth/utility pages, demote decorative hero statements to paragraph or H2 text."
+        },
+        {
+          "title": "Meta descriptions are reused on operational pages",
+          "severity": "Low",
+          "description": "Auth, verification, privacy, and terms pages reuse the default institute description. For pages that remain indexable, this weakens snippet relevance.",
+          "recommendation": "Use page-specific descriptions for all indexable pages and keep noindex utility pages out of sitemap/internal marketing links."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 76,
+      "what_works": [
+        "Organization, EducationalOrganization, LocalBusiness, WebSite, Course, BreadcrumbList, and FAQPage JSON-LD are present",
+        "Course pages include provider linkage and breadcrumb markup",
+        "Local business schema includes phone, email, postal address, opening hours, and languages"
+      ],
+      "findings": [
+        {
+          "title": "LocalBusiness schema could be richer for local rankings",
+          "severity": "Medium",
+          "description": "The LocalBusiness entity lacks geo coordinates, hasMap/sameAs profiles, image arrays, priceRange, areaServed details beyond country, and review/aggregateRating where compliant.",
+          "recommendation": "Add geo, hasMap, sameAs social/GBP links, image, priceRange, areaServed including Muscat/Oman, and reviewed-by/accreditation properties where verifiable."
+        },
+        {
+          "title": "Non-course pages miss page-specific schema opportunities",
+          "severity": "Medium",
+          "description": "About, Contact, Facilities, Events, Privacy, Terms, Verify, and auth pages primarily inherit Organization/WebSite schema only.",
+          "recommendation": "Add AboutPage, ContactPage, Place/TrainingCenter, Event where real events exist, and WebPage schema with breadcrumb for primary pages."
+        },
+        {
+          "title": "Schema validation was syntax-level only",
+          "severity": "Info",
+          "description": "JSON-LD blocks were found and parseable from crawl samples, but live Rich Results or Schema.org validator checks were not run from this environment.",
+          "recommendation": "Validate representative templates in Google Rich Results Test and Schema.org validator before launch."
+        }
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 55,
+      "what_works": [
+        "Visual analysis found visible H1, visible CTA, no mobile horizontal scroll, and acceptable touch targets",
+        "Images are served through Next.js image optimization URLs",
+        "Font preloads are declared"
+      ],
+      "findings": [
+        {
+          "title": "PageSpeed Insights data unavailable due rate limit",
+          "severity": "Medium",
+          "description": "The PSI API returned rate-limit errors for both mobile and desktop. No CrUX field data is available because Google API credentials are not configured.",
+          "recommendation": "Re-run Lighthouse/PSI with configured API credentials or local Lighthouse in CI, and track LCP, INP, CLS, TTFB, and bundle size per template."
+        },
+        {
+          "title": "Homepage HTML payload and font strategy may pressure LCP",
+          "severity": "Medium",
+          "description": "The homepage HTML response was about 137 KB and preloads seven font files. The hero image is large and above the fold. These are common contributors to slower LCP on mobile networks.",
+          "recommendation": "Audit font subsets/weights, reduce preloaded fonts to critical variants, set hero image priority/sizes carefully, and measure LCP element timing."
+        },
+        {
+          "title": "Dynamic homepage response uses no-store cache headers",
+          "severity": "Low",
+          "description": "The homepage returned Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate, while several static pages return public cache headers. This can reduce edge-cache benefit for the most important SEO landing page.",
+          "recommendation": "If the homepage content is public and stable, use static generation or cacheable response headers appropriate for Vercel."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 62,
+      "what_works": [
+        "Pages use clear headings, FAQs, local entity details, and course-specific snippets that can be extracted by AI systems",
+        "Organization and Course schema provide machine-readable entity context",
+        "Contact details are repeated consistently across public pages"
+      ],
+      "findings": [
+        {
+          "title": "No llms.txt is available",
+          "severity": "Medium",
+          "description": "https://ims-asti-uat.vercel.app/llms.txt returned 404. This is not a ranking requirement, but it is increasingly useful for guiding AI crawlers to preferred summary, course, contact, and policy resources.",
+          "recommendation": "Add /llms.txt with concise institute overview, canonical course URLs, contact page, certificate verification page, and crawl-use guidance."
+        },
+        {
+          "title": "Citability needs stronger evidence blocks",
+          "severity": "Medium",
+          "description": "The site states accreditation, student volume, and partner count, but AI answers benefit from compact, attributed facts that are easy to quote and verify.",
+          "recommendation": "Add 'fast facts' sections with dates, accreditations, service areas, course outcomes, and source-backed claims. Link to proof pages where possible."
+        },
+        {
+          "title": "No backlink/referring-domain signals found for UAT host",
+          "severity": "Low",
+          "description": "Common Crawl returned no referring-domain metrics for ims-asti-uat.vercel.app. This is expected for a UAT host but means authority signals are absent for this domain.",
+          "recommendation": "Use the final branded domain for production, build citations from Google Business Profile, directories, partners, accreditation bodies, and corporate training references."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 86,
+      "what_works": [
+        "Public marketing and course pages had image alt text present in the crawl",
+        "Images are emitted through Next.js optimized image routes",
+        "No visual text-overflow or overlap was detected in automated visual analysis"
+      ],
+      "findings": [
+        {
+          "title": "Auth utility pages have missing image alt text",
+          "severity": "Low",
+          "description": "5 pages had missing alt text, concentrated on /sign-in, /forgot-password, /activate-account, /mandatory-password-change, and likely related auth templates.",
+          "recommendation": "Add decorative empty alt attributes for decorative images or descriptive alt text for meaningful images in auth templates."
+        },
+        {
+          "title": "Image asset dimensions/weights need Lighthouse verification",
+          "severity": "Info",
+          "description": "The crawl confirmed optimized image routes but did not include byte-level image audit by asset. PSI was rate-limited.",
+          "recommendation": "Run Lighthouse image diagnostics once PSI/local Lighthouse is available and check modern formats, right-sized images, and preload only for the LCP image."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Critical Fixes",
+        "timeframe": "Week 1",
+        "items": [
+          "Confirm whether ims-asti-uat.vercel.app should be indexable. If UAT, apply site-wide noindex and remove from sitemap. If production, migrate/redirect to branded domain.",
+          "Fix canonical URLs on /privacy and /terms; review noindex page canonicals.",
+          "Remove or gate publicly discoverable auth utility links and demo-login copy.",
+          "Add baseline security headers: CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, and remove X-Powered-By."
+        ]
+      },
+      {
+        "name": "Phase 2: High-Impact Improvements",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Rewrite generic/long title tags and utility meta descriptions.",
+          "Fix H1 structure on /verify and auth templates.",
+          "Expand indexable legal pages or keep them noindex if not intended for organic visibility.",
+          "Add page-specific schema for AboutPage, ContactPage, facilities/Place, and Events where applicable."
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Authority",
+        "timeframe": "Month 2",
+        "items": [
+          "Add unique syllabus, equipment, duration, eligibility, assessment, PPE, and certification details to every course page.",
+          "Create accreditation/trust/instructor evidence sections with verifiable claims.",
+          "Build local citations and partner/accreditation backlinks on the final production domain.",
+          "Add /llms.txt and AI-citable fast-fact sections."
+        ]
+      },
+      {
+        "name": "Phase 4: Monitoring & Iteration",
+        "timeframe": "Ongoing",
+        "items": [
+          "Run PSI/Lighthouse after rate limits clear or with configured API credentials.",
+          "Connect Google Search Console/GA4 for indexation, query, and conversion reporting.",
+          "Capture an SEO drift baseline after fixes.",
+          "Review sitemap and crawl reports monthly for new noindex/canonical/internal-link regressions."
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  },
+  "evidence": {
+    "crawl_page_count": 20,
+    "robots_status": 200,
+    "sitemap_status": 200,
+    "issues": {
+      "title_length": 5,
+      "thin_content": 9,
+      "h1_count": 6,
+      "missing_alt_pages": 5,
+      "missing_schema": 5
+    },
+    "psi_status": "rate_limited",
+    "google_credentials": "not configured",
+    "backlink_tier": "Common Crawl fallback only; no Moz/Bing credentials",
+    "drift_baseline": "not found",
+    "screenshots": [
+      "screenshots/ims-asti-uat_vercel_app_desktop.png",
+      "screenshots/ims-asti-uat_vercel_app_laptop.png",
+      "screenshots/ims-asti-uat_vercel_app_tablet.png",
+      "screenshots/ims-asti-uat_vercel_app_mobile.png"
+    ]
+  }
+}

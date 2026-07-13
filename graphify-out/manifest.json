@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/forgot-password/page.tsx": {
-    "mtime": 1783476040.1047046,
-    "ast_hash": "9c4f9a8296d92d381e379d1c66f5e326",
+    "mtime": 1783957576.267629,
+    "ast_hash": "e3b176616dfd1877425ea6af47001819",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/forgot-password/schema.ts": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/reset-password/ResetPasswordForm.tsx": {
-    "mtime": 1783476040.134462,
-    "ast_hash": "14104a32ed28f1c062028635a2872495",
+    "mtime": 1783957576.2708044,
+    "ast_hash": "3b5bd7cf02c5ddeee2c3fb618ccd7d66",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/reset-password/actions.ts": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/reset-password/page.tsx": {
-    "mtime": 1783476040.1205451,
-    "ast_hash": "c35140d9ce0edfe21f00e96af01ebc72",
+    "mtime": 1783957602.3936899,
+    "ast_hash": "ef05a0debfbe619cfb51faf8d1fff9f4",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/reset-password/schema.ts": {
@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/sign-in/page.tsx": {
-    "mtime": 1783839003.4483786,
-    "ast_hash": "0bf5625e2af3cf770ce51fb348035d98",
+    "mtime": 1783957576.2670445,
+    "ast_hash": "a0a6d24c78758054b047a5e08c39bba9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/sign-in/schema.ts": {
@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/layout.tsx": {
-    "mtime": 1783953824.6397016,
-    "ast_hash": "498b6ed83f98f5b2b959f9b057d03fe0",
+    "mtime": 1783957498.943861,
+    "ast_hash": "98252b2678441a2fdd451a06f1854432",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/auth-actions.ts": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/verify/page.tsx": {
-    "mtime": 1783762756.6380494,
-    "ast_hash": "1ca952f13b6fdcad3173529a3f08aec1",
+    "mtime": 1783957617.8349814,
+    "ast_hash": "ff7cb5098a133d0f0fa9deaa96f3f9b8",
     "semantic_hash": ""
   },
   "apps/admin-portal/instrumentation.ts": {
@@ -320,13 +320,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1783954739.9958727,
+    "mtime": 1783957745.2650185,
     "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
-    "mtime": 1783916568.7063255,
-    "ast_hash": "6bee59d30e794c682d7af85894b47ffd",
+    "mtime": 1783957508.4120617,
+    "ast_hash": "a88b3c7b9565b0a8e84867cabc471701",
     "semantic_hash": ""
   },
   "apps/admin-portal/package.json": {
@@ -2835,18 +2835,18 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site.tsx": {
-    "mtime": 1783955723.524405,
-    "ast_hash": "d0e69ab69934986b79865c12b81f1db9",
+    "mtime": 1783957522.9043245,
+    "ast_hash": "10c36bccd13bac8cbb86fd9e51cb8ea5",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/about/page.tsx": {
-    "mtime": 1783953824.636924,
-    "ast_hash": "75d6a5a8852fdd30867d78c57a5202f0",
+    "mtime": 1783957669.2493386,
+    "ast_hash": "4879d6b5b5fdf693386e1747fd99ea52",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/contact-us/page.tsx": {
-    "mtime": 1783953824.6372437,
-    "ast_hash": "2dbbfe96b15948d52c5fecd5cad92895",
+    "mtime": 1783957669.2501717,
+    "ast_hash": "aa481df86f96e1ce5a9e2c89b635c0c6",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/contact/page.tsx": {
@@ -2855,13 +2855,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/courses/page.tsx": {
-    "mtime": 1783953824.6383088,
-    "ast_hash": "fc1e95e66935b9049093e7067312e746",
+    "mtime": 1783957669.2532926,
+    "ast_hash": "49a3902158f2f754a4ee70584307f379",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/elevated-work-platforms-2/page.tsx": {
-    "mtime": 1783953824.638576,
-    "ast_hash": "3cbff28f388f12a281cdc7be752edb5c",
+    "mtime": 1783957669.254512,
+    "ast_hash": "5cd37243ddd4a8fee6f07a0906ecda60",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/events/page.tsx": {
@@ -2885,8 +2885,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/login/page.tsx": {
-    "mtime": 1783953824.6399398,
-    "ast_hash": "136dde79bd7b8791e6fb73a323bcf060",
+    "mtime": 1783957531.2623367,
+    "ast_hash": "389bfc9123212beadab1deaa25914af6",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/other-courses-available/page.tsx": {
@@ -2895,13 +2895,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/overhead-gantry-crane-operation/page.tsx": {
-    "mtime": 1783953824.6404724,
-    "ast_hash": "a91fd558c9a452b3cd4e2e522e01ab5a",
+    "mtime": 1783957669.2553618,
+    "ast_hash": "7e5a5c0466c011bcc7681162ce30d8df",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/privacy/page.tsx": {
-    "mtime": 1783476044.9466417,
-    "ast_hash": "19c3a81aaf841ff7ff05c67690891404",
+    "mtime": 1783957560.6169975,
+    "ast_hash": "ea8d248158d8483680002b8eec10cfe1",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/services/page.tsx": {
@@ -2915,8 +2915,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/terms/page.tsx": {
-    "mtime": 1783476044.9881816,
-    "ast_hash": "4179d5663025412c25d049f08a85fc49",
+    "mtime": 1783957560.617557,
+    "ast_hash": "54acbd4617c386a49ea7ae44d2fca786",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/training-facilities/page.tsx": {
@@ -3585,8 +3585,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-site-data.ts": {
-    "mtime": 1783762756.6378388,
-    "ast_hash": "9570f39f60a9d8f558d1e4d9c0038210",
+    "mtime": 1783957498.947282,
+    "ast_hash": "0333e97ec38e9f48270e044c1bf3b40f",
     "semantic_hash": ""
   },
   "packages/database/prisma/migrations/20260629120000_user_roles_lifecycle_fields/migration.sql": {
@@ -3610,8 +3610,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/activate-account/ActivateAccountForm.tsx": {
-    "mtime": 1783476040.0873017,
-    "ast_hash": "5782d3839bff3494239608759735c0b5",
+    "mtime": 1783957576.2691567,
+    "ast_hash": "ece40ad8625ed0b056f6f89cdc522328",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/activate-account/actions.ts": {
@@ -3620,8 +3620,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/activate-account/page.tsx": {
-    "mtime": 1783476040.0893607,
-    "ast_hash": "3d3d8f8c92b640225b307130b5ce9658",
+    "mtime": 1783957602.3926437,
+    "ast_hash": "bc37dc77efd46fa88c5ef41da67d7f53",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/activate-account/schema.ts": {
@@ -3630,8 +3630,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(auth)/mandatory-password-change/page.tsx": {
-    "mtime": 1783476040.1133199,
-    "ast_hash": "8945e176afe3de1950916fae597bbbf6",
+    "mtime": 1783957602.3946574,
+    "ast_hash": "da24deadab5a6cfe889160192272aea9",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/(protected)/iam/audit/page.tsx": {
@@ -11895,23 +11895,23 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/_components/public-metadata.ts": {
-    "mtime": 1783953824.6360292,
-    "ast_hash": "336602a405e618a3e3601d1ede948e8e",
+    "mtime": 1783957498.9429116,
+    "ast_hash": "3d6422363738fb5db4e6665f928e9355",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/robots.ts": {
-    "mtime": 1783953824.6410081,
-    "ast_hash": "6bc47b31297e4095bad8391062130e97",
+    "mtime": 1783957498.9453151,
+    "ast_hash": "d20ec2b6665dfbd16d4e82ecd2e4da07",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/sitemap.ts": {
-    "mtime": 1783953824.6412337,
-    "ast_hash": "ee33d38b36a7cd8adbdc8b2a5aa7d653",
+    "mtime": 1783957498.9464417,
+    "ast_hash": "980201d40748abe16cd1a69b12dd9546",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/verify/layout.tsx": {
-    "mtime": 1783953824.6422796,
-    "ast_hash": "6e69c83b320c8cf1304d0adaf364c2e8",
+    "mtime": 1783957531.26178,
+    "ast_hash": "17268c62f428c66073a2846dfaba73fa",
     "semantic_hash": ""
   },
   "openspec/changes/archive/2026-07-13-add-corporate-sales-visit-forms/.openspec.yaml": {
@@ -12162,6 +12162,116 @@
   "openspec/specs/enrollment-id-card-generation/spec.md": {
     "mtime": 1783954209.4699047,
     "ast_hash": "c42bbe2c199f3d448157cac667ba0289",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(auth)/forgot-password/layout.tsx": {
+    "mtime": 1783957602.391772,
+    "ast_hash": "54120fe996a174da85a6ddb5f127dfa9",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/(auth)/sign-in/layout.tsx": {
+    "mtime": 1783957602.3893604,
+    "ast_hash": "3cf53f3afb0f1dab88b7a2804250eeab",
+    "semantic_hash": ""
+  },
+  "apps/admin-portal/app/llms.txt/route.ts": {
+    "mtime": 1783957631.8013453,
+    "ast_hash": "ee24efda1076691f77831dc51d0dbb37",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/audit-data.json": {
+    "mtime": 1783957073.2654045,
+    "ast_hash": "d6f265686679932d597e4885f26e038c",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/ACTION-PLAN.md": {
+    "mtime": 1783957073.2669067,
+    "ast_hash": "0521ec05e737edcad1b56524cb0a2ef1",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/FULL-AUDIT-REPORT.md": {
+    "mtime": 1783957143.220502,
+    "ast_hash": "5a8e0c7d6d353f4519dce8b497206f00",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/ai-search.md": {
+    "mtime": 1783957073.2661233,
+    "ast_hash": "c1ede65b8a9e63e0508cda608a41f7a2",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/backlinks.md": {
+    "mtime": 1783957073.266549,
+    "ast_hash": "d54f065b9a5732c49d1296521d654b7d",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/content.md": {
+    "mtime": 1783957073.2657406,
+    "ast_hash": "f2f1ca95bec7d9bf472b5b7cdf5953c1",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/images.md": {
+    "mtime": 1783957073.2662115,
+    "ast_hash": "112da958e546a499c0d52200f8590380",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/local.md": {
+    "mtime": 1783957073.2664587,
+    "ast_hash": "b742f53e2ac55655276463b5228add9e",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/on-page.md": {
+    "mtime": 1783957073.2658403,
+    "ast_hash": "8b1323f23635c623e8610a566a9ad70a",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/performance.md": {
+    "mtime": 1783957073.2660298,
+    "ast_hash": "43904ffe096f165a9cd756f7989fc444",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/schema.md": {
+    "mtime": 1783957073.2659342,
+    "ast_hash": "c3cd0f84a7fa7b71a1476304def4199b",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/sitemap.md": {
+    "mtime": 1783957073.2663772,
+    "ast_hash": "e655f4daff7f6976fc26edcc79ccc3af",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/sxo.md": {
+    "mtime": 1783957073.2666452,
+    "ast_hash": "dc1d8024add5b400a8e21a8e778abc41",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/technical.md": {
+    "mtime": 1783957073.2656348,
+    "ast_hash": "668c2707ac4c2b0c864b819f8758598b",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/findings/visual.md": {
+    "mtime": 1783957073.2662923,
+    "ast_hash": "7f5304ecdb7ed2c2c62b089d7e154bc6",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/screenshots/ims-asti-uat_vercel_app_desktop.png": {
+    "mtime": 1783956791.7814505,
+    "ast_hash": "a033564eb54bab44ed1f7519f8594a2f",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/screenshots/ims-asti-uat_vercel_app_laptop.png": {
+    "mtime": 1783956795.231547,
+    "ast_hash": "96ca520c379d426492e9231fb1734433",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/screenshots/ims-asti-uat_vercel_app_mobile.png": {
+    "mtime": 1783956802.7345784,
+    "ast_hash": "35325e47a652238bfe0b04741198b58d",
+    "semantic_hash": ""
+  },
+  "ims-asti-uat-vercel-app-audit/screenshots/ims-asti-uat_vercel_app_tablet.png": {
+    "mtime": 1783956798.7991936,
+    "ast_hash": "96aa16ce8bd76d059ae54ab658405ebe",
     "semantic_hash": ""
   }
 }
