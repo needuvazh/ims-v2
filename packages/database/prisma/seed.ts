@@ -1924,6 +1924,35 @@ async function seed() {
   await prisma.person.deleteMany({});
   await prisma.role.deleteMany({});
   await prisma.permission.deleteMany({});
+  // Clean up B2B/Corporate Sales tables (which might exist in PostgreSQL database from other migrations/branches)
+  const rawTablesToTruncate = [
+    'corporate_marketing_visits',
+    'corporate_sales_follow_ups',
+    'corporate_sales_leads',
+    'quotation_line_items',
+    'quotation_revisions',
+    'quotation_costing_sheets',
+    'quotation_direct_cost_items',
+    'direct_cost_element_masters',
+    'sales_orders',
+    'quotations',
+  ];
+
+  for (const table of rawTablesToTruncate) {
+    try {
+      await prisma.$executeRawUnsafe(`TRUNCATE TABLE IF EXISTS "${table}" CASCADE;`);
+    } catch (e) {
+      // Ignore errors if table does not exist
+    }
+  }
+
+  // Delete B2B relations defined in current schema
+  await prisma.corporateEnrollment.deleteMany({});
+  await prisma.corporateParticipant.deleteMany({});
+  await prisma.corporateContract.deleteMany({});
+  await prisma.corporateContact.deleteMany({});
+  await prisma.corporateAccount.deleteMany({});
+
   await prisma.classroom.deleteMany({});
   await prisma.department.deleteMany({});
   await prisma.branch.deleteMany({});

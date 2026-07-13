@@ -602,6 +602,11 @@ model Branch {
   trainerAvailability    TrainerAvailability[]
   studentStatusHistories StudentStatusHistory[]
   corporateAccounts      CorporateAccount[]
+  corporateSalesLeads      CorporateSalesLead[]
+  corporateMarketingVisits CorporateMarketingVisit[]
+  corporateSalesFollowUps  CorporateSalesFollowUp[]
+  quotations               Quotation[]
+  salesOrders              SalesOrder[]
 
   studentIdCardHistories StudentIdCardHistory[]
   studentDuplicateCases  StudentDuplicateCase[]
@@ -1165,6 +1170,7 @@ model Course {
   trainerAuthorizations TrainerCourseAuthorization[]
   exams     Exam[]
   documentRequirements DocumentRequirement[]
+  quotationLineItems   QuotationLineItem[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -1247,6 +1253,10 @@ model CorporateAccount {
   contracts          CorporateContract[]
   participants       CorporateParticipant[]
   enrollments        CorporateEnrollment[]
+  leads              CorporateSalesLead[]
+  visits             CorporateMarketingVisit[]
+  quotations         Quotation[]
+  salesOrders        SalesOrder[]
 
   createdAt DateTime  @default(now()) @db.Timestamptz(6)
   createdBy String?   @db.Uuid
@@ -3204,5 +3214,283 @@ model LeaveRequest {
   @@index([branchId])
   @@index([startDate, endDate])
   @@map("leave_requests")
+}
+
+// ============================================================================
+// B2B Corporate Sales & Quotation Models
+// ============================================================================
+
+model CorporateSalesLead {
+  id                 String                     @id @default(uuid()) @db.Uuid
+  corporateAccountId String                     @db.Uuid
+  leadId             String?                    @db.Uuid
+  salesOwnerId       String                     @db.Uuid
+  branchId           String                     @db.Uuid
+  stage              String                     @db.VarChar(50) // New, VisitPlanned, VisitCompleted, QuotationSent, Confirmed, Lost
+  expectedValue      Decimal                    @db.Decimal(18, 3)
+  expectedCloseDate  DateTime                   @db.Date
+  status             String                     @default("Active") @db.VarChar(30)
+  version            Int                        @default(1)
+  createdAt          DateTime                   @default(now()) @db.Timestamptz(6)
+  createdBy          String?                    @db.Uuid
+  updatedAt          DateTime?                  @updatedAt @db.Timestamptz(6)
+  updatedBy          String?                    @db.Uuid
+  deletedAt          DateTime?                  @db.Timestamptz(6)
+  deletedBy          String?                    @db.Uuid
+  isDeleted          Boolean                    @default(false)
+
+  // Relations
+  corporateAccount   CorporateAccount           @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  branch             Branch                     @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  visits             CorporateMarketingVisit[]
+  followUps          CorporateSalesFollowUp[]
+  quotations         Quotation[]
+
+  @@index([corporateAccountId, stage])
+  @@index([branchId])
+  @@map("corporate_sales_leads")
+}
+
+model CorporateMarketingVisit {
+  id                         String             @id @default(uuid()) @db.Uuid
+  corporateSalesLeadId       String             @db.Uuid
+  corporateAccountId         String             @db.Uuid
+  companyNameSnapshot        String             @db.VarChar(255)
+  contactPersonNameSnapshot  String             @db.VarChar(255)
+  contactNumberSnapshot      String             @db.VarChar(32)
+  emailSnapshot              String             @db.VarChar(320)
+  meetingDate                DateTime           @db.Date
+  discussionNotes            String             @db.Text
+  coursesDiscussed           String             @db.Text
+  expectedCandidates         Int
+  expectedTrainingDate       DateTime           @db.Date
+  visitOutcome               String?            @db.VarChar(50)
+  branchId                   String             @db.Uuid
+  version                    Int                @default(1)
+  createdAt                  DateTime           @default(now()) @db.Timestamptz(6)
+  createdBy                  String?            @db.Uuid
+  updatedAt                  DateTime?          @updatedAt @db.Timestamptz(6)
+  updatedBy              String?            @db.Uuid
+  deletedAt                  DateTime?          @db.Timestamptz(6)
+  deletedBy                  String?            @db.Uuid
+  isDeleted                  Boolean            @default(false)
+
+  // Relations
+  lead                       CorporateSalesLead @relation(fields: [corporateSalesLeadId], references: [id], onDelete: Restrict)
+  corporateAccount           CorporateAccount   @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  branch                     Branch             @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  @@index([corporateSalesLeadId])
+  @@index([corporateAccountId])
+  @@index([branchId])
+  @@map("corporate_marketing_visits")
+}
+
+model CorporateSalesFollowUp {
+  id                   String                   @id @default(uuid()) @db.Uuid
+  corporateSalesLeadId String                   @db.Uuid
+  assignedToUserId     String                   @db.Uuid
+  followUpDate         DateTime                 @db.Timestamptz(6)
+  followUpType         String                   @db.VarChar(50)
+  notes                String                   @db.Text
+  outcome              String?                  @db.VarChar(100)
+  nextFollowUpDate     DateTime?                @db.Date
+  status               String                   @default("Scheduled") @db.VarChar(30)
+  reminderGenerated    Boolean                  @default(false)
+  branchId             String                   @db.Uuid
+  version              Int                      @default(1)
+  createdAt            DateTime                 @default(now()) @db.Timestamptz(6)
+  createdBy            String?                  @db.Uuid
+  updatedAt            DateTime?                @updatedAt @db.Timestamptz(6)
+  updatedBy            String?                  @db.Uuid
+  deletedAt            DateTime?                @db.Timestamptz(6)
+  deletedBy            String?                  @db.Uuid
+  isDeleted            Boolean                  @default(false)
+
+  // Relations
+  lead                 CorporateSalesLead       @relation(fields: [corporateSalesLeadId], references: [id], onDelete: Restrict)
+  branch               Branch                   @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  @@index([corporateSalesLeadId])
+  @@index([assignedToUserId, status])
+  @@index([branchId])
+  @@map("corporate_sales_follow_ups")
+}
+
+model Quotation {
+  id                   String                   @id @default(uuid()) @db.Uuid
+  quotationNumber      String                   @unique @db.VarChar(80)
+  corporateAccountId   String                   @db.Uuid
+  corporateSalesLeadId String                   @db.Uuid
+  quotationDate        DateTime                 @db.Date
+  validUntil           DateTime                 @db.Date
+  subtotal             Decimal                  @db.Decimal(18, 3)
+  discountAmount       Decimal                  @db.Decimal(18, 3)
+  taxAmount            Decimal                  @db.Decimal(18, 3)
+  totalAmount          Decimal                  @db.Decimal(18, 3)
+  status               String                   @default("Draft") @db.VarChar(30) // Draft, SubmittedForApproval, Approved, Rejected, Sent, Accepted, Expired
+  approvedBy           String?                  @db.Uuid
+  approvedAt           DateTime?                @db.Timestamptz(6)
+  branchId             String                   @db.Uuid
+  version              Int                      @default(1)
+  createdAt            DateTime                 @default(now()) @db.Timestamptz(6)
+  createdBy            String?                  @db.Uuid
+  updatedAt            DateTime?                @updatedAt @db.Timestamptz(6)
+  updatedBy            String?                  @db.Uuid
+  deletedAt            DateTime?                @db.Timestamptz(6)
+  deletedBy            String?                  @db.Uuid
+  isDeleted            Boolean                  @default(false)
+
+  // Relations
+  corporateAccount     CorporateAccount         @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  lead                 CorporateSalesLead       @relation(fields: [corporateSalesLeadId], references: [id], onDelete: Restrict)
+  branch               Branch                   @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  lineItems            QuotationLineItem[]
+  costingSheet         QuotationCostingSheet?
+  revisions            QuotationRevision[]
+  salesOrders          SalesOrder[]
+
+  @@index([corporateAccountId])
+  @@index([corporateSalesLeadId])
+  @@index([branchId, status])
+  @@map("quotations")
+}
+
+model QuotationLineItem {
+  id             String                         @id @default(uuid()) @db.Uuid
+  quotationId    String                         @db.Uuid
+  courseId       String                         @db.Uuid
+  quantity       Int
+  unitPrice      Decimal                        @db.Decimal(18, 3)
+  discountAmount Decimal                        @db.Decimal(18, 3)
+  taxAmount      Decimal                        @db.Decimal(18, 3)
+  lineTotal      Decimal                        @db.Decimal(18, 3)
+  version        Int                            @default(1)
+  createdAt      DateTime                       @default(now()) @db.Timestamptz(6)
+  createdBy      String?                        @db.Uuid
+  updatedAt      DateTime?                      @updatedAt @db.Timestamptz(6)
+  updatedBy      String?                        @db.Uuid
+  deletedAt      DateTime?                      @db.Timestamptz(6)
+  deletedBy      String?                        @db.Uuid
+  isDeleted      Boolean                        @default(false)
+
+  // Relations
+  quotation      Quotation                      @relation(fields: [quotationId], references: [id], onDelete: Restrict)
+  course         Course                         @relation(fields: [courseId], references: [id], onDelete: Restrict)
+
+  @@index([quotationId])
+  @@map("quotation_line_items")
+}
+
+model QuotationRevision {
+  id              String                        @id @default(uuid()) @db.Uuid
+  quotationId     String                        @db.Uuid
+  revisionNumber  Int
+  snapshotJson    Json
+  revisionReason  String                        @db.Text
+  revisedBy       String                        @db.Uuid
+  revisedAt       DateTime                      @default(now()) @db.Timestamptz(6)
+
+  // Relations
+  quotation       Quotation                     @relation(fields: [quotationId], references: [id], onDelete: Restrict)
+
+  @@index([quotationId])
+  @@map("quotation_revisions")
+}
+
+model QuotationCostingSheet {
+  id                 String                     @id @default(uuid()) @db.Uuid
+  quotationId        String                     @unique @db.Uuid
+  trainerCost        Decimal?                   @db.Decimal(18, 3)
+  venueCost          Decimal?                   @db.Decimal(18, 3)
+  equipmentCost      Decimal?                   @db.Decimal(18, 3)
+  printingCost       Decimal?                   @db.Decimal(18, 3)
+  certificateCost    Decimal?                   @db.Decimal(18, 3)
+  travelCost         Decimal?                   @db.Decimal(18, 3)
+  accommodationCost  Decimal?                   @db.Decimal(18, 3)
+  foodCost           Decimal?                   @db.Decimal(18, 3)
+  vehicleCost        Decimal?                   @db.Decimal(18, 3)
+  administrationCost Decimal?                   @db.Decimal(18, 3)
+  marketingCost      Decimal?                   @db.Decimal(18, 3)
+  miscellaneousCost  Decimal?                   @db.Decimal(18, 3)
+  totalDirectCost    Decimal                    @db.Decimal(18, 3)
+  totalIndirectCost  Decimal                    @db.Decimal(18, 3)
+  totalCost          Decimal                    @db.Decimal(18, 3)
+  sellingPrice       Decimal                    @db.Decimal(18, 3)
+  profitAmount       Decimal                    @db.Decimal(18, 3)
+  profitPercentage   Decimal                    @db.Decimal(5, 2)
+  status             String                     @default("Draft") @db.VarChar(30)
+  version            Int                        @default(1)
+  createdAt          DateTime                   @default(now()) @db.Timestamptz(6)
+  createdBy          String?                    @db.Uuid
+  updatedAt          DateTime?                  @updatedAt @db.Timestamptz(6)
+  updatedBy          String?                    @db.Uuid
+  deletedAt          DateTime?                  @db.Timestamptz(6)
+  deletedBy          String?                    @db.Uuid
+  isDeleted          Boolean                    @default(false)
+
+  // Relations
+  quotation          Quotation                  @relation(fields: [quotationId], references: [id], onDelete: Restrict)
+  directCosts        QuotationDirectCostItem[]
+
+  @@map("quotation_costing_sheets")
+}
+
+model SalesOrder {
+  id                 String                     @id @default(uuid()) @db.Uuid
+  salesOrderNumber   String                     @unique @db.VarChar(80)
+  quotationId        String                     @db.Uuid
+  corporateAccountId String                     @db.Uuid
+  orderDate          DateTime                   @db.Date
+  totalAmount        Decimal                    @db.Decimal(18, 3)
+  status             String                     @default("Draft") @db.VarChar(30) // Draft, Confirmed, ContractInitiated, TrainingHandoffCompleted, Cancelled
+  LpoDocumentId      String?                    @db.Uuid
+  branchId           String                     @db.Uuid
+  version            Int                        @default(1)
+  createdAt          DateTime                   @default(now()) @db.Timestamptz(6)
+  createdBy          String?                    @db.Uuid
+  updatedAt          DateTime?                  @updatedAt @db.Timestamptz(6)
+  updatedBy          String?                    @db.Uuid
+  deletedAt          DateTime?                  @db.Timestamptz(6)
+  deletedBy          String?                    @db.Uuid
+  isDeleted          Boolean                    @default(false)
+
+  // Relations
+  quotation          Quotation                  @relation(fields: [quotationId], references: [id], onDelete: Restrict)
+  corporateAccount   CorporateAccount           @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
+  branch             Branch                     @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  @@index([quotationId])
+  @@index([corporateAccountId])
+  @@index([branchId])
+  @@map("sales_orders")
+}
+
+model DirectCostElementMaster {
+  id        String                    @id @default(uuid()) @db.Uuid
+  name      String                    @unique @db.VarChar(100)
+  status    String                    @default("Active") @db.VarChar(20) // Active, Inactive
+  createdAt DateTime                  @default(now()) @db.Timestamptz(6)
+  createdBy String?                   @db.Uuid
+  updatedAt DateTime                  @updatedAt @db.Timestamptz(6)
+  updatedBy String?                   @db.Uuid
+  costItems QuotationDirectCostItem[]
+
+  @@map("direct_cost_element_masters")
+}
+
+model QuotationDirectCostItem {
+  id             String                @id @default(uuid()) @db.Uuid
+  costingSheetId String                @db.Uuid
+  costElementId  String                @db.Uuid
+  amount         Decimal               @db.Decimal(18, 3)
+  createdAt      DateTime              @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime?             @updatedAt @db.Timestamptz(6)
+  costingSheet   QuotationCostingSheet @relation(fields: [costingSheetId], references: [id], onDelete: Cascade)
+  costElement    DirectCostElementMaster @relation(fields: [costElementId], references: [id], onDelete: Restrict)
+
+  @@unique([costingSheetId, costElementId])
+  @@index([costingSheetId])
+  @@map("quotation_direct_cost_items")
 }
 

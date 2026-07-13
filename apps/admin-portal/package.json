@@ -17,6 +17,7 @@
     "@ims/attendance": "workspace:*",
     "@ims/audit": "workspace:*",
     "@ims/certificates": "workspace:*",
+    "@ims/corporate-sales": "workspace:*",
     "@ims/course-catalog": "workspace:*",
     "@ims/crm-leads": "workspace:*",
     "@ims/database": "workspace:*",
