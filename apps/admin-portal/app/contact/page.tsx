@@ -9,6 +9,7 @@ import {
   FAQStructuredData,
   SplitHero,
 } from '../_components/public-site';
+import { PublicStatStrip } from '../_components/public-content';
 import { contactInfo, courseCatalog } from '../_components/public-site-data';
 import Link from 'next/link';
 
@@ -62,7 +63,12 @@ export default function ContactPage() {
         primaryLabel="Email us"
         secondaryHref={contactInfo.phoneHref}
         secondaryLabel="Call now"
+        showStats={false}
       />
+
+      <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
+        <PublicStatStrip />
+      </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SectionHeading

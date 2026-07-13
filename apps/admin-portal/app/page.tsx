@@ -187,7 +187,7 @@ export default function HomePage() {
             />
           </div>
           <div className="mt-10">
-            <PublicCourseGrid courses={courseCatalog.slice(0, 4)} />
+            <PublicCourseGrid courses={courseCatalog.slice(0, 6)} />
           </div>
           <div className="mt-8 text-center">
             <Link
