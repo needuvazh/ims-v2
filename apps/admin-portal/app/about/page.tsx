@@ -1,12 +1,20 @@
-'use client';
-
 import { ShieldCheck, Target, Award, BookOpen, Users, Compass } from 'lucide-react';
 import {
   PublicShell,
   SplitHero,
   SectionHeading,
 } from '../_components/public-site';
-import { RealTimeStatStrip } from '../_components/public-site-client';
+import { PublicStatStrip } from '../_components/public-content';
+import { buildPublicMetadata } from '../_components/public-metadata';
+import { courseCatalog } from '../_components/public-site-data';
+import Link from 'next/link';
+
+export const metadata = buildPublicMetadata({
+  title: 'About Al-Saud Training Institute',
+  description:
+    'Learn about Al-Saud Training Institute in Muscat, its vocational training approach, mission, and safety-focused delivery model.',
+  path: '/about',
+});
 
 const coreValues = [
   {
@@ -75,7 +83,7 @@ export default function AboutPage() {
 
       {/* ─── STATISTICS ───────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
-        <RealTimeStatStrip />
+        <PublicStatStrip />
       </section>
 
       {/* ─── OUR STORY ────────────────────────────────────── */}
@@ -183,8 +191,27 @@ export default function AboutPage() {
                   {item.description}
                 </p>
               </div>
-            );
+          );
           })}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Explore courses"
+          title="Training paths that match common site requirements"
+          description="These pages show the main operator training paths offered by ASTI, with practical content, duration details, and enquiry prompts."
+        />
+        <div className="mt-10 flex flex-wrap gap-3">
+          {courseCatalog.slice(0, 4).map((course) => (
+            <Link
+              key={course.slug}
+              href={`/${course.slug}`}
+              className="inline-flex items-center rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm font-semibold text-neutral-700 transition-colors hover:border-orange-200 hover:text-orange-700"
+            >
+              {course.title}
+            </Link>
+          ))}
         </div>
       </section>
     </PublicShell>

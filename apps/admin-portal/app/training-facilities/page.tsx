@@ -1,5 +1,3 @@
-'use client';
-
 import { CheckCircle2, ShieldAlert, GraduationCap, Building2 } from 'lucide-react';
 import {
   PublicShell,
@@ -7,6 +5,16 @@ import {
   SimpleCTA,
   SplitHero,
 } from '../_components/public-site';
+import { buildPublicMetadata } from '../_components/public-metadata';
+import { courseCatalog } from '../_components/public-site-data';
+import Link from 'next/link';
+
+export const metadata = buildPublicMetadata({
+  title: 'Training Facilities in Muscat',
+  description:
+    'Explore the training facilities at Al-Saud Training Institute in Muscat, including classrooms, practice yards, and safety-audited zones.',
+  path: '/training-facilities',
+});
 
 const facilityFeatures = [
   {
@@ -128,6 +136,25 @@ export default function FacilitiesPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Related courses"
+          title="Facilities support the core training catalogue"
+          description="The same yards and classrooms back the institute's forklift, crane, and elevated work platform training routes."
+        />
+        <div className="mt-10 flex flex-wrap gap-3">
+          {courseCatalog.slice(0, 4).map((course) => (
+            <Link
+              key={course.slug}
+              href={`/${course.slug}`}
+              className="inline-flex items-center rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm font-semibold text-neutral-700 transition-colors hover:border-orange-200 hover:text-orange-700"
+            >
+              {course.title}
+            </Link>
+          ))}
         </div>
       </section>
 

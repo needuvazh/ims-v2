@@ -77,6 +77,89 @@ export const stats: StatCard[] = [
   { value: '20+', label: 'Years Experience', icon: Award },
 ];
 
+const SITE_URL = 'https://ims-asti-uat.vercel.app';
+
+const siteStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'EducationalOrganization', 'LocalBusiness'],
+    name: 'Al-Saud Training Institute',
+    url: SITE_URL,
+    logo: `${SITE_URL}/alsaud/logo.png`,
+    telephone: contactInfo.phoneHref.replace('tel:', ''),
+    email: contactInfo.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Al Anwar Street, Building No. 648',
+      addressLocality: 'Azaiba North',
+      addressRegion: 'Muscat',
+      addressCountry: 'OM',
+    },
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: contactInfo.phoneHref.replace('tel:', ''),
+        contactType: 'customer service',
+        areaServed: 'OM',
+        availableLanguage: ['en', 'ar'],
+      },
+    ],
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: [
+          'Saturday',
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+        ],
+        opens: '08:00',
+        closes: '17:00',
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Al-Saud Training Institute',
+    url: SITE_URL,
+  },
+];
+
+function JsonLd({ data }: { data: unknown }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+export function FAQStructuredData({
+  items,
+}: {
+  items: Array<{ question: string; answer: string }>;
+}) {
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: items.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      }}
+    />
+  );
+}
+
 export const strengths = [
   {
     title: 'Extensive Expertise',
@@ -158,6 +241,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-surface-50 text-neutral-900 font-sans selection:bg-orange-500/30 selection:text-white">
+      <JsonLd data={siteStructuredData} />
       {/* Top Bar */}
       <div className="bg-[#031a27] border-b border-white/5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-300">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
@@ -901,9 +985,63 @@ export function SimpleCTA({
 
 export function CourseDetailPage({ slug }: { slug: string }) {
   const course = getCourse(slug);
+  const relatedCourses = courseCatalog.filter((item) => item.slug !== slug).slice(0, 3);
+  const detailCopy = courseDetailCopy[slug] ?? courseDetailCopy['forklift-operator-training'];
+  const courseUrl = `${SITE_URL}/${slug}`;
+  const courseStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: course.title,
+    description: course.summary,
+    url: courseUrl,
+    provider: {
+      '@type': 'EducationalOrganization',
+      name: 'Al-Saud Training Institute',
+      url: SITE_URL,
+      telephone: contactInfo.phoneHref.replace('tel:', ''),
+      email: contactInfo.email,
+    },
+  };
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Courses',
+        item: `${SITE_URL}/courses`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: course.title,
+        item: courseUrl,
+      },
+    ],
+  };
+  const faqStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: detailCopy.faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
 
   return (
     <PublicShell>
+      <JsonLd data={[courseStructuredData, breadcrumbStructuredData, faqStructuredData]} />
       <HeroSection
         eyebrow="Course detail"
         title={course.title}
@@ -960,6 +1098,102 @@ export function CourseDetailPage({ slug }: { slug: string }) {
                 </div>
               </div>
             </div>
+
+            <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">
+                Who this suits
+              </p>
+              <div className="mt-5 grid gap-5 sm:grid-cols-3">
+                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+                    Audience
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
+                    {detailCopy.audience.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-500" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+                    Outcomes
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
+                    {detailCopy.outcomes.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-500" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl bg-muted-50 p-5 ring-1 ring-border-light">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+                    Prerequisites
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-600">
+                    {detailCopy.prerequisites.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent-500" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[2.5rem] border border-border-light bg-white p-8 shadow-xl shadow-primary-950/5">
+              <SectionHeading
+                eyebrow="Course FAQ"
+                title="Common questions about this training"
+                description="Answers based on how this course is delivered, assessed, and booked."
+              />
+              <div className="mt-8 space-y-4">
+                {detailCopy.faqs.map((item) => (
+                  <div key={item.question} className="rounded-2xl border border-neutral-100 bg-neutral-50 p-5">
+                    <p className="font-display text-lg font-bold text-neutral-900">
+                      {item.question}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                      {item.answer}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="rounded-[2.5rem] border border-neutral-100 bg-white p-8 shadow-sm">
+          <SectionHeading
+            eyebrow="Related courses"
+            title="Compare this training path with other operator courses"
+            description="These links help learners and employers move through the catalogue without returning to search."
+          />
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {relatedCourses.map((relatedCourse) => (
+              <Link
+                key={relatedCourse.slug}
+                href={`/${relatedCourse.slug}`}
+                className="rounded-2xl border border-neutral-100 bg-neutral-50 p-5 transition-colors hover:border-orange-200 hover:bg-white"
+              >
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-600">
+                  {relatedCourse.duration}
+                </p>
+                <h3 className="mt-3 font-display text-lg font-bold text-neutral-900">
+                  {relatedCourse.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                  {relatedCourse.summary}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -975,6 +1209,71 @@ export function CourseDetailPage({ slug }: { slug: string }) {
     </PublicShell>
   );
 }
+
+const courseDetailCopy: Record<
+  string,
+  {
+    audience: string[];
+    outcomes: string[];
+    prerequisites: string[];
+    faqs: Array<{ question: string; answer: string }>;
+  }
+> = {
+  'forklift-operator-training': {
+    audience: ['New forklift operators', 'Warehouse teams', 'Site logistics staff'],
+    outcomes: ['Safer daily operation', 'Correct pre-use checks', 'Confident load handling'],
+    prerequisites: ['Basic literacy is helpful', 'Bring valid ID for registration', 'No prior experience required'],
+    faqs: [
+      { question: 'Is prior experience required?', answer: 'No. This course is suitable for beginners and refreshers alike.' },
+      { question: 'Does the course include practical driving?', answer: 'Yes. Practical handling is part of the training and assessment.' },
+    ],
+  },
+  'forklift-operator-training-course': {
+    audience: ['Operators needing endorsement', 'Road-side forklift users', 'Compliance-focused employers'],
+    outcomes: ['Better legal awareness', 'Safer public-road operation', 'Improved operating discipline'],
+    prerequisites: ['Suitable for experienced learners', 'Bring valid ID for registration', 'Confirmation depends on local requirements'],
+    faqs: [
+      { question: 'What makes this different from the main forklift course?', answer: 'This path focuses on endorsement and road-use considerations.' },
+      { question: 'Can companies book multiple learners?', answer: 'Yes. Group bookings are supported and can be scheduled together.' },
+    ],
+  },
+  'truck-mounted-crane': {
+    audience: ['Truck loader crane operators', 'Transport crews', 'Lifting supervisors'],
+    outcomes: ['Safer lifting practice', 'Better lift planning', 'Routine maintenance awareness'],
+    prerequisites: ['Basic lifting experience is helpful', 'Suitable for operational teams', 'Bring valid ID for registration'],
+    faqs: [
+      { question: 'Does this include lifting theory?', answer: 'Yes. The course combines theory with hands-on load handling.' },
+      { question: 'Is this suitable for companies?', answer: 'Yes. It is commonly booked for work teams and project sites.' },
+    ],
+  },
+  'overhead-gantry-crane-operation': {
+    audience: ['Warehouse crane operators', 'Production teams', 'Maintenance staff'],
+    outcomes: ['Controlled travel and placement', 'Safer use of attachments', 'Better operator confidence'],
+    prerequisites: ['Suitable for beginners and refreshers', 'Bring valid ID for registration', 'No specialist background required'],
+    faqs: [
+      { question: 'Is this course practical?', answer: 'Yes. Practical lifts and operator handling are central to the course.' },
+      { question: 'Can the class be arranged for a company?', answer: 'Yes. The institute can plan group delivery for organizations.' },
+    ],
+  },
+  'elevated-work-platforms-2': {
+    audience: ['EWP operators', 'Construction teams', 'Maintenance contractors'],
+    outcomes: ['Safer access setup', 'Correct platform selection', 'Stronger hazard awareness'],
+    prerequisites: ['Suitable for site staff and beginners', 'Bring valid ID for registration', 'No prior certification required'],
+    faqs: [
+      { question: 'Which lift types are covered?', answer: 'Scissor, boom, truck-mounted, self-propelled, and trailer-mounted lifts are covered.' },
+      { question: 'Is there a practical assessment?', answer: 'Yes. Learners complete practical assessment on the day.' },
+    ],
+  },
+  'other-courses-available': {
+    audience: ['Specialist lifting teams', 'Safety staff', 'Organizations needing custom training'],
+    outcomes: ['Custom skill coverage', 'Improved site compliance', 'Training tailored to need'],
+    prerequisites: ['Requirements vary by course', 'Contact admissions for scope', 'Bring valid ID for registration'],
+    faqs: [
+      { question: 'Can you design a custom course?', answer: 'Yes. The institute can tailor delivery around your operational need.' },
+      { question: 'Are these specialist courses only for companies?', answer: 'They are often booked by companies, but individual enquiries are welcome.' },
+    ],
+  },
+};
 
 export function LegalPageShell({
   title,

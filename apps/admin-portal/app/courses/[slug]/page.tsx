@@ -17,7 +17,6 @@ import {
   SectionHeading,
   SimpleCTA,
   BulletList,
-  contactInfo,
   WhatsAppButton,
 } from '../../_components/public-site';
 
@@ -72,18 +71,37 @@ export async function generateMetadata({
   if (!course) {
     return {
       title: 'Course Not Found | Al-Saud Training Institute',
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
+  const description =
+    course.descriptionEnglish ??
+    `Learn ${course.nameEnglish} at Al-Saud Training Institute. Hands-on training with industry-recognized certification.`;
+
   return {
     title: `${course.nameEnglish} | Al-Saud Training Institute`,
-    description:
-      course.descriptionEnglish ??
-      `Learn ${course.nameEnglish} at Al-Saud Training Institute. Hands-on training with industry-recognized certification.`,
+    description,
+    robots: {
+      index: false,
+      follow: false,
+    },
+    alternates: {
+      canonical: `/courses/${course.slug}`,
+    },
     openGraph: {
       title: `${course.nameEnglish} | Al-Saud Training Institute`,
-      description: course.descriptionEnglish ?? '',
+      description,
+      url: `https://ims-asti-uat.vercel.app/${course.slug}`,
       type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${course.nameEnglish} | Al-Saud Training Institute`,
+      description,
     },
   };
 }

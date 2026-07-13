@@ -1,7 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { LegalPageShell } from '../_components/public-site';
 import { courseCatalog, mainNavigation } from '../_components/public-site-data';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function SitemapPage() {
   return (

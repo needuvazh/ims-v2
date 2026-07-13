@@ -6,7 +6,17 @@ import {
   SplitHero,
 } from '../_components/public-site';
 import { eventCards } from '../_components/public-site-data';
-import { RealTimeStatStrip } from '../_components/public-site-client';
+import { PublicStatStrip } from '../_components/public-content';
+import { buildPublicMetadata } from '../_components/public-metadata';
+import Link from 'next/link';
+import { courseCatalog } from '../_components/public-site-data';
+
+export const metadata = buildPublicMetadata({
+  title: 'Upcoming Training Events',
+  description:
+    'View upcoming training intakes, certification clinics, and corporate session dates at Al-Saud Training Institute.',
+  path: '/events',
+});
 
 export default function EventsPage() {
   return (
@@ -32,7 +42,7 @@ export default function EventsPage() {
 
       {/* ─── STAT STRIP (pulls up over hero on desktop) ───── */}
       <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
-        <RealTimeStatStrip />
+        <PublicStatStrip />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
@@ -61,6 +71,25 @@ export default function EventsPage() {
                 <span>{event.meta}</span>
               </div>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Related routes"
+          title="Events usually lead into these course pages"
+          description="Use the course pages below to compare duration, focus, and the practical outcomes before you book."
+        />
+        <div className="mt-10 flex flex-wrap gap-3">
+          {courseCatalog.slice(0, 4).map((course) => (
+            <Link
+              key={course.slug}
+              href={`/${course.slug}`}
+              className="inline-flex items-center rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm font-semibold text-neutral-700 transition-colors hover:border-orange-200 hover:text-orange-700"
+            >
+              {course.title}
+            </Link>
           ))}
         </div>
       </section>

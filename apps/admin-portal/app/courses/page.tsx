@@ -1,16 +1,19 @@
-import { Suspense } from 'react';
 import {
   PublicShell,
   SplitHero,
   SectionHeading,
   SimpleCTA,
-  contactInfo,
-  CourseCardSkeleton,
 } from '../_components/public-site';
-import { CoursesClient } from '../_components/courses-page-client';
-import { RealTimeStatStrip } from '../_components/public-site-client';
+import { PublicCourseGrid, PublicStatStrip } from '../_components/public-content';
+import { buildPublicMetadata } from '../_components/public-metadata';
+import { contactInfo, courseCatalog } from '../_components/public-site-data';
 
-export const dynamic = 'force-dynamic';
+export const metadata = buildPublicMetadata({
+  title: 'Courses at Al-Saud Training Institute',
+  description:
+    'Browse forklift, crane, and elevated work platform courses at Al-Saud Training Institute in Muscat, Oman.',
+  path: '/courses',
+});
 
 export default function CoursesPage() {
   return (
@@ -36,7 +39,7 @@ export default function CoursesPage() {
 
       {/* ─── STAT STRIP (pulls up over hero on desktop) ───── */}
       <section className="mx-auto max-w-7xl px-4 -mt-12 sm:px-6 lg:px-8 relative z-10">
-        <RealTimeStatStrip />
+        <PublicStatStrip />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -46,9 +49,7 @@ export default function CoursesPage() {
           description="Each card maps to a dedicated detail screen with the live-site copy and a direct contact call to action."
         />
         <div className="mt-10">
-          <Suspense fallback={<CoursesSkeleton />}>
-            <CoursesClient />
-          </Suspense>
+          <PublicCourseGrid courses={courseCatalog} />
         </div>
       </section>
 
@@ -61,15 +62,5 @@ export default function CoursesPage() {
         />
       </section>
     </PublicShell>
-  );
-}
-
-function CoursesSkeleton() {
-  return (
-    <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-      {Array.from({ length: 9 }).map((_, i) => (
-        <CourseCardSkeleton key={i} />
-      ))}
-    </div>
   );
 }
