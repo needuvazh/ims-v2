@@ -405,17 +405,43 @@ export function CorporateLeadDetailsClient({
     },
     {
       header: "Actions",
-      render: (visit: any) => (
-        <Button
-          variant="ghost"
-          size="sm"
-          className="flex items-center gap-1.5 text-[color:var(--ims-brass)] hover:text-[color:var(--ims-ink)]"
-          onClick={() => setSelectedVisit(visit)}
-        >
-          <Eye className="h-4 w-4" />
-          <span>View</span>
-        </Button>
-      ),
+      render: (visit: any) => {
+        const linkedQuotation = (lead.quotations || []).find(
+          (q: any) => q.corporateMarketingVisitId === visit.id
+        );
+        const isRequested = visit.visitOutcome?.toLowerCase() === "requested quotation";
+
+        return (
+          <div className="flex items-center gap-2 justify-end">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex items-center gap-1 text-[color:var(--ims-brass)] hover:text-[color:var(--ims-ink)] px-2"
+              onClick={() => setSelectedVisit(visit)}
+            >
+              <Eye className="h-4 w-4" />
+              <span>View</span>
+            </Button>
+            {isRequested && (
+              linkedQuotation ? (
+                <Link
+                  href={`/corporate-sales/quotations/${linkedQuotation.id}`}
+                  className="inline-flex items-center gap-1 text-xs font-semibold py-1.5 px-3 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg border border-emerald-100 transition"
+                >
+                  View Quote
+                </Link>
+              ) : (
+                <Link
+                  href={`/corporate-sales/quotations/create?leadId=${lead.id}&branchId=${lead.branchId}&visitId=${visit.id}`}
+                  className="inline-flex items-center gap-1 text-xs font-semibold py-1.5 px-3 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg border border-indigo-100 transition"
+                >
+                  Generate Quote
+                </Link>
+              )
+            )}
+          </div>
+        );
+      },
     },
   ];
 
@@ -441,16 +467,36 @@ export function CorporateLeadDetailsClient({
           "{visit.discussionNotes}"
         </div>
       )}
-      <div className="pt-2 border-t border-[color:var(--ims-border)] flex justify-end">
+      <div className="pt-2 border-t border-[color:var(--ims-border)] flex items-center justify-end gap-2">
         <Button
           variant="ghost"
           size="sm"
-          className="w-full flex justify-center gap-1.5 text-[color:var(--ims-brass)]"
+          className="flex justify-center gap-1.5 text-[color:var(--ims-brass)]"
           onClick={() => setSelectedVisit(visit)}
         >
           <Eye className="h-4 w-4" />
           <span>View Details</span>
         </Button>
+        {visit.visitOutcome?.toLowerCase() === "requested quotation" && (
+          (() => {
+            const linked = (lead.quotations || []).find((q: any) => q.corporateMarketingVisitId === visit.id);
+            return linked ? (
+              <Link
+                href={`/corporate-sales/quotations/${linked.id}`}
+                className="inline-flex items-center justify-center gap-1 text-xs font-bold py-1.5 px-3 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg border border-emerald-100 transition"
+              >
+                View Quote
+              </Link>
+            ) : (
+              <Link
+                href={`/corporate-sales/quotations/create?leadId=${lead.id}&branchId=${lead.branchId}&visitId=${visit.id}`}
+                className="inline-flex items-center justify-center gap-1 text-xs font-bold py-1.5 px-3 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg border border-indigo-100 transition"
+              >
+                Generate Quote
+              </Link>
+            );
+          })()
+        )}
       </div>
     </Card>
   );

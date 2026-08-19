@@ -167,6 +167,11 @@ export const adminNavigation: NavigationItem[] = [
         label: 'Approvals Queue',
         permission: 'lead.read',
       },
+      {
+        href: '/corporate-training/accounts',
+        label: 'Corporate Accounts (B2B)',
+        permission: 'corporate-training.accounts.read',
+      },
     ],
   },
   {

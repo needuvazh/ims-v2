@@ -95,6 +95,9 @@ function mapNavigationIcons(item: any): any {
     case '/corporate-sales/approvals':
       icon = <UserCheck className="h-4.5 w-4.5" />;
       break;
+    case '/corporate-training/accounts':
+      icon = <Building2 className="h-4.5 w-4.5" />;
+      break;
     case '/admissions':
       icon = <UserCheck className="h-4.5 w-4.5" />;
       break;

@@ -74,6 +74,7 @@ export const CreateQuotationSchema = z.object({
   quotationDate: datePreprocess,
   validUntil: datePreprocess,
   branchId: z.string().uuid(),
+  corporateMarketingVisitId: z.string().uuid().optional().nullable(),
   lineItems: z.array(QuotationLineItemInputSchema).min(1, "Quotation must have at least one line item"),
 });
 

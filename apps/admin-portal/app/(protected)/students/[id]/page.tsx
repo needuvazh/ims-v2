@@ -8,6 +8,7 @@ import {
   Calendar,
   CreditCard,
   PencilLine,
+  Building,
 } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
@@ -84,6 +85,13 @@ export default async function StudentProfileDashboardPage(props: {
           branch: true,
           attendanceRecords: {
             where: { isDeleted: false },
+          },
+          corporateEnrollments: {
+            where: { isDeleted: false },
+            include: {
+              corporateAccount: true,
+              contract: true,
+            },
           },
         },
       },
@@ -288,6 +296,38 @@ export default async function StudentProfileDashboardPage(props: {
           displayVisa={displayVisa}
           canRevealPII={canRevealPII}
         />
+
+        {/* B2B Corporate Account Linkage if student is nominated by corporate client */}
+        {(() => {
+          const corpEnr = profile.enrollments.find(
+            (e) => e.corporateEnrollments && e.corporateEnrollments.length > 0
+          );
+          if (!corpEnr) return null;
+          const link = corpEnr.corporateEnrollments[0];
+          return (
+            <Card className="bg-amber-50/20 border border-amber-100/70 shadow-sm rounded-2xl p-6">
+              <h3 className="font-bold text-amber-800 flex items-center gap-2 mb-4">
+                <Building className="h-5 w-5 text-amber-600" /> B2B Corporate Client Linkage
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-3 text-sm text-slate-700">
+                <div>
+                  <span className="text-xs text-slate-400 block font-semibold uppercase tracking-wider">Corporate Client</span>
+                  <span className="font-bold text-slate-800 text-base">{link.corporateAccount.accountName}</span>
+                </div>
+                <div>
+                  <span className="text-xs text-slate-400 block font-semibold uppercase tracking-wider">Account Code</span>
+                  <span className="font-mono text-slate-800 text-base">{link.corporateAccount.accountCode}</span>
+                </div>
+                {link.contract && (
+                  <div>
+                    <span className="text-xs text-slate-400 block font-semibold uppercase tracking-wider">Associated Contract</span>
+                    <span className="font-semibold text-slate-800 text-base">#{link.contract.contractNumber}</span>
+                  </div>
+                )}
+              </div>
+            </Card>
+          );
+        })()}
 
         {/* ID Card Management Panel */}
         {canManageIdCard && (

@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import {
   decodeSession,
   sessionCookieName,
@@ -59,6 +60,9 @@ export const getSession: () => Promise<Session> = cache(async () => {
     getCookieValue(headerStore.get('cookie'), sessionCookieName);
 
   if (!accessToken && !sessionToken) {
+    if (!headerStore.has('next-action')) {
+      redirect('/sign-in');
+    }
     throw new DomainError(
       'unauthorized',
       'Session has expired or you are not signed in. Please sign in again.',
@@ -83,6 +87,9 @@ export const getSession: () => Promise<Session> = cache(async () => {
 
     const decodedSession = await decodeSession(sessionToken);
     if (!decodedSession && !tokenPayload) {
+      if (!headerStore.has('next-action')) {
+        redirect('/sign-in');
+      }
       throw new DomainError(
         'unauthorized',
         'Authentication required. Please sign in.',
@@ -98,6 +105,9 @@ export const getSession: () => Promise<Session> = cache(async () => {
       dbSession.status !== 'Active' ||
       new Date() > dbSession.expiresAt
     ) {
+      if (!headerStore.has('next-action')) {
+        redirect('/sign-in');
+      }
       throw new DomainError(
         'unauthorized',
         'Your session has been revoked or has expired. Please sign in again.',
@@ -108,12 +118,18 @@ export const getSession: () => Promise<Session> = cache(async () => {
     const user = await userService.getUser(dbSession.userId);
 
     if (user.status === 'Inactive') {
+      if (!headerStore.has('next-action')) {
+        redirect('/sign-in');
+      }
       throw new DomainError(
         'inactive_user_cannot_login',
         'Your account is not active. Contact your administrator.',
       );
     }
     if (user.status === 'Locked') {
+      if (!headerStore.has('next-action')) {
+        redirect('/sign-in');
+      }
       throw new DomainError(
         'locked_user_cannot_login',
         'Your account is locked. Contact your administrator.',
@@ -127,6 +143,9 @@ export const getSession: () => Promise<Session> = cache(async () => {
       (userStartDate && userStartDate > now) ||
       (user.effectiveEndDate && user.effectiveEndDate < now)
     ) {
+      if (!headerStore.has('next-action')) {
+        redirect('/sign-in');
+      }
       throw new DomainError(
         'unauthorized',
         'Your account is not currently within its active date range.',
@@ -141,6 +160,9 @@ export const getSession: () => Promise<Session> = cache(async () => {
       ) {
         throw err;
       }
+    }
+    if (!headerStore.has('next-action')) {
+      redirect('/sign-in');
     }
     throw new DomainError(
       'unauthorized',
@@ -160,6 +182,9 @@ export const getSession: () => Promise<Session> = cache(async () => {
   const { sessionRepository, effectivePermissionsService } =
     await import('./runtime');
   if (!tokenPayload) {
+    if (!headerStore.has('next-action')) {
+      redirect('/sign-in');
+    }
     throw new DomainError(
       'unauthorized',
       'Authentication required. Please sign in.',
@@ -170,6 +195,9 @@ export const getSession: () => Promise<Session> = cache(async () => {
     tokenPayload.jti ?? '',
   );
   if (!dbSession) {
+    if (!headerStore.has('next-action')) {
+      redirect('/sign-in');
+    }
     throw new DomainError(
       'unauthorized',
       'Authentication required. Please sign in.',

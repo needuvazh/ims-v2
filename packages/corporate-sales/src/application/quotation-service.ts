@@ -65,6 +65,7 @@ export class QuotationService {
           totalAmount: new Prisma.Decimal(totalAmount),
           status: "Draft",
           branchId: input.branchId,
+          corporateMarketingVisitId: input.corporateMarketingVisitId || null,
           createdBy: actorId,
         },
       });

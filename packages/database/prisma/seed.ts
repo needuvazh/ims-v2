@@ -1845,6 +1845,38 @@ const systemPermissions = [
     permissionType: 'Action' as const,
     description: 'View the Batches operational dashboard.',
   },
+  {
+    moduleCode: 'corporate-training',
+    featureCode: 'accounts',
+    actionCode: 'read',
+    permissionCode: 'corporate-training.accounts.read',
+    permissionType: 'Action' as const,
+    description: 'View B2B corporate training cockpit and account profiles.',
+  },
+  {
+    moduleCode: 'corporate-training',
+    featureCode: 'accounts',
+    actionCode: 'write',
+    permissionCode: 'corporate-training.accounts.write',
+    permissionType: 'Action' as const,
+    description: 'Create and edit B2B corporate training accounts.',
+  },
+  {
+    moduleCode: 'corporate-training',
+    featureCode: 'billing',
+    actionCode: 'write',
+    permissionCode: 'corporate-training.billing.write',
+    permissionType: 'Action' as const,
+    description: 'Request B2B invoicing milestones for enrollments.',
+  },
+  {
+    moduleCode: 'corporate-training',
+    featureCode: 'billing',
+    actionCode: 'read',
+    permissionCode: 'corporate-training.billing.read',
+    permissionType: 'Action' as const,
+    description: 'View B2B invoices and outstanding collections.',
+  },
 ];
 
 async function seed() {
@@ -1852,6 +1884,24 @@ async function seed() {
 
   // 1. Clean up existing relations to prevent duplicate key errors in fresh seeds
   console.log('🧹 Cleaning old records...');
+
+  // Clean up B2B/Corporate Sales and Quotation tables in dependency order
+  await prisma.quotationDirectCostItem.deleteMany({});
+  await prisma.quotationCostingSheet.deleteMany({});
+  await prisma.quotationLineItem.deleteMany({});
+  await prisma.quotationRevision.deleteMany({});
+  await prisma.salesOrder.deleteMany({});
+  await prisma.quotation.deleteMany({});
+  await prisma.corporateMarketingVisit.deleteMany({});
+  await prisma.corporateSalesFollowUp.deleteMany({});
+  await prisma.corporateSalesLead.deleteMany({});
+  await prisma.corporateEnrollment.deleteMany({});
+  await prisma.corporateParticipant.deleteMany({});
+  await prisma.corporateContract.deleteMany({});
+  await prisma.corporateContact.deleteMany({});
+  await prisma.corporateAccount.deleteMany({});
+  await prisma.directCostElementMaster.deleteMany({});
+
   // Finance cleanup
   await prisma.refund.deleteMany({});
   await prisma.receipt.deleteMany({});
@@ -1924,34 +1974,7 @@ async function seed() {
   await prisma.person.deleteMany({});
   await prisma.role.deleteMany({});
   await prisma.permission.deleteMany({});
-  // Clean up B2B/Corporate Sales tables (which might exist in PostgreSQL database from other migrations/branches)
-  const rawTablesToTruncate = [
-    'corporate_marketing_visits',
-    'corporate_sales_follow_ups',
-    'corporate_sales_leads',
-    'quotation_line_items',
-    'quotation_revisions',
-    'quotation_costing_sheets',
-    'quotation_direct_cost_items',
-    'direct_cost_element_masters',
-    'sales_orders',
-    'quotations',
-  ];
-
-  for (const table of rawTablesToTruncate) {
-    try {
-      await prisma.$executeRawUnsafe(`TRUNCATE TABLE IF EXISTS "${table}" CASCADE;`);
-    } catch (e) {
-      // Ignore errors if table does not exist
-    }
-  }
-
-  // Delete B2B relations defined in current schema
-  await prisma.corporateEnrollment.deleteMany({});
-  await prisma.corporateParticipant.deleteMany({});
-  await prisma.corporateContract.deleteMany({});
-  await prisma.corporateContact.deleteMany({});
-  await prisma.corporateAccount.deleteMany({});
+  // B2B relations and raw tables were cleaned up at start of cleanup to prevent foreign key errors
 
   await prisma.classroom.deleteMany({});
   await prisma.department.deleteMany({});
@@ -2070,6 +2093,10 @@ async function seed() {
     'iam.session.read',
     'iam.security-policy.read',
     'iam.audit.read',
+    'corporate-training.accounts.read',
+    'corporate-training.accounts.write',
+    'corporate-training.billing.write',
+    'corporate-training.billing.read',
     'report.iam.user',
     'report.iam.login-history',
     'report.iam.security',
@@ -2236,6 +2263,8 @@ async function seed() {
     'iam.user.read',
     'lead.read',
     'lead.write',
+    'corporate-training.accounts.read',
+    'corporate-training.accounts.write',
     'lead.create',
     'lead.update',
     'lead.assign',
@@ -2405,6 +2434,9 @@ async function seed() {
     'finance.payment.read',
     'finance.payment.create',
     'finance.refund.read',
+    'corporate-training.accounts.read',
+    'corporate-training.billing.write',
+    'corporate-training.billing.read',
   ];
   const accountantPerms = permRecords.filter((p) =>
     accountantPermCodes.includes(p.permissionCode),
@@ -3196,7 +3228,6 @@ async function seed() {
         },
       });
 
-      // Seed default pricing and completion rules to satisfy constraints
       await prisma.coursePricing.create({
         data: {
           id: crypto.randomUUID(),
@@ -3204,6 +3235,17 @@ async function seed() {
           customerType: 'Individual',
           batchType: 'Regular',
           basePrice: 150.0,
+          effectiveStartDate: new Date(),
+          status: 'Active',
+        },
+      });
+      await prisma.coursePricing.create({
+        data: {
+          id: crypto.randomUUID(),
+          courseId: newCourse.id,
+          customerType: 'Corporate',
+          batchType: 'Regular',
+          basePrice: 120.0,
           effectiveStartDate: new Date(),
           status: 'Active',
         },
@@ -3432,6 +3474,31 @@ async function seed() {
     });
   }
   console.log('  ✓ Document requirements seeded.');
+
+  // Seed Direct Cost Elements
+  const costElements = [
+    { name: 'Trainer Fees', status: 'Active' },
+    { name: 'Training Materials & Printing', status: 'Active' },
+    { name: 'Catering & Refreshments', status: 'Active' },
+    { name: 'Venue & Classroom Rental', status: 'Active' },
+    { name: 'Lab & Equipment Setup', status: 'Active' },
+    { name: 'Software Licenses & Subscriptions', status: 'Active' },
+    { name: 'Logistics & Transport', status: 'Active' },
+    { name: 'Certificates & Accreditation', status: 'Active' },
+    { name: 'Marketing & Sales Commission', status: 'Active' },
+    { name: 'Administrative Overhead', status: 'Active' },
+  ];
+
+  for (const element of costElements) {
+    await prisma.directCostElementMaster.create({
+      data: {
+        id: crypto.randomUUID(),
+        name: element.name,
+        status: element.status,
+      },
+    });
+  }
+  console.log('  ✓ Direct Cost Elements seeded.');
 
   console.log('\n🌱 Seed script complete! Database seeded successfully.');
 }

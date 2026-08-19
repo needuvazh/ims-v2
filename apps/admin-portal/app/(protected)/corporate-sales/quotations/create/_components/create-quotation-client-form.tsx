@@ -162,6 +162,7 @@ const quotationFormSchema = z.object({
   branchId: z.string().uuid("Branch is required"),
   quotationDate: z.string().min(1, "Quotation date is required"),
   validUntil: z.string().min(1, "Valid until date is required"),
+  corporateMarketingVisitId: z.string().uuid().nullable().optional(),
   lineItems: z
     .array(
       z.object({
@@ -196,6 +197,8 @@ interface CourseOption {
   id: string;
   nameEnglish: string;
   code: string;
+  basePrice: number;
+  hasCorporatePrice: boolean;
 }
 
 interface CreateQuotationClientFormProps {
@@ -203,6 +206,11 @@ interface CreateQuotationClientFormProps {
   courses: CourseOption[];
   initialLeadId?: string;
   actorId: string;
+  initialVisit?: {
+    id: string;
+    coursesDiscussed: string | null;
+    expectedCandidates: number;
+  } | null;
 }
 
 export function CreateQuotationClientForm({
@@ -210,6 +218,7 @@ export function CreateQuotationClientForm({
   courses,
   initialLeadId,
   actorId,
+  initialVisit,
 }: CreateQuotationClientFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -217,6 +226,32 @@ export function CreateQuotationClientForm({
 
   // Default values
   const defaultLead = leads.find((l) => l.id === initialLeadId) || leads[0];
+
+  // Resolve line items from visit if present
+  let defaultLineItems = [
+    {
+      courseId: "",
+      quantity: 1,
+      unitPrice: 0,
+    },
+  ];
+
+  if (initialVisit && initialVisit.coursesDiscussed) {
+    const discussedNames = initialVisit.coursesDiscussed.split(", ");
+    const matched = discussedNames
+      .map((name: string) =>
+        courses.find((c) => `${c.nameEnglish} (${c.code})` === name)
+      )
+      .filter((c: any): c is NonNullable<typeof c> => !!c);
+
+    if (matched.length > 0) {
+      defaultLineItems = matched.map((c: any) => ({
+        courseId: c.id,
+        quantity: initialVisit.expectedCandidates || 1,
+        unitPrice: c.basePrice > 0 ? c.basePrice : 100,
+      }));
+    }
+  }
 
   const {
     register,
@@ -235,13 +270,8 @@ export function CreateQuotationClientForm({
       validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
         .toISOString()
         .split("T")[0],
-      lineItems: [
-        {
-          courseId: "",
-          quantity: 1,
-          unitPrice: 0,
-        },
-      ],
+      corporateMarketingVisitId: initialVisit?.id || null,
+      lineItems: defaultLineItems,
     },
   });
 
@@ -293,6 +323,18 @@ export function CreateQuotationClientForm({
     setLoading(true);
     setServerError(null);
 
+    // Validate if any course does not have Corporate Pricing setup
+    for (let i = 0; i < data.lineItems.length; i++) {
+      const item = data.lineItems[i];
+      const match = courses.find((c) => c.id === item.courseId);
+      if (match && !match.hasCorporatePrice) {
+        setServerError(`Course "${match.nameEnglish}" does not have a Corporate Price setup. Please configure the corporate price in the Course Catalog first.`);
+        toast.error("Missing Corporate Course Pricing");
+        setLoading(false);
+        return;
+      }
+    }
+
     try {
       const payload = {
         corporateAccountId: data.corporateAccountId,
@@ -300,6 +342,7 @@ export function CreateQuotationClientForm({
         quotationDate: new Date(data.quotationDate),
         validUntil: new Date(data.validUntil),
         branchId: data.branchId,
+        corporateMarketingVisitId: data.corporateMarketingVisitId || null,
         lineItems: data.lineItems.map((item) => ({
           courseId: item.courseId,
           quantity: Number(item.quantity),
@@ -465,7 +508,17 @@ export function CreateQuotationClientForm({
                           render={({ field: selectField }) => (
                             <Select
                               value={selectField.value}
-                              onChange={(e) => selectField.onChange(e.target.value)}
+                              onChange={(e) => {
+                                const selectedCourseId = e.target.value;
+                                selectField.onChange(selectedCourseId);
+                                const match = courses.find((c) => c.id === selectedCourseId);
+                                if (match) {
+                                  setValue(
+                                    `lineItems.${index}.unitPrice`,
+                                    match.basePrice > 0 ? match.basePrice : 100
+                                  );
+                                }
+                              }}
                               options={[
                                 { value: "", label: "-- Choose Course --" },
                                 ...courses.map((c) => ({
@@ -478,7 +531,14 @@ export function CreateQuotationClientForm({
                         />
                       </FormControl>
                       <FormError>
-                        {errors.lineItems?.[index]?.courseId?.message}
+                        {(() => {
+                          const val = watch(`lineItems.${index}.courseId`);
+                          const match = courses.find((c) => c.id === val);
+                          if (match && !match.hasCorporatePrice) {
+                            return "✗ No Corporate Price setup found. Please configure in Course Catalog first.";
+                          }
+                          return errors.lineItems?.[index]?.courseId?.message;
+                        })()}
                       </FormError>
                     </FormField>
 

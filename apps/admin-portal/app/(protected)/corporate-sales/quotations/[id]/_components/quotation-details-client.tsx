@@ -168,6 +168,11 @@ export function QuotationDetailsClient({
         }
         actions={
           <div className="flex gap-2 items-center">
+            <a href={`/api/v1/corporate-sales/quotations/${quote.id}/download`} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline">
+                Print / Save PDF
+              </Button>
+            </a>
             <Link href={`/corporate-sales/quotations/${quote.id}/costing`}>
               <Button variant="outline">
                 {["SubmittedForApproval", "Approved", "Sent", "Accepted"].includes(quote.status)

@@ -23,6 +23,7 @@ import {
   CreditCard,
   Lock,
   Landmark,
+  Building,
 } from 'lucide-react';
 import {
   Card,
@@ -74,6 +75,10 @@ interface EnrollmentDetail {
   priceEvaluationTimestamp: string | null;
   paymentCollected: string;
   enrollmentType: string;
+  corporateAccountName?: string | null;
+  corporateAccountCode?: string | null;
+  corporateAccountId?: string | null;
+  contractNumber?: string | null;
   studentProfileId: string;
   photoUrl: string | null;
   resolvedDiscounts?: Array<{
@@ -514,7 +519,7 @@ export function EnrollmentDetailsClient({
         category: enrollment.enrollmentType === 'Corporate' ? 'Corporate' : 'Student',
         subCategory: invoiceSubCategory,
         studentProfileId: enrollment.studentProfileId,
-        corporateAccountId: null,
+        corporateAccountId: enrollment.corporateAccountId || null,
         enrollmentId: enrollment.id,
         branchId: enrollment.branchId,
         invoiceDate: new Date(invoiceDate),
@@ -742,6 +747,34 @@ export function EnrollmentDetailsClient({
                 </div>
               </div>
             </Card>
+
+            {/* Corporate Account details if applicable */}
+            {enrollment.enrollmentType === 'Corporate' && enrollment.corporateAccountName && (
+              <Card className="bg-amber-50/20 border border-amber-100/70 shadow-sm rounded-2xl p-5 space-y-4">
+                <div className="flex items-center gap-2 border-b border-amber-100/50 pb-2">
+                  <Building className="h-4.5 w-4.5 text-amber-700" />
+                  <h4 className="font-semibold text-amber-800 text-sm uppercase tracking-wide">
+                    B2B Corporate Account Linkage
+                  </h4>
+                </div>
+                <div className="space-y-2 text-sm text-slate-700">
+                  <div className="flex justify-between">
+                    <span>Corporate Client:</span>
+                    <span className="font-bold text-slate-800">{enrollment.corporateAccountName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Account Code:</span>
+                    <span className="font-mono text-slate-800">{enrollment.corporateAccountCode}</span>
+                  </div>
+                  {enrollment.contractNumber && (
+                    <div className="flex justify-between">
+                      <span>Contract Number:</span>
+                      <span className="font-semibold text-slate-800">{enrollment.contractNumber}</span>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            )}
 
             {/* Student metadata */}
             <Card className="bg-white border border-slate-100 shadow-sm rounded-2xl p-5 space-y-4">

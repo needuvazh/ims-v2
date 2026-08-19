@@ -32,6 +32,13 @@ export default async function EnrollmentDetailPage(props: {
       batch: true,
       branch: true,
       walkInEnrollment: true,
+      corporateEnrollments: {
+        where: { isDeleted: false },
+        include: {
+          corporateAccount: true,
+          contract: true,
+        },
+      },
     },
   });
 
@@ -239,6 +246,10 @@ export default async function EnrollmentDetailPage(props: {
       paymentCollected:
         enrollment.walkInEnrollment?.paymentCollected?.toString() || '0.00',
       enrollmentType: enrollment.enrollmentType,
+      corporateAccountName: enrollment.corporateEnrollments?.[0]?.corporateAccount?.accountName || null,
+      corporateAccountCode: enrollment.corporateEnrollments?.[0]?.corporateAccount?.accountCode || null,
+      corporateAccountId: enrollment.corporateEnrollments?.[0]?.corporateAccountId || null,
+      contractNumber: enrollment.corporateEnrollments?.[0]?.contract?.contractNumber || null,
       studentProfileId: enrollment.studentProfileId,
       photoUrl: enrollment.studentProfile.person.photoUrl || null,
     },

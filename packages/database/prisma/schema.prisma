@@ -3279,6 +3279,7 @@ model CorporateMarketingVisit {
   lead                       CorporateSalesLead @relation(fields: [corporateSalesLeadId], references: [id], onDelete: Restrict)
   corporateAccount           CorporateAccount   @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
   branch                     Branch             @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  quotations                 Quotation[]
 
   @@index([corporateSalesLeadId])
   @@index([corporateAccountId])
@@ -3340,11 +3341,13 @@ model Quotation {
   deletedAt            DateTime?                @db.Timestamptz(6)
   deletedBy            String?                  @db.Uuid
   isDeleted            Boolean                  @default(false)
+  corporateMarketingVisitId String?             @db.Uuid
 
   // Relations
   corporateAccount     CorporateAccount         @relation(fields: [corporateAccountId], references: [id], onDelete: Restrict)
   lead                 CorporateSalesLead       @relation(fields: [corporateSalesLeadId], references: [id], onDelete: Restrict)
   branch               Branch                   @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  corporateMarketingVisit CorporateMarketingVisit? @relation(fields: [corporateMarketingVisitId], references: [id], onDelete: Restrict)
   lineItems            QuotationLineItem[]
   costingSheet         QuotationCostingSheet?
   revisions            QuotationRevision[]
@@ -3352,6 +3355,7 @@ model Quotation {
 
   @@index([corporateAccountId])
   @@index([corporateSalesLeadId])
+  @@index([corporateMarketingVisitId])
   @@index([branchId, status])
   @@map("quotations")
 }

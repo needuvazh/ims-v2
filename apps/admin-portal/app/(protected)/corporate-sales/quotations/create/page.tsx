@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 export const metadata = { title: "Create B2B Quotation - Corporate Sales | ASTI IMS" };
 
 export default async function CreateCorporateQuotationPage(props: {
-  searchParams: Promise<{ leadId?: string }>;
+  searchParams: Promise<{ leadId?: string; visitId?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const session = await assertAnyPermission(["lead.write", "organization.manage"]);
@@ -31,12 +31,35 @@ export default async function CreateCorporateQuotationPage(props: {
 
   const courses = await prisma.course.findMany({
     where: { isDeleted: false, status: "Published" },
+    include: {
+      pricings: {
+        where: { isDeleted: false, status: "Active" },
+      },
+    },
   });
 
   // If a leadId query param is supplied, verify it exists and is allowed
   let initialLead = null;
   if (searchParams.leadId) {
     initialLead = leads.find((l) => l.id === searchParams.leadId) || null;
+  }
+
+  let initialVisit = null;
+  if (searchParams.visitId) {
+    const visitRecord = await prisma.corporateMarketingVisit.findFirst({
+      where: { id: searchParams.visitId, isDeleted: false },
+    });
+    if (visitRecord) {
+      initialVisit = {
+        id: visitRecord.id,
+        coursesDiscussed: visitRecord.coursesDiscussed,
+        expectedCandidates: visitRecord.expectedCandidates,
+      };
+      // Auto-set the lead if not provided
+      if (!initialLead) {
+        initialLead = leads.find((l) => l.id === visitRecord.corporateSalesLeadId) || null;
+      }
+    }
   }
 
   const mappedLeads = leads.map((l) => ({
@@ -46,11 +69,23 @@ export default async function CreateCorporateQuotationPage(props: {
     branchId: l.branchId,
   }));
 
-  const mappedCourses = courses.map((c) => ({
-    id: c.id,
-    nameEnglish: c.nameEnglish,
-    code: c.courseCode,
-  }));
+  const mappedCourses = courses.map((c) => {
+    const corpPrice = c.pricings.find((p) => p.customerType === "Corporate");
+    const fallbackPrice = c.pricings[0];
+    const resolvedPrice = corpPrice
+      ? Number(corpPrice.basePrice)
+      : fallbackPrice
+      ? Number(fallbackPrice.basePrice)
+      : 0;
+
+    return {
+      id: c.id,
+      nameEnglish: c.nameEnglish,
+      code: c.courseCode,
+      basePrice: resolvedPrice,
+      hasCorporatePrice: !!corpPrice,
+    };
+  });
 
   return (
     <AdminFormPageLayout>
@@ -86,6 +121,7 @@ export default async function CreateCorporateQuotationPage(props: {
           courses={mappedCourses}
           initialLeadId={initialLead?.id}
           actorId={session.userId}
+          initialVisit={initialVisit}
         />
       </div>
     </AdminFormPageLayout>
