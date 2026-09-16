@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/auth-guard.ts": {
-    "mtime": 1783476044.9122946,
-    "ast_hash": "02d70f478e8764c7625f2a5ffc006b19",
+    "mtime": 1784297073.7853637,
+    "ast_hash": "876a6f2ea3bd9f721740161525d3df11",
     "semantic_hash": ""
   },
   "apps/admin-portal/app/lib/observability.ts": {
@@ -315,13 +315,13 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/instrumentation.ts": {
-    "mtime": 1783476045.0416648,
-    "ast_hash": "5f64753bc316066b94fb500d4ec234cf",
+    "mtime": 1784297078.7645147,
+    "ast_hash": "80329577ab127249884d3a5924ff45fd",
     "semantic_hash": ""
   },
   "apps/admin-portal/next-env.d.ts": {
-    "mtime": 1784157112.2808907,
-    "ast_hash": "d0f8375ae1199dc7acd3977fc33b78b8",
+    "mtime": 1789576390.051528,
+    "ast_hash": "2a74d3909800ca5467fa83b0ab4a4890",
     "semantic_hash": ""
   },
   "apps/admin-portal/next.config.ts": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "apps/admin-portal/package.json": {
-    "mtime": 1783916692.5985966,
-    "ast_hash": "fcc3459980d2ce78784045ae8da6e5ef",
+    "mtime": 1789582601.3413715,
+    "ast_hash": "091f3b7ed09529b012cbd573cb965c08",
     "semantic_hash": ""
   },
   "apps/admin-portal/postcss.config.mjs": {
@@ -865,8 +865,8 @@
     "semantic_hash": ""
   },
   "skills-lock.json": {
-    "mtime": 1783104198.724334,
-    "ast_hash": "e1daa8893842e60c8979170a748bfa42",
+    "mtime": 1789578566.601632,
+    "ast_hash": "35e7582ee6b05ff13736834e56e7a271",
     "semantic_hash": ""
   },
   "test_reports/iteration_1.json": {
@@ -900,8 +900,8 @@
     "semantic_hash": ""
   },
   "turbo.json": {
-    "mtime": 1783104198.7404466,
-    "ast_hash": "0fa4e054895542d0846db33b5b03d80f",
+    "mtime": 1789582601.342465,
+    "ast_hash": "8c01c3fc600e144894ceb6fc0e95bb35",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -2265,8 +2265,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1783707291.4309418,
-    "ast_hash": "041080917843b771922f82d42f037468",
+    "mtime": 1789582609.607733,
+    "ast_hash": "69ac334856f3cc9f6e9071fa18ca6aa5",
     "semantic_hash": ""
   },
   "compose.yaml": {
@@ -10632,6 +10632,261 @@
   "packages/database/prisma/seed-cost-elements.ts": {
     "mtime": 1784292836.6424286,
     "ast_hash": "38a28186e095ac65cd4ea902789ff986",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/AGENTS.md": {
+    "mtime": 1789578566.5796373,
+    "ast_hash": "54d8bcb3096bea9104019c5f5815a4e1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/README.md": {
+    "mtime": 1789578566.5796418,
+    "ast_hash": "ede8675dde9eeb39c5c1283879a2a9d1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/SKILL.md": {
+    "mtime": 1789578566.5794828,
+    "ast_hash": "4be05a22e44fae1e0597db217a90642c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/assets/templates/_template.md": {
+    "mtime": 1789578566.5863366,
+    "ast_hash": "80443ed173fae3545e3405d7afa9d27b",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/_review-algorithm.md": {
+    "mtime": 1789578566.5811365,
+    "ast_hash": "2e0492a7bc68d622e0a917e6f41bed2d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/_sections.md": {
+    "mtime": 1789578566.5808377,
+    "ast_hash": "e017e38a9d5fa30fa32ead65ea0b66a1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/action-error-handling.md": {
+    "mtime": 1789578566.5808485,
+    "ast_hash": "0240c5e8ec991b34262b411bac44f498",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/action-optimistic-updates.md": {
+    "mtime": 1789578566.5807595,
+    "ast_hash": "47260f0d87a693b1d0f7b3801e00c351",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/action-pending-states.md": {
+    "mtime": 1789578566.5814102,
+    "ast_hash": "83b3373ce5ada2bf2abe5451fa2baf0e",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/action-revalidation.md": {
+    "mtime": 1789578566.5819795,
+    "ast_hash": "05fb7070cf86ed107c5dc20fa0f7e5a8",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/action-server-action-forms.md": {
+    "mtime": 1789578566.581005,
+    "ast_hash": "36a40f379ad67c0306a977ef8a7dc649",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/build-barrel-files.md": {
+    "mtime": 1789578566.5811834,
+    "ast_hash": "c978dfb90939c733d12de0009a55cb71",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/build-dynamic-imports.md": {
+    "mtime": 1789578566.5812068,
+    "ast_hash": "ea478f1bae3fdd28844131b11d609bcc",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/build-external-packages.md": {
+    "mtime": 1789578566.5814507,
+    "ast_hash": "14a5226259e5cae3580cd6cb88405f74",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/build-optimize-package-imports.md": {
+    "mtime": 1789578566.5824947,
+    "ast_hash": "ce687db037f99910407d2f1e22c012d2",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/build-turbopack-config.md": {
+    "mtime": 1789578566.5814989,
+    "ast_hash": "f29be72c7c76e01ecccb4f4e6cf0027c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cache-fetch-options.md": {
+    "mtime": 1789578566.5856986,
+    "ast_hash": "1d58a40703b8f97ee8e90d757d1cb8c4",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cache-react-cache.md": {
+    "mtime": 1789578566.5852382,
+    "ast_hash": "f7b9e5cf50da1a3eba70f7fd5832d10f",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cache-revalidate-path.md": {
+    "mtime": 1789578566.5817218,
+    "ast_hash": "73593c4953fa107be69adf931a747ce7",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cache-revalidate-tag.md": {
+    "mtime": 1789578566.5819774,
+    "ast_hash": "a081eca945af11439f56f0399df41a3d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cache-segment-config.md": {
+    "mtime": 1789578566.581813,
+    "ast_hash": "aaade1f5d1f941706c9460fe1cdded80",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cache-use-cache-directive.md": {
+    "mtime": 1789578566.5816214,
+    "ast_hash": "836c600a699a162b4fe42097e0f8ddd5",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/client-children-pattern.md": {
+    "mtime": 1789578566.5840676,
+    "ast_hash": "a550ea57ad7209d5ffc50d55c532da68",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/client-hydration-mismatch.md": {
+    "mtime": 1789578566.583324,
+    "ast_hash": "ada3fd37922a2e012bd5823373d45209",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/client-third-party-scripts.md": {
+    "mtime": 1789578566.584053,
+    "ast_hash": "3936c81ff222ab78de20c9f0e8ac4ea3",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/client-use-client-boundary.md": {
+    "mtime": 1789578566.5821676,
+    "ast_hash": "ea164deab0a8100fbf40b707718d3163",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cross-boundary-coherence.md": {
+    "mtime": 1789578566.5820513,
+    "ast_hash": "9de34c4f4c78c4ea3e77ad58310d66bd",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cross-component-consolidation.md": {
+    "mtime": 1789578566.5822768,
+    "ast_hash": "9c776a8b9a4209d1362b59e0263ab59c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cross-dead-code.md": {
+    "mtime": 1789578566.5835273,
+    "ast_hash": "db4de6aa9615888b67c167a47520b422",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cross-extract-shared-logic.md": {
+    "mtime": 1789578566.582877,
+    "ast_hash": "fb88f77ababe8dc7174f903d2eff12b6",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/cross-prop-shape-drift.md": {
+    "mtime": 1789578566.5852818,
+    "ast_hash": "20b257e97da5d1ff786bca2198880b98",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/meta-generate-metadata.md": {
+    "mtime": 1789578566.5823681,
+    "ast_hash": "047268843168a7809c773062b8852c56",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/meta-opengraph-images.md": {
+    "mtime": 1789578566.5825129,
+    "ast_hash": "5a9ed516230a093cf3ab8463fbf8467c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/meta-robots.md": {
+    "mtime": 1789578566.5825992,
+    "ast_hash": "0551f5a7a56ebc2df7acf49c2ca89948",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/meta-sitemap.md": {
+    "mtime": 1789578566.5860996,
+    "ast_hash": "60af394b6ae119626db901148ffc97a3",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/route-intercepting-routes.md": {
+    "mtime": 1789578566.58306,
+    "ast_hash": "cdd0da3a7d1a8c422db59a70ef562838",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/route-not-found.md": {
+    "mtime": 1789578566.5835729,
+    "ast_hash": "7572c82cb8dff890cc35c6277ae21b2c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/route-parallel-routes.md": {
+    "mtime": 1789578566.5828488,
+    "ast_hash": "bdf6dccfeebc828a986f56cca952e0ee",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/route-prefetching.md": {
+    "mtime": 1789578566.5857458,
+    "ast_hash": "f8f8091ac7b0da372b4166087681bcb9",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/route-proxy-ts.md": {
+    "mtime": 1789578566.5838125,
+    "ast_hash": "eeaf207dcd75a51d6ffd6d3ea6ae64be",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/server-avoid-client-fetching.md": {
+    "mtime": 1789578566.5848353,
+    "ast_hash": "dbedac135b379ae4e5ff0e66e1406542",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/server-component-streaming.md": {
+    "mtime": 1789578566.5859263,
+    "ast_hash": "bf5d76b762f058fa92dfc2789b55018a",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/server-data-colocation.md": {
+    "mtime": 1789578566.5845318,
+    "ast_hash": "a9bd0ab4be01b754a7b4aa1399e0d953",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/server-error-handling.md": {
+    "mtime": 1789578566.5844893,
+    "ast_hash": "d4119504c2006b1f25e606b2c3de00a9",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/server-parallel-fetching.md": {
+    "mtime": 1789578566.584052,
+    "ast_hash": "2c0e58c6a570fae1b497a062fc9b73be",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/server-preload-pattern.md": {
+    "mtime": 1789578566.5843947,
+    "ast_hash": "84d464ac260bd002ac2e50dded142b0d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/stream-error-tsx.md": {
+    "mtime": 1789578566.5847044,
+    "ast_hash": "2cd5b338857aba2f0ca7d6000ab25c6a",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/stream-loading-tsx.md": {
+    "mtime": 1789578566.5846488,
+    "ast_hash": "61424584ffc4e70450efc722c23123db",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/stream-nested-suspense.md": {
+    "mtime": 1789578566.5843341,
+    "ast_hash": "c10f984bc681eb07d8f6e322522ca5b4",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/stream-skeleton-matching.md": {
+    "mtime": 1789578566.585508,
+    "ast_hash": "18d05459abd6b05af6e9474a5281bd8e",
+    "semantic_hash": ""
+  },
+  ".agents/skills/nextjs/references/stream-suspense-boundaries.md": {
+    "mtime": 1789578566.5849323,
+    "ast_hash": "55065f480953a3fd4c0c47a9c65476c1",
     "semantic_hash": ""
   }
 }

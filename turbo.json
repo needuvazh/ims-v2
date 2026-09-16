@@ -3,6 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": ["DATABASE_URL", "SESSION_SECRET", "CRON_SECRET"],
       "outputs": [".next/**", "dist/**", "coverage/**"]
     },
     "dev": {

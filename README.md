@@ -48,7 +48,17 @@ For a fresh clone:
 
 If you want the full workspace dev stack, use `pnpm dev` after the database is up and migrated.
 
-## Scripts
+## Vercel build
+
+Use `turbo run build --filter=@ims/admin-portal` as the build command. The
+admin portal build generates Prisma Client from `packages/database/prisma/schema.prisma`
+before running Next.js, including when Vercel restores cached dependencies.
+
+Configure `DATABASE_URL`, `SESSION_SECRET`, and `CRON_SECRET` in Vercel for the
+appropriate environments. These are declared in `turbo.json` so Turbo passes them
+to the build. Database migrations remain a separate deployment step.
+
+## Workspace commands
 
 - `pnpm dev`
 - `pnpm build`
